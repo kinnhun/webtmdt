@@ -14,10 +14,10 @@ export default function MaterialsSection() {
   const vis = inView ? "show" : "hidden";
 
   return (
-    <section className="py-24" style={{ backgroundColor: "hsl(var(--navy))" }}>
+    <section className="py-16 sm:py-24" style={{ backgroundColor: "hsl(var(--navy))" }}>
       <div ref={ref}>
-        <div className="container mx-auto px-6 md:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-end mb-14">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8 items-end mb-8 sm:mb-14">
             <motion.div variants={stagger(0, 0.12)} initial="hidden" animate={vis}>
               <motion.div variants={fadeUp} className="flex items-center gap-3 mb-4">
                 <span className="h-px w-8" style={{ backgroundColor: "hsl(var(--orange))" }} />
@@ -25,9 +25,9 @@ export default function MaterialsSection() {
               </motion.div>
               <motion.h2 variants={fadeUp} className="font-display font-bold text-white leading-tight" style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)" }}>Crafted from<br />Nature&apos;s Best</motion.h2>
             </motion.div>
-            <motion.p initial={{ opacity: 0, y: 16, filter: "blur(4px)" }} animate={inView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}} transition={{ duration: 0.65, delay: 0.25, ease: [0.16, 1, 0.3, 1] }} className="font-body text-base text-white/55 leading-relaxed">We source only premium-grade natural materials — each selected for its structural integrity, aesthetic warmth, and lasting beauty. FSC-certified timber, sustainably harvested.</motion.p>
+            <motion.p initial={{ opacity: 0, y: 16, filter: "blur(4px)" }} animate={inView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}} transition={{ duration: 0.65, delay: 0.25, ease: [0.16, 1, 0.3, 1] }} className="font-body text-sm sm:text-base text-white/55 leading-relaxed">We source only premium-grade natural materials — each selected for its structural integrity, aesthetic warmth, and lasting beauty. FSC-certified timber, sustainably harvested.</motion.p>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {materials.map((mat, i) => (
               <motion.div key={mat.name} {...cardReveal(i)} className="group relative overflow-hidden rounded-sm aspect-[3/4]">
                 <img src={mat.image} alt={mat.name} className="w-full h-full object-cover group-hover:scale-[1.06] transition-transform duration-700" />

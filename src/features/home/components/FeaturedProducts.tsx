@@ -47,23 +47,23 @@ export default function FeaturedProducts() {
   const filtered = activeFilter === "All" ? featuredProductsData : featuredProductsData.filter(p => p.category === activeFilter);
 
   return (
-    <section className="py-28" style={{ backgroundColor: "hsl(var(--warm-cream))" }}>
+    <section className="py-16 sm:py-28" style={{ backgroundColor: "hsl(var(--warm-cream))" }}>
       <div ref={ref}>
-        <div className="container mx-auto px-6 md:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-8 sm:mb-10">
             <div>
               <motion.div initial={{ opacity: 0, x: -16 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.5 }} className="flex items-center gap-3 mb-4">
                 <span className="h-px w-8" style={{ backgroundColor: "hsl(var(--orange))" }} />
                 <span className="font-body text-xs tracking-[0.25em] uppercase font-medium" style={{ color: "hsl(var(--orange))" }}>Selected Pieces</span>
               </motion.div>
-              <motion.h2 initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay: 0.1 }} className="font-display font-bold leading-tight" style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "hsl(var(--navy-deep))" }}>Featured Products</motion.h2>
-              <motion.p initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.2 }} className="font-body text-sm text-muted-foreground mt-3 max-w-md leading-relaxed">Handpicked from our latest collections — each piece crafted with precision and designed to elevate any space.</motion.p>
+              <motion.h2 initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay: 0.1 }} className="font-display font-bold leading-tight" style={{ fontSize: "clamp(1.8rem, 4vw, 3.5rem)", color: "hsl(var(--navy-deep))" }}>Featured Products</motion.h2>
+              <motion.p initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.2 }} className="font-body text-xs sm:text-sm text-muted-foreground mt-2 sm:mt-3 max-w-md leading-relaxed">Handpicked from our latest collections — each piece crafted with precision and designed to elevate any space.</motion.p>
             </div>
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.3 }} className="flex-shrink-0">
+            <motion.div initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.3 }} className="shrink-0">
               <Link href="/catalogue" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90 hover:gap-3" style={{ backgroundColor: "hsl(var(--navy))" }}>Full Catalogue <ArrowRight size={15} /></Link>
             </motion.div>
           </div>
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.35 }} className="flex flex-wrap gap-2 mb-10">
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.35 }} className="flex gap-2 mb-8 sm:mb-10 overflow-x-auto pb-2" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
             {FILTERS.map((f) => {
               const isActive = activeFilter === f;
               const count = f === "All" ? featuredProductsData.length : featuredProductsData.filter(p => p.category === f).length;
@@ -76,7 +76,7 @@ export default function FeaturedProducts() {
               );
             })}
           </motion.div>
-          <motion.div layout className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-5 gap-y-10 md:gap-x-7">
+          <motion.div layout className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-6 sm:gap-x-5 sm:gap-y-10 md:gap-x-7">
             <AnimatePresence mode="popLayout">
               {filtered.map((product, i) => (<EditorialProductCard key={product.id} product={product} index={i} onQuickView={setQuickViewProduct} />))}
             </AnimatePresence>

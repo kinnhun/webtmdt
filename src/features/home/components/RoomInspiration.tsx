@@ -4,6 +4,22 @@ import Link from "next/link";
 import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useInView } from "@/hooks/useInView";
 
+function useCardSize() {
+  const [size, setSize] = useState({ w: 340, h: 440 });
+  useEffect(() => {
+    const update = () => {
+      const vw = window.innerWidth;
+      if (vw < 480) setSize({ w: 260, h: 340 });
+      else if (vw < 768) setSize({ w: 300, h: 380 });
+      else setSize({ w: 340, h: 440 });
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+  return size;
+}
+
 const rooms = [
   { name: "Master Bedroom", label: "Bedroom", tagline: "Where rest becomes ritual", image: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=900&auto=format&fit=crop&q=80", href: "/catalogue?category=Bedroom" },
   { name: "Living Room", label: "Living", tagline: "The heart of every home", image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=900&auto=format&fit=crop&q=80", href: "/catalogue?category=Living+Room" },
@@ -12,15 +28,13 @@ const rooms = [
   { name: "Outdoor Patio", label: "Outdoor", tagline: "Design without walls", image: "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=900&auto=format&fit=crop&q=80", href: "/catalogue?category=Outdoor" },
 ];
 
-const CARD_WIDTH = 340;
-const GAP = 20;
-const VISIBLE_DESKTOP = 4; // cards visible on desktop
+const GAP = 16;
 
-function RoomCard({ room, index }: { room: typeof rooms[0]; index: number }) {
+function RoomCard({ room, index, cardWidth, cardHeight }: { room: typeof rooms[0]; index: number; cardWidth: number; cardHeight: number }) {
   return (
     <div
       className="group relative shrink-0 overflow-hidden rounded-lg cursor-pointer shadow-lg"
-      style={{ width: CARD_WIDTH, height: 440 }}
+      style={{ width: cardWidth, height: cardHeight }}
     >
       <Link href={room.href} className="block w-full h-full relative">
         <img
@@ -53,6 +67,7 @@ export default function RoomInspiration() {
   const trackRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const { w: CARD_WIDTH, h: CARD_HEIGHT } = useCardSize();
 
   // Create extended array: [...rooms, ...rooms, ...rooms] for infinite illusion
   const extendedRooms = [...rooms, ...rooms, ...rooms];
@@ -105,14 +120,14 @@ export default function RoomInspiration() {
     <section className="py-24" style={{ backgroundColor: "hsl(var(--warm-cream))" }}>
       <div ref={ref}>
         <div className="container mx-auto px-6 md:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4 mb-8 sm:mb-12">
             <div>
-              <motion.div initial={{ opacity: 0, x: -16 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.5 }} className="flex items-center gap-3 mb-4">
+              <motion.div initial={{ opacity: 0, x: -16 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.5 }} className="flex items-center gap-3 mb-3 sm:mb-4">
                 <span className="h-px w-8" style={{ backgroundColor: "hsl(var(--orange))" }} />
                 <span className="font-body text-xs tracking-[0.25em] uppercase font-medium" style={{ color: "hsl(var(--orange))" }}>Inspiration</span>
               </motion.div>
-              <motion.h2 initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay: 0.1 }} className="font-display font-bold leading-tight" style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "hsl(var(--navy-deep))" }}>Room by Room</motion.h2>
-              <motion.p initial={{ opacity: 0, y: 10 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.2 }} className="font-body text-sm text-muted-foreground mt-2 max-w-sm">Every space tells a story. Discover furniture curated for each room in your home.</motion.p>
+              <motion.h2 initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay: 0.1 }} className="font-display font-bold leading-tight" style={{ fontSize: "clamp(1.8rem, 4vw, 3.5rem)", color: "hsl(var(--navy-deep))" }}>Room by Room</motion.h2>
+              <motion.p initial={{ opacity: 0, y: 10 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.2 }} className="font-body text-xs sm:text-sm text-muted-foreground mt-2 max-w-sm">Every space tells a story. Discover furniture curated for each room in your home.</motion.p>
             </div>
             <motion.div initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ delay: 0.4 }} className="hidden md:flex items-center gap-2 pb-1">
               <button onClick={() => slide("left")} className="w-11 h-11 rounded-full border flex items-center justify-center transition-all hover:bg-white hover:shadow-sm" style={{ borderColor: "hsl(var(--border))", color: "hsl(var(--navy-deep))" }} aria-label="Previous">
@@ -129,7 +144,7 @@ export default function RoomInspiration() {
         <div className="overflow-hidden">
           <div
             ref={trackRef}
-            className="flex py-2 px-6 md:px-[max(1.5rem,calc((100vw-1280px)/2+1.5rem))]"
+            className="flex py-2 px-4 sm:px-6 md:px-[max(1.5rem,calc((100vw-1280px)/2+1.5rem))]"
             style={{
               gap: GAP,
               transform: `translateX(${translateX}px)`,
@@ -138,7 +153,7 @@ export default function RoomInspiration() {
             onTransitionEnd={handleTransitionEnd}
           >
             {extendedRooms.map((room, i) => (
-              <RoomCard key={`room-${i}`} room={room} index={i} />
+              <RoomCard key={`room-${i}`} room={room} index={i} cardWidth={CARD_WIDTH} cardHeight={CARD_HEIGHT} />
             ))}
           </div>
         </div>

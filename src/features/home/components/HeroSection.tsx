@@ -3,16 +3,34 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useRef } from "react";
 
-const HERO_VIDEO = "https://videos.pexels.com/video-files/4812452/4812452-hd_1920_1080_25fps.mp4";
+const YOUTUBE_VIDEO_ID = "EfvZPYW_8nk";
 
 export default function HeroSection() {
   const ref = useRef<HTMLElement>(null);
 
   return (
     <section ref={ref} className="relative w-full overflow-hidden" style={{ height: "100svh", minHeight: 560, backgroundColor: "hsl(var(--navy-deep))" }}>
-      <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover" style={{ opacity: 0.55 }}>
-        <source src={HERO_VIDEO} type="video/mp4" />
-      </video>
+      {/* YouTube Background Video */}
+      <div className="absolute inset-0 pointer-events-none" style={{ overflow: "hidden" }}>
+        <iframe
+          src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&playsinline=1&enablejsapi=1&origin=${typeof window !== "undefined" ? window.location.origin : ""}`}
+          allow="autoplay; encrypted-media"
+          allowFullScreen
+          className="absolute border-0"
+          style={{
+            top: "50%",
+            left: "50%",
+            width: "120vw",
+            height: "120vh",
+            minWidth: "120vw",
+            minHeight: "120vh",
+            transform: "translate(-50%, -50%) scale(1.15)",
+            opacity: 0.55,
+            pointerEvents: "none",
+          }}
+          title="Hero background video"
+        />
+      </div>
       <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, hsl(var(--navy-deep)/0.3) 0%, hsl(var(--navy-deep)/0.65) 60%, hsl(var(--navy-deep)) 100%)" }} />
       <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
         <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }} className="font-body text-xs tracking-[0.3em] uppercase font-medium mb-6" style={{ color: "hsl(var(--orange))" }}>

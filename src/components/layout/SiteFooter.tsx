@@ -1,0 +1,114 @@
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { Facebook, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react";
+import { fadeUp, stagger } from "@/lib/animations";
+
+export default function SiteFooter() {
+  return (
+    <footer className="text-white/80 pt-16 pb-8" style={{ backgroundColor: "hsl(var(--navy-dark))" }}>
+      <div className="container mx-auto px-4">
+        <motion.div
+          variants={stagger(0, 0.1)}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.15 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/10"
+        >
+          <motion.div variants={fadeUp}>
+            <div className="flex items-center gap-2 mb-5">
+              <div className="w-8 h-8 rounded-sm flex items-center justify-center" style={{ backgroundColor: "hsl(var(--accent))" }}>
+                <span className="text-white font-display font-bold text-sm">D</span>
+              </div>
+              <div>
+                <span className="font-display text-white font-semibold text-xl block leading-none">DHT</span>
+                <span className="font-body text-white/40 text-xs tracking-widest uppercase">Outdoor Furniture</span>
+              </div>
+            </div>
+            <p className="font-body text-sm leading-relaxed text-white/60 mb-5">
+              Premium outdoor furniture manufacturer and supplier — crafting durable, weather-resistant pieces for hospitality, residential, and commercial outdoor spaces.
+            </p>
+            <div className="flex gap-3">
+              {[
+                { Icon: Instagram, href: "#" },
+                { Icon: Facebook, href: "#" },
+                { Icon: Linkedin, href: "#" },
+              ].map(({ Icon, href }, i) => (
+                <motion.a
+                  key={i}
+                  href={href}
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-9 h-9 rounded border border-white/20 flex items-center justify-center text-white/50 hover:text-white hover:border-white/50 transition-colors duration-200"
+                >
+                  <Icon size={16} />
+                </motion.a>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.div variants={fadeUp}>
+            <h4 className="font-display text-white font-semibold text-base mb-5">Quick Links</h4>
+            <ul className="space-y-3">
+              {[
+                { label: "Home", href: "/" },
+                { label: "About Us", href: "/about" },
+                { label: "Catalogue", href: "/catalogue" },
+                { label: "Contact", href: "/contact" },
+              ].map(({ label, href }) => (
+                <li key={href}>
+                  <Link href={href} className="font-body text-sm text-white/60 hover:text-white transition-colors duration-200 group flex items-center gap-1">
+                    <span className="inline-block w-0 group-hover:w-3 h-px transition-all duration-200 mr-0 group-hover:mr-1" style={{ backgroundColor: "hsl(var(--orange))" }} />
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+
+          <motion.div variants={fadeUp}>
+            <h4 className="font-display text-white font-semibold text-base mb-5">Collections</h4>
+            <ul className="space-y-3">
+              {["Bedroom", "Dining Room", "Living Room", "Home Office", "Outdoor"].map((cat) => (
+                <li key={cat}>
+                  <Link href={`/catalogue?category=${encodeURIComponent(cat)}`} className="font-body text-sm text-white/60 hover:text-white transition-colors duration-200 group flex items-center gap-1">
+                    <span className="inline-block w-0 group-hover:w-3 h-px transition-all duration-200 mr-0 group-hover:mr-1" style={{ backgroundColor: "hsl(var(--orange))" }} />
+                    {cat}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+
+          <motion.div variants={fadeUp}>
+            <h4 className="font-display text-white font-semibold text-base mb-5">Contact</h4>
+            <ul className="space-y-4">
+              <li className="flex items-start gap-3">
+                <MapPin size={16} className="mt-0.5 flex-shrink-0" style={{ color: "hsl(var(--accent))" }} />
+                <span className="font-body text-sm text-white/60">12 Commerce Blvd, Furniture District, Jakarta 12345</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone size={16} style={{ color: "hsl(var(--accent))" }} className="flex-shrink-0" />
+                <a href="tel:+6221234567890" className="font-body text-sm text-white/60 hover:text-white transition-colors">+62 21 234 567 890</a>
+              </li>
+              <li className="flex items-center gap-3">
+                <Mail size={16} style={{ color: "hsl(var(--accent))" }} className="flex-shrink-0" />
+                <a href="mailto:info@dht-furniture.com" className="font-body text-sm text-white/60 hover:text-white transition-colors">info@dht-furniture.com</a>
+              </li>
+            </ul>
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="pt-6 flex flex-col md:flex-row items-center justify-between gap-3"
+        >
+          <p className="font-body text-xs text-white/40">© 2025 DHT Outdoor Furniture Production. All rights reserved.</p>
+          <p className="font-body text-xs text-white/30">Interior Manufacturer & Supplier</p>
+        </motion.div>
+      </div>
+    </footer>
+  );
+}

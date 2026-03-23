@@ -21,7 +21,7 @@ const filterGroups = [
 /* ── Hero Slider ── */
 function HeroSlider({ products, onQuickView }: { products: Product[]; onQuickView: (p: Product) => void }) {
   const [current, setCurrent] = useState(0);
-  const timerRef = useRef<ReturnType<typeof setInterval>>();
+  const timerRef = useRef<ReturnType<typeof setInterval>>(undefined);
   const featured = products.slice(0, 5);
 
   const goTo = useCallback((i: number) => setCurrent((i + featured.length) % featured.length), [featured.length]);
@@ -235,7 +235,7 @@ export default function CataloguePage() {
               {activeCount > 0 && (
                 <div className="flex flex-wrap gap-2 mb-5">
                   {Object.entries(filters).map(([key, values]) =>
-                    values.map((val) => (
+                    (values as string[]).map((val: string) => (
                       <button key={`${key}-${val}`} onClick={() => toggleFilter(key as keyof FilterState, val)} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm bg-white border border-border font-body text-xs font-medium text-foreground hover:border-red-300 hover:text-red-500 transition-colors group">
                         {val} <X size={12} className="text-muted-foreground group-hover:text-red-500" />
                       </button>

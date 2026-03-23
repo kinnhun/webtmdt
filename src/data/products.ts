@@ -1,6 +1,6 @@
 import type { Product } from "@/domains/product/product.types";
 
-export const productsData: Omit<Product, "id"> & { id: string }[] = [
+export const productsData: Product[] = [
   {
     id: "p001",
     name: "Oslo Bed Frame",

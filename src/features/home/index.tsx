@@ -5,7 +5,7 @@ import CategoryShowcase from "./components/CategoryShowcase";
 import FeaturedProducts from "./components/FeaturedProducts";
 import WhyChooseUs from "./components/WhyChooseUs";
 import MaterialsSection from "./components/MaterialsSection";
-import RoomInspiration from "./components/RoomInspiration";
+import BlogPreview from "./components/BlogPreview";
 import Testimonials from "./components/Testimonials";
 import CtaBanner from "./components/CtaBanner";
 
@@ -19,7 +19,7 @@ export default function HomeContainer() {
       <FeaturedProducts />
       <WhyChooseUs />
       <MaterialsSection />
-      <RoomInspiration />
+      <BlogPreview />
       <Testimonials />
       <CtaBanner />
     </>

@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Search, X } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
 import { productsData } from "@/data/products";
 
 interface SearchOverlayProps {
@@ -12,6 +13,7 @@ interface SearchOverlayProps {
 export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
   const [query, setQuery] = useState("");
   const router = useRouter();
+  const { t } = useTranslation();
 
   const results = query.length >= 2
     ? productsData.filter(
@@ -38,7 +40,7 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
               <div className="flex items-center gap-4">
                 <Search size={20} className="text-muted-foreground flex-shrink-0" />
                 <input
-                  autoFocus type="text" placeholder="Search by product name or code..."
+                  autoFocus type="text" placeholder={t("search.placeholder")}
                   value={query} onChange={(e) => setQuery(e.target.value)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter") { handleSelect(); }
@@ -66,7 +68,7 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
               )}
 
               {query.length >= 2 && results.length === 0 && (
-                <p className="mt-4 border-t border-border pt-4 font-body text-sm text-muted-foreground">No products found for &ldquo;{query}&rdquo;</p>
+                <p className="mt-4 border-t border-border pt-4 font-body text-sm text-muted-foreground">{t("search.noResults", { query })}</p>
               )}
             </div>
           </motion.div>

@@ -4,22 +4,16 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 import Link from "next/link";
 import { Search, SlidersHorizontal, X, ChevronLeft, ChevronRight, ArrowUpRight, Eye } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import ProductCard from "@/components/ProductCard";
 import QuickViewModal from "@/components/QuickViewModal";
 import { productsData } from "@/data/products";
 import { CATEGORIES, MATERIALS, COLORS, SIZES, STYLES } from "@/domains/product/product.types";
 import type { Product, FilterState } from "@/domains/product/product.types";
 
-const filterGroups = [
-  { key: "category" as const, label: "Category", options: CATEGORIES },
-  { key: "material" as const, label: "Material", options: MATERIALS },
-  { key: "color" as const, label: "Color", options: COLORS },
-  { key: "size" as const, label: "Size", options: SIZES },
-  { key: "style" as const, label: "Style", options: STYLES },
-];
-
 /* ── Hero Slider ── */
 function HeroSlider({ products, onQuickView }: { products: Product[]; onQuickView: (p: Product) => void }) {
+  const { t } = useTranslation();
   const [current, setCurrent] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval>>(undefined);
   const featured = products.slice(0, 5);
@@ -52,17 +46,16 @@ function HeroSlider({ products, onQuickView }: { products: Product[]; onQuickVie
               <p className="font-body text-white/40 text-sm mb-6">{p.style}</p>
               <div className="flex gap-3">
                 <button onClick={() => onQuickView(p)} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-sm font-body font-semibold text-sm text-white hover:opacity-90 transition-all" style={{ backgroundColor: "hsl(var(--orange))" }}>
-                  <Eye size={15} /> Quick View
+                  <Eye size={15} /> {t("catalogue.quickView")}
                 </button>
                 <Link href={`/contact?product=${encodeURIComponent(p.name)}&code=${p.code}`} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-sm font-body font-semibold text-sm text-white/70 border border-white/20 hover:bg-white/10 transition-all">
-                  Inquire <ArrowUpRight size={14} />
+                  {t("catalogue.inquire")} <ArrowUpRight size={14} />
                 </Link>
               </div>
             </motion.div>
           </AnimatePresence>
         </div>
       </div>
-      {/* Nav */}
       <div className="absolute bottom-5 right-6 flex items-center gap-3 z-10">
         <button onClick={() => goTo(current - 1)} className="w-9 h-9 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 text-white transition-all"><ChevronLeft size={18} /></button>
         <div className="flex gap-1.5">
@@ -81,14 +74,22 @@ function SidebarFilter({ filters, toggleFilter, clearFilters, activeCount }: {
   clearFilters: () => void;
   activeCount: number;
 }) {
+  const { t } = useTranslation();
+  const filterGroups = [
+    { key: "category" as const, label: t("catalogue.category"), options: CATEGORIES },
+    { key: "material" as const, label: t("catalogue.material"), options: MATERIALS },
+    { key: "color" as const, label: t("catalogue.color"), options: COLORS },
+    { key: "size" as const, label: t("catalogue.size"), options: SIZES },
+    { key: "style" as const, label: t("catalogue.style"), options: STYLES },
+  ];
   const [expanded, setExpanded] = useState<Record<string, boolean>>({ category: true, material: true, color: false, size: false, style: false });
 
   return (
     <aside className="w-full space-y-1">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-display font-semibold text-foreground text-lg">Filters</h3>
+        <h3 className="font-display font-semibold text-foreground text-lg">{t("catalogue.filters")}</h3>
         {activeCount > 0 && (
-          <button onClick={clearFilters} className="font-body text-xs font-medium hover:underline" style={{ color: "hsl(var(--orange))" }}>Clear all ({activeCount})</button>
+          <button onClick={clearFilters} className="font-body text-xs font-medium hover:underline" style={{ color: "hsl(var(--orange))" }}>{t("catalogue.clearAll")} ({activeCount})</button>
         )}
       </div>
       {filterGroups.map(({ key, label, options }) => (
@@ -126,10 +127,19 @@ function SidebarFilter({ filters, toggleFilter, clearFilters, activeCount }: {
 /* ── Main Page ── */
 export default function CataloguePage() {
   const router = useRouter();
+  const { t } = useTranslation();
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState<FilterState>({ category: [], material: [], color: [], size: [], style: [] });
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+
+  const filterGroups = [
+    { key: "category" as const, label: t("catalogue.category"), options: CATEGORIES },
+    { key: "material" as const, label: t("catalogue.material"), options: MATERIALS },
+    { key: "color" as const, label: t("catalogue.color"), options: COLORS },
+    { key: "size" as const, label: t("catalogue.size"), options: SIZES },
+    { key: "style" as const, label: t("catalogue.style"), options: STYLES },
+  ];
 
   useEffect(() => {
     const q = router.query;
@@ -173,29 +183,26 @@ export default function CataloguePage() {
   return (
     <>
       <Head>
-        <title>Catalogue — DHT Outdoor Furniture</title>
-        <meta name="description" content="Browse our full collection of premium outdoor furniture." />
+        <title>{t("catalogue.seo.title")}</title>
+        <meta name="description" content={t("catalogue.seo.description")} />
       </Head>
 
       <div className="pt-[64px]" style={{ backgroundColor: "hsl(var(--warm-cream))", minHeight: "100vh" }}>
-        {/* Hero Slider — desktop only, full-width right below header */}
         <div className="hidden lg:block">
           <HeroSlider products={filtered} onQuickView={setQuickViewProduct} />
         </div>
 
         <div className="container mx-auto px-6 py-8">
-          {/* Search Bar + Mobile Filter Button */}
           <div className="flex gap-3 mb-6">
             <div className="relative flex-1">
               <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
-              <input type="text" placeholder="Search by name, code, or category..." value={search} onChange={(e) => setSearch(e.target.value)} className="w-full pl-10 pr-4 py-3 rounded-sm bg-white border border-border font-body text-sm outline-none focus:ring-2 transition-shadow" style={{ "--tw-ring-color": "hsl(var(--orange)/0.3)" } as React.CSSProperties} />
+              <input type="text" placeholder={t("catalogue.searchPlaceholder")} value={search} onChange={(e) => setSearch(e.target.value)} className="w-full pl-10 pr-4 py-3 rounded-sm bg-white border border-border font-body text-sm outline-none focus:ring-2 transition-shadow" style={{ "--tw-ring-color": "hsl(var(--orange)/0.3)" } as React.CSSProperties} />
             </div>
             <button onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)} className="lg:hidden flex items-center gap-2 px-5 py-3 rounded-sm bg-white border border-border font-body text-sm font-medium hover:bg-muted transition-colors">
-              <SlidersHorizontal size={15} /> Filters {activeCount > 0 && <span className="w-5 h-5 rounded-full text-xs text-white flex items-center justify-center" style={{ backgroundColor: "hsl(var(--orange))" }}>{activeCount}</span>}
+              <SlidersHorizontal size={15} /> {t("catalogue.filters")} {activeCount > 0 && <span className="w-5 h-5 rounded-full text-xs text-white flex items-center justify-center" style={{ backgroundColor: "hsl(var(--orange))" }}>{activeCount}</span>}
             </button>
           </div>
 
-          {/* Mobile filters dropdown */}
           <AnimatePresence>
             {mobileFiltersOpen && (
               <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.3 }} className="overflow-hidden mb-6 lg:hidden">
@@ -220,18 +227,14 @@ export default function CataloguePage() {
             )}
           </AnimatePresence>
 
-          {/* Desktop: Sidebar + Grid  |  Mobile: Grid only */}
           <div className="flex gap-8">
-            {/* Sidebar — desktop only */}
             <div className="hidden lg:block w-56 shrink-0">
               <div className="sticky top-24 bg-white rounded-sm border border-border p-5 max-h-[calc(100vh-7rem)] overflow-y-auto">
                 <SidebarFilter filters={filters} toggleFilter={toggleFilter} clearFilters={clearFilters} activeCount={activeCount} />
               </div>
             </div>
 
-            {/* Products Grid */}
             <div className="flex-1 min-w-0">
-              {/* Active filter chips */}
               {activeCount > 0 && (
                 <div className="flex flex-wrap gap-2 mb-5">
                   {Object.entries(filters).map(([key, values]) =>
@@ -241,7 +244,7 @@ export default function CataloguePage() {
                       </button>
                     ))
                   )}
-                  <button onClick={clearFilters} className="inline-flex items-center gap-1 px-3 py-1.5 font-body text-xs font-medium text-muted-foreground hover:text-foreground transition-colors">Clear all</button>
+                  <button onClick={clearFilters} className="inline-flex items-center gap-1 px-3 py-1.5 font-body text-xs font-medium text-muted-foreground hover:text-foreground transition-colors">{t("catalogue.clearAll")}</button>
                 </div>
               )}
 
@@ -251,8 +254,8 @@ export default function CataloguePage() {
                 </div>
               ) : (
                 <div className="text-center py-20">
-                  <p className="font-body text-muted-foreground text-lg mb-2">No products match your filters</p>
-                  <button onClick={clearFilters} className="font-body text-sm font-medium" style={{ color: "hsl(var(--orange))" }}>Clear all filters</button>
+                  <p className="font-body text-muted-foreground text-lg mb-2">{t("catalogue.noResults")}</p>
+                  <button onClick={clearFilters} className="font-body text-sm font-medium" style={{ color: "hsl(var(--orange))" }}>{t("catalogue.clearAllFilters")}</button>
                 </div>
               )}
             </div>

@@ -1,79 +1,60 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ArrowRight } from "lucide-react";
 import { useInView } from "@/hooks/useInView";
-import { fadeUp, fadeLeft, stagger, cardReveal } from "@/lib/animations";
+import { useTranslation } from "react-i18next";
 
-const categories = [
-  { name: "Bedroom", tagline: "Rest in elegance", count: "48 products", image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=900&auto=format&fit=crop", href: "/catalogue?category=Bedroom" },
-  { name: "Dining Room", tagline: "Gather, dine, celebrate", count: "32 products", image: "https://images.unsplash.com/photo-1617806118233-18e1de247200?w=900&auto=format&fit=crop", href: "/catalogue?category=Dining+Room" },
-  { name: "Living Room", tagline: "Where comfort meets design", count: "56 products", image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=900&auto=format&fit=crop", href: "/catalogue?category=Living+Room" },
-  { name: "Home Office", tagline: "Work with purpose", count: "24 products", image: "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=900&auto=format&fit=crop", href: "/catalogue?category=Home+Office" },
-  { name: "Outdoor", tagline: "Extend your living space", count: "18 products", image: "https://images.unsplash.com/photo-1520587337572-92e75e9b6c0b?w=900&auto=format&fit=crop", href: "/catalogue?category=Outdoor" },
-];
-
-function CategoryCard({ cat, index }: { cat: (typeof categories)[0]; index: number }) {
-  return (
-    <motion.div {...cardReveal(index)} className="h-full">
-      <Link href={cat.href} className="group block relative overflow-hidden rounded-sm h-full">
-        <img src={cat.image} alt={cat.name} className="w-full h-full object-cover group-hover:scale-[1.05] transition-transform duration-700 ease-out" />
-        <div className="absolute inset-0 transition-opacity duration-300 group-hover:opacity-90" style={{ background: "linear-gradient(to top, hsl(var(--navy-deep)) 0%, hsl(var(--navy-deep)/0.5) 40%, transparent 80%)" }} />
-        <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5">
-          <div className="flex items-end justify-between gap-2">
-            <div>
-              <p className="font-body text-[10px] sm:text-xs text-white/50 mb-1 uppercase tracking-widest">{cat.tagline}</p>
-              <h3 className="font-display font-bold text-white text-base sm:text-xl leading-tight">{cat.name}</h3>
-            </div>
-            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-sm flex items-center justify-center shrink-0 transform translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300" style={{ backgroundColor: "hsl(var(--orange))" }}>
-              <ArrowUpRight size={14} className="text-white" />
-            </div>
-          </div>
-          <div className="h-px mt-2 sm:mt-3 mb-1 sm:mb-2 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-          <p className="font-body text-[10px] sm:text-xs text-white/40 transform translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">{cat.count}</p>
-        </div>
-      </Link>
-    </motion.div>
-  );
-}
+const fItem = (i: number) => ({ initial: { opacity: 0, y: 24 }, whileInView: { opacity: 1, y: 0 }, viewport: { once: true, amount: 0.1 }, transition: { duration: 0.6, delay: 0.15 + i * 0.1, ease: [0.16, 1, 0.3, 1] as [number, number, number, number] } });
 
 export default function CategoryShowcase() {
   const { ref, inView } = useInView();
-  const vis = inView ? "show" : "hidden";
+  const { t } = useTranslation();
+
+  const categories = [
+    { key: "bedroom", image: "https://images.unsplash.com/photo-1540518614846-7eded433c457?w=800&auto=format&fit=crop&q=80", href: "/catalogue?category=Bedroom" },
+    { key: "diningRoom", image: "https://images.unsplash.com/photo-1617806118233-18e1de247200?w=800&auto=format&fit=crop&q=80", href: "/catalogue?category=Dining+Room" },
+    { key: "livingRoom", image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&auto=format&fit=crop&q=80", href: "/catalogue?category=Living+Room" },
+    { key: "homeOffice", image: "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=800&auto=format&fit=crop&q=80", href: "/catalogue?category=Home+Office" },
+    { key: "outdoor", image: "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800&auto=format&fit=crop&q=80", href: "/catalogue?category=Outdoor" },
+  ];
 
   return (
     <section className="py-16 sm:py-24" style={{ backgroundColor: "hsl(var(--warm-cream))" }}>
       <div ref={ref} className="container mx-auto px-4 sm:px-6 md:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-8 sm:mb-12">
-          <motion.div variants={stagger(0, 0.1)} initial="hidden" animate={vis}>
-            <motion.div variants={fadeUp} className="flex items-center gap-3 mb-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 sm:mb-12">
+          <div>
+            <motion.div initial={{ opacity: 0, x: -16 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.5 }} className="flex items-center gap-3 mb-4">
               <span className="h-px w-8" style={{ backgroundColor: "hsl(var(--orange))" }} />
-              <span className="font-body text-xs tracking-[0.25em] uppercase font-medium" style={{ color: "hsl(var(--orange))" }}>Collections</span>
+              <span className="font-body text-xs tracking-[0.25em] uppercase font-medium" style={{ color: "hsl(var(--orange))" }}>{t("home.categories.label")}</span>
             </motion.div>
-            <motion.h2 variants={fadeUp} className="font-display font-bold text-foreground leading-tight" style={{ fontSize: "clamp(1.8rem, 4vw, 3.5rem)" }}>
-              Every Room,<br />Perfectly Furnished
+            <motion.h2 initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay: 0.1 }} className="font-display font-bold leading-tight" style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)", color: "hsl(var(--navy-deep))" }}>
+              {t("home.categories.heading1")}<br />{t("home.categories.heading2")}
             </motion.h2>
-          </motion.div>
-          <motion.div variants={fadeLeft} initial="hidden" animate={vis} transition={{ delay: 0.3 }}>
-            <Link href="/catalogue" className="inline-flex items-center gap-2 font-body font-semibold text-sm group" style={{ color: "hsl(var(--navy))" }}>
-              View All
-              <span className="w-6 h-px transition-all duration-300 group-hover:w-12" style={{ backgroundColor: "hsl(var(--navy))", display: "inline-block" }} />
-            </Link>
+          </div>
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.3 }} className="shrink-0">
+            <Link href="/catalogue" className="inline-flex items-center gap-2 px-6 py-3 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90" style={{ backgroundColor: "hsl(var(--navy))" }}>{t("home.categories.viewAll")} <ArrowRight size={15} /></Link>
           </motion.div>
         </div>
-        {/* Mobile: 2-col simple grid, Tablet+: complex bento grid */}
-        <div className="hidden md:grid grid-cols-12 grid-rows-2 gap-3 md:gap-4" style={{ height: "clamp(520px, 70vh, 780px)" }}>
-          <div className="col-span-4 row-span-2"><CategoryCard cat={categories[0]} index={0} /></div>
-          <div className="col-span-4 row-span-1"><CategoryCard cat={categories[1]} index={1} /></div>
-          <div className="col-span-4 row-span-1"><CategoryCard cat={categories[2]} index={2} /></div>
-          <div className="col-span-4 row-span-1"><CategoryCard cat={categories[3]} index={3} /></div>
-          <div className="col-span-4 row-span-1"><CategoryCard cat={categories[4]} index={4} /></div>
-        </div>
-        {/* Mobile grid */}
-        <div className="grid grid-cols-2 gap-3 md:hidden">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
           {categories.map((cat, i) => (
-            <div key={cat.name} className={i === 0 ? "col-span-2 h-52" : "h-44"}>
-              <CategoryCard cat={cat} index={i} />
-            </div>
+            <motion.div key={cat.key} {...fItem(i)}>
+              <Link href={cat.href} className="group block relative overflow-hidden rounded-sm aspect-[3/4]">
+                <img src={cat.image} alt={t(`home.categories.${cat.key}.name`)} className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.06] transition-transform duration-700 ease-out" loading="lazy" />
+                <div className="absolute inset-0" style={{ background: "linear-gradient(to top, hsl(var(--navy-deep)/0.85) 0%, hsl(var(--navy-deep)/0.1) 50%, transparent 100%)" }} />
+                <div className="absolute inset-x-0 bottom-0 p-4">
+                  <p className="font-body text-[10px] tracking-wider uppercase mb-1" style={{ color: "hsl(var(--orange))" }}>{t(`home.categories.${cat.key}.tagline`)}</p>
+                  <div className="flex items-end justify-between gap-2">
+                    <div>
+                      <h3 className="font-display font-bold text-white text-lg leading-tight">{t(`home.categories.${cat.key}.name`)}</h3>
+                      <p className="font-body text-xs text-white/40 mt-0.5">{t(`home.categories.${cat.key}.count`)}</p>
+                    </div>
+                    <div className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300" style={{ backgroundColor: "hsl(var(--orange))" }}>
+                      <ArrowUpRight size={12} className="text-white" />
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
           ))}
         </div>
       </div>

@@ -1,0 +1,278 @@
+{
+  "nav": {
+    "home": "Trang chủ",
+    "about": "Giới thiệu",
+    "catalogue": "Danh mục",
+    "contact": "Liên hệ",
+    "getQuote": "Báo giá",
+    "whatsapp": "WhatsApp",
+    "outdoorFurniture": "Nội thất ngoài trời",
+    "search": "Tìm kiếm"
+  },
+  "footer": {
+    "description": "Nhà sản xuất và cung cấp nội thất ngoài trời cao cấp — chế tác các sản phẩm bền bỉ, chống chịu thời tiết cho khách sạn, nhà ở và không gian thương mại.",
+    "quickLinks": "Liên kết nhanh",
+    "collections": "Bộ sưu tập",
+    "contact": "Liên hệ",
+    "copyright": "© 2025 DHT Outdoor Furniture Production. Bảo lưu mọi quyền.",
+    "tagline": "Nhà sản xuất & Cung cấp nội thất"
+  },
+  "home": {
+    "seo": {
+      "title": "DHT Outdoor Furniture — Nhà sản xuất & Cung cấp nội thất cao cấp",
+      "description": "DHT Outdoor Furniture Production — nhà sản xuất nội thất ngoài trời & trong nhà cao cấp. Gỗ teak, gỗ nguyên khối, đặt hàng theo yêu cầu. Chứng nhận ISO. Xuất khẩu 25+ quốc gia."
+    },
+    "hero": {
+      "badge": "DHT · Sản xuất nội thất ngoài trời",
+      "title1": "Chế tác cho",
+      "title2": "Ngoài trời",
+      "exploreProducts": "Khám phá sản phẩm",
+      "getQuote": "Nhận báo giá",
+      "stats": {
+        "yearsExperience": "Năm kinh nghiệm",
+        "unitsMonth": "Sản phẩm / Tháng",
+        "products": "Sản phẩm",
+        "exportCountries": "Quốc gia xuất khẩu"
+      }
+    },
+    "intro": {
+      "label": "Chúng tôi là ai",
+      "heading1": "Xây dựng trên nghề thủ công.",
+      "heading2": "Hướng tới",
+      "heading3": "Chất lượng.",
+      "paragraph1": "DHT Outdoor Furniture Production là nhà sản xuất nội thất ngoài trời cao cấp với cơ sở sản xuất 5.000m² tại Jakarta. Hơn 15 năm hợp tác với các thương hiệu khách sạn, resort và nhà thiết kế trên 25+ quốc gia.",
+      "paragraph2": "Mỗi sản phẩm — từ bộ bàn ghế teak đến bộ sofa chống thời tiết — được chế tác bởi 400+ nghệ nhân lành nghề, trải qua kiểm soát chất lượng đa tầng.",
+      "ourStory": "Câu chuyện của chúng tôi",
+      "isoCertified": "Chứng nhận 9001:2015",
+      "location": "Jakarta, Indonesia",
+      "statsYears": "Năm hoạt động",
+      "statsUnits": "Sản phẩm / Tháng",
+      "statsCraftspeople": "Nghệ nhân",
+      "statsExport": "Quốc gia xuất khẩu"
+    },
+    "categories": {
+      "label": "Bộ sưu tập",
+      "heading1": "Mỗi căn phòng,",
+      "heading2": "Hoàn hảo từng chi tiết",
+      "viewAll": "Xem tất cả",
+      "bedroom": { "name": "Phòng ngủ", "tagline": "Nghỉ ngơi thanh lịch", "count": "48 sản phẩm" },
+      "diningRoom": { "name": "Phòng ăn", "tagline": "Sum họp, tiệc tùng, kỷ niệm", "count": "32 sản phẩm" },
+      "livingRoom": { "name": "Phòng khách", "tagline": "Nơi tiện nghi gặp thiết kế", "count": "56 sản phẩm" },
+      "homeOffice": { "name": "Văn phòng tại nhà", "tagline": "Làm việc có mục đích", "count": "24 sản phẩm" },
+      "outdoor": { "name": "Ngoài trời", "tagline": "Mở rộng không gian sống", "count": "18 sản phẩm" }
+    },
+    "featured": {
+      "label": "Sản phẩm chọn lọc",
+      "heading": "Sản phẩm nổi bật",
+      "description": "Được chọn lọc từ các bộ sưu tập mới nhất — mỗi sản phẩm được chế tác tỉ mỉ và thiết kế để nâng tầm mọi không gian.",
+      "fullCatalogue": "Toàn bộ danh mục",
+      "seeAllProducts": "Xem tất cả sản phẩm",
+      "noProducts": "Chưa có sản phẩm nổi bật trong danh mục này.",
+      "new": "Mới",
+      "inquire": "Hỏi giá",
+      "filterAll": "Tất cả"
+    },
+    "whyUs": {
+      "label": "Tại sao chọn DHT",
+      "heading": "Đối tác sản xuất đáng tin cậy",
+      "description": "Từ bản phác thảo đến giao hàng container — chúng tôi quản lý mọi bước với sự chính xác, minh bạch và tận tâm.",
+      "points": [
+        "Sản xuất nội bộ: không thuê ngoài, kiểm soát chất lượng toàn diện",
+        "Kích thước, hoàn thiện tùy chỉnh và OEM / ODM",
+        "Năng lực ổn định cho các dự án khách sạn & phát triển lớn",
+        "Đội xuất khẩu giàu kinh nghiệm, tỷ lệ giao hàng đúng hạn cao",
+        "Nguyên liệu chứng nhận FSC, khai thác bền vững"
+      ],
+      "requestQuote": "Yêu cầu báo giá",
+      "viewCatalogue": "Xem danh mục"
+    },
+    "materials": {
+      "label": "Chất liệu",
+      "heading1": "Chế tác từ",
+      "heading2": "Tinh hoa thiên nhiên",
+      "description": "Chúng tôi chỉ sử dụng nguyên liệu tự nhiên cao cấp — mỗi loại được chọn lựa vì tính toàn vẹn cấu trúc, vẻ đẹp ấm áp và độ bền lâu dài. Gỗ chứng nhận FSC, khai thác bền vững.",
+      "solidOak": { "name": "Gỗ sồi nguyên khối", "desc": "Vân thẳng, tông mật ong ấm áp, độ bền vượt trội" },
+      "walnutWood": { "name": "Gỗ óc chó", "desc": "Sắc nâu chocolate đậm, kết cấu mịn, ấm áp phong cách mid-century" },
+      "premiumTeak": { "name": "Gỗ teak cao cấp", "desc": "Dầu tự nhiên, chống chịu mọi thời tiết, vẻ đẹp nâu vàng" },
+      "linenVelvet": { "name": "Vải lanh & Nhung", "desc": "Vải bọc chọn lọc với bảng màu vượt thời gian" }
+    },
+    "rooms": {
+      "label": "Cảm hứng",
+      "heading": "Từng căn phòng",
+      "description": "Mỗi không gian kể một câu chuyện. Khám phá nội thất được chọn lọc cho từng căn phòng trong ngôi nhà bạn.",
+      "masterBedroom": { "name": "Phòng ngủ chính", "label": "Phòng ngủ", "tagline": "Nơi nghỉ ngơi trở thành nghi thức" },
+      "livingRoom": { "name": "Phòng khách", "label": "Phòng khách", "tagline": "Trái tim của mọi ngôi nhà" },
+      "familyDining": { "name": "Phòng ăn gia đình", "label": "Phòng ăn", "tagline": "Chế tác cho những khoảnh khắc chia sẻ" },
+      "homeOffice": { "name": "Văn phòng tại nhà", "label": "Văn phòng", "tagline": "Tập trung gặp phong cách" },
+      "outdoorPatio": { "name": "Sân ngoài trời", "label": "Ngoài trời", "tagline": "Thiết kế không giới hạn" }
+    },
+    "testimonials": {
+      "label": "Câu chuyện khách hàng",
+      "heading": "Được tin tưởng bởi các nhà thiết kế",
+      "quotes": [
+        {
+          "quote": "DHT đã giao đúng hạn 200 sản phẩm với chất lượng hoàn thiện xuất sắc. Chuyên nghiệp và phản hồi nhanh chóng.",
+          "name": "James Lim",
+          "role": "Nhà thiết kế nội thất, Singapore",
+          "project": "Căn hộ 200 đơn vị"
+        },
+        {
+          "quote": "Chúng tôi đã hợp tác với DHT cho ba dự án khách sạn. Chất lượng ổn định và hậu cần thuận lợi.",
+          "name": "Sophie Tan",
+          "role": "Giám đốc mua hàng, KL",
+          "project": "3x Trang bị Khách sạn"
+        },
+        {
+          "quote": "Bộ phòng ngủ đặt riêng vượt xa kỳ vọng. Tay nghề thủ công thật sự với giá cạnh tranh.",
+          "name": "Marco Rossi",
+          "role": "Chủ đầu tư, Bali",
+          "project": "Biệt thự sang trọng"
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Sẵn sàng trang bị không gian của bạn?",
+      "description": "Liên hệ đội ngũ chúng tôi để nhận báo giá tùy chỉnh, đặt hàng số lượng lớn và tư vấn dự án. Giao hàng toàn cầu.",
+      "sendInquiry": "Gửi yêu cầu",
+      "browseCatalogue": "Xem danh mục"
+    }
+  },
+  "about": {
+    "seo": {
+      "title": "Giới thiệu — DHT Outdoor Furniture",
+      "description": "Tìm hiểu về DHT Outdoor Furniture — hơn 15 năm xuất sắc trong sản xuất nội thất."
+    },
+    "hero": {
+      "title": "Về DHT",
+      "subtitle": "Nhà sản xuất nội thất ngoài trời cao cấp. Chế tác các sản phẩm bền bỉ, chống thời tiết từ năm 2008."
+    },
+    "story": {
+      "label": "Câu chuyện",
+      "heading": "Từ xưởng nhỏ đến nhà máy đẳng cấp thế giới",
+      "paragraph1": "DHT Outdoor Furniture Production bắt đầu vào năm 2008 như một xưởng nhỏ tại Jakarta với chỉ 12 nghệ nhân và niềm đam mê chất lượng.",
+      "paragraph2": "Ngày nay, chúng tôi vận hành cơ sở sản xuất hiện đại 5.000m² với 400+ nghệ nhân lành nghề, xuất khẩu đến 25+ quốc gia. Chứng nhận ISO 9001:2015 phản ánh cam kết của chúng tôi về chất lượng nhất quán.",
+      "paragraph3": "Chúng tôi chuyên về gỗ teak, gỗ nguyên khối và vật liệu chống thời tiết — chế tác nội thất cho khách sạn, resort, nhà hàng và biệt thự cao cấp trên toàn thế giới."
+    },
+    "values": {
+      "label": "Giá trị",
+      "heading": "Tại sao chọn chúng tôi",
+      "qualityFirst": { "title": "Chất lượng trên hết", "desc": "Chứng nhận ISO 9001:2015. Kiểm soát chất lượng đa tầng trên mỗi sản phẩm." },
+      "craftspeople": { "title": "400+ Nghệ nhân", "desc": "Nghệ nhân lành nghề với nhiều thế hệ kinh nghiệm sản xuất nội thất." },
+      "globalExport": { "title": "Xuất khẩu toàn cầu", "desc": "Vận chuyển đáng tin cậy đến 25+ quốc gia với đầy đủ chứng từ." },
+      "warranty": { "title": "Bảo hành", "desc": "Bảo hành cấu trúc 5 năm cho tất cả sản phẩm." },
+      "customOem": { "title": "OEM/ODM tùy chỉnh", "desc": "Thiết kế, hoàn thiện và thương hiệu tùy chỉnh cho dự án của bạn." },
+      "sustainable": { "title": "Bền vững", "desc": "Gỗ chứng nhận FSC. Quy trình hoàn thiện thân thiện môi trường." }
+    },
+    "timeline": {
+      "label": "Hành trình",
+      "heading": "Dòng thời gian",
+      "items": [
+        { "year": "2008", "title": "Thành lập", "desc": "Bắt đầu như một xưởng nhỏ tại Jakarta với 12 nghệ nhân." },
+        { "year": "2012", "title": "Chứng nhận ISO", "desc": "Đạt chứng nhận ISO 9001. Mở rộng lên 50 nhân viên." },
+        { "year": "2016", "title": "Mở rộng xuất khẩu", "desc": "Container đầu tiên xuất đi Singapore, Úc và Châu Âu." },
+        { "year": "2020", "title": "Nhà máy mới", "desc": "Khai trương cơ sở sản xuất 5.000m² với máy móc hiện đại." },
+        { "year": "2024", "title": "25+ Quốc gia", "desc": "Phục vụ các dự án khách sạn và nhà ở trên toàn thế giới." }
+      ]
+    },
+    "cta": {
+      "heading": "Sẵn sàng hợp tác?",
+      "button": "Liên hệ"
+    }
+  },
+  "catalogue": {
+    "seo": {
+      "title": "Danh mục — DHT Outdoor Furniture",
+      "description": "Khám phá bộ sưu tập đầy đủ nội thất ngoài trời cao cấp."
+    },
+    "searchPlaceholder": "Tìm theo tên, mã hoặc danh mục...",
+    "filters": "Bộ lọc",
+    "clearAll": "Xóa tất cả",
+    "category": "Danh mục",
+    "material": "Chất liệu",
+    "color": "Màu sắc",
+    "size": "Kích thước",
+    "style": "Phong cách",
+    "noResults": "Không có sản phẩm phù hợp với bộ lọc",
+    "clearAllFilters": "Xóa tất cả bộ lọc",
+    "quickView": "Xem nhanh",
+    "inquire": "Hỏi giá"
+  },
+  "contact": {
+    "seo": {
+      "title": "Liên hệ — DHT Outdoor Furniture",
+      "description": "Liên hệ để nhận báo giá, đặt hàng tùy chỉnh và yêu cầu dự án."
+    },
+    "hero": {
+      "title": "Liên hệ với chúng tôi",
+      "subtitle": "Liên hệ đội ngũ để nhận báo giá tùy chỉnh, đặt hàng và yêu cầu"
+    },
+    "info": {
+      "phone": "Điện thoại",
+      "email": "Email",
+      "factory": "Nhà máy",
+      "hours": "Giờ làm việc",
+      "hoursValue": "Thứ 2–Thứ 6, 08:00 – 17:00 WIB",
+      "export": "Xuất khẩu",
+      "exportValue": "Giao hàng toàn cầu"
+    },
+    "form": {
+      "name": "Họ tên",
+      "email": "Email",
+      "phone": "Điện thoại",
+      "company": "Công ty",
+      "subject": "Chủ đề",
+      "message": "Tin nhắn",
+      "sending": "Đang gửi...",
+      "sendInquiry": "Gửi yêu cầu",
+      "inquirySubject": "Yêu cầu: {{product}}{{code}}",
+      "inquiryMessage": "Xin chào, tôi muốn hỏi về {{product}}{{code}}.\n\nVui lòng cung cấp thông tin giá và tình trạng hàng.\n\nCảm ơn."
+    },
+    "success": {
+      "title": "Cảm ơn bạn!",
+      "description": "Yêu cầu của bạn đã được gửi. Chúng tôi sẽ phản hồi trong vòng 24 giờ.",
+      "sendAnother": "Gửi yêu cầu khác"
+    }
+  },
+  "notFound": {
+    "seo": {
+      "title": "404 — Không tìm thấy trang"
+    },
+    "title": "Không tìm thấy trang",
+    "description": "Trang bạn đang tìm không tồn tại hoặc đã được di chuyển.",
+    "backHome": "Về trang chủ"
+  },
+  "product": {
+    "quickView": "Xem nhanh",
+    "viewDetails": "Xem chi tiết",
+    "sendInquiry": "Gửi yêu cầu cho sản phẩm này",
+    "whatsappUs": "Liên hệ WhatsApp",
+    "category": "Danh mục",
+    "material": "Chất liệu",
+    "color": "Màu sắc",
+    "size": "Kích thước",
+    "style": "Phong cách"
+  },
+  "marquee": {
+    "items": [
+      "DHT Nội thất ngoài trời",
+      "Gỗ teak & Gỗ nguyên khối",
+      "Chống thời tiết",
+      "Đặt hàng tùy chỉnh",
+      "Xuất khẩu toàn cầu",
+      "Chứng nhận ISO",
+      "Không gian ngoài trời",
+      "Thiết kế vượt thời gian",
+      "15 năm kinh nghiệm",
+      "50.000 sản phẩm / Tháng"
+    ]
+  },
+  "search": {
+    "placeholder": "Tìm theo tên sản phẩm hoặc mã...",
+    "noResults": "Không tìm thấy sản phẩm cho \"{{query}}\""
+  },
+  "language": {
+    "en-US": "English (US)",
+    "en-GB": "English (UK)",
+    "vi-VN": "Tiếng Việt"
+  }
+}

@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, Phone } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 import type { Product } from "@/domains/product/product.types";
 
 interface QuickViewModalProps {
@@ -11,6 +12,7 @@ interface QuickViewModalProps {
 
 export default function QuickViewModal({ product, onClose }: QuickViewModalProps) {
   const [activeImage, setActiveImage] = useState(0);
+  const { t } = useTranslation();
 
   if (!product) return null;
 
@@ -54,11 +56,11 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
                   </div>
                   <div className="grid grid-cols-2 gap-x-4 gap-y-2">
                     {[
-                      { label: "Category", value: product.category },
-                      { label: "Material", value: product.material },
-                      { label: "Color", value: product.color },
-                      { label: "Size", value: product.size },
-                      { label: "Style", value: product.style },
+                      { label: t("product.category"), value: product.category },
+                      { label: t("product.material"), value: product.material },
+                      { label: t("product.color"), value: product.color },
+                      { label: t("product.size"), value: product.size },
+                      { label: t("product.style"), value: product.style },
                     ].map(({ label, value }) => (
                       <div key={label} className="text-sm">
                         <span className="font-body text-muted-foreground">{label}: </span>
@@ -77,10 +79,10 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
                   </ul>
                   <div className="flex flex-col gap-3 mt-auto pt-2">
                     <Link href={`/contact?product=${encodeURIComponent(product.name)}&code=${product.code}`} className="w-full py-3 rounded font-body font-medium text-center text-white text-sm transition-all hover:opacity-90" style={{ backgroundColor: "hsl(var(--accent))" }} onClick={onClose}>
-                      Send Inquiry for This Product
+                      {t("product.sendInquiry")}
                     </Link>
                     <a href={`https://wa.me/1234567890?text=Hi, I'd like to inquire about ${product.name} (${product.code})`} target="_blank" rel="noopener noreferrer" className="w-full py-3 rounded font-body font-medium text-center text-sm border transition-all hover:bg-muted" style={{ borderColor: "hsl(var(--navy))", color: "hsl(var(--navy))" }}>
-                      <Phone size={14} className="inline mr-2" /> WhatsApp Us
+                      <Phone size={14} className="inline mr-2" /> {t("product.whatsappUs")}
                     </a>
                   </div>
                 </div>

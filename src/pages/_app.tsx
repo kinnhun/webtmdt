@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { AppProps } from "next/app";
+import i18n, { STORAGE_KEY, SUPPORTED_LANGS } from "@/lib/i18n";
 import "@fontsource/playfair-display/400.css";
 import "@fontsource/playfair-display/600.css";
 import "@fontsource/playfair-display/700.css";
@@ -15,6 +16,14 @@ import SearchOverlay from "@/components/SearchOverlay";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [searchOpen, setSearchOpen] = useState(false);
+
+  // Restore saved language AFTER hydration to avoid SSR mismatch
+  useEffect(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved && (SUPPORTED_LANGS as readonly string[]).includes(saved) && saved !== i18n.language) {
+      i18n.changeLanguage(saved);
+    }
+  }, []);
 
   return (
     <QueryProvider>

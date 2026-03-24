@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Eye } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import type { Product } from "@/domains/product/product.types";
 
 interface ProductCardProps {
@@ -9,6 +10,8 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, onQuickView, index = 0 }: ProductCardProps) {
+  const { t } = useTranslation();
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -21,7 +24,7 @@ export default function ProductCard({ product, onQuickView, index = 0 }: Product
         <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
         <div className="absolute inset-0 bg-navy/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
           <button onClick={() => onQuickView(product)} className="flex items-center gap-2 px-4 py-2 bg-white rounded font-body text-sm font-medium text-foreground shadow-md hover:bg-accent hover:text-white transition-all duration-200">
-            <Eye size={15} /> Quick View
+            <Eye size={15} /> {t("product.quickView")}
           </button>
         </div>
         <span className="absolute top-3 left-3 text-xs font-body font-medium px-2.5 py-1 rounded-sm" style={{ backgroundColor: "hsl(var(--navy))", color: "white" }}>{product.category}</span>
@@ -41,7 +44,7 @@ export default function ProductCard({ product, onQuickView, index = 0 }: Product
           onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = "hsl(var(--navy))"; (e.currentTarget as HTMLButtonElement).style.color = "white"; }}
           onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent"; (e.currentTarget as HTMLButtonElement).style.color = "hsl(var(--navy))"; }}
         >
-          View Details
+          {t("product.viewDetails")}
         </button>
       </div>
     </motion.div>

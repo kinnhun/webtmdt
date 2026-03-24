@@ -1,12 +1,15 @@
 import Head from "next/head";
+import { useTranslation } from "react-i18next";
 import HomeContainer from "@/features/home";
 
 export default function HomePage() {
+  const { t } = useTranslation();
+
   return (
     <>
       <Head>
-        <title>DHT Outdoor Furniture — Premium Manufacturer & Supplier</title>
-        <meta name="description" content="DHT Outdoor Furniture Production — premium outdoor & indoor furniture manufacturer. Teak, solid wood, custom orders. ISO certified. 25+ export countries." />
+        <title>{t("home.seo.title")}</title>
+        <meta name="description" content={t("home.seo.description")} />
       </Head>
       <HomeContainer />
     </>

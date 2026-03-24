@@ -3,29 +3,25 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Menu, X, Phone } from "lucide-react";
-import "@fontsource/playfair-display/400.css";
-import "@fontsource/playfair-display/600.css";
-import "@fontsource/playfair-display/700.css";
-import "@fontsource/dm-sans/300.css";
-import "@fontsource/dm-sans/400.css";
-import "@fontsource/dm-sans/500.css";
-import "@fontsource/dm-sans/600.css";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 interface SiteHeaderProps {
   onSearchOpen?: () => void;
 }
 
-const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "About Us", href: "/about" },
-  { label: "Catalogue", href: "/catalogue" },
-  { label: "Contact", href: "/contact" },
-];
-
 export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
+  const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const router = useRouter();
+
+  const navLinks = [
+    { label: t("nav.home"), href: "/" },
+    { label: t("nav.about"), href: "/about" },
+    { label: t("nav.catalogue"), href: "/catalogue" },
+    { label: t("nav.contact"), href: "/contact" },
+  ];
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -38,7 +34,6 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
   }, [router.pathname]);
 
   const isHome = router.pathname === "/";
-  // Non-home pages always get a solid dark header
   const shouldShowSolidBg = !isHome || scrolled;
 
   return (
@@ -66,7 +61,7 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
               </div>
               <div>
                 <span className="font-display text-white font-bold text-lg tracking-wide leading-none block">DHT</span>
-                <span className="font-body text-white/40 text-xs tracking-[0.2em] uppercase leading-none">Outdoor Furniture</span>
+                <span className="font-body text-white/40 text-xs tracking-[0.2em] uppercase leading-none">{t("nav.outdoorFurniture")}</span>
               </div>
             </Link>
 
@@ -104,10 +99,12 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
               <button
                 onClick={onSearchOpen}
                 className="w-8 h-8 flex items-center justify-center rounded-sm text-white/60 hover:text-white hover:bg-white/10 transition-all"
-                aria-label="Search"
+                aria-label={t("nav.search")}
               >
                 <Search size={17} />
               </button>
+
+              <LanguageSwitcher />
 
               <a
                 href="https://wa.me/1234567890"
@@ -116,7 +113,7 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
                 className="hidden lg:flex items-center gap-1.5 font-body text-sm text-white/60 hover:text-white transition-colors px-2 py-1"
               >
                 <Phone size={14} />
-                WhatsApp
+                {t("nav.whatsapp")}
               </a>
 
               <Link
@@ -124,7 +121,7 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
                 className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 rounded-sm font-body font-semibold text-white text-sm transition-all hover:opacity-90"
                 style={{ backgroundColor: "hsl(var(--orange))" }}
               >
-                Get Quote
+                {t("nav.getQuote")}
               </Link>
 
               <button
@@ -163,7 +160,7 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
                 className="mt-2 text-center py-3.5 rounded-sm font-body font-semibold text-white text-base"
                 style={{ backgroundColor: "hsl(var(--orange))" }}
               >
-                Get Quote
+                {t("nav.getQuote")}
               </Link>
             </nav>
           </motion.div>

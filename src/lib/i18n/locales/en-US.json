@@ -1,0 +1,278 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About Us",
+    "catalogue": "Catalogue",
+    "contact": "Contact",
+    "getQuote": "Get Quote",
+    "whatsapp": "WhatsApp",
+    "outdoorFurniture": "Outdoor Furniture",
+    "search": "Search"
+  },
+  "footer": {
+    "description": "Premium outdoor furniture manufacturer and supplier — crafting durable, weather-resistant pieces for hospitality, residential, and commercial outdoor spaces.",
+    "quickLinks": "Quick Links",
+    "collections": "Collections",
+    "contact": "Contact",
+    "copyright": "© 2025 DHT Outdoor Furniture Production. All rights reserved.",
+    "tagline": "Interior Manufacturer & Supplier"
+  },
+  "home": {
+    "seo": {
+      "title": "DHT Outdoor Furniture — Premium Manufacturer & Supplier",
+      "description": "DHT Outdoor Furniture Production — premium outdoor & indoor furniture manufacturer. Teak, solid wood, custom orders. ISO certified. 25+ export countries."
+    },
+    "hero": {
+      "badge": "DHT · Outdoor Furniture Production",
+      "title1": "Crafted for the",
+      "title2": "Outdoors",
+      "exploreProducts": "Explore Products",
+      "getQuote": "Get a Quote",
+      "stats": {
+        "yearsExperience": "Years Experience",
+        "unitsMonth": "Units / Month",
+        "products": "Products",
+        "exportCountries": "Export Countries"
+      }
+    },
+    "intro": {
+      "label": "Who We Are",
+      "heading1": "Built on Craft.",
+      "heading2": "Driven by",
+      "heading3": "Quality.",
+      "paragraph1": "DHT Outdoor Furniture Production is a premium outdoor furniture manufacturer with a 5,000m² production facility in Jakarta. Over 15 years of partnership with hotel brands, resorts, and designers across 25+ countries.",
+      "paragraph2": "Every product — from teak dining sets to weather-resistant sofas — is crafted by 400+ skilled artisans, undergoing multi-stage quality control.",
+      "ourStory": "Our Story",
+      "isoCertified": "9001:2015 Certified",
+      "location": "Jakarta, Indonesia",
+      "statsYears": "Years Operating",
+      "statsUnits": "Units / Month",
+      "statsCraftspeople": "Craftspeople",
+      "statsExport": "Export Countries"
+    },
+    "categories": {
+      "label": "Collections",
+      "heading1": "Every Room,",
+      "heading2": "Perfectly Furnished",
+      "viewAll": "View All",
+      "bedroom": { "name": "Bedroom", "tagline": "Rest in elegance", "count": "48 products" },
+      "diningRoom": { "name": "Dining Room", "tagline": "Gather, dine, celebrate", "count": "32 products" },
+      "livingRoom": { "name": "Living Room", "tagline": "Where comfort meets design", "count": "56 products" },
+      "homeOffice": { "name": "Home Office", "tagline": "Work with purpose", "count": "24 products" },
+      "outdoor": { "name": "Outdoor", "tagline": "Extend your living space", "count": "18 products" }
+    },
+    "featured": {
+      "label": "Selected Pieces",
+      "heading": "Featured Products",
+      "description": "Handpicked from our latest collections — each piece crafted with precision and designed to elevate any space.",
+      "fullCatalogue": "Full Catalogue",
+      "seeAllProducts": "See All Products",
+      "noProducts": "No featured products in this category yet.",
+      "new": "New",
+      "inquire": "Inquire",
+      "filterAll": "All"
+    },
+    "whyUs": {
+      "label": "Why DHT",
+      "heading": "Your Trusted Manufacturing Partner",
+      "description": "From concept sketch to container delivery — we manage every step with precision, transparency, and care.",
+      "points": [
+        "In-house production: no outsourcing, full quality control",
+        "Custom sizes, finishes, and OEM / ODM available",
+        "Stable capacity for large hospitality & development projects",
+        "Experienced export team, on-time delivery record",
+        "FSC-certified materials, sustainable sourcing"
+      ],
+      "requestQuote": "Request a Quote",
+      "viewCatalogue": "View Catalogue"
+    },
+    "materials": {
+      "label": "Materials",
+      "heading1": "Crafted from",
+      "heading2": "Nature's Best",
+      "description": "We source only premium-grade natural materials — each selected for its structural integrity, aesthetic warmth, and lasting beauty. FSC-certified timber, sustainably harvested.",
+      "solidOak": { "name": "Solid Oak", "desc": "Straight grain, warm honey tones, exceptional durability" },
+      "walnutWood": { "name": "Walnut Wood", "desc": "Deep chocolate hues, fine texture, mid-century warmth" },
+      "premiumTeak": { "name": "Premium Teak", "desc": "Natural oils, all-weather resilience, golden brown beauty" },
+      "linenVelvet": { "name": "Linen & Velvet", "desc": "Curated upholstery fabrics in timeless palettes" }
+    },
+    "rooms": {
+      "label": "Inspiration",
+      "heading": "Room by Room",
+      "description": "Every space tells a story. Discover furniture curated for each room in your home.",
+      "masterBedroom": { "name": "Master Bedroom", "label": "Bedroom", "tagline": "Where rest becomes ritual" },
+      "livingRoom": { "name": "Living Room", "label": "Living", "tagline": "The heart of every home" },
+      "familyDining": { "name": "Family Dining", "label": "Dining", "tagline": "Crafted for moments shared" },
+      "homeOffice": { "name": "Home Office", "label": "Office", "tagline": "Focus meets form" },
+      "outdoorPatio": { "name": "Outdoor Patio", "label": "Outdoor", "tagline": "Design without walls" }
+    },
+    "testimonials": {
+      "label": "Client Stories",
+      "heading": "Trusted by Designers",
+      "quotes": [
+        {
+          "quote": "DHT delivered all 200 units on time with exceptional finish quality. Professional and responsive throughout.",
+          "name": "James Lim",
+          "role": "Interior Designer, Singapore",
+          "project": "200-unit Apartment"
+        },
+        {
+          "quote": "We've partnered with DHT for three hospitality projects. Consistent quality and hassle-free logistics.",
+          "name": "Sophie Tan",
+          "role": "Procurement Manager, KL",
+          "project": "3x Hotel Fit-Out"
+        },
+        {
+          "quote": "The custom bedroom sets exceeded expectations. True craftsmanship at a competitive price.",
+          "name": "Marco Rossi",
+          "role": "Property Developer, Bali",
+          "project": "Luxury Villa"
+        }
+      ]
+    },
+    "cta": {
+      "heading": "Ready to Furnish Your Space?",
+      "description": "Contact our team for custom quotes, bulk orders, and project consultations. We ship worldwide.",
+      "sendInquiry": "Send Inquiry",
+      "browseCatalogue": "Browse Catalogue"
+    }
+  },
+  "about": {
+    "seo": {
+      "title": "About Us — DHT Outdoor Furniture",
+      "description": "Learn about DHT Outdoor Furniture — 15+ years of furniture manufacturing excellence."
+    },
+    "hero": {
+      "title": "About DHT",
+      "subtitle": "Premium outdoor furniture manufacturer. Crafting durable, weather-resistant pieces since 2008."
+    },
+    "story": {
+      "label": "Our Story",
+      "heading": "From Workshop to World-Class Factory",
+      "paragraph1": "DHT Outdoor Furniture Production started in 2008 as a small workshop in Jakarta with just 12 craftspeople and a passion for quality.",
+      "paragraph2": "Today, we operate a 5,000m² modern production facility with 400+ skilled artisans, exporting to 25+ countries. Our ISO 9001:2015 certification reflects our commitment to consistent quality.",
+      "paragraph3": "We specialize in teak, solid wood, and weather-resistant materials — crafting furniture for hotels, resorts, restaurants, and luxury residences worldwide."
+    },
+    "values": {
+      "label": "Our Values",
+      "heading": "Why Choose Us",
+      "qualityFirst": { "title": "Quality First", "desc": "ISO 9001:2015 certified. Multi-stage quality control on every piece." },
+      "craftspeople": { "title": "400+ Craftspeople", "desc": "Skilled artisans with generations of furniture-making expertise." },
+      "globalExport": { "title": "Global Export", "desc": "Reliable shipping to 25+ countries with full documentation." },
+      "warranty": { "title": "Warranty", "desc": "5-year structural warranty on all products." },
+      "customOem": { "title": "Custom OEM/ODM", "desc": "Custom designs, finishes, and branding for your projects." },
+      "sustainable": { "title": "Sustainable", "desc": "FSC-certified timber. Eco-friendly finishing processes." }
+    },
+    "timeline": {
+      "label": "Journey",
+      "heading": "Our Timeline",
+      "items": [
+        { "year": "2008", "title": "Founded", "desc": "Started as a small workshop in Jakarta with 12 craftspeople." },
+        { "year": "2012", "title": "ISO Certified", "desc": "Achieved ISO 9001 certification. Expanded to 50 staff." },
+        { "year": "2016", "title": "Export Expansion", "desc": "First container shipments to Singapore, Australia, and Europe." },
+        { "year": "2020", "title": "New Factory", "desc": "Opened 5,000m² production facility with modern machinery." },
+        { "year": "2024", "title": "25+ Countries", "desc": "Serving hospitality and residential projects worldwide." }
+      ]
+    },
+    "cta": {
+      "heading": "Ready to Work Together?",
+      "button": "Contact Us"
+    }
+  },
+  "catalogue": {
+    "seo": {
+      "title": "Catalogue — DHT Outdoor Furniture",
+      "description": "Browse our full collection of premium outdoor furniture."
+    },
+    "searchPlaceholder": "Search by name, code, or category...",
+    "filters": "Filters",
+    "clearAll": "Clear all",
+    "category": "Category",
+    "material": "Material",
+    "color": "Color",
+    "size": "Size",
+    "style": "Style",
+    "noResults": "No products match your filters",
+    "clearAllFilters": "Clear all filters",
+    "quickView": "Quick View",
+    "inquire": "Inquire"
+  },
+  "contact": {
+    "seo": {
+      "title": "Contact — DHT Outdoor Furniture",
+      "description": "Get in touch for quotes, custom orders, and project inquiries."
+    },
+    "hero": {
+      "title": "Get in Touch",
+      "subtitle": "Contact our team for custom quotes, orders, and inquiries"
+    },
+    "info": {
+      "phone": "Phone",
+      "email": "Email",
+      "factory": "Factory",
+      "hours": "Hours",
+      "hoursValue": "Mon–Fri, 08:00 – 17:00 WIB",
+      "export": "Export",
+      "exportValue": "Worldwide shipping available"
+    },
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "company": "Company",
+      "subject": "Subject",
+      "message": "Message",
+      "sending": "Sending...",
+      "sendInquiry": "Send Inquiry",
+      "inquirySubject": "Inquiry: {{product}}{{code}}",
+      "inquiryMessage": "Hi, I would like to inquire about {{product}}{{code}}.\n\nPlease provide pricing and availability information.\n\nThank you."
+    },
+    "success": {
+      "title": "Thank You!",
+      "description": "Your inquiry has been submitted. We'll respond within 24 hours.",
+      "sendAnother": "Send another inquiry"
+    }
+  },
+  "notFound": {
+    "seo": {
+      "title": "404 — Page Not Found"
+    },
+    "title": "Page Not Found",
+    "description": "The page you're looking for doesn't exist or has been moved.",
+    "backHome": "Back to Home"
+  },
+  "product": {
+    "quickView": "Quick View",
+    "viewDetails": "View Details",
+    "sendInquiry": "Send Inquiry for This Product",
+    "whatsappUs": "WhatsApp Us",
+    "category": "Category",
+    "material": "Material",
+    "color": "Color",
+    "size": "Size",
+    "style": "Style"
+  },
+  "marquee": {
+    "items": [
+      "DHT Outdoor Furniture",
+      "Teak & Solid Wood",
+      "Weather-Resistant",
+      "Custom Orders",
+      "Global Export",
+      "ISO Certified",
+      "Outdoor Living",
+      "Timeless Design",
+      "15 Years Experience",
+      "50,000 Units / Month"
+    ]
+  },
+  "search": {
+    "placeholder": "Search by product name or code...",
+    "noResults": "No products found for \"{{query}}\""
+  },
+  "language": {
+    "en-US": "English (US)",
+    "en-GB": "English (UK)",
+    "vi-VN": "Tiếng Việt"
+  }
+}

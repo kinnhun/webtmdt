@@ -2,31 +2,28 @@ import { motion } from "framer-motion";
 import Head from "next/head";
 import Link from "next/link";
 import { Award, Users, Truck, Shield, Globe, Leaf } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import MarqueeStrip from "@/components/MarqueeStrip";
 
-const values = [
-  { icon: Award, title: "Quality First", desc: "ISO 9001:2015 certified. Multi-stage quality control on every piece." },
-  { icon: Users, title: "400+ Craftspeople", desc: "Skilled artisans with generations of furniture-making expertise." },
-  { icon: Truck, title: "Global Export", desc: "Reliable shipping to 25+ countries with full documentation." },
-  { icon: Shield, title: "Warranty", desc: "5-year structural warranty on all products." },
-  { icon: Globe, title: "Custom OEM/ODM", desc: "Custom designs, finishes, and branding for your projects." },
-  { icon: Leaf, title: "Sustainable", desc: "FSC-certified timber. Eco-friendly finishing processes." },
-];
-
-const timeline = [
-  { year: "2008", title: "Founded", desc: "Started as a small workshop in Jakarta with 12 craftspeople." },
-  { year: "2012", title: "ISO Certified", desc: "Achieved ISO 9001 certification. Expanded to 50 staff." },
-  { year: "2016", title: "Export Expansion", desc: "First container shipments to Singapore, Australia, and Europe." },
-  { year: "2020", title: "New Factory", desc: "Opened 5,000m² production facility with modern machinery." },
-  { year: "2024", title: "25+ Countries", desc: "Serving hospitality and residential projects worldwide." },
-];
-
 export default function AboutPage() {
+  const { t } = useTranslation();
+
+  const values = [
+    { icon: Award, title: t("about.values.qualityFirst.title"), desc: t("about.values.qualityFirst.desc") },
+    { icon: Users, title: t("about.values.craftspeople.title"), desc: t("about.values.craftspeople.desc") },
+    { icon: Truck, title: t("about.values.globalExport.title"), desc: t("about.values.globalExport.desc") },
+    { icon: Shield, title: t("about.values.warranty.title"), desc: t("about.values.warranty.desc") },
+    { icon: Globe, title: t("about.values.customOem.title"), desc: t("about.values.customOem.desc") },
+    { icon: Leaf, title: t("about.values.sustainable.title"), desc: t("about.values.sustainable.desc") },
+  ];
+
+  const timeline = t("about.timeline.items", { returnObjects: true }) as Array<{ year: string; title: string; desc: string }>;
+
   return (
     <>
       <Head>
-        <title>About Us — DHT Outdoor Furniture</title>
-        <meta name="description" content="Learn about DHT Outdoor Furniture — 15+ years of furniture manufacturing excellence." />
+        <title>{t("about.seo.title")}</title>
+        <meta name="description" content={t("about.seo.description")} />
       </Head>
       <div className="pt-20">
         <section className="relative py-24 overflow-hidden" style={{ backgroundColor: "hsl(var(--navy-deep))" }}>
@@ -34,8 +31,8 @@ export default function AboutPage() {
             <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&auto=format&fit=crop&q=85" alt="Factory" className="w-full h-full object-cover opacity-30" />
           </div>
           <div className="container mx-auto px-6 relative z-10 text-center">
-            <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="font-display font-bold text-white mb-4" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)" }}>About DHT</motion.h1>
-            <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="font-body text-white/60 text-base max-w-lg mx-auto">Premium outdoor furniture manufacturer. Crafting durable, weather-resistant pieces since 2008.</motion.p>
+            <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="font-display font-bold text-white mb-4" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)" }}>{t("about.hero.title")}</motion.h1>
+            <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="font-body text-white/60 text-base max-w-lg mx-auto">{t("about.hero.subtitle")}</motion.p>
           </div>
         </section>
 
@@ -47,13 +44,13 @@ export default function AboutPage() {
               <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
                 <div className="flex items-center gap-3 mb-6">
                   <span className="h-px w-8" style={{ backgroundColor: "hsl(var(--orange))" }} />
-                  <span className="font-body text-xs tracking-[0.25em] uppercase font-medium" style={{ color: "hsl(var(--orange))" }}>Our Story</span>
+                  <span className="font-body text-xs tracking-[0.25em] uppercase font-medium" style={{ color: "hsl(var(--orange))" }}>{t("about.story.label")}</span>
                 </div>
-                <h2 className="font-display font-bold text-foreground leading-tight mb-6" style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}>From Workshop to World-Class Factory</h2>
+                <h2 className="font-display font-bold text-foreground leading-tight mb-6" style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}>{t("about.story.heading")}</h2>
                 <div className="space-y-4 font-body text-sm text-muted-foreground leading-relaxed">
-                  <p>DHT Outdoor Furniture Production started in 2008 as a small workshop in Jakarta with just 12 craftspeople and a passion for quality.</p>
-                  <p>Today, we operate a 5,000m² modern production facility with 400+ skilled artisans, exporting to 25+ countries. Our ISO 9001:2015 certification reflects our commitment to consistent quality.</p>
-                  <p>We specialize in teak, solid wood, and weather-resistant materials — crafting furniture for hotels, resorts, restaurants, and luxury residences worldwide.</p>
+                  <p>{t("about.story.paragraph1")}</p>
+                  <p>{t("about.story.paragraph2")}</p>
+                  <p>{t("about.story.paragraph3")}</p>
                 </div>
               </motion.div>
               <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }} className="rounded-sm overflow-hidden" style={{ aspectRatio: "4/3" }}>
@@ -65,10 +62,10 @@ export default function AboutPage() {
               <div className="text-center mb-12">
                 <div className="flex items-center gap-3 justify-center mb-4">
                   <span className="h-px w-8" style={{ backgroundColor: "hsl(var(--orange))" }} />
-                  <span className="font-body text-xs tracking-[0.25em] uppercase font-medium" style={{ color: "hsl(var(--orange))" }}>Our Values</span>
+                  <span className="font-body text-xs tracking-[0.25em] uppercase font-medium" style={{ color: "hsl(var(--orange))" }}>{t("about.values.label")}</span>
                   <span className="h-px w-8" style={{ backgroundColor: "hsl(var(--orange))" }} />
                 </div>
-                <h2 className="font-display font-bold text-foreground" style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}>Why Choose Us</h2>
+                <h2 className="font-display font-bold text-foreground" style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}>{t("about.values.heading")}</h2>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {values.map(({ icon: Icon, title, desc }, i) => (
@@ -87,10 +84,10 @@ export default function AboutPage() {
               <div className="text-center mb-12">
                 <div className="flex items-center gap-3 justify-center mb-4">
                   <span className="h-px w-8" style={{ backgroundColor: "hsl(var(--orange))" }} />
-                  <span className="font-body text-xs tracking-[0.25em] uppercase font-medium" style={{ color: "hsl(var(--orange))" }}>Journey</span>
+                  <span className="font-body text-xs tracking-[0.25em] uppercase font-medium" style={{ color: "hsl(var(--orange))" }}>{t("about.timeline.label")}</span>
                   <span className="h-px w-8" style={{ backgroundColor: "hsl(var(--orange))" }} />
                 </div>
-                <h2 className="font-display font-bold text-foreground" style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}>Our Timeline</h2>
+                <h2 className="font-display font-bold text-foreground" style={{ fontSize: "clamp(2rem, 4vw, 3rem)" }}>{t("about.timeline.heading")}</h2>
               </div>
               <div className="relative max-w-2xl mx-auto">
                 <div className="absolute left-6 top-0 bottom-0 w-px" style={{ backgroundColor: "hsl(var(--border))" }} />
@@ -108,8 +105,8 @@ export default function AboutPage() {
         </section>
 
         <section className="py-16 text-center" style={{ backgroundColor: "hsl(var(--navy-deep))" }}>
-          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="font-display font-bold text-white mb-4" style={{ fontSize: "clamp(1.5rem, 3vw, 2.5rem)" }}>Ready to Work Together?</motion.h2>
-          <Link href="/contact" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-sm font-body font-semibold text-sm text-white mt-4 hover:opacity-90 transition-all" style={{ backgroundColor: "hsl(var(--orange))" }}>Contact Us</Link>
+          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="font-display font-bold text-white mb-4" style={{ fontSize: "clamp(1.5rem, 3vw, 2.5rem)" }}>{t("about.cta.heading")}</motion.h2>
+          <Link href="/contact" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-sm font-body font-semibold text-sm text-white mt-4 hover:opacity-90 transition-all" style={{ backgroundColor: "hsl(var(--orange))" }}>{t("about.cta.button")}</Link>
         </section>
       </div>
     </>

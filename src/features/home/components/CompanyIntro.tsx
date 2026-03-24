@@ -3,8 +3,8 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-const ease = [0.16, 1, 0.3, 1] as const;
-const vp = { once: true, amount: 0.05 };
+const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
+const vp = { once: true, amount: 0.05 as const };
 
 export default function CompanyIntro() {
   const { t } = useTranslation();
@@ -25,8 +25,8 @@ export default function CompanyIntro() {
                 { text: t("home.intro.heading2"), outline: true, italic: true },
                 { text: t("home.intro.heading3"), outline: false, accent: true },
               ].map(({ text, outline, italic, accent }, i) => (
-                <div key={i} className="overflow-hidden">
-                  <motion.h2 initial={{ y: "105%" }} whileInView={{ y: 0 }} viewport={vp} transition={{ duration: 0.8, delay: i * 0.08, ease }} className={`font-display font-bold leading-[0.92] tracking-tight block${italic ? " italic" : ""}`} style={{ fontSize: "clamp(2.2rem, 6.5vw, 6rem)", color: outline ? "transparent" : "hsl(var(--navy-deep))", WebkitTextStroke: outline ? "1.5px hsl(var(--navy-light))" : undefined }}>
+                <div key={i}>
+                  <motion.h2 initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={vp} transition={{ duration: 0.8, delay: i * 0.08, ease }} className={`font-display font-bold leading-[0.92] tracking-tight block${italic ? " italic" : ""}`} style={{ fontSize: "clamp(2.2rem, 6.5vw, 6rem)", color: outline ? "transparent" : "hsl(var(--navy-deep))", WebkitTextStroke: outline ? "1.5px hsl(var(--navy-light))" : undefined }}>
                     {accent ? (<>{text.replace(".", "")}<span style={{ color: "hsl(var(--orange))" }}>.</span></>) : text}
                   </motion.h2>
                 </div>

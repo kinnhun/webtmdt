@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { Facebook, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { fadeUp, stagger } from "@/lib/animations";
@@ -33,14 +34,15 @@ export default function SiteFooter() {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/10"
         >
           <motion.div variants={fadeUp}>
-            <div className="flex items-center gap-2 mb-5">
-              <div className="w-8 h-8 rounded-sm flex items-center justify-center" style={{ backgroundColor: "hsl(var(--accent))" }}>
-                <span className="text-white font-display font-bold text-sm">D</span>
-              </div>
-              <div>
-                <span className="font-display text-white font-semibold text-xl block leading-none">DHT</span>
-                <span className="font-body text-white/40 text-xs tracking-widest uppercase">{t("nav.outdoorFurniture")}</span>
-              </div>
+            <div className="flex justify-center mb-5">
+              <Image
+                src="/img/logo.png"
+                alt="DHT Logo"
+                width={140}
+                height={140}
+                className="rounded-sm"
+              />
+
             </div>
             <p className="font-body text-sm leading-relaxed text-white/60 mb-5">
               {t("footer.description")}

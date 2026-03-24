@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Menu, X, Phone } from "lucide-react";
@@ -53,12 +54,14 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
             style={{ height: scrolled ? "64px" : "80px" }}
           >
             <Link href="/" className="flex items-center gap-2.5 flex-shrink-0 group">
-              <div
-                className="w-9 h-9 rounded-sm flex items-center justify-center transition-all group-hover:scale-105"
-                style={{ backgroundColor: "hsl(var(--orange))" }}
-              >
-                <span className="font-display text-white font-bold text-base leading-none">D</span>
-              </div>
+              <Image
+                src="/img/logo-no-text.png"
+                alt="DHT Logo"
+                width={40}
+                height={40}
+                className="transition-all group-hover:scale-105 rounded-sm"
+                priority
+              />
               <div>
                 <span className="font-display text-white font-bold text-lg tracking-wide leading-none block">DHT</span>
                 <span className="font-body text-white/40 text-xs tracking-[0.2em] uppercase leading-none">{t("nav.outdoorFurniture")}</span>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import type { AppProps } from "next/app";
+import { useRouter } from "next/router";
 import i18n, { STORAGE_KEY, SUPPORTED_LANGS } from "@/lib/i18n";
 import "@fontsource/playfair-display/400.css";
 import "@fontsource/playfair-display/600.css";
@@ -16,6 +17,8 @@ import SearchOverlay from "@/components/SearchOverlay";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [searchOpen, setSearchOpen] = useState(false);
+  const router = useRouter();
+  const isAdminRoute = router.pathname.startsWith('/admin');
 
   // Restore saved language AFTER hydration to avoid SSR mismatch
   useEffect(() => {
@@ -27,12 +30,12 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <QueryProvider>
-      <SiteHeader onSearchOpen={() => setSearchOpen(true)} />
+      {!isAdminRoute && <SiteHeader onSearchOpen={() => setSearchOpen(true)} />}
       <main>
         <Component {...pageProps} />
       </main>
-      <SiteFooter />
-      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
+      {!isAdminRoute && <SiteFooter />}
+      {!isAdminRoute && <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />}
     </QueryProvider>
   );
 }

@@ -1,5 +1,6 @@
 export interface Product {
   id: string;
+  slug: string;
   name: string;
   code: string;
   category: string;
@@ -13,7 +14,16 @@ export interface Product {
   description: string;
   features: string[];
   room: string;
+  /** Detail page extras */
+  video?: string;
+  dimensions?: string;
+  weight?: string;
+  specifications?: Record<string, string>;
+  careInstructions?: string[];
+  usageSettings?: string[];
+  longDescription?: string;
 }
+
 
 export interface FilterState {
   category: string[];

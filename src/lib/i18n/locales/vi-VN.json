@@ -254,6 +254,19 @@
     "size": "Kích thước",
     "style": "Phong cách"
   },
+  "productDetail": {
+    "specifications": "Thông số kỹ thuật",
+    "care": "Hướng dẫn bảo quản",
+    "usage": "Không gian phù hợp",
+    "features": "Đặc điểm nổi bật",
+    "dimensions": "Kích thước",
+    "weight": "Trọng lượng",
+    "material": "Chất liệu",
+    "style": "Phong cách",
+    "inquire": "Yêu cầu báo giá",
+    "videoTitle": "Video sản phẩm",
+    "relatedProducts": "Sản phẩm liên quan"
+  },
   "marquee": {
     "items": [
       "DHT Nội thất ngoài trời",

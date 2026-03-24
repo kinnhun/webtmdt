@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { Eye } from "lucide-react";
+import { Eye, ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import type { Product } from "@/domains/product/product.types";
 
@@ -22,8 +23,11 @@ export default function ProductCard({ product, onQuickView, index = 0 }: Product
     >
       <div className="relative overflow-hidden bg-beige aspect-[4/3]">
         <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
-        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-          <button onClick={() => onQuickView(product)} className="flex items-center gap-2 px-4 py-2 bg-white rounded font-body text-sm font-medium text-foreground shadow-md transition-all duration-200" style={{ }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'hsl(var(--orange))'; e.currentTarget.style.color = 'white'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'white'; e.currentTarget.style.color = ''; }}>
+        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2">
+          <button
+            onClick={() => onQuickView(product)}
+            className="flex items-center gap-2 px-4 py-2 bg-white rounded font-body text-sm font-medium text-foreground shadow-md transition-all duration-200 hover:bg-[hsl(var(--orange))] hover:text-white"
+          >
             <Eye size={15} /> {t("product.quickView")}
           </button>
         </div>
@@ -37,15 +41,13 @@ export default function ProductCard({ product, onQuickView, index = 0 }: Product
             <span key={tag} className="text-xs font-body px-2 py-0.5 rounded-sm bg-muted text-muted-foreground">{tag}</span>
           ))}
         </div>
-        <button
-          onClick={() => onQuickView(product)}
-          className="w-full py-2.5 rounded font-body text-sm font-semibold text-white transition-all duration-200"
-          style={{ backgroundColor: "hsl(var(--orange))" }}
-          onMouseEnter={(e) => { e.currentTarget.style.filter = "brightness(1.1)"; e.currentTarget.style.transform = "translateY(-1px)"; e.currentTarget.style.boxShadow = "0 4px 12px hsl(var(--orange)/0.35)"; }}
-          onMouseLeave={(e) => { e.currentTarget.style.filter = ""; e.currentTarget.style.transform = ""; e.currentTarget.style.boxShadow = ""; }}
+        <Link
+          href={`/catalogue/${product.slug}`}
+          className="w-full py-2.5 rounded font-body text-sm font-semibold text-white transition-all duration-200 flex items-center justify-center gap-2 hover:brightness-110 hover:-translate-y-px"
+          style={{ backgroundColor: "hsl(var(--orange))", boxShadow: "0 2px 8px hsl(var(--orange)/0.2)" }}
         >
-          {t("product.viewDetails")}
-        </button>
+          {t("product.viewDetails")} <ArrowRight size={14} />
+        </Link>
       </div>
     </motion.div>
   );

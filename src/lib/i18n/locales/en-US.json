@@ -254,6 +254,19 @@
     "size": "Size",
     "style": "Style"
   },
+  "productDetail": {
+    "specifications": "Specifications",
+    "care": "Care Instructions",
+    "usage": "Ideal Settings",
+    "features": "Key Features",
+    "dimensions": "Dimensions",
+    "weight": "Weight",
+    "material": "Material",
+    "style": "Style",
+    "inquire": "Request Quote",
+    "videoTitle": "Product Video",
+    "relatedProducts": "You May Also Like"
+  },
   "marquee": {
     "items": [
       "DHT Outdoor Furniture",

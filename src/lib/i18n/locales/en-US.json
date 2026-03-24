@@ -7,7 +7,8 @@
     "getQuote": "Get Quote",
     "whatsapp": "WhatsApp",
     "outdoorFurniture": "Outdoor Furniture",
-    "search": "Search"
+    "search": "Search",
+    "blog": "Blog"
   },
   "footer": {
     "description": "Premium outdoor furniture manufacturer and supplier — crafting durable, weather-resistant pieces for hospitality, residential, and commercial outdoor spaces.",
@@ -275,5 +276,23 @@
     "en-US": "English (US)",
     "en-GB": "English (UK)",
     "vi-VN": "Tiếng Việt"
+  },
+  "blog": {
+    "seo": {
+      "title": "Blog — DHT Outdoor Furniture",
+      "description": "Insights, tips, and stories from our furniture manufacturing experts."
+    },
+    "hero": {
+      "label": "Blog & Insights",
+      "heading": "Stories, Tips & Expertise",
+      "description": "Design inspiration, material guides, and behind-the-scenes stories from our production team."
+    },
+    "filterAll": "All",
+    "backToList": "Back to Blog",
+    "readTime": "read",
+    "related": {
+      "label": "Keep Reading",
+      "heading": "Related Articles"
+    }
   }
 }

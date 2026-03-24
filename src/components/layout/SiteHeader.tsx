@@ -21,6 +21,7 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
     { label: t("nav.home"), href: "/" },
     { label: t("nav.about"), href: "/about" },
     { label: t("nav.catalogue"), href: "/catalogue" },
+    { label: t("nav.blog"), href: "/blog" },
     { label: t("nav.contact"), href: "/contact" },
   ];
 

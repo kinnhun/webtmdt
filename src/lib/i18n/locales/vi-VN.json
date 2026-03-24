@@ -7,7 +7,8 @@
     "getQuote": "Báo giá",
     "whatsapp": "WhatsApp",
     "outdoorFurniture": "Nội thất ngoài trời",
-    "search": "Tìm kiếm"
+    "search": "Tìm kiếm",
+    "blog": "Blog"
   },
   "footer": {
     "description": "Nhà sản xuất và cung cấp nội thất ngoài trời cao cấp — chế tác các sản phẩm bền bỉ, chống chịu thời tiết cho khách sạn, nhà ở và không gian thương mại.",
@@ -275,5 +276,23 @@
     "en-US": "English (US)",
     "en-GB": "English (UK)",
     "vi-VN": "Tiếng Việt"
+  },
+  "blog": {
+    "seo": {
+      "title": "Blog — DHT Nội Thất Ngoài Trời",
+      "description": "Kiến thức, mẹo và câu chuyện từ đội ngũ sản xuất nội thất của chúng tôi."
+    },
+    "hero": {
+      "label": "Blog & Kiến Thức",
+      "heading": "Câu Chuyện, Mẹo & Chuyên Môn",
+      "description": "Cảm hứng thiết kế, hướng dẫn chất liệu và câu chuyện hậu trường từ đội ngũ sản xuất."
+    },
+    "filterAll": "Tất cả",
+    "backToList": "Quay lại Blog",
+    "readTime": "đọc",
+    "related": {
+      "label": "Đọc Thêm",
+      "heading": "Bài Viết Liên Quan"
+    }
   }
 }

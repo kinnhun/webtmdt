@@ -23,7 +23,7 @@ export default function ProductCard({ product, onQuickView, index = 0 }: Product
     >
       <div className="relative overflow-hidden bg-beige aspect-[4/3]">
         <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
-        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2">
+        <div className="hidden sm:flex absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center gap-2">
           <button
             onClick={() => onQuickView(product)}
             className="flex items-center gap-2 px-4 py-2 bg-white rounded font-body text-sm font-medium text-foreground shadow-md transition-all duration-200 hover:bg-[hsl(var(--orange))] hover:text-white"
@@ -35,15 +35,35 @@ export default function ProductCard({ product, onQuickView, index = 0 }: Product
       </div>
       <div className="p-4">
         <p className="font-body text-xs text-muted-foreground mb-1">{product.code}</p>
-        <h3 className="font-display text-base font-semibold text-foreground leading-tight mb-2">{product.name}</h3>
-        <div className="flex flex-wrap gap-1.5 mb-3">
+        <h3 className="font-display text-base font-semibold text-foreground leading-tight mb-2 truncate">{product.name}</h3>
+        <div className="flex flex-wrap gap-1.5 mb-4">
           {[product.material, product.style].map((tag) => (
             <span key={tag} className="text-xs font-body px-2 py-0.5 rounded-sm bg-muted text-muted-foreground">{tag}</span>
           ))}
         </div>
+        
+        {/* Mobile Actions: Side-by-side Quick View and Details */}
+        <div className="flex sm:hidden items-center justify-between gap-2 w-full">
+          <button
+            onClick={() => onQuickView(product)}
+            className="flex-1 py-2.5 rounded font-body text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-1.5 border hover:bg-gray-50"
+            style={{ color: "hsl(var(--navy-deep))", borderColor: "hsl(var(--navy-deep)/0.1)" }}
+          >
+            <Eye size={14} /> {t("product.quickView")}
+          </button>
+          <Link
+            href={`/catalogue/${product.slug}`}
+            className="flex-1 py-2.5 rounded font-body text-xs sm:text-sm font-semibold text-white transition-all duration-200 flex items-center justify-center gap-1.5 hover:brightness-110"
+            style={{ backgroundColor: "hsl(var(--orange))", boxShadow: "0 2px 8px hsl(var(--orange)/0.2)" }}
+          >
+            {t("product.viewDetails")} <ArrowRight size={14} />
+          </Link>
+        </div>
+
+        {/* Desktop Action: Full width Details */}
         <Link
           href={`/catalogue/${product.slug}`}
-          className="w-full py-2.5 rounded font-body text-sm font-semibold text-white transition-all duration-200 flex items-center justify-center gap-2 hover:brightness-110 hover:-translate-y-px"
+          className="hidden sm:flex w-full py-2.5 rounded font-body text-sm font-semibold text-white transition-all duration-200 items-center justify-center gap-2 hover:brightness-110 hover:-translate-y-px"
           style={{ backgroundColor: "hsl(var(--orange))", boxShadow: "0 2px 8px hsl(var(--orange)/0.2)" }}
         >
           {t("product.viewDetails")} <ArrowRight size={14} />

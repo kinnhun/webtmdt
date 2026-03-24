@@ -22,7 +22,10 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
         <>
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }} className="fixed inset-0 z-50 bg-black/40" onClick={onClose} />
           <motion.div initial={{ opacity: 0, scale: 0.96, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.96, y: 20 }} transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }} className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
-            <div className="pointer-events-auto bg-white rounded-lg shadow-2xl overflow-hidden w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+            <div className="pointer-events-auto bg-white rounded-lg shadow-2xl overflow-hidden w-full max-w-4xl max-h-[90vh] overflow-y-auto relative">
+              <button onClick={onClose} className="absolute top-3 right-3 z-10 w-9 h-9 flex items-center justify-center rounded-full bg-white shadow-md text-muted-foreground hover:text-foreground hover:bg-gray-50 transition-colors">
+                <X size={20} />
+              </button>
               <div className="grid grid-cols-1 md:grid-cols-2">
                 <div className="relative bg-beige min-h-72">
                   <img src={product.images[activeImage]} alt={product.name} className="w-full h-80 md:h-full object-cover" />
@@ -45,14 +48,9 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
                   )}
                 </div>
                 <div className="p-7 flex flex-col gap-5">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <p className="font-body text-xs text-muted-foreground mb-1 tracking-wider uppercase">{product.code}</p>
-                      <h2 className="font-display text-2xl text-foreground font-semibold">{product.name}</h2>
-                    </div>
-                    <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-muted transition-colors text-muted-foreground flex-shrink-0">
-                      <X size={18} />
-                    </button>
+                  <div>
+                    <p className="font-body text-xs text-muted-foreground mb-1 tracking-wider uppercase">{product.code}</p>
+                    <h2 className="font-display text-2xl text-foreground font-semibold">{product.name}</h2>
                   </div>
                   <div className="grid grid-cols-2 gap-x-4 gap-y-2">
                     {[
@@ -72,7 +70,7 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
                   <ul className="space-y-1.5">
                     {product.features.map((f, i) => (
                       <li key={i} className="flex items-start gap-2 font-body text-sm text-foreground">
-                        <span className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0" style={{ backgroundColor: "hsl(var(--accent))" }} />
+                        <span className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0" style={{ backgroundColor: "hsl(var(--accent))" }} />
                         {f}
                       </li>
                     ))}

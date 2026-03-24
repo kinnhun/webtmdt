@@ -294,7 +294,7 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
               {relatedProducts.map((p) => (
                 <Link key={p.id} href={`/catalogue/${p.slug}`} className="group block">
                   <div className="rounded-lg overflow-hidden border border-black/5 transition-all duration-300 group-hover:shadow-lg group-hover:-translate-y-1" style={{ backgroundColor: "#fff" }}>
-                    <div className="relative aspect-[4/3] overflow-hidden">
+                    <div className="relative aspect-4/3 overflow-hidden">
                       <Image src={p.image} alt={p.name} fill className="object-cover transition-transform duration-500 group-hover:scale-105" sizes="(max-width: 768px) 50vw, 25vw" />
                     </div>
                     <div className="p-3 md:p-4">

@@ -8,7 +8,7 @@
   --color-navy-deep: hsl(215, 40%, 15%);
   --color-navy-dark: hsl(215, 42%, 10%);
   --color-navy-light: hsl(215, 25%, 45%);
-  --color-orange: hsl(24, 90%, 52%);
+  --color-orange: hsl(38, 82%, 54%);
   --color-warm-cream: hsl(40, 30%, 96%);
   --color-warm-beige: hsl(36, 20%, 91%);
 
@@ -17,7 +17,7 @@
   --color-muted: hsl(210, 20%, 96%);
   --color-muted-foreground: hsl(215, 15%, 50%);
   --color-border: hsl(220, 13%, 90%);
-  --color-accent: hsl(24, 90%, 52%);
+  --color-accent: hsl(38, 82%, 54%);
   --color-primary: hsl(215, 35%, 25%);
   --color-primary-foreground: hsl(0, 0%, 100%);
   --color-secondary: hsl(210, 20%, 96%);
@@ -52,7 +52,7 @@
   --navy-deep: 215 40% 15%;
   --navy-dark: 215 42% 10%;
   --navy-light: 215 25% 45%;
-  --orange: 24 90% 52%;
+  --orange: 38 82% 54%;
   --warm-cream: 40 30% 96%;
   --warm-beige: 36 20% 91%;
   --background: 0 0% 100%;
@@ -60,7 +60,7 @@
   --muted: 210 20% 96%;
   --muted-foreground: 215 15% 50%;
   --border: 220 13% 90%;
-  --accent: 24 90% 52%;
+  --accent: 38 82% 54%;
   --primary: 215 35% 25%;
   --primary-foreground: 0 0% 100%;
   --secondary: 210 20% 96%;

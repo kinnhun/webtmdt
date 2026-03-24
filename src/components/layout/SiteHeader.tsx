@@ -63,8 +63,24 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
                 priority
               />
               <div>
-                <span className="font-display text-white font-bold text-lg tracking-wide leading-none block">DHT</span>
-                <span className="font-body text-white/40 text-xs tracking-[0.2em] uppercase leading-none">{t("nav.outdoorFurniture")}</span>
+                <span
+                  className="font-display font-bold text-lg tracking-wide leading-none block"
+                  style={{
+                    background: "linear-gradient(180deg, #f5d76e 0%, #e8a838 50%, #d4862a 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >DHT</span>
+                <span
+                  className="font-body text-xs tracking-[0.2em] uppercase leading-none"
+                  style={{
+                    background: "linear-gradient(180deg, #e8a838 0%, #d4862a 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >{t("nav.outdoorFurniture")}</span>
               </div>
             </Link>
 
@@ -98,7 +114,7 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
               })}
             </nav>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1 md:gap-3">
               <button
                 onClick={onSearchOpen}
                 className="w-8 h-8 flex items-center justify-center rounded-sm text-white/60 hover:text-white hover:bg-white/10 transition-all"

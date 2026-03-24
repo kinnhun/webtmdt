@@ -1,10 +1,37 @@
 import { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import type { ReactNode } from "react";
+
+const FLAGS: Record<string, ReactNode> = {
+  "en-US": (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" width="20" height="14" className="rounded-[2px]">
+      <rect width="60" height="30" fill="#002868"/>
+      <rect y="2.31" width="60" height="2.31" fill="#fff"/><rect y="6.92" width="60" height="2.31" fill="#fff"/><rect y="11.54" width="60" height="2.31" fill="#fff"/><rect y="16.15" width="60" height="2.31" fill="#fff"/><rect y="20.77" width="60" height="2.31" fill="#fff"/><rect y="25.38" width="60" height="2.31" fill="#fff"/>
+      <rect y="4.62" width="60" height="2.31" fill="#BF0A30"/><rect y="9.23" width="60" height="2.31" fill="#BF0A30"/><rect y="13.85" width="60" height="2.31" fill="#BF0A30"/><rect y="18.46" width="60" height="2.31" fill="#BF0A30"/><rect y="23.08" width="60" height="2.31" fill="#BF0A30"/><rect y="27.69" width="60" height="2.31" fill="#BF0A30"/>
+      <rect width="24" height="16.15" fill="#002868"/>
+    </svg>
+  ),
+  "en-GB": (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" width="20" height="14" className="rounded-[2px]">
+      <rect width="60" height="30" fill="#012169"/>
+      <path d="M0 0L60 30M60 0L0 30" stroke="#fff" strokeWidth="6"/>
+      <path d="M0 0L60 30M60 0L0 30" stroke="#C8102E" strokeWidth="2" clipPath="url(#gb)"/>
+      <path d="M30 0V30M0 15H60" stroke="#fff" strokeWidth="10"/>
+      <path d="M30 0V30M0 15H60" stroke="#C8102E" strokeWidth="6"/>
+    </svg>
+  ),
+  "vi-VN": (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 20" width="20" height="14" className="rounded-[2px]">
+      <rect width="30" height="20" fill="#da251d"/>
+      <polygon points="15,4 16.76,9.41 22.5,9.41 17.87,12.59 19.63,18 15,14.82 10.37,18 12.13,12.59 7.5,9.41 13.24,9.41" fill="#ff0"/>
+    </svg>
+  ),
+};
 
 const LANGUAGES = [
-  { code: "en-US", flag: "🇺🇸", short: "US" },
-  { code: "en-GB", flag: "🇬🇧", short: "UK" },
-  { code: "vi-VN", flag: "🇻🇳", short: "VI" },
+  { code: "en-US", short: "US" },
+  { code: "en-GB", short: "UK" },
+  { code: "vi-VN", short: "VI" },
 ] as const;
 
 export default function LanguageSwitcher() {
@@ -34,7 +61,7 @@ export default function LanguageSwitcher() {
       >
         {mounted ? (
           <>
-            <span className="text-base leading-none">{current.flag}</span>
+            <span className="flex items-center leading-none">{FLAGS[current.code]}</span>
             <span className="hidden sm:inline text-xs font-medium tracking-wide">{current.short}</span>
           </>
         ) : (
@@ -66,7 +93,7 @@ export default function LanguageSwitcher() {
                 onMouseEnter={(e) => { if (!isActive) (e.currentTarget as HTMLButtonElement).style.backgroundColor = "rgba(255,255,255,0.08)"; }}
                 onMouseLeave={(e) => { if (!isActive) (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent"; }}
               >
-                <span className="text-base leading-none">{lang.flag}</span>
+                <span className="flex items-center leading-none">{FLAGS[lang.code]}</span>
                 <span className="font-medium">{lang.short}</span>
                 {isActive && (
                   <svg width="12" height="9" viewBox="0 0 12 9" fill="none" className="ml-auto">

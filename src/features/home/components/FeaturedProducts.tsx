@@ -15,7 +15,7 @@ function EditorialProductCard({ product, index, onQuickView }: { product: Produc
 
   return (
     <motion.div layout initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 16, scale: 0.97 }} transition={{ duration: 0.55, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }} className="group cursor-pointer" onClick={() => onQuickView(product)}>
-      <div className="relative overflow-hidden rounded-sm aspect-[3/4] mb-4 shadow-md group-hover:shadow-xl transition-shadow duration-500" style={{ backgroundColor: "hsl(var(--warm-beige))" }}>
+      <div className="relative overflow-hidden rounded-sm aspect-3/4 mb-4 shadow-md group-hover:shadow-xl transition-shadow duration-500" style={{ backgroundColor: "hsl(var(--warm-beige))" }}>
         <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-[1.07] transition-transform duration-700 ease-out" loading="lazy" />
         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
@@ -67,15 +67,15 @@ export default function FeaturedProducts() {
               <Link href="/catalogue" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90 hover:gap-3" style={{ backgroundColor: "hsl(var(--navy))" }}>{t("home.featured.fullCatalogue")} <ArrowRight size={15} /></Link>
             </motion.div>
           </div>
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.35 }} className="flex gap-2 mb-8 sm:mb-10 overflow-x-auto pb-2" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.35 }} className="flex flex-wrap gap-2.5 mb-8 sm:mb-10">
             {FILTERS.map((f) => {
               const isActive = activeFilter === f;
               const count = f === "All" ? featuredProductsData.length : featuredProductsData.filter(p => p.category === f).length;
               if (count === 0 && f !== "All") return null;
               return (
-                <button key={f} onClick={() => setActiveFilter(f)} className="relative inline-flex items-center gap-1.5 px-4 py-2 rounded-full font-body text-sm font-medium transition-all duration-300 overflow-hidden" style={isActive ? { backgroundColor: "hsl(var(--navy-deep))", color: "#fff", boxShadow: "0 4px 14px hsl(var(--navy-deep)/0.25)" } : { backgroundColor: "hsl(var(--warm-beige))", color: "hsl(var(--navy-deep))", border: "1px solid hsl(var(--warm-beige))" }}>
+                <button key={f} onClick={() => setActiveFilter(f)} className="relative inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full font-body text-sm font-medium transition-all duration-300 overflow-hidden whitespace-nowrap shrink-0" style={isActive ? { backgroundColor: "hsl(var(--navy-deep))", color: "#fff", boxShadow: "0 4px 14px hsl(var(--navy-deep)/0.25)" } : { backgroundColor: "hsl(var(--warm-beige))", color: "hsl(var(--navy-deep))", border: "1px solid hsl(var(--warm-beige))" }}>
                   {f === "All" ? t("home.featured.filterAll") : f}
-                  <span className="inline-flex items-center justify-center w-4 h-4 rounded-full text-[10px] font-bold" style={isActive ? { backgroundColor: "hsl(var(--orange))", color: "#fff" } : { backgroundColor: "hsl(var(--navy-deep)/0.12)", color: "hsl(var(--navy-deep)/0.6)" }}>{count}</span>
+                  <span className="inline-flex items-center justify-center min-w-[1.25rem] h-5 px-1 rounded-full text-[10px] font-bold" style={isActive ? { backgroundColor: "hsl(var(--orange))", color: "#fff" } : { backgroundColor: "hsl(var(--navy-deep)/0.12)", color: "hsl(var(--navy-deep)/0.8)" }}>{count}</span>
                 </button>
               );
             })}

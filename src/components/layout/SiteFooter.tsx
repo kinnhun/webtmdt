@@ -30,10 +30,10 @@ export default function SiteFooter() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.15 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/10"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12 pb-12 border-b border-white/10"
         >
-          <motion.div variants={fadeUp}>
-            <div className="flex justify-center mb-5">
+          <motion.div variants={fadeUp} className="md:col-span-1 lg:col-span-3">
+            <div className="flex justify-start lg:justify-center mb-5">
               <Image
                 src="/img/logo.png"
                 alt="DHT Logo"
@@ -41,12 +41,11 @@ export default function SiteFooter() {
                 height={140}
                 className="rounded-sm"
               />
-
             </div>
-            <p className="font-body text-sm leading-relaxed text-white/60 mb-5">
+            <p className="font-body text-sm leading-relaxed text-white/60 mb-5 lg:text-center">
               {t("footer.description")}
             </p>
-            <div className="flex gap-3">
+            <div className="flex gap-3 lg:justify-center">
               {[
                 { Icon: Instagram, href: "#" },
                 { Icon: Facebook, href: "#" },
@@ -65,7 +64,7 @@ export default function SiteFooter() {
             </div>
           </motion.div>
 
-          <motion.div variants={fadeUp}>
+          <motion.div variants={fadeUp} className="md:col-span-1 lg:col-span-2">
             <h4 className="font-display text-white font-semibold text-base mb-5">{t("footer.quickLinks")}</h4>
             <ul className="space-y-3">
               {quickLinks.map(({ label, href }) => (
@@ -79,7 +78,7 @@ export default function SiteFooter() {
             </ul>
           </motion.div>
 
-          <motion.div variants={fadeUp}>
+          <motion.div variants={fadeUp} className="md:col-span-1 lg:col-span-2">
             <h4 className="font-display text-white font-semibold text-base mb-5">{t("footer.collections")}</h4>
             <ul className="space-y-3">
               {collections.map(({ label, category }) => (
@@ -93,22 +92,89 @@ export default function SiteFooter() {
             </ul>
           </motion.div>
 
-          <motion.div variants={fadeUp}>
-            <h4 className="font-display text-white font-semibold text-base mb-5">{t("footer.contact")}</h4>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3">
-                <MapPin size={16} className="mt-0.5 flex-shrink-0" style={{ color: "hsl(var(--accent))" }} />
-                <span className="font-body text-sm text-white/60">12 Commerce Blvd, Furniture District, Jakarta 12345</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Phone size={16} style={{ color: "hsl(var(--accent))" }} className="flex-shrink-0" />
-                <a href="tel:+6221234567890" className="font-body text-sm text-white/60 hover:text-white transition-colors">+62 21 234 567 890</a>
-              </li>
-              <li className="flex items-center gap-3">
-                <Mail size={16} style={{ color: "hsl(var(--accent))" }} className="flex-shrink-0" />
-                <a href="mailto:info@dht-furniture.com" className="font-body text-sm text-white/60 hover:text-white transition-colors">info@dht-furniture.com</a>
-              </li>
-            </ul>
+          <motion.div variants={fadeUp} className="md:col-span-2 lg:col-span-5">
+            <h4 className="font-display text-white font-semibold text-base mb-6">{t("footer.contact")}</h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-8">
+
+              {/* Factory */}
+              <div>
+                <h5 className="text-white font-bold text-sm mb-3">DHT Furniture Vietnam Factory</h5>
+                <ul className="space-y-3">
+                  <li className="flex items-start gap-2">
+                    <MapPin size={16} className="mt-0.5 flex-shrink-0 text-[hsl(var(--orange))]" />
+                    <span className="font-body text-xs text-white/60 leading-relaxed">19 National Highway, Nguyen Hue Ward, Phuoc Loc, Tuy Phuoc District, Binh Dinh Province, Vietnam</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Phone size={16} className="mt-0.5 flex-shrink-0 text-[hsl(var(--orange))]" />
+                    <span className="font-body text-xs text-white/60 leading-relaxed">
+                      <a href="tel:+84902907399" className="hover:text-white transition-colors block mb-1">Hotline: +84 902 907 399</a>
+                      <span className="text-white/40 block">(From 8:00 AM - 17:00 PM Vietnam local time)</span>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Showroom */}
+              <div>
+                <h5 className="text-white font-bold text-sm mb-3">DHT Private Garden Showroom</h5>
+                <ul className="space-y-3">
+                  <li className="flex items-start gap-2">
+                    <MapPin size={16} className="mt-0.5 flex-shrink-0 text-[hsl(var(--orange))]" />
+                    <span className="font-body text-xs text-white/60 leading-relaxed">Vinh Thanh 2 Hamlet, Tuy Phuoc Commune, Gia Lai Province, Vietnam</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Phone size={16} className="mt-0.5 flex-shrink-0 text-[hsl(var(--orange))]" />
+                    <span className="font-body text-xs text-white/60 leading-relaxed">
+                      <a href="tel:+84907386898" className="hover:text-white transition-colors block mb-1">Hotline: +84 907 386 898</a>
+                      <span className="text-white/40 block">(From 8:00 AM - 17:00 PM Vietnam local time)</span>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Office */}
+              <div>
+                <h5 className="text-white font-bold text-sm mb-3">DHT Furniture Vietnam Office<br /><span className="text-[10px] text-[hsl(var(--orange))]/80 uppercase tracking-widest block mt-1">Commercial & CS Dept.</span></h5>
+                <ul className="space-y-3">
+                  <li className="flex items-start gap-2">
+                    <MapPin size={16} className="mt-0.5 flex-shrink-0 text-[hsl(var(--orange))]" />
+                    <span className="font-body text-xs text-white/60 leading-relaxed">72 Le Thanh Ton Street, Sai Gon Ward, Ho Chi Minh City, Vietnam</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Phone size={16} className="mt-0.5 flex-shrink-0 text-[hsl(var(--orange))]" />
+                    <span className="font-body text-xs text-white/60 leading-relaxed">
+                      <a href="tel:+84907386898" className="hover:text-white transition-colors block mb-1">Hotline: +84 907 386 898</a>
+                      <span className="text-white/40 block">(24/7)</span>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* JDD */}
+              <div>
+                <h5 className="text-white font-bold text-sm mb-3 mt-4 sm:mt-0">JDD Global Furnishing Co. Ltd</h5>
+                <ul className="space-y-3">
+                  <li className="flex items-start gap-2">
+                    <MapPin size={16} className="mt-0.5 flex-shrink-0 text-[hsl(var(--orange))]" />
+                    <span className="font-body text-xs text-white/60 leading-relaxed">226 Go Dua Street, Tam Binh Ward, Thu Duc City, Ho Chi Minh City, Vietnam</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Phone size={16} className="mt-0.5 flex-shrink-0 text-[hsl(var(--orange))]" />
+                    <span className="font-body text-xs text-white/60 leading-relaxed">
+                      <a href="tel:+84932058545" className="hover:text-white transition-colors block mb-1">Hotline: +84 932 058 545</a>
+                      <span className="text-white/40 block">(From 8:00 AM - 17:00 PM Vietnam local time)</span>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+
+            {/* <div className="mt-8 pt-6 border-t border-white/5">
+              <a href="mailto:info@dhtcompany.com" className="inline-flex items-center gap-2 font-body text-sm font-semibold text-[hsl(var(--orange))] hover:text-white transition-colors">
+                <Mail size={16} /> info@dhtcompany.com
+              </a>
+            </div> */}
           </motion.div>
         </motion.div>
 

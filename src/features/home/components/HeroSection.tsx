@@ -4,8 +4,6 @@ import { ArrowRight } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
-const YOUTUBE_VIDEO_ID = "EfvZPYW_8nk";
-
 export default function HeroSection() {
   const ref = useRef<HTMLElement>(null);
   const { t } = useTranslation();
@@ -15,34 +13,28 @@ export default function HeroSection() {
     setIsMounted(true);
   }, []);
 
-  const iframeSrc = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&playsinline=1&enablejsapi=1`;
-
   return (
     <section ref={ref} className="relative w-full overflow-hidden" style={{ height: "100svh", minHeight: 480, backgroundColor: "hsl(var(--navy-deep))" }}>
-      {/* YouTube Background Video — scaled to cover viewport on all devices */}
-      <div className="absolute inset-0 pointer-events-none" style={{ overflow: "hidden" }}>
+      {/* YouTube Background Video */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden bg-[#0a1128]">
         {isMounted && (
           <iframe
-            src={iframeSrc}
-            allow="autoplay; encrypted-media"
-            allowFullScreen
-            className="absolute border-0"
+            src="https://www.youtube.com/embed/_9CxO-2BJFk?autoplay=1&mute=1&loop=1&playlist=_9CxO-2BJFk&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&fs=0&iv_load_policy=3"
+            title="DHT Furniture Hero Background"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-85 mix-blend-screen"
             style={{
-              top: "50%",
-              left: "50%",
-              width: "300vw",
-              height: "300vh",
-              minWidth: "300vw",
-              minHeight: "300vh",
-              transform: "translate(-50%, -50%)",
-              opacity: 0.5,
-              pointerEvents: "none",
+              width: "calc(100vw + 200px)",
+              height: "calc(100vh + 200px)",
+              minWidth: "177.78vh",
+              minHeight: "56.25vw",
+              border: "none",
             }}
-            title="Hero background video"
+            allow="autoplay; encrypted-media"
+            loading="lazy"
           />
         )}
       </div>
-      <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, hsl(var(--navy-deep)/0.35) 0%, hsl(var(--navy-deep)/0.6) 55%, hsl(var(--navy-deep)) 100%)" }} />
+      <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, hsl(var(--navy-deep)/0.15) 0%, hsl(var(--navy-deep)/0.4) 55%, hsl(var(--navy-deep)) 100%)" }} />
       <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-5 sm:px-6">
         <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }} className="font-body text-[10px] sm:text-xs tracking-[0.25em] sm:tracking-[0.3em] uppercase font-medium mb-4 sm:mb-6" style={{ color: "hsl(var(--orange))" }}>
           {t("home.hero.badge")}

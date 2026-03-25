@@ -9,11 +9,11 @@ export default function CtaBanner() {
   return (
     <section className="relative overflow-hidden" style={{ minHeight: "580px" }}>
       {/* YouTube Video Background */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden bg-black">
         <iframe
-          src="https://www.youtube.com/embed/3ItE2e0zheE?autoplay=1&mute=1&loop=1&playlist=3ItE2e0zheE&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&fs=0&iv_load_policy=3"
-          title="DHT Furniture Production"
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
+          src="https://www.youtube.com/embed/_9CxO-2BJFk?autoplay=1&mute=1&loop=1&playlist=_9CxO-2BJFk&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&disablekb=1&fs=0&iv_load_policy=3"
+          title="DHT Furniture Video"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-60 mix-blend-screen"
           style={{
             width: "calc(100vw + 200px)",
             height: "calc(100vh + 200px)",

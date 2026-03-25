@@ -288,6 +288,72 @@
     "cta": {
       "heading": "Sẵn sàng hợp tác?",
       "button": "Liên hệ"
+    },
+    "stats": {
+      "heading": "Năng Lực & Quy Mô Sản Xuất",
+      "subtitle": "Được trang bị máy móc hiện đại và nhà máy rộng 80.000m², chúng tôi đảm bảo khả năng mở rộng quy mô, sự chính xác và giao hàng đáng tin cậy cho toàn cầu.",
+      "factorySize": "Diện Tích Xưởng",
+      "yearlyOutput": "Sản Phẩm / Năm",
+      "monthlyContainers": "Container / Tháng",
+      "workers": "Công Nhân Sản Xuất"
+    },
+    "hr": {
+      "heading": "Nhân Sự & R&D",
+      "prodWorkers": "250 công nhân sản xuất tận tâm với chất lượng đồng nhất.",
+      "techStaff": "30 nhân sự kỹ thuật & quản lý giám sát mọi quy trình.",
+      "rndModels": "40–50 mẫu mới được phát triển mỗi năm bởi đội ngũ R&D."
+    },
+    "machinery": {
+      "heading": "Máy Móc Trọng Điểm",
+      "panelSaws": "Máy cắt ván & máy cưa bàn trượt",
+      "planers": "Máy bào 2 mặt & máy bào cuốn",
+      "pressing": "Máy ghép dọc & máy ép nóng/lạnh",
+      "cnc": "Máy CNC 3 trục",
+      "coating": "Dây chuyền sơn UV/PU/Dầu",
+      "kilns": "Lò sấy gỗ chuẩn xuất khẩu",
+      "packaging": "Máy đóng gói & hút chân không"
+    },
+    "locations": {
+      "heading": "Các Cơ Sở Hệ Thống",
+      "factory": {
+        "name": "Nhà máy DHT Furniture Vietnam",
+        "address": "Quốc lộ 19, Phường Nguyễn Văn Cừ, Phước Lộc, Huyện Tuy Phước, Tỉnh Bình Định, Việt Nam",
+        "hotline": "Hotline: +84 902 907 399"
+      },
+      "office": {
+        "name": "Văn Phòng Thương Mại & CSKH",
+        "address": "72 Lê Thánh Tôn, Quận 1, TP. Hồ Chí Minh, Việt Nam",
+        "hotline": "Hotline: +84 907 386 898 (24/7)"
+      },
+      "showroom": {
+        "name": "Showroom DHT Private Garden",
+        "address": "Thôn Vĩnh Thạnh 2, Xã Tuy Phước, Tỉnh Bình Định, Việt Nam",
+        "hotline": "Hotline: +84 907 386 898"
+      },
+      "jdd": {
+        "name": "Công ty TNHH JDD Global Furnishing",
+        "address": "226 Gò Dưa, Phường Tam Bình, TP. Thủ Đức, TP. Hồ Chí Minh, Việt Nam",
+        "hotline": "Hotline: +84 932 058 545"
+      }
+    },
+    "welcome": {
+      "heading": "LỜI CHÀO\nMỪNG",
+      "intro": "DHT Furniture Vietnam – Nhà sản xuất và chuyên xuất khẩu nội thất gỗ ngoài trời, trụ sở tại Quy Nhơn.",
+      "d": {
+        "letter": "D",
+        "word": "EDICATION",
+        "desc": "Cam kết và tận tâm trên từng sản phẩm."
+      },
+      "h": {
+        "letter": "H",
+        "word": "ONESTY",
+        "desc": "Minh bạch và trung thực trong mọi giao dịch."
+      },
+      "t": {
+        "letter": "T",
+        "word": "ENACITY",
+        "desc": "Kiên trì theo đuổi chất lượng và các mục tiêu dài hạn."
+      }
     }
   },
   "catalogue": {

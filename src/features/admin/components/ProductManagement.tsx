@@ -84,13 +84,6 @@ export default function ProductManagement() {
     },
   ];
 
-  const onFinish = (values: any) => {
-    console.log('Success:', values);
-    message.success('Product saved successfully (Demo)');
-    setDrawerVisible(false);
-    form.resetFields();
-  };
-
   return (
     <div className="space-y-4">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">

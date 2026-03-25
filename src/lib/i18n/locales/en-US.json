@@ -288,6 +288,72 @@
     "cta": {
       "heading": "Ready to Work Together?",
       "button": "Contact Us"
+    },
+    "stats": {
+      "heading": "Production Figures & Capacity",
+      "subtitle": "Equipped with state-of-the-art machinery and an expansive 80,000m² facility, we ensure scalability, precision, and reliable fulfillment for global markets.",
+      "factorySize": "Factory Area",
+      "yearlyOutput": "Products / Year",
+      "monthlyContainers": "Containers / Month",
+      "workers": "Production Workers"
+    },
+    "hr": {
+      "heading": "Human Resources & R&D",
+      "prodWorkers": "250 production workers dedicated to consistent quality.",
+      "techStaff": "30 technical & management staff overseeing operations.",
+      "rndModels": "40–50 new models being developed yearly by our R&D team."
+    },
+    "machinery": {
+      "heading": "Key Machinery",
+      "panelSaws": "Panel saws & sliding table saws",
+      "planers": "Double-surface planers & thickness planers",
+      "pressing": "Finger-joint & hot/cold pressing machines",
+      "cnc": "Three-axis CNC machines",
+      "coating": "UV/PU/oil coating lines",
+      "kilns": "Export-standard wood kilns",
+      "packaging": "Packaging & vacuum machines"
+    },
+    "locations": {
+      "heading": "Our Locations",
+      "factory": {
+        "name": "DHT Furniture Vietnam Factory",
+        "address": "19 National Highway, Nguyen Hue Ward, Phuoc Loc, Tuy Phuoc District, Binh Dinh Province, Vietnam",
+        "hotline": "Hotline: +84 902 907 399"
+      },
+      "office": {
+        "name": "Commercial & Customer Service Office",
+        "address": "72 Le Thanh Ton Street, District 1, Ho Chi Minh City, Vietnam",
+        "hotline": "Hotline: +84 907 386 898 (24/7)"
+      },
+      "showroom": {
+        "name": "DHT Private Garden Showroom",
+        "address": "Vinh Thanh 2 Hamlet, Tuy Phuoc Commune, Binh Dinh Province, Vietnam",
+        "hotline": "Hotline: +84 907 386 898"
+      },
+      "jdd": {
+        "name": "JDD Global Furnishing Co. Ltd",
+        "address": "226 Go Dua Street, Tam Binh Ward, Thu Duc City, Ho Chi Minh City, Vietnam",
+        "hotline": "Hotline: +84 932 058 545"
+      }
+    },
+    "welcome": {
+      "heading": "WELCOME\nMESSAGE",
+      "intro": "DHT Furniture Vietnam – A manufacturer and exporter of outdoor wooden furniture, based in Quy Nhon.",
+      "d": {
+        "letter": "D",
+        "word": "EDICATION",
+        "desc": "Commitment to every product."
+      },
+      "h": {
+        "letter": "H",
+        "word": "ONESTY",
+        "desc": "Transparency in all transactions."
+      },
+      "t": {
+        "letter": "T",
+        "word": "ENACITY",
+        "desc": "Persistence in pursuing quality and long-term goals."
+      }
     }
   },
   "catalogue": {

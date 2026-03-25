@@ -24,13 +24,11 @@ export default function OrderManagement() {
       item.email.toLowerCase().includes(searchText.toLowerCase())
   );
 
-  const actionMenu = (
-    <Menu>
-      <Menu.Item key="1" icon={<EyeOutlined />}>View Details</Menu.Item>
-      <Menu.Item key="2" icon={<SyncOutlined />}>Mark as Processing</Menu.Item>
-      <Menu.Item key="3" icon={<CheckCircleOutlined />}>Mark as Shipped</Menu.Item>
-    </Menu>
-  );
+  const actionItems = [
+    { key: '1', icon: <EyeOutlined />, label: 'View Details' },
+    { key: '2', icon: <SyncOutlined />, label: 'Mark as Processing' },
+    { key: '3', icon: <CheckCircleOutlined />, label: 'Mark as Shipped' },
+  ];
 
   const columns = [
     {
@@ -99,7 +97,7 @@ export default function OrderManagement() {
       render: () => (
         <Space size="small">
           <Button type="text" icon={<EyeOutlined />} className="text-navy" />
-          <Dropdown overlay={actionMenu} trigger={['click']}>
+          <Dropdown menu={{ items: actionItems }} trigger={['click']}>
             <Button type="text" icon={<MoreOutlined />} />
           </Dropdown>
         </Space>

@@ -42,11 +42,11 @@ export const emptyFilters: FilterState = {
 };
 
 export const CATEGORIES = [
-  "Bedroom",
-  "Dining Room",
-  "Living Room",
-  "Home Office",
-  "Outdoor",
+  "Outdoor Sofas",
+  "Dining Sets",
+  "Lounge & Daybeds",
+  "Tables",
+  "Chairs",
 ];
 
 export const MATERIALS = [

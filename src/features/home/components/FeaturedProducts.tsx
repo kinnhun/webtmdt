@@ -8,7 +8,16 @@ import QuickViewModal from "@/components/QuickViewModal";
 import { featuredProductsData } from "@/data/products";
 import type { Product } from "@/domains/product/product.types";
 
-const FILTERS = ["All", "Bedroom", "Living Room", "Dining Room", "Outdoor", "Home Office"];
+const FILTER_KEYS = ["All", "Outdoor Sofas", "Dining Sets", "Lounge & Daybeds", "Tables", "Chairs"] as const;
+
+const FILTER_I18N: Record<string, string> = {
+  "All": "home.featured.filterAll",
+  "Outdoor Sofas": "home.featured.filterOutdoorSofas",
+  "Dining Sets": "home.featured.filterDiningSets",
+  "Lounge & Daybeds": "home.featured.filterLoungeDaybeds",
+  "Tables": "home.featured.filterTables",
+  "Chairs": "home.featured.filterChairs",
+};
 
 function EditorialProductCard({ product, index, onQuickView }: { product: Product; index: number; onQuickView: (p: Product) => void }) {
   const { t } = useTranslation();
@@ -68,13 +77,13 @@ export default function FeaturedProducts() {
             </motion.div>
           </div>
           <motion.div initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.35 }} className="flex flex-wrap gap-2.5 mb-8 sm:mb-10">
-            {FILTERS.map((f) => {
+            {FILTER_KEYS.map((f) => {
               const isActive = activeFilter === f;
               const count = f === "All" ? featuredProductsData.length : featuredProductsData.filter(p => p.category === f).length;
               if (count === 0 && f !== "All") return null;
               return (
                 <button key={f} onClick={() => setActiveFilter(f)} className="relative inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full font-body text-sm font-medium transition-all duration-300 overflow-hidden whitespace-nowrap shrink-0" style={isActive ? { backgroundColor: "hsl(var(--navy-deep))", color: "#fff", boxShadow: "0 4px 14px hsl(var(--navy-deep)/0.25)" } : { backgroundColor: "hsl(var(--warm-beige))", color: "hsl(var(--navy-deep))", border: "1px solid hsl(var(--warm-beige))" }}>
-                  {f === "All" ? t("home.featured.filterAll") : f}
+                  {t(FILTER_I18N[f])}
                   <span className="inline-flex items-center justify-center min-w-[1.25rem] h-5 px-1 rounded-full text-[10px] font-bold" style={isActive ? { backgroundColor: "hsl(var(--orange))", color: "#fff" } : { backgroundColor: "hsl(var(--navy-deep)/0.12)", color: "hsl(var(--navy-deep)/0.8)" }}>{count}</span>
                 </button>
               );
@@ -98,3 +107,4 @@ export default function FeaturedProducts() {
     </section>
   );
 }
+

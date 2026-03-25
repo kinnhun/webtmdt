@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import Head from "next/head";
 import Link from "next/link";
-import { Award, Users, Truck, Shield, Globe, Leaf } from "lucide-react";
+import { Award, Users, Shield, Globe, Leaf } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import MarqueeStrip from "@/components/MarqueeStrip";
 
@@ -9,12 +9,11 @@ export default function AboutPage() {
   const { t } = useTranslation();
 
   const values = [
-    { icon: Award, title: t("about.values.qualityFirst.title"), desc: t("about.values.qualityFirst.desc") },
-    { icon: Users, title: t("about.values.craftspeople.title"), desc: t("about.values.craftspeople.desc") },
-    { icon: Truck, title: t("about.values.globalExport.title"), desc: t("about.values.globalExport.desc") },
-    { icon: Shield, title: t("about.values.warranty.title"), desc: t("about.values.warranty.desc") },
-    { icon: Globe, title: t("about.values.customOem.title"), desc: t("about.values.customOem.desc") },
-    { icon: Leaf, title: t("about.values.sustainable.title"), desc: t("about.values.sustainable.desc") },
+    { icon: Award, title: t("about.values.quality.title"), desc: t("about.values.quality.desc") },
+    { icon: Shield, title: t("about.values.transparency.title"), desc: t("about.values.transparency.desc") },
+    { icon: Globe, title: t("about.values.creativity.title"), desc: t("about.values.creativity.desc") },
+    { icon: Leaf, title: t("about.values.sustainability.title"), desc: t("about.values.sustainability.desc") },
+    { icon: Users, title: t("about.values.dedication.title"), desc: t("about.values.dedication.desc") },
   ];
 
   const timeline = t("about.timeline.items", { returnObjects: true }) as Array<{ year: string; title: string; desc: string }>;
@@ -101,6 +100,98 @@ export default function AboutPage() {
                 ))}
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* ── Executive Board ── */}
+        <section className="py-16 sm:py-28 relative overflow-hidden" style={{ backgroundColor: "hsl(var(--navy-dark))" }}>
+          <div className="absolute inset-0">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&auto=format&fit=crop&q=85" alt="" className="w-full h-full object-cover opacity-[0.06]" />
+            <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, hsl(var(--navy-dark)) 0%, transparent 50%, hsl(var(--navy-dark)) 100%)" }} />
+          </div>
+          {/* Watermark */}
+          <span className="absolute bottom-5 left-8 font-body text-xs tracking-[0.2em] uppercase text-white/10 z-10 hidden lg:block">www.dhtcompany.com</span>
+
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            {/* ─── Row 1: Logo+Title (left) │ John Vo (right) ─── */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-8 lg:mb-10">
+              {/* Left — Logo + Heading */}
+              <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
+                className="flex flex-col justify-center">
+                <img src="/img/logo.png" alt="DHT" className="w-20 h-20 sm:w-28 sm:h-28 object-contain mb-8 rounded-sm" />
+                <h2 className="font-display font-black uppercase leading-[0.9]" style={{ fontSize: "clamp(2.8rem, 7vw, 5rem)", color: "hsl(var(--orange))", letterSpacing: "-0.02em" }}>
+                  {t("about.team.heading")}
+                </h2>
+                <div className="mt-4 h-1 w-20 rounded-full" style={{ backgroundColor: "hsl(var(--orange))" }} />
+              </motion.div>
+
+              {/* Right — John Vo (featured) */}
+              <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }}
+                className="flex gap-5 sm:gap-6 items-start">
+                <div className="w-32 sm:w-44 aspect-[3/4] rounded-lg overflow-hidden shrink-0 border-2" style={{ borderColor: "hsl(var(--orange)/0.4)" }}>
+                  <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&auto=format&fit=crop&q=80" alt="John Vo" className="w-full h-full object-cover" />
+                </div>
+                <div className="pt-2">
+                  <h3 className="font-display font-black text-2xl sm:text-3xl uppercase tracking-wide" style={{ color: "hsl(var(--orange))" }}>John Vo</h3>
+                  <span className="inline-block px-4 py-1 rounded-full text-xs font-body font-bold uppercase tracking-wider mt-2 mb-4 border" style={{ borderColor: "hsl(var(--orange))", color: "hsl(var(--orange))", backgroundColor: "hsl(var(--orange)/0.1)" }}>{t("about.team.john.role")}</span>
+                  <div className="space-y-1.5 font-body text-sm text-white/60 mb-4">
+                    <a href="mailto:sales@dhtcompany.com" className="flex items-center gap-2.5 hover:text-white transition-colors">
+                      <span className="text-base" style={{ color: "hsl(var(--orange))" }}>✉</span> sales@dhtcompany.com
+                    </a>
+                    <a href="tel:+84932058545" className="flex items-center gap-2.5 hover:text-white transition-colors">
+                      <span className="text-base" style={{ color: "hsl(var(--orange))" }}>✆</span> +84 932 058 545
+                    </a>
+                  </div>
+                  <p className="font-body text-sm text-white/45 italic leading-relaxed max-w-sm">&ldquo;{t("about.team.john.quote")}&rdquo;</p>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* ─── Row 2 & 3 ─── */}
+            {(() => {
+              const row2 = [
+                { name: "Tyler Lê", key: "tyler", email: "tyler@dhtcompany.com", phone: "+84 902 907 399", image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&auto=format&fit=crop&q=80" },
+                { name: "Dylan", key: "dylan", email: "dylan@dhtcompany.com", phone: "+84 907 386 898", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80" },
+              ];
+              const row3 = [
+                { name: "David", key: "david", email: "david@dhtcompany.com", phone: "+84 932 057 861", image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&auto=format&fit=crop&q=80" },
+                { name: "Alicia", key: "alicia", email: "alicia@dhtcompany.com", phone: "+84 964 256 456", image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&auto=format&fit=crop&q=80" },
+              ];
+
+              const renderCard = (m: typeof row2[0], delay: number) => (
+                <motion.div key={m.name} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay }}
+                  className="flex gap-4 sm:gap-5 items-start p-5 sm:p-7 rounded-lg border border-white/[0.08] backdrop-blur-sm hover:border-white/15 transition-colors duration-300"
+                  style={{ backgroundColor: "hsl(var(--navy-deep)/0.5)" }}>
+                  <div className="w-24 sm:w-28 aspect-[3/4] rounded-lg overflow-hidden shrink-0 border" style={{ borderColor: "hsl(var(--orange)/0.3)" }}>
+                    <img src={m.image} alt={m.name} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="min-w-0 pt-1">
+                    <h3 className="font-display font-black text-lg sm:text-xl uppercase tracking-wide" style={{ color: "hsl(var(--orange))" }}>{m.name}</h3>
+                    <span className="inline-block px-3 py-0.5 rounded-full text-[10px] font-body font-bold uppercase tracking-wider mt-1 mb-3 border" style={{ borderColor: "hsl(var(--orange))", color: "hsl(var(--orange))", backgroundColor: "hsl(var(--orange)/0.1)" }}>{t(`about.team.${m.key}.role`)}</span>
+                    <div className="space-y-1 font-body text-sm text-white/55 mb-3">
+                      <a href={`mailto:${m.email}`} className="flex items-center gap-2 hover:text-white transition-colors">
+                        <span style={{ color: "hsl(var(--orange))" }}>✉</span> {m.email}
+                      </a>
+                      <a href={`tel:${m.phone.replace(/\s/g, "")}`} className="flex items-center gap-2 hover:text-white transition-colors">
+                        <span style={{ color: "hsl(var(--orange))" }}>✆</span> {m.phone}
+                      </a>
+                    </div>
+                    <p className="font-body text-sm text-white/40 italic leading-relaxed">&ldquo;{t(`about.team.${m.key}.quote`)}&rdquo;</p>
+                  </div>
+                </motion.div>
+              );
+
+              return (
+                <>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 mb-6 lg:mb-8">
+                    {row2.map((m, i) => renderCard(m, 0.1 + i * 0.08))}
+                  </div>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+                    {row3.map((m, i) => renderCard(m, 0.15 + i * 0.08))}
+                  </div>
+                </>
+              );
+            })()}
           </div>
         </section>
 

@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 const YOUTUBE_VIDEO_ID = "EfvZPYW_8nk";
@@ -9,29 +9,38 @@ const YOUTUBE_VIDEO_ID = "EfvZPYW_8nk";
 export default function HeroSection() {
   const ref = useRef<HTMLElement>(null);
   const { t } = useTranslation();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const iframeSrc = `https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&playsinline=1&enablejsapi=1`;
 
   return (
     <section ref={ref} className="relative w-full overflow-hidden" style={{ height: "100svh", minHeight: 480, backgroundColor: "hsl(var(--navy-deep))" }}>
       {/* YouTube Background Video — scaled to cover viewport on all devices */}
       <div className="absolute inset-0 pointer-events-none" style={{ overflow: "hidden" }}>
-        <iframe
-          src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&playsinline=1&enablejsapi=1&origin=${typeof window !== "undefined" ? window.location.origin : ""}`}
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-          className="absolute border-0"
-          style={{
-            top: "50%",
-            left: "50%",
-            width: "300vw",
-            height: "300vh",
-            minWidth: "300vw",
-            minHeight: "300vh",
-            transform: "translate(-50%, -50%)",
-            opacity: 0.5,
-            pointerEvents: "none",
-          }}
-          title="Hero background video"
-        />
+        {isMounted && (
+          <iframe
+            src={iframeSrc}
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+            className="absolute border-0"
+            style={{
+              top: "50%",
+              left: "50%",
+              width: "300vw",
+              height: "300vh",
+              minWidth: "300vw",
+              minHeight: "300vh",
+              transform: "translate(-50%, -50%)",
+              opacity: 0.5,
+              pointerEvents: "none",
+            }}
+            title="Hero background video"
+          />
+        )}
       </div>
       <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, hsl(var(--navy-deep)/0.35) 0%, hsl(var(--navy-deep)/0.6) 55%, hsl(var(--navy-deep)) 100%)" }} />
       <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-5 sm:px-6">

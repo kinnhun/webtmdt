@@ -16,11 +16,10 @@ export default function SiteFooter() {
   ];
 
   const collections = [
-    t("home.categories.bedroom.name"),
-    t("home.categories.diningRoom.name"),
-    t("home.categories.livingRoom.name"),
-    t("home.categories.homeOffice.name"),
-    t("home.categories.outdoor.name"),
+    { label: t("home.categories.outdoorSofa.name"), category: "Outdoor Sofas" },
+    { label: t("home.categories.outdoorDining.name"), category: "Dining Sets" },
+    { label: t("home.categories.aluminium.name"), category: "Tables" },
+    { label: t("home.categories.indoor.name"), category: "Chairs" },
   ];
 
   return (
@@ -83,11 +82,11 @@ export default function SiteFooter() {
           <motion.div variants={fadeUp}>
             <h4 className="font-display text-white font-semibold text-base mb-5">{t("footer.collections")}</h4>
             <ul className="space-y-3">
-              {collections.map((cat) => (
-                <li key={cat}>
-                  <Link href={`/catalogue?category=${encodeURIComponent(cat)}`} className="font-body text-sm text-white/60 hover:text-white transition-colors duration-200 group flex items-center gap-1">
+              {collections.map(({ label, category }) => (
+                <li key={category}>
+                  <Link href={`/catalogue?category=${encodeURIComponent(category)}`} className="font-body text-sm text-white/60 hover:text-white transition-colors duration-200 group flex items-center gap-1">
                     <span className="inline-block w-0 group-hover:w-3 h-px transition-all duration-200 mr-0 group-hover:mr-1" style={{ backgroundColor: "hsl(var(--orange))" }} />
-                    {cat}
+                    {label}
                   </Link>
                 </li>
               ))}

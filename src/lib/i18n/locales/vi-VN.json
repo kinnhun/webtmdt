@@ -11,7 +11,7 @@
     "blog": "Blog"
   },
   "footer": {
-    "description": "Nhà sản xuất và cung cấp nội thất ngoài trời cao cấp — chế tác các sản phẩm bền bỉ, chống chịu thời tiết cho khách sạn, nhà ở và không gian thương mại.",
+    "description": "Chúng tôi là nhà sản xuất tại Việt Nam chuyên về nội thất ngoài trời cao cấp cho các thương hiệu và nhà bán lẻ toàn cầu. Tập trung vào độ bền, tay nghề thủ công và sản xuất quy mô, chúng tôi cung cấp giải pháp OEM/ODM phù hợp cho thị trường quốc tế.",
     "quickLinks": "Liên kết nhanh",
     "collections": "Bộ sưu tập",
     "contact": "Liên hệ",
@@ -53,25 +53,49 @@
     },
     "categories": {
       "label": "Bộ sưu tập",
-      "heading1": "Mỗi căn phòng,",
-      "heading2": "Hoàn hảo từng chi tiết",
+      "heading1": "Nội thất ngoài trời,",
+      "heading2": "Hoàn hảo cho mọi dự án",
       "viewAll": "Xem tất cả",
-      "bedroom": { "name": "Phòng ngủ", "tagline": "Nghỉ ngơi thanh lịch", "count": "48 sản phẩm" },
-      "diningRoom": { "name": "Phòng ăn", "tagline": "Sum họp, tiệc tùng, kỷ niệm", "count": "32 sản phẩm" },
-      "livingRoom": { "name": "Phòng khách", "tagline": "Nơi tiện nghi gặp thiết kế", "count": "56 sản phẩm" },
-      "homeOffice": { "name": "Văn phòng tại nhà", "tagline": "Làm việc có mục đích", "count": "24 sản phẩm" },
-      "outdoor": { "name": "Ngoài trời", "tagline": "Mở rộng không gian sống", "count": "18 sản phẩm" }
+      "outdoorSofa": {
+        "name": "Bộ Sofa Ngoài Trời",
+        "tagline": "Thoải mái cho mọi sân thượng",
+        "count": "36 sản phẩm"
+      },
+      "outdoorDining": {
+        "name": "Bộ Bàn Ăn Ngoài Trời",
+        "tagline": "Thưởng thức bữa ăn ngoài trời",
+        "count": "28 sản phẩm"
+      },
+      "aluminium": {
+        "name": "Nội Thất Nhôm",
+        "tagline": "Nhẹ & chống thời tiết",
+        "count": "42 sản phẩm"
+      },
+      "indoor": {
+        "name": "Bộ Sưu Tập Trong Nhà",
+        "tagline": "Nội thất trong nhà cao cấp",
+        "sub": {
+          "livingRoom": "Phòng khách",
+          "diningRoom": "Phòng ăn",
+          "bathroom": "Phòng tắm"
+        }
+      }
     },
     "featured": {
-      "label": "Sản phẩm chọn lọc",
-      "heading": "Sản phẩm nổi bật",
-      "description": "Được chọn lọc từ các bộ sưu tập mới nhất — mỗi sản phẩm được chế tác tỉ mỉ và thiết kế để nâng tầm mọi không gian.",
+      "label": "Bán chạy",
+      "heading": "Nội Thất Ngoài Trời Bán Chạy",
+      "description": "Sản xuất tại Việt Nam với nguyên liệu cao cấp — lý tưởng cho resort, biệt thự và đối tác bán buôn.",
       "fullCatalogue": "Toàn bộ danh mục",
       "seeAllProducts": "Xem tất cả sản phẩm",
       "noProducts": "Chưa có sản phẩm nổi bật trong danh mục này.",
       "new": "Mới",
       "inquire": "Hỏi giá",
-      "filterAll": "Tất cả"
+      "filterAll": "Tất cả",
+      "filterOutdoorSofas": "Sofa ngoài trời",
+      "filterDiningSets": "Bộ bàn ăn",
+      "filterLoungeDaybeds": "Ghế dài & Giường tắm nắng",
+      "filterTables": "Bàn",
+      "filterChairs": "Ghế"
     },
     "whyUs": {
       "label": "Tại sao chọn DHT",
@@ -92,20 +116,52 @@
       "heading1": "Chế tác từ",
       "heading2": "Tinh hoa thiên nhiên",
       "description": "Chúng tôi chỉ sử dụng nguyên liệu tự nhiên cao cấp — mỗi loại được chọn lựa vì tính toàn vẹn cấu trúc, vẻ đẹp ấm áp và độ bền lâu dài. Gỗ chứng nhận FSC, khai thác bền vững.",
-      "solidOak": { "name": "Gỗ sồi nguyên khối", "desc": "Vân thẳng, tông mật ong ấm áp, độ bền vượt trội" },
-      "walnutWood": { "name": "Gỗ óc chó", "desc": "Sắc nâu chocolate đậm, kết cấu mịn, ấm áp phong cách mid-century" },
-      "premiumTeak": { "name": "Gỗ teak cao cấp", "desc": "Dầu tự nhiên, chống chịu mọi thời tiết, vẻ đẹp nâu vàng" },
-      "linenVelvet": { "name": "Vải lanh & Nhung", "desc": "Vải bọc chọn lọc với bảng màu vượt thời gian" }
+      "solidOak": {
+        "name": "Gỗ sồi nguyên khối",
+        "desc": "Vân thẳng, tông mật ong ấm áp, độ bền vượt trội"
+      },
+      "walnutWood": {
+        "name": "Gỗ óc chó",
+        "desc": "Sắc nâu chocolate đậm, kết cấu mịn, ấm áp phong cách mid-century"
+      },
+      "premiumTeak": {
+        "name": "Gỗ teak cao cấp",
+        "desc": "Dầu tự nhiên, chống chịu mọi thời tiết, vẻ đẹp nâu vàng"
+      },
+      "linenVelvet": {
+        "name": "Vải lanh & Nhung",
+        "desc": "Vải bọc chọn lọc với bảng màu vượt thời gian"
+      }
     },
     "rooms": {
       "label": "Cảm hứng",
       "heading": "Từng căn phòng",
       "description": "Mỗi không gian kể một câu chuyện. Khám phá nội thất được chọn lọc cho từng căn phòng trong ngôi nhà bạn.",
-      "masterBedroom": { "name": "Phòng ngủ chính", "label": "Phòng ngủ", "tagline": "Nơi nghỉ ngơi trở thành nghi thức" },
-      "livingRoom": { "name": "Phòng khách", "label": "Phòng khách", "tagline": "Trái tim của mọi ngôi nhà" },
-      "familyDining": { "name": "Phòng ăn gia đình", "label": "Phòng ăn", "tagline": "Chế tác cho những khoảnh khắc chia sẻ" },
-      "homeOffice": { "name": "Văn phòng tại nhà", "label": "Văn phòng", "tagline": "Tập trung gặp phong cách" },
-      "outdoorPatio": { "name": "Sân ngoài trời", "label": "Ngoài trời", "tagline": "Thiết kế không giới hạn" }
+      "masterBedroom": {
+        "name": "Phòng ngủ chính",
+        "label": "Phòng ngủ",
+        "tagline": "Nơi nghỉ ngơi trở thành nghi thức"
+      },
+      "livingRoom": {
+        "name": "Phòng khách",
+        "label": "Phòng khách",
+        "tagline": "Trái tim của mọi ngôi nhà"
+      },
+      "familyDining": {
+        "name": "Phòng ăn gia đình",
+        "label": "Phòng ăn",
+        "tagline": "Chế tác cho những khoảnh khắc chia sẻ"
+      },
+      "homeOffice": {
+        "name": "Văn phòng tại nhà",
+        "label": "Văn phòng",
+        "tagline": "Tập trung gặp phong cách"
+      },
+      "outdoorPatio": {
+        "name": "Sân ngoài trời",
+        "label": "Ngoài trời",
+        "tagline": "Thiết kế không giới hạn"
+      }
     },
     "testimonials": {
       "label": "Câu chuyện khách hàng",
@@ -146,35 +202,88 @@
     },
     "hero": {
       "title": "Về DHT",
-      "subtitle": "Nhà sản xuất nội thất ngoài trời cao cấp. Chế tác các sản phẩm bền bỉ, chống thời tiết từ năm 2008."
+      "subtitle": "Nhà sản xuất và xuất khẩu nội thất gỗ ngoài trời, trụ sở tại Quy Nhơn."
     },
     "story": {
       "label": "Câu chuyện",
-      "heading": "Từ xưởng nhỏ đến nhà máy đẳng cấp thế giới",
-      "paragraph1": "DHT Outdoor Furniture Production bắt đầu vào năm 2008 như một xưởng nhỏ tại Jakarta với chỉ 12 nghệ nhân và niềm đam mê chất lượng.",
-      "paragraph2": "Ngày nay, chúng tôi vận hành cơ sở sản xuất hiện đại 5.000m² với 400+ nghệ nhân lành nghề, xuất khẩu đến 25+ quốc gia. Chứng nhận ISO 9001:2015 phản ánh cam kết của chúng tôi về chất lượng nhất quán.",
-      "paragraph3": "Chúng tôi chuyên về gỗ teak, gỗ nguyên khối và vật liệu chống thời tiết — chế tác nội thất cho khách sạn, resort, nhà hàng và biệt thự cao cấp trên toàn thế giới."
+      "heading": "Từ Gia Công OEM Đến Thương Hiệu Toàn Cầu",
+      "paragraph1": "DHT khởi đầu là một nhà sản xuất OEM. Khi thị trường thay đổi, chúng tôi quyết định làm chủ hành trình xuất khẩu của chính mình.",
+      "paragraph2": "Đó là một quá trình đầy thử thách: tái cấu trúc sản xuất, đầu tư vào công nghệ, đào tạo đội ngũ và học cách phục vụ khách hàng toàn cầu.",
+      "paragraph3": "Nhờ sự kiên trì và hơn 30 năm kinh nghiệm, DHT hiện đã xuất khẩu đến hơn 20 quốc gia – từ Mỹ, Úc cho đến khắp Châu Âu. \"Chúng tôi không chỉ bán gỗ – chúng tôi trao gửi câu chuyện về sự kiên cường của người Việt.\""
     },
     "values": {
-      "label": "Giá trị",
-      "heading": "Tại sao chọn chúng tôi",
-      "qualityFirst": { "title": "Chất lượng trên hết", "desc": "Chứng nhận ISO 9001:2015. Kiểm soát chất lượng đa tầng trên mỗi sản phẩm." },
-      "craftspeople": { "title": "400+ Nghệ nhân", "desc": "Nghệ nhân lành nghề với nhiều thế hệ kinh nghiệm sản xuất nội thất." },
-      "globalExport": { "title": "Xuất khẩu toàn cầu", "desc": "Vận chuyển đáng tin cậy đến 25+ quốc gia với đầy đủ chứng từ." },
-      "warranty": { "title": "Bảo hành", "desc": "Bảo hành cấu trúc 5 năm cho tất cả sản phẩm." },
-      "customOem": { "title": "OEM/ODM tùy chỉnh", "desc": "Thiết kế, hoàn thiện và thương hiệu tùy chỉnh cho dự án của bạn." },
-      "sustainable": { "title": "Bền vững", "desc": "Gỗ chứng nhận FSC. Quy trình hoàn thiện thân thiện môi trường." }
+      "label": "Giá trị của chúng tôi",
+      "heading": "Giá Trị Cốt Lõi",
+      "quality": {
+        "title": "Chất Lượng",
+        "desc": "Kiểm soát chặt chẽ từ nguyên liệu thô đến sản phẩm hoàn thiện."
+      },
+      "transparency": {
+        "title": "Minh Bạch",
+        "desc": "Chính sách giá cả rõ ràng, báo cáo tiến độ minh bạch."
+      },
+      "creativity": {
+        "title": "Sáng Tạo",
+        "desc": "Liên tục phát triển các mẫu mã mới."
+      },
+      "sustainability": {
+        "title": "Bền Vững",
+        "desc": "Sử dụng gỗ được chứng nhận FSC."
+      },
+      "dedication": {
+        "title": "Tận Tâm",
+        "desc": "Hợp tác lâu dài và hỗ trợ khách hàng."
+      }
     },
     "timeline": {
       "label": "Hành trình",
-      "heading": "Dòng thời gian",
+      "heading": "Hình thành & Phát triển",
       "items": [
-        { "year": "2008", "title": "Thành lập", "desc": "Bắt đầu như một xưởng nhỏ tại Jakarta với 12 nghệ nhân." },
-        { "year": "2012", "title": "Chứng nhận ISO", "desc": "Đạt chứng nhận ISO 9001. Mở rộng lên 50 nhân viên." },
-        { "year": "2016", "title": "Mở rộng xuất khẩu", "desc": "Container đầu tiên xuất đi Singapore, Úc và Châu Âu." },
-        { "year": "2020", "title": "Nhà máy mới", "desc": "Khai trương cơ sở sản xuất 5.000m² với máy móc hiện đại." },
-        { "year": "2024", "title": "25+ Quốc gia", "desc": "Phục vụ các dự án khách sạn và nhà ở trên toàn thế giới." }
+        {
+          "year": "2016",
+          "title": "Thành lập DHT",
+          "desc": "Tập trung vào xuất khẩu nội thất ngoài trời."
+        },
+        {
+          "year": "2018–2020",
+          "title": "Mở rộng nhà máy",
+          "desc": "Mở rộng nhà máy, đầu tư vào CNC, dây chuyền sơn UV và lò sấy gỗ."
+        },
+        {
+          "year": "2021–2024",
+          "title": "Vươn ra toàn cầu",
+          "desc": "Đạt chứng nhận FSC và BSCI, mở rộng sang thị trường Mỹ, EU và Úc."
+        },
+        {
+          "year": "2025",
+          "title": "Đối tác chiến lược",
+          "desc": "Hướng tới mục tiêu trở thành đối tác chiến lược của các chuỗi bán lẻ quốc tế."
+        }
       ]
+    },
+    "team": {
+      "label": "Ban lãnh đạo",
+      "heading": "Ban Điều Hành",
+      "john": {
+        "role": "Nhà sáng lập & Giám đốc Kinh doanh",
+        "quote": "DHT đã, đang và sẽ tiếp tục nỗ lực mang lại giá trị lớn hơn cho khách hàng, xây dựng niềm tin bền vững và mang niềm tự hào về tay nghề Việt Nam từ Quy Nhơn ra thế giới."
+      },
+      "tyler": {
+        "role": "Đồng sáng lập & CEO",
+        "quote": "Tại DHT, chúng tôi không chỉ sản xuất nội thất ngoài trời — chúng tôi kiến tạo không gian nơi mọi người kết nối, chia sẻ câu chuyện và tạo nên những kỷ niệm đáng nhớ."
+      },
+      "dylan": {
+        "role": "Tổng Giám đốc",
+        "quote": "Mỗi dự án chúng tôi thực hiện đều mang trong mình cam kết về sự chính xác, độ bền và tay nghề thủ công Việt Nam — điều tạo nên bản sắc DHT."
+      },
+      "david": {
+        "role": "Giám đốc Phát triển Sản phẩm",
+        "quote": "Đổi mới là sự kết hợp giữa gỗ teak cổ điển với thiết kế hiện đại để tạo ra nội thất vững chãi dưới mọi bầu trời."
+      },
+      "alicia": {
+        "role": "Giám đốc Tài chính",
+        "quote": "Tài chính vững mạnh nuôi dưỡng quan hệ đối tác bền chặt. Tại DHT, mỗi đơn hàng đều được đảm bảo bởi niềm tin, minh bạch và tăng trưởng bền vững."
+      }
     },
     "cta": {
       "heading": "Sẵn sàng hợp tác?",

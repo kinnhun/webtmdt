@@ -61,6 +61,7 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
                 width={40}
                 height={40}
                 className="transition-all group-hover:scale-105 rounded-sm"
+                style={{ width: "auto", height: "auto" }}
                 priority
               />
               <div>

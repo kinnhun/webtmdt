@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
-import { Table, Button, Input, Space, Tag, Drawer, Form, Select, Upload, Row, Col, message } from 'antd';
-import { PlusOutlined, SearchOutlined, EditOutlined, DeleteOutlined, UploadOutlined } from '@ant-design/icons';
+import { Table, Button, Input, Space, Tag, message } from 'antd';
+import { PlusOutlined, SearchOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { productsData } from '@/data/products';
 import type { Product } from '@/domains/product/product.types';
-
-const { Option } = Select;
-const { TextArea } = Input;
+import { useRouter } from 'next/router';
 
 export default function ProductManagement() {
-  const [drawerVisible, setDrawerVisible] = useState(false);
+  const router = useRouter();
   const [searchText, setSearchText] = useState('');
-  const [form] = Form.useForm();
 
   // Mock data for table
   const dataSource = productsData.map((p) => ({ ...p, key: p.id }));
@@ -73,10 +70,7 @@ export default function ProductManagement() {
           <Button 
             type="text" 
             icon={<EditOutlined />} 
-            onClick={() => {
-              form.setFieldsValue(record);
-              setDrawerVisible(true);
-            }} 
+            onClick={() => router.push(`/admin/products/${record.slug || record.id}`)} 
             className="text-blue-500"
           />
           <Button 
@@ -107,10 +101,7 @@ export default function ProductManagement() {
         <Button 
           type="primary" 
           icon={<PlusOutlined />} 
-          onClick={() => {
-            form.resetFields();
-            setDrawerVisible(true);
-          }}
+          onClick={() => router.push('/admin/products/create')}
           className="bg-orange hover:bg-orange/90 border-none shadow-md h-10 px-6 font-semibold"
         >
           Add Product
@@ -137,90 +128,6 @@ export default function ProductManagement() {
         />
       </div>
 
-      <Drawer
-        title={<span className="font-display font-semibold text-lg">Product Details</span>}
-        width={720}
-        onClose={() => setDrawerVisible(false)}
-        open={drawerVisible}
-        bodyStyle={{ paddingBottom: 80 }}
-        extra={
-          <Space>
-            <Button onClick={() => setDrawerVisible(false)}>Cancel</Button>
-            <Button onClick={() => form.submit()} type="primary" className="bg-orange border-none">
-              Save Product
-            </Button>
-          </Space>
-        }
-      >
-        <Form layout="vertical" form={form} onFinish={onFinish}>
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                name="name"
-                label="Product Name"
-                rules={[{ required: true, message: 'Please enter product name' }]}
-              >
-                <Input placeholder="e.g. Oslo Bed Frame" />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                name="code"
-                label="SKU / Code"
-                rules={[{ required: true, message: 'Please enter product code' }]}
-              >
-                <Input placeholder="e.g. BED-OSL-001" />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                name="category"
-                label="Category"
-                rules={[{ required: true, message: 'Please select category' }]}
-              >
-                <Select placeholder="Select a category">
-                  <Option value="Bedroom">Bedroom</Option>
-                  <Option value="Living Room">Living Room</Option>
-                  <Option value="Dining Room">Dining Room</Option>
-                  <Option value="Outdoor">Outdoor</Option>
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                name="material"
-                label="Material"
-              >
-                <Input placeholder="e.g. Solid Oak" />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col span={24}>
-              <Form.Item
-                name="description"
-                label="Short Description"
-              >
-                <TextArea rows={3} placeholder="Brief product overview..." />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col span={24}>
-              <Form.Item label="Product Images">
-                <Upload action="/upload.do" listType="picture-card">
-                  <div>
-                    <UploadOutlined />
-                    <div style={{ marginTop: 8 }}>Upload</div>
-                  </div>
-                </Upload>
-              </Form.Item>
-            </Col>
-          </Row>
-        </Form>
-      </Drawer>
     </div>
   );
 }

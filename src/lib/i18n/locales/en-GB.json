@@ -17,15 +17,12 @@
       "browseCatalogue": "Browse Catalogue"
     },
     "materials": {
-      "linenVelvet": { "desc": "Curated upholstery fabrics in timeless palettes" }
+      "linenVelvet": {
+        "desc": "Curated upholstery fabrics in timeless palettes"
+      }
     }
   },
-  "about": {
-    "values": {
-      "customOem": { "desc": "Custom designs, finishes, and branding for your projects." },
-      "sustainable": { "desc": "FSC-certified timber. Eco-friendly finishing processes." }
-    }
-  },
+  "about": {},
   "language": {
     "en-US": "English (US)",
     "en-GB": "English (UK)",

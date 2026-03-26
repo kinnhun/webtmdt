@@ -45,7 +45,7 @@
       "paragraph2": "Every product — from teak dining sets to weather-resistant sofas — is crafted by 400+ skilled artisans, undergoing multi-stage quality control.",
       "ourStory": "Our Story",
       "isoCertified": "9001:2015 Certified",
-      "location": "Jakarta, Indonesia",
+      "location": "Ho Chi Minh, Viet Nam",
       "statsYears": "Years Operating",
       "statsUnits": "Units / Month",
       "statsCraftspeople": "Craftspeople",
@@ -362,13 +362,38 @@
       "description": "Browse our full collection of premium outdoor furniture."
     },
     "searchPlaceholder": "Search by name, code, or category...",
+    "collection": "Collection",
+    "outdoorCollection": "Outdoor Collection",
+    "indoorCollection": "Indoor Collection",
     "filters": "Filters",
     "clearAll": "Clear all",
     "category": "Category",
     "material": "Material",
     "color": "Color",
-    "size": "Size",
     "style": "Style",
+    "moq": "Min. Order Qty (MOQ)",
+    "moqOptions": {
+      "under10": "Under 10",
+      "10to50": "10–50",
+      "50to100": "50–100",
+      "100plus": "100+"
+    },
+    "colorOptions": {
+      "naturalWood": "Natural Wood",
+      "brown": "Brown",
+      "black": "Black",
+      "white": "White",
+      "grey": "Grey",
+      "beige": "Beige",
+      "green": "Green"
+    },
+    "styleOptions": {
+      "modern": "Modern",
+      "contemporary": "Contemporary",
+      "minimalist": "Minimalist",
+      "coastal": "Coastal",
+      "luxury": "Luxury"
+    },
     "noResults": "No products match your filters",
     "clearAllFilters": "Clear all filters",
     "quickView": "Quick View",

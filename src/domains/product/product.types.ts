@@ -1,14 +1,18 @@
+export type Collection = 'Outdoor' | 'Indoor';
+
 export interface Product {
   id: string;
   slug: string;
   name: string;
   code: string;
+  collection: Collection;
   category: string;
   subCategory?: string;
   material: string;
   color: string;
-  size: string;
+  size?: string;
   style: string;
+  moq?: string;
   image: string;
   images: string[];
   description: string;
@@ -24,67 +28,61 @@ export interface Product {
   longDescription?: string;
 }
 
-
 export interface FilterState {
   category: string[];
   material: string[];
+  moq: string[];
   color: string[];
-  size: string[];
   style: string[];
 }
 
 export const emptyFilters: FilterState = {
   category: [],
   material: [],
+  moq: [],
   color: [],
-  size: [],
   style: [],
 };
 
-export const CATEGORIES = [
-  "Outdoor Sofas",
-  "Dining Sets",
-  "Lounge & Daybeds",
-  "Tables",
-  "Chairs",
+// ── Outdoor categories ──────────────────────────────────────────
+export const OUTDOOR_CATEGORIES = [
+  'Outdoor Sofas',
+  'Dining Sets',
+  'Lounge & Daybeds',
+  'Tables',
+  'Chairs',
 ];
 
-export const MATERIALS = [
-  "Solid Oak",
-  "Walnut Wood",
-  "Teak",
-  "Marble Top",
-  "Upholstered",
-  "Metal Frame",
-  "Rattan",
+// ── Indoor categories ───────────────────────────────────────────
+export const INDOOR_CATEGORIES = [
+  'Living Room Furniture',
+  'Dining Room Furniture',
+  'Bathroom Furniture',
 ];
+
+// ── Shared filters ──────────────────────────────────────────────
+export const MATERIALS = ['Teak', 'Acacia', 'Aluminium'];
+
+export const MOQ_OPTIONS = ['Under 10', '10–50', '50–100', '100+'];
+
+export const CATEGORIES = [...OUTDOOR_CATEGORIES, ...INDOOR_CATEGORIES];
 
 export const COLORS = [
-  "Natural Wood",
-  "Walnut Brown",
-  "Ivory White",
-  "Charcoal Grey",
-  "Sage Green",
-  "Deep Navy",
-  "Warm Beige",
-];
-
-export const SIZES = [
-  "Single",
-  "Double / Full",
-  "Queen",
-  "King",
-  "Small",
-  "Medium",
-  "Large",
+  'Natural Wood',
+  'Brown',
+  'Black',
+  'White',
+  'Grey',
+  'Beige',
+  'Green'
 ];
 
 export const STYLES = [
-  "Scandinavian",
-  "Mid-Century Modern",
-  "Contemporary",
-  "Classic",
-  "Industrial",
-  "Coastal",
-  "Minimalist",
+  'Modern',
+  'Contemporary',
+  'Minimalist',
+  'Coastal',
+  'Luxury'
 ];
+
+export const SIZES: string[] = [];

@@ -8,7 +8,6 @@ export async function getProducts(filters: FilterState, search: string): Promise
   if (filters.category.length) params.category = filters.category.join(",");
   if (filters.material.length) params.material = filters.material.join(",");
   if (filters.color.length) params.color = filters.color.join(",");
-  if (filters.size.length) params.size = filters.size.join(",");
   if (filters.style.length) params.style = filters.style.join(",");
 
   const { data } = await httpClient.get<Product[]>("/products", { params });

@@ -45,7 +45,7 @@
       "paragraph2": "Mỗi sản phẩm — từ bộ bàn ghế teak đến bộ sofa chống thời tiết — được chế tác bởi 400+ nghệ nhân lành nghề, trải qua kiểm soát chất lượng đa tầng.",
       "ourStory": "Câu chuyện của chúng tôi",
       "isoCertified": "Chứng nhận 9001:2015",
-      "location": "Jakarta, Indonesia",
+      "location": "Ho Chi Minh, Viet Nam",
       "statsYears": "Năm hoạt động",
       "statsUnits": "Sản phẩm / Tháng",
       "statsCraftspeople": "Nghệ nhân",
@@ -362,13 +362,38 @@
       "description": "Khám phá bộ sưu tập đầy đủ nội thất ngoài trời cao cấp."
     },
     "searchPlaceholder": "Tìm theo tên, mã hoặc danh mục...",
+    "collection": "Bộ sưu tập",
+    "outdoorCollection": "Bộ sưu tập Ngoài trời",
+    "indoorCollection": "Bộ sưu tập Trong nhà",
     "filters": "Bộ lọc",
     "clearAll": "Xóa tất cả",
     "category": "Danh mục",
     "material": "Chất liệu",
     "color": "Màu sắc",
-    "size": "Kích thước",
     "style": "Phong cách",
+    "moq": "SL đặt hàng tối thiểu",
+    "moqOptions": {
+      "under10": "Dưới 10",
+      "10to50": "10–50",
+      "50to100": "50–100",
+      "100plus": "100+"
+    },
+    "colorOptions": {
+      "naturalWood": "Mũ vân gỗ tự nhiên",
+      "brown": "Nâu",
+      "black": "Đen",
+      "white": "Trắng",
+      "grey": "Xám",
+      "beige": "Beige",
+      "green": "Xanh lá"
+    },
+    "styleOptions": {
+      "modern": "Hiện đại",
+      "contemporary": "Đương đại",
+      "minimalist": "Tối giản",
+      "coastal": "Ven biển",
+      "luxury": "Sang trọng"
+    },
     "noResults": "Không có sản phẩm phù hợp với bộ lọc",
     "clearAllFilters": "Xóa tất cả bộ lọc",
     "quickView": "Xem nhanh",

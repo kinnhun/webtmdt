@@ -171,6 +171,8 @@ export default function CataloguePage() {
   const [filters, setFilters] = useState<FilterState>({ category: [], material: [], moq: [], color: [], style: [] });
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [page, setPage] = useState(1);
+  const ITEMS_PER_PAGE = 12;
 
   const filterGroups: { key: keyof FilterState; label: string; options: string[] }[] = [
     { key: "category", label: t("catalogue.category"), options: collection === "Outdoor" ? OUTDOOR_CATEGORIES : INDOOR_CATEGORIES },
@@ -213,6 +215,10 @@ export default function CataloguePage() {
     setCollection(initCol);
     setFilters(initFilters);
     if (q.search && typeof q.search === "string") setSearch(q.search);
+    if (q.page && typeof q.page === "string") {
+      const parsedPage = parseInt(q.page, 10);
+      if (!isNaN(parsedPage) && parsedPage > 0) setPage(parsedPage);
+    }
     
     setInitialized(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -222,9 +228,10 @@ export default function CataloguePage() {
   useEffect(() => {
     if (!initialized) return;
 
-    const query: any = {};
+    const query: Record<string, string> = {};
     if (collection !== "Outdoor") query.collection = collection;
     if (search) query.search = search;
+    if (page > 1) query.page = page.toString();
     
     Object.entries(filters).forEach(([key, values]) => {
       if (values && values.length > 0) {
@@ -232,12 +239,24 @@ export default function CataloguePage() {
       }
     });
 
-    router.replace({ pathname: router.pathname, query }, undefined, { shallow: true, scroll: false });
-  }, [collection, search, filters, initialized, router.pathname]);
+    // Check if the query is actually different from the current URL to avoid cancelling Next.js scroll-to-top
+    const currentQueryRaw = { ...router.query };
+    delete currentQueryRaw.slug; // clean up if any dynamic route slugs leaked (though index.tsx doesn't have them)
+    
+    // Sort keys to ensure stable stringify or URLSearchParams
+    const newQueryString = new URLSearchParams(query).toString();
+    const currentQueryString = new URLSearchParams(currentQueryRaw as any).toString();
+
+    if (newQueryString !== currentQueryString) {
+      router.replace({ pathname: router.pathname, query }, undefined, { shallow: true, scroll: false });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [collection, search, filters, page, initialized, router.pathname]);
 
   const handleCollectionChange = (newCollection: Collection) => {
     setCollection(newCollection);
     setFilters(prev => ({ ...prev, category: [] })); 
+    setPage(1);
   };
 
   const toggleFilter = (key: keyof FilterState, value: string) => {
@@ -245,11 +264,13 @@ export default function CataloguePage() {
       const arr = prev[key] || [];
       return { ...prev, [key]: arr.includes(value) ? arr.filter((v: string) => v !== value) : [...arr, value] };
     });
+    setPage(1);
   };
 
   const clearFilters = () => {
     setFilters({ category: [], material: [], moq: [], color: [], style: [] });
     setSearch("");
+    setPage(1);
   };
 
   const activeCount = Object.values(filters).flat().length + (search ? 1 : 0);
@@ -273,6 +294,10 @@ export default function CataloguePage() {
 
   filtered = [...filtered].sort((a, b) => a.name.localeCompare(b.name));
 
+  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE) || 1;
+  const safePage = Math.min(page, totalPages);
+  const paginated = filtered.slice((safePage - 1) * ITEMS_PER_PAGE, safePage * ITEMS_PER_PAGE);
+
   return (
     <>
       <Head>
@@ -289,7 +314,7 @@ export default function CataloguePage() {
           <div className="flex gap-3 mb-6">
             <div className="relative flex-1">
               <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
-              <input type="text" placeholder={t("catalogue.searchPlaceholder")} value={search} onChange={(e) => setSearch(e.target.value)} className="w-full pl-10 pr-4 py-3 rounded-sm bg-white border border-border font-body text-sm outline-none focus:ring-2 transition-shadow" style={{ "--tw-ring-color": "hsl(var(--orange)/0.3)" } as React.CSSProperties} />
+              <input type="text" placeholder={t("catalogue.searchPlaceholder")} value={search} onChange={(e) => { setSearch(e.target.value); setPage(1); }} className="w-full pl-10 pr-4 py-3 rounded-sm bg-white border border-border font-body text-sm outline-none focus:ring-2 transition-shadow" style={{ "--tw-ring-color": "hsl(var(--orange)/0.3)" } as React.CSSProperties} />
             </div>
             <button onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)} className="lg:hidden flex items-center gap-2 px-5 py-3 rounded-sm bg-white border border-border font-body text-sm font-medium hover:bg-muted transition-colors">
               <SlidersHorizontal size={15} /> {t("catalogue.filters")} {activeCount > 0 && <span className="w-5 h-5 rounded-full text-xs text-white flex items-center justify-center" style={{ backgroundColor: "hsl(var(--orange))" }}>{activeCount}</span>}
@@ -361,9 +386,35 @@ export default function CataloguePage() {
               )}
 
               {filtered.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5">
-                  {filtered.map((p, i) => (<ProductCard key={p.id} product={p} index={i} onQuickView={setQuickViewProduct} />))}
-                </div>
+                <>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                    {paginated.map((p, i) => (<ProductCard key={p.id} product={p} index={i} onQuickView={setQuickViewProduct} />))}
+                  </div>
+
+                  {totalPages > 1 && (
+                    <div className="mt-12 mb-8 flex items-center justify-center gap-2 font-body text-sm">
+                      <button onClick={() => { setPage(1); window.scrollTo({ top: 300, behavior: 'smooth' }); }} disabled={safePage === 1} className="w-8 h-8 flex items-center justify-center rounded-sm border border-border disabled:opacity-50 hover:bg-muted transition-colors disabled:cursor-not-allowed text-muted-foreground hover:text-foreground" title="First">«</button>
+                      <button onClick={() => { setPage(safePage - 1); window.scrollTo({ top: 300, behavior: 'smooth' }); }} disabled={safePage === 1} className="w-8 h-8 flex items-center justify-center rounded-sm border border-border disabled:opacity-50 hover:bg-muted transition-colors disabled:cursor-not-allowed text-muted-foreground hover:text-foreground" title="Previous">‹</button>
+
+                      {Array.from({ length: totalPages }).map((_, idx) => {
+                        const p = idx + 1;
+                        if (p === 1 || p === totalPages || (p >= safePage - 1 && p <= safePage + 1)) {
+                          return (
+                            <button key={p} onClick={() => { setPage(p); window.scrollTo({ top: 300, behavior: 'smooth' }); }} className={`w-8 h-8 flex items-center justify-center rounded-sm border transition-colors ${safePage === p ? 'bg-orange outline-none text-white border-orange shadow-md' : 'border-border text-foreground hover:bg-muted'}`} style={safePage === p ? { backgroundColor: 'hsl(var(--orange))', borderColor: 'hsl(var(--orange))' } : {}}>
+                              {p}
+                            </button>
+                          );
+                        }
+                        if (p === 2 && safePage > 3) return <span key={`dots-start-${p}`} className="px-1 text-muted-foreground">...</span>;
+                        if (p === totalPages - 1 && safePage < totalPages - 2) return <span key={`dots-end-${p}`} className="px-1 text-muted-foreground">...</span>;
+                        return null;
+                      })}
+
+                      <button onClick={() => { setPage(safePage + 1); window.scrollTo({ top: 300, behavior: 'smooth' }); }} disabled={safePage === totalPages} className="w-8 h-8 flex items-center justify-center rounded-sm border border-border disabled:opacity-50 hover:bg-muted transition-colors disabled:cursor-not-allowed text-muted-foreground hover:text-foreground" title="Next">›</button>
+                      <button onClick={() => { setPage(totalPages); window.scrollTo({ top: 300, behavior: 'smooth' }); }} disabled={safePage === totalPages} className="w-8 h-8 flex items-center justify-center rounded-sm border border-border disabled:opacity-50 hover:bg-muted transition-colors disabled:cursor-not-allowed text-muted-foreground hover:text-foreground" title="Last">»</button>
+                    </div>
+                  )}
+                </>
               ) : (
                 <div className="text-center py-20">
                   <p className="font-body text-muted-foreground text-lg mb-2">{t("catalogue.noResults")}</p>

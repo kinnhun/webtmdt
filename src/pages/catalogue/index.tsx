@@ -369,6 +369,12 @@ export default function CataloguePage() {
             </div>
 
             <div className="flex-1 min-w-0">
+              <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
+                <span className="font-body text-sm font-medium text-foreground">
+                  {t("catalogue.productsFound", { count: filtered.length })}
+                </span>
+              </div>
+
               {activeCount > 0 && (
                 <div className="flex flex-wrap gap-2 mb-5">
                   {Object.entries(filters).map(([key, values]) =>

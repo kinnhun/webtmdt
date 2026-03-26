@@ -396,6 +396,7 @@
     },
     "noResults": "Không có sản phẩm phù hợp với bộ lọc",
     "clearAllFilters": "Xóa tất cả bộ lọc",
+    "productsFound": "Hiển thị {{count}} sản phẩm",
     "quickView": "Xem nhanh",
     "inquire": "Hỏi giá"
   },

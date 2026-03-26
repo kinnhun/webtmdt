@@ -396,6 +396,7 @@
     },
     "noResults": "No products match your filters",
     "clearAllFilters": "Clear all filters",
+    "productsFound": "Showing {{count}} products",
     "quickView": "Quick View",
     "inquire": "Inquire"
   },

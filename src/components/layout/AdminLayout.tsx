@@ -50,7 +50,19 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     {
       key: '/admin/products',
       icon: <ShoppingOutlined className="text-[1.1rem]" />,
-      label: <Link href="/admin/products" className="font-body text-sm font-medium">{t('admin.menu.products', 'Products')}</Link>,
+      label: <span className="font-body text-sm font-medium">{t('admin.menu.products', 'Products')}</span>,
+      children: [
+        {
+          key: '/admin/products/manage',
+          icon: <EditOutlined />,
+          label: <Link href="/admin/products" className="font-body text-sm">Manage Products</Link>,
+        },
+        {
+          key: '/admin/products/attributes',
+          icon: <SettingOutlined />,
+          label: <Link href="/admin/products/attributes" className="font-body text-sm">Attributes & Filters</Link>,
+        },
+      ],
     },
     {
       key: '/admin/inquiries',
@@ -121,6 +133,18 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
   if (!mounted) return null;
 
+  const getSelectedKey = () => {
+    if (router.pathname === '/admin/blog') return '/admin/blog/overview';
+    if (router.pathname === '/admin/products') return '/admin/products/manage';
+    return router.pathname;
+  };
+
+  const getOpenKeys = () => {
+    if (router.pathname.startsWith('/admin/blog')) return ['/admin/blog'];
+    if (router.pathname.startsWith('/admin/products')) return ['/admin/products'];
+    return [];
+  };
+
   return (
     <Layout className="min-h-screen font-body" style={{ backgroundColor: "hsl(var(--warm-cream))" }}>
       <Sider 
@@ -159,11 +183,8 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         <div className="px-3 py-6">
           <Menu
             mode="inline"
-            selectedKeys={[
-              router.pathname === '/admin/blog' ? '/admin/blog/overview' :
-              router.pathname.startsWith('/admin/blog/') ? router.pathname : router.pathname
-            ]}
-            defaultOpenKeys={router.pathname.startsWith('/admin/blog') ? ['/admin/blog'] : []}
+            selectedKeys={[getSelectedKey()]}
+            defaultOpenKeys={getOpenKeys()}
             items={menuItems}
             className="border-none bg-transparent admin-custom-menu"
           />

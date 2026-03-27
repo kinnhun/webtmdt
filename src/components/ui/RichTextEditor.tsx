@@ -617,6 +617,9 @@ function EDITOR_STYLES(minHeight: number) {
       background: #fafafa;
       border-color: #e5e7eb;
       font-family: inherit;
+      position: sticky;
+      top: 80px;
+      z-index: 10;
     }
     .quill-custom-wrap .ql-container {
       border-bottom-left-radius: 10px;

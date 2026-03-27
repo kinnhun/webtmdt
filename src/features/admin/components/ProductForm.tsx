@@ -162,10 +162,10 @@ function AttributeRow({ fieldName, remove }: { fieldName: number; remove: () => 
   const titleField = lang === 'VI' ? 'titleVI' : lang === 'UK' ? 'titleUK' : 'titleUS';
 
   return (
-    <div className="group p-4 rounded-xl border border-gray-100 bg-gray-50/60 hover:border-orange/30 hover:bg-orange/[0.02] transition-all">
-      <div className="flex items-start gap-3">
+    <div className="group p-3 sm:p-4 rounded-xl border border-gray-100 bg-gray-50/60 hover:border-orange/30 hover:bg-orange/2 transition-all">
+      <div className="flex flex-col sm:flex-row items-start gap-3">
         {/* Icon picker */}
-        <div className="w-36 flex-shrink-0">
+        <div className="w-full sm:w-36 shrink-0">
           <p className="text-[10px] text-gray-400 font-semibold uppercase mb-1">Icon</p>
           <Form.Item name={[fieldName, 'icon']} noStyle>
             <IconPicker />
@@ -225,10 +225,10 @@ function SpecRow({ fieldName, remove }: { fieldName: number; remove: () => void 
   const titleField = lang === 'VI' ? 'nameVI' : lang === 'UK' ? 'nameUK' : 'nameUS';
 
   return (
-    <div className="group p-4 rounded-xl border border-gray-100 bg-gray-50/60 hover:border-orange/30 hover:bg-orange/[0.02] transition-all">
-      <div className="flex items-start gap-4">
+    <div className="group p-3 sm:p-4 rounded-xl border border-gray-100 bg-gray-50/60 hover:border-orange/30 hover:bg-orange/2 transition-all">
+      <div className="flex flex-col sm:flex-row items-start gap-4">
         {/* Title */}
-        <div className="w-1/3">
+        <div className="w-full sm:w-1/3">
           <div className="flex items-center justify-between mb-1">
             <p className="text-[10px] text-gray-400 font-semibold uppercase">Key</p>
             <div className="flex gap-1">
@@ -565,7 +565,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
 
   // ── Translation banner ───────────────────────────────────────────────────
   const TransBanner = ({ flag, label, suffix }: { flag: string; label: string; suffix: string }) => (
-    <div className="flex items-center gap-3 mb-5 p-3.5 rounded-xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100">
+    <div className="flex items-center gap-3 mb-5 p-3.5 rounded-xl bg-linear-to-r from-blue-50 to-indigo-50 border border-blue-100">
       <span className="text-2xl">{flag}</span>
       <div className="flex-1">
         <p className="font-semibold text-gray-800 m-0 text-sm">{label}</p>
@@ -670,8 +670,8 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
 
 
           {/* ── URL & SKU ── */}
-          <Row gutter={16}>
-            <Col span={14}>
+          <Row gutter={[16, 16]}>
+            <Col xs={24} md={14}>
               <SectionLabel>URL Slug</SectionLabel>
               <Form.Item name="slug" rules={[{ required: true }]}>
                 <Input
@@ -682,7 +682,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
                 />
               </Form.Item>
             </Col>
-            <Col span={10}>
+            <Col xs={24} md={10}>
               <SectionLabel>SKU Code</SectionLabel>
               <Form.Item name="code" rules={[{ required: true }]}>
                 <Input
@@ -695,7 +695,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
           </Row>
 
           {/* ── Collection & Category ── */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <SectionLabel>Collection</SectionLabel>
               <Form.Item name="collection" rules={[{ required: true }]}>
@@ -747,41 +747,41 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
           <div>
             <SectionLabel>B2B Details (Required)</SectionLabel>
             <p className="text-xs text-gray-400 -mt-3 mb-4">Core fields used for storefront filtering and categorization.</p>
-            <Row gutter={16}>
-              <Col span={8}>
+            <Row gutter={[16, 16]}>
+              <Col xs={24} md={8}>
                 <Form.Item name="moq" label="MOQ" rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
                   <Select placeholder="50–100 pcs" className="rounded-lg" allowClear>
                     {MOQ_OPTIONS.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
                   </Select>
                 </Form.Item>
               </Col>
-              <Col span={8}>
+              <Col xs={24} md={8}>
                 <Form.Item name="dimensions" label="Dimensions (L×W×H)" rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
                   <Input placeholder="220 × 100 × 76 cm" className="rounded-lg border-gray-200" />
                 </Form.Item>
               </Col>
-              <Col span={8}>
+              <Col xs={24} md={8}>
                 <Form.Item name="weight" label="Weight" rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
                   <Input placeholder="52 kg" className="rounded-lg border-gray-200" />
                 </Form.Item>
               </Col>
             </Row>
-            <Row gutter={16}>
-              <Col span={8}>
+            <Row gutter={[16, 16]}>
+              <Col xs={24} md={8}>
                 <Form.Item name="material" label="Material" rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
                   <Select placeholder="Walnut Wood" className="rounded-lg" allowClear mode="tags">
                     {MATERIALS.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
                   </Select>
                 </Form.Item>
               </Col>
-              <Col span={8}>
+              <Col xs={24} md={8}>
                 <Form.Item name="style" label="Style" rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
                   <Select placeholder="Mid-Century Modern" className="rounded-lg" allowClear mode="tags">
                     {STYLES.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
                   </Select>
                 </Form.Item>
               </Col>
-              <Col span={8}>
+              <Col xs={24} md={8}>
                 <Form.Item name="color" label="Color / Finish" rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
                   <Select placeholder="Natural Walnut" className="rounded-lg" allowClear mode="tags">
                     {COLORS.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
@@ -860,7 +860,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       label: <span className="flex items-center gap-1.5"><HeartOutlined />Care</span>,
       children: (
         <div className="pt-5">
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="p-5 rounded-xl bg-amber-50 border border-amber-100">
               <SectionLabel>Care Instructions</SectionLabel>
               <DynamicList name="careInstructions" placeholder="e.g. Clean with damp cloth" btnLabel="Add instruction" />
@@ -922,11 +922,11 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
     <div className="min-h-screen bg-gray-50/60">
       {/* ── Sticky Header ─────────────────────────────────────────────────── */}
       <div className="bg-white border-b border-gray-100 shadow-sm sticky top-0 z-30">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-0">
+          <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto overflow-hidden">
             <button
               onClick={() => router.push('/admin/products')}
-              className="flex items-center justify-center w-9 h-9 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-gray-500"
+              className="flex shrink-0 items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-gray-500"
             >
               <ArrowLeftOutlined className="text-sm" />
             </button>
@@ -934,8 +934,8 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
               <img src={initialValues.image} alt="" className="w-10 h-10 rounded-lg object-cover border-2 border-white shadow-sm" />
             )}
             <div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-lg font-bold text-gray-900 m-0 leading-tight">
+              <div className="flex items-center gap-2 flex-wrap">
+                <h1 className="text-base sm:text-lg font-bold text-gray-900 m-0 leading-tight truncate max-w-[150px] sm:max-w-xs">
                   {isEdit ? initialValues?.name || 'Edit Product' : 'New Product'}
                 </h1>
                 {isEdit && (
@@ -957,8 +957,8 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <Button onClick={() => router.push('/admin/products')} className="rounded-lg border-gray-200 text-gray-500">
+          <div className="flex items-center justify-start sm:justify-end gap-2 sm:gap-3 w-full sm:w-auto">
+            <Button onClick={() => router.push('/admin/products')} className="rounded-lg border-gray-200 text-gray-500 flex-1 sm:flex-none">
               Discard
             </Button>
             <Button
@@ -967,7 +967,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
               loading={isUpdating}
               onClick={() => form.submit()}
               size="large"
-              className="rounded-lg border-none font-semibold px-6 shadow-md"
+              className="rounded-lg border-none font-semibold px-4 sm:px-6 shadow-md flex-1 sm:flex-none"
               style={{ background: 'linear-gradient(135deg, #f97316, #ea580c)' }}
             >
               {isEdit ? 'Save Changes' : 'Publish'}
@@ -977,7 +977,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       </div>
 
       {/* ── Form body ─────────────────────────────────────────────────────── */}
-      <div className="max-w-6xl mx-auto px-6 py-6">
+      <div className="max-w-6xl mx-auto px-2 sm:px-6 py-4 sm:py-6 relative z-10">
         <Form layout="vertical" form={form} onFinish={onFinish}>
           <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden" style={{ boxShadow: '0 2px 20px rgba(0,0,0,0.04)' }}>
             <Tabs

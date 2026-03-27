@@ -6,6 +6,7 @@ import {
   CheckCircleOutlined, ExclamationCircleOutlined
 } from '@ant-design/icons';
 import { useRouter } from 'next/router';
+import type { Inquiry } from '@/types/admin';
 
 const { Title, Text } = Typography;
 
@@ -13,7 +14,7 @@ export default function DashboardContainer() {
   const router = useRouter();
 
   // --- MOCK DATA ---
-  const recentInquiries = [
+  const recentInquiries: Inquiry[] = [
     { key: '1', date: 'Just now', name: 'John Doe', company: 'JD Furniture', email: 'john@jdfurniture.com', product: 'Outdoor Sofa Set A', status: 'Pending', rep: 'Unassigned' },
     { key: '2', date: '2 hrs ago', name: 'Alice Smith', company: 'Smith Hotels', email: 'alice@smithhotels.com', product: 'Aluminium Dining Chair', status: 'Replied', rep: 'Sarah' },
     { key: '3', date: '1 day ago', name: 'Robert Chen', company: 'Chen Imports', email: 'robert@chenimports.com', product: 'Teak Wood Sunbed', status: 'Quoted', rep: 'Mike' },
@@ -23,7 +24,7 @@ export default function DashboardContainer() {
 
   const inquiryColumns = [
     { title: 'Time', dataIndex: 'date', key: 'date', render: (t: string) => <Text type="secondary" className="text-xs">{t}</Text> },
-    { title: 'Client Info', key: 'client', render: (_: any, r: any) => (
+    { title: 'Client Info', key: 'client', render: (_: unknown, r: Inquiry) => (
       <div>
         <div className="font-medium text-navy-deep">{r.name}</div>
         <div className="text-xs text-navy/60">{r.company}</div>

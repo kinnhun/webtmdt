@@ -24,7 +24,7 @@ import * as AntIcons from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateProduct } from '@/services/product.service';
-import type { Product, ProductAttribute } from '@/domains/product/product.types';
+import type { Product, ProductAttribute, ProductSpecification } from '@/domains/product/product.types';
 import type { UploadFile } from 'antd/es/upload/interface';
 import dynamic from 'next/dynamic';
 import ImgCrop from 'antd-img-crop';
@@ -87,14 +87,14 @@ function autoSKU(name: string) {
 }
 
 function renderIcon(name: string, className = 'text-orange') {
-  const Comp = (AntIcons as any)[name];
+  const Comp = AntIcons[name as keyof typeof AntIcons] as React.ComponentType<{ className?: string }>;
   return Comp ? <Comp className={className} /> : <AppstoreOutlined className={className} />;
 }
 
 // ─── Sub-components ────────────────────────────────────────────────────────
 const SectionLabel = ({ children }: { children: React.ReactNode }) => (
   <div className="flex items-center gap-2 mb-4">
-    <div className="w-1 h-4 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(180deg, #f97316, #ea580c)' }} />
+    <div className="w-1 h-4 rounded-full shrink-0" style={{ background: 'linear-gradient(180deg, #f97316, #ea580c)' }} />
     <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest">{children}</span>
   </div>
 );
@@ -115,7 +115,7 @@ function IconPicker({ value, onChange }: { value?: string; onChange?: (v: string
         onClick={() => setOpen(true)}
         className="flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-200 hover:border-orange hover:bg-orange/5 transition-all cursor-pointer w-full"
       >
-        <span className="text-xl flex-shrink-0">{value ? renderIcon(value, 'text-orange text-base') : <AppstoreOutlined className="text-gray-300 text-base" />}</span>
+        <span className="text-xl shrink-0">{value ? renderIcon(value, 'text-orange text-base') : <AppstoreOutlined className="text-gray-300 text-base" />}</span>
         <span className="text-sm text-gray-500 flex-1 text-left">{value ? ICON_OPTIONS.find(i => i.name === value)?.label || value : 'Pick icon…'}</span>
         <SwapOutlined className="text-gray-300 text-xs" />
       </button>
@@ -365,7 +365,7 @@ function DescriptionFields({ form }: { form: ReturnType<typeof Form.useForm>[0] 
 /** Bridges Form state with the uncontrolled RichTextEditor */
 function RichTextEditorControl({
   fieldName, form, placeholder, minHeight,
-}: { fieldName: string; form: any; placeholder?: string; minHeight?: number }) {
+}: { fieldName: string; form: import('antd').FormInstance; placeholder?: string; minHeight?: number }) {
   const value = Form.useWatch(fieldName, form);
   return (
     <RichTextEditor
@@ -414,12 +414,12 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
   useEffect(() => {
     if (!initialValues) return;
 
-    let specifications: any[] = [];
+    let specifications: ProductSpecification[] = [];
     if (Array.isArray(initialValues.specifications)) {
       specifications = initialValues.specifications;
     } else if (initialValues.specifications && typeof initialValues.specifications === 'object') {
       specifications = Object.entries(initialValues.specifications).map(
-        ([nameUS, valueUS]) => ({ nameUS, valueUS })
+        ([nameUS, valueUS]) => ({ nameUS, valueUS: String(valueUS) })
       );
     }
 
@@ -464,23 +464,23 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
     [form, slugEdited, skuEdited]
   );
 
-  const handleCustomUpload = useCallback(async (options: any) => {
+  const handleCustomUpload = useCallback(async (options: Parameters<NonNullable<import('antd').UploadProps['customRequest']>>[0]) => {
     const { onSuccess, onError, file, onProgress } = options;
     try {
       const reader = new FileReader();
       reader.readAsDataURL(file as Blob);
       reader.onload = async () => {
         const base64Data = reader.result as string;
-        onProgress({ percent: 50 });
+        if (onProgress) onProgress({ percent: 50 });
 
         const response = await fetch('/api/upload', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             base64Data,
-            mimeType: file.type,
-            filename: file.name,
-            size: file.size,
+            mimeType: (file as File).type || 'image/png',
+            filename: (file as File).name || 'upload.png',
+            size: (file as File).size || 0,
           }),
         });
 
@@ -489,12 +489,14 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
         }
 
         const data = await response.json();
-        onProgress({ percent: 100 });
-        onSuccess(data, new XMLHttpRequest());
+        if (onProgress) onProgress({ percent: 100 });
+        if (onSuccess) onSuccess(data, new XMLHttpRequest());
       };
-      reader.onerror = (err) => onError(err);
+      reader.onerror = () => {
+        if (onError) onError(new Error('File reading failed'));
+      };
     } catch (err) {
-      onError(err);
+      if (onError) onError(err instanceof Error ? err : new Error(String(err)));
     }
   }, []);
 
@@ -502,7 +504,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
     setFileList(fl);
   }, []);
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: Partial<Product>) => {
     const uploadedImages = fileList.map((f) => f.url || f.response?.url || '').filter(Boolean);
     
     let finalVideo = values.video || '';
@@ -532,7 +534,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
   };
 
   const hasTrans = (suffix: string) =>
-    !!(initialValues as any)?.[`name${suffix}`] || !!(initialValues as any)?.[`description${suffix}`];
+    !!(initialValues as Record<string, string | undefined>)?.[`name${suffix}`] || !!(initialValues as Record<string, string | undefined>)?.[`description${suffix}`];
 
   // ── Name with language toggle (VI / UK / US only — base field is EN) ───────
   const nameFieldMap: Record<string, string> = {
@@ -675,7 +677,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
               <SectionLabel>URL Slug</SectionLabel>
               <Form.Item name="slug" rules={[{ required: true }]}>
                 <Input
-                  addonBefore={<span className="text-gray-400 text-xs">/catalogue/</span>}
+                  prefix={<span className="text-gray-400 text-xs pr-1.5 mr-1.5 border-r border-gray-200">/catalogue/</span>}
                   placeholder="aria-dining-table"
                   className="rounded-lg border-gray-200"
                   onChange={() => setSlugEdited(true)}

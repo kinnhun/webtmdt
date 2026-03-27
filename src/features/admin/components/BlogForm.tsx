@@ -26,7 +26,7 @@ export default function BlogForm({ initialValues, isEdit = false }: BlogFormProp
     }
   }, [initialValues, form]);
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: Partial<BlogPost>) => {
     console.log('Form values:', values);
     message.success(`Blog post ${isEdit ? 'updated' : 'created'} successfully (Demo)`);
     router.push('/admin/blog');
@@ -74,7 +74,7 @@ export default function BlogForm({ initialValues, isEdit = false }: BlogFormProp
                 rules={[{ required: true, message: 'Please enter a slug' }]}
                 extra="Leave blank to auto-generate from title"
               >
-                <Input addonBefore="/blog/" placeholder="top-10-interior-trends" />
+                <Input prefix={<span className="text-gray-400 text-xs pr-1 border-r border-gray-200 mr-2">/blog/</span>} placeholder="top-10-interior-trends" />
               </Form.Item>
 
               <Form.Item

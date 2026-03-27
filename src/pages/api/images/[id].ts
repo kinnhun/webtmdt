@@ -41,8 +41,9 @@ export default async function handler(
 
     // Pipe buffer to response
     res.end(buffer);
-  } catch (error: any) {
+  } catch (error) {
     console.error("Image GET API error:", error);
-    res.status(500).json({ message: "Failed to pull image", error: error.message });
+    const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
+    res.status(500).json({ message: "Failed to pull image", error: errorMessage });
   }
 }

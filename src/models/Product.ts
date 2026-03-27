@@ -102,7 +102,7 @@ const ProductSchema = new Schema<IProduct>(
     longDescriptionUS: { type: String },
     longDescriptionUK: { type: String },
   },
-  { timestamps: true }
+  { timestamps: true, suppressReservedKeysWarning: true }
 );
 
 // Compound indexing for robust B2B catalogue queries

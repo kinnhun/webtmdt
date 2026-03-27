@@ -54,8 +54,8 @@ export function ProductTable({ data, onEdit, onDelete, loading }: ProductTablePr
         { text: 'Dining', value: 'Dining' },
         { text: 'Lounge', value: 'Lounge' },
       ],
-      onFilter: (value: any, record: Product) => record.category.includes(value),
-      render: (_: any, record: Product) => (
+      onFilter: (value: React.Key | boolean, record: Product) => record.category.includes(String(value)),
+      render: (_: unknown, record: Product) => (
         <div className="flex flex-col gap-1 items-start">
           <Tag color="cyan" className="m-0 border-0">{record.collection}</Tag>
           <span className="text-xs text-navy/70">{record.category}</span>
@@ -76,7 +76,7 @@ export function ProductTable({ data, onEdit, onDelete, loading }: ProductTablePr
     {
       title: 'Action',
       key: 'action',
-      render: (_: any, record: Product) => (
+      render: (_: unknown, record: Product) => (
         <Space size="small">
           <Tooltip title="Edit Product">
             <Link href={`/admin/products/edit/${record.slug || record.id}`}>

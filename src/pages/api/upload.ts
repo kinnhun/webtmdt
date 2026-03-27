@@ -51,8 +51,9 @@ export default async function handler(
     const url = `/api/images/${media._id}`;
 
     res.status(200).json({ url, id: media._id });
-  } catch (error: any) {
+  } catch (error) {
     console.error("Upload API error:", error);
-    res.status(500).json({ message: "Failed to upload image", error: error.message });
+    const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
+    res.status(500).json({ message: "Failed to upload image", error: errorMessage });
   }
 }

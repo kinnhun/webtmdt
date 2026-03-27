@@ -72,8 +72,12 @@ export function useCatalogue() {
     const currentQueryRaw = { ...router.query };
     delete currentQueryRaw.slug; 
     
+    const ObjectQuery = Object.fromEntries(
+      Object.entries(currentQueryRaw).filter(([_, v]) => typeof v === 'string')
+    ) as Record<string, string>;
+
     const newQueryString = new URLSearchParams(query).toString();
-    const currentQueryString = new URLSearchParams(currentQueryRaw as any).toString();
+    const currentQueryString = new URLSearchParams(ObjectQuery).toString();
 
     if (newQueryString !== currentQueryString) {
       router.replace({ pathname: router.pathname, query }, undefined, { shallow: true, scroll: false });
@@ -102,14 +106,26 @@ export function useCatalogue() {
 
   const activeCount = Object.values(filters).flat().length + (search ? 1 : 0);
 
-  let collectionProducts = productsData.filter(p => p.collection === collection);
+  let collectionProducts = productsData.filter(p => 
+    Array.isArray(p.collection) ? p.collection.includes(collection) : p.collection === collection
+  );
 
   let filtered = collectionProducts.filter((p) => {
     if (search) {
       const q = search.toLowerCase();
-      if (!p.name.toLowerCase().includes(q) && !p.code.toLowerCase().includes(q) && !p.category.toLowerCase().includes(q)) return false;
+      const catMatch = Array.isArray(p.category)
+        ? p.category.some(c => c.toLowerCase().includes(q))
+        : p.category.toLowerCase().includes(q);
+      if (!p.name.toLowerCase().includes(q) && !p.code.toLowerCase().includes(q) && !catMatch) return false;
     }
-    if (filters.category.length && !filters.category.includes(p.category)) return false;
+    
+    if (filters.category.length) {
+      const match = Array.isArray(p.category) 
+        ? p.category.some(c => filters.category.includes(c))
+        : filters.category.includes(p.category);
+      if (!match) return false;
+    }
+    
     if (filters.material.length && !filters.material.includes(p.material)) return false;
     if (filters.moq.length && (!p.moq || !filters.moq.includes(p.moq))) return false;
     if (filters.color.length && (!p.color || !filters.color.includes(p.color))) return false;

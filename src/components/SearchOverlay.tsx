@@ -16,12 +16,17 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
   const { t } = useTranslation();
 
   const results = query.length >= 2
-    ? productsData.filter(
-        (p) =>
+    ? productsData.filter((p) => {
+        const catMatch = Array.isArray(p.category)
+          ? p.category.some(c => c.toLowerCase().includes(query.toLowerCase()))
+          : p.category.toLowerCase().includes(query.toLowerCase());
+          
+        return (
           p.name.toLowerCase().includes(query.toLowerCase()) ||
           p.code.toLowerCase().includes(query.toLowerCase()) ||
-          p.category.toLowerCase().includes(query.toLowerCase())
-      ).slice(0, 6)
+          catMatch
+        );
+      }).slice(0, 6)
     : [];
 
   const handleSelect = () => {

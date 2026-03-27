@@ -1,4 +1,6 @@
-export function getOptionTranslation(t: any, key: string, opt: string) {
+import type { TFunction } from 'i18next';
+
+export function getOptionTranslation(t: TFunction, key: string, opt: string) {
   if (key === 'moq') {
     if (opt === 'Under 10') return t('catalogue.moqOptions.under10');
     if (opt === '10–50') return t('catalogue.moqOptions.10to50');

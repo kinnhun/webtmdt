@@ -1,6 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "@/lib/mongodb";
 import Product from "@/models/Product";
+import mongoose from "mongoose";
+import type { Product as ProductType } from "@/types/product";
 import { productsData } from "@/data/products";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -13,8 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const { search, category, material, color, size, style } = req.query;
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const filter: Record<string, any> = {};
+    const filter: Record<string, string | { $in: string[] } | Array<{ [key: string]: RegExp }>> = {};
 
     if (search && typeof search === "string") {
       const regex = new RegExp(search, "i");

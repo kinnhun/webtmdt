@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getProducts, deleteProduct } from '@/services/product.service';
 import type { FilterState } from '@/domains/product/product.types';
+import type { Product as ProductType } from '@/types/product';
 import { productsData } from '@/data/products';
 
 const DEFAULT_FILTERS: FilterState = {
@@ -24,7 +25,7 @@ export function useProductManagement() {
     queryKey: ['products', 'admin'],
     queryFn: () => getProducts(DEFAULT_FILTERS, ''),
     // Fallback to static data on error
-    placeholderData: productsData as any,
+    placeholderData: productsData as ProductType[],
     retry: 1,
   });
 
@@ -38,12 +39,17 @@ export function useProductManagement() {
   const filteredData = useMemo(() => {
     if (!searchText) return dataSource;
     const q = searchText.toLowerCase();
-    return dataSource.filter(
-      (item) =>
+    return dataSource.filter((item) => {
+      const catMatch = Array.isArray(item.category)
+        ? item.category.some(c => c.toLowerCase().includes(q))
+        : item.category?.toLowerCase().includes(q);
+
+      return (
         item.name.toLowerCase().includes(q) ||
         item.code?.toLowerCase().includes(q) ||
-        item.category?.toLowerCase().includes(q)
-    );
+        catMatch
+      );
+    });
   }, [dataSource, searchText]);
 
   // Delete mutation

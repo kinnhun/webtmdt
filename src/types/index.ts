@@ -4,3 +4,4 @@ export * from './contact';
 export * from './i18n';
 export * from './common';
 export * from './user';
+export * from './admin';

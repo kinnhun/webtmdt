@@ -14,6 +14,15 @@ interface RichTextEditorProps {
   className?: string;
 }
 
+interface QuillInstance {
+  on: (event: string, handler: (delta: unknown, oldDelta: unknown, source: string) => void) => void;
+  getSemanticHTML: () => string;
+  getText: () => string;
+  clipboard: {
+    dangerouslyPasteHTML: (html: string) => void;
+  };
+}
+
 export default function RichTextEditor({
   value,
   onChange,
@@ -22,7 +31,7 @@ export default function RichTextEditor({
   className = '',
 }: RichTextEditorProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const quillRef = useRef<any>(null);
+  const quillRef = useRef<QuillInstance | null>(null);
   const onChangeRef = useRef(onChange);
   onChangeRef.current = onChange;
 
@@ -71,8 +80,8 @@ export default function RichTextEditor({
       quillRef.current = quill;
 
       // Listen for changes FIRST, before setting initial content to catch events correctly if needed
-      quill.on('text-change', () => {
-        if (isSettingRef.current) return;
+      quill.on('text-change', (delta: any, oldDelta: any, source: string) => {
+        if (source !== 'user') return;
         const html = quill.getSemanticHTML();
         const isEmpty = quill.getText().trim() === '';
         onChangeRef.current?.(isEmpty ? '' : html);

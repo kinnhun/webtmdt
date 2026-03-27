@@ -12,7 +12,10 @@ import {
   UserOutlined,
   LogoutOutlined,
   BellOutlined,
-  GlobalOutlined
+  GlobalOutlined,
+  BarChartOutlined,
+  EditOutlined,
+  FolderOpenOutlined,
 } from '@ant-design/icons';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -62,7 +65,24 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     {
       key: '/admin/blog',
       icon: <FileTextOutlined className="text-[1.1rem]" />,
-      label: <Link href="/admin/blog" className="font-body text-sm font-medium">{t('admin.menu.blog', 'Blog Posts')}</Link>,
+      label: <span className="font-body text-sm font-medium">{t('admin.menu.blog', 'Blog Posts')}</span>,
+      children: [
+        {
+          key: '/admin/blog/overview',
+          icon: <BarChartOutlined />,
+          label: <Link href="/admin/blog" className="font-body text-sm">Overview</Link>,
+        },
+        {
+          key: '/admin/blog/manage',
+          icon: <EditOutlined />,
+          label: <Link href="/admin/blog/manage" className="font-body text-sm">Manage Posts</Link>,
+        },
+        {
+          key: '/admin/blog/categories',
+          icon: <FolderOpenOutlined />,
+          label: <Link href="/admin/blog/categories" className="font-body text-sm">Categories</Link>,
+        },
+      ],
     },
     {
       key: '/admin/settings',
@@ -139,7 +159,11 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         <div className="px-3 py-6">
           <Menu
             mode="inline"
-            selectedKeys={[router.pathname]}
+            selectedKeys={[
+              router.pathname === '/admin/blog' ? '/admin/blog/overview' :
+              router.pathname.startsWith('/admin/blog/') ? router.pathname : router.pathname
+            ]}
+            defaultOpenKeys={router.pathname.startsWith('/admin/blog') ? ['/admin/blog'] : []}
             items={menuItems}
             className="border-none bg-transparent admin-custom-menu"
           />
@@ -226,6 +250,28 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
           }
           .admin-custom-menu .ant-menu-item:hover:not(.ant-menu-item-selected) a {
             color: hsl(var(--navy-deep)) !important;
+          }
+          .admin-custom-menu .ant-menu-submenu-title {
+            border-radius: 8px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+          }
+          .admin-custom-menu .ant-menu-submenu-title:hover {
+            background-color: hsl(var(--navy) / 0.04) !important;
+          }
+          .admin-custom-menu .ant-menu-sub.ant-menu-inline {
+            background: transparent !important;
+          }
+          .admin-custom-menu .ant-menu-sub .ant-menu-item {
+            height: 40px;
+            padding-left: 48px !important;
+          }
+          .admin-custom-menu .ant-menu-submenu-selected > .ant-menu-submenu-title {
+            color: hsl(var(--orange)) !important;
+          }
+          .admin-custom-menu .ant-menu-submenu-selected > .ant-menu-submenu-title .anticon {
+            color: hsl(var(--orange)) !important;
           }
         `}</style>
       </Layout>

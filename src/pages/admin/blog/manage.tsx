@@ -1,16 +1,16 @@
 import Head from 'next/head';
 import AdminLayout from '@/components/layout/AdminLayout';
-import BlogOverview from '@/features/admin/components/BlogOverview';
+import BlogManagement from '@/features/admin/components/BlogManagement';
 
-export default function AdminBlogIndex() {
+export default function BlogManagePage() {
   return (
     <>
       <Head>
-        <title>Blog Overview | DHT Admin</title>
+        <title>Manage Blog Posts | DHT Admin</title>
         <meta name="robots" content="noindex,nofollow" />
       </Head>
       <AdminLayout>
-        <BlogOverview />
+        <BlogManagement />
       </AdminLayout>
     </>
   );

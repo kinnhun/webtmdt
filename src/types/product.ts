@@ -3,14 +3,12 @@ export type Collection = 'Outdoor' | 'Indoor';
 /** One visual attribute card as shown on the catalogue detail page */
 export interface ProductAttribute {
   icon: string;       // Ant Design icon name string e.g. "RulerOutlined"
-  titleEN: string;
+  titleUS: string;    // Primary (American English)
   titleVI?: string;
   titleUK?: string;
-  titleUS?: string;
-  valueEN: string;
+  valueUS: string;    // Primary (American English)
   valueVI?: string;
   valueUK?: string;
-  valueUS?: string;
 }
 
 export interface Product {

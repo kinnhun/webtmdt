@@ -623,129 +623,132 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       ),
     },
 
-    // ── 2. Rich Attributes ─────────────────────────────────────────────────
+    // ── 2. Attributes & Specs ──────────────────────────────────────────────
     {
       key: 'attributes',
-      label: <span className="flex items-center gap-1.5"><AppstoreOutlined />Attributes</span>,
+      label: <span className="flex items-center gap-1.5"><AppstoreOutlined />Attributes & Specs</span>,
       children: (
-        <div className="pt-5">
-          <SectionLabel>Visual Attribute Cards</SectionLabel>
-          <p className="text-xs text-gray-400 -mt-3 mb-5">
-            These appear as icon cards on the product catalogue page (e.g. Dimensions, Material, Style).
-            Each row supports labels & values in US / UK / VI.
-          </p>
-
-          <Form.List name="attributes">
-            {(fields, { add, remove }) => (
-              <div className="space-y-3">
-                {fields.map((field) => (
-                  <AttributeRow
-                    key={field.key}
-                    fieldName={field.name}
-                    remove={() => remove(field.name)}
-                  />
-                ))}
-
-                <button
-                  type="button"
-                  onClick={() => add({ icon: 'ProfileOutlined', titleUS: '', valueUS: '' })}
-                  className="w-full flex items-center justify-center gap-2 py-3 text-sm text-orange border-2 border-dashed border-orange/30 rounded-xl hover:border-orange/60 hover:bg-orange/5 transition-all"
-                >
-                  <PlusOutlined /> Add Attribute Card
-                </button>
-              </div>
-            )}
-          </Form.List>
-        </div>
-      ),
-    },
-
-
-
-    // ── 4. Specs & B2B ─────────────────────────────────────────────────────
-    {
-      key: 'specs',
-      label: <span className="flex items-center gap-1.5"><ToolOutlined />Specs & B2B</span>,
-      children: (
-        <div className="pt-5 space-y-4">
-          <SectionLabel>B2B Details</SectionLabel>
-          <Row gutter={16}>
-            <Col span={8}>
-              <Form.Item name="moq" label="MOQ">
-                <Select placeholder="50–100 pcs" className="rounded-lg" allowClear>
-                  {MOQ_OPTIONS.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col span={8}>
-              <Form.Item name="dimensions" label="Dimensions (L×W×H)">
-                <Input placeholder="220 × 100 × 76 cm" className="rounded-lg border-gray-200" />
-              </Form.Item>
-            </Col>
-            <Col span={8}>
-              <Form.Item name="weight" label="Weight">
-                <Input placeholder="52 kg" className="rounded-lg border-gray-200" />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col span={8}>
-              <Form.Item name="material" label="Material">
-                <Select placeholder="Walnut Wood" className="rounded-lg" allowClear mode="tags">
-                  {MATERIALS.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col span={8}>
-              <Form.Item name="style" label="Style">
-                <Select placeholder="Mid-Century Modern" className="rounded-lg" allowClear mode="tags">
-                  {STYLES.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col span={8}>
-              <Form.Item name="color" label="Color / Finish">
-                <Select placeholder="Natural Walnut" className="rounded-lg" allowClear mode="tags">
-                  {COLORS.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
-                </Select>
-              </Form.Item>
-            </Col>
-          </Row>
+        <div className="pt-5 space-y-8">
+          {/* A. B2B Details */}
+          <div>
+            <SectionLabel>B2B Details (Required)</SectionLabel>
+            <p className="text-xs text-gray-400 -mt-3 mb-4">Core fields used for storefront filtering and categorization.</p>
+            <Row gutter={16}>
+              <Col span={8}>
+                <Form.Item name="moq" label="MOQ" rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
+                  <Select placeholder="50–100 pcs" className="rounded-lg" allowClear>
+                    {MOQ_OPTIONS.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item name="dimensions" label="Dimensions (L×W×H)" rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
+                  <Input placeholder="220 × 100 × 76 cm" className="rounded-lg border-gray-200" />
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item name="weight" label="Weight" rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
+                  <Input placeholder="52 kg" className="rounded-lg border-gray-200" />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col span={8}>
+                <Form.Item name="material" label="Material" rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
+                  <Select placeholder="Walnut Wood" className="rounded-lg" allowClear mode="tags">
+                    {MATERIALS.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item name="style" label="Style" rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
+                  <Select placeholder="Mid-Century Modern" className="rounded-lg" allowClear mode="tags">
+                    {STYLES.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item name="color" label="Color / Finish" rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
+                  <Select placeholder="Natural Walnut" className="rounded-lg" allowClear mode="tags">
+                    {COLORS.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
+                  </Select>
+                </Form.Item>
+              </Col>
+            </Row>
+          </div>
 
           <Divider className="my-2" />
-          <SectionLabel>Specification Rows</SectionLabel>
-          <Form.List name="specList">
-            {(fields, { add, remove }) => (
-              <div className="space-y-2">
-                {fields.map(({ key, name, ...rest }) => (
-                  <div key={key} className="flex items-center gap-3 px-3 py-2.5 bg-gray-50 rounded-xl group border border-transparent hover:border-gray-200 transition-colors">
-                    <div className="w-2 h-2 rounded-full bg-orange flex-shrink-0" />
-                    <Form.Item {...rest} name={[name, 'name']} noStyle>
-                      <Input placeholder="Key (e.g. Finish)" className="rounded-lg border-gray-200 w-44" />
-                    </Form.Item>
-                    <span className="text-gray-300 flex-shrink-0">→</span>
-                    <Form.Item {...rest} name={[name, 'value']} noStyle>
-                      <Input placeholder="Value" className="rounded-lg border-gray-200 flex-1" />
-                    </Form.Item>
-                    <button
-                      type="button"
-                      onClick={() => remove(name)}
-                      className="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600 transition-opacity"
-                    >
-                      <MinusCircleOutlined />
-                    </button>
-                  </div>
-                ))}
-                <button
-                  type="button"
-                  onClick={() => add()}
-                  className="flex items-center gap-1.5 text-sm text-orange hover:text-orange/70 mt-2"
-                >
-                  <PlusOutlined className="text-xs" /> Add Spec Row
-                </button>
-              </div>
-            )}
-          </Form.List>
+
+          {/* B. Visual Attribute Cards */}
+          <div>
+            <SectionLabel>Visual Attribute Cards</SectionLabel>
+            <p className="text-xs text-gray-400 -mt-3 mb-5">
+              These appear as icon cards on the product catalogue page (e.g. Dimensions, Material, Style).
+              Each row supports labels & values in US / UK / VI.
+            </p>
+  
+            <Form.List name="attributes">
+              {(fields, { add, remove }) => (
+                <div className="space-y-3">
+                  {fields.map((field) => (
+                    <AttributeRow
+                      key={field.key}
+                      fieldName={field.name}
+                      remove={() => remove(field.name)}
+                    />
+                  ))}
+  
+                  <button
+                    type="button"
+                    onClick={() => add({ icon: 'ProfileOutlined', titleUS: '', valueUS: '' })}
+                    className="w-full flex items-center justify-center gap-2 py-3 text-sm text-orange border-2 border-dashed border-orange/30 rounded-xl hover:border-orange/60 hover:bg-orange/5 transition-all"
+                  >
+                    <PlusOutlined /> Add Attribute Card
+                  </button>
+                </div>
+              )}
+            </Form.List>
+          </div>
+
+          <Divider className="my-2" />
+
+          {/* C. Specification Rows */}
+          <div>
+            <SectionLabel>Specification Rows</SectionLabel>
+            <p className="text-xs text-gray-400 -mt-3 mb-4">Detailed technical specifications presented in table format.</p>
+            <Form.List name="specList">
+              {(fields, { add, remove }) => (
+                <div className="space-y-2">
+                  {fields.map(({ key, name, ...rest }) => (
+                    <div key={key} className="flex items-center gap-3 px-3 py-2.5 bg-gray-50 rounded-xl group border border-transparent hover:border-gray-200 transition-colors">
+                      <div className="w-2 h-2 rounded-full bg-orange shrink-0" />
+                      <Form.Item {...rest} name={[name, 'name']} noStyle>
+                        <Input placeholder="Key (e.g. Finish)" className="rounded-lg border-gray-200 w-44" />
+                      </Form.Item>
+                      <span className="text-gray-300 shrink-0">→</span>
+                      <Form.Item {...rest} name={[name, 'value']} noStyle>
+                        <Input placeholder="Value" className="rounded-lg border-gray-200 flex-1" />
+                      </Form.Item>
+                      <button
+                        type="button"
+                        onClick={() => remove(name)}
+                        className="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600 transition-opacity"
+                      >
+                        <MinusCircleOutlined />
+                      </button>
+                    </div>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={() => add()}
+                    className="flex items-center gap-1.5 text-sm text-orange hover:text-orange/70 mt-2"
+                  >
+                    <PlusOutlined className="text-xs" /> Add Spec Row
+                  </button>
+                </div>
+              )}
+            </Form.List>
+          </div>
         </div>
       ),
     },

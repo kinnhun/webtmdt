@@ -33,8 +33,14 @@ export interface IProduct extends Omit<Document, 'collection'> {
   video?: string;
   dimensions?: string;
   weight?: string;
-  specifications?: Record<string, string>;
-  specificationsVI?: Record<string, string>;
+  specifications?: {
+    nameUS: string;
+    nameVI?: string;
+    nameUK?: string;
+    valueUS: string;
+    valueVI?: string;
+    valueUK?: string;
+  }[];
   careInstructions?: string[];
   careInstructionsVI?: string[];
   usageSettings?: string[];
@@ -79,8 +85,14 @@ const ProductSchema = new Schema<IProduct>(
     video: { type: String },
     dimensions: { type: String },
     weight: { type: String },
-    specifications: { type: Map, of: String },
-    specificationsVI: { type: Map, of: String },
+    specifications: [{ 
+      nameUS: String, 
+      nameVI: String, 
+      nameUK: String, 
+      valueUS: String, 
+      valueVI: String, 
+      valueUK: String 
+    }],
     careInstructions: [{ type: String }],
     careInstructionsVI: [{ type: String }],
     usageSettings: [{ type: String }],

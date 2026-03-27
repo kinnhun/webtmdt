@@ -11,6 +11,15 @@ export interface ProductAttribute {
   valueUK?: string;
 }
 
+export interface ProductSpecification {
+  nameUS: string;
+  nameVI?: string;
+  nameUK?: string;
+  valueUS: string;
+  valueVI?: string;
+  valueUK?: string;
+}
+
 export interface Product {
   id: string;
   slug: string;
@@ -47,8 +56,7 @@ export interface Product {
   video?: string;
   dimensions?: string;
   weight?: string;
-  specifications?: Record<string, string>;
-  specificationsVI?: Record<string, string>;
+  specifications?: ProductSpecification[];
   careInstructions?: string[];
   careInstructionsVI?: string[];
   usageSettings?: string[];

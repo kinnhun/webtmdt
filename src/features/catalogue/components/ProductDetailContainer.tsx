@@ -62,7 +62,9 @@ function ImageGallery({ images, name }: { images: string[]; name: string }) {
 
 /* ── Tab Section ── */
 function DetailTabs({ product }: { product: Product }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const langEnum: Record<string, 'VI' | 'UK' | 'US'> = { "vi-VN": "VI", "en-GB": "UK", "en-US": "US" };
+  const langId = langEnum[i18n?.language] || "US";
   const tabs = [
     { id: "specs", label: t("productDetail.specifications") },
     { id: "care", label: t("productDetail.care") },
@@ -90,12 +92,26 @@ function DetailTabs({ product }: { product: Product }) {
           {activeTab === "specs" && product.specifications && (
             <motion.div key="specs" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
-                {Object.entries(product.specifications).map(([key, val]) => (
-                  <div key={key} className="flex justify-between py-2 border-b" style={{ borderColor: "hsl(var(--navy)/0.06)" }}>
-                    <span className="font-body text-sm font-semibold" style={{ color: "hsl(var(--navy-deep))" }}>{key}</span>
-                    <span className="font-body text-sm" style={{ color: "hsl(var(--navy)/0.55)" }}>{val}</span>
-                  </div>
-                ))}
+                {Array.isArray(product.specifications) ? (
+                  product.specifications.map((spec: any, i) => {
+                    const key = spec[`name${langId}`] || spec.nameUS;
+                    const val = spec[`value${langId}`] || spec.valueUS;
+                    if (!key) return null;
+                    return (
+                      <div key={i} className="flex justify-between py-2 border-b" style={{ borderColor: "hsl(var(--navy)/0.06)" }}>
+                        <span className="font-body text-sm font-semibold" style={{ color: "hsl(var(--navy-deep))" }}>{key}</span>
+                        <span className="font-body text-sm" style={{ color: "hsl(var(--navy)/0.55)" }}>{val}</span>
+                      </div>
+                    );
+                  })
+                ) : (
+                  Object.entries(product.specifications).map(([key, val]) => (
+                    <div key={key} className="flex justify-between py-2 border-b" style={{ borderColor: "hsl(var(--navy)/0.06)" }}>
+                      <span className="font-body text-sm font-semibold" style={{ color: "hsl(var(--navy-deep))" }}>{key}</span>
+                      <span className="font-body text-sm" style={{ color: "hsl(var(--navy)/0.55)" }}>{val as React.ReactNode}</span>
+                    </div>
+                  ))
+                )}
               </div>
             </motion.div>
           )}

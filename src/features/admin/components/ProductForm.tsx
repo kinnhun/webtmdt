@@ -216,6 +216,61 @@ function AttributeRow({ fieldName, remove }: { fieldName: number; remove: () => 
   );
 }
 
+// ─── Specification Row ─────────────────────────────────────────────────────
+function SpecRow({ fieldName, remove }: { fieldName: number; remove: () => void }) {
+  const [lang, setLang] = useState<'VI' | 'UK' | 'US'>('US');
+
+  const valField = lang === 'VI' ? 'valueVI' : lang === 'UK' ? 'valueUK' : 'valueUS';
+  const titleField = lang === 'VI' ? 'nameVI' : lang === 'UK' ? 'nameUK' : 'nameUS';
+
+  return (
+    <div className="group p-4 rounded-xl border border-gray-100 bg-gray-50/60 hover:border-orange/30 hover:bg-orange/[0.02] transition-all">
+      <div className="flex items-start gap-4">
+        {/* Title */}
+        <div className="w-1/3">
+          <div className="flex items-center justify-between mb-1">
+            <p className="text-[10px] text-gray-400 font-semibold uppercase">Key</p>
+            <div className="flex gap-1">
+              {(['VI', 'UK', 'US'] as const).map((l) => (
+                <button
+                  key={l}
+                  type="button"
+                  onClick={() => setLang(l)}
+                  className={`text-[9px] px-1.5 py-0.5 rounded font-bold transition-all ${
+                    lang === l ? 'bg-orange text-white' : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
+                  }`}
+                >
+                  {l}
+                </button>
+              ))}
+            </div>
+          </div>
+          <Form.Item name={[fieldName, titleField]} noStyle>
+            <Input placeholder={`Key (${lang})… (e.g. Finish)`} className="rounded-lg border-gray-200 text-sm" />
+          </Form.Item>
+        </div>
+
+        {/* Value */}
+        <div className="flex-1">
+          <p className="text-[10px] text-gray-400 font-semibold uppercase mb-1">Value ({lang})</p>
+          <Form.Item name={[fieldName, valField]} noStyle>
+            <Input placeholder={`Value (${lang})…`} className="rounded-lg border-gray-200 text-sm" />
+          </Form.Item>
+        </div>
+
+        {/* Remove */}
+        <button
+          type="button"
+          onClick={remove}
+          className="mt-5 opacity-0 group-hover:opacity-100 transition-opacity text-red-400 hover:text-red-600"
+        >
+          <MinusCircleOutlined />
+        </button>
+      </div>
+    </div>
+  );
+}
+
 // ─── Description Fields with Language Toggle ──────────────────────────────
 const ALL_LANGS = ['US', 'UK', 'VI'] as const;
 type AllLang = typeof ALL_LANGS[number];
@@ -358,9 +413,14 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
   useEffect(() => {
     if (!initialValues) return;
 
-    const specList = Object.entries(initialValues.specifications || {}).map(
-      ([name, value]) => ({ name, value })
-    );
+    let specifications: any[] = [];
+    if (Array.isArray(initialValues.specifications)) {
+      specifications = initialValues.specifications;
+    } else if (initialValues.specifications && typeof initialValues.specifications === 'object') {
+      specifications = Object.entries(initialValues.specifications).map(
+        ([nameUS, valueUS]) => ({ nameUS, valueUS })
+      );
+    }
 
     const initialImages: UploadFile[] = (initialValues.images || []).map((url, i) => ({
       uid: `-${i}`,
@@ -386,7 +446,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       ...initialValues,
       collection: collections,
       category: categories,
-      specList,
+      specifications,
     });
   }, [initialValues, form]);
 
@@ -712,35 +772,22 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
 
           <Divider className="my-2" />
 
-          {/* C. Specification Rows */}
           <div>
             <SectionLabel>Specification Rows</SectionLabel>
-            <p className="text-xs text-gray-400 -mt-3 mb-4">Detailed technical specifications presented in table format.</p>
-            <Form.List name="specList">
+            <p className="text-xs text-gray-400 -mt-3 mb-4">Detailed technical specifications presented in table format. Supports VI/UK/US.</p>
+            <Form.List name="specifications">
               {(fields, { add, remove }) => (
-                <div className="space-y-2">
-                  {fields.map(({ key, name, ...rest }) => (
-                    <div key={key} className="flex items-center gap-3 px-3 py-2.5 bg-gray-50 rounded-xl group border border-transparent hover:border-gray-200 transition-colors">
-                      <div className="w-2 h-2 rounded-full bg-orange shrink-0" />
-                      <Form.Item {...rest} name={[name, 'name']} noStyle>
-                        <Input placeholder="Key (e.g. Finish)" className="rounded-lg border-gray-200 w-44" />
-                      </Form.Item>
-                      <span className="text-gray-300 shrink-0">→</span>
-                      <Form.Item {...rest} name={[name, 'value']} noStyle>
-                        <Input placeholder="Value" className="rounded-lg border-gray-200 flex-1" />
-                      </Form.Item>
-                      <button
-                        type="button"
-                        onClick={() => remove(name)}
-                        className="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600 transition-opacity"
-                      >
-                        <MinusCircleOutlined />
-                      </button>
-                    </div>
+                <div className="space-y-3">
+                  {fields.map((field) => (
+                    <SpecRow
+                      key={field.key}
+                      fieldName={field.name}
+                      remove={() => remove(field.name)}
+                    />
                   ))}
                   <button
                     type="button"
-                    onClick={() => add()}
+                    onClick={() => add({ nameUS: '', valueUS: '' })}
                     className="flex items-center gap-1.5 text-sm text-orange hover:text-orange/70 mt-2"
                   >
                     <PlusOutlined className="text-xs" /> Add Spec Row

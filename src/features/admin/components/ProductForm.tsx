@@ -22,6 +22,7 @@ import {
 } from '@ant-design/icons';
 import * as AntIcons from '@ant-design/icons';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'react-i18next';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateProduct } from '@/services/product.service';
 import type { Product, ProductAttribute, ProductSpecification } from '@/domains/product/product.types';
@@ -290,6 +291,7 @@ const LONG_FIELD: Record<AllLang, string> = {
 };
 
 function DescriptionFields({ form }: { form: ReturnType<typeof Form.useForm>[0] }) {
+  const { t } = useTranslation();
   const [lang, setLang] = useState<AllLang>('US');
 
   const LangBar = () => (
@@ -327,7 +329,7 @@ function DescriptionFields({ form }: { form: ReturnType<typeof Form.useForm>[0] 
       {/* Short Description */}
       <div>
         <p className="text-xs font-semibold text-gray-500 mb-1.5">
-          Short Description
+          {t('admin.products.form.shortDescription')}
           {lang === 'US' && <span className="ml-1 text-[10px] text-orange font-normal">(required)</span>}
         </p>
         <Form.Item
@@ -347,7 +349,7 @@ function DescriptionFields({ form }: { form: ReturnType<typeof Form.useForm>[0] 
       {/* Long Description (Rich Text) */}
       <div>
         <p className="text-xs font-semibold text-gray-500 mb-1.5">
-          Long Description <span className="text-[10px] text-gray-400 font-normal">(rich text)</span>
+          {t('admin.products.form.longDescription')} <span className="text-[10px] text-gray-400 font-normal">(rich text)</span>
         </p>
         <RichTextEditorControl
           key={lang}
@@ -386,6 +388,7 @@ interface ProductFormProps {
 
 export default function ProductForm({ initialValues, isEdit = false }: ProductFormProps) {
   const router = useRouter();
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
   const [form] = Form.useForm();
   const [fileList, setFileList] = useState<UploadFile[]>([]);
@@ -541,9 +544,9 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
     VI: 'nameVI', UK: 'nameUK', US: 'nameUS',
   };
   const namePlaceholder: Record<string, string> = {
-    VI: 'Tên sản phẩm tiếng Việt',
-    UK: 'British English name',
-    US: 'American English name',
+    VI: t('admin.products.form.productNamePlaceholderVI'),
+    UK: t('admin.products.form.productNamePlaceholderUK'),
+    US: t('admin.products.form.productNamePlaceholderUS'),
   };
   const nameFlagMap: Record<string, string> = { VI: '🇻🇳', UK: '🇬🇧', US: '🇺🇸' };
 
@@ -582,13 +585,13 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
   const renderTransTab = (suffix: string, flag: string, label: string) => (
     <div className="pt-4 space-y-4">
       <TransBanner flag={flag} label={label} suffix={suffix} />
-      <Form.Item name={`name${suffix}`} label="Product Name">
+      <Form.Item name={`name${suffix}`} label={t('admin.products.form.productName')}>
         <Input placeholder={`${label} name`} size="large" className="rounded-lg border-gray-200" />
       </Form.Item>
-      <Form.Item name={`description${suffix}`} label="Short Description">
+      <Form.Item name={`description${suffix}`} label={t('admin.products.form.shortDescription')}>
         <TextArea rows={3} placeholder="Translated…" className="rounded-lg border-gray-200" />
       </Form.Item>
-      <Form.Item name={`longDescription${suffix}`} label="Long Description (HTML)">
+      <Form.Item name={`longDescription${suffix}`} label={t('admin.products.form.longDescription')}>
         <TextArea rows={6} className="rounded-lg border-gray-200" style={{ fontFamily: 'monospace', fontSize: 12 }} />
       </Form.Item>
     </div>
@@ -604,10 +607,10 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
               <Form.Item {...field} noStyle>
                 <Input placeholder={placeholder} className="rounded-lg border-gray-200" />
               </Form.Item>
-              <button
+               <button
                 type="button"
                 onClick={() => remove(field.name)}
-                className="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600 transition-opacity flex-shrink-0"
+                className="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600 transition-opacity shrink-0"
               >
                 <MinusCircleOutlined />
               </button>
@@ -630,11 +633,11 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
     // ── 1. Basic Info ──────────────────────────────────────────────────────
     {
       key: 'info',
-      label: <span className="flex items-center gap-1.5"><InfoCircleOutlined />Basic Info</span>,
+      label: <span className="flex items-center gap-1.5"><InfoCircleOutlined />{t('admin.products.form.tabBasicInfo')}</span>,
       children: (
         <div className="pt-5 space-y-6">
           {/* ── Name (US primary + UK/VI toggle) ── */}
-          <SectionLabel>Product Name</SectionLabel>
+          <SectionLabel>{t('admin.products.form.productName')}</SectionLabel>
           <div className="rounded-xl border border-orange/20 overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(249,115,22,0.04), rgba(251,191,36,0.06))' }}>
             <div className="p-4">
               {/* Toggle bar */}
@@ -674,7 +677,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
           {/* ── URL & SKU ── */}
           <Row gutter={[16, 16]}>
             <Col xs={24} md={14}>
-              <SectionLabel>URL Slug</SectionLabel>
+              <SectionLabel>{t('admin.products.form.urlSlug')}</SectionLabel>
               <Form.Item name="slug" rules={[{ required: true }]}>
                 <Input
                   prefix={<span className="text-gray-400 text-xs pr-1.5 mr-1.5 border-r border-gray-200">/catalogue/</span>}
@@ -685,7 +688,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
               </Form.Item>
             </Col>
             <Col xs={24} md={10}>
-              <SectionLabel>SKU Code</SectionLabel>
+              <SectionLabel>{t('admin.products.form.skuCode')}</SectionLabel>
               <Form.Item name="code" rules={[{ required: true }]}>
                 <Input
                   placeholder="DIN-ARI-0327"
@@ -699,7 +702,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
           {/* ── Collection & Category ── */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <SectionLabel>Collection</SectionLabel>
+              <SectionLabel>{t('admin.products.form.collection')}</SectionLabel>
               <Form.Item name="collection" rules={[{ required: true }]}>
                 <Select
                   mode="multiple"
@@ -716,7 +719,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
               </Form.Item>
             </div>
             <div>
-              <SectionLabel>Category</SectionLabel>
+              <SectionLabel>{t('admin.products.form.category')}</SectionLabel>
               <Form.Item name="category" rules={[{ required: true }]}>
                 <Select
                   mode="tags"
@@ -742,49 +745,49 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
     // ── 2. Attributes & Specs ──────────────────────────────────────────────
     {
       key: 'attributes',
-      label: <span className="flex items-center gap-1.5"><AppstoreOutlined />Attributes & Specs</span>,
+      label: <span className="flex items-center gap-1.5"><AppstoreOutlined />{t('admin.products.form.tabAttributes')}</span>,
       children: (
         <div className="pt-5 space-y-8">
           {/* A. B2B Details */}
           <div>
-            <SectionLabel>B2B Details (Required)</SectionLabel>
+            <SectionLabel>{t('admin.products.form.b2bDetails')}</SectionLabel>
             <p className="text-xs text-gray-400 -mt-3 mb-4">Core fields used for storefront filtering and categorization.</p>
             <Row gutter={[16, 16]}>
               <Col xs={24} md={8}>
-                <Form.Item name="moq" label="MOQ" rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
+                <Form.Item name="moq" label={t('admin.products.form.moq')} rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
                   <Select placeholder="50–100 pcs" className="rounded-lg" allowClear>
                     {MOQ_OPTIONS.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
                   </Select>
                 </Form.Item>
               </Col>
               <Col xs={24} md={8}>
-                <Form.Item name="dimensions" label="Dimensions (L×W×H)" rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
+                <Form.Item name="dimensions" label={t('admin.products.form.dimensions')} rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
                   <Input placeholder="220 × 100 × 76 cm" className="rounded-lg border-gray-200" />
                 </Form.Item>
               </Col>
               <Col xs={24} md={8}>
-                <Form.Item name="weight" label="Weight" rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
+                <Form.Item name="weight" label={t('admin.products.form.weight')} rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
                   <Input placeholder="52 kg" className="rounded-lg border-gray-200" />
                 </Form.Item>
               </Col>
             </Row>
             <Row gutter={[16, 16]}>
               <Col xs={24} md={8}>
-                <Form.Item name="material" label="Material" rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
+                <Form.Item name="material" label={t('admin.products.form.material')} rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
                   <Select placeholder="Walnut Wood" className="rounded-lg" allowClear mode="tags">
                     {MATERIALS.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
                   </Select>
                 </Form.Item>
               </Col>
               <Col xs={24} md={8}>
-                <Form.Item name="style" label="Style" rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
+                <Form.Item name="style" label={t('admin.products.form.style')} rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
                   <Select placeholder="Mid-Century Modern" className="rounded-lg" allowClear mode="tags">
                     {STYLES.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
                   </Select>
                 </Form.Item>
               </Col>
               <Col xs={24} md={8}>
-                <Form.Item name="color" label="Color / Finish" rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
+                <Form.Item name="color" label={t('admin.products.form.color')} rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
                   <Select placeholder="Natural Walnut" className="rounded-lg" allowClear mode="tags">
                     {COLORS.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
                   </Select>
@@ -797,7 +800,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
 
           {/* B. Visual Attribute Cards */}
           <div>
-            <SectionLabel>Visual Attribute Cards</SectionLabel>
+            <SectionLabel>{t('admin.products.form.visualAttributeCards')}</SectionLabel>
             <p className="text-xs text-gray-400 -mt-3 mb-5">
               These appear as icon cards on the product catalogue page (e.g. Dimensions, Material, Style).
               Each row supports labels & values in US / UK / VI.
@@ -819,7 +822,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
                     onClick={() => add({ icon: 'ProfileOutlined', titleUS: '', valueUS: '' })}
                     className="w-full flex items-center justify-center gap-2 py-3 text-sm text-orange border-2 border-dashed border-orange/30 rounded-xl hover:border-orange/60 hover:bg-orange/5 transition-all"
                   >
-                    <PlusOutlined /> Add Attribute Card
+                    <PlusOutlined /> {t('admin.products.form.addAttributeCard')}
                   </button>
                 </div>
               )}
@@ -829,7 +832,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
           <Divider className="my-2" />
 
           <div>
-            <SectionLabel>Specification Rows</SectionLabel>
+            <SectionLabel>{t('admin.products.form.specificationRows')}</SectionLabel>
             <p className="text-xs text-gray-400 -mt-3 mb-4">Detailed technical specifications presented in table format. Supports VI/UK/US.</p>
             <Form.List name="specifications">
               {(fields, { add, remove }) => (
@@ -846,7 +849,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
                     onClick={() => add({ nameUS: '', valueUS: '' })}
                     className="flex items-center gap-1.5 text-sm text-orange hover:text-orange/70 mt-2"
                   >
-                    <PlusOutlined className="text-xs" /> Add Spec Row
+                    <PlusOutlined className="text-xs" /> {t('admin.products.form.addSpecRow')}
                   </button>
                 </div>
               )}
@@ -859,17 +862,17 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
     // ── 5. Care & Usage ────────────────────────────────────────────────────
     {
       key: 'care',
-      label: <span className="flex items-center gap-1.5"><HeartOutlined />Care</span>,
+      label: <span className="flex items-center gap-1.5"><HeartOutlined />{t('admin.products.form.tabCare')}</span>,
       children: (
         <div className="pt-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="p-5 rounded-xl bg-amber-50 border border-amber-100">
-              <SectionLabel>Care Instructions</SectionLabel>
-              <DynamicList name="careInstructions" placeholder="e.g. Clean with damp cloth" btnLabel="Add instruction" />
+              <SectionLabel>{t('admin.products.form.careInstructions')}</SectionLabel>
+              <DynamicList name="careInstructions" placeholder="e.g. Clean with damp cloth" btnLabel={t('admin.products.form.addInstruction')} />
             </div>
             <div className="p-5 rounded-xl bg-blue-50 border border-blue-100">
-              <SectionLabel>Usage Settings</SectionLabel>
-              <DynamicList name="usageSettings" placeholder="e.g. Indoor / Covered Outdoor" btnLabel="Add setting" />
+              <SectionLabel>{t('admin.products.form.usageSettings')}</SectionLabel>
+              <DynamicList name="usageSettings" placeholder="e.g. Indoor / Covered Outdoor" btnLabel={t('admin.products.form.addSetting')} />
             </div>
           </div>
         </div>
@@ -882,7 +885,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       label: (
         <span className="flex items-center gap-1.5">
           <PictureOutlined />
-          Media
+          {t('admin.products.form.tabMedia')}
           {fileList.length > 0 && (
             <span className="text-[10px] bg-orange/10 text-orange px-1.5 py-0.5 rounded-full font-semibold ml-0.5">
               {fileList.length}
@@ -892,7 +895,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       ),
       children: (
         <div className="pt-5 space-y-5">
-          <SectionLabel>Product Images</SectionLabel>
+          <SectionLabel>{t('admin.products.form.productImages')}</SectionLabel>
           <p className="text-xs text-gray-400 -mt-3 mb-3">First image = cover. Max 10. Drag to reorder.</p>
           {/* @ts-ignore: antd-img-crop type definitions are incomplete for cropperProps overrides */}
           <ImgCrop rotationSlider aspect={4 / 3} quality={1} fillColor="white" minZoom={0.1} cropperProps={{ restrictPosition: false }}>
@@ -905,13 +908,13 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
               {fileList.length >= 10 ? null : (
                 <div className="flex flex-col items-center py-1">
                   <UploadOutlined className="text-gray-400 text-xl mb-1" />
-                  <div className="text-xs text-gray-400">Upload</div>
+                  <div className="text-xs text-gray-400">{t('admin.products.form.upload')}</div>
                 </div>
               )}
             </Upload>
           </ImgCrop>
           <Divider />
-          <Form.Item name="video" label="Video URL" help="Nhập link YouTube / Vimeo (có thể là link thường hoặc embed)">
+          <Form.Item name="video" label={t('admin.products.form.videoUrl')} help="Nhập link YouTube / Vimeo (có thể là link thường hoặc embed)">
             <Input placeholder="https://youtube.com/watch?v=..." className="rounded-lg border-gray-200" />
           </Form.Item>
         </div>
@@ -938,7 +941,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
             <div>
               <div className="flex items-center gap-2 flex-wrap">
                 <h1 className="text-base sm:text-lg font-bold text-gray-900 m-0 leading-tight truncate max-w-[150px] sm:max-w-xs">
-                  {isEdit ? initialValues?.name || 'Edit Product' : 'New Product'}
+                  {isEdit ? initialValues?.name || t('admin.products.form.editProduct') : t('admin.products.form.newProduct')}
                 </h1>
                 {isEdit && (
                   <span className="text-[10px] font-mono text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">
@@ -961,7 +964,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
 
           <div className="flex items-center justify-start sm:justify-end gap-2 sm:gap-3 w-full sm:w-auto">
             <Button onClick={() => router.push('/admin/products')} className="rounded-lg border-gray-200 text-gray-500 flex-1 sm:flex-none">
-              Discard
+              {t('admin.products.form.discard')}
             </Button>
             <Button
               type="primary"
@@ -972,7 +975,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
               className="rounded-lg border-none font-semibold px-4 sm:px-6 shadow-md flex-1 sm:flex-none"
               style={{ background: 'linear-gradient(135deg, #f97316, #ea580c)' }}
             >
-              {isEdit ? 'Save Changes' : 'Publish'}
+              {isEdit ? t('admin.products.form.saveChanges') : t('admin.products.form.publish')}
             </Button>
           </div>
         </div>

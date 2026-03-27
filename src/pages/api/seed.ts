@@ -16,19 +16,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // Insert all products
     const docs = productsData.map((p) => ({
+      ...p,
       productId: p.id,
-      name: p.name,
-      code: p.code,
-      category: p.category,
-      material: p.material,
-      color: p.color,
-      size: p.size,
-      style: p.style,
-      image: p.image,
-      images: p.images,
-      description: p.description,
-      features: p.features,
-      room: p.room,
     }));
 
     await Product.insertMany(docs);

@@ -1,17 +1,19 @@
 import { useRouter } from "next/router";
 import { useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getProduct } from "@/services/product.service";
 import { productsData } from "@/data/products";
 
 export const useProductDetail = () => {
   const router = useRouter();
   const { slug } = router.query;
 
-  const isReady = router.isReady;
-
-  const product = useMemo(() => {
-    if (!isReady || !slug) return null;
-    return productsData.find((p) => p.slug === slug) || null;
-  }, [isReady, slug]);
+  const { data: product, isLoading, isError } = useQuery({
+    queryKey: ['product', slug],
+    queryFn: () => getProduct(slug as string),
+    enabled: router.isReady && !!slug,
+    retry: 1
+  });
 
   const relatedProducts = useMemo(() => {
     if (!product) return [];
@@ -21,7 +23,9 @@ export const useProductDetail = () => {
   }, [product]);
 
   return {
-    isReady,
+    isReady: router.isReady && !isLoading,
+    isLoading: !router.isReady || isLoading,
+    isError,
     product,
     relatedProducts
   };

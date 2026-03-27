@@ -18,3 +18,17 @@ export async function getFeaturedProducts(): Promise<Product[]> {
   const { data } = await httpClient.get<Product[]>("/products/featured");
   return data;
 }
+
+export async function getProduct(slugOrId: string): Promise<Product> {
+  const { data } = await httpClient.get<Product>(`/products/${slugOrId}`);
+  return data;
+}
+
+export async function updateProduct(slugOrId: string, payload: Partial<Product>): Promise<Product> {
+  const { data } = await httpClient.put<Product>(`/products/${slugOrId}`, payload);
+  return data;
+}
+
+export async function deleteProduct(slugOrId: string): Promise<void> {
+  await httpClient.delete(`/products/${slugOrId}`);
+}

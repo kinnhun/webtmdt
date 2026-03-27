@@ -508,5 +508,21 @@
       "label": "Đọc Thêm",
       "heading": "Bài Viết Liên Quan"
     }
+  },
+  "admin": {
+    "menu": {
+      "dashboard": "Bảng điều khiển",
+      "products": "Sản phẩm",
+      "orders": "Đơn hàng",
+      "customers": "Khách hàng",
+      "blog": "Bài viết",
+      "settings": "Cài đặt"
+    },
+    "header": {
+      "profile": "Hồ sơ",
+      "logout": "Đăng xuất",
+      "language": "Ngôn ngữ",
+      "adminUser": "Quản trị viên"
+    }
   }
 }

@@ -9,6 +9,7 @@ export default function ProductManagement() {
     searchText,
     setSearchText,
     filteredData,
+    isLoading,
     handleDelete,
     handleCreateProduct,
     handleEditProduct,
@@ -26,7 +27,8 @@ export default function ProductManagement() {
       <ProductTable 
         data={filteredData} 
         onEdit={handleEditProduct} 
-        onDelete={handleDelete} 
+        onDelete={handleDelete}
+        loading={isLoading}
       />
     </div>
   );

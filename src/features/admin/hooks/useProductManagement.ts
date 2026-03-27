@@ -1,23 +1,65 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { message } from 'antd';
 import { useRouter } from 'next/router';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { getProducts, deleteProduct } from '@/services/product.service';
+import type { FilterState } from '@/domains/product/product.types';
 import { productsData } from '@/data/products';
+
+const DEFAULT_FILTERS: FilterState = {
+  category: [],
+  material: [],
+  moq: [],
+  color: [],
+  style: [],
+};
 
 export function useProductManagement() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [searchText, setSearchText] = useState('');
 
-  // Mock data for table
-  const dataSource = productsData.map((p) => ({ ...p, key: p.id }));
+  // Fetch live data from MongoDB via API
+  const { data: products, isLoading } = useQuery({
+    queryKey: ['products', 'admin'],
+    queryFn: () => getProducts(DEFAULT_FILTERS, ''),
+    // Fallback to static data on error
+    placeholderData: productsData as any,
+    retry: 1,
+  });
 
-  const filteredData = dataSource.filter(
-    (item) => 
-      item.name.toLowerCase().includes(searchText.toLowerCase()) || 
-      item.code.toLowerCase().includes(searchText.toLowerCase())
-  );
+  // Build table data source
+  const dataSource = useMemo(() => {
+    const source = products || productsData;
+    return source.map((p) => ({ ...p, key: p.id || p.slug }));
+  }, [products]);
 
-  const handleDelete = (id: string) => {
-    message.success(`Product ${id} deleted successfully (Demo)`);
+  // Client-side search filter
+  const filteredData = useMemo(() => {
+    if (!searchText) return dataSource;
+    const q = searchText.toLowerCase();
+    return dataSource.filter(
+      (item) =>
+        item.name.toLowerCase().includes(q) ||
+        item.code?.toLowerCase().includes(q) ||
+        item.category?.toLowerCase().includes(q)
+    );
+  }, [dataSource, searchText]);
+
+  // Delete mutation
+  const { mutate: mutateDelete } = useMutation({
+    mutationFn: (slugOrId: string) => deleteProduct(slugOrId),
+    onSuccess: (_, slugOrId) => {
+      message.success(`Product deleted successfully`);
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+    },
+    onError: () => {
+      message.error('Failed to delete product. Try again.');
+    },
+  });
+
+  const handleDelete = (slugOrId: string) => {
+    mutateDelete(slugOrId);
   };
 
   const handleCreateProduct = () => {
@@ -25,13 +67,14 @@ export function useProductManagement() {
   };
 
   const handleEditProduct = (slugOrId: string) => {
-    router.push(`/admin/products/${slugOrId}`);
+    router.push(`/admin/products/edit/${slugOrId}`);
   };
 
   return {
     searchText,
     setSearchText,
     filteredData,
+    isLoading,
     handleDelete,
     handleCreateProduct,
     handleEditProduct,

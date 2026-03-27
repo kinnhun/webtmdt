@@ -27,5 +27,21 @@
     "en-US": "English (US)",
     "en-GB": "English (UK)",
     "vi-VN": "Tiếng Việt"
+  },
+  "admin": {
+    "menu": {
+      "dashboard": "Dashboard",
+      "products": "Products",
+      "orders": "Orders",
+      "customers": "Customers",
+      "blog": "Blog Posts",
+      "settings": "Settings"
+    },
+    "header": {
+      "profile": "Profile",
+      "logout": "Logout",
+      "language": "Language",
+      "adminUser": "Admin User"
+    }
   }
 }

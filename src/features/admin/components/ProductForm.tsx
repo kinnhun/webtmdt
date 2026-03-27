@@ -27,6 +27,7 @@ import { updateProduct } from '@/services/product.service';
 import type { Product, ProductAttribute } from '@/domains/product/product.types';
 import type { UploadFile } from 'antd/es/upload/interface';
 import dynamic from 'next/dynamic';
+import ImgCrop from 'antd-img-crop';
 
 const RichTextEditor = dynamic(() => import('@/components/ui/RichTextEditor'), {
   ssr: false,
@@ -463,6 +464,44 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
     [form, slugEdited, skuEdited]
   );
 
+  const handleCustomUpload = useCallback(async (options: any) => {
+    const { onSuccess, onError, file, onProgress } = options;
+    try {
+      const reader = new FileReader();
+      reader.readAsDataURL(file as Blob);
+      reader.onload = async () => {
+        const base64Data = reader.result as string;
+        onProgress({ percent: 50 });
+
+        const response = await fetch('/api/upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            base64Data,
+            mimeType: file.type,
+            filename: file.name,
+            size: file.size,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Upload failed');
+        }
+
+        const data = await response.json();
+        onProgress({ percent: 100 });
+        onSuccess(data, new XMLHttpRequest());
+      };
+      reader.onerror = (err) => onError(err);
+    } catch (err) {
+      onError(err);
+    }
+  }, []);
+
+  const handleUploadChange = useCallback(({ fileList: fl }: { fileList: UploadFile[] }) => {
+    setFileList(fl);
+  }, []);
+
   const onFinish = (values: any) => {
     const uploadedImages = fileList.map((f) => f.url || f.response?.url || '').filter(Boolean);
     const payload = {
@@ -838,20 +877,22 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
         <div className="pt-5 space-y-5">
           <SectionLabel>Product Images</SectionLabel>
           <p className="text-xs text-gray-400 -mt-3 mb-3">First image = cover. Max 10. Drag to reorder.</p>
-          <Upload
-            action="/api/upload"
-            listType="picture-card"
-            fileList={fileList}
-            onChange={({ fileList: fl }) => setFileList(fl)}
-            multiple
-          >
-            {fileList.length >= 10 ? null : (
-              <div className="flex flex-col items-center py-1">
-                <UploadOutlined className="text-gray-400 text-xl mb-1" />
-                <div className="text-xs text-gray-400">Upload</div>
-              </div>
-            )}
-          </Upload>
+          {/* @ts-ignore: antd-img-crop type definitions are incomplete for cropperProps overrides */}
+          <ImgCrop rotationSlider aspect={4 / 3} quality={1} fillColor="white" minZoom={0.1} cropperProps={{ restrictPosition: false }}>
+            <Upload
+              customRequest={handleCustomUpload}
+              listType="picture-card"
+              fileList={fileList}
+              onChange={handleUploadChange}
+            >
+              {fileList.length >= 10 ? null : (
+                <div className="flex flex-col items-center py-1">
+                  <UploadOutlined className="text-gray-400 text-xl mb-1" />
+                  <div className="text-xs text-gray-400">Upload</div>
+                </div>
+              )}
+            </Upload>
+          </ImgCrop>
           <Divider />
           <Form.Item name="video" label="Video Embed URL" help="YouTube / Vimeo embed link">
             <Input placeholder="https://youtube.com/embed/…" className="rounded-lg border-gray-200" />

@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { Product } from "@/domains/product/product.types";
+import ProductInquiryModal from "./ProductInquiryModal";
 
 interface Props {
   product: Product;
@@ -148,6 +149,7 @@ function DetailTabs({ product }: { product: Product }) {
 /* ── Main Container ── */
 export default function ProductDetailContainer({ product, relatedProducts }: Props) {
   const { t } = useTranslation();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleShare = useCallback(() => {
     if (typeof navigator !== "undefined") navigator.clipboard.writeText(window.location.href);
@@ -244,13 +246,14 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
 
             {/* CTAs */}
             <div className="flex gap-3">
-              <Link
-                href={`/contact?product=${encodeURIComponent(product.name)}&code=${product.code}`}
-                className="flex-1 inline-flex items-center justify-center gap-2 py-3 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90"
-                style={{ backgroundColor: "hsl(var(--orange))" }}
+              <button
+                type="button"
+                onClick={() => setIsModalOpen(true)}
+                className="flex-1 inline-flex items-center justify-center gap-2 py-3 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90 cursor-pointer"
+                style={{ backgroundColor: "hsl(var(--orange))", outline: "none", border: "none" }}
               >
                 {t("productDetail.inquire")} <ArrowUpRight size={15} />
-              </Link>
+              </button>
               <button onClick={handleShare} className="px-4 py-3 rounded-sm border font-body text-sm transition-all hover:bg-gray-50" style={{ borderColor: "hsl(var(--navy)/0.12)", color: "hsl(var(--navy)/0.55)" }}>
                 <Share2 size={16} />
               </button>

@@ -3,7 +3,6 @@ import dbConnect from "@/lib/mongodb";
 import Product from "@/models/Product";
 import mongoose from "mongoose";
 import type { Product as ProductType } from "@/types/product";
-import { productsData } from "@/data/products";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "GET") {
@@ -45,14 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     let products = await Product.find(filter).lean();
 
-    // If DB is empty, return static data
-    if (!products.length && Object.keys(filter).length === 0) {
-      return res.status(200).json(
-        productsData.map((p) => ({ ...p, _id: p.id }))
-      );
-    }
-
-    // Map _id to id for frontend compatibility
+    // Only map _id to id for frontend compatibility
     const mapped = products.map((p) => ({
       id: p.productId || p._id?.toString(),
       name: p.name,
@@ -70,8 +62,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }));
 
     return res.status(200).json(mapped);
-  } catch {
-    // Fallback to static data if DB connection fails
-    return res.status(200).json(productsData);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return res.status(500).json({ error: error.message });
+    }
+    return res.status(500).json({ error: "Failed to fetch products" });
   }
 }

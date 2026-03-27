@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 export default function ContactPage() {
   const router = useRouter();
   const { t } = useTranslation();
-  const [form, setForm] = useState({ name: "", email: "", phone: "", company: "", subject: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", company: "", subject: "", message: "", interestedProduct: "" });
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
 
@@ -19,6 +19,7 @@ export default function ContactPage() {
         ...prev,
         subject: t("contact.form.inquirySubject", { product, code: code ? ` (${code})` : "" }),
         message: t("contact.form.inquiryMessage", { product, code: code ? ` (Code: ${code})` : "" }),
+        interestedProduct: `${product}${code ? ` - ${code}` : ""}`,
       }));
     }
   }, [router.query, t]);
@@ -29,7 +30,7 @@ export default function ContactPage() {
     try {
       await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) });
       setSent(true);
-      setForm({ name: "", email: "", phone: "", company: "", subject: "", message: "" });
+      setForm({ name: "", email: "", phone: "", company: "", subject: "", message: "", interestedProduct: "" });
     } catch { /* ignore */ }
     setSending(false);
   };

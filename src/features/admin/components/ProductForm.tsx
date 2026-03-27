@@ -26,6 +26,13 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateProduct } from '@/services/product.service';
 import type { Product, ProductAttribute } from '@/domains/product/product.types';
 import type { UploadFile } from 'antd/es/upload/interface';
+import dynamic from 'next/dynamic';
+
+const RichTextEditor = dynamic(() => import('@/components/ui/RichTextEditor'), {
+  ssr: false,
+  loading: () => <div className="h-24 bg-gray-50 rounded-lg border border-gray-200 animate-pulse" />,
+});
+
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -213,6 +220,112 @@ function AttributeRow({ fieldName, remove }: { fieldName: number; remove: () => 
   );
 }
 
+// ─── Description Fields with Language Toggle ──────────────────────────────
+const ALL_LANGS = ['US', 'UK', 'VI'] as const;
+type AllLang = typeof ALL_LANGS[number];
+
+const LANG_FLAGS: Record<AllLang, string> = { US: '🇺🇸', UK: '🇬🇧', VI: '🇻🇳' };
+const LANG_LABELS: Record<AllLang, string> = {
+  US: 'American English', UK: 'British English', VI: 'Vietnamese',
+};
+
+// US → primary English fields; UK/VI → localized overrides
+const SHORT_FIELD: Record<AllLang, string> = {
+  US: 'description', UK: 'descriptionUK', VI: 'descriptionVI',
+};
+const LONG_FIELD: Record<AllLang, string> = {
+  US: 'longDescription', UK: 'longDescriptionUK', VI: 'longDescriptionVI',
+};
+
+function DescriptionFields({ form }: { form: ReturnType<typeof Form.useForm>[0] }) {
+  const [lang, setLang] = useState<AllLang>('US');
+
+  const LangBar = () => (
+    <div className="flex gap-1 flex-wrap">
+      {ALL_LANGS.map((l) => (
+        <button
+          key={l}
+          type="button"
+          onClick={() => setLang(l)}
+          className={`flex items-center gap-1 text-[10px] px-2.5 py-1 rounded-md font-bold transition-all ${
+            lang === l
+              ? 'bg-orange text-white shadow-sm'
+              : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
+          }`}
+        >
+          <span>{LANG_FLAGS[l]}</span>{l}
+        </button>
+      ))}
+    </div>
+  );
+
+  return (
+    <div className="space-y-4">
+      <SectionLabel>Descriptions</SectionLabel>
+
+      {/* Lang switcher */}
+      <div className="flex items-center justify-between p-3 rounded-xl bg-gray-50 border border-gray-100">
+        <span className="text-xs text-gray-500 font-medium">
+          Editing: <strong>{LANG_FLAGS[lang]} {LANG_LABELS[lang]}</strong>
+          {lang !== 'US' && <span className="text-gray-400 font-normal"> — blank inherits US</span>}
+        </span>
+        <LangBar />
+      </div>
+
+      {/* Short Description */}
+      <div>
+        <p className="text-xs font-semibold text-gray-500 mb-1.5">
+          Short Description
+          {lang === 'US' && <span className="ml-1 text-[10px] text-orange font-normal">(required)</span>}
+        </p>
+        <Form.Item
+          name={SHORT_FIELD[lang]}
+          rules={lang === 'US' ? [{ required: true, message: 'Short description required' }] : []}
+          noStyle
+        >
+          <Input.TextArea
+            key={lang}
+            rows={2}
+            placeholder={`${LANG_LABELS[lang]} short description…`}
+            className="rounded-lg border-gray-200 w-full"
+          />
+        </Form.Item>
+      </div>
+
+      {/* Long Description (Rich Text) */}
+      <div>
+        <p className="text-xs font-semibold text-gray-500 mb-1.5">
+          Long Description <span className="text-[10px] text-gray-400 font-normal">(rich text)</span>
+        </p>
+        <RichTextEditorControl
+          key={lang}
+          fieldName={LONG_FIELD[lang]}
+          form={form}
+          minHeight={220}
+          placeholder={`${LANG_LABELS[lang]} long description…`}
+        />
+      </div>
+    </div>
+  );
+}
+
+
+/** Bridges Form state with the uncontrolled RichTextEditor */
+function RichTextEditorControl({
+  fieldName, form, placeholder, minHeight,
+}: { fieldName: string; form: any; placeholder?: string; minHeight?: number }) {
+  const value = Form.useWatch(fieldName, form);
+  return (
+    <RichTextEditor
+      value={value || ''}
+      onChange={(v) => form.setFieldValue(fieldName, v)}
+      placeholder={placeholder}
+      minHeight={minHeight}
+    />
+  );
+}
+
+
 // ─── Main Component ────────────────────────────────────────────────────────
 interface ProductFormProps {
   initialValues?: Partial<Product>;
@@ -226,7 +339,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [activeTab, setActiveTab] = useState('info');
   // Name language toggle
-  const [nameLang, setNameLang] = useState<'VI' | 'UK' | 'US'>('UK');
+  const [nameLang, setNameLang] = useState<'VI' | 'UK' | 'US'>('US');
   const [slugEdited, setSlugEdited] = useState(false);
   const [skuEdited, setSkuEdited] = useState(false);
 
@@ -408,43 +521,42 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       label: <span className="flex items-center gap-1.5"><InfoCircleOutlined />Basic Info</span>,
       children: (
         <div className="pt-5 space-y-6">
-          {/* ── Name (primary EN always + VI/UK/US toggle) ── */}
+          {/* ── Name (US primary + UK/VI toggle) ── */}
           <SectionLabel>Product Name</SectionLabel>
           <div className="rounded-xl border border-orange/20 overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(249,115,22,0.04), rgba(251,191,36,0.06))' }}>
-            {/* Primary English name */}
-            <div className="p-4 border-b border-orange/10">
+            <div className="p-4">
+              {/* Toggle bar */}
               <div className="flex items-center justify-between mb-2">
                 <span className="text-xs font-semibold text-gray-500 flex items-center gap-1.5">
-                  <GlobalOutlined className="text-orange" /> Primary Name <span className="text-[10px] text-gray-400 font-normal">(English — auto-generates slug & SKU)</span>
-                </span>
-                <span className="text-[10px] bg-orange text-white px-2 py-0.5 rounded-full font-semibold">EN</span>
-              </div>
-              <Form.Item name="name" rules={[{ required: true, message: 'Product name is required' }]} noStyle>
-                <Input
-                  size="large"
-                  placeholder="Aria Dining Table"
-                  onChange={handleNameChange}
-                  className="rounded-lg border-orange/20"
-                />
-              </Form.Item>
-            </div>
-            {/* Localized name toggle */}
-            <div className="p-4">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-semibold text-gray-500">
-                  {nameFlagMap[nameLang]} Localized Name <span className="text-[10px] text-gray-400 font-normal">(leave blank to inherit English)</span>
+                  <GlobalOutlined className="text-orange" />
+                  {nameFlagMap[nameLang]} {({ VI: 'Vietnamese', UK: 'British English', US: 'American English' } as Record<string,string>)[nameLang]}
+                  {nameLang === 'US'
+                    ? <span className="text-[10px] text-gray-400 font-normal ml-1">(primary — auto-generates slug & SKU)</span>
+                    : <span className="text-[10px] text-gray-400 font-normal ml-1">— blank inherits US</span>}
                 </span>
                 <NameLangToggle />
               </div>
-              <Form.Item name={nameFieldMap[nameLang]} noStyle>
-                <Input
-                  size="large"
-                  placeholder={namePlaceholder[nameLang]}
-                  className="rounded-lg border-gray-200"
-                />
-              </Form.Item>
+              {nameLang === 'US' ? (
+                <Form.Item name="name" rules={[{ required: true, message: 'Product name is required' }]} noStyle>
+                  <Input
+                    size="large"
+                    placeholder="Aria Dining Table"
+                    onChange={handleNameChange}
+                    className="rounded-lg border-orange/20"
+                  />
+                </Form.Item>
+              ) : (
+                <Form.Item name={nameFieldMap[nameLang]} noStyle>
+                  <Input
+                    size="large"
+                    placeholder={namePlaceholder[nameLang]}
+                    className="rounded-lg border-gray-200"
+                  />
+                </Form.Item>
+              )}
             </div>
           </div>
+
 
 
           {/* ── URL & SKU ── */}
@@ -509,13 +621,8 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
           </div>
 
           {/* ── Descriptions ── */}
-          <SectionLabel>Descriptions (English Primary)</SectionLabel>
-          <Form.Item name="description" label="Short Description" rules={[{ required: true }]}>
-            <TextArea rows={3} placeholder="Concise product teaser for catalogue cards…" className="rounded-lg border-gray-200" />
-          </Form.Item>
-          <Form.Item name="longDescription" label="Long Description (HTML)" help="Supports full HTML markup">
-            <TextArea rows={8} placeholder="<p>Full product details…</p>" className="rounded-lg border-gray-200" style={{ fontFamily: 'monospace', fontSize: 12 }} />
-          </Form.Item>
+          <DescriptionFields form={form} />
+
         </div>
       ),
     },

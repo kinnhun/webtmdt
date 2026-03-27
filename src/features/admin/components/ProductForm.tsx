@@ -504,8 +504,23 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
 
   const onFinish = (values: any) => {
     const uploadedImages = fileList.map((f) => f.url || f.response?.url || '').filter(Boolean);
+    
+    let finalVideo = values.video || '';
+    if (finalVideo) {
+      const ytMatch = finalVideo.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
+      if (ytMatch && ytMatch[1]) {
+        finalVideo = `https://www.youtube.com/embed/${ytMatch[1]}`;
+      } else {
+        const vimeoMatch = finalVideo.match(/(?:vimeo\.com\/)(\d+)/);
+        if (vimeoMatch && vimeoMatch[1]) {
+          finalVideo = `https://player.vimeo.com/video/${vimeoMatch[1]}`;
+        }
+      }
+    }
+
     const payload = {
       ...values,
+      video: finalVideo,
       image: uploadedImages[0] || values.image || '',
       images: uploadedImages,
     };
@@ -894,8 +909,8 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
             </Upload>
           </ImgCrop>
           <Divider />
-          <Form.Item name="video" label="Video Embed URL" help="YouTube / Vimeo embed link">
-            <Input placeholder="https://youtube.com/embed/…" className="rounded-lg border-gray-200" />
+          <Form.Item name="video" label="Video URL" help="Nhập link YouTube / Vimeo (có thể là link thường hoặc embed)">
+            <Input placeholder="https://youtube.com/watch?v=..." className="rounded-lg border-gray-200" />
           </Form.Item>
         </div>
       ),

@@ -5,12 +5,35 @@ import mongoose from "mongoose";
 import type { Product as ProductType } from "@/types/product";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== "GET") {
+  if (req.method !== "GET" && req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
   try {
     await dbConnect();
+
+    if (req.method === "POST") {
+      const payload = { ...req.body };
+
+      // Normalize array fields to strings for Mongoose Schema compatibility
+      const arrayToStringFields = ['collection', 'category', 'material', 'color', 'style'];
+      arrayToStringFields.forEach(field => {
+        if (Array.isArray(payload[field])) {
+          payload[field] = payload[field].join(', ');
+        }
+      });
+
+      // Provide defaults for strictly required schema fields if missing
+      payload.productId = payload.productId || payload.code || `p_${Date.now()}`;
+      payload.room = payload.room || 'General';
+
+      const newProduct = await Product.create(payload);
+      const productObj = newProduct.toObject();
+      return res.status(201).json({
+        ...productObj,
+        id: productObj.productId || productObj._id?.toString(),
+      });
+    }
 
     const { search, category, material, color, size, style } = req.query;
 
@@ -42,24 +65,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       filter.style = { $in: style.split(",") };
     }
 
-    let products = await Product.find(filter).lean();
+    let products = await Product.find(filter).sort({ createdAt: -1 }).lean();
 
-    // Only map _id to id for frontend compatibility
-    const mapped = products.map((p) => ({
-      id: p.productId || p._id?.toString(),
-      name: p.name,
-      code: p.code,
-      category: p.category,
-      material: p.material,
-      color: p.color,
-      size: p.size,
-      style: p.style,
-      image: p.image,
-      images: p.images,
-      description: p.description,
-      features: p.features,
-      room: p.room,
-    }));
+    // Map _id to id for frontend compatibility without losing any other fields
+    const mapped = products.map((p) => {
+      const { _id, ...rest } = p as any; 
+      return {
+        ...rest,
+        id: p.productId || _id?.toString(),
+      };
+    });
 
     return res.status(200).json(mapped);
   } catch (error: unknown) {

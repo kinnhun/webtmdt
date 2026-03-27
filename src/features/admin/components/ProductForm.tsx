@@ -24,7 +24,7 @@ import * as AntIcons from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { updateProduct } from '@/services/product.service';
+import { updateProduct, createProduct } from '@/services/product.service';
 import type { Product, ProductAttribute, ProductSpecification } from '@/domains/product/product.types';
 import type { UploadFile } from 'antd/es/upload/interface';
 import dynamic from 'next/dynamic';
@@ -414,6 +414,19 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
     },
   });
 
+  const { mutate: mutateCreate, isPending: isCreating } = useMutation({
+    mutationFn: (payload: Partial<Product>) => createProduct(payload),
+    onSuccess: () => {
+      message.success('Product created!');
+      queryClient.invalidateQueries({ queryKey: ['products'] }); // Ensure list updates
+      router.push('/admin/products');
+    },
+    onError: (err) => {
+      console.error(err);
+      message.error('Create failed. See console.');
+    },
+  });
+
   useEffect(() => {
     if (!initialValues) return;
 
@@ -529,10 +542,10 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       image: uploadedImages[0] || values.image || '',
       images: uploadedImages,
     };
-    if (isEdit) mutateUpdate(payload);
-    else {
-      message.success('Product created!');
-      router.push('/admin/products');
+    if (isEdit) {
+      mutateUpdate(payload);
+    } else {
+      mutateCreate(payload);
     }
   };
 

@@ -24,6 +24,11 @@ export async function getProduct(slugOrId: string): Promise<Product> {
   return data;
 }
 
+export async function createProduct(payload: Partial<Product>): Promise<Product> {
+  const { data } = await httpClient.post<Product>("/products", payload);
+  return data;
+}
+
 export async function updateProduct(slugOrId: string, payload: Partial<Product>): Promise<Product> {
   const { data } = await httpClient.put<Product>(`/products/${slugOrId}`, payload);
   return data;

@@ -329,6 +329,13 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
           </div>
         </section>
       )}
+
+      {/* Inquiry Modal Popup */}
+      <ProductInquiryModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        product={product}
+      />
     </div>
   );
 }

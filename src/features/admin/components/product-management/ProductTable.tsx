@@ -78,6 +78,15 @@ export function ProductTable({ data, onEdit, onDelete, loading }: ProductTablePr
       key: 'action',
       render: (_: unknown, record: Product) => (
         <Space size="small">
+          <Tooltip title="View Live">
+            <Link href={`/catalogue/${record.slug}`} target="_blank">
+              <Button 
+                type="text" 
+                icon={<GlobalOutlined />} 
+                className="text-emerald-600 hover:bg-emerald-50"
+              />
+            </Link>
+          </Tooltip>
           <Tooltip title="Edit Product">
             <Link href={`/admin/products/edit/${record.slug || record.id}`}>
               <Button 

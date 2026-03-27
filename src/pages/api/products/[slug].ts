@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import dbConnect from '@/lib/mongodb';
 import Product from '@/models/Product';
-import { productsData } from '@/data/products';
+import mongoose from 'mongoose';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { slug } = req.query;
@@ -13,20 +13,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     await dbConnect();
 
+    const orConditions: any[] = [{ slug }, { code: slug }, { productId: slug }];
+    if (mongoose.isValidObjectId(slug)) {
+      orConditions.push({ _id: slug });
+    }
+
     if (req.method === 'GET') {
-      // Find by slug, code, or productId
-      const product = await Product.findOne({
-        $or: [{ slug }, { code: slug }, { productId: slug }],
-      }).lean();
+      // Find by slug, code, productId, or _id
+      const product = await Product.findOne({ $or: orConditions }).lean();
 
       if (!product) {
-        // Fallback to local data for demo flexibility
-        const localProduct = productsData.find(
-          (p) => p.slug === slug || p.id === slug || p.code === slug
-        );
-        if (localProduct) {
-          return res.status(200).json(localProduct);
-        }
         return res.status(404).json({ error: 'Product not found' });
       }
 
@@ -40,14 +36,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     } 
 
     if (req.method === 'PUT') {
-      const updatedData = req.body;
+      const updatedData = { ...req.body };
       
       // We don't want to accidentally overwrite _id or productId
       delete updatedData._id;
       if (updatedData.id) delete updatedData.id;
 
+      // Normalize array fields to strings for schema
+      const arrayToStringFields = ['collection', 'category', 'material', 'color', 'style'];
+      arrayToStringFields.forEach(field => {
+        if (Array.isArray(updatedData[field])) {
+          updatedData[field] = updatedData[field].join(', ');
+        }
+      });
+
       const updatedProduct = await Product.findOneAndUpdate(
-        { $or: [{ slug }, { code: slug }, { productId: slug }] },
+        { $or: orConditions },
         { $set: updatedData },
         { new: true, runValidators: true }
       ).lean();
@@ -63,9 +67,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     if (req.method === 'DELETE') {
-      const deleted = await Product.findOneAndDelete({
-        $or: [{ slug }, { code: slug }, { productId: slug }],
-      });
+      const deleted = await Product.findOneAndDelete({ $or: orConditions });
 
       if (!deleted) {
         return res.status(404).json({ error: 'Product not found to delete' });

@@ -61,13 +61,9 @@ const ICON_OPTIONS = [
   { name: 'UserOutlined', label: 'Capacity' },
 ];
 
+import { CATEGORIES, MATERIALS, MOQ_OPTIONS, COLORS, STYLES } from '@/constants/product';
+
 const COLLECTIONS = ['Outdoor', 'Indoor'];
-const CATEGORIES = [
-  'Dining Sets', 'Sofa & Sectionals', 'Lounge & Daybeds',
-  'Outdoor Chairs', 'Coffee Tables', 'Side Tables',
-  'Sunbeds & Loungers', 'Swings & Hammocks', 'Aluminium Furniture',
-  'Rattan & Wicker', 'Teak Furniture', 'Indoor Collection',
-];
 
 // ─── Helpers ───────────────────────────────────────────────────────────────
 function slugify(str: string) {
@@ -159,7 +155,7 @@ function IconPicker({ value, onChange }: { value?: string; onChange?: (v: string
 
 // ─── Attribute Builder Row ─────────────────────────────────────────────────
 function AttributeRow({ fieldName, remove }: { fieldName: number; remove: () => void }) {
-  const [lang, setLang] = useState<'VI' | 'UK' | 'US'>('UK');
+  const [lang, setLang] = useState<'VI' | 'UK' | 'US'>('US');
 
   const valField = lang === 'VI' ? 'valueVI' : lang === 'UK' ? 'valueUK' : 'valueUS';
   const titleField = lang === 'VI' ? 'titleVI' : lang === 'UK' ? 'titleUK' : 'titleUS';
@@ -636,7 +632,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
           <SectionLabel>Visual Attribute Cards</SectionLabel>
           <p className="text-xs text-gray-400 -mt-3 mb-5">
             These appear as icon cards on the product catalogue page (e.g. Dimensions, Material, Style).
-            Each row supports labels & values in EN / VI / UK / US.
+            Each row supports labels & values in US / UK / VI.
           </p>
 
           <Form.List name="attributes">
@@ -652,7 +648,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
 
                 <button
                   type="button"
-                  onClick={() => add({ icon: 'ProfileOutlined', titleEN: '', valueEN: '' })}
+                  onClick={() => add({ icon: 'ProfileOutlined', titleUS: '', valueUS: '' })}
                   className="w-full flex items-center justify-center gap-2 py-3 text-sm text-orange border-2 border-dashed border-orange/30 rounded-xl hover:border-orange/60 hover:bg-orange/5 transition-all"
                 >
                   <PlusOutlined /> Add Attribute Card
@@ -676,7 +672,9 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
           <Row gutter={16}>
             <Col span={8}>
               <Form.Item name="moq" label="MOQ">
-                <Input placeholder="50–100 pcs" className="rounded-lg border-gray-200" />
+                <Select placeholder="50–100 pcs" className="rounded-lg" allowClear>
+                  {MOQ_OPTIONS.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
+                </Select>
               </Form.Item>
             </Col>
             <Col span={8}>
@@ -693,17 +691,23 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
           <Row gutter={16}>
             <Col span={8}>
               <Form.Item name="material" label="Material">
-                <Input placeholder="Walnut Wood" className="rounded-lg border-gray-200" />
+                <Select placeholder="Walnut Wood" className="rounded-lg" allowClear mode="tags">
+                  {MATERIALS.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
+                </Select>
               </Form.Item>
             </Col>
             <Col span={8}>
               <Form.Item name="style" label="Style">
-                <Input placeholder="Mid-Century Modern" className="rounded-lg border-gray-200" />
+                <Select placeholder="Mid-Century Modern" className="rounded-lg" allowClear mode="tags">
+                  {STYLES.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
+                </Select>
               </Form.Item>
             </Col>
             <Col span={8}>
               <Form.Item name="color" label="Color / Finish">
-                <Input placeholder="Natural Walnut" className="rounded-lg border-gray-200" />
+                <Select placeholder="Natural Walnut" className="rounded-lg" allowClear mode="tags">
+                  {COLORS.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
+                </Select>
               </Form.Item>
             </Col>
           </Row>

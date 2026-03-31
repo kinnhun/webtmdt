@@ -1,0 +1,130 @@
+=== PAGE 1 ===
+Web design
+Sắp xếp các bố cục web
+Chỉnh sửa size và video , ảnh cho hợp lý
+1
+Thay đổi bố cục menu sắp xếp logic
+2
+Thay đổi cách giới thiệu và địa lý
+3
+Lượt bỏ bớt các phần không cần
+4
+
+
+=== PAGE 2 ===
+2:  HERO Text : Reliable Outdoor Furniture Supplier from Vietnam Build for Retailers. Made for Scale
+3:  Sub Text phía trên :  Acacia | Eucalyptus | Teak | Aluminum | Mixed Container Available
+4: Bỏ luôn 2 nút bấm Explore Products và Get a Quote
+7:  Thay đổi video background bằng video ở link bên dưới chỉnh lại size pixel video cho vừa
+khung hình trang web đừng quá to như hiện tại
+https://drive.google.com/drive/u/0/folders/16JfBb9__jI1HmZ541POcIUGMA_2Q-wg3
+5: Dòng số liệu bên dưới chỉnh lại theo lần lượt ( phần nào không ghi chú giữ nguyên ) : 18+   50,000+   400+ Designs Ready   35+ 
+6:  Dòng chữ chạy bên dưới sẽ đổi thành : • OEM / ODM • Mixed Container • BSCI / SMETA • Consistent Quality • On-time Delivery
+1:  Phần quickview bên trên : Catalog sẽ đổi thành Outdoor Collection và thêm Indoor Collection kế bên , bỏ luôn phần Blog
+
+
+=== PAGE 3 ===
+1: Headline đổi thành : Vietnam Outdoor Furniture Manufacturer for Retailers & Projects
+2: Thêm Subline : Acacia • Eucalyptus • Teak • Aluminum | OEM / ODM | Mixed Container Available
+3: Phần giới thiệu đổi thành : We help retailers, distributors, and project buyers source reliable outdoor furniture Made in Vietnam , Binh Dinh Manufacturing Base — with
+stable quality, flexible production, and on-time delivery. From sample development to container loading, every step is controlled to meet international standards.
+✔ Consistent quality with full QC control  
+✔ OEM / ODM customization for private labels  
+✔ Stable capacity up to 50,000 units/month  
+✔ On-time delivery with export-ready process  
+✔ Experienced with US, EU & global markets
+4: Thêm 2 nút bấm [GET FULL CATALOG] [REQUEST QUOTE] và đổi tên Our Story bằng View Factory → ( Để phía sau 2 nút bấm trước ) 
+5:  Thay đổi hình ảnh thành 3 bức ảnh trên thêm effect lướt vào nha 
+7: Chỉnh số liệu bên dưới ảnh thành : 18+ Years Export Experience , 50,000 Units / Month Capacity , 35+ Export Countries , OEM / ODM Available
+6 : Thay đổi địa lý Ho Chi Minh , Viet Nam thành Binh Dinh, Viet Nam
+
+
+=== PAGE 4 ===
+1: Head line đổi thành : Outdoor Furniture for Retailers & Projects
+ 2: Thêm Subline : Acacia • Teak • Aluminum | OEM / ODM | Mixed Container Available
+3: Menu theo trình tự trái sang phải bỏ tất cả dòng chữ vàng bên trên : Outdoor Sofa Collection , Outdoor Dining Set ,  Sunlounger & Daybed ,  Aluminum Furniture
+ 
+4: Phần này phải nhất định phải để cuối hoặc cho nó nằm riêng lẻ vì là second  : Indoor Furniture (Custom Orders Only) 
+5 : Bỏ tất cả từ phần Material trở xuống
+6: Phần Indoor Collection xóa trong đây đừng để ngang hàng với Outdoor ( Nhưng ở phần ngoài khách vẫn bấm vào xem được làm cho nó 1 Fillters riêng cũng giống như
+Outdoor Collection )
+
+
+=== PAGE 5 ===
+1: Headline giữ nguyên
+2: Subline đổi thành : Manufactured in Vietnam for retailers, distributors, and project buyers
+3 : Thứ tự selection : All > Outdoor Sofa > Dining Set > Sunlounger > Outdoor Table > Aluminum Furniture
+4: Đổi tên nút Full Catalogue → thành : Get Full Catalog →
+
+
+=== PAGE 6 ===
+1: Headline đổi thành : Why Buyers Choose DHT for Outdoor Furniture
+2: Subline đổi thành : We support retailers, distributors, and project buyers with reliable production, consistent quality, and on-time delivery.
+3: Các dòng bên dưới đổi thành:
+ Consistent quality – strict QC at every stage  
+ Stable production capacity for large orders  
+ Flexible OEM / ODM for private labels  
+ Mixed container loading to optimize cost  
+ On-time delivery with export-ready process
+4: Thay đổi thứ tự 2 nút bên dưới thành : [GET FULL CATALOG] > Request Quote →
+5: Đổi ảnh background bằng ảnh bên phải 
+
+
+=== PAGE 7 ===
+1: Headline đổi thành : Materials Built for Outdoor Performance
+ 2: Subline đổi thành : We use weather-resistant materials designed for durability, stability, and long-term outdoor use.
+3: Đổi tên sản phẩm chính và dòng ẩn nhỏ bên dưới theo thứ tự từ trái sang phải :
+ Acacia Wood 
+( Cost-effective & suitable for retail programs )
+ Teak Wood 
+( High durability for outdoor environments )
+ Powder-Coated Aluminum 
+( Rust-resistant & lightweight )
+ Outdoor Fabric 
+( Olefin / Sunbrella available UV & water resistant ) 
+4:  Đổi các avatar như hình đã gửi theo ghi chú
+Acacia Wood
+Teak Wood
+Powder-Coated Aluminum
+Outdoor Fabric
+
+
+=== PAGE 8 ===
+2 phần bên dưới này bỏ luôn cho gọn web 
+
+
+=== PAGE 9 ===
+1: Headline đổi thành : Looking for a Reliable Outdoor Furniture Supplier?
+2: Subline đổi thành : Get our latest catalog, pricing, and product details for your next
+order.
+3:  Đổi 2 tên 2 nút bên dưới thành:   [GET FULL CATALOG] > Request Quote → , bỏ
+dòng chữ màu vàng bên dưới
+4:  Đổi video thành 3 bức ảnh tĩnh từ trái sang phải thêm effects vào để khách dễ xem
+cả 3 tấm
+5: Thiết kế tất cả các dòng chữ sang bên trái để khách hàng có thể thấy được hình ảnh 
+6: Footer Description đổi thành : Vietnam-based outdoor furniture supplier Acacia,
+Teak & Aluminum OEM / ODM for global buyers
+1
+2
+3
+
+
+=== PAGE 10 ===
+1: Headline giữa đổi thành : Vietnam Outdoor Furniture Manufacturer
+2: Subline ở trên đổi thành : Acacia • Teak • Eucalyptus • Aluminum OEM / ODM • Mixed Container • Export Worldwide
+3: Dòng dưới đổi thành : DHT is a Vietnam-based outdoor furniture supplier supporting retailers, distributors, and project buyers. We deliver
+stable quality, flexible production, and reliable export solutions for global partners.
+4: Đổi ảnh background thành ảnh bên phải
+
+
+=== PAGE 11 ===
+1:  Dòng chữ chạy phía trên chỉ focus 3 thông tin này : 18+ Years Experience • 50,000 Units / Month • 35+ Export Countries
+2: Welcome Message đổi thành : Why Global Buyers Choose DHT ?
+3: Subline bên dưới đổi thành : DHT supports retailers, distributors, and project buyers with reliable outdoor furniture production from Vietnam. We focus on stable
+quality, flexible production, and long-term partnerships.
+4:  Các dòng DHT bên phải đổi thành values :
+ Production You Can Trust Strict QC, stable quality across orders
+Built for B2B Buyers OEM / ODM, mixed container, scalable production
+Export Ready On-time delivery, global shipping experience
+
+

@@ -89,5 +89,14 @@
         "discard": "Discard"
       }
     }
+  },
+  "marquee": {
+    "items": [
+      "OEM / ODM",
+      "Mixed Container",
+      "BSCI / SMETA",
+      "Consistent Quality",
+      "On-time Delivery"
+    ]
   }
 }

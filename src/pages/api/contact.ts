@@ -8,7 +8,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const { name, email, phone, company, subject, message } = req.body;
+    const { name, email, phone, company, subject, message, interestedProduct } = req.body;
 
     if (!name || !email || !subject || !message) {
       return res.status(400).json({ error: "Missing required fields: name, email, subject, message" });
@@ -23,6 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       company: company || "",
       subject,
       message,
+      interestedProduct: interestedProduct || null,
     });
 
     return res.status(201).json({ success: true, message: "Inquiry submitted successfully" });

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import type { Product } from "@/domains/product/product.types";
+import ProductInquiryModal from "@/features/catalogue/components/ProductInquiryModal";
 
 interface QuickViewModalProps {
   product: Product | null;
@@ -12,6 +13,7 @@ interface QuickViewModalProps {
 
 export default function QuickViewModal({ product, onClose }: QuickViewModalProps) {
   const [activeImage, setActiveImage] = useState(0);
+  const [isInquiryOpen, setIsInquiryOpen] = useState(false);
   const { t } = useTranslation();
 
   if (!product) return null;
@@ -76,10 +78,15 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
                     ))}
                   </ul>
                   <div className="flex flex-col gap-3 mt-auto pt-2">
-                    <Link href={`/contact?product=${encodeURIComponent(product.name)}&code=${product.code}`} className="w-full py-3 rounded font-body font-medium text-center text-white text-sm transition-all hover:opacity-90" style={{ backgroundColor: "hsl(var(--accent))" }} onClick={onClose}>
+                    <button 
+                      type="button" 
+                      onClick={() => setIsInquiryOpen(true)} 
+                      className="w-full py-3 rounded font-body font-medium text-center text-white text-sm transition-all hover:opacity-90 cursor-pointer border-0" 
+                      style={{ backgroundColor: "hsl(var(--accent))" }}
+                    >
                       {t("product.sendInquiry")}
-                    </Link>
-                    <a href={`https://wa.me/1234567890?text=Hi, I'd like to inquire about ${product.name} (${product.code})`} target="_blank" rel="noopener noreferrer" className="w-full py-3 rounded font-body font-medium text-center text-sm border transition-all hover:bg-orange/5" style={{ borderColor: "hsl(var(--orange))", color: "hsl(var(--orange))" }}>
+                    </button>
+                    <a href={`https://wa.me/1234567890?text=Hi, I'd like to inquire about ${encodeURIComponent(product.name)} (${product.code})`} target="_blank" rel="noopener noreferrer" className="w-full py-3 rounded font-body font-medium text-center text-sm border transition-all hover:bg-orange/5" style={{ borderColor: "hsl(var(--orange))", color: "hsl(var(--orange))" }}>
                       <Phone size={14} className="inline mr-2" /> {t("product.whatsappUs")}
                     </a>
                   </div>
@@ -88,6 +95,15 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
             </div>
           </motion.div>
         </>
+      )}
+
+      {/* Inquiry Modal layered on top of Quick View */}
+      {product && (
+        <ProductInquiryModal 
+          isOpen={isInquiryOpen} 
+          onClose={() => setIsInquiryOpen(false)} 
+          product={product} 
+        />
       )}
     </AnimatePresence>
   );

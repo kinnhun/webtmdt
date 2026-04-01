@@ -25,16 +25,16 @@ export const productsData: Product[] = [
     video: "https://www.youtube.com/embed/3ItE2e0zheE",
     dimensions: "200cm × 180cm × 95cm (L × W × H)",
     weight: "68 kg",
-    specifications: {
-      "Frame Material": "Solid Grade-A European Oak",
-      "Finish": "Natural oil, matte",
-      "Headboard Height": "95 cm",
-      "Slat System": "Included — flexible birch slats",
-      "Max Mattress Weight": "300 kg",
-      "Assembly": "Tool-free knock-down, ~30 min",
-      "Warranty": "10-year structural warranty",
-      "Certification": "FSC-certified timber",
-    },
+    specifications: [
+      { nameUS: "Frame Material", valueUS: "Solid Grade-A European Oak" },
+      { nameUS: "Finish", valueUS: "Natural oil, matte" },
+      { nameUS: "Headboard Height", valueUS: "95 cm" },
+      { nameUS: "Slat System", valueUS: "Included — flexible birch slats" },
+      { nameUS: "Max Mattress Weight", valueUS: "300 kg" },
+      { nameUS: "Assembly", valueUS: "Tool-free knock-down, ~30 min" },
+      { nameUS: "Warranty", valueUS: "10-year structural warranty" },
+      { nameUS: "Certification", valueUS: "FSC-certified timber" }
+    ],
     careInstructions: [
       "Wipe with a damp cloth and mild soap",
       "Re-oil every 12–18 months with teak or Danish oil",
@@ -73,16 +73,16 @@ export const productsData: Product[] = [
     video: "https://www.youtube.com/embed/EfvZPYW_8nk",
     dimensions: "220cm × 100cm × 76cm (L × W × H)",
     weight: "52 kg",
-    specifications: {
-      "Tabletop Material": "Solid American Walnut",
-      "Tabletop Thickness": "4.5 cm",
-      "Leg Material": "Solid walnut, tapered",
-      "Finish": "Hand-rubbed natural oil",
-      "Seating Capacity": "6–8 (10 with extension)",
-      "Extension": "Optional leaf adds 50cm",
-      "Assembly": "Legs attach with threaded inserts",
-      "Warranty": "8-year structural warranty",
-    },
+    specifications: [
+      { nameUS: "Tabletop Material", valueUS: "Solid American Walnut" },
+      { nameUS: "Tabletop Thickness", valueUS: "4.5 cm" },
+      { nameUS: "Leg Material", valueUS: "Solid walnut, tapered" },
+      { nameUS: "Finish", valueUS: "Hand-rubbed natural oil" },
+      { nameUS: "Seating Capacity", valueUS: "6–8 (10 with extension)" },
+      { nameUS: "Extension", valueUS: "Optional leaf adds 50cm" },
+      { nameUS: "Assembly", valueUS: "Legs attach with threaded inserts" },
+      { nameUS: "Warranty", valueUS: "8-year structural warranty" }
+    ],
     careInstructions: [
       "Use coasters and placemats to prevent heat marks",
       "Clean with a soft, damp cloth",
@@ -118,16 +118,16 @@ export const productsData: Product[] = [
     room: "Living Room",
     dimensions: "240cm × 95cm × 82cm (L × W × H)",
     weight: "48 kg",
-    specifications: {
-      "Frame": "Kiln-dried hardwood (guaranteed warp-free)",
-      "Cushion Fill": "HR foam core + feather-down wrap",
-      "Fabric": "Premium linen-blend, 40,000+ rub count",
-      "Seat Depth": "58 cm",
-      "Seat Height": "42 cm",
-      "Covers": "Removable, machine-washable at 30°C",
-      "Warranty": "Frame: 15 years; Cushions: 5 years",
-      "Fabric Options": "12 colours available",
-    },
+    specifications: [
+      { nameUS: "Frame", valueUS: "Kiln-dried hardwood (guaranteed warp-free)" },
+      { nameUS: "Cushion Fill", valueUS: "HR foam core + feather-down wrap" },
+      { nameUS: "Fabric", valueUS: "Premium linen-blend, 40,000+ rub count" },
+      { nameUS: "Seat Depth", valueUS: "58 cm" },
+      { nameUS: "Seat Height", valueUS: "42 cm" },
+      { nameUS: "Covers", valueUS: "Removable, machine-washable at 30°C" },
+      { nameUS: "Warranty", valueUS: "Frame: 15 years; Cushions: 5 years" },
+      { nameUS: "Fabric Options", valueUS: "12 colours available" }
+    ],
     careInstructions: [
       "Remove and wash covers at 30°C every 3–6 months",
       "Rotate and flip cushions monthly for even wear",
@@ -162,15 +162,15 @@ export const productsData: Product[] = [
     room: "Bedroom",
     dimensions: "180cm × 60cm × 210cm (W × D × H)",
     weight: "95 kg",
-    specifications: {
-      "Body Material": "Premium MDF with oak veneer",
-      "Door Panels": "Flush-mounted, push-to-open",
-      "Hinges": "Blum soft-close (Austrian)",
-      "Interior": "Fully configurable rails / shelves / drawers",
-      "Max Door Height": "240 cm (floor-to-ceiling)",
-      "Finish": "Matte lacquer or natural oil",
-      "Warranty": "10-year warranty",
-    },
+    specifications: [
+      { nameUS: "Body Material", valueUS: "Premium MDF with oak veneer" },
+      { nameUS: "Door Panels", valueUS: "Flush-mounted, push-to-open" },
+      { nameUS: "Hinges", valueUS: "Blum soft-close (Austrian)" },
+      { nameUS: "Interior", valueUS: "Fully configurable rails / shelves / drawers" },
+      { nameUS: "Max Door Height", valueUS: "240 cm (floor-to-ceiling)" },
+      { nameUS: "Finish", valueUS: "Matte lacquer or natural oil" },
+      { nameUS: "Warranty", valueUS: "10-year warranty" }
+    ],
     careInstructions: [
       "Wipe exterior with a soft damp cloth",
       "Lubricate hinges annually with silicone spray",
@@ -199,14 +199,14 @@ export const productsData: Product[] = [
     room: "Dining Room",
     dimensions: "52cm × 56cm × 82cm (W × D × H)",
     weight: "6.5 kg",
-    specifications: {
-      "Frame": "Solid walnut with clear lacquer",
-      "Seat Fabric": "Premium wool-blend, 50,000+ rub count",
-      "Seat Height": "46 cm",
-      "Stackable": "No",
-      "Max Load": "150 kg",
-      "Warranty": "5-year warranty",
-    },
+    specifications: [
+      { nameUS: "Frame", valueUS: "Solid walnut with clear lacquer" },
+      { nameUS: "Seat Fabric", valueUS: "Premium wool-blend, 50,000+ rub count" },
+      { nameUS: "Seat Height", valueUS: "46 cm" },
+      { nameUS: "Stackable", valueUS: "No" },
+      { nameUS: "Max Load", valueUS: "150 kg" },
+      { nameUS: "Warranty", valueUS: "5-year warranty" }
+    ],
     careInstructions: [
       "Vacuum seat fabric regularly",
       "Spot-clean with mild upholstery cleaner",
@@ -235,14 +235,14 @@ export const productsData: Product[] = [
     room: "Living Room",
     dimensions: "120cm × 60cm × 40cm (L × W × H)",
     weight: "35 kg",
-    specifications: {
-      "Top Material": "Genuine Carrara marble, honed finish",
-      "Top Thickness": "2 cm",
-      "Base Material": "Powder-coated steel",
-      "Base Finish": "Matte black or brass",
-      "Assembly": "Base pre-assembled; top sits by gravity",
-      "Warranty": "5-year warranty (excludes natural stone variations)",
-    },
+    specifications: [
+      { nameUS: "Top Material", valueUS: "Genuine Carrara marble, honed finish" },
+      { nameUS: "Top Thickness", valueUS: "2 cm" },
+      { nameUS: "Base Material", valueUS: "Powder-coated steel" },
+      { nameUS: "Base Finish", valueUS: "Matte black or brass" },
+      { nameUS: "Assembly", valueUS: "Base pre-assembled; top sits by gravity" },
+      { nameUS: "Warranty", valueUS: "5-year warranty (excludes natural stone variations)" }
+    ],
     careInstructions: [
       "Seal marble surface every 6–12 months",
       "Clean with pH-neutral stone cleaner",
@@ -273,14 +273,14 @@ export const productsData: Product[] = [
     video: "https://www.youtube.com/embed/3ItE2e0zheE",
     dimensions: "200cm × 70cm × 35cm (L × W × H)",
     weight: "22 kg",
-    specifications: {
-      "Wood": "Grade-A plantation teak (FSC-certified)",
-      "Hardware": "316 stainless steel (marine grade)",
-      "Backrest": "5-position adjustable",
-      "Wheels": "Integrated teak wheels for easy repositioning",
-      "Finish": "Unfinished (natural silver patina) or oiled",
-      "Warranty": "10-year frame warranty",
-    },
+    specifications: [
+      { nameUS: "Wood", valueUS: "Grade-A plantation teak (FSC-certified)" },
+      { nameUS: "Hardware", valueUS: "316 stainless steel (marine grade)" },
+      { nameUS: "Backrest", valueUS: "5-position adjustable" },
+      { nameUS: "Wheels", valueUS: "Integrated teak wheels for easy repositioning" },
+      { nameUS: "Finish", valueUS: "Unfinished (natural silver patina) or oiled" },
+      { nameUS: "Warranty", valueUS: "10-year frame warranty" }
+    ],
     careInstructions: [
       "Clean with soapy water and soft brush",
       "Oil every 3–4 months to maintain golden tone",
@@ -310,15 +310,15 @@ export const productsData: Product[] = [
     room: "Living Room",
     dimensions: "120cm × 35cm × 200cm (W × D × H)",
     weight: "42 kg",
-    specifications: {
-      "Frame": "40mm square tube steel, powder-coated",
-      "Shelves": "Solid walnut, 2.5cm thick",
-      "Shelf Count": "5 shelves (3 adjustable)",
-      "Max Load per Shelf": "25 kg",
-      "Wall Anchor": "Anti-tip wall anchor included",
-      "Assembly": "30 minutes, tools included",
-      "Warranty": "8-year warranty",
-    },
+    specifications: [
+      { nameUS: "Frame", valueUS: "40mm square tube steel, powder-coated" },
+      { nameUS: "Shelves", valueUS: "Solid walnut, 2.5cm thick" },
+      { nameUS: "Shelf Count", valueUS: "5 shelves (3 adjustable)" },
+      { nameUS: "Max Load per Shelf", valueUS: "25 kg" },
+      { nameUS: "Wall Anchor", valueUS: "Anti-tip wall anchor included" },
+      { nameUS: "Assembly", valueUS: "30 minutes, tools included" },
+      { nameUS: "Warranty", valueUS: "8-year warranty" }
+    ],
     careInstructions: [
       "Dust shelves regularly with a soft cloth",
       "Wipe steel frame with a damp cloth",
@@ -347,14 +347,14 @@ export const productsData: Product[] = [
     room: "Bedroom",
     dimensions: "45cm × 38cm × 55cm (W × D × H)",
     weight: "12 kg",
-    specifications: {
-      "Material": "Solid European oak",
-      "Drawer": "Soft-close runner system",
-      "Drawer Interior": "Unlined solid oak",
-      "Finish": "Natural oil, matte",
-      "Assembly": "Fully assembled — no assembly required",
-      "Warranty": "8-year warranty",
-    },
+    specifications: [
+      { nameUS: "Material", valueUS: "Solid European oak" },
+      { nameUS: "Drawer", valueUS: "Soft-close runner system" },
+      { nameUS: "Drawer Interior", valueUS: "Unlined solid oak" },
+      { nameUS: "Finish", valueUS: "Natural oil, matte" },
+      { nameUS: "Assembly", valueUS: "Fully assembled — no assembly required" },
+      { nameUS: "Warranty", valueUS: "8-year warranty" }
+    ],
     careInstructions: [
       "Wipe with a damp cloth",
       "Re-oil every 12–18 months",
@@ -383,15 +383,15 @@ export const productsData: Product[] = [
     room: "Home Office",
     dimensions: "160cm × 75cm × 76cm (L × W × H)",
     weight: "38 kg",
-    specifications: {
-      "Desktop": "Solid American Walnut, 3cm thick",
-      "Legs": "Tapered steel, matte black powder-coat",
-      "Cable Tray": "Under-desk mesh tray included",
-      "Optional": "Single drawer or double drawer add-on",
-      "Max Desktop Load": "80 kg",
-      "Assembly": "20 min, tools included",
-      "Warranty": "8-year warranty",
-    },
+    specifications: [
+      { nameUS: "Desktop", valueUS: "Solid American Walnut, 3cm thick" },
+      { nameUS: "Legs", valueUS: "Tapered steel, matte black powder-coat" },
+      { nameUS: "Cable Tray", valueUS: "Under-desk mesh tray included" },
+      { nameUS: "Optional", valueUS: "Single drawer or double drawer add-on" },
+      { nameUS: "Max Desktop Load", valueUS: "80 kg" },
+      { nameUS: "Assembly", valueUS: "20 min, tools included" },
+      { nameUS: "Warranty", valueUS: "8-year warranty" }
+    ],
     careInstructions: [
       "Clean walnut surface with damp cloth",
       "Re-oil every 12 months",
@@ -420,15 +420,15 @@ export const productsData: Product[] = [
     room: "Outdoor",
     dimensions: "Sofa: 160×75×80cm, Chair: 75×75×80cm, Table: 90×50×40cm",
     weight: "65 kg (total set)",
-    specifications: {
-      "Weave Material": "UV-stabilized PE rattan",
-      "Frame": "Powder-coated aluminum",
-      "Cushion Fabric": "Olefin, water-resistant",
-      "Cushion Fill": "Quick-dry foam",
-      "Set Includes": "1 sofa, 2 chairs, 1 coffee table",
-      "Glass Top": "5mm tempered glass on table",
-      "Warranty": "5-year frame, 2-year cushion",
-    },
+    specifications: [
+      { nameUS: "Weave Material", valueUS: "UV-stabilized PE rattan" },
+      { nameUS: "Frame", valueUS: "Powder-coated aluminum" },
+      { nameUS: "Cushion Fabric", valueUS: "Olefin, water-resistant" },
+      { nameUS: "Cushion Fill", valueUS: "Quick-dry foam" },
+      { nameUS: "Set Includes", valueUS: "1 sofa, 2 chairs, 1 coffee table" },
+      { nameUS: "Glass Top", valueUS: "5mm tempered glass on table" },
+      { nameUS: "Warranty", valueUS: "5-year frame, 2-year cushion" }
+    ],
     careInstructions: [
       "Hose down rattan weave periodically",
       "Machine-wash cushion covers at 30°C",
@@ -459,15 +459,15 @@ export const productsData: Product[] = [
     room: "Bedroom",
     dimensions: "170cm × 215cm × 125cm (W × L × Headboard H)",
     weight: "55 kg",
-    specifications: {
-      "Headboard": "Channel-tufted performance velvet",
-      "Frame": "Solid pine with center support beam",
-      "Platform": "Slatted base — no box spring needed",
-      "Headboard Height": "125 cm",
-      "Mattress Compatibility": "All standard mattress types",
-      "Fabric Options": "5 colours: Navy, Charcoal, Forest, Blush, Ivory",
-      "Warranty": "10-year frame, 3-year fabric",
-    },
+    specifications: [
+      { nameUS: "Headboard", valueUS: "Channel-tufted performance velvet" },
+      { nameUS: "Frame", valueUS: "Solid pine with center support beam" },
+      { nameUS: "Platform", valueUS: "Slatted base — no box spring needed" },
+      { nameUS: "Headboard Height", valueUS: "125 cm" },
+      { nameUS: "Mattress Compatibility", valueUS: "All standard mattress types" },
+      { nameUS: "Fabric Options", valueUS: "5 colours: Navy, Charcoal, Forest, Blush, Ivory" },
+      { nameUS: "Warranty", valueUS: "10-year frame, 3-year fabric" }
+    ],
     careInstructions: [
       "Vacuum velvet headboard weekly with upholstery attachment",
       "Blot spills immediately — do not rub",

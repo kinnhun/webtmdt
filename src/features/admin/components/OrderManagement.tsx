@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Table, Button, Input, Space, Tag, Dropdown, Menu } from 'antd';
 import { SearchOutlined, EyeOutlined, MoreOutlined, CheckCircleOutlined, SyncOutlined } from '@ant-design/icons';
+import type { Order } from '@/types/admin';
 
 export default function OrderManagement() {
   const [searchText, setSearchText] = useState('');
@@ -41,7 +42,7 @@ export default function OrderManagement() {
       title: 'Customer',
       dataIndex: 'customer',
       key: 'customer',
-      render: (text: string, record: any) => (
+      render: (text: string, record: Order) => (
         <div>
           <div className="font-semibold text-navy-deep">{text}</div>
           <div className="text-xs text-gray-500">{record.email}</div>
@@ -52,7 +53,7 @@ export default function OrderManagement() {
       title: 'Date',
       dataIndex: 'date',
       key: 'date',
-      sorter: (a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+      sorter: (a: Order, b: Order) => new Date(a.date).getTime() - new Date(b.date).getTime(),
     },
     {
       title: 'Items',
@@ -85,7 +86,7 @@ export default function OrderManagement() {
         { text: 'Delivered', value: 'Delivered' },
         { text: 'Cancelled', value: 'Cancelled' },
       ],
-      onFilter: (value: any, record: any) => record.status === value,
+      onFilter: (value: React.Key | boolean, record: Order) => record.status === value,
       render: (status: string) => {
         let color = status === 'Delivered' ? 'green' : status === 'Processing' ? 'blue' : status === 'Shipped' ? 'cyan' : status === 'Pending' ? 'orange' : 'red';
         return <Tag color={color}>{status.toUpperCase()}</Tag>;

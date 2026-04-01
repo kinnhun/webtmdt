@@ -34,7 +34,7 @@ export default function BlogManagement() {
       title: 'Title',
       dataIndex: 'title',
       key: 'title',
-      render: (text: string, record: any) => (
+      render: (text: string, record: { slug: string }) => (
         <div>
           <div className="font-semibold text-navy-deep">{text}</div>
           <div className="text-xs text-gray-400">/{record.slug}</div>
@@ -52,13 +52,13 @@ export default function BlogManagement() {
       title: 'Author',
       dataIndex: 'author',
       key: 'author',
-      render: (author: any) => author?.name || 'Unknown',
+      render: (author: { name: string } | undefined) => author?.name || 'Unknown',
       width: 150,
     },
     {
       title: 'Action',
       key: 'action',
-      render: (_: any, record: any) => (
+      render: (_: unknown, record: { slug: string }) => (
         <Space size="middle">
           <Button 
             type="text" 

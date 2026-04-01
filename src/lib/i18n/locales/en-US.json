@@ -396,6 +396,7 @@
     },
     "noResults": "No products match your filters",
     "clearAllFilters": "Clear all filters",
+    "productsFound": "Showing {{count}} products",
     "quickView": "Quick View",
     "inquire": "Inquire"
   },
@@ -506,6 +507,63 @@
     "related": {
       "label": "Keep Reading",
       "heading": "Related Articles"
+    }
+  },
+  "admin": {
+    "menu": {
+      "dashboard": "Dashboard",
+      "products": "Products",
+      "orders": "Orders",
+      "customers": "Customers",
+      "blog": "Blog Posts",
+      "settings": "Settings"
+    },
+    "header": {
+      "profile": "Profile",
+      "logout": "Logout",
+      "language": "Language",
+      "adminUser": "Admin User"
+    },
+    "products": {
+      "form": {
+        "productName": "Product Name",
+        "collection": "Collection",
+        "productNamePlaceholderVI": "Vietnamese Name",
+        "productNamePlaceholderUK": "British English Name",
+        "productNamePlaceholderUS": "American English Name",
+        "shortDescription": "Short Description",
+        "longDescription": "Long Description (HTML)",
+        "urlSlug": "URL Slug",
+        "skuCode": "SKU Code",
+        "category": "Category",
+        "b2bDetails": "B2B Details (Required)",
+        "moq": "MOQ",
+        "dimensions": "Dimensions (L×W×H)",
+        "weight": "Weight",
+        "material": "Material",
+        "style": "Style",
+        "color": "Color / Finish",
+        "visualAttributeCards": "Visual Attribute Cards",
+        "addAttributeCard": "Add Attribute Card",
+        "specificationRows": "Specification Rows",
+        "addSpecRow": "Add Spec Row",
+        "careInstructions": "Care Instructions",
+        "addInstruction": "Add instruction",
+        "usageSettings": "Usage Settings",
+        "addSetting": "Add setting",
+        "productImages": "Product Images",
+        "upload": "Upload",
+        "videoUrl": "Video URL",
+        "tabBasicInfo": "Basic Info",
+        "tabAttributes": "Attributes & Specs",
+        "tabCare": "Care",
+        "tabMedia": "Media",
+        "editProduct": "Edit Product",
+        "newProduct": "New Product",
+        "saveChanges": "Save Changes",
+        "publish": "Publish",
+        "discard": "Discard"
+      }
     }
   }
 }

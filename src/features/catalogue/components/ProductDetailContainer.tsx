@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { Product } from "@/domains/product/product.types";
+import ProductInquiryModal from "./ProductInquiryModal";
 
 interface Props {
   product: Product;
@@ -62,7 +63,9 @@ function ImageGallery({ images, name }: { images: string[]; name: string }) {
 
 /* ── Tab Section ── */
 function DetailTabs({ product }: { product: Product }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const langEnum: Record<string, 'VI' | 'UK' | 'US'> = { "vi-VN": "VI", "en-GB": "UK", "en-US": "US" };
+  const langId = langEnum[i18n?.language] || "US";
   const tabs = [
     { id: "specs", label: t("productDetail.specifications") },
     { id: "care", label: t("productDetail.care") },
@@ -90,12 +93,26 @@ function DetailTabs({ product }: { product: Product }) {
           {activeTab === "specs" && product.specifications && (
             <motion.div key="specs" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
-                {Object.entries(product.specifications).map(([key, val]) => (
-                  <div key={key} className="flex justify-between py-2 border-b" style={{ borderColor: "hsl(var(--navy)/0.06)" }}>
-                    <span className="font-body text-sm font-semibold" style={{ color: "hsl(var(--navy-deep))" }}>{key}</span>
-                    <span className="font-body text-sm" style={{ color: "hsl(var(--navy)/0.55)" }}>{val}</span>
-                  </div>
-                ))}
+                {Array.isArray(product.specifications) ? (
+                  product.specifications.map((spec: any, i) => {
+                    const key = spec[`name${langId}`] || spec.nameUS;
+                    const val = spec[`value${langId}`] || spec.valueUS;
+                    if (!key) return null;
+                    return (
+                      <div key={i} className="flex justify-between py-2 border-b" style={{ borderColor: "hsl(var(--navy)/0.06)" }}>
+                        <span className="font-body text-sm font-semibold" style={{ color: "hsl(var(--navy-deep))" }}>{key}</span>
+                        <span className="font-body text-sm" style={{ color: "hsl(var(--navy)/0.55)" }}>{val}</span>
+                      </div>
+                    );
+                  })
+                ) : (
+                  Object.entries(product.specifications).map(([key, val]) => (
+                    <div key={key} className="flex justify-between py-2 border-b" style={{ borderColor: "hsl(var(--navy)/0.06)" }}>
+                      <span className="font-body text-sm font-semibold" style={{ color: "hsl(var(--navy-deep))" }}>{key}</span>
+                      <span className="font-body text-sm" style={{ color: "hsl(var(--navy)/0.55)" }}>{val as React.ReactNode}</span>
+                    </div>
+                  ))
+                )}
               </div>
             </motion.div>
           )}
@@ -132,6 +149,7 @@ function DetailTabs({ product }: { product: Product }) {
 /* ── Main Container ── */
 export default function ProductDetailContainer({ product, relatedProducts }: Props) {
   const { t } = useTranslation();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleShare = useCallback(() => {
     if (typeof navigator !== "undefined") navigator.clipboard.writeText(window.location.href);
@@ -228,13 +246,14 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
 
             {/* CTAs */}
             <div className="flex gap-3">
-              <Link
-                href={`/contact?product=${encodeURIComponent(product.name)}&code=${product.code}`}
-                className="flex-1 inline-flex items-center justify-center gap-2 py-3 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90"
-                style={{ backgroundColor: "hsl(var(--orange))" }}
+              <button
+                type="button"
+                onClick={() => setIsModalOpen(true)}
+                className="flex-1 inline-flex items-center justify-center gap-2 py-3 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90 cursor-pointer"
+                style={{ backgroundColor: "hsl(var(--orange))", outline: "none", border: "none" }}
               >
                 {t("productDetail.inquire")} <ArrowUpRight size={15} />
-              </Link>
+              </button>
               <button onClick={handleShare} className="px-4 py-3 rounded-sm border font-body text-sm transition-all hover:bg-gray-50" style={{ borderColor: "hsl(var(--navy)/0.12)", color: "hsl(var(--navy)/0.55)" }}>
                 <Share2 size={16} />
               </button>
@@ -310,6 +329,13 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
           </div>
         </section>
       )}
+
+      {/* Inquiry Modal Popup */}
+      <ProductInquiryModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        product={product}
+      />
     </div>
   );
 }

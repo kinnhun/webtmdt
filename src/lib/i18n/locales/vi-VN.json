@@ -396,6 +396,7 @@
     },
     "noResults": "Không có sản phẩm phù hợp với bộ lọc",
     "clearAllFilters": "Xóa tất cả bộ lọc",
+    "productsFound": "Hiển thị {{count}} sản phẩm",
     "quickView": "Xem nhanh",
     "inquire": "Hỏi giá"
   },
@@ -506,6 +507,63 @@
     "related": {
       "label": "Đọc Thêm",
       "heading": "Bài Viết Liên Quan"
+    }
+  },
+  "admin": {
+    "menu": {
+      "dashboard": "Bảng điều khiển",
+      "products": "Sản phẩm",
+      "orders": "Đơn hàng",
+      "customers": "Khách hàng",
+      "blog": "Bài viết",
+      "settings": "Cài đặt"
+    },
+    "header": {
+      "profile": "Hồ sơ",
+      "logout": "Đăng xuất",
+      "language": "Ngôn ngữ",
+      "adminUser": "Quản trị viên"
+    },
+    "products": {
+      "form": {
+        "productName": "Tên sản phẩm",
+        "collection": "Bộ sưu tập",
+        "productNamePlaceholderVI": "Tên tiếng Việt",
+        "productNamePlaceholderUK": "Tên tiếng Anh (Anh)",
+        "productNamePlaceholderUS": "Tên tiếng Anh (Mỹ)",
+        "shortDescription": "Mô tả ngắn",
+        "longDescription": "Mô tả chi tiết (HTML)",
+        "urlSlug": "Đường dẫn URL",
+        "skuCode": "Mã SKU",
+        "category": "Danh mục",
+        "b2bDetails": "Thông tin B2B (Bắt buộc)",
+        "moq": "Số lượng tối thiểu (MOQ)",
+        "dimensions": "Kích thước (D×R×C)",
+        "weight": "Trọng lượng",
+        "material": "Chất liệu",
+        "style": "Phong cách",
+        "color": "Màu sắc / Hoàn thiện",
+        "visualAttributeCards": "Thẻ thuộc tính nổi bật",
+        "addAttributeCard": "Thêm thẻ thuộc tính",
+        "specificationRows": "Bảng thông số kỹ thuật",
+        "addSpecRow": "Thêm thông số",
+        "careInstructions": "Hướng dẫn bảo quản",
+        "addInstruction": "Thêm hướng dẫn",
+        "usageSettings": "Môi trường sử dụng",
+        "addSetting": "Thêm môi trường",
+        "productImages": "Hình ảnh sản phẩm",
+        "upload": "Tải lên",
+        "videoUrl": "Đường dẫn Video",
+        "tabBasicInfo": "Thông tin cơ bản",
+        "tabAttributes": "Thuộc tính & Thông số",
+        "tabCare": "Bảo quản",
+        "tabMedia": "Hình ảnh & Video",
+        "editProduct": "Chỉnh sửa sản phẩm",
+        "newProduct": "Thêm sản phẩm mới",
+        "saveChanges": "Lưu thay đổi",
+        "publish": "Xuất bản",
+        "discard": "Huỷ bỏ"
+      }
     }
   }
 }

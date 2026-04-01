@@ -127,24 +127,28 @@
     },
     "materials": {
       "label": "Chất liệu",
-      "heading1": "Chế tác từ",
-      "heading2": "Tinh hoa thiên nhiên",
-      "description": "Chúng tôi chỉ sử dụng nguyên liệu tự nhiên cao cấp — mỗi loại được chọn lựa vì tính toàn vẹn cấu trúc, vẻ đẹp ấm áp và độ bền lâu dài. Gỗ chứng nhận FSC, khai thác bền vững.",
+      "heading1": "Vật liệu Tiêu chuẩn",
+      "heading2": "Ngoài trời",
+      "description": "Chúng tôi sử dụng các vật liệu chịu thời tiết được thiết kế cho độ bền, sự ổn định và sử dụng lâu dài ngoài trời.",
       "solidOak": {
-        "name": "Gỗ sồi nguyên khối",
-        "desc": "Vân thẳng, tông mật ong ấm áp, độ bền vượt trội"
+        "name": "Gỗ Tràm (Acacia)",
+        "desc": "Hiệu quả về chi phí & phù hợp cho các chương trình bán lẻ"
       },
       "walnutWood": {
         "name": "Gỗ óc chó",
         "desc": "Sắc nâu chocolate đậm, kết cấu mịn, ấm áp phong cách mid-century"
       },
       "premiumTeak": {
-        "name": "Gỗ teak cao cấp",
-        "desc": "Dầu tự nhiên, chống chịu mọi thời tiết, vẻ đẹp nâu vàng"
+        "name": "Gỗ Tếch (Teak)",
+        "desc": "Độ bền cực cao trong môi trường ngoài trời"
       },
       "linenVelvet": {
-        "name": "Vải lanh & Nhung",
-        "desc": "Vải bọc chọn lọc với bảng màu vượt thời gian"
+        "name": "Vải Ngoài Trời",
+        "desc": "Gồm các dòng Olefin / Sunbrella kháng tia cực tím cực mạnh & chống nước"
+      },
+      "aluminium": {
+        "name": "Nhôm Sơn Tĩnh Điện",
+        "desc": "Chống gỉ sét & trọng lượng nhẹ"
       }
     },
     "rooms": {

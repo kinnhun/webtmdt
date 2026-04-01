@@ -1,18 +1,22 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "@/hooks/useInView";
 import { fadeUp, stagger, cardReveal } from "@/lib/animations";
 import { useTranslation } from "react-i18next";
+import Image from "next/image";
+import { X } from "lucide-react";
 
 export default function MaterialsSection() {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const { ref, inView } = useInView();
   const { t } = useTranslation();
   const vis = inView ? "show" : "hidden";
 
   const materials = [
-    { key: "solidOak", image: "https://images.unsplash.com/photo-1595526114101-1b702ecacccf?w=600&auto=format&fit=crop&q=90" },
-    { key: "walnutWood", image: "https://images.unsplash.com/photo-1588854337221-4cf9fa96059c?w=600&auto=format&fit=crop&q=90" },
-    { key: "premiumTeak", image: "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=600&auto=format&fit=crop&q=90" },
-    { key: "linenVelvet", image: "https://images.unsplash.com/photo-1606744837616-56c9a5c08a68?w=600&auto=format&fit=crop&q=90" },
+    { key: "solidOak", image: "/img/materials/AcaciaWood.png" },
+    { key: "premiumTeak", image: "/img/materials/TeakWood.png" },
+    { key: "aluminium", image: "/img/materials/Powder-CoatedAluminum.png" },
+    { key: "linenVelvet", image: "/img/materials/OutdoorFabric.png" },
   ];
 
   return (
@@ -31,18 +35,47 @@ export default function MaterialsSection() {
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {materials.map((mat, i) => (
-              <motion.div key={mat.key} {...cardReveal(i)} className="group relative overflow-hidden rounded-sm aspect-[3/4]">
-                <img src={mat.image} alt={t(`home.materials.${mat.key}.name`)} className="w-full h-full object-cover group-hover:scale-[1.06] transition-transform duration-700" />
-                <div className="absolute inset-0" style={{ background: "linear-gradient(to top, hsl(var(--navy-deep)) 0%, transparent 55%)" }} />
-                <div className="absolute bottom-0 left-0 right-0 p-4">
-                  <p className="font-display font-bold text-white text-base mb-1">{t(`home.materials.${mat.key}.name`)}</p>
-                  <p className="font-body text-xs text-white/50 leading-relaxed opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">{t(`home.materials.${mat.key}.desc`)}</p>
+              <motion.div key={mat.key} {...cardReveal(i)} onClick={() => setSelectedImage(mat.image)} className="group relative overflow-hidden rounded-sm aspect-[3/4] cursor-pointer">
+                <Image src={mat.image} alt={t(`home.materials.${mat.key}.name`)} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover group-hover:scale-[1.06] transition-transform duration-700" />
+                <div className="absolute inset-0" style={{ background: "linear-gradient(to top, hsl(var(--navy-deep)) 0%, transparent 60%)" }} />
+                <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6">
+                  <p className="font-display font-medium text-white mb-2" style={{ fontSize: "clamp(1.1rem, 1.5vw, 1.35rem)" }}>{t(`home.materials.${mat.key}.name`)}</p>
+                  <p className="font-body text-xs sm:text-sm text-white/70 leading-relaxed">{t(`home.materials.${mat.key}.desc`)}</p>
                 </div>
               </motion.div>
             ))}
           </div>
         </div>
       </div>
+
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedImage(null)}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 p-4 sm:p-8 backdrop-blur-sm cursor-zoom-out"
+          >
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-6 right-6 z-[101] text-white/80 hover:text-white transition-colors p-2 bg-white/10 rounded-full hover:bg-white/20"
+            >
+              <X size={24} />
+            </button>
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="relative w-full h-[85vh] max-w-6xl rounded-sm overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Image src={selectedImage} alt="Expanded Material" fill className="object-contain" />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

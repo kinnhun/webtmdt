@@ -111,17 +111,19 @@
     },
     "whyUs": {
       "label": "Tại sao chọn DHT",
-      "heading": "Đối tác sản xuất đáng tin cậy",
-      "description": "Từ bản phác thảo đến giao hàng container — chúng tôi quản lý mọi bước với sự chính xác, minh bạch và tận tâm.",
+      "heading": "Tại sao chọn DHT cho nội thất ngoài trời",
+      "description": "Chúng tôi đồng hành cùng các nhà bán lẻ, nhà phân phối và khách hàng dự án với năng lực sản xuất đáng tin cậy, chất lượng đồng nhất và giao hàng đúng tiến độ.",
       "points": [
-        "Sản xuất nội bộ: không thuê ngoài, kiểm soát chất lượng toàn diện",
-        "Kích thước, hoàn thiện tùy chỉnh và OEM / ODM",
-        "Năng lực ổn định cho các dự án khách sạn & phát triển lớn",
-        "Đội xuất khẩu giàu kinh nghiệm, tỷ lệ giao hàng đúng hạn cao",
-        "Nguyên liệu chứng nhận FSC, khai thác bền vững"
+        "Chất lượng đồng nhất – quy trình QC nghiêm ngặt ở mọi giai đoạn",
+        "Năng lực sản xuất ổn định đáp ứng các đơn hàng lớn",
+        "Sản xuất OEM / ODM linh hoạt cho các thương hiệu",
+        "Hỗ trợ ghép container giúp tối ưu chi phí",
+        "Giao hàng đúng hạn với quy trình xuất khẩu chuyên nghiệp"
       ],
-      "requestQuote": "Contact Us",
-      "viewCatalogue": "Download Catalog"
+      "requestQuote": "Liên hệ ngay",
+      "viewCatalogue": "Tải Catalog",
+      "btn1": "TẢI TOÀN BỘ CATALOG",
+      "btn2": "Yêu cầu báo giá →"
     },
     "materials": {
       "label": "Chất liệu",

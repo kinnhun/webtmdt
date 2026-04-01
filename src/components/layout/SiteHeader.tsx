@@ -21,7 +21,7 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
     { label: t("nav.home"), href: "/" },
     { label: t("nav.about"), href: "/about" },
     { label: t("nav.catalogue"), href: "/catalogue" },
-    { label: t("nav.blog"), href: "/blog" },
+    { label: t("nav.indoorCollection"), href: "/catalogue?type=indoor" },
     { label: t("nav.contact"), href: "/contact" },
   ];
 
@@ -51,8 +51,8 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
       >
         <div className="container mx-auto px-6">
           <div
-            className="flex items-center justify-between transition-all duration-300"
-            style={{ height: scrolled ? "64px" : "80px" }}
+            className="flex items-center justify-between transition-all duration-300 py-1"
+            style={{ minHeight: scrolled ? "64px" : "80px" }}
           >
             <Link href="/" className="flex items-center gap-2.5 flex-shrink-0 group">
               <Image
@@ -75,7 +75,7 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
                   }}
                 >DHT</span>
                 <span
-                  className="font-body text-xs tracking-[0.2em] uppercase leading-none"
+                  className="font-body text-[8.5px] md:text-[9.5px] tracking-[0.1em] uppercase leading-[1.2] mt-1 block max-w-[160px] md:max-w-[200px] text-wrap"
                   style={{
                     background: "linear-gradient(180deg, #e8a838 0%, #d4862a 100%)",
                     WebkitBackgroundClip: "text",

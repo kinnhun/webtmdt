@@ -9,9 +9,9 @@ export default function MaterialsSection() {
   const vis = inView ? "show" : "hidden";
 
   const materials = [
-    { key: "solidOak", image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&auto=format&fit=crop&q=90" },
-    { key: "walnutWood", image: "https://images.unsplash.com/photo-1572981779307-38b8cabb2407?w=600&auto=format&fit=crop&q=90" },
-    { key: "premiumTeak", image: "https://images.unsplash.com/photo-1588854337221-4cf9fa96059c?w=600&auto=format&fit=crop&q=90" },
+    { key: "solidOak", image: "https://images.unsplash.com/photo-1595526114101-1b702ecacccf?w=600&auto=format&fit=crop&q=90" },
+    { key: "walnutWood", image: "https://images.unsplash.com/photo-1588854337221-4cf9fa96059c?w=600&auto=format&fit=crop&q=90" },
+    { key: "premiumTeak", image: "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=600&auto=format&fit=crop&q=90" },
     { key: "linenVelvet", image: "https://images.unsplash.com/photo-1606744837616-56c9a5c08a68?w=600&auto=format&fit=crop&q=90" },
   ];
 

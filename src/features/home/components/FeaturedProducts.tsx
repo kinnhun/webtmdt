@@ -8,10 +8,9 @@ import QuickViewModal from "@/components/QuickViewModal";
 import { featuredProductsData } from "@/data/products";
 import type { Product } from "@/domains/product/product.types";
 
-const FILTER_KEYS = ["All", "Outdoor Sofas", "Dining Sets", "Lounge & Daybeds", "Tables", "Chairs"] as const;
+const FILTER_KEYS = ["Outdoor Sofas", "Dining Sets", "Lounge & Daybeds", "Tables", "Chairs"] as const;
 
 const FILTER_I18N: Record<string, string> = {
-  "All": "home.featured.filterAll",
   "Outdoor Sofas": "home.featured.filterOutdoorSofas",
   "Dining Sets": "home.featured.filterDiningSets",
   "Lounge & Daybeds": "home.featured.filterLoungeDaybeds",
@@ -55,10 +54,10 @@ export default function FeaturedProducts() {
   const { ref, inView } = useInView();
   const { t } = useTranslation();
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
-  const [activeFilter, setActiveFilter] = useState("All");
+  const [activeFilter, setActiveFilter] = useState("Outdoor Sofas");
 
-  const filtered = activeFilter === "All" ? featuredProductsData : featuredProductsData.filter(p => p.category === activeFilter);
-  const targetUrl = activeFilter === "All" ? "/catalogue" : `/catalogue?category=${encodeURIComponent(activeFilter)}`;
+  const filtered = featuredProductsData.filter(p => p.category === activeFilter);
+  const targetUrl = `/catalogue?category=${encodeURIComponent(activeFilter)}`;
 
   return (
     <section className="py-16 sm:py-28" style={{ backgroundColor: "hsl(var(--warm-cream))" }}>
@@ -80,8 +79,8 @@ export default function FeaturedProducts() {
           <motion.div initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.35 }} className="flex flex-wrap gap-2.5 mb-8 sm:mb-10">
             {FILTER_KEYS.map((f) => {
               const isActive = activeFilter === f;
-              const count = f === "All" ? featuredProductsData.length : featuredProductsData.filter(p => p.category === f).length;
-              if (count === 0 && f !== "All") return null;
+              const count = featuredProductsData.filter(p => p.category === f).length;
+              if (count === 0) return null;
               return (
                 <button key={f} onClick={() => setActiveFilter(f)} className="relative inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full font-body text-sm font-medium transition-all duration-300 overflow-hidden whitespace-nowrap shrink-0" style={isActive ? { backgroundColor: "hsl(var(--navy-deep))", color: "#fff", boxShadow: "0 4px 14px hsl(var(--navy-deep)/0.25)" } : { backgroundColor: "hsl(var(--warm-beige))", color: "hsl(var(--navy-deep))", border: "1px solid hsl(var(--warm-beige))" }}>
                   {t(FILTER_I18N[f])}

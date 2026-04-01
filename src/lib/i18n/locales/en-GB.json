@@ -11,7 +11,8 @@
   },
   "home": {
     "whyUs": {
-      "viewCatalogue": "View Catalogue"
+      "viewCatalogue": "Download Catalog",
+      "requestQuote": "Contact Us"
     },
     "cta": {
       "browseCatalogue": "Browse Catalogue"
@@ -20,6 +21,10 @@
       "linenVelvet": {
         "desc": "Curated upholstery fabrics in timeless palettes"
       }
+    },
+    "hero": {
+      "title1": "Reliable Outdoor Furniture Supplier from Vietnam",
+      "title2": "Build for Retailers. Made for Scale"
     }
   },
   "about": {},

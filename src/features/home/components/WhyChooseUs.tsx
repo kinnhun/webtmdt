@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { CheckCircle2, ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
@@ -13,8 +14,8 @@ export default function WhyChooseUs() {
   return (
     <section className="relative overflow-hidden">
       <div className="absolute inset-0">
-        <img src="https://images.unsplash.com/photo-1549497538-303791108f95?w=1600&auto=format&fit=crop&q=85" alt="Factory" className="w-full h-full object-cover" />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(90deg, hsl(var(--navy-deep)/0.97) 0%, hsl(var(--navy-deep)/0.90) 45%, hsl(var(--navy-deep)/0.4) 100%)" }} />
+        <Image src="/img/WhyDHT.png" alt="Factory" fill className="object-cover brightness-110" />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(90deg, hsl(var(--navy-deep)/0.90) 0%, hsl(var(--navy-deep)/0.75) 45%, hsl(var(--navy-deep)/0.25) 100%)" }} />
       </div>
       <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-28">
         <div className="max-w-xl">
@@ -33,8 +34,8 @@ export default function WhyChooseUs() {
             ))}
           </ul>
           <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={vp} transition={{ duration: 0.5, delay: 0.7, ease }} className="flex flex-wrap gap-3">
-            <Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90" style={{ backgroundColor: "hsl(var(--orange))" }}>{t("home.whyUs.requestQuote")} <ArrowRight size={15} /></Link>
-            <Link href="/catalogue" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white/70 border border-white/20 hover:bg-white/10 transition-all">{t("home.whyUs.viewCatalogue")}</Link>
+            <Link href="/catalogue" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90 uppercase" style={{ backgroundColor: "hsl(var(--orange))" }}>{t("home.whyUs.btn1")}</Link>
+            <Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white/70 border border-white/20 hover:bg-white/10 transition-all">{t("home.whyUs.btn2")}</Link>
           </motion.div>
         </div>
       </div>

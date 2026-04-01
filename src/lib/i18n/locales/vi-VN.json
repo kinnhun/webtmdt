@@ -25,8 +25,8 @@
     },
     "hero": {
       "badge": "DHT · Sản xuất nội thất ngoài trời",
-      "title1": "Chế tác cho",
-      "title2": "Ngoài trời",
+      "title1": "Nhà Cung Cấp Nội Thất Ngoài Trời Uy Tín Từ Việt Nam",
+      "title2": "Gia Công Cho Nhà Bán Lẻ. Sản Xuất Quy Mô Lớn",
       "exploreProducts": "Khám phá sản phẩm",
       "getQuote": "Nhận báo giá",
       "stats": {
@@ -38,18 +38,24 @@
     },
     "intro": {
       "label": "Chúng tôi là ai",
-      "heading1": "Xây dựng trên nghề thủ công.",
-      "heading2": "Hướng tới",
-      "heading3": "Chất lượng.",
-      "paragraph1": "DHT Outdoor Furniture Production là nhà sản xuất nội thất ngoài trời cao cấp với cơ sở sản xuất 5.000m² tại Jakarta. Hơn 15 năm hợp tác với các thương hiệu khách sạn, resort và nhà thiết kế trên 25+ quốc gia.",
-      "paragraph2": "Mỗi sản phẩm — từ bộ bàn ghế teak đến bộ sofa chống thời tiết — được chế tác bởi 400+ nghệ nhân lành nghề, trải qua kiểm soát chất lượng đa tầng.",
+      "heading1": "Nhà Sản Xuất Nội Thất Ngoài Trời",
+      "heading2": "Chuyên Gia Công Cho",
+      "heading3": "Nhà Bán Lẻ & Dự Án",
+      "paragraph1": "Chúng tôi giúp các nhà bán lẻ, nhà phân phối và ban quản lý dự án tìm kiếm nguồn cung nội thất ngoài trời đáng tin cậy Sản Xuất Tại Việt Nam, Trụ Sở Sản Xuất Bình Định — với chất lượng ổn định, linh hoạt sản xuất và giao hàng đúng tiến độ. Từ khâu phát triển mẫu đến đóng xếp container, mọi quy trình đều tuân thủ tiêu chuẩn quốc tế.",
+      "paragraph2": "✔ Chất lượng đồng nhất với quy trình QC toàn diện\n✔ Tuỳ chỉnh OEM / ODM cho thương hiệu riêng\n✔ Năng suất ổn định lên đến 50.000 sản phẩm/tháng\n✔ Giao hàng đúng tiến độ với quy trình xuất khẩu chuẩn xác\n✔ Kinh nghiệm dày dặn với thị trường Mỹ, EU và toàn cầu",
       "ourStory": "Câu chuyện của chúng tôi",
-      "isoCertified": "Chứng nhận 9001:2015",
-      "location": "Ho Chi Minh, Viet Nam",
-      "statsYears": "Năm hoạt động",
-      "statsUnits": "Sản phẩm / Tháng",
-      "statsCraftspeople": "Nghệ nhân",
-      "statsExport": "Quốc gia xuất khẩu"
+      "isoCertified": "Chứng nhận ISO 9001:2015",
+      "location": "Bình Định, Việt Nam",
+      "statsYears": "Hơn 18 năm xuất khẩu",
+      "statsUnits": "Năng lực 50.000 SP/tháng",
+      "statsCraftspeople": "Hơn 35 quốc gia",
+      "statsExport": "Hỗ trợ OEM / ODM",
+      "subline": "Acacia • Bạch Đàn • Teak • Nhôm | OEM / ODM | Hỗ Trợ Ghép Container",
+      "buttons": {
+        "catalog": "NHẬN TOÀN BỘ CATALOG",
+        "quote": "YÊU CẦU BÁO GIÁ",
+        "factory": "Xem Hình Ảnh Xưởng →"
+      }
     },
     "categories": {
       "label": "Bộ sưu tập",
@@ -72,20 +78,25 @@
         "count": "42 sản phẩm"
       },
       "indoor": {
-        "name": "Bộ Sưu Tập Trong Nhà",
+        "name": "Nội Thất Trong Nhà (Đặt Hàng Riêng)",
         "tagline": "Nội thất trong nhà cao cấp",
         "sub": {
           "livingRoom": "Phòng khách",
           "diningRoom": "Phòng ăn",
           "bathroom": "Phòng tắm"
         }
+      },
+      "sunlounger": {
+        "name": "Giường Tắm Nắng",
+        "tagline": "",
+        "count": "(Đặt hàng riêng)"
       }
     },
     "featured": {
       "label": "Bán chạy",
       "heading": "Nội Thất Ngoài Trời Bán Chạy",
-      "description": "Sản xuất tại Việt Nam với nguyên liệu cao cấp — lý tưởng cho resort, biệt thự và đối tác bán buôn.",
-      "fullCatalogue": "Toàn bộ danh mục",
+      "description": "Sản xuất tại Việt Nam phục vụ nhà bán lẻ, nhà phân phối và dự án",
+      "fullCatalogue": "Xem toàn bộ danh mục",
       "seeAllProducts": "Xem tất cả sản phẩm",
       "noProducts": "Chưa có sản phẩm nổi bật trong danh mục này.",
       "new": "Mới",
@@ -93,23 +104,26 @@
       "filterAll": "Tất cả",
       "filterOutdoorSofas": "Sofa ngoài trời",
       "filterDiningSets": "Bộ bàn ăn",
-      "filterLoungeDaybeds": "Ghế dài & Giường tắm nắng",
-      "filterTables": "Bàn",
-      "filterChairs": "Ghế"
+      "filterLoungeDaybeds": "Giường tắm nắng",
+      "filterTables": "Bàn ngoài trời",
+      "filterChairs": "Nội thất nhôm",
+      "subline": "Sản xuất tại Việt Nam phục vụ nhà bán lẻ, nhà phân phối và dự án"
     },
     "whyUs": {
       "label": "Tại sao chọn DHT",
-      "heading": "Đối tác sản xuất đáng tin cậy",
-      "description": "Từ bản phác thảo đến giao hàng container — chúng tôi quản lý mọi bước với sự chính xác, minh bạch và tận tâm.",
+      "heading": "Tại sao chọn DHT cho nội thất ngoài trời",
+      "description": "Chúng tôi đồng hành cùng các nhà bán lẻ, nhà phân phối và khách hàng dự án với năng lực sản xuất đáng tin cậy, chất lượng đồng nhất và giao hàng đúng tiến độ.",
       "points": [
-        "Sản xuất nội bộ: không thuê ngoài, kiểm soát chất lượng toàn diện",
-        "Kích thước, hoàn thiện tùy chỉnh và OEM / ODM",
-        "Năng lực ổn định cho các dự án khách sạn & phát triển lớn",
-        "Đội xuất khẩu giàu kinh nghiệm, tỷ lệ giao hàng đúng hạn cao",
-        "Nguyên liệu chứng nhận FSC, khai thác bền vững"
+        "Chất lượng đồng nhất – quy trình QC nghiêm ngặt ở mọi giai đoạn",
+        "Năng lực sản xuất ổn định đáp ứng các đơn hàng lớn",
+        "Sản xuất OEM / ODM linh hoạt cho các thương hiệu",
+        "Hỗ trợ ghép container giúp tối ưu chi phí",
+        "Giao hàng đúng hạn với quy trình xuất khẩu chuyên nghiệp"
       ],
-      "requestQuote": "Yêu cầu báo giá",
-      "viewCatalogue": "Xem danh mục"
+      "requestQuote": "Liên hệ ngay",
+      "viewCatalogue": "Tải Catalog",
+      "btn1": "TẢI TOÀN BỘ CATALOG",
+      "btn2": "Yêu cầu báo giá →"
     },
     "materials": {
       "label": "Chất liệu",
@@ -470,16 +484,11 @@
   },
   "marquee": {
     "items": [
-      "DHT Nội thất ngoài trời",
-      "Gỗ teak & Gỗ nguyên khối",
-      "Chống thời tiết",
-      "Đặt hàng tùy chỉnh",
-      "Xuất khẩu toàn cầu",
-      "Chứng nhận ISO",
-      "Không gian ngoài trời",
-      "Thiết kế vượt thời gian",
-      "15 năm kinh nghiệm",
-      "50.000 sản phẩm / Tháng"
+      "OEM / ODM",
+      "Mixed Container",
+      "BSCI / SMETA",
+      "Chất lượng Đồng nhất",
+      "Giao hàng Đúng hạn"
     ]
   },
   "search": {

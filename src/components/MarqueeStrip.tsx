@@ -13,11 +13,18 @@ export default function MarqueeStrip() {
     <span key={`dot-${i}`} className="inline-block" aria-hidden>{separatorDot}</span>,
   ]);
 
+  // Duplicate content 8 times to ensure it's wide enough for 4K+ screens
+  const repeatedContent = Array.from({ length: 8 }).map((_, i) => (
+    <span key={`repeat-${i}`} className="inline-flex items-center shrink-0">
+      {content}
+    </span>
+  ));
+
   return (
     <div className="relative overflow-hidden py-4 border-y" style={{ backgroundColor: "hsl(var(--navy))", borderColor: "hsl(var(--navy-light)/0.4)" }}>
-      <div className="flex animate-marquee">
-        <span className="flex items-center" style={{ color: "hsl(var(--warm-cream)/0.7)" }}>{content}</span>
-        <span className="flex items-center" style={{ color: "hsl(var(--warm-cream)/0.7)" }} aria-hidden>{content}</span>
+      <div className="flex w-max animate-marquee hover:[animation-play-state:paused]">
+        <span className="flex items-center shrink-0" style={{ color: "hsl(var(--warm-cream)/0.7)" }}>{repeatedContent}</span>
+        <span className="flex items-center shrink-0" style={{ color: "hsl(var(--warm-cream)/0.7)" }} aria-hidden>{repeatedContent}</span>
       </div>
     </div>
   );

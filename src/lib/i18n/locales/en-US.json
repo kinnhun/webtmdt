@@ -2,16 +2,16 @@
   "nav": {
     "home": "Home",
     "about": "About Us",
-    "catalogue": "Catalogue",
+    "catalogue": "Outdoor Collection",
     "contact": "Contact",
     "getQuote": "Get Quote",
     "whatsapp": "WhatsApp",
     "outdoorFurniture": "Outdoor Furniture",
     "search": "Search",
-    "blog": "Blog"
+    "indoorCollection": "Indoor Collection"
   },
   "footer": {
-    "description": "We are a Vietnam-based manufacturer specializing in premium outdoor furniture for global brands and retailers. With a focus on durability, craftsmanship, and scalable production, we provide OEM/ODM solutions tailored for international markets.",
+    "description": "Vietnam-based outdoor furniture supplier Acacia, Teak & Aluminum OEM / ODM for global buyers",
     "quickLinks": "Quick Links",
     "collections": "Collections",
     "contact": "Contact",
@@ -24,37 +24,43 @@
       "description": "DHT Outdoor Furniture Production — premium outdoor & indoor furniture manufacturer. Teak, solid wood, custom orders. ISO certified. 25+ export countries."
     },
     "hero": {
-      "badge": "DHT · Outdoor Furniture Production",
-      "title1": "Crafted for the",
-      "title2": "Outdoors",
+      "badge": "Acacia | Eucalyptus | Teak | Aluminum | Mixed Container Available",
+      "title1": "Reliable Outdoor Furniture Supplier from Vietnam",
+      "title2": "Build for Retailers. Made for Scale",
       "exploreProducts": "Explore Products",
       "getQuote": "Get a Quote",
       "stats": {
         "yearsExperience": "Years Experience",
         "unitsMonth": "Units / Month",
-        "products": "Products",
+        "products": "Designs Ready",
         "exportCountries": "Export Countries"
       }
     },
     "intro": {
       "label": "Who We Are",
-      "heading1": "Built on Craft.",
-      "heading2": "Driven by",
-      "heading3": "Quality.",
-      "paragraph1": "DHT Outdoor Furniture Production is a premium outdoor furniture manufacturer with a 5,000m² production facility in Jakarta. Over 15 years of partnership with hotel brands, resorts, and designers across 25+ countries.",
-      "paragraph2": "Every product — from teak dining sets to weather-resistant sofas — is crafted by 400+ skilled artisans, undergoing multi-stage quality control.",
+      "heading1": "Vietnam Outdoor Furniture",
+      "heading2": "Manufacturer for",
+      "heading3": "Retailers & Projects",
+      "paragraph1": "We help retailers, distributors, and project buyers source reliable outdoor furniture Made in Vietnam , Binh Dinh Manufacturing Base — with stable quality, flexible production, and on-time delivery. From sample development to container loading, every step is controlled to meet international standards.",
+      "paragraph2": "✔ Consistent quality with full QC control\n✔ OEM / ODM customization for private labels\n✔ Stable capacity up to 50,000 units/month\n✔ On-time delivery with export-ready process\n✔ Experienced with US, EU & global markets",
       "ourStory": "Our Story",
       "isoCertified": "9001:2015 Certified",
-      "location": "Ho Chi Minh, Viet Nam",
-      "statsYears": "Years Operating",
-      "statsUnits": "Units / Month",
-      "statsCraftspeople": "Craftspeople",
-      "statsExport": "Export Countries"
+      "location": "Binh Dinh, Viet Nam",
+      "statsYears": "18+ Years Export Experience",
+      "statsUnits": "50,000 Units / Month Capacity",
+      "statsCraftspeople": "35+ Export Countries",
+      "statsExport": "OEM / ODM Available",
+      "subline": "Acacia • Eucalyptus • Teak • Aluminum | OEM / ODM | Mixed Container Available",
+      "buttons": {
+        "catalog": "GET FULL CATALOG",
+        "quote": "REQUEST QUOTE",
+        "factory": "View Factory →"
+      }
     },
     "categories": {
       "label": "Collections",
-      "heading1": "Outdoor Furniture,",
-      "heading2": "Built for Projects",
+      "heading1": "Outdoor Furniture for",
+      "heading2": "Retailers & Projects",
       "viewAll": "View All",
       "outdoorSofa": {
         "name": "Outdoor Sofa Collection",
@@ -62,75 +68,88 @@
         "count": "36 products"
       },
       "outdoorDining": {
-        "name": "Outdoor Dining Collection",
+        "name": "Outdoor Dining Set",
         "tagline": "Dine al fresco in style",
         "count": "28 products"
       },
       "aluminium": {
-        "name": "Aluminium Furniture",
+        "name": "Aluminum Furniture",
         "tagline": "Lightweight & weather-proof",
         "count": "42 products"
       },
       "indoor": {
-        "name": "Indoor Collection",
+        "name": "Indoor Furniture (Custom Orders Only)",
         "tagline": "Premium indoor pieces",
         "sub": {
           "livingRoom": "Living Room",
           "diningRoom": "Dining Room",
           "bathroom": "Bathroom"
         }
+      },
+      "subline": "Acacia • Teak • Aluminum | OEM / ODM | Mixed Container Available",
+      "sunlounger": {
+        "name": "Sunlounger & Daybed",
+        "tagline": "",
+        "count": "(Custom Orders)"
       }
     },
     "featured": {
       "label": "Best Sellers",
       "heading": "Best-Selling Outdoor Furniture",
-      "description": "Manufactured in Vietnam with premium materials — ideal for resorts, villas, and wholesale partners.",
-      "fullCatalogue": "Full Catalogue",
-      "seeAllProducts": "See All Products",
+      "description": "Manufactured in Vietnam for retailers, distributors, and project buyers",
+      "fullCatalogue": "Get Full Catalog",
+      "seeAllProducts": "Get All Products",
       "noProducts": "No featured products in this category yet.",
       "new": "New",
       "inquire": "Inquire",
       "filterAll": "All",
-      "filterOutdoorSofas": "Outdoor Sofas",
-      "filterDiningSets": "Dining Sets",
-      "filterLoungeDaybeds": "Lounge & Daybeds",
-      "filterTables": "Tables",
-      "filterChairs": "Chairs"
+      "filterOutdoorSofas": "Outdoor Sofa",
+      "filterDiningSets": "Dining Set",
+      "filterLoungeDaybeds": "Sunlounger",
+      "filterTables": "Outdoor Table",
+      "filterChairs": "Aluminum Furniture",
+      "subline": "Manufactured in Vietnam for retailers, distributors, and project buyers"
     },
     "whyUs": {
       "label": "Why DHT",
-      "heading": "Your Trusted Manufacturing Partner",
-      "description": "From concept sketch to container delivery — we manage every step with precision, transparency, and care.",
+      "heading": "Why Buyers Choose DHT for Outdoor Furniture",
+      "description": "We support retailers, distributors, and project buyers with reliable production, consistent quality, and on-time delivery.",
       "points": [
-        "In-house production: no outsourcing, full quality control",
-        "Custom sizes, finishes, and OEM / ODM available",
-        "Stable capacity for large hospitality & development projects",
-        "Experienced export team, on-time delivery record",
-        "FSC-certified materials, sustainable sourcing"
+        "Consistent quality – strict QC at every stage",
+        "Stable production capacity for large orders",
+        "Flexible OEM / ODM for private labels",
+        "Mixed container loading to optimize cost",
+        "On-time delivery with export-ready process"
       ],
-      "requestQuote": "Request a Quote",
-      "viewCatalogue": "View Catalogue"
+      "requestQuote": "Contact Us",
+      "viewCatalogue": "Download Catalog",
+      "btn1": "GET FULL CATALOG",
+      "btn2": "Request Quote →"
     },
     "materials": {
       "label": "Materials",
-      "heading1": "Crafted from",
-      "heading2": "Nature's Best",
-      "description": "We source only premium-grade natural materials — each selected for its structural integrity, aesthetic warmth, and lasting beauty. FSC-certified timber, sustainably harvested.",
+      "heading1": "Materials Built for",
+      "heading2": "Outdoor Performance",
+      "description": "We use weather-resistant materials designed for durability, stability, and long-term outdoor use.",
       "solidOak": {
-        "name": "Solid Oak",
-        "desc": "Straight grain, warm honey tones, exceptional durability"
+        "name": "Acacia Wood",
+        "desc": "Cost-effective & suitable for retail programs"
       },
       "walnutWood": {
         "name": "Walnut Wood",
         "desc": "Deep chocolate hues, fine texture, mid-century warmth"
       },
       "premiumTeak": {
-        "name": "Premium Teak",
-        "desc": "Natural oils, all-weather resilience, golden brown beauty"
+        "name": "Teak Wood",
+        "desc": "High durability for outdoor environments"
       },
       "linenVelvet": {
-        "name": "Linen & Velvet",
-        "desc": "Curated upholstery fabrics in timeless palettes"
+        "name": "Outdoor Fabric",
+        "desc": "Olefin / Sunbrella available UV & water resistant"
+      },
+      "aluminium": {
+        "name": "Powder-Coated Aluminum",
+        "desc": "Rust-resistant & lightweight"
       }
     },
     "rooms": {
@@ -188,11 +207,13 @@
       ]
     },
     "cta": {
-      "heading": "Ready to Furnish Your Space?",
-      "description": "Contact our team for custom quotes, bulk orders, and project consultations. We ship worldwide.",
+      "heading": "Looking for a Reliable Outdoor Furniture Supplier?",
+      "description": "Get our latest catalog, pricing, and product details for your next order.",
       "sendInquiry": "Send Inquiry",
       "browseCatalogue": "Browse Catalogue",
-      "slogan": "Crafting Premium Outdoor Furniture Since 2008"
+      "slogan": "Crafting Premium Outdoor Furniture Since 2008",
+      "btn1": "GET FULL CATALOG",
+      "btn2": "Request Quote →"
     }
   },
   "about": {
@@ -201,8 +222,9 @@
       "description": "Learn about DHT Outdoor Furniture — 15+ years of furniture manufacturing excellence."
     },
     "hero": {
-      "title": "About DHT",
-      "subtitle": "A manufacturer and exporter of outdoor wooden furniture, based in Quy Nhon."
+      "title": "Vietnam Outdoor Furniture Manufacturer",
+      "subtitle": "Acacia • Teak • Eucalyptus • Aluminum OEM / ODM • Mixed Container • Export Worldwide",
+      "description": "DHT is a Vietnam-based outdoor furniture supplier supporting retailers, distributors, and project buyers. We deliver stable quality, flexible production, and reliable export solutions for global partners."
     },
     "story": {
       "label": "Our Story",
@@ -337,24 +359,28 @@
       }
     },
     "welcome": {
-      "heading": "WELCOME\nMESSAGE",
-      "intro": "DHT Furniture Vietnam – A manufacturer and exporter of outdoor wooden furniture, based in Quy Nhon.",
-      "d": {
-        "letter": "D",
-        "word": "EDICATION",
-        "desc": "Commitment to every product."
-      },
-      "h": {
-        "letter": "H",
-        "word": "ONESTY",
-        "desc": "Transparency in all transactions."
-      },
-      "t": {
-        "letter": "T",
-        "word": "ENACITY",
-        "desc": "Persistence in pursuing quality and long-term goals."
-      }
-    }
+      "title": "Why Global Buyers Choose DHT?",
+      "description": "DHT supports retailers, distributors, and project buyers with reliable outdoor furniture production from Vietnam. We focus on stable quality, flexible production, and long-term partnerships.",
+      "values": [
+        {
+          "title": "Production You Can Trust",
+          "desc": "Strict QC, stable quality across orders"
+        },
+        {
+          "title": "Built for B2B Buyers",
+          "desc": "OEM / ODM, mixed container, scalable production"
+        },
+        {
+          "title": "Export Ready",
+          "desc": "On-time delivery, global shipping experience"
+        }
+      ]
+    },
+    "marquee": [
+      "18+ Years Experience",
+      "50,000 Units / Month",
+      "35+ Export Countries"
+    ]
   },
   "catalogue": {
     "seo": {
@@ -470,16 +496,11 @@
   },
   "marquee": {
     "items": [
-      "DHT Outdoor Furniture",
-      "Teak & Solid Wood",
-      "Weather-Resistant",
-      "Custom Orders",
-      "Global Export",
-      "ISO Certified",
-      "Outdoor Living",
-      "Timeless Design",
-      "15 Years Experience",
-      "50,000 Units / Month"
+      "OEM / ODM",
+      "Mixed Container",
+      "BSCI / SMETA",
+      "Consistent Quality",
+      "On-time Delivery"
     ]
   },
   "search": {

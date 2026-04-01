@@ -13,24 +13,26 @@ interface SearchOverlayProps {
 export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
   const [query, setQuery] = useState("");
   const router = useRouter();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const langEnum: Record<string, 'vi' | 'uk' | 'us'> = { "vi-VN": "vi", "en-GB": "uk", "en-US": "us" };
+  const langId = (langEnum[i18n?.language] || "us") as 'vi' | 'uk' | 'us';
 
   const results = query.length >= 2
     ? productsData.filter((p) => {
-        const catMatch = Array.isArray(p.category)
-          ? p.category.some(c => c.toLowerCase().includes(query.toLowerCase()))
-          : p.category.toLowerCase().includes(query.toLowerCase());
+        const q = query.toLowerCase();
+        const pName = (p.name?.[langId] || p.name?.us || "").toLowerCase();
+        const pCat = (p.category?.[langId] || p.category?.us || "").toLowerCase();
           
         return (
-          p.name.toLowerCase().includes(query.toLowerCase()) ||
-          p.code.toLowerCase().includes(query.toLowerCase()) ||
-          catMatch
+          pName.includes(q) ||
+          p.code.toLowerCase().includes(q) ||
+          pCat.includes(q)
         );
       }).slice(0, 6)
     : [];
 
   const handleSelect = () => {
-    router.push(`/catalogue?search=${encodeURIComponent(query)}`);
+    router.push(`/catalogue/outdoor?search=${encodeURIComponent(query)}`);
     onClose();
     setQuery("");
   };
@@ -43,7 +45,7 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.25 }} className="fixed top-0 left-0 right-0 z-50 bg-white shadow-2xl p-6">
             <div className="container mx-auto px-4">
               <div className="flex items-center gap-4">
-                <Search size={20} className="text-muted-foreground flex-shrink-0" />
+                <Search size={20} className="text-muted-foreground shrink-0" />
                 <input
                   autoFocus type="text" placeholder={t("search.placeholder")}
                   value={query} onChange={(e) => setQuery(e.target.value)}
@@ -60,15 +62,19 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
 
               {results.length > 0 && (
                 <div className="mt-4 border-t border-border pt-4 grid grid-cols-1 gap-2 max-h-80 overflow-y-auto">
-                  {results.map((p) => (
-                    <button key={p.id} onClick={handleSelect} className="flex items-center gap-4 p-3 hover:bg-muted rounded-md transition-colors text-left">
-                      <img src={p.image} alt={p.name} className="w-12 h-10 rounded object-cover flex-shrink-0" />
-                      <div>
-                        <p className="font-body font-medium text-sm text-foreground">{p.name}</p>
-                        <p className="font-body text-xs text-muted-foreground">{p.code} · {p.category}</p>
-                      </div>
-                    </button>
-                  ))}
+                  {results.map((p) => {
+                    const pNameItem = p.name?.[langId] || p.name?.us || "";
+                    const pCatItem = p.category?.[langId] || p.category?.us || "";
+                    return (
+                      <button key={p.id} onClick={handleSelect} className="flex items-center gap-4 p-3 hover:bg-muted rounded-md transition-colors text-left">
+                        <img src={p.image} alt={pNameItem} className="w-12 h-10 rounded object-cover shrink-0" />
+                        <div>
+                          <p className="font-body font-medium text-sm text-foreground">{pNameItem}</p>
+                          <p className="font-body text-xs text-muted-foreground">{p.code} · {pCatItem}</p>
+                        </div>
+                      </button>
+                    )
+                  })}
                 </div>
               )}
 

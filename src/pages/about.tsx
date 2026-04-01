@@ -39,14 +39,14 @@ export default function AboutPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black" />
           
           <div className="container mx-auto px-6 relative z-10 text-center mt-20">
-            <motion.span initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.2 }} className="font-body text-white/70 tracking-[0.5em] md:tracking-[0.8em] uppercase text-xs md:text-sm mb-8 block font-bold">
-              {t("about.seo.title")}
+            <motion.span initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.2 }} className="font-body text-[hsl(var(--orange))] tracking-[0.2em] md:tracking-[0.4em] uppercase text-xs md:text-sm mb-8 block font-bold">
+              {t("about.hero.subtitle")}
             </motion.span>
-            <motion.h1 initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2, delay: 0.4 }} className="font-display font-black text-white italic tracking-tighter uppercase mb-8 leading-[0.85]" style={{ fontSize: "clamp(4rem, 15vw, 12rem)", color: "hsl(var(--orange))" }}>
+            <motion.h1 initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2, delay: 0.4 }} className="font-display font-black text-white italic tracking-tighter uppercase mb-6 leading-[0.85]" style={{ fontSize: "clamp(3rem, 10vw, 8rem)" }}>
               {t("about.hero.title")}
             </motion.h1>
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.2, delay: 0.8 }} className="font-body text-white/80 text-lg md:text-2xl max-w-3xl mx-auto font-light leading-relaxed">
-              {t("about.hero.subtitle")}
+              {t("about.hero.description")}
             </motion.p>
           </div>
           
@@ -67,30 +67,30 @@ export default function AboutPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
               {/* Left Column */}
               <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8 }}>
-                <h2 className="font-display font-black uppercase italic tracking-tighter text-white mb-8 leading-[0.85] whitespace-pre-line" style={{ fontSize: "clamp(4rem, 10vw, 7rem)", color: "hsl(var(--orange))" }}>
-                  {t("about.welcome.heading")}
+                <h2 className="font-display font-black uppercase italic tracking-tighter text-white mb-8 leading-[0.85] whitespace-pre-line" style={{ fontSize: "clamp(3rem, 8vw, 6rem)", color: "hsl(var(--orange))" }}>
+                  {t("about.welcome.title")}
                 </h2>
                 <div className="w-16 h-16 mb-10 rounded-full flex items-center justify-center bg-[hsl(var(--orange))] shadow-2xl shadow-[hsl(var(--orange))]/30">
                   <span className="text-4xl text-[hsl(var(--navy-deep))] transform -translate-y-1">❞</span>
                 </div>
                 <p className="font-body text-white text-xl sm:text-2xl leading-relaxed max-w-md font-light">
-                  {t("about.welcome.intro")}
+                  {t("about.welcome.description")}
                 </p>
               </motion.div>
 
               {/* Right Column */}
               <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8, delay: 0.3 }} className="space-y-16">
-                {['d', 'h', 't'].map((letter) => (
-                  <div key={letter} className="flex items-start gap-6 sm:gap-10 group">
-                    <div className="font-display font-black leading-none group-hover:scale-110 transition-transform duration-500 origin-bottom-left" style={{ fontSize: "clamp(6rem, 15vw, 10rem)", color: "hsl(var(--orange))", marginTop: "-0.1em" }}>
-                      {t(`about.welcome.${letter}.letter`)}
+                {(t("about.welcome.values", { returnObjects: true }) as Array<{ title: string; desc: string }>).map((val, i) => (
+                  <div key={i} className="flex items-start gap-6 sm:gap-10 group">
+                    <div className="font-display font-black leading-none group-hover:scale-110 transition-transform duration-500 origin-bottom-left" style={{ fontSize: "clamp(4rem, 10vw, 6rem)", color: "hsl(var(--orange))", marginTop: "-0.1em" }}>
+                      {String(i + 1).padStart(2, '0')}
                     </div>
-                    <div className="pt-3 sm:pt-6">
-                      <h3 className="font-display font-bold text-white text-xl sm:text-3xl tracking-[0.2em] mb-2 uppercase">
-                        {t(`about.welcome.${letter}.word`)}
+                    <div className="pt-2 sm:pt-4">
+                      <h3 className="font-display font-bold text-white text-xl sm:text-3xl tracking-[0.1em] mb-2 uppercase">
+                        {val.title}
                       </h3>
                       <p className="font-body text-white/60 text-base sm:text-lg leading-relaxed font-light">
-                        {t(`about.welcome.${letter}.desc`)}
+                        {val.desc}
                       </p>
                     </div>
                   </div>

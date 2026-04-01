@@ -1,7 +1,12 @@
-import dynamic from "next/dynamic";
-
-const CatalogueContainer = dynamic(() => import("@/features/catalogue/components/CatalogueContainer"), { ssr: false });
+export async function getServerSideProps() {
+  return {
+    redirect: {
+      destination: '/catalogue/outdoor',
+      permanent: false,
+    },
+  };
+}
 
 export default function CataloguePage() {
-  return <CatalogueContainer />;
+  return null;
 }

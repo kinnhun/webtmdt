@@ -1,13 +1,28 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useState, useEffect } from "react";
 
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
 const vp = { once: true, amount: 0.05 as const };
 
 export default function CompanyIntro() {
   const { t } = useTranslation();
+  const [currentImage, setCurrentImage] = useState(0);
+
+  const images = [
+    "/img/WhoWeAre1.png",
+    "/img/WhoWeAre2.png",
+    "/img/WhoWeAre3.png"
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % images.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [images.length]);
 
   return (
     <section style={{ backgroundColor: "hsl(var(--warm-cream))" }}>
@@ -26,46 +41,75 @@ export default function CompanyIntro() {
                 { text: t("home.intro.heading3"), outline: false, accent: true },
               ].map(({ text, outline, italic, accent }, i) => (
                 <div key={i}>
-                  <motion.h2 initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={vp} transition={{ duration: 0.8, delay: i * 0.08, ease }} className={`font-display font-bold leading-[0.92] tracking-tight block${italic ? " italic" : ""}`} style={{ fontSize: "clamp(2.2rem, 6.5vw, 6rem)", color: outline ? "transparent" : "hsl(var(--navy-deep))", WebkitTextStroke: outline ? "1.5px hsl(var(--navy-light))" : undefined }}>
+                  <motion.h2 initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={vp} transition={{ duration: 0.8, delay: i * 0.08, ease }} className={`font-display font-bold leading-[0.92] tracking-tight block${italic ? " italic" : ""}`} style={{ fontSize: "clamp(2.2rem, 5vw, 4.5rem)", color: outline ? "transparent" : "hsl(var(--navy-deep))", WebkitTextStroke: outline ? "1.5px hsl(var(--navy-light))" : undefined }}>
                     {accent ? (<>{text.replace(".", "")}<span style={{ color: "hsl(var(--orange))" }}>.</span></>) : text}
                   </motion.h2>
                 </div>
               ))}
+              <motion.p initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={vp} transition={{ duration: 0.8, delay: 0.2 }} className="font-body text-sm uppercase tracking-widest font-semibold mt-4" style={{ color: "hsl(var(--orange))" }}>
+                {t("home.intro.subline")}
+              </motion.p>
+
             </div>
             <motion.div initial={{ opacity: 0, y: 20, filter: "blur(4px)" }} whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }} viewport={vp} transition={{ duration: 0.65, delay: 0.28, ease }} className="space-y-3 sm:space-y-4 mb-8 sm:mb-10 max-w-lg">
               <p className="font-body text-sm sm:text-base leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>{t("home.intro.paragraph1")}</p>
-              <p className="font-body text-sm sm:text-base leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>{t("home.intro.paragraph2")}</p>
+              <p className="font-body text-sm sm:text-base leading-relaxed whitespace-pre-line" style={{ color: "hsl(var(--muted-foreground))" }}>{t("home.intro.paragraph2")}</p>
             </motion.div>
-            <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={vp} transition={{ duration: 0.5, delay: 0.44, ease }}>
-              <Link href="/about" className="group inline-flex items-center gap-2.5 font-body font-semibold text-sm" style={{ color: "hsl(var(--navy))" }}>
-                <span className="border-b border-current pb-0.5 transition-opacity duration-300 group-hover:opacity-60">{t("home.intro.ourStory")}</span>
-                <span className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:rotate-45" style={{ backgroundColor: "hsl(var(--orange))" }}>
+            <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={vp} transition={{ duration: 0.5, delay: 0.44, ease }} className="flex flex-col sm:flex-row items-center gap-4">
+              <Link href="/catalogue/outdoor" className="inline-flex items-center justify-center px-6 py-3 font-body font-semibold text-sm text-white rounded-sm hover:opacity-90 transition-all text-center w-full sm:w-auto" style={{ backgroundColor: "hsl(var(--orange))" }}>
+                {t("home.intro.buttons.catalog")}
+              </Link>
+              <Link href="/contact" className="inline-flex items-center justify-center px-6 py-3 font-body font-semibold text-sm text-white rounded-sm hover:bg-white/10 transition-all text-center w-full sm:w-auto" style={{ backgroundColor: "hsl(var(--navy))" }}>
+                {t("home.intro.buttons.quote")}
+              </Link>
+              <Link href="/about" className="group hidden sm:inline-flex items-center gap-2.5 font-body font-semibold text-sm ml-2" style={{ color: "hsl(var(--navy))" }}>
+                <span className="border-b border-current pb-0.5 transition-opacity duration-300 group-hover:opacity-60">{t("home.intro.buttons.factory")}</span>
+                <span className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:rotate-45" style={{ backgroundColor: "hsl(var(--orange))" }}>
                   <ArrowUpRight size={12} className="text-white" />
                 </span>
               </Link>
             </motion.div>
           </div>
           <div className="flex flex-col gap-4">
-            <motion.div initial={{ opacity: 0, scale: 0.97, filter: "blur(8px)" }} whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }} viewport={vp} transition={{ duration: 1, delay: 0.1, ease }} className="relative overflow-hidden rounded-sm" style={{ aspectRatio: "4/3" }}>
-              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&auto=format&fit=crop&q=85" alt="DHT outdoor furniture production" className="w-full h-full object-cover transition-transform duration-700 hover:scale-[1.04]" />
-              <div className="absolute inset-0" style={{ background: "linear-gradient(to top, hsl(var(--navy-deep)/0.55) 0%, transparent 55%)" }} />
-              <motion.div initial={{ opacity: 0, y: 14, scale: 0.9 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={vp} transition={{ duration: 0.5, delay: 0.55, ease }} className="absolute bottom-4 left-4 px-5 py-3.5 rounded-sm shadow-2xl" style={{ backgroundColor: "hsl(var(--navy))" }}>
-                <p className="font-display font-bold text-2xl text-white leading-none">ISO</p>
-                <p className="font-body text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.5)" }}>{t("home.intro.isoCertified")}</p>
-              </motion.div>
-              <motion.div initial={{ opacity: 0, x: 14 }} whileInView={{ opacity: 1, x: 0 }} viewport={vp} transition={{ duration: 0.45, delay: 0.65, ease }} className="absolute top-4 right-4 px-3 py-1.5 rounded-full" style={{ backgroundColor: "hsl(var(--orange))" }}>
+            <div className="relative h-64 sm:h-80 lg:h-96 overflow-hidden rounded-sm group">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentImage}
+                  initial={{ opacity: 0, scale: 1.05 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.8, ease }}
+                  className="absolute inset-0 z-0"
+                >
+                  <img src={images[currentImage]} alt="Team and Furniture Production" className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-[1.1]" />
+                </motion.div>
+              </AnimatePresence>
+              <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--navy-deep)/0.3)] to-transparent pointer-events-none z-10" />
+              <motion.div initial={{ opacity: 0, x: 14 }} whileInView={{ opacity: 1, x: 0 }} viewport={vp} transition={{ duration: 0.45, delay: 0.65, ease }} className="absolute top-4 right-4 px-3 py-1.5 rounded-full z-20" style={{ backgroundColor: "hsl(var(--orange))" }}>
                 <span className="font-body font-semibold text-xs text-white tracking-wide">{t("home.intro.location")}</span>
               </motion.div>
-            </motion.div>
+              
+              {/* Slider dots */}
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+                {images.map((_, i) => (
+                  <button 
+                    key={i} 
+                    onClick={() => setCurrentImage(i)}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${i === currentImage ? "w-6 bg-white" : "w-1.5 bg-white/50"}`}
+                    aria-label={`Go to slide ${i + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
             <div className="grid grid-cols-2 gap-2 sm:gap-3">
               {[
-                { n: "15+", label: t("home.intro.statsYears"), filled: true },
+                { n: "18+", label: t("home.intro.statsYears"), filled: true },
                 { n: "50K", label: t("home.intro.statsUnits"), filled: false },
-                { n: "400+", label: t("home.intro.statsCraftspeople"), filled: true },
-                { n: "25+", label: t("home.intro.statsExport"), filled: false },
+                { n: "35+", label: t("home.intro.statsCraftspeople"), filled: true },
+                { n: "OEM", label: t("home.intro.statsExport"), filled: false },
               ].map(({ n, label, filled }, i) => (
                 <motion.div key={label} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={vp} transition={{ duration: 0.55, delay: 0.2 + i * 0.09, ease }} className="rounded-sm px-4 sm:px-5 py-4 sm:py-5" style={{ backgroundColor: filled ? "hsl(var(--navy))" : "white", border: filled ? "none" : "1px solid hsl(var(--border))", minHeight: 76 }}>
-                  <p className="font-display font-bold leading-none mb-1.5" style={{ fontSize: "clamp(1.6rem, 3vw, 2.4rem)", color: filled ? "white" : "hsl(var(--navy))" }}>{n}</p>
+                  <p className="font-display font-bold leading-none mb-1.5 lining-nums tabular-nums" style={{ fontSize: "clamp(1.6rem, 3vw, 2.4rem)", color: filled ? "white" : "hsl(var(--navy))" }}>{n}</p>
                   <p className="font-body text-xs tracking-[0.12em] uppercase font-medium" style={{ color: filled ? "rgba(255,255,255,0.45)" : "hsl(var(--muted-foreground))" }}>{label}</p>
                 </motion.div>
               ))}

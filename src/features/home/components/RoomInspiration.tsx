@@ -24,11 +24,11 @@ function useCardSize() {
 const ROOM_KEYS = ["masterBedroom", "livingRoom", "familyDining", "homeOffice", "outdoorPatio"] as const;
 
 const roomImages: Record<string, { image: string; href: string }> = {
-  masterBedroom: { image: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=900&auto=format&fit=crop&q=80", href: "/catalogue?category=Bedroom" },
-  livingRoom: { image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=900&auto=format&fit=crop&q=80", href: "/catalogue?category=Living+Room" },
-  familyDining: { image: "https://images.unsplash.com/photo-1617806118233-18e1de247200?w=900&auto=format&fit=crop&q=80", href: "/catalogue?category=Dining+Room" },
-  homeOffice: { image: "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=900&auto=format&fit=crop&q=80", href: "/catalogue?category=Home+Office" },
-  outdoorPatio: { image: "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=900&auto=format&fit=crop&q=80", href: "/catalogue?category=Outdoor" },
+  masterBedroom: { image: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=900&auto=format&fit=crop&q=80", href: "/catalogue/indoor?category=Bedroom" },
+  livingRoom: { image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=900&auto=format&fit=crop&q=80", href: "/catalogue/indoor?category=Living+Room" },
+  familyDining: { image: "https://images.unsplash.com/photo-1617806118233-18e1de247200?w=900&auto=format&fit=crop&q=80", href: "/catalogue/indoor?category=Dining+Room" },
+  homeOffice: { image: "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=900&auto=format&fit=crop&q=80", href: "/catalogue/indoor?category=Home+Office" },
+  outdoorPatio: { image: "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=900&auto=format&fit=crop&q=80", href: "/catalogue/outdoor?category=Outdoor" },
 };
 
 const GAP = 16;

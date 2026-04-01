@@ -14,9 +14,20 @@ interface QuickViewModalProps {
 export default function QuickViewModal({ product, onClose }: QuickViewModalProps) {
   const [activeImage, setActiveImage] = useState(0);
   const [isInquiryOpen, setIsInquiryOpen] = useState(false);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   if (!product) return null;
+
+  const langEnum: Record<string, 'vi' | 'uk' | 'us'> = { "vi-VN": "vi", "en-GB": "uk", "en-US": "us" };
+  const langId = (langEnum[i18n?.language] || "us") as 'vi' | 'uk' | 'us';
+  const pName = product.name?.[langId] || product.name?.us || "";
+  const pDesc = product.description?.[langId] || product.description?.us || "";
+  const pCat = product.category?.[langId] || product.category?.us || "";
+  const pMat = product.material?.[langId] || product.material?.us || "";
+  const pColor = product.color?.[langId] || product.color?.us || "";
+  const pStyle = product.style?.[langId] || product.style?.us || "";
+  const pSize = product.size || "";
+  const pFeatures = product.features?.[langId] || product.features?.us || [];
 
   return (
     <AnimatePresence>
@@ -30,7 +41,7 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
               </button>
               <div className="grid grid-cols-1 md:grid-cols-2">
                 <div className="relative bg-beige min-h-72">
-                  <img src={product.images[activeImage]} alt={product.name} className="w-full h-80 md:h-full object-cover" />
+                  <img src={product.images[activeImage]} alt={pName} className="w-full h-80 md:h-full object-cover" />
                   {product.images.length > 1 && (
                     <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2">
                       {product.images.map((_, i) => (
@@ -52,15 +63,15 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
                 <div className="p-7 flex flex-col gap-5">
                   <div>
                     <p className="font-body text-xs text-muted-foreground mb-1 tracking-wider uppercase">{product.code}</p>
-                    <h2 className="font-display text-2xl text-foreground font-semibold">{product.name}</h2>
+                    <h2 className="font-display text-2xl text-foreground font-semibold">{pName}</h2>
                   </div>
                   <div className="grid grid-cols-2 gap-x-4 gap-y-2">
                     {[
-                      { label: t("product.category"), value: product.category },
-                      { label: t("product.material"), value: product.material },
-                      { label: t("product.color"), value: product.color },
-                      { label: t("product.size"), value: product.size },
-                      { label: t("product.style"), value: product.style },
+                      { label: t("product.category"), value: pCat },
+                      { label: t("product.material"), value: pMat },
+                      { label: t("product.color"), value: pColor },
+                      { label: t("product.size"), value: pSize },
+                      { label: t("product.style"), value: pStyle },
                     ].map(({ label, value }) => (
                       <div key={label} className="text-sm">
                         <span className="font-body text-muted-foreground">{label}: </span>
@@ -68,9 +79,9 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
                       </div>
                     ))}
                   </div>
-                  <p className="font-body text-sm text-muted-foreground leading-relaxed">{product.description}</p>
+                  <p className="font-body text-sm text-muted-foreground leading-relaxed">{pDesc}</p>
                   <ul className="space-y-1.5">
-                    {product.features.map((f, i) => (
+                    {pFeatures.map((f, i) => (
                       <li key={i} className="flex items-start gap-2 font-body text-sm text-foreground">
                         <span className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0" style={{ backgroundColor: "hsl(var(--accent))" }} />
                         {f}
@@ -86,7 +97,7 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
                     >
                       {t("product.sendInquiry")}
                     </button>
-                    <a href={`https://wa.me/1234567890?text=Hi, I'd like to inquire about ${encodeURIComponent(product.name)} (${product.code})`} target="_blank" rel="noopener noreferrer" className="w-full py-3 rounded font-body font-medium text-center text-sm border transition-all hover:bg-orange/5" style={{ borderColor: "hsl(var(--orange))", color: "hsl(var(--orange))" }}>
+                    <a href={`https://wa.me/1234567890?text=Hi, I'd like to inquire about ${encodeURIComponent(pName)} (${product.code})`} target="_blank" rel="noopener noreferrer" className="w-full py-3 rounded font-body font-medium text-center text-sm border transition-all hover:bg-orange/5" style={{ borderColor: "hsl(var(--orange))", color: "hsl(var(--orange))" }}>
                       <Phone size={14} className="inline mr-2" /> {t("product.whatsappUs")}
                     </a>
                   </div>

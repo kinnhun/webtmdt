@@ -34,7 +34,7 @@ export default function WhyChooseUs() {
           </ul>
           <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={vp} transition={{ duration: 0.5, delay: 0.7, ease }} className="flex flex-wrap gap-3">
             <Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90" style={{ backgroundColor: "hsl(var(--orange))" }}>{t("home.whyUs.requestQuote")} <ArrowRight size={15} /></Link>
-            <Link href="/catalogue" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white/70 border border-white/20 hover:bg-white/10 transition-all">{t("home.whyUs.viewCatalogue")}</Link>
+            <Link href="/catalogue/outdoor" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white/70 border border-white/20 hover:bg-white/10 transition-all">{t("home.whyUs.viewCatalogue")}</Link>
           </motion.div>
         </div>
       </div>

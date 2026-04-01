@@ -459,8 +459,39 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       ? initialValues.category
       : initialValues.category ? [initialValues.category] : [];
 
+    const flatInit: any = { ...initialValues };
+    if (initialValues?.name && typeof initialValues.name === 'object') {
+      flatInit.name = initialValues.name?.us || '';
+      flatInit.nameUK = initialValues.name?.uk || '';
+      flatInit.nameVI = initialValues.name?.vi || '';
+    }
+    if (initialValues?.description && typeof initialValues.description === 'object') {
+      flatInit.description = initialValues.description?.us || '';
+      flatInit.descriptionUK = initialValues.description?.uk || '';
+      flatInit.descriptionVI = initialValues.description?.vi || '';
+    }
+    if (initialValues?.longDescription && typeof initialValues.longDescription === 'object') {
+      flatInit.longDescription = initialValues.longDescription?.us || '';
+      flatInit.longDescriptionUK = initialValues.longDescription?.uk || '';
+      flatInit.longDescriptionVI = initialValues.longDescription?.vi || '';
+    }
+    if (initialValues?.material && typeof initialValues.material === 'object') {
+      flatInit.material = initialValues.material?.us || '';
+    } else if (Array.isArray(initialValues?.material)) {
+      flatInit.material = (initialValues.material as any[]).map(m => m?.us || m || '').join(', ');
+    }
+    if (initialValues?.color && typeof initialValues.color === 'object') {
+      flatInit.color = initialValues.color?.us || '';
+    }
+    if (initialValues?.style && typeof initialValues.style === 'object') {
+      flatInit.style = initialValues.style?.us || '';
+    }
+    if (initialValues?.category && typeof initialValues.category === 'object') {
+      flatInit.category = initialValues.category?.us || '';
+    }
+
     form.setFieldsValue({
-      ...initialValues,
+      ...flatInit,
       collection: collections,
       category: categories,
       specifications,
@@ -536,11 +567,20 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       }
     }
 
-    const payload = {
+    const payload: any = {
       ...values,
       video: finalVideo,
       image: uploadedImages[0] || values.image || '',
       images: uploadedImages,
+      // Map to I18nText nested objects
+      name: { us: (values as any).name || '', uk: (values as any).nameUK || '', vi: (values as any).nameVI || '' },
+      description: { us: (values as any).description || '', uk: (values as any).descriptionUK || '', vi: (values as any).descriptionVI || '' },
+      longDescription: { us: (values as any).longDescription || '', uk: (values as any).longDescriptionUK || '', vi: (values as any).longDescriptionVI || '' },
+      material: { us: (values as any).material || '', uk: '', vi: '' },
+      color: { us: (values as any).color || '', uk: '', vi: '' },
+      style: { us: (values as any).style || '', uk: '', vi: '' },
+      category: { us: (values as any).category || '', uk: '', vi: '' },
+      collection: { us: (values as any).collection || '', uk: '', vi: '' },
     };
     if (isEdit) {
       mutateUpdate(payload);
@@ -954,7 +994,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
             <div>
               <div className="flex items-center gap-2 flex-wrap">
                 <h1 className="text-base sm:text-lg font-bold text-gray-900 m-0 leading-tight truncate max-w-[150px] sm:max-w-xs">
-                  {isEdit ? initialValues?.name || t('admin.products.form.editProduct') : t('admin.products.form.newProduct')}
+                  {isEdit ? (initialValues?.name?.us || initialValues?.name?.vi || t('admin.products.form.editProduct')) : t('admin.products.form.newProduct')}
                 </h1>
                 {isEdit && (
                   <span className="text-[10px] font-mono text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">

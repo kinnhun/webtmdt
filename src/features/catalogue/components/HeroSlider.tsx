@@ -6,10 +6,13 @@ import { useTranslation } from "react-i18next";
 import type { Product } from "@/domains/product/product.types";
 
 export function HeroSlider({ products, onQuickView }: { products: Product[]; onQuickView: (p: Product) => void }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [current, setCurrent] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval>>(undefined);
   const featured = products.slice(0, 5);
+
+  const langEnum: Record<string, 'vi' | 'uk' | 'us'> = { "vi-VN": "vi", "en-GB": "uk", "en-US": "us" };
+  const langId = (langEnum[i18n?.language] || "us") as 'vi' | 'uk' | 'us';
 
   const goTo = useCallback((i: number) => setCurrent((i + featured.length) % featured.length), [featured.length]);
 
@@ -25,12 +28,18 @@ export function HeroSlider({ products, onQuickView }: { products: Product[]; onQ
   if (!featured.length) return null;
   const safeCurrent = current >= featured.length ? 0 : current;
   const p = featured[safeCurrent];
+  
+  const pName = p.name?.[langId] || p.name?.us || "";
+  const pCat = p.category?.[langId] || p.category?.us || "";
+  const pMat = p.material?.[langId] || p.material?.us || "";
+  const pColor = p.color?.[langId] || p.color?.us || "";
+  const pStyle = p.style?.[langId] || p.style?.us || "";
 
   return (
     <div className="relative w-full overflow-hidden" style={{ height: "480px", backgroundColor: "hsl(var(--navy-deep))" }}>
       <AnimatePresence mode="wait">
         <motion.div key={p.id} initial={{ opacity: 0, scale: 1.05 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.98 }} transition={{ duration: 0.6 }} className="absolute inset-0">
-          <img src={p.images[0]} alt={p.name} className="w-full h-full object-cover opacity-60" />
+          <img src={p.images[0]} alt={pName} className="w-full h-full object-cover opacity-60" />
           <div className="absolute inset-0" style={{ background: "linear-gradient(90deg, hsl(var(--navy-deep)) 35%, transparent 80%)" }} />
         </motion.div>
       </AnimatePresence>
@@ -38,15 +47,15 @@ export function HeroSlider({ products, onQuickView }: { products: Product[]; onQ
         <div className="container mx-auto px-10">
           <AnimatePresence mode="wait">
             <motion.div key={p.id} initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 30 }} transition={{ duration: 0.5 }} className="max-w-md">
-              <span className="font-body text-xs tracking-[0.2em] uppercase font-medium mb-3 block" style={{ color: "hsl(var(--orange))" }}>{p.category} — {p.code}</span>
-              <h2 className="font-display font-bold text-white text-4xl leading-tight mb-3">{p.name}</h2>
-              <p className="font-body text-white/50 text-sm mb-1">{p.material} · {p.color}</p>
-              <p className="font-body text-white/40 text-sm mb-6">{p.style} {p.moq && `· MOQ: ${p.moq}`}</p>
+              <span className="font-body text-xs tracking-[0.2em] uppercase font-medium mb-3 block" style={{ color: "hsl(var(--orange))" }}>{pCat} — {p.code}</span>
+              <h2 className="font-display font-bold text-white text-4xl leading-tight mb-3">{pName}</h2>
+              <p className="font-body text-white/50 text-sm mb-1">{pMat} · {pColor}</p>
+              <p className="font-body text-white/40 text-sm mb-6">{pStyle} {p.moq && `· MOQ: ${p.moq}`}</p>
               <div className="flex gap-3">
                 <button onClick={() => onQuickView(p)} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-sm font-body font-semibold text-sm text-white hover:opacity-90 transition-all" style={{ backgroundColor: "hsl(var(--orange))" }}>
                   <Eye size={15} /> {t("catalogue.quickView")}
                 </button>
-                <Link href={`/contact?product=${encodeURIComponent(p.name)}&code=${p.code}`} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-sm font-body font-semibold text-sm text-white/70 border border-white/20 hover:bg-white/10 transition-all">
+                <Link href={`/contact?product=${encodeURIComponent(pName)}&code=${p.code}`} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-sm font-body font-semibold text-sm text-white/70 border border-white/20 hover:bg-white/10 transition-all">
                   {t("catalogue.inquire")} <ArrowUpRight size={14} />
                 </Link>
               </div>

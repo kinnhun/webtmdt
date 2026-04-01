@@ -1,9 +1,11 @@
 import Head from "next/head";
 import ProductDetailContainer from "./ProductDetailContainer";
 import { useProductDetail } from "../hooks/useProductDetail";
+import { useTranslation } from "react-i18next";
 
 export default function ProductDetailWrapper() {
   const { isReady, product, relatedProducts } = useProductDetail();
+  const { i18n } = useTranslation();
 
   if (!isReady) return null;
 
@@ -16,11 +18,16 @@ export default function ProductDetailWrapper() {
     );
   }
 
+  const langEnum: Record<string, 'vi' | 'uk' | 'us'> = { "vi-VN": "vi", "en-GB": "uk", "en-US": "us" };
+  const langId = langEnum[i18n?.language] || "us";
+  const pName = product.name?.[langId] || product.name?.us || "";
+  const pDesc = product.description?.[langId] || product.description?.us || "";
+
   return (
     <>
       <Head>
-        <title>{product.name} — DHT Furniture</title>
-        <meta name="description" content={product.description} />
+        <title>{pName} — DHT Furniture</title>
+        <meta name="description" content={pDesc} />
       </Head>
       <ProductDetailContainer product={product} relatedProducts={relatedProducts} />
     </>

@@ -37,14 +37,18 @@ export function useProductManagement() {
     if (!searchText) return dataSource;
     const q = searchText.toLowerCase();
     return dataSource.filter((item) => {
-      const catMatch = Array.isArray(item.category)
-        ? item.category.some(c => c.toLowerCase().includes(q))
-        : item.category?.toLowerCase().includes(q);
+      const catUs = (item.category?.us || '').toLowerCase();
+      const catUk = (item.category?.uk || '').toLowerCase();
+      const catVi = (item.category?.vi || '').toLowerCase();
+
+      const nameUs = (item.name?.us || '').toLowerCase();
+      const nameUk = (item.name?.uk || '').toLowerCase();
+      const nameVi = (item.name?.vi || '').toLowerCase();
 
       return (
-        item.name.toLowerCase().includes(q) ||
+        nameUs.includes(q) || nameUk.includes(q) || nameVi.includes(q) ||
         item.code?.toLowerCase().includes(q) ||
-        catMatch
+        catUs.includes(q) || catUk.includes(q) || catVi.includes(q)
       );
     });
   }, [dataSource, searchText]);

@@ -11,7 +11,13 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, onQuickView, index = 0 }: ProductCardProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const langEnum: Record<string, 'vi' | 'uk' | 'us'> = { "vi-VN": "vi", "en-GB": "uk", "en-US": "us" };
+  const langId = langEnum[i18n?.language] || "us";
+  const pName = product.name?.[langId] || product.name?.us || "";
+  const pCategory = product.category?.[langId] || product.category?.us || "";
+  const pMaterial = product.material?.[langId] || product.material?.us || "";
+  const pStyle = product.style?.[langId] || product.style?.us || "";
 
   return (
     <motion.div
@@ -22,7 +28,7 @@ export default function ProductCard({ product, onQuickView, index = 0 }: Product
       className="group bg-white rounded-lg overflow-hidden border border-border hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
     >
       <div className="relative overflow-hidden bg-beige aspect-[4/3]">
-        <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+        <img src={product.image} alt={pName} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
         <div className="hidden sm:flex absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center gap-2">
           <button
             onClick={() => onQuickView(product)}
@@ -31,13 +37,13 @@ export default function ProductCard({ product, onQuickView, index = 0 }: Product
             <Eye size={15} /> {t("product.quickView")}
           </button>
         </div>
-        <span className="absolute top-3 left-3 text-xs font-body font-medium px-2.5 py-1 rounded-sm" style={{ backgroundColor: "hsl(var(--orange))", color: "white" }}>{product.category}</span>
+        <span className="absolute top-3 left-3 text-xs font-body font-medium px-2.5 py-1 rounded-sm" style={{ backgroundColor: "hsl(var(--orange))", color: "white" }}>{pCategory}</span>
       </div>
       <div className="p-4">
         <p className="font-body text-xs text-muted-foreground mb-1">{product.code}</p>
-        <h3 className="font-display text-base font-semibold text-foreground leading-tight mb-2 truncate">{product.name}</h3>
+        <h3 className="font-display text-base font-semibold text-foreground leading-tight mb-2 truncate">{pName}</h3>
         <div className="flex flex-wrap gap-1.5 mb-4">
-          {[product.material, product.style].map((tag) => (
+          {[pMaterial, pStyle].filter(Boolean).map((tag) => (
             <span key={tag} className="text-xs font-body px-2 py-0.5 rounded-sm bg-muted text-muted-foreground">{tag}</span>
           ))}
         </div>

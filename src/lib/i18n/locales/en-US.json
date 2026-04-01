@@ -68,17 +68,17 @@
         "count": "36 products"
       },
       "outdoorDining": {
-        "name": "Outdoor Dining Collection",
+        "name": "Outdoor Dining Set",
         "tagline": "Dine al fresco in style",
         "count": "28 products"
       },
       "aluminium": {
-        "name": "Aluminium Furniture",
+        "name": "Aluminum Furniture",
         "tagline": "Lightweight & weather-proof",
         "count": "42 products"
       },
       "indoor": {
-        "name": "Indoor Collection",
+        "name": "Indoor Furniture (Custom Orders Only)",
         "tagline": "Premium indoor pieces",
         "sub": {
           "livingRoom": "Living Room",
@@ -86,23 +86,28 @@
           "bathroom": "Bathroom"
         }
       },
-      "subline": "Acacia • Teak • Aluminum | OEM / ODM | Mixed Container Available"
+      "subline": "Acacia • Teak • Aluminum | OEM / ODM | Mixed Container Available",
+      "sunlounger": {
+        "name": "Sunlounger & Daybed",
+        "tagline": "",
+        "count": "(Custom Orders)"
+      }
     },
     "featured": {
       "label": "Best Sellers",
       "heading": "Best-Selling Outdoor Furniture",
-      "description": "Manufactured in Vietnam with premium materials — ideal for resorts, villas, and wholesale partners.",
-      "fullCatalogue": "Get Full Catalog →",
-      "seeAllProducts": "See All Products",
+      "description": "Manufactured in Vietnam for retailers, distributors, and project buyers",
+      "fullCatalogue": "Get Full Catalog",
+      "seeAllProducts": "Get All Products",
       "noProducts": "No featured products in this category yet.",
       "new": "New",
       "inquire": "Inquire",
       "filterAll": "All",
-      "filterOutdoorSofas": "Wicker / Rattan",
-      "filterDiningSets": "Teak / Wood",
-      "filterLoungeDaybeds": "Lounge & Daybeds",
-      "filterTables": "Aluminum / Metal",
-      "filterChairs": "Indoor Collection",
+      "filterOutdoorSofas": "Outdoor Sofa",
+      "filterDiningSets": "Dining Set",
+      "filterLoungeDaybeds": "Sunlounger",
+      "filterTables": "Outdoor Table",
+      "filterChairs": "Aluminum Furniture",
       "subline": "Manufactured in Vietnam for retailers, distributors, and project buyers"
     },
     "whyUs": {

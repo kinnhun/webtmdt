@@ -19,7 +19,7 @@ export function ProductTable({ data, onEdit, onDelete, loading }: ProductTablePr
       key: 'image',
       render: (img: string, record: Product) => (
         <div className="relative inline-block">
-          <img src={img} alt={record.name} className="w-14 h-14 rounded object-cover border border-gray-100 shadow-sm" />
+          <img src={img} alt={record.name?.us || ''} className="w-14 h-14 rounded object-cover border border-gray-100 shadow-sm" />
           {record.images && record.images.length > 1 && (
             <Badge count={record.images.length} className="absolute -top-2 -right-2" style={{ backgroundColor: '#1890ff' }} />
           )}
@@ -31,14 +31,14 @@ export function ProductTable({ data, onEdit, onDelete, loading }: ProductTablePr
       title: 'Identification',
       dataIndex: 'name',
       key: 'name',
-      sorter: (a: Product, b: Product) => a.name.localeCompare(b.name),
-      render: (text: string, record: Product) => (
+      sorter: (a: Product, b: Product) => (a.name?.us || '').localeCompare(b.name?.us || ''),
+      render: (_text: any, record: Product) => (
         <div>
           <div className="font-semibold text-navy-deep text-sm flex items-center gap-2">
-            {text}
+            {record.name?.us || ''}
             <div className="flex gap-1">
-              {(record.nameVI || record.descriptionVI) && <Tag color="blue" className="text-[10px] leading-3 px-1 border-0 m-0">VN</Tag>}
-              {(record.nameUS || record.descriptionUS) && <Tag color="orange" className="text-[10px] leading-3 px-1 border-0 m-0">US</Tag>}
+              {(record.name?.vi) && <Tag color="blue" className="text-[10px] leading-3 px-1 border-0 m-0">VN</Tag>}
+              {(record.name?.us) && <Tag color="orange" className="text-[10px] leading-3 px-1 border-0 m-0">US</Tag>}
             </div>
           </div>
           <div className="text-xs text-navy/60 font-mono mt-0.5">{record.code}</div>
@@ -54,24 +54,34 @@ export function ProductTable({ data, onEdit, onDelete, loading }: ProductTablePr
         { text: 'Dining', value: 'Dining' },
         { text: 'Lounge', value: 'Lounge' },
       ],
-      onFilter: (value: React.Key | boolean, record: Product) => record.category.includes(String(value)),
-      render: (_: unknown, record: Product) => (
-        <div className="flex flex-col gap-1 items-start">
-          <Tag color="cyan" className="m-0 border-0">{record.collection}</Tag>
-          <span className="text-xs text-navy/70">{record.category}</span>
-        </div>
-      ),
+      onFilter: (value: React.Key | boolean, record: Product) => {
+        const catArray = Array.isArray(record.category) ? record.category : [record.category];
+        return catArray.some(c => (c?.us || '').includes(String(value)));
+      },
+      render: (_: unknown, record: Product) => {
+        const collections = Array.isArray(record.collection) ? record.collection : [record.collection];
+        const categories = Array.isArray(record.category) ? record.category : [record.category];
+        return (
+          <div className="flex flex-col gap-1 items-start">
+            {collections.map((c, i) => <Tag key={i} color="cyan" className="m-0 border-0">{c}</Tag>)}
+            {categories.map((c, i) => <span key={i} className="text-xs text-navy/70">{c?.us || c || ''}</span>)}
+          </div>
+        )
+      },
     },
     {
       title: 'Specs & Material',
       dataIndex: 'material',
       key: 'material',
-      render: (material: string, record: Product) => (
-        <div className="flex flex-col gap-1">
-          <span className="text-sm font-medium">{material}</span>
-          {record.moq && <span className="text-xs text-orange bg-orange/10 px-1.5 py-0.5 rounded-sm w-fit">MOQ: {record.moq}</span>}
-        </div>
-      ),
+      render: (_: unknown, record: Product) => {
+        const mats = Array.isArray(record.material) ? record.material : [record.material];
+        return (
+          <div className="flex flex-col gap-1">
+            <span className="text-sm font-medium">{mats.map(m => m?.us || m || '').join(', ')}</span>
+            {record.moq && <span className="text-xs text-orange bg-orange/10 px-1.5 py-0.5 rounded-sm w-fit">MOQ: {record.moq}</span>}
+          </div>
+        )
+      },
     },
     {
       title: 'Action',

@@ -20,8 +20,8 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
   const navLinks = [
     { label: t("nav.home"), href: "/" },
     { label: t("nav.about"), href: "/about" },
-    { label: t("nav.catalogue"), href: "/catalogue" },
-    { label: t("nav.indoorCollection"), href: "/catalogue?type=indoor" },
+    { label: t("nav.catalogue"), href: "/catalogue/outdoor" },
+    { label: t("nav.indoorCollection"), href: "/catalogue/indoor" },
     { label: t("nav.contact"), href: "/contact" },
   ];
 

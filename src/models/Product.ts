@@ -1,35 +1,35 @@
 import mongoose, { Schema, type Document } from "mongoose";
 
+export interface I18nText {
+  us: string;
+  uk?: string;
+  vi?: string;
+}
+
+export interface I18nList {
+  us: string[];
+  uk?: string[];
+  vi?: string[];
+}
+
 export interface IProduct extends Omit<Document, 'collection'> {
   productId: string;
   slug: string;
-  name: string;
-  nameVI?: string;
-  nameUS?: string;
-  nameUK?: string;
+  name: I18nText;
   code: string;
   collection: string;
-  category: string;
-  categoryVI?: string;
+  category: I18nText;
   subCategory?: string;
-  material: string;
-  materialVI?: string;
-  color: string;
-  colorVI?: string;
+  material: I18nText;
+  color: I18nText;
   size?: string;
-  style: string;
-  styleVI?: string;
+  style: I18nText;
   moq?: string;
   image: string;
   images: string[];
-  description: string;
-  descriptionVI?: string;
-  descriptionUS?: string;
-  descriptionUK?: string;
-  features: string[];
-  featuresVI?: string[];
-  room: string;
-  roomVI?: string;
+  description: I18nText;
+  features: I18nList;
+  room: I18nText;
   video?: string;
   dimensions?: string;
   weight?: string;
@@ -41,47 +41,42 @@ export interface IProduct extends Omit<Document, 'collection'> {
     valueVI?: string;
     valueUK?: string;
   }[];
-  careInstructions?: string[];
-  careInstructionsVI?: string[];
-  usageSettings?: string[];
-  usageSettingsVI?: string[];
-  longDescription?: string;
-  longDescriptionVI?: string;
-  longDescriptionUS?: string;
-  longDescriptionUK?: string;
+  careInstructions?: I18nList;
+  usageSettings?: I18nList;
+  longDescription?: I18nText;
 }
+
+const I18nTextSchema = {
+  us: { type: String, required: true },
+  uk: { type: String },
+  vi: { type: String }
+};
+
+const I18nListSchema = {
+  us: [{ type: String }],
+  uk: [{ type: String }],
+  vi: [{ type: String }]
+};
 
 const ProductSchema = new Schema<IProduct>(
   {
     productId: { type: String, required: true, unique: true },
     slug: { type: String, required: true, unique: true, index: true },
-    name: { type: String, required: true },
-    nameVI: { type: String },
-    nameUS: { type: String },
-    nameUK: { type: String },
+    name: I18nTextSchema,
     code: { type: String, required: true, unique: true, index: true },
     collection: { type: String, required: true, index: true },
-    category: { type: String, required: true, index: true },
-    categoryVI: { type: String },
+    category: I18nTextSchema,
     subCategory: { type: String },
-    material: { type: String, required: true, index: true },
-    materialVI: { type: String },
-    color: { type: String, required: true },
-    colorVI: { type: String },
+    material: I18nTextSchema,
+    color: I18nTextSchema,
     size: { type: String },
-    style: { type: String, required: true, index: true },
-    styleVI: { type: String },
+    style: I18nTextSchema,
     moq: { type: String },
     image: { type: String, required: true },
-    images: { type: [String], index: true }, // Index to optimize fetching multiple images
-    description: { type: String, required: true },
-    descriptionVI: { type: String },
-    descriptionUS: { type: String },
-    descriptionUK: { type: String },
-    features: [{ type: String }],
-    featuresVI: [{ type: String }],
-    room: { type: String, required: true },
-    roomVI: { type: String },
+    images: { type: [String], index: true },
+    description: I18nTextSchema,
+    features: I18nListSchema,
+    room: I18nTextSchema,
     video: { type: String },
     dimensions: { type: String },
     weight: { type: String },
@@ -93,14 +88,9 @@ const ProductSchema = new Schema<IProduct>(
       valueVI: String, 
       valueUK: String 
     }],
-    careInstructions: [{ type: String }],
-    careInstructionsVI: [{ type: String }],
-    usageSettings: [{ type: String }],
-    usageSettingsVI: [{ type: String }],
-    longDescription: { type: String },
-    longDescriptionVI: { type: String },
-    longDescriptionUS: { type: String },
-    longDescriptionUK: { type: String },
+    careInstructions: I18nListSchema,
+    usageSettings: I18nListSchema,
+    longDescription: I18nTextSchema,
   },
   { timestamps: true, suppressReservedKeysWarning: true }
 );
@@ -111,14 +101,14 @@ ProductSchema.index({ collection: 1, category: 1, material: 1 });
 // Text index for fast text searches
 ProductSchema.index(
   {
-    name: "text",
-    nameVI: "text",
-    nameUS: "text",
-    description: "text",
-    descriptionVI: "text"
+    "name.us": "text",
+    "name.vi": "text",
+    "name.uk": "text",
+    "description.us": "text",
+    "description.vi": "text"
   },
   {
-    weights: { name: 10, nameVI: 10, nameUS: 10, description: 5, descriptionVI: 5 },
+    weights: { "name.us": 10, "name.vi": 10, "name.uk": 10, "description.us": 5, "description.vi": 5 },
     name: "Product_Text_Index"
   }
 );

@@ -8,42 +8,69 @@ import QuickViewModal from "@/components/QuickViewModal";
 import { featuredProductsData } from "@/data/products";
 import type { Product } from "@/domains/product/product.types";
 
-const FILTER_KEYS = ["Outdoor Sofas", "Dining Sets", "Lounge & Daybeds", "Tables", "Chairs"] as const;
+const FILTER_KEYS = ["All", "Outdoor Sofa", "Dining Set", "Sunlounger", "Outdoor Table", "Aluminum Furniture"] as const;
 
 const FILTER_I18N: Record<string, string> = {
-  "Outdoor Sofas": "home.featured.filterOutdoorSofas",
-  "Dining Sets": "home.featured.filterDiningSets",
-  "Lounge & Daybeds": "home.featured.filterLoungeDaybeds",
-  "Tables": "home.featured.filterTables",
-  "Chairs": "home.featured.filterChairs",
+  "All": "home.featured.filterAll",
+  "Outdoor Sofa": "home.featured.filterOutdoorSofas",
+  "Dining Set": "home.featured.filterDiningSets",
+  "Sunlounger": "home.featured.filterLoungeDaybeds",
+  "Outdoor Table": "home.featured.filterTables",
+  "Aluminum Furniture": "home.featured.filterChairs",
+};
+
+const FILTER_MAPPING: Record<string, string> = {
+  "All": "All",
+  "Outdoor Sofa": "Outdoor Sofas",
+  "Dining Set": "Dining Sets",
+  "Sunlounger": "Lounge & Daybeds",
+  "Outdoor Table": "Tables",
+  "Aluminum Furniture": "Chairs",
 };
 
 function EditorialProductCard({ product, index, onQuickView }: { product: Product; index: number; onQuickView: (p: Product) => void }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const langEnum: Record<string, 'vi' | 'uk' | 'us'> = { "vi-VN": "vi", "en-GB": "uk", "en-US": "us" };
+  const langId = langEnum[i18n?.language] || "us";
+  const pName = product.name?.[langId] || product.name?.us || "";
+  const pMaterial = product.material?.[langId] || product.material?.us || "";
+  const pStyle = product.style?.[langId] || product.style?.us || "";
 
   return (
-    <motion.div layout initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 16, scale: 0.97 }} transition={{ duration: 0.55, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }} className="group cursor-pointer" onClick={() => onQuickView(product)}>
+    <motion.div layout initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 16, scale: 0.97 }} transition={{ duration: 0.55, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }} className="group cursor-pointer">
       <div className="relative overflow-hidden rounded-sm aspect-3/4 mb-4 shadow-md group-hover:shadow-xl transition-shadow duration-500" style={{ backgroundColor: "hsl(var(--warm-beige))" }}>
-        <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-[1.07] transition-transform duration-700 ease-out" loading="lazy" />
-        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400" />
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-          <div className="flex items-center gap-2 px-5 py-3 rounded-sm font-body font-semibold text-sm text-white shadow-lg translate-y-3 group-hover:translate-y-0 transition-transform duration-350" style={{ backgroundColor: "hsl(var(--orange))" }}>
+        <Link href={`/catalogue/${product.slug}`} className="absolute inset-0 z-0 bg-transparent" />
+        <img src={product.image} alt={pName} className="w-full h-full object-cover group-hover:scale-[1.07] transition-transform duration-700 ease-out pointer-events-none" loading="lazy" />
+        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none" />
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2.5 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
+          <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); onQuickView(product); }} className="pointer-events-auto flex items-center justify-center min-w-[140px] gap-2 px-5 py-2.5 rounded-sm font-body font-semibold text-sm text-white shadow-lg translate-y-3 group-hover:translate-y-0 transition-all duration-350 hover:brightness-110 cursor-pointer" style={{ backgroundColor: "hsl(var(--orange))" }}>
             <Eye size={15} /> {t("product.quickView")}
-          </div>
+          </button>
+          <Link href={`/catalogue/${product.slug}`} className="pointer-events-auto flex items-center justify-center min-w-[140px] gap-2 px-5 py-2.5 rounded-sm font-body font-semibold text-sm text-white shadow-lg translate-y-3 group-hover:translate-y-0 transition-all duration-350 delay-75 cursor-pointer" style={{ backgroundColor: "hsl(var(--navy-deep)/0.85)", backdropFilter: "blur(4px)" }}>
+            <ArrowRight size={15} /> {t("product.viewDetails")}
+          </Link>
         </div>
-        <span className="absolute top-3 left-3 font-body text-xs font-medium px-2.5 py-1 rounded-sm text-white backdrop-blur-sm" style={{ backgroundColor: "hsl(var(--navy-deep)/0.8)" }}>{product.category}</span>
+        <span className="absolute top-3 left-3 font-body text-xs font-medium px-2.5 py-1 rounded-sm text-white backdrop-blur-sm pointer-events-none" style={{ backgroundColor: "hsl(var(--navy-deep)/0.8)" }}>{product.category?.[langId] || product.category?.us || ""}</span>
         {index === 0 && (
-          <span className="absolute top-3 right-3 flex items-center gap-1 font-body text-xs font-semibold px-2.5 py-1 rounded-sm text-white" style={{ backgroundColor: "hsl(var(--orange))" }}>
+          <span className="absolute top-3 right-3 flex items-center gap-1 font-body text-xs font-semibold px-2.5 py-1 rounded-sm text-white pointer-events-none" style={{ backgroundColor: "hsl(var(--orange))" }}>
             <Sparkles size={10} /> {t("home.featured.new")}
           </span>
         )}
       </div>
       <div className="space-y-1">
         <p className="font-body text-xs tracking-wider" style={{ color: "hsl(var(--orange))" }}>{product.code}</p>
-        <h3 className="font-display font-semibold text-base leading-snug transition-colors duration-200" style={{ color: "hsl(var(--navy-deep))" }}>{product.name}</h3>
+        <Link href={`/catalogue/${product.slug}`} className="block">
+          <h3 className="font-display font-semibold text-base leading-snug transition-colors duration-200 hover:opacity-75" style={{ color: "hsl(var(--navy-deep))" }}>
+            {pName}
+          </h3>
+        </Link>
         <div className="flex items-center justify-between pt-0.5">
-          <span className="font-body text-xs text-muted-foreground">{product.material} · {product.style}</span>
-          <span className="font-body text-xs font-semibold flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200" style={{ color: "hsl(var(--orange))" }}>{t("home.featured.inquire")} <ArrowRight size={11} /></span>
+          <span className="font-body text-xs text-muted-foreground">
+            {pMaterial} · {pStyle}
+          </span>
+          <Link href={`/catalogue/${product.slug}`} className="font-body text-xs font-semibold flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:opacity-75" style={{ color: "hsl(var(--orange))" }}>
+            {t("home.featured.inquire")} <ArrowRight size={11} />
+          </Link>
         </div>
       </div>
     </motion.div>
@@ -54,10 +81,14 @@ export default function FeaturedProducts() {
   const { ref, inView } = useInView();
   const { t } = useTranslation();
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
-  const [activeFilter, setActiveFilter] = useState("Outdoor Sofas");
+  const [activeFilter, setActiveFilter] = useState("All");
 
-  const filtered = featuredProductsData.filter(p => p.category === activeFilter);
-  const targetUrl = `/catalogue?category=${encodeURIComponent(activeFilter)}`;
+  const filtered = activeFilter === "All"
+    ? featuredProductsData
+    : featuredProductsData.filter(p => p.category?.us === FILTER_MAPPING[activeFilter]);
+  const targetUrl = activeFilter === "All" 
+    ? `/catalogue/outdoor` 
+    : `/catalogue/outdoor?category=${encodeURIComponent(FILTER_MAPPING[activeFilter])}`;
 
   return (
     <section className="py-16 sm:py-28" style={{ backgroundColor: "hsl(var(--warm-cream))" }}>
@@ -79,7 +110,7 @@ export default function FeaturedProducts() {
           <motion.div initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.35 }} className="flex flex-wrap gap-2.5 mb-8 sm:mb-10">
             {FILTER_KEYS.map((f) => {
               const isActive = activeFilter === f;
-              const count = featuredProductsData.filter(p => p.category === f).length;
+              const count = f === "All" ? featuredProductsData.length : featuredProductsData.filter(p => p.category?.us === FILTER_MAPPING[f]).length;
               if (count === 0) return null;
               return (
                 <button key={f} onClick={() => setActiveFilter(f)} className="relative inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full font-body text-sm font-medium transition-all duration-300 overflow-hidden whitespace-nowrap shrink-0" style={isActive ? { backgroundColor: "hsl(var(--navy-deep))", color: "#fff", boxShadow: "0 4px 14px hsl(var(--navy-deep)/0.25)" } : { backgroundColor: "hsl(var(--warm-beige))", color: "hsl(var(--navy-deep))", border: "1px solid hsl(var(--warm-beige))" }}>

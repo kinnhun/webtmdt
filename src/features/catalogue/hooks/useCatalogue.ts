@@ -5,11 +5,13 @@ import { OUTDOOR_CATEGORIES, INDOOR_CATEGORIES, MATERIALS, MOQ_OPTIONS, COLORS, 
 import type { Product, FilterState, Collection } from "@/domains/product/product.types";
 import { useTranslation } from "react-i18next";
 
-export function useCatalogue() {
+export function useCatalogue(forcedCollection?: Collection) {
   const router = useRouter();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const langEnum: Record<string, 'vi' | 'uk' | 'us'> = { "vi-VN": "vi", "en-GB": "uk", "en-US": "us" };
+  const langId = langEnum[i18n?.language] || "us";
   
-  const [collection, setCollection] = useState<Collection>("Outdoor");
+  const [collection, setCollection] = useState<Collection>(forcedCollection || "Outdoor");
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState<FilterState>({ category: [], material: [], moq: [], color: [], style: [] });
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
@@ -23,9 +25,11 @@ export function useCatalogue() {
     if (!router.isReady) return;
     const q = router.query;
     
-    let initCol: Collection = "Outdoor";
-    if (q.collection === "Indoor" || q.collection === "Outdoor") {
-      initCol = q.collection as Collection;
+    let initCol: Collection = forcedCollection || "Outdoor";
+    if (!forcedCollection) {
+      if (q.collection === "Indoor" || q.collection === "Outdoor") {
+        initCol = q.collection as Collection;
+      }
     }
     
     const initFilters: FilterState = { category: [], material: [], moq: [], color: [], style: [] };
@@ -59,7 +63,7 @@ export function useCatalogue() {
     if (!initialized) return;
 
     const query: Record<string, string> = {};
-    if (collection !== "Outdoor") query.collection = collection;
+    if (!forcedCollection && collection !== "Outdoor") query.collection = collection;
     if (search) query.search = search;
     if (page > 1) query.page = page.toString();
     
@@ -113,27 +117,27 @@ export function useCatalogue() {
   let filtered = collectionProducts.filter((p) => {
     if (search) {
       const q = search.toLowerCase();
-      const catMatch = Array.isArray(p.category)
-        ? p.category.some(c => c.toLowerCase().includes(q))
-        : p.category.toLowerCase().includes(q);
-      if (!p.name.toLowerCase().includes(q) && !p.code.toLowerCase().includes(q) && !catMatch) return false;
+      const pName = (p.name?.[langId] || p.name?.us || "").toLowerCase();
+      const pCat = (p.category?.[langId] || p.category?.us || "").toLowerCase();
+      if (!pName.includes(q) && !p.code.toLowerCase().includes(q) && !pCat.includes(q)) return false;
     }
     
     if (filters.category.length) {
-      const match = Array.isArray(p.category) 
-        ? p.category.some(c => filters.category.includes(c))
-        : filters.category.includes(p.category);
-      if (!match) return false;
+      if (!filters.category.includes(p.category?.us || "")) return false;
     }
     
-    if (filters.material.length && !filters.material.includes(p.material)) return false;
+    if (filters.material.length && !filters.material.includes(p.material?.us || "")) return false;
     if (filters.moq.length && (!p.moq || !filters.moq.includes(p.moq))) return false;
-    if (filters.color.length && (!p.color || !filters.color.includes(p.color))) return false;
-    if (filters.style.length && (!p.style || !filters.style.includes(p.style))) return false;
+    if (filters.color.length && !filters.color.includes(p.color?.us || "")) return false;
+    if (filters.style.length && !filters.style.includes(p.style?.us || "")) return false;
     return true;
   });
 
-  filtered = [...filtered].sort((a, b) => a.name.localeCompare(b.name));
+  filtered = [...filtered].sort((a, b) => {
+    const aName = a.name?.[langId] || a.name?.us || "";
+    const bName = b.name?.[langId] || b.name?.us || "";
+    return aName.localeCompare(bName);
+  });
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE) || 1;
   const safePage = Math.min(page, totalPages);

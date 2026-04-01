@@ -64,8 +64,10 @@ function ImageGallery({ images, name }: { images: string[]; name: string }) {
 /* ── Tab Section ── */
 function DetailTabs({ product }: { product: Product }) {
   const { t, i18n } = useTranslation();
-  const langEnum: Record<string, 'VI' | 'UK' | 'US'> = { "vi-VN": "VI", "en-GB": "UK", "en-US": "US" };
-  const langId = langEnum[i18n?.language] || "US";
+  const langEnum: Record<string, 'vi' | 'uk' | 'us'> = { "vi-VN": "vi", "en-GB": "uk", "en-US": "us" };
+  const langId = langEnum[i18n?.language] || "us";
+  const pCare = product.careInstructions?.[langId] || product.careInstructions?.us || [];
+  const pUsage = product.usageSettings?.[langId] || product.usageSettings?.us || [];
   const tabs = [
     { id: "specs", label: t("productDetail.specifications") },
     { id: "care", label: t("productDetail.care") },
@@ -119,7 +121,7 @@ function DetailTabs({ product }: { product: Product }) {
           {activeTab === "care" && product.careInstructions && (
             <motion.div key="care" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
               <ul className="space-y-3">
-                {product.careInstructions.map((item, i) => (
+                {pCare.map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <Shield size={16} className="mt-0.5 shrink-0" style={{ color: "hsl(var(--orange))" }} />
                     <span className="font-body text-sm" style={{ color: "hsl(var(--navy)/0.65)" }}>{item}</span>
@@ -131,7 +133,7 @@ function DetailTabs({ product }: { product: Product }) {
           {activeTab === "usage" && product.usageSettings && (
             <motion.div key="usage" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
               <div className="grid grid-cols-2 gap-3">
-                {product.usageSettings.map((setting) => (
+                {pUsage.map((setting) => (
                   <div key={setting} className="flex items-center gap-3 p-3 rounded-lg border" style={{ borderColor: "hsl(var(--navy)/0.08)", backgroundColor: "hsl(var(--navy)/0.02)" }}>
                     <MapPin size={15} style={{ color: "hsl(var(--orange))" }} />
                     <span className="font-body text-sm font-medium" style={{ color: "hsl(var(--navy-deep))" }}>{setting}</span>
@@ -148,8 +150,21 @@ function DetailTabs({ product }: { product: Product }) {
 
 /* ── Main Container ── */
 export default function ProductDetailContainer({ product, relatedProducts }: Props) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const langEnum: Record<string, 'vi' | 'uk' | 'us'> = { "vi-VN": "vi", "en-GB": "uk", "en-US": "us" };
+  const langId = langEnum[i18n?.language] || "us";
+
+  const pName = product.name?.[langId] || product.name?.us || "";
+  const pDesc = product.description?.[langId] || product.description?.us || "";
+  const pMat = product.material?.[langId] || product.material?.us || "";
+  const pStyle = product.style?.[langId] || product.style?.us || "";
+  const pFeatures = product.features?.[langId] || product.features?.us || [];
+  const pCategory = product.category?.[langId] || product.category?.us || "";
+  const pCare = product.careInstructions?.[langId] || product.careInstructions?.us || [];
+  const pUsage = product.usageSettings?.[langId] || product.usageSettings?.us || [];
+  const pLongDesc = product.longDescription?.[langId] || product.longDescription?.us || "";
 
   const handleShare = useCallback(() => {
     if (typeof navigator !== "undefined") navigator.clipboard.writeText(window.location.href);
@@ -163,9 +178,9 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
           <div className="flex items-center gap-2 font-body text-xs" style={{ color: "hsl(var(--navy)/0.45)" }}>
             <Link href="/" className="hover:underline">{t("nav.home")}</Link>
             <span>/</span>
-            <Link href="/catalogue" className="hover:underline">{t("nav.catalogue")}</Link>
+            <Link href={product?.collection === "Indoor" ? "/catalogue/indoor" : "/catalogue/outdoor"} className="hover:underline">{t("nav.catalogue")}</Link>
             <span>/</span>
-            <span style={{ color: "hsl(var(--navy-deep))" }}>{product.name}</span>
+            <span style={{ color: "hsl(var(--navy-deep))" }}>{pName}</span>
           </div>
         </div>
       </div>
@@ -175,24 +190,24 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
         <div className="grid md:grid-cols-2 gap-8 lg:gap-14">
           {/* Left — Gallery */}
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-            <ImageGallery images={product.images} name={product.name} />
+            <ImageGallery images={product.images} name={pName} />
           </motion.div>
 
           {/* Right — Info */}
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>
             <div className="flex items-center gap-2 mb-3">
               <span className="px-2.5 py-1 rounded-sm font-body text-[10px] font-semibold tracking-wider uppercase text-white" style={{ backgroundColor: "hsl(var(--orange))" }}>
-                {product.category}
+                {pCategory}
               </span>
               <span className="font-body text-xs" style={{ color: "hsl(var(--navy)/0.4)" }}>{product.code}</span>
             </div>
 
             <h1 className="font-display font-bold leading-tight mb-3" style={{ fontSize: "clamp(1.6rem, 3.5vw, 2.4rem)", color: "hsl(var(--navy-deep))" }}>
-              {product.name}
+              {pName}
             </h1>
 
             <p className="font-body text-sm leading-relaxed mb-6" style={{ color: "hsl(var(--navy)/0.55)" }}>
-              {product.description}
+              {pDesc}
             </p>
 
             {/* Quick specs */}
@@ -219,14 +234,14 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
                 <Sparkles size={16} style={{ color: "hsl(var(--orange))" }} />
                 <div>
                   <p className="font-body text-[10px] uppercase tracking-wider font-medium" style={{ color: "hsl(var(--navy)/0.4)" }}>{t("productDetail.material")}</p>
-                  <p className="font-body text-xs font-semibold" style={{ color: "hsl(var(--navy-deep))" }}>{product.material}</p>
+                  <p className="font-body text-xs font-semibold" style={{ color: "hsl(var(--navy-deep))" }}>{pMat}</p>
                 </div>
               </div>
               <div className="flex items-center gap-2.5 p-3 rounded-lg" style={{ backgroundColor: "hsl(var(--navy)/0.03)" }}>
                 <Settings2 size={16} style={{ color: "hsl(var(--orange))" }} />
                 <div>
                   <p className="font-body text-[10px] uppercase tracking-wider font-medium" style={{ color: "hsl(var(--navy)/0.4)" }}>{t("productDetail.style")}</p>
-                  <p className="font-body text-xs font-semibold" style={{ color: "hsl(var(--navy-deep))" }}>{product.style}</p>
+                  <p className="font-body text-xs font-semibold" style={{ color: "hsl(var(--navy-deep))" }}>{pStyle}</p>
                 </div>
               </div>
             </div>
@@ -235,7 +250,7 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
             <div className="mb-6">
               <h3 className="font-display font-semibold text-sm mb-3" style={{ color: "hsl(var(--navy-deep))" }}>{t("productDetail.features")}</h3>
               <ul className="space-y-2">
-                {product.features.map((f, i) => (
+                {pFeatures.map((f: string, i: number) => (
                   <li key={i} className="flex items-start gap-2.5">
                     <div className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0" style={{ backgroundColor: "hsl(var(--orange))" }} />
                     <span className="font-body text-sm" style={{ color: "hsl(var(--navy)/0.6)" }}>{f}</span>
@@ -276,7 +291,7 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
                   src={product.video}
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
-                  title={product.name}
+                  title={pName}
                   className="absolute top-0 left-0 w-full h-full"
                   style={{ border: 0 }}
                 />
@@ -289,7 +304,7 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
       {/* Long description */}
       {product.longDescription && (
         <section className="container mx-auto px-6 py-10 md:py-14">
-          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="max-w-3xl mx-auto prose-dht" dangerouslySetInnerHTML={{ __html: product.longDescription }} />
+          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="max-w-3xl mx-auto prose-dht" dangerouslySetInnerHTML={{ __html: pLongDesc }} />
         </section>
       )}
 
@@ -314,12 +329,12 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
                 <Link key={p.id} href={`/catalogue/${p.slug}`} className="group block">
                   <div className="rounded-lg overflow-hidden border border-black/5 transition-all duration-300 group-hover:shadow-lg group-hover:-translate-y-1" style={{ backgroundColor: "#fff" }}>
                     <div className="relative aspect-4/3 overflow-hidden">
-                      <Image src={p.image} alt={p.name} fill className="object-cover transition-transform duration-500 group-hover:scale-105" sizes="(max-width: 768px) 50vw, 25vw" />
+                      <Image src={p.image} alt={p.name?.[langId] || p.name?.us || ""} fill className="object-cover transition-transform duration-500 group-hover:scale-105" sizes="(max-width: 768px) 50vw, 25vw" />
                     </div>
                     <div className="p-3 md:p-4">
                       <p className="font-body text-[10px] uppercase tracking-wider mb-1" style={{ color: "hsl(var(--navy)/0.4)" }}>{p.code}</p>
                       <h3 className="font-display font-semibold text-sm leading-snug transition-colors group-hover:text-[hsl(var(--orange))]" style={{ color: "hsl(var(--navy-deep))" }}>
-                        {p.name}
+                        {p.name?.[langId] || p.name?.us || ""}
                       </h3>
                     </div>
                   </div>

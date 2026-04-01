@@ -26,19 +26,7 @@ export function SidebarFilter({ collection, handleCollectionChange, filters, tog
         )}
       </div>
 
-      <div className="border-b border-border pb-4 mb-2">
-        <p className="font-body font-semibold text-sm text-foreground mb-3">{t("catalogue.collection")}</p>
-        <div className="space-y-2.5">
-          {(["Outdoor", "Indoor"] as Collection[]).map((c) => (
-            <label key={c} className="flex items-center gap-2.5 cursor-pointer group">
-              <input type="radio" checked={collection === c} onChange={() => handleCollectionChange(c)} className="w-4 h-4 accent-orange outline-none" style={{ accentColor: "hsl(var(--orange))" }} />
-              <span className={`font-body text-sm transition-colors ${collection === c ? "text-foreground font-medium" : "text-muted-foreground group-hover:text-foreground"}`}>
-                {c === "Outdoor" ? t("catalogue.outdoorCollection") : t("catalogue.indoorCollection")}
-              </span>
-            </label>
-          ))}
-        </div>
-      </div>
+
       {filterGroups.map(({ key, label, options }) => (
         <div key={key} className="border-b border-border">
           <button onClick={() => setExpanded((prev) => ({ ...prev, [key]: !prev[key] }))} className="w-full flex items-center justify-between py-3.5 font-body text-sm font-semibold text-foreground hover:text-foreground/80 transition-colors">

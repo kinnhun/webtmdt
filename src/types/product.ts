@@ -20,36 +20,36 @@ export interface ProductSpecification {
   valueUK?: string;
 }
 
+export interface I18nText {
+  us: string;
+  uk?: string;
+  vi?: string;
+}
+
+export interface I18nList {
+  us: string[];
+  uk?: string[];
+  vi?: string[];
+}
+
 export interface Product {
   id: string;
   slug: string;
-  name: string;
-  nameVI?: string;
-  nameUS?: string;
-  nameUK?: string;
+  name: I18nText;
   code: string;
   collection: Collection | Collection[];
-  category: string | string[];
-  categoryVI?: string;
+  category: I18nText;
   subCategory?: string;
-  material: string;
-  materialVI?: string;
-  color: string;
-  colorVI?: string;
+  material: I18nText;
+  color: I18nText;
   size?: string;
-  style: string;
-  styleVI?: string;
+  style: I18nText;
   moq?: string;
   image: string;
   images: string[];
-  description: string;
-  descriptionVI?: string;
-  descriptionUS?: string;
-  descriptionUK?: string;
-  features: string[];
-  featuresVI?: string[];
-  room: string;
-  roomVI?: string;
+  description: I18nText;
+  features: I18nList;
+  room: I18nText;
   /** Structured attribute cards with icon + localized labels & values */
   attributes?: ProductAttribute[];
   /** Detail page extras */
@@ -57,14 +57,9 @@ export interface Product {
   dimensions?: string;
   weight?: string;
   specifications?: ProductSpecification[];
-  careInstructions?: string[];
-  careInstructionsVI?: string[];
-  usageSettings?: string[];
-  usageSettingsVI?: string[];
-  longDescription?: string;
-  longDescriptionVI?: string;
-  longDescriptionUS?: string;
-  longDescriptionUK?: string;
+  careInstructions?: I18nList;
+  usageSettings?: I18nList;
+  longDescription?: I18nText;
 }
 
 export interface FilterState {

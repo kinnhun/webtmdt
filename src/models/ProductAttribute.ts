@@ -2,7 +2,7 @@ import mongoose, { Schema, type Document } from "mongoose";
 
 export type AttributeType = "category" | "material" | "moq" | "color" | "style";
 
-export interface IProductAttribute extends Document {
+export interface IProductAttribute extends Omit<Document, 'collection'> {
   type: AttributeType;
   nameUS: string;
   nameUK?: string;

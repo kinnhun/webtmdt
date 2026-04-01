@@ -9,7 +9,7 @@ import { HeroSlider } from "./HeroSlider";
 import { SidebarFilter } from "./SidebarFilter";
 import { getOptionTranslation } from "../utils/translations";
 
-export default function CatalogueContainer() {
+export default function CatalogueContainer({ forcedCollection }: { forcedCollection?: Collection }) {
   const {
     collection,
     search,
@@ -32,7 +32,7 @@ export default function CatalogueContainer() {
     safePage,
     filterGroups,
     t
-  } = useCatalogue();
+  } = useCatalogue(forcedCollection);
 
   return (
     <>
@@ -62,19 +62,6 @@ export default function CatalogueContainer() {
               <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.3 }} className="overflow-hidden mb-6 lg:hidden">
                 <div className="p-6 bg-white rounded-sm border border-border">
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
-                    <div>
-                      <p className="font-body font-semibold text-sm mb-3 text-foreground">{t("catalogue.collection")}</p>
-                      <div className="space-y-2">
-                        {(["Outdoor", "Indoor"] as Collection[]).map((c) => (
-                          <label key={c} className="flex items-center gap-2 cursor-pointer group">
-                            <input type="radio" checked={collection === c} onChange={() => handleCollectionChange(c)} className="accent-orange w-4 h-4 outline-none" style={{ accentColor: "hsl(var(--orange))" }} />
-                            <span className={`font-body text-sm transition-colors ${collection === c ? "text-foreground font-medium" : "text-muted-foreground group-hover:text-foreground"}`}>
-                              {c === "Outdoor" ? t("catalogue.outdoorCollection") : t("catalogue.indoorCollection")}
-                            </span>
-                          </label>
-                        ))}
-                      </div>
-                    </div>
                     {filterGroups.map(({ key, label, options }) => (
                       <div key={key}>
                         <p className="font-body font-semibold text-sm mb-3 text-foreground">{label}</p>

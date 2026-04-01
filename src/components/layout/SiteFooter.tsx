@@ -11,7 +11,7 @@ export default function SiteFooter() {
   const quickLinks = [
     { label: t("nav.home"), href: "/" },
     { label: t("nav.about"), href: "/about" },
-    { label: t("nav.catalogue"), href: "/catalogue" },
+    { label: t("nav.catalogue"), href: "/catalogue/outdoor" },
     { label: t("nav.contact"), href: "/contact" },
   ];
 

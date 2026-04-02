@@ -63,7 +63,7 @@ const ICON_OPTIONS = [
   { name: 'UserOutlined', label: 'Capacity' },
 ];
 
-import { CATEGORIES, MATERIALS, MOQ_OPTIONS, COLORS, STYLES } from '@/constants/product';
+import { CATEGORIES, INDOOR_CATEGORIES, OUTDOOR_CATEGORIES, MATERIALS, MOQ_OPTIONS, COLORS, STYLES } from '@/constants/product';
 
 const COLLECTIONS = ['Outdoor', 'Indoor'];
 
@@ -396,6 +396,16 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
   const [form] = Form.useForm();
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [activeTab, setActiveTab] = useState('info');
+  
+  const selectedCollections = Form.useWatch('collection', form) || [];
+  
+  const availableCategories = React.useMemo(() => {
+    if (!selectedCollections || selectedCollections.length === 0) return CATEGORIES;
+    let cats: string[] = [];
+    if (selectedCollections.includes('Indoor')) cats = [...cats, ...INDOOR_CATEGORIES];
+    if (selectedCollections.includes('Outdoor')) cats = [...cats, ...OUTDOOR_CATEGORIES];
+    return cats.length > 0 ? cats : CATEGORIES;
+  }, [selectedCollections]);
   // Name language toggle
   const [nameLang, setNameLang] = useState<'VI' | 'UK' | 'US'>('US');
   const [slugEdited, setSlugEdited] = useState(false);
@@ -403,7 +413,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
 
   const { mutate: mutateUpdate, isPending: isUpdating } = useMutation({
     mutationFn: (payload: Partial<Product>) => {
-      const targetId = initialValues?.slug || initialValues?.id || initialValues?.code || '';
+      const targetId = initialValues?.id || (initialValues as any)?._id || initialValues?.slug || initialValues?.code || '';
       return updateProduct(targetId, payload);
     },
     retry: false,
@@ -460,7 +470,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
     const rawCol = initialValues.collection;
     const collections: string[] = Array.isArray(rawCol)
       ? rawCol
-      : typeof rawCol === 'string' && rawCol ? [rawCol]
+      : typeof rawCol === 'string' && rawCol ? rawCol.split(',').map((s: string) => s.trim()).filter(Boolean)
       : [];
 
     // Normalize category: from I18nText { us, uk, vi } → extract .us into array for Select
@@ -469,9 +479,9 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
     if (Array.isArray(rawCat)) {
       categories = rawCat.map((c: any) => (typeof c === 'object' && c?.us) ? c.us : String(c));
     } else if (rawCat && typeof rawCat === 'object' && rawCat.us) {
-      categories = [rawCat.us];
+      categories = rawCat.us.split(',').map((s: string) => s.trim()).filter(Boolean);
     } else if (typeof rawCat === 'string' && rawCat) {
-      categories = [rawCat];
+      categories = rawCat.split(',').map((s: string) => s.trim()).filter(Boolean);
     }
 
     const flatInit: any = { ...initialValues };
@@ -490,16 +500,33 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       flatInit.longDescriptionUK = initialValues.longDescription?.uk || '';
       flatInit.longDescriptionVI = initialValues.longDescription?.vi || '';
     }
-    // Flatten I18nText fields to .us string for form inputs
-    if (initialValues?.material && typeof initialValues.material === 'object') {
-      flatInit.material = (initialValues.material as any)?.us || '';
+    // Flatten I18nText fields: Select mode="tags" expects array, DB supplies string (comma separated)
+    const extractTags = (val: any) => {
+      if (!val) return [];
+      const txt = typeof val === 'object' ? val.us : String(val);
+      if (!txt) return [];
+      if (Array.isArray(txt)) return txt;
+      return txt.split(',').map((s: string) => s.trim()).filter(Boolean);
+    };
+
+    if (initialValues?.material) {
+      flatInit.material = extractTags(initialValues.material);
     }
-    if (initialValues?.color && typeof initialValues.color === 'object') {
-      flatInit.color = (initialValues.color as any)?.us || '';
+    if (initialValues?.color) {
+      flatInit.color = extractTags(initialValues.color);
     }
-    if (initialValues?.style && typeof initialValues.style === 'object') {
-      flatInit.style = (initialValues.style as any)?.us || '';
+    if (initialValues?.style) {
+      flatInit.style = extractTags(initialValues.style);
     }
+
+    const extractList = (val: any) => {
+      if (Array.isArray(val)) return val.length ? val : [''];
+      if (val && typeof val === 'object' && Array.isArray(val.us)) return val.us.length ? val.us : [''];
+      return [''];
+    };
+    flatInit.features = extractList(initialValues?.features);
+    flatInit.careInstructions = extractList(initialValues?.careInstructions);
+    flatInit.usageSettings = extractList(initialValues?.usageSettings);
 
     form.setFieldsValue({
       ...flatInit,
@@ -584,7 +611,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
     const v = values as any;
     const catArr: string[] = Array.isArray(v.category) ? v.category : (v.category ? [v.category] : []);
     const colArr: string[] = Array.isArray(v.collection) ? v.collection : (v.collection ? [v.collection] : []);
-    const categoryUs = catArr[0] || '';
+    const categoryUs = catArr.join(', ');
     const collectionStr = colArr.join(', '); // collection is plain String in schema
 
     const payload: any = {
@@ -596,11 +623,14 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       name: { us: v.name || '', uk: v.nameUK || '', vi: v.nameVI || '' },
       description: { us: v.description || '', uk: v.descriptionUK || '', vi: v.descriptionVI || '' },
       longDescription: { us: v.longDescription || '', uk: v.longDescriptionUK || '', vi: v.longDescriptionVI || '' },
-      material: { us: v.material || '', uk: '', vi: '' },
-      color: { us: v.color || '', uk: '', vi: '' },
-      style: { us: v.style || '', uk: '', vi: '' },
+      material: { us: Array.isArray(v.material) ? v.material.join(', ') : (v.material || ''), uk: '', vi: '' },
+      color: { us: Array.isArray(v.color) ? v.color.join(', ') : (v.color || ''), uk: '', vi: '' },
+      style: { us: Array.isArray(v.style) ? v.style.join(', ') : (v.style || ''), uk: '', vi: '' },
       category: { us: categoryUs, uk: '', vi: '' },
       collection: collectionStr || 'Outdoor',
+      features: { us: v.features?.filter(Boolean) || [], uk: [], vi: [] },
+      careInstructions: { us: v.careInstructions?.filter(Boolean) || [], uk: [], vi: [] },
+      usageSettings: { us: v.usageSettings?.filter(Boolean) || [], uk: [], vi: [] },
     };
     // Clean up flat form fields that shouldn't be sent to API
     delete payload.nameUK;
@@ -789,6 +819,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
                   placeholder="Select collections…"
                   className="rounded-lg"
                   allowClear
+                  onChange={() => form.setFieldValue('category', [])}
                 >
                   {COLLECTIONS.map((c) => (
                     <Option key={c} value={c}>
@@ -807,7 +838,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
                   className="rounded-lg"
                   allowClear
                 >
-                  {CATEGORIES.map((c) => (
+                  {availableCategories.map((c) => (
                     <Option key={c} value={c}>{c}</Option>
                   ))}
                 </Select>
@@ -1036,7 +1067,9 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
                   </Tag>
                 ))}
                 <span className="text-xs text-gray-400">
-                  {[initialValues?.category].flat().filter(Boolean).join(', ')}
+                  {typeof initialValues?.category === 'object' && initialValues?.category !== null 
+                    ? (initialValues.category as any).us 
+                    : [initialValues?.category].flat().filter(Boolean).join(', ')}
                 </span>
               </div>
             </div>
@@ -1049,7 +1082,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
             <Button
               type="primary"
               icon={<SaveOutlined />}
-              loading={isUpdating}
+              loading={isUpdating || isCreating}
               onClick={() => form.submit()}
               size="large"
               className="rounded-lg border-none font-semibold px-4 sm:px-6 shadow-md flex-1 sm:flex-none"
@@ -1063,7 +1096,24 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
 
       {/* ── Form body ─────────────────────────────────────────────────────── */}
       <div className="max-w-6xl mx-auto px-2 sm:px-6 py-4 sm:py-6 relative z-10">
-        <Form layout="vertical" form={form} onFinish={onFinish}>
+        <Form 
+          layout="vertical" 
+          form={form} 
+          onFinish={onFinish}
+          onFinishFailed={(errorInfo) => {
+            message.error('Validation failed! Please check tabs for missing required fields (marked in red).');
+            console.warn('Form validation errors:', errorInfo);
+            if (errorInfo.errorFields.length > 0) {
+              const firstFieldName = errorInfo.errorFields[0].name[0];
+              const fieldStr = String(firstFieldName);
+              if (['name', 'slug', 'code', 'category', 'collection', 'description', 'descriptionUK', 'descriptionVI'].includes(fieldStr)) {
+                setActiveTab('info');
+              } else if (['moq', 'dimensions', 'weight', 'material', 'style', 'color'].includes(fieldStr)) {
+                setActiveTab('attributes');
+              }
+            }
+          }}
+        >
           <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden" style={{ boxShadow: '0 2px 20px rgba(0,0,0,0.04)' }}>
             <Tabs
               activeKey={activeTab}

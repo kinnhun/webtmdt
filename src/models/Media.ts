@@ -24,7 +24,8 @@ const MediaSchema = new mongoose.Schema<IMedia>(
 );
 
 // Indexes "cho thật đẹp"
-MediaSchema.index({ md5: 1 }, { unique: true });
+// md5 index removed to avoid duplicate since the schema already defines unique: true
+
 MediaSchema.index({ createdAt: -1 });
 
 // Avoid schema overwrite in Next.js Hot Reload

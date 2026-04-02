@@ -40,18 +40,40 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       delete updatedData._id;
       if (updatedData.id) delete updatedData.id;
 
-      // Ensure collection is a plain string (schema: String, not I18nText)
       if (Array.isArray(updatedData.collection)) {
         updatedData.collection = updatedData.collection.join(', ');
       }
 
-      const updatedProduct = await Product.findOneAndUpdate(
-        { $or: orConditions },
-        { $set: updatedData },
-        { new: true, runValidators: true }
-      ).lean();
+      console.log("[PUT] Update payload:", updatedData);
+      
+      let updateResult: any = null;
+      try {
+        updateResult = await Product.updateOne(
+          { $or: orConditions },
+          { $set: updatedData },
+          { runValidators: true }
+        );
+        console.log("[PUT] updateOne result:", updateResult);
+      } catch (err) {
+        console.error("[PUT] updateOne ValidationError:", err);
+        return res.status(500).json({ error: String(err) });
+      }
+
+      const productIdToFind = updateResult && updateResult.acknowledged && updateResult.matchedCount > 0 ? 
+        (updatedData.slug || slug) : slug;
+
+      const updatedProduct = await Product.findOne({ 
+        $or: [
+          { slug: productIdToFind }, 
+          { code: productIdToFind }, 
+          { productId: productIdToFind }
+        ].concat(mongoose.isValidObjectId(productIdToFind) ? [{ _id: productIdToFind }] as any : [])
+      }).lean();
+
+      console.log("[PUT] final findOne result exists?", !!updatedProduct);
 
       if (!updatedProduct) {
+        console.log("[PUT] returning 404 explicitly");
         return res.status(404).json({ error: 'Product not found to update' });
       }
 

@@ -98,7 +98,7 @@ export function ProductTable({ data, onEdit, onDelete, loading }: ProductTablePr
             </Link>
           </Tooltip>
           <Tooltip title="Edit Product">
-            <Link href={`/admin/products/edit/${record.slug || record.id}`}>
+            <Link href={`/admin/products/edit/${record.id || (record as any)._id || record.code || record.slug}`}>
               <Button 
                 type="text" 
                 icon={<EditOutlined />} 
@@ -111,7 +111,7 @@ export function ProductTable({ data, onEdit, onDelete, loading }: ProductTablePr
               type="text" 
               danger 
               icon={<DeleteOutlined />} 
-              onClick={() => onDelete(record.slug || record.id)} 
+              onClick={() => onDelete(record.id || (record as any)._id || record.code || record.slug)} 
               className="hover:bg-red-50"
             />
           </Tooltip>

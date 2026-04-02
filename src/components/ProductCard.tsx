@@ -27,7 +27,7 @@ export default function ProductCard({ product, onQuickView, index = 0 }: Product
       transition={{ duration: 0.5, delay: index * 0.07 }}
       className="group bg-white rounded-lg overflow-hidden border border-border hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
     >
-      <div className="relative overflow-hidden bg-beige aspect-[4/3]">
+      <div className="relative overflow-hidden bg-beige aspect-4/3">
         <img src={product.image} alt={pName} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
         <div className="hidden sm:flex absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center gap-2">
           <button
@@ -37,7 +37,7 @@ export default function ProductCard({ product, onQuickView, index = 0 }: Product
             <Eye size={15} /> {t("product.quickView")}
           </button>
         </div>
-        <span className="absolute top-3 left-3 text-xs font-body font-medium px-2.5 py-1 rounded-sm" style={{ backgroundColor: "hsl(var(--orange))", color: "white" }}>{pCategory}</span>
+        <span className="absolute top-3 left-3 text-xs font-body font-medium px-2.5 py-1 rounded-sm truncate max-w-[calc(100%-24px)]" style={{ backgroundColor: "hsl(var(--orange))", color: "white" }} title={pCategory}>{pCategory}</span>
       </div>
       <div className="p-4">
         <p className="font-body text-xs text-muted-foreground mb-1">{product.code}</p>

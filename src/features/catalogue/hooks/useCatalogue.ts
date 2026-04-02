@@ -116,9 +116,11 @@ export function useCatalogue(forcedCollection?: Collection) {
 
   const productsToFilter = Array.isArray(rawProducts) ? rawProducts : (rawProducts as any)?.data || [];
 
-  let collectionProducts = productsToFilter.filter((p: Product) => 
-    Array.isArray(p.collection) ? p.collection.includes(collection) : p.collection === collection
-  );
+  let collectionProducts = productsToFilter.filter((p: Product) => {
+    if (!p.collection) return false;
+    const colArray = Array.isArray(p.collection) ? p.collection : String(p.collection).split(',').map(s => s.trim());
+    return colArray.includes(collection);
+  });
 
   let filtered = collectionProducts.filter((p: Product) => {
     if (search) {
@@ -128,14 +130,18 @@ export function useCatalogue(forcedCollection?: Collection) {
       if (!pName.includes(q) && !p.code.toLowerCase().includes(q) && !pCat.includes(q)) return false;
     }
     
-    if (filters.category.length) {
-      if (!filters.category.includes(p.category?.us || "")) return false;
-    }
-    
-    if (filters.material.length && !filters.material.includes(p.material?.us || "")) return false;
+    const checkOverlap = (productStr: string | undefined, selectedFilters: string[]) => {
+      if (!selectedFilters.length) return true;
+      const productArr = (productStr || "").split(',').map(s => s.trim());
+      return selectedFilters.some(f => productArr.includes(f));
+    };
+
+    if (!checkOverlap(p.category?.us, filters.category)) return false;
+    if (!checkOverlap(p.material?.us, filters.material)) return false;
     if (filters.moq.length && (!p.moq || !filters.moq.includes(p.moq))) return false;
-    if (filters.color.length && !filters.color.includes(p.color?.us || "")) return false;
-    if (filters.style.length && !filters.style.includes(p.style?.us || "")) return false;
+    if (!checkOverlap(p.color?.us, filters.color)) return false;
+    if (!checkOverlap(p.style?.us, filters.style)) return false;
+
     return true;
   });
 

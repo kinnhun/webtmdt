@@ -22,6 +22,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // Provide defaults for strictly required schema fields if missing
       payload.productId = payload.productId || payload.code || `p_${Date.now()}`;
       payload.room = payload.room || { us: 'General', uk: 'General', vi: 'General' };
+      
+      if (!payload.image || typeof payload.image !== 'string' || payload.image.trim() === '') {
+        payload.image = '/images/products/placeholder.webp'; // Schema required fallback
+      }
 
       const newProduct = await Product.create(payload);
       const productObj = newProduct.toObject();
@@ -48,21 +52,30 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       ];
     }
 
-    // I18nText fields: filter on the .us sub-field
+    const buildRegex = (val: string) => {
+      const items = val.split(",").map((c: string) => c.trim().replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')).filter(Boolean);
+      return items.length > 0 ? new RegExp(`(${items.join('|')})`, 'i') : null;
+    };
+
+    // I18nText fields and plain strings that store comma-separated lists
     if (category && typeof category === "string") {
-      filter["category.us"] = { $in: category.split(",") };
+      const rx = buildRegex(category);
+      if (rx) filter["category.us"] = rx;
     }
     if (material && typeof material === "string") {
-      filter["material.us"] = { $in: material.split(",") };
+      const rx = buildRegex(material);
+      if (rx) filter["material.us"] = rx;
     }
     if (color && typeof color === "string") {
-      filter["color.us"] = { $in: color.split(",") };
+      const rx = buildRegex(color);
+      if (rx) filter["color.us"] = rx;
     }
     if (size && typeof size === "string") {
-      filter.size = { $in: size.split(",") };
+      filter.size = { $in: size.split(",") }; // Assuming size isn't multiple tags in UI
     }
     if (style && typeof style === "string") {
-      filter["style.us"] = { $in: style.split(",") };
+      const rx = buildRegex(style);
+      if (rx) filter["style.us"] = rx;
     }
 
     const products = await Product.find(filter).sort({ createdAt: -1 }).lean();

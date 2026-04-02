@@ -6,12 +6,13 @@ import { useProducts } from "@/domains/product/product.hooks";
 
 export const useProductDetail = () => {
   const router = useRouter();
-  const { slug } = router.query;
+  const rawId = router.query.id || router.query.slug;
+  const identifier = Array.isArray(rawId) ? rawId[0] : rawId;
 
   const { data: product, isLoading, isError } = useQuery({
-    queryKey: ['product', slug],
-    queryFn: () => getProduct(slug as string),
-    enabled: router.isReady && !!slug,
+    queryKey: ['product', identifier],
+    queryFn: () => getProduct(identifier as string),
+    enabled: router.isReady && !!identifier,
     retry: 1
   });
 

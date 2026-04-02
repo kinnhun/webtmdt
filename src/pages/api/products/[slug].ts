@@ -19,7 +19,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     if (req.method === 'GET') {
-      const product = await Product.findOne({ $or: orConditions }).lean();
+      const product = await Product.findOneAndUpdate(
+        { $or: orConditions },
+        { $inc: { views: 1 } },
+        { new: true, lean: true }
+      );
 
       if (!product) {
         return res.status(404).json({ error: 'Product not found' });

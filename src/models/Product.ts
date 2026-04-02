@@ -44,6 +44,7 @@ export interface IProduct extends Omit<Document, 'collection'> {
   careInstructions?: I18nList;
   usageSettings?: I18nList;
   longDescription?: I18nText;
+  views?: number;
 }
 
 const I18nTextSchema = {
@@ -91,6 +92,7 @@ const ProductSchema = new Schema<IProduct>(
     careInstructions: I18nListSchema,
     usageSettings: I18nListSchema,
     longDescription: I18nTextSchema,
+    views: { type: Number, default: 0 },
   },
   { timestamps: true, suppressReservedKeysWarning: true }
 );

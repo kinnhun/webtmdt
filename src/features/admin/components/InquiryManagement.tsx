@@ -318,7 +318,7 @@ export default function InquiryManagement() {
           </div>
         }
         placement="right"
-        width={600}
+        size="large"
         onClose={() => setDrawerVisible(false)}
         open={drawerVisible}
         destroyOnClose

@@ -5,7 +5,7 @@ import { ArrowRight, Eye, Sparkles } from "lucide-react";
 import { useInView } from "@/hooks/useInView";
 import { useTranslation } from "react-i18next";
 import QuickViewModal from "@/components/QuickViewModal";
-import { featuredProductsData } from "@/data/products";
+import { useFeaturedProducts } from "@/domains/product/product.hooks";
 import type { Product } from "@/domains/product/product.types";
 
 const FILTER_KEYS = ["All", "Outdoor Sofa", "Dining Set", "Sunlounger", "Outdoor Table", "Aluminum Furniture"] as const;
@@ -82,6 +82,8 @@ export default function FeaturedProducts() {
   const { t } = useTranslation();
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
   const [activeFilter, setActiveFilter] = useState("All");
+
+  const { data: featuredProductsData = [] } = useFeaturedProducts();
 
   const filtered = activeFilter === "All"
     ? featuredProductsData

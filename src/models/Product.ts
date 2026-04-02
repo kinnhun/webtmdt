@@ -47,7 +47,7 @@ export interface IProduct extends Omit<Document, 'collection'> {
 }
 
 const I18nTextSchema = {
-  us: { type: String, required: true },
+  us: { type: String, default: '' },
   uk: { type: String },
   vi: { type: String }
 };
@@ -112,5 +112,10 @@ ProductSchema.index(
     name: "Product_Text_Index"
   }
 );
+
+// In development, delete cached model so schema changes take effect immediately
+if (process.env.NODE_ENV !== 'production' && mongoose.models.Product) {
+  delete mongoose.models.Product;
+}
 
 export default mongoose.models.Product || mongoose.model<IProduct>("Product", ProductSchema);

@@ -445,6 +445,8 @@ const RichTextEditor = React.forwardRef<RichTextEditorRef, RichTextEditorProps>(
   const quillRef = useRef<QuillInstance | null>(null);
   const onChangeRef = useRef(onChange);
   onChangeRef.current = onChange;
+  const valueRef = useRef(value);
+  valueRef.current = value;
   const isSettingRef = useRef(false);
 
   const insertHTML = useCallback((html: string) => {
@@ -558,9 +560,9 @@ const RichTextEditor = React.forwardRef<RichTextEditorRef, RichTextEditorProps>(
         onChangeRef.current?.(isEmpty ? '' : html);
       });
 
-      if (value) {
+      if (valueRef.current) {
         isSettingRef.current = true;
-        quill.clipboard.dangerouslyPasteHTML(value);
+        quill.clipboard.dangerouslyPasteHTML(valueRef.current);
         isSettingRef.current = false;
       }
     });
@@ -676,32 +678,32 @@ function EDITOR_STYLES(minHeight: number) {
     .quill-expanded .ql-toolbar button.ql-active .ql-fill { fill: #fff; }
 
     /* ── Rich content styling ── */
-    .quill-expanded .ql-editor h1 { font-size: 1.75rem; font-weight: 700; margin-top: 1.5rem; color: #1a2332; }
-    .quill-expanded .ql-editor h2 { font-size: 1.35rem; font-weight: 700; margin-top: 1.25rem; color: #1a2332; }
-    .quill-expanded .ql-editor h3 { font-size: 1.1rem; font-weight: 600; margin-top: 1rem; color: #2d3748; }
-    .quill-expanded .ql-editor blockquote {
+    .quill-custom-wrap .ql-editor h1 { font-size: 1.75rem; font-weight: 700; margin-top: 1.5rem; color: #1a2332; }
+    .quill-custom-wrap .ql-editor h2 { font-size: 1.35rem; font-weight: 700; margin-top: 1.25rem; color: #1a2332; }
+    .quill-custom-wrap .ql-editor h3 { font-size: 1.1rem; font-weight: 600; margin-top: 1rem; color: #2d3748; }
+    .quill-custom-wrap .ql-editor blockquote {
       border-left: 4px solid #f97316; margin: 1rem 0; color: #4a5568;
       font-style: italic; background: #fffbf5; padding: 12px 16px; border-radius: 0 8px 8px 0;
     }
-    .quill-expanded .ql-editor pre {
+    .quill-custom-wrap .ql-editor pre {
       background: #1a2332; color: #e2e8f0; border-radius: 8px; padding: 16px;
       font-family: 'Fira Code','Consolas',monospace; font-size: 13px;
     }
-    .quill-expanded .ql-editor img {
+    .quill-custom-wrap .ql-editor img {
       max-width: 100%; border-radius: 8px; margin: 8px 0;
       cursor: pointer; transition: outline 0.15s, box-shadow 0.15s;
     }
-    .quill-expanded .ql-editor img:hover {
+    .quill-custom-wrap .ql-editor img:hover {
       outline: 2px solid hsl(24,95%,53%,0.4); outline-offset: 2px;
     }
-    .quill-expanded .ql-editor img.ql-img-selected {
+    .quill-custom-wrap .ql-editor img.ql-img-selected {
       outline: 3px solid hsl(24,95%,53%); outline-offset: 2px;
       box-shadow: 0 0 0 6px hsl(24,95%,53%,0.12);
     }
-    .quill-expanded .ql-editor .ql-video {
+    .quill-custom-wrap .ql-editor .ql-video {
       width: 100%; min-height: 320px; border-radius: 8px;
     }
-    .quill-expanded .ql-editor a { color: #f97316; text-decoration: underline; }
+    .quill-custom-wrap .ql-editor a { color: #f97316; text-decoration: underline; }
 
     /* ── Drag-and-drop overlay ── */
     .quill-expanded .ql-editor.ql-drag-over {

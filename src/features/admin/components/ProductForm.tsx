@@ -370,12 +370,15 @@ function RichTextEditorControl({
 }: { fieldName: string; form: import('antd').FormInstance; placeholder?: string; minHeight?: number }) {
   const value = Form.useWatch(fieldName, form);
   return (
-    <RichTextEditor
-      value={value || ''}
-      onChange={(v) => form.setFieldValue(fieldName, v)}
-      placeholder={placeholder}
-      minHeight={minHeight}
-    />
+    <Form.Item name={fieldName} noStyle>
+      <RichTextEditor
+        value={value || ''}
+        onChange={(v) => form.setFieldValue(fieldName, v)}
+        placeholder={placeholder}
+        minHeight={minHeight}
+        expanded={true}
+      />
+    </Form.Item>
   );
 }
 
@@ -403,6 +406,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       const targetId = initialValues?.slug || initialValues?.id || initialValues?.code || '';
       return updateProduct(targetId, payload);
     },
+    retry: false,
     onSuccess: () => {
       message.success('Product updated!');
       queryClient.invalidateQueries({ queryKey: ['product'] });
@@ -416,9 +420,10 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
 
   const { mutate: mutateCreate, isPending: isCreating } = useMutation({
     mutationFn: (payload: Partial<Product>) => createProduct(payload),
+    retry: false,
     onSuccess: () => {
       message.success('Product created!');
-      queryClient.invalidateQueries({ queryKey: ['products'] }); // Ensure list updates
+      queryClient.invalidateQueries({ queryKey: ['products'] });
       router.push('/admin/products');
     },
     onError: (err) => {
@@ -451,13 +456,23 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
 
     setFileList(initialImages);
 
-    // Normalize collection and category to arrays
-    const collections = Array.isArray(initialValues.collection)
-      ? initialValues.collection
-      : initialValues.collection ? [initialValues.collection] : [];
-    const categories = Array.isArray(initialValues.category)
-      ? initialValues.category
-      : initialValues.category ? [initialValues.category] : [];
+    // Normalize collection to array of strings for Select component
+    const rawCol = initialValues.collection;
+    const collections: string[] = Array.isArray(rawCol)
+      ? rawCol
+      : typeof rawCol === 'string' && rawCol ? [rawCol]
+      : [];
+
+    // Normalize category: from I18nText { us, uk, vi } → extract .us into array for Select
+    const rawCat = initialValues.category as any;
+    let categories: string[] = [];
+    if (Array.isArray(rawCat)) {
+      categories = rawCat.map((c: any) => (typeof c === 'object' && c?.us) ? c.us : String(c));
+    } else if (rawCat && typeof rawCat === 'object' && rawCat.us) {
+      categories = [rawCat.us];
+    } else if (typeof rawCat === 'string' && rawCat) {
+      categories = [rawCat];
+    }
 
     const flatInit: any = { ...initialValues };
     if (initialValues?.name && typeof initialValues.name === 'object') {
@@ -475,19 +490,15 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       flatInit.longDescriptionUK = initialValues.longDescription?.uk || '';
       flatInit.longDescriptionVI = initialValues.longDescription?.vi || '';
     }
+    // Flatten I18nText fields to .us string for form inputs
     if (initialValues?.material && typeof initialValues.material === 'object') {
-      flatInit.material = initialValues.material?.us || '';
-    } else if (Array.isArray(initialValues?.material)) {
-      flatInit.material = (initialValues.material as any[]).map(m => m?.us || m || '').join(', ');
+      flatInit.material = (initialValues.material as any)?.us || '';
     }
     if (initialValues?.color && typeof initialValues.color === 'object') {
-      flatInit.color = initialValues.color?.us || '';
+      flatInit.color = (initialValues.color as any)?.us || '';
     }
     if (initialValues?.style && typeof initialValues.style === 'object') {
-      flatInit.style = initialValues.style?.us || '';
-    }
-    if (initialValues?.category && typeof initialValues.category === 'object') {
-      flatInit.category = initialValues.category?.us || '';
+      flatInit.style = (initialValues.style as any)?.us || '';
     }
 
     form.setFieldsValue({
@@ -552,6 +563,8 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
   }, []);
 
   const onFinish = (values: Partial<Product>) => {
+    // Prevent double submission
+    if (isUpdating || isCreating) return;
     const uploadedImages = fileList.map((f) => f.url || f.response?.url || '').filter(Boolean);
     
     let finalVideo = values.video || '';
@@ -567,21 +580,35 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       }
     }
 
+    // Extract string values from form arrays (Select mode="multiple"/"tags" returns arrays)
+    const v = values as any;
+    const catArr: string[] = Array.isArray(v.category) ? v.category : (v.category ? [v.category] : []);
+    const colArr: string[] = Array.isArray(v.collection) ? v.collection : (v.collection ? [v.collection] : []);
+    const categoryUs = catArr[0] || '';
+    const collectionStr = colArr.join(', '); // collection is plain String in schema
+
     const payload: any = {
       ...values,
       video: finalVideo,
       image: uploadedImages[0] || values.image || '',
       images: uploadedImages,
       // Map to I18nText nested objects
-      name: { us: (values as any).name || '', uk: (values as any).nameUK || '', vi: (values as any).nameVI || '' },
-      description: { us: (values as any).description || '', uk: (values as any).descriptionUK || '', vi: (values as any).descriptionVI || '' },
-      longDescription: { us: (values as any).longDescription || '', uk: (values as any).longDescriptionUK || '', vi: (values as any).longDescriptionVI || '' },
-      material: { us: (values as any).material || '', uk: '', vi: '' },
-      color: { us: (values as any).color || '', uk: '', vi: '' },
-      style: { us: (values as any).style || '', uk: '', vi: '' },
-      category: { us: (values as any).category || '', uk: '', vi: '' },
-      collection: { us: (values as any).collection || '', uk: '', vi: '' },
+      name: { us: v.name || '', uk: v.nameUK || '', vi: v.nameVI || '' },
+      description: { us: v.description || '', uk: v.descriptionUK || '', vi: v.descriptionVI || '' },
+      longDescription: { us: v.longDescription || '', uk: v.longDescriptionUK || '', vi: v.longDescriptionVI || '' },
+      material: { us: v.material || '', uk: '', vi: '' },
+      color: { us: v.color || '', uk: '', vi: '' },
+      style: { us: v.style || '', uk: '', vi: '' },
+      category: { us: categoryUs, uk: '', vi: '' },
+      collection: collectionStr || 'Outdoor',
     };
+    // Clean up flat form fields that shouldn't be sent to API
+    delete payload.nameUK;
+    delete payload.nameVI;
+    delete payload.descriptionUK;
+    delete payload.descriptionVI;
+    delete payload.longDescriptionUK;
+    delete payload.longDescriptionVI;
     if (isEdit) {
       mutateUpdate(payload);
     } else {

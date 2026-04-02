@@ -66,7 +66,7 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
 
               {results.length > 0 && (
                 <div className="mt-4 border-t border-border pt-4 grid grid-cols-1 gap-2 max-h-80 overflow-y-auto">
-                  {results.map((p) => {
+                  {results.map((p: any) => {
                     const pNameItem = p.name?.[langId] || p.name?.us || "";
                     const pCatItem = p.category?.[langId] || p.category?.us || "";
                     return (

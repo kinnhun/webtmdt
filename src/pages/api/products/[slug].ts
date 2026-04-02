@@ -13,23 +13,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     await dbConnect();
 
-    const orConditions: any[] = [{ slug }, { code: slug }, { productId: slug }];
+    const orConditions: Record<string, unknown>[] = [{ slug }, { code: slug }, { productId: slug }];
     if (mongoose.isValidObjectId(slug)) {
       orConditions.push({ _id: slug });
     }
 
     if (req.method === 'GET') {
-      // Find by slug, code, productId, or _id
       const product = await Product.findOne({ $or: orConditions }).lean();
 
       if (!product) {
         return res.status(404).json({ error: 'Product not found' });
       }
 
-      // Format for frontend
       const formatted = {
         ...product,
-        id: product.productId || product._id?.toString(),
+        id: (product as any).productId || product._id?.toString(),
       };
       
       return res.status(200).json(formatted);
@@ -38,17 +36,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (req.method === 'PUT') {
       const updatedData = { ...req.body };
       
-      // We don't want to accidentally overwrite _id or productId
+      // Don't overwrite _id or productId
       delete updatedData._id;
       if (updatedData.id) delete updatedData.id;
 
-      // Normalize array fields to strings for schema
-      const arrayToStringFields = ['collection', 'category', 'material', 'color', 'style'];
-      arrayToStringFields.forEach(field => {
-        if (Array.isArray(updatedData[field])) {
-          updatedData[field] = updatedData[field].join(', ');
-        }
-      });
+      // Ensure collection is a plain string (schema: String, not I18nText)
+      if (Array.isArray(updatedData.collection)) {
+        updatedData.collection = updatedData.collection.join(', ');
+      }
 
       const updatedProduct = await Product.findOneAndUpdate(
         { $or: orConditions },
@@ -62,7 +57,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       return res.status(200).json({
         ...updatedProduct,
-        id: updatedProduct.productId || updatedProduct._id?.toString(),
+        id: (updatedProduct as any).productId || updatedProduct._id?.toString(),
       });
     }
 

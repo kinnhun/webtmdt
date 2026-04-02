@@ -95,6 +95,8 @@ body {
   color: hsl(215 35% 25%);
   line-height: 1.85;
   font-size: 1.05rem;
+  word-break: break-word;
+  overflow-wrap: break-word; /* fixes horizontal overflow */
 }
 .prose-dht h2 {
   font-family: "Playfair Display", serif;
@@ -116,6 +118,7 @@ body {
 .prose-dht p {
   margin-bottom: 1.25rem;
   color: hsl(215 25% 35%);
+  text-align: justify; /* Căn đều 2 bên (Justify) theo format của khách */
 }
 .prose-dht ul, .prose-dht ol {
   padding-left: 1.5rem;

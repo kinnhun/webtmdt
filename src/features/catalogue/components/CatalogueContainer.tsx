@@ -117,7 +117,7 @@ export default function CatalogueContainer({ forcedCollection }: { forcedCollect
               {filtered.length > 0 ? (
                 <>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                    {paginated.map((p, i) => (<ProductCard key={p.id} product={p} index={i} onQuickView={setQuickViewProduct} />))}
+                    {paginated.map((p: any, i: number) => (<ProductCard key={p.id} product={p} index={i} onQuickView={setQuickViewProduct} />))}
                   </div>
 
                   {totalPages > 1 && (

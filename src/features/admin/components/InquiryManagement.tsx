@@ -4,6 +4,7 @@ import { Table, Button, Input, Space, Tag, Drawer, Form, Select, Typography, Row
 import { SearchOutlined, EyeOutlined, MailOutlined, InboxOutlined, UserOutlined, ClockCircleOutlined, InfoCircleOutlined, ShoppingOutlined } from '@ant-design/icons';
 import { format } from 'date-fns';
 import { useInquiries, useUpdateInquiry, useInquirySettings, type Inquiry } from '@/domains/inquiry';
+import { useQuery } from '@tanstack/react-query';
 import { useProducts, emptyFilters } from '@/domains/product';
 import InquirySettingsModal from './InquirySettingsModal';
 
@@ -26,8 +27,8 @@ export default function InquiryManagement() {
   const [form] = Form.useForm();
 
   // Helper maps for settings
-  const categories = settings.filter((s: { type: string; }) => s.type === 'category' && s.isActive).sort((a: { order: number; }, b: { order: number; }) => a.order - b.order);
-  const statuses = settings.filter((s: { type: string; }) => s.type === 'status' && s.isActive).sort((a: { order: number; }, b: { order: number; }) => a.order - b.order);
+  const categories = settings.filter((s: any) => s.type === 'category' && s.isActive).sort((a: any, b: any) => a.order - b.order);
+  const statuses = settings.filter((s: any) => s.type === 'status' && s.isActive).sort((a: any, b: any) => a.order - b.order);
   
   const categoryMap = Object.fromEntries(categories.map((c: any) => [c.key, c.label]));
   const statusLabels = Object.fromEntries(statuses.map((s: any) => [s.key, s.label]));
@@ -60,9 +61,21 @@ export default function InquiryManagement() {
       category: record.category,
       interestedProduct: record.interestedProduct && typeof record.interestedProduct === 'object' ? record.interestedProduct._id : record.interestedProduct,
       internalNotes: record.internalNotes,
+      assignedTo: record.assignedTo ? (record.assignedTo as any)._id || record.assignedTo : undefined,
     });
     setDrawerVisible(true);
   };
+
+  // Fetch admin users for assignment
+  const { data: usersData } = useQuery({
+    queryKey: ['admin-users'],
+    queryFn: async () => {
+      const res = await fetch('/api/admin/users');
+      return res.json();
+    }
+  });
+
+  const staffMembers = (usersData?.data || []).filter((u: any) => u.status === 'active' && u.roleId?.name !== 'Admin');
 
   const handleSave = () => {
     form.validateFields().then((values) => {
@@ -217,6 +230,20 @@ export default function InquiryManagement() {
       ),
       filters: statuses.map((s: any) => ({ text: s.label, value: s.key })),
       onFilter: (value: boolean | React.Key, record: Inquiry) => record.status === value,
+    },
+    {
+      title: 'Assigned To',
+      key: 'assignedTo',
+      render: (_: unknown, record: Inquiry) => {
+        if (!record.assignedTo) return <span className="text-gray-400 text-xs italic">Unassigned</span>;
+        const assignedName = typeof record.assignedTo === 'object' ? (record.assignedTo as any).name : record.assignedTo;
+        return (
+          <div className="flex items-center gap-1.5">
+            <UserOutlined className="text-blue-500 text-[10px]" />
+            <span className="text-sm font-medium text-gray-700">{assignedName}</span>
+          </div>
+        );
+      }
     },
     {
       title: 'Action',
@@ -441,6 +468,18 @@ export default function InquiryManagement() {
                       </Form.Item>
                     </Col>
                     <Col span={8}>
+                      <Form.Item name="assignedTo" label="Assign To Manager">
+                        <Select showSearch placeholder="Select a manager" allowClear size="large">
+                          {staffMembers.map((m: any) => (
+                            <Option key={m._id} value={m._id}>{m.name}</Option>
+                          ))}
+                        </Select>
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                  
+                  <Row gutter={16}>
+                    <Col span={24}>
                       <Form.Item name="interestedProduct" label="Interested Product">
                         <Select 
                           showSearch 

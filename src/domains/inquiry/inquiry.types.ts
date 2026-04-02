@@ -18,15 +18,25 @@ export interface Inquiry {
     image?: string;
   };
   internalNotes?: string;
+  assignedTo?: { _id: string; name: string; username: string };
+  assignedBy?: { _id: string; name: string; username: string };
+  assignedAt?: string;
+  acceptedAt?: string;
+  rejectedAt?: string;
+  closedAt?: string;
+  priority: "low" | "normal" | "high" | "urgent";
+  lastActionBy?: string;
   createdAt: string;
   updatedAt: string;
 }
 
 export interface UpdateInquiryPayload {
-  status?: Inquiry['status'];
-  category?: Inquiry['category'];
+  status?: string;
+  category?: string;
   interestedProduct?: string;
   internalNotes?: string;
+  assignedTo?: string | null;
+  priority?: "low" | "normal" | "high" | "urgent";
 }
 
 export interface InquirySetting {

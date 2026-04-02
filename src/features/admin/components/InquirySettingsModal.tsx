@@ -171,8 +171,8 @@ export default function InquirySettingsModal({ open, onClose }: SettingsModalPro
             
             <div className="flex gap-4 items-center">
               {activeTab === 'status' && (
-                <Form.Item name="color" label="Color (AntD or Hex)" className="w-40">
-                  <Input placeholder="e.g., error, #f5222d" />
+                <Form.Item name="color" label="Color Tag" className="w-40">
+                  <ColorPicker showText />
                 </Form.Item>
               )}
               <Form.Item name="order" label="Sort Priority" className="w-24">

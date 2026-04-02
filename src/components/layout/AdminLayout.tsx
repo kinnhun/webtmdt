@@ -55,7 +55,12 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     (hasPermission('inquiry.view') || hasPermission('inquiry.manage')) ? {
       key: '/admin/inquiries',
       icon: <InboxOutlined className="text-[1.1rem]" />,
-      label: <Link href="/admin/inquiries" className="font-body text-sm font-medium">{t('admin.menu.inquiries', 'Inquiries')}</Link>,
+      label: <Link href="/admin/inquiries" className="font-body text-sm font-medium">{t('admin.menu.inquiries', 'Inquiries All')}</Link>,
+    } : null,
+    (hasPermission('inquiry.manage') && user?.role !== 'Admin') ? {
+      key: '/admin/my-inquiries',
+      icon: <InboxOutlined className="text-[1.1rem]" />,
+      label: <Link href="/admin/my-inquiries" className="font-body text-sm font-medium">My Inquiries</Link>,
     } : null,
     (hasPermission('staff.view') || hasPermission('staff.manage')) ? {
       key: '/admin/users',
@@ -108,11 +113,11 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     ],
   };
 
-  // Route Permission Mapping
   const routePermissions: Record<string, string[]> = {
     '/admin/products/create': ['product.manage'],
     '/admin/products/edit': ['product.manage'],
     '/admin/products': ['product.view', 'product.manage'],
+    '/admin/my-inquiries': ['inquiry.manage'],
     '/admin/inquiries': ['inquiry.view', 'inquiry.manage'],
     '/admin/users': ['staff.view', 'staff.manage'],
     '/admin/roles': ['staff.view', 'staff.manage'],

@@ -3,10 +3,10 @@ import { fetchInquiries, editInquiry, fetchSettings, createSetting, updateSettin
 import { inquiryKeys } from "./inquiry.keys";
 import type { UpdateInquiryPayload } from "./inquiry.types";
 
-export function useInquiries() {
+export function useInquiries(params?: { scope?: string }) {
   return useQuery({
-    queryKey: inquiryKeys.lists(),
-    queryFn: fetchInquiries,
+    queryKey: inquiryKeys.lists(params),
+    queryFn: () => fetchInquiries(params),
   });
 }
 
@@ -17,8 +17,8 @@ export function useUpdateInquiry() {
     mutationFn: ({ id, payload }: { id: string; payload: UpdateInquiryPayload }) =>
       editInquiry(id, payload),
     onSuccess: () => {
-      // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: inquiryKeys.lists() });
+      // Invalidate and refetch all inquiry lists
+      queryClient.invalidateQueries({ queryKey: inquiryKeys.all });
     },
   });
 }

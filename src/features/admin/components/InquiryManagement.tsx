@@ -293,7 +293,7 @@ export default function InquiryManagement() {
             Save Changes
           </Button>
         }
-        bodyStyle={{ backgroundColor: '#fafafb', padding: 0 }}
+        styles={{ body: { backgroundColor: '#fafafb', padding: 0 } }}
       >
         {selectedInquiry && (
           <div className="flex flex-col h-full font-body">
@@ -383,7 +383,7 @@ export default function InquiryManagement() {
                           filterOption={(input, option) =>
                             String(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
                           }
-                          options={Array.isArray(productsData) ? productsData.map((p: any) => ({ value: p.id || p._id, label: `${p.code} - ${p.name}` })) : (productsData as any)?.data?.map((p: any) => ({ value: p.id || p._id, label: `${p.code} - ${p.name}` })) || []}
+                          options={Array.isArray(productsData) ? productsData.map((p: any) => ({ value: p.id || p._id, label: `${p.code} - ${typeof p.name === 'object' ? p.name?.us : p.name}` })) : (productsData as any)?.data?.map((p: any) => ({ value: p.id || p._id, label: `${p.code} - ${typeof p.name === 'object' ? p.name?.us : p.name}` })) || []}
                         />
                       </Form.Item>
                     </Col>

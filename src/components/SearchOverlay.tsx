@@ -3,7 +3,7 @@ import { Search, X } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { useTranslation } from "react-i18next";
-import { productsData } from "@/data/products";
+import { useProducts } from "@/domains/product/product.hooks";
 
 interface SearchOverlayProps {
   open: boolean;
@@ -17,8 +17,12 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
   const langEnum: Record<string, 'vi' | 'uk' | 'us'> = { "vi-VN": "vi", "en-GB": "uk", "en-US": "us" };
   const langId = (langEnum[i18n?.language] || "us") as 'vi' | 'uk' | 'us';
 
+  const emptyFilters = { category: [], material: [], moq: [], color: [], style: [] };
+  const { data: rawProducts = [] } = useProducts(emptyFilters, "");
+  const productsToFilter = Array.isArray(rawProducts) ? rawProducts : (rawProducts as any)?.data || [];
+
   const results = query.length >= 2
-    ? productsData.filter((p) => {
+    ? productsToFilter.filter((p: any) => {
         const q = query.toLowerCase();
         const pName = (p.name?.[langId] || p.name?.us || "").toLowerCase();
         const pCat = (p.category?.[langId] || p.category?.us || "").toLowerCase();
@@ -62,7 +66,7 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
 
               {results.length > 0 && (
                 <div className="mt-4 border-t border-border pt-4 grid grid-cols-1 gap-2 max-h-80 overflow-y-auto">
-                  {results.map((p) => {
+                  {results.map((p: any) => {
                     const pNameItem = p.name?.[langId] || p.name?.us || "";
                     const pCatItem = p.category?.[langId] || p.category?.us || "";
                     return (

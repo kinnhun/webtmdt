@@ -41,13 +41,32 @@ export function SidebarFilter({ collection, handleCollectionChange, filters, tog
                   {options.map((opt) => {
                     const displayOpt = getOptionTranslation(t, key, opt);
                     const checked = filters[key].includes(opt);
+                    
+                    let hexColor = null;
+                    let displayName = displayOpt;
+                    if (key === 'color') {
+                      const match = displayOpt.match(/^\[(#[A-Fa-f0-9]+)\]\s*(.*)$/);
+                      if (match) {
+                        hexColor = match[1];
+                        displayName = match[2];
+                      }
+                    }
+
                     return (
                       <label key={opt} className="flex items-center gap-2.5 cursor-pointer group py-0.5 px-1 rounded hover:bg-muted/50 transition-colors">
                         <input type="checkbox" className="sr-only" checked={checked} onChange={() => toggleFilter(key, opt)} />
-                        <span className={`w-4 h-4 rounded-[3px] border-2 flex items-center justify-center transition-all ${checked ? "border-orange bg-orange" : "border-border group-hover:border-muted-foreground"}`} style={checked ? { borderColor: "hsl(var(--orange))", backgroundColor: "hsl(var(--orange))" } : {}}>
+                        <span className={`w-4 h-4 rounded-[3px] border-2 flex items-center justify-center shrink-0 transition-all ${checked ? "border-orange bg-orange" : "border-border group-hover:border-muted-foreground"}`} style={checked ? { borderColor: "hsl(var(--orange))", backgroundColor: "hsl(var(--orange))" } : {}}>
                           {checked && <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4L3.5 6.5L9 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>}
                         </span>
-                        <span className={`font-body text-sm transition-colors ${checked ? "text-foreground font-medium" : "text-muted-foreground group-hover:text-foreground"}`}>{displayOpt}</span>
+                        
+                        {key === 'color' && hexColor ? (
+                          <div className="flex items-center gap-2 flex-1 min-w-0">
+                            <div className="w-3.5 h-3.5 rounded-full border border-black/10 shrink-0" style={{ backgroundColor: hexColor }} />
+                            <span className={`font-body text-sm truncate transition-colors ${checked ? "text-foreground font-medium" : "text-muted-foreground group-hover:text-foreground"}`}>{displayName}</span>
+                          </div>
+                        ) : (
+                          <span className={`font-body text-sm transition-colors ${checked ? "text-foreground font-medium" : "text-muted-foreground group-hover:text-foreground"}`}>{displayName}</span>
+                        )}
                       </label>
                     );
                   })}

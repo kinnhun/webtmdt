@@ -83,33 +83,33 @@ export default function DashboardContainer() {
       {/* ROW 1: OVERVIEW CARDS */}
       <Row gutter={[16, 16]}>
         <Col xs={12} sm={8} lg={4}>
-          <Card bordered={false} className="shadow-sm h-full" bodyStyle={{ padding: '20px' }}>
-            <Statistic title={<span className="text-navy/60 text-xs font-semibold uppercase tracking-wider">Total Inquiries</span>} value={142} valueStyle={{ color: 'hsl(var(--navy-deep))', fontWeight: 600 }} />
+          <Card variant="borderless" className="shadow-sm h-full" styles={{ body: { padding: '20px' } }}>
+            <Statistic title={<span className="text-navy/60 text-xs font-semibold uppercase tracking-wider">Total Inquiries</span>} value={142} styles={{ content: { color: 'hsl(var(--navy-deep))', fontWeight: 600 } }} />
           </Card>
         </Col>
         <Col xs={12} sm={8} lg={4}>
-          <Card bordered={false} className="shadow-sm h-full" bodyStyle={{ padding: '20px' }}>
-            <Statistic title={<span className="text-orange text-xs font-semibold uppercase tracking-wider">New Today</span>} value={8} valueStyle={{ color: 'hsl(var(--orange))', fontWeight: 600 }} prefix={<ArrowUpOutlined className="text-sm" />} />
+          <Card variant="borderless" className="shadow-sm h-full" styles={{ body: { padding: '20px' } }}>
+            <Statistic title={<span className="text-orange text-xs font-semibold uppercase tracking-wider">New Today</span>} value={8} styles={{ content: { color: 'hsl(var(--orange))', fontWeight: 600 } }} prefix={<ArrowUpOutlined className="text-sm" />} />
           </Card>
         </Col>
         <Col xs={12} sm={8} lg={4}>
-          <Card bordered={false} className="shadow-sm h-full bg-red-50/50" bodyStyle={{ padding: '20px' }}>
-            <Statistic title={<span className="text-red-500 text-xs font-semibold uppercase tracking-wider">Pending</span>} value={15} valueStyle={{ color: '#ef4444', fontWeight: 600 }} />
+          <Card variant="borderless" className="shadow-sm h-full bg-red-50/50" styles={{ body: { padding: '20px' } }}>
+            <Statistic title={<span className="text-red-500 text-xs font-semibold uppercase tracking-wider">Pending</span>} value={15} styles={{ content: { color: '#ef4444', fontWeight: 600 } }} />
           </Card>
         </Col>
         <Col xs={12} sm={8} lg={4}>
-          <Card bordered={false} className="shadow-sm h-full" bodyStyle={{ padding: '20px' }}>
-            <Statistic title={<span className="text-navy/60 text-xs font-semibold uppercase tracking-wider">Total Products</span>} value={214} valueStyle={{ color: 'hsl(var(--navy-deep))', fontWeight: 600 }} />
+          <Card variant="borderless" className="shadow-sm h-full" styles={{ body: { padding: '20px' } }}>
+            <Statistic title={<span className="text-navy/60 text-xs font-semibold uppercase tracking-wider">Total Products</span>} value={214} styles={{ content: { color: 'hsl(var(--navy-deep))', fontWeight: 600 } }} />
           </Card>
         </Col>
         <Col xs={12} sm={8} lg={4}>
-          <Card bordered={false} className="shadow-sm h-full" bodyStyle={{ padding: '20px' }}>
-            <Statistic title={<span className="text-navy/60 text-xs font-semibold uppercase tracking-wider">Blog Posts</span>} value={48} valueStyle={{ color: 'hsl(var(--navy-deep))', fontWeight: 600 }} />
+          <Card variant="borderless" className="shadow-sm h-full" styles={{ body: { padding: '20px' } }}>
+            <Statistic title={<span className="text-navy/60 text-xs font-semibold uppercase tracking-wider">Blog Posts</span>} value={48} styles={{ content: { color: 'hsl(var(--navy-deep))', fontWeight: 600 } }} />
           </Card>
         </Col>
         <Col xs={12} sm={8} lg={4}>
-          <Card bordered={false} className="shadow-sm h-full border border-orange/20" bodyStyle={{ padding: '20px' }}>
-            <Statistic title={<span className="text-orange text-xs font-semibold uppercase tracking-wider">Missing Data</span>} value={23} suffix="/ 214" valueStyle={{ color: 'hsl(var(--orange))', fontWeight: 600, fontSize: '1.25rem' }} />
+          <Card variant="borderless" className="shadow-sm h-full border border-orange/20" styles={{ body: { padding: '20px' } }}>
+            <Statistic title={<span className="text-orange text-xs font-semibold uppercase tracking-wider">Missing Data</span>} value={23} suffix="/ 214" styles={{ content: { color: 'hsl(var(--orange))', fontWeight: 600, fontSize: '1.25rem' } }} />
           </Card>
         </Col>
       </Row>
@@ -117,7 +117,7 @@ export default function DashboardContainer() {
       {/* ROW 2: INQUIRY TREND & COLLECTION OVERVIEW */}
       <Row gutter={[24, 24]}>
         <Col xs={24} lg={14}>
-          <Card title={<span className="font-display font-medium text-lg text-navy-deep">Inquiry Pipeline</span>} bordered={false} className="shadow-sm h-full">
+          <Card title={<span className="font-display font-medium text-lg text-navy-deep">Inquiry Pipeline</span>} variant="borderless" className="shadow-sm h-full">
             <Row gutter={24} className="mb-6">
               <Col span={8}>
                 <div className="text-xs text-navy/60 uppercase tracking-wide mb-1">Today</div>
@@ -136,25 +136,25 @@ export default function DashboardContainer() {
             <div className="space-y-4">
               <div>
                 <div className="flex justify-between text-sm mb-1"><Text>Pending / Unread</Text><Text strong>15</Text></div>
-                <Progress percent={10} showInfo={false} strokeColor="#ef4444" trailColor="#fee2e2" />
+                <Progress percent={10} showInfo={false} strokeColor="#ef4444" railColor="#fee2e2" />
               </div>
               <div>
                 <div className="flex justify-between text-sm mb-1"><Text>Replied (Working)</Text><Text strong>42</Text></div>
-                <Progress percent={30} showInfo={false} strokeColor="#3b82f6" trailColor="#dbeafe" />
+                <Progress percent={30} showInfo={false} strokeColor="#3b82f6" railColor="#dbeafe" />
               </div>
               <div>
                 <div className="flex justify-between text-sm mb-1"><Text>Quoted</Text><Text strong>38</Text></div>
-                <Progress percent={26} showInfo={false} strokeColor="#a855f7" trailColor="#f3e8ff" />
+                <Progress percent={26} showInfo={false} strokeColor="#a855f7" railColor="#f3e8ff" />
               </div>
               <div>
                 <div className="flex justify-between text-sm mb-1"><Text>Closed (Won)</Text><Text strong>25</Text></div>
-                <Progress percent={18} showInfo={false} strokeColor="#22c55e" trailColor="#dcfce7" />
+                <Progress percent={18} showInfo={false} strokeColor="#22c55e" railColor="#dcfce7" />
               </div>
             </div>
           </Card>
         </Col>
         <Col xs={24} lg={10}>
-          <Card title={<span className="font-display font-medium text-lg text-navy-deep">Products by Collection</span>} bordered={false} className="shadow-sm h-full">
+          <Card title={<span className="font-display font-medium text-lg text-navy-deep">Products by Collection</span>} variant="borderless" className="shadow-sm h-full">
             <div className="space-y-5">
               <div>
                 <div className="flex justify-between text-sm mb-2"><Text strong>Outdoor Sofa Collection</Text><Text className="text-navy/60">85 items</Text></div>
@@ -180,7 +180,7 @@ export default function DashboardContainer() {
       {/* ROW 3: PRODUCT BREAKDOWNS */}
       <Row gutter={[16, 16]}>
         <Col xs={24} md={8}>
-          <Card title={<Text className="font-display font-medium text-navy-deep">By Category</Text>} size="small" bordered={false} className="shadow-sm h-full">
+          <Card title={<Text className="font-display font-medium text-navy-deep">By Category</Text>} size="small" variant="borderless" className="shadow-sm h-full">
             <div className="flex flex-col">
               {[
                 { n: 'Sofas & Sectionals', c: 68 },
@@ -197,7 +197,7 @@ export default function DashboardContainer() {
           </Card>
         </Col>
         <Col xs={24} md={8}>
-          <Card title={<Text className="font-display font-medium text-navy-deep">By Material</Text>} size="small" bordered={false} className="shadow-sm h-full">
+          <Card title={<Text className="font-display font-medium text-navy-deep">By Material</Text>} size="small" variant="borderless" className="shadow-sm h-full">
             <div className="flex flex-col">
               {[
                 { n: 'Teak Wood', c: 85 },
@@ -214,7 +214,7 @@ export default function DashboardContainer() {
           </Card>
         </Col>
         <Col xs={24} md={8}>
-          <Card title={<Text className="font-display font-medium text-navy-deep">By MOQ</Text>} size="small" bordered={false} className="shadow-sm h-full">
+          <Card title={<Text className="font-display font-medium text-navy-deep">By MOQ</Text>} size="small" variant="borderless" className="shadow-sm h-full">
             <div className="flex flex-col">
               {[
                 { n: '20ft Container (Mixed)', c: 120 },
@@ -237,9 +237,9 @@ export default function DashboardContainer() {
           <Card 
             title={<span className="font-display font-medium text-lg text-navy-deep">Recent Inquiries</span>} 
             extra={<Button type="link" onClick={() => router.push('/admin/inquiries')}>View All <ArrowRightOutlined /></Button>}
-            bordered={false} 
+            variant="borderless" 
             className="shadow-sm h-full"
-            bodyStyle={{ padding: 0 }}
+            styles={{ body: { padding: 0 } }}
           >
             <Table 
               columns={inquiryColumns} 
@@ -252,7 +252,7 @@ export default function DashboardContainer() {
         </Col>
         <Col xs={24} lg={8}>
           <div className="flex flex-col gap-6 h-full">
-            <Card title={<Text className="font-display font-medium text-navy-deep">Top Viewed Products</Text>} size="small" bordered={false} className="shadow-sm flex-1">
+            <Card title={<Text className="font-display font-medium text-navy-deep">Top Viewed Products</Text>} size="small" variant="borderless" className="shadow-sm flex-1">
               <div className="flex flex-col">
                 {topViewedProducts.map((item, i) => (
                   <div key={i} className="px-0 py-2 flex items-center justify-between border-b border-transparent">
@@ -266,7 +266,7 @@ export default function DashboardContainer() {
               </div>
             </Card>
             
-            <Card title={<Text className="font-display font-medium text-navy-deep">Top Inquired Products</Text>} size="small" bordered={false} className="shadow-sm flex-1">
+            <Card title={<Text className="font-display font-medium text-navy-deep">Top Inquired Products</Text>} size="small" variant="borderless" className="shadow-sm flex-1">
               <div className="flex flex-col">
                 {topInquiredProducts.map((item, i) => (
                   <div key={i} className="px-0 py-2 flex items-center justify-between border-b border-transparent">
@@ -286,7 +286,7 @@ export default function DashboardContainer() {
       {/* ROW 5: BLOG, HEALTH ALERTS, COMPANY RECAP */}
       <Row gutter={[16, 16]}>
         <Col xs={24} md={8}>
-          <Card title={<span className="font-display font-medium text-navy-deep">Content & Blog</span>} size="small" bordered={false} className="shadow-sm h-full bg-gray-50/50">
+          <Card title={<span className="font-display font-medium text-navy-deep">Content & Blog</span>} size="small" variant="borderless" className="shadow-sm h-full bg-gray-50/50">
             <div className="flex gap-4 mb-4">
               <div className="flex-1 bg-white p-3 rounded-md border border-gray-100 text-center shadow-sm">
                 <div className="text-2xl font-bold text-navy">42</div>
@@ -312,7 +312,7 @@ export default function DashboardContainer() {
         </Col>
         
         <Col xs={24} md={8}>
-          <Card title={<span className="font-display font-medium text-orange"><WarningOutlined className="mr-2"/>Data Health Alerts</span>} size="small" bordered={false} className="shadow-sm h-full border border-orange/20">
+          <Card title={<span className="font-display font-medium text-orange"><WarningOutlined className="mr-2"/>Data Health Alerts</span>} size="small" variant="borderless" className="shadow-sm h-full border border-orange/20">
             <div className="flex flex-col">
               {[
                 { msg: 'Products without images', c: 4, type: 'error' },
@@ -334,7 +334,7 @@ export default function DashboardContainer() {
         </Col>
 
         <Col xs={24} md={8}>
-          <Card title={<span className="font-display font-medium text-navy-deep">Company Profile Overview</span>} size="small" bordered={false} className="shadow-sm h-full bg-navy/2">
+          <Card title={<span className="font-display font-medium text-navy-deep">Company Profile Overview</span>} size="small" variant="borderless" className="shadow-sm h-full bg-navy/2">
             <div className="flex flex-col">
               {[
                 { l: 'Experience', v: '15+ Years' },

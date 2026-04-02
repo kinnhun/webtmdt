@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { productsData } from "@/data/products";
 import { OUTDOOR_CATEGORIES, INDOOR_CATEGORIES, MATERIALS, MOQ_OPTIONS, COLORS, STYLES } from "@/domains/product/product.types";
 import type { Product, FilterState, Collection } from "@/domains/product/product.types";
+import { useProducts } from "@/domains/product/product.hooks";
 import { useTranslation } from "react-i18next";
 
 export function useCatalogue(forcedCollection?: Collection) {
@@ -20,6 +20,10 @@ export function useCatalogue(forcedCollection?: Collection) {
   const ITEMS_PER_PAGE = 12;
 
   const [initialized, setInitialized] = useState(false);
+
+  // Fetch all live products and use existing client-side filtering logic
+  const emptyFilters: FilterState = { category: [], material: [], moq: [], color: [], style: [] };
+  const { data: rawProducts = [], isLoading } = useProducts(emptyFilters, "");
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -110,11 +114,15 @@ export function useCatalogue(forcedCollection?: Collection) {
 
   const activeCount = Object.values(filters).flat().length + (search ? 1 : 0);
 
-  let collectionProducts = productsData.filter(p => 
-    Array.isArray(p.collection) ? p.collection.includes(collection) : p.collection === collection
-  );
+  const productsToFilter = Array.isArray(rawProducts) ? rawProducts : (rawProducts as any)?.data || [];
 
-  let filtered = collectionProducts.filter((p) => {
+  let collectionProducts = productsToFilter.filter((p: Product) => {
+    if (!p.collection) return false;
+    const colArray = Array.isArray(p.collection) ? p.collection : String(p.collection).split(',').map(s => s.trim());
+    return colArray.includes(collection);
+  });
+
+  let filtered = collectionProducts.filter((p: Product) => {
     if (search) {
       const q = search.toLowerCase();
       const pName = (p.name?.[langId] || p.name?.us || "").toLowerCase();
@@ -122,14 +130,26 @@ export function useCatalogue(forcedCollection?: Collection) {
       if (!pName.includes(q) && !p.code.toLowerCase().includes(q) && !pCat.includes(q)) return false;
     }
     
-    if (filters.category.length) {
-      if (!filters.category.includes(p.category?.us || "")) return false;
-    }
-    
-    if (filters.material.length && !filters.material.includes(p.material?.us || "")) return false;
+    const checkOverlapExt = (fieldData: any, selectedFilters: string[]) => {
+      if (!selectedFilters.length) return true;
+      let arr: string[] = [];
+      if (typeof fieldData === 'string') {
+        arr = fieldData.split(',').map(s => s.trim());
+      } else if (fieldData && typeof fieldData === 'object') {
+        arr = [
+          ...(fieldData.us || "").split(','),
+          ...(fieldData[langId] || "").split(',')
+        ].map((s: string) => s.trim());
+      }
+      return selectedFilters.some(f => arr.includes(f));
+    };
+
+    if (!checkOverlapExt(p.category, filters.category)) return false;
+    if (!checkOverlapExt(p.material, filters.material)) return false;
     if (filters.moq.length && (!p.moq || !filters.moq.includes(p.moq))) return false;
-    if (filters.color.length && !filters.color.includes(p.color?.us || "")) return false;
-    if (filters.style.length && !filters.style.includes(p.style?.us || "")) return false;
+    if (!checkOverlapExt(p.color, filters.color)) return false;
+    if (!checkOverlapExt(p.style, filters.style)) return false;
+
     return true;
   });
 
@@ -143,12 +163,24 @@ export function useCatalogue(forcedCollection?: Collection) {
   const safePage = Math.min(page, totalPages);
   const paginated = filtered.slice((safePage - 1) * ITEMS_PER_PAGE, safePage * ITEMS_PER_PAGE);
 
+  const getDynamicOptions = (key: 'material' | 'color' | 'style'): string[] => {
+    const opts = new Set<string>();
+    collectionProducts.forEach((p: Product) => {
+      const valStr = p[key]?.[langId] || p[key]?.us || "";
+      valStr.split(',').forEach((s: string) => {
+        const trimmed = s.trim();
+        if (trimmed) opts.add(trimmed);
+      });
+    });
+    return Array.from(opts).sort();
+  };
+
   const filterGroups: { key: keyof FilterState; label: string; options: string[] }[] = [
     { key: "category", label: t("catalogue.category"), options: collection === "Outdoor" ? OUTDOOR_CATEGORIES : INDOOR_CATEGORIES },
-    { key: "material", label: t("catalogue.material"), options: MATERIALS },
+    { key: "material", label: t("catalogue.material"), options: getDynamicOptions('material') },
     { key: "moq", label: t("catalogue.moq"), options: MOQ_OPTIONS },
-    { key: "color", label: t("catalogue.color"), options: COLORS },
-    { key: "style", label: t("catalogue.style"), options: STYLES },
+    { key: "color", label: t("catalogue.color"), options: getDynamicOptions('color') },
+    { key: "style", label: t("catalogue.style"), options: getDynamicOptions('style') },
   ];
 
   return {
@@ -172,6 +204,7 @@ export function useCatalogue(forcedCollection?: Collection) {
     totalPages,
     safePage,
     filterGroups,
-    t
+    t,
+    isLoading
   };
 }

@@ -5,7 +5,7 @@ import Link from "next/link";
 import {
   ArrowLeft, ChevronLeft, ChevronRight, Play,
   Ruler, Weight, Shield, Sparkles, Settings2, MapPin,
-  ArrowUpRight, Share2
+  ArrowUpRight, Share2, Palette
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { Product } from "@/domains/product/product.types";
@@ -66,8 +66,17 @@ function DetailTabs({ product }: { product: Product }) {
   const { t, i18n } = useTranslation();
   const langEnum: Record<string, 'vi' | 'uk' | 'us'> = { "vi-VN": "vi", "en-GB": "uk", "en-US": "us" };
   const langId = langEnum[i18n?.language] || "us";
-  const pCare = product.careInstructions?.[langId] || product.careInstructions?.us || [];
-  const pUsage = product.usageSettings?.[langId] || product.usageSettings?.us || [];
+  const getList = (field: any, lang: string) => {
+    if (Array.isArray(field)) return field;
+    if (field && typeof field === 'object') {
+      const arr = field[lang];
+      if (Array.isArray(arr) && arr.length > 0) return arr;
+      if (Array.isArray(field.us) && field.us.length > 0) return field.us;
+    }
+    return [];
+  };
+  const pCare = getList(product.careInstructions, langId);
+  const pUsage = getList(product.usageSettings, langId);
   const tabs = [
     { id: "specs", label: t("productDetail.specifications") },
     { id: "care", label: t("productDetail.care") },
@@ -121,7 +130,7 @@ function DetailTabs({ product }: { product: Product }) {
           {activeTab === "care" && product.careInstructions && (
             <motion.div key="care" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
               <ul className="space-y-3">
-                {pCare.map((item, i) => (
+                {pCare.map((item: string, i: number) => (
                   <li key={i} className="flex items-start gap-3">
                     <Shield size={16} className="mt-0.5 shrink-0" style={{ color: "hsl(var(--orange))" }} />
                     <span className="font-body text-sm" style={{ color: "hsl(var(--navy)/0.65)" }}>{item}</span>
@@ -133,7 +142,7 @@ function DetailTabs({ product }: { product: Product }) {
           {activeTab === "usage" && product.usageSettings && (
             <motion.div key="usage" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
               <div className="grid grid-cols-2 gap-3">
-                {pUsage.map((setting) => (
+                {pUsage.map((setting: string) => (
                   <div key={setting} className="flex items-center gap-3 p-3 rounded-lg border" style={{ borderColor: "hsl(var(--navy)/0.08)", backgroundColor: "hsl(var(--navy)/0.02)" }}>
                     <MapPin size={15} style={{ color: "hsl(var(--orange))" }} />
                     <span className="font-body text-sm font-medium" style={{ color: "hsl(var(--navy-deep))" }}>{setting}</span>
@@ -160,11 +169,41 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
   const pDesc = product.description?.[langId] || product.description?.us || "";
   const pMat = product.material?.[langId] || product.material?.us || "";
   const pStyle = product.style?.[langId] || product.style?.us || "";
-  const pFeatures = product.features?.[langId] || product.features?.us || [];
+  const getList = (field: any, lang: string) => {
+    if (Array.isArray(field)) return field;
+    if (field && typeof field === 'object') {
+      const arr = field[lang];
+      if (Array.isArray(arr) && arr.length > 0) return arr;
+      if (Array.isArray(field.us) && field.us.length > 0) return field.us;
+    }
+    return [];
+  };
+
+  const pFeatures = getList(product.features, langId);
   const pCategory = product.category?.[langId] || product.category?.us || "";
-  const pCare = product.careInstructions?.[langId] || product.careInstructions?.us || [];
-  const pUsage = product.usageSettings?.[langId] || product.usageSettings?.us || [];
+  const pCare = getList(product.careInstructions, langId);
+  const pUsage = getList(product.usageSettings, langId);
   const pLongDesc = product.longDescription?.[langId] || product.longDescription?.us || "";
+
+  const pColorStr = product.color?.[langId] || product.color?.us || "";
+  const colorList = typeof pColorStr === 'string' ? pColorStr.split(',').map(s => s.trim()).filter(Boolean) : [];
+
+  const renderColorItem = (colorStr: string) => {
+    const match = colorStr.match(/^\[(#[A-Fa-f0-9]+)\]\s*(.*)$/);
+    if (match) {
+      return (
+        <div key={colorStr} className="flex items-center gap-1.5 bg-white border border-gray-100 rounded-full pr-2 p-0.5 shadow-sm shrink-0">
+          <div className="w-3.5 h-3.5 rounded-full border border-black/10 shrink-0" style={{ backgroundColor: match[1] }} />
+          <span className="text-[10px] font-medium text-gray-700">{match[2]}</span>
+        </div>
+      );
+    }
+    return (
+      <span key={colorStr} className="px-2 py-1 bg-white flex items-center border border-gray-100 rounded-full text-[10px] shadow-sm shrink-0">
+        {colorStr}
+      </span>
+    );
+  };
 
   const handleShare = useCallback(() => {
     if (typeof navigator !== "undefined") navigator.clipboard.writeText(window.location.href);
@@ -244,6 +283,17 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
                   <p className="font-body text-xs font-semibold" style={{ color: "hsl(var(--navy-deep))" }}>{pStyle}</p>
                 </div>
               </div>
+              {colorList.length > 0 && (
+                <div className="flex items-start gap-2.5 p-3 rounded-lg col-span-2" style={{ backgroundColor: "hsl(var(--navy)/0.03)" }}>
+                  <Palette size={16} className="mt-0.5 shrink-0" style={{ color: "hsl(var(--orange))" }} />
+                  <div className="w-full flex-1 overflow-hidden">
+                    <p className="font-body text-[10px] uppercase tracking-wider font-medium mb-1.5" style={{ color: "hsl(var(--navy)/0.4)" }}>{t("productDetail.color") || "Color"}</p>
+                    <div className="flex flex-wrap gap-1.5">
+                       {colorList.map(renderColorItem)}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Features */}

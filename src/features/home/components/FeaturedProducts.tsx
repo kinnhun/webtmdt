@@ -5,7 +5,7 @@ import { ArrowRight, Eye, Sparkles } from "lucide-react";
 import { useInView } from "@/hooks/useInView";
 import { useTranslation } from "react-i18next";
 import QuickViewModal from "@/components/QuickViewModal";
-import { featuredProductsData } from "@/data/products";
+import { useFeaturedProducts } from "@/domains/product/product.hooks";
 import type { Product } from "@/domains/product/product.types";
 
 const FILTER_KEYS = ["All", "Outdoor Sofa", "Dining Set", "Sunlounger", "Outdoor Table", "Aluminum Furniture"] as const;
@@ -50,7 +50,7 @@ function EditorialProductCard({ product, index, onQuickView }: { product: Produc
             <ArrowRight size={15} /> {t("product.viewDetails")}
           </Link>
         </div>
-        <span className="absolute top-3 left-3 font-body text-xs font-medium px-2.5 py-1 rounded-sm text-white backdrop-blur-sm pointer-events-none" style={{ backgroundColor: "hsl(var(--navy-deep)/0.8)" }}>{product.category?.[langId] || product.category?.us || ""}</span>
+        <span className="absolute top-3 left-3 font-body text-xs font-medium px-2.5 py-1 rounded-sm text-white backdrop-blur-sm pointer-events-none truncate max-w-[calc(100%-24px)]" style={{ backgroundColor: "hsl(var(--navy-deep)/0.8)" }} title={product.category?.[langId] || product.category?.us || ""}>{product.category?.[langId] || product.category?.us || ""}</span>
         {index === 0 && (
           <span className="absolute top-3 right-3 flex items-center gap-1 font-body text-xs font-semibold px-2.5 py-1 rounded-sm text-white pointer-events-none" style={{ backgroundColor: "hsl(var(--orange))" }}>
             <Sparkles size={10} /> {t("home.featured.new")}
@@ -82,6 +82,8 @@ export default function FeaturedProducts() {
   const { t } = useTranslation();
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
   const [activeFilter, setActiveFilter] = useState("All");
+
+  const { data: featuredProductsData = [] } = useFeaturedProducts();
 
   const filtered = activeFilter === "All"
     ? featuredProductsData

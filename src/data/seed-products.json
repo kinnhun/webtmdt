@@ -1,6 +1,4 @@
-import type { Product } from "@/domains/product/product.types";
-
-export const productsData: Product[] = [
+[
   {
     "id": "p001",
     "slug": "oslo-bed-frame",
@@ -1709,6 +1707,4 @@ export const productsData: Product[] = [
       ]
     }
   }
-];
-
-export const featuredProductsData = productsData.slice(0, 8);
+]

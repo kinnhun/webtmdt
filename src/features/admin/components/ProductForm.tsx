@@ -11,14 +11,14 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import {
   Form, Input, Button, Select, Row, Col, message, Upload, Divider,
-  Tabs, Tag, Badge, Tooltip, Modal, Space,
+  Tabs, Tag, Badge, Tooltip, Modal, Space, ColorPicker
 } from 'antd';
 import {
   ArrowLeftOutlined, UploadOutlined, PlusOutlined, MinusCircleOutlined,
   SaveOutlined, InfoCircleOutlined, ToolOutlined, HeartOutlined,
   PictureOutlined, GlobalOutlined, CheckCircleFilled,
   ExclamationCircleOutlined, SwapOutlined, AppstoreOutlined,
-  SearchOutlined,
+  SearchOutlined, TranslationOutlined, LoadingOutlined,
 } from '@ant-design/icons';
 import * as AntIcons from '@ant-design/icons';
 import { useRouter } from 'next/router';
@@ -63,7 +63,7 @@ const ICON_OPTIONS = [
   { name: 'UserOutlined', label: 'Capacity' },
 ];
 
-import { CATEGORIES, MATERIALS, MOQ_OPTIONS, COLORS, STYLES } from '@/constants/product';
+import { CATEGORIES, INDOOR_CATEGORIES, OUTDOOR_CATEGORIES, MATERIALS, MOQ_OPTIONS, COLORS, STYLES } from '@/constants/product';
 
 const COLLECTIONS = ['Outdoor', 'Indoor'];
 
@@ -141,9 +141,8 @@ function IconPicker({ value, onChange }: { value?: string; onChange?: (v: string
               key={ic.name}
               type="button"
               onClick={() => { onChange?.(ic.name); setOpen(false); }}
-              className={`flex flex-col items-center gap-1.5 p-3 rounded-xl border transition-all cursor-pointer hover:border-orange hover:bg-orange/5 ${
-                value === ic.name ? 'border-orange bg-orange/5' : 'border-gray-100'
-              }`}
+              className={`flex flex-col items-center gap-1.5 p-3 rounded-xl border transition-all cursor-pointer hover:border-orange hover:bg-orange/5 ${value === ic.name ? 'border-orange bg-orange/5' : 'border-gray-100'
+                }`}
             >
               <span className="text-2xl">{renderIcon(ic.name, value === ic.name ? 'text-orange' : 'text-gray-500')}</span>
               <span className="text-[10px] text-gray-400 leading-none">{ic.label}</span>
@@ -157,10 +156,63 @@ function IconPicker({ value, onChange }: { value?: string; onChange?: (v: string
 
 // ─── Attribute Builder Row ─────────────────────────────────────────────────
 function AttributeRow({ fieldName, remove }: { fieldName: number; remove: () => void }) {
+  const form = Form.useFormInstance();
   const [lang, setLang] = useState<'VI' | 'UK' | 'US'>('US');
+  const [translating, setTranslating] = useState(false);
 
   const valField = lang === 'VI' ? 'valueVI' : lang === 'UK' ? 'valueUK' : 'valueUS';
   const titleField = lang === 'VI' ? 'titleVI' : lang === 'UK' ? 'titleUK' : 'titleUS';
+
+  const handleTranslate = async () => {
+    const tVal = form.getFieldValue(['attributes', fieldName, titleField]) || '';
+    const vVal = form.getFieldValue(['attributes', fieldName, valField]) || '';
+    
+    if (!tVal && !vVal) {
+      if (typeof window !== 'undefined') (window as any).antdMessage?.warning(`Please enter text in ${lang} first`);
+      return;
+    }
+    
+    setTranslating(true);
+    try {
+      const sourceStr = `${tVal} ||| ${vVal}`;
+      const isVI = lang === 'VI';
+
+      const res = await fetch('/api/translate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          text: sourceStr, 
+          targetLang: isVI ? 'en' : 'vi',
+          sourceLang: isVI ? 'vi' : 'en'
+        }),
+      });
+      
+      const data = await res.json();
+      if (res.ok && data.translated) {
+        const parts = data.translated.split('|||').map((s: string) => s.trim());
+        const tranT = parts[0] || '';
+        const tranV = parts[1] || '';
+
+        if (isVI) {
+          form.setFieldValue(['attributes', fieldName, 'titleUS'], tranT);
+          form.setFieldValue(['attributes', fieldName, 'valueUS'], tranV);
+          form.setFieldValue(['attributes', fieldName, 'titleUK'], tranT);
+          form.setFieldValue(['attributes', fieldName, 'valueUK'], tranV);
+        } else {
+          const otherEn = lang === 'US' ? 'UK' : 'US';
+          form.setFieldValue(['attributes', fieldName, `title${otherEn}`], tVal);
+          form.setFieldValue(['attributes', fieldName, `value${otherEn}`], vVal);
+          form.setFieldValue(['attributes', fieldName, 'titleVI'], tranT);
+          form.setFieldValue(['attributes', fieldName, 'valueVI'], tranV);
+        }
+        if (typeof window !== 'undefined') (window as any).antdMessage?.success('Translated!');
+      }
+    } catch {
+      if (typeof window !== 'undefined') (window as any).antdMessage?.error('Translation failed');
+    } finally {
+      setTranslating(false);
+    }
+  };
 
   return (
     <div className="group p-3 sm:p-4 rounded-xl border border-gray-100 bg-gray-50/60 hover:border-orange/30 hover:bg-orange/2 transition-all">
@@ -177,19 +229,27 @@ function AttributeRow({ fieldName, remove }: { fieldName: number; remove: () => 
         <div className="flex-1">
           <div className="flex items-center justify-between mb-1">
             <p className="text-[10px] text-gray-400 font-semibold uppercase">Label</p>
-            <div className="flex gap-1">
+            <div className="flex gap-1 items-center">
               {(['VI', 'UK', 'US'] as const).map((l) => (
                 <button
                   key={l}
                   type="button"
                   onClick={() => setLang(l)}
-                  className={`text-[9px] px-1.5 py-0.5 rounded font-bold transition-all ${
-                    lang === l ? 'bg-orange text-white' : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
-                  }`}
+                  className={`text-[9px] px-1.5 py-0.5 rounded font-bold transition-all ${lang === l ? 'bg-orange text-white' : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
+                    }`}
                 >
                   {l}
                 </button>
               ))}
+              <div className="w-px h-3 bg-gray-300 mx-1"></div>
+              <button
+                type="button"
+                onClick={handleTranslate}
+                disabled={translating}
+                className="flex items-center gap-1 text-[9px] bg-orange/10 text-orange px-1.5 py-0.5 rounded transition-colors hover:bg-orange/20 font-semibold disabled:opacity-50"
+              >
+                {translating ? <LoadingOutlined spin /> : <TranslationOutlined />} Dịch tự động
+              </button>
             </div>
           </div>
           <Form.Item name={[fieldName, titleField]} noStyle>
@@ -220,10 +280,63 @@ function AttributeRow({ fieldName, remove }: { fieldName: number; remove: () => 
 
 // ─── Specification Row ─────────────────────────────────────────────────────
 function SpecRow({ fieldName, remove }: { fieldName: number; remove: () => void }) {
+  const form = Form.useFormInstance();
   const [lang, setLang] = useState<'VI' | 'UK' | 'US'>('US');
+  const [translating, setTranslating] = useState(false);
 
   const valField = lang === 'VI' ? 'valueVI' : lang === 'UK' ? 'valueUK' : 'valueUS';
   const titleField = lang === 'VI' ? 'nameVI' : lang === 'UK' ? 'nameUK' : 'nameUS';
+
+  const handleTranslate = async () => {
+    const tVal = form.getFieldValue(['specifications', fieldName, titleField]) || '';
+    const vVal = form.getFieldValue(['specifications', fieldName, valField]) || '';
+    
+    if (!tVal && !vVal) {
+      if (typeof window !== 'undefined') (window as any).antdMessage?.warning(`Please enter text in ${lang} first`);
+      return;
+    }
+    
+    setTranslating(true);
+    try {
+      const sourceStr = `${tVal} ||| ${vVal}`;
+      const isVI = lang === 'VI';
+
+      const res = await fetch('/api/translate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          text: sourceStr, 
+          targetLang: isVI ? 'en' : 'vi',
+          sourceLang: isVI ? 'vi' : 'en'
+        }),
+      });
+      
+      const data = await res.json();
+      if (res.ok && data.translated) {
+        const parts = data.translated.split('|||').map((s: string) => s.trim());
+        const tranT = parts[0] || '';
+        const tranV = parts[1] || '';
+
+        if (isVI) {
+          form.setFieldValue(['specifications', fieldName, 'nameUS'], tranT);
+          form.setFieldValue(['specifications', fieldName, 'valueUS'], tranV);
+          form.setFieldValue(['specifications', fieldName, 'nameUK'], tranT);
+          form.setFieldValue(['specifications', fieldName, 'valueUK'], tranV);
+        } else {
+          const otherEn = lang === 'US' ? 'UK' : 'US';
+          form.setFieldValue(['specifications', fieldName, `name${otherEn}`], tVal);
+          form.setFieldValue(['specifications', fieldName, `value${otherEn}`], vVal);
+          form.setFieldValue(['specifications', fieldName, 'nameVI'], tranT);
+          form.setFieldValue(['specifications', fieldName, 'valueVI'], tranV);
+        }
+        if (typeof window !== 'undefined') (window as any).antdMessage?.success('Translated!');
+      }
+    } catch {
+      if (typeof window !== 'undefined') (window as any).antdMessage?.error('Translation failed');
+    } finally {
+      setTranslating(false);
+    }
+  };
 
   return (
     <div className="group p-3 sm:p-4 rounded-xl border border-gray-100 bg-gray-50/60 hover:border-orange/30 hover:bg-orange/2 transition-all">
@@ -232,19 +345,27 @@ function SpecRow({ fieldName, remove }: { fieldName: number; remove: () => void 
         <div className="w-full sm:w-1/3">
           <div className="flex items-center justify-between mb-1">
             <p className="text-[10px] text-gray-400 font-semibold uppercase">Key</p>
-            <div className="flex gap-1">
+            <div className="flex gap-1 items-center">
               {(['VI', 'UK', 'US'] as const).map((l) => (
                 <button
                   key={l}
                   type="button"
                   onClick={() => setLang(l)}
-                  className={`text-[9px] px-1.5 py-0.5 rounded font-bold transition-all ${
-                    lang === l ? 'bg-orange text-white' : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
-                  }`}
+                  className={`text-[9px] px-1.5 py-0.5 rounded font-bold transition-all ${lang === l ? 'bg-orange text-white' : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
+                    }`}
                 >
                   {l}
                 </button>
               ))}
+              <div className="w-px h-3 bg-gray-300 mx-1"></div>
+              <button
+                type="button"
+                onClick={handleTranslate}
+                disabled={translating}
+                className="flex items-center gap-1 text-[9px] bg-orange/10 text-orange px-1.5 py-0.5 rounded transition-colors hover:bg-orange/20 font-semibold disabled:opacity-50"
+              >
+                {translating ? <LoadingOutlined spin /> : <TranslationOutlined />} Dịch tự động
+              </button>
             </div>
           </div>
           <Form.Item name={[fieldName, titleField]} noStyle>
@@ -292,73 +413,165 @@ const LONG_FIELD: Record<AllLang, string> = {
 
 function DescriptionFields({ form }: { form: ReturnType<typeof Form.useForm>[0] }) {
   const { t } = useTranslation();
-  const [lang, setLang] = useState<AllLang>('US');
+  const [translating, setTranslating] = useState(false);
 
-  const LangBar = () => (
-    <div className="flex gap-1 flex-wrap">
-      {ALL_LANGS.map((l) => (
-        <button
-          key={l}
-          type="button"
-          onClick={() => setLang(l)}
-          className={`flex items-center gap-1 text-[10px] px-2.5 py-1 rounded-md font-bold transition-all ${
-            lang === l
-              ? 'bg-orange text-white shadow-sm'
-              : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
-          }`}
-        >
-          <span>{LANG_FLAGS[l]}</span>{l}
-        </button>
-      ))}
-    </div>
-  );
+  const autoTranslateDesc = async (sourceLang: 'US' | 'UK' | 'VI') => {
+    const fields = {
+      US: { short: 'description', long: 'longDescription' },
+      UK: { short: 'descriptionUK', long: 'longDescriptionUK' },
+      VI: { short: 'descriptionVI', long: 'longDescriptionVI' },
+    };
+
+    const sourceShort = form.getFieldValue(fields[sourceLang].short) || '';
+    const sourceLong = form.getFieldValue(fields[sourceLang].long) || '';
+
+    if (!sourceShort.trim() && !sourceLong.trim()) {
+      message.warning(`Please enter a description in ${sourceLang} first.`);
+      return;
+    }
+    
+    setTranslating(true);
+    try {
+      const translateText = async (text: string, targetLang: string) => {
+        if (!text.trim()) return '';
+        const res = await fetch('/api/translate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            text, 
+            targetLang, 
+            sourceLang: sourceLang === 'VI' ? 'vi' : 'en' 
+          }),
+        });
+        const data = await res.json();
+        return res.ok && data.translated ? data.translated : '';
+      };
+
+      if (sourceLang === 'US' || sourceLang === 'UK') {
+        const otherEn = sourceLang === 'US' ? fields.UK : fields.US;
+        if (sourceShort) form.setFieldValue(otherEn.short, sourceShort);
+        if (sourceLong) form.setFieldValue(otherEn.long, sourceLong);
+
+        const [viShortRes, viLongRes] = await Promise.all([
+          sourceShort ? translateText(sourceShort, 'vi') : Promise.resolve(''),
+          sourceLong ? translateText(sourceLong, 'vi') : Promise.resolve(''),
+        ]);
+        if (viShortRes) form.setFieldValue(fields.VI.short, viShortRes);
+        if (viLongRes) form.setFieldValue(fields.VI.long, viLongRes);
+
+      } else if (sourceLang === 'VI') {
+        const [enShortRes, enLongRes] = await Promise.all([
+          sourceShort ? translateText(sourceShort, 'en') : Promise.resolve(''),
+          sourceLong ? translateText(sourceLong, 'en') : Promise.resolve(''),
+        ]);
+        if (enShortRes) {
+          form.setFieldValue(fields.US.short, enShortRes);
+          form.setFieldValue(fields.UK.short, enShortRes);
+        }
+        if (enLongRes) {
+          form.setFieldValue(fields.US.long, enLongRes);
+          form.setFieldValue(fields.UK.long, enLongRes);
+        }
+      }
+
+      message.success(`Descriptions translated from ${sourceLang}!`);
+    } catch {
+      message.error('Translation failed.');
+    } finally {
+      setTranslating(false);
+    }
+  };
+
+  const renderLangBlock = (
+    lang: AllLang,
+    shortField: string,
+    longField: string,
+    isPrimary: boolean,
+  ) => {
+    const iconColor = lang === 'US' ? 'text-orange' : lang === 'UK' ? 'text-blue-400' : 'text-red-400';
+    const borderClass = isPrimary ? 'border-orange/20' : 'border-gray-100';
+    const bgStyle = isPrimary
+      ? { background: 'linear-gradient(135deg, rgba(249,115,22,0.04), rgba(251,191,36,0.06))' }
+      : {};
+    const bgClass = isPrimary ? '' : 'bg-gray-50/50';
+
+    return (
+      <div className={`rounded-xl border ${borderClass} overflow-hidden ${bgClass}`} style={bgStyle}>
+        <div className="p-4 space-y-3">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-semibold text-gray-500 flex items-center gap-1.5">
+              <GlobalOutlined className={iconColor} />
+              {LANG_FLAGS[lang]} {LANG_LABELS[lang]}
+              {isPrimary
+                ? <span className="text-[10px] text-gray-400 font-normal ml-1">(primary)</span>
+                : <span className="text-[10px] text-gray-400 font-normal ml-1">— blank inherits US</span>}
+            </span>
+            <button
+              type="button"
+              onClick={() => autoTranslateDesc(lang)}
+              disabled={translating}
+              className={`flex items-center gap-1.5 text-[10px] font-semibold px-2.5 py-1 rounded-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${
+                lang === 'US'
+                  ? 'hover:shadow-sm'
+                  : lang === 'UK'
+                  ? 'hover:bg-gray-200 text-gray-500 bg-gray-100'
+                  : 'hover:bg-red-50 text-red-500 bg-white border border-red-200'
+              }`}
+              style={lang === 'US' ? { backgroundColor: 'hsl(var(--orange)/0.1)', color: 'hsl(var(--orange))' } : {}}
+            >
+              {translating ? <LoadingOutlined spin /> : <TranslationOutlined />}
+              {lang === 'US' ? 'Translate to UK & VI' : lang === 'UK' ? 'Translate to US & VI' : 'Translate to US & UK'}
+            </button>
+          </div>
+
+          {/* Short Description */}
+          <div>
+            <p className="text-[10px] font-semibold text-gray-400 uppercase mb-1">
+              {t('admin.products.form.shortDescription')}
+              {isPrimary && <span className="ml-1 text-orange font-normal normal-case">(required)</span>}
+            </p>
+            <Form.Item
+              name={shortField}
+              rules={isPrimary ? [{ required: true, message: 'Short description required' }] : []}
+              noStyle
+            >
+              <Input.TextArea
+                rows={2}
+                placeholder={`${LANG_LABELS[lang]} short description…`}
+                className="rounded-lg border-gray-200 w-full"
+              />
+            </Form.Item>
+          </div>
+
+          {/* Long Description */}
+          <div>
+            <p className="text-[10px] font-semibold text-gray-400 uppercase mb-1">
+              {t('admin.products.form.longDescription')} <span className="text-gray-300 font-normal">(rich text)</span>
+            </p>
+            <RichTextEditorControl
+              fieldName={longField}
+              form={form}
+              minHeight={180}
+              placeholder={`${LANG_LABELS[lang]} long description…`}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="space-y-4">
       <SectionLabel>Descriptions</SectionLabel>
 
-      {/* Lang switcher */}
-      <div className="flex items-center justify-between p-3 rounded-xl bg-gray-50 border border-gray-100">
-        <span className="text-xs text-gray-500 font-medium">
-          Editing: <strong>{LANG_FLAGS[lang]} {LANG_LABELS[lang]}</strong>
-          {lang !== 'US' && <span className="text-gray-400 font-normal"> — blank inherits US</span>}
-        </span>
-        <LangBar />
-      </div>
+      {/* US - Primary */}
+      {renderLangBlock('US', SHORT_FIELD.US, LONG_FIELD.US, true)}
 
-      {/* Short Description */}
-      <div>
-        <p className="text-xs font-semibold text-gray-500 mb-1.5">
-          {t('admin.products.form.shortDescription')}
-          {lang === 'US' && <span className="ml-1 text-[10px] text-orange font-normal">(required)</span>}
-        </p>
-        <Form.Item
-          name={SHORT_FIELD[lang]}
-          rules={lang === 'US' ? [{ required: true, message: 'Short description required' }] : []}
-          noStyle
-        >
-          <Input.TextArea
-            key={lang}
-            rows={2}
-            placeholder={`${LANG_LABELS[lang]} short description…`}
-            className="rounded-lg border-gray-200 w-full"
-          />
-        </Form.Item>
-      </div>
+      {/* UK */}
+      {renderLangBlock('UK', SHORT_FIELD.UK, LONG_FIELD.UK, false)}
 
-      {/* Long Description (Rich Text) */}
-      <div>
-        <p className="text-xs font-semibold text-gray-500 mb-1.5">
-          {t('admin.products.form.longDescription')} <span className="text-[10px] text-gray-400 font-normal">(rich text)</span>
-        </p>
-        <RichTextEditorControl
-          key={lang}
-          fieldName={LONG_FIELD[lang]}
-          form={form}
-          minHeight={220}
-          placeholder={`${LANG_LABELS[lang]} long description…`}
-        />
-      </div>
+      {/* VI */}
+      {renderLangBlock('VI', SHORT_FIELD.VI, LONG_FIELD.VI, false)}
     </div>
   );
 }
@@ -370,12 +583,15 @@ function RichTextEditorControl({
 }: { fieldName: string; form: import('antd').FormInstance; placeholder?: string; minHeight?: number }) {
   const value = Form.useWatch(fieldName, form);
   return (
-    <RichTextEditor
-      value={value || ''}
-      onChange={(v) => form.setFieldValue(fieldName, v)}
-      placeholder={placeholder}
-      minHeight={minHeight}
-    />
+    <Form.Item name={fieldName} noStyle>
+      <RichTextEditor
+        value={value || ''}
+        onChange={(v) => form.setFieldValue(fieldName, v)}
+        placeholder={placeholder}
+        minHeight={minHeight}
+        expanded={true}
+      />
+    </Form.Item>
   );
 }
 
@@ -393,16 +609,86 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
   const [form] = Form.useForm();
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [activeTab, setActiveTab] = useState('info');
+
+  const selectedCollections = Form.useWatch('collection', form) || [];
+
+  const availableCategories = React.useMemo(() => {
+    if (!selectedCollections || selectedCollections.length === 0) return CATEGORIES;
+    let cats: string[] = [];
+    if (selectedCollections.includes('Indoor')) cats = [...cats, ...INDOOR_CATEGORIES];
+    if (selectedCollections.includes('Outdoor')) cats = [...cats, ...OUTDOOR_CATEGORIES];
+    return cats.length > 0 ? cats : CATEGORIES;
+  }, [selectedCollections]);
   // Name language toggle
   const [nameLang, setNameLang] = useState<'VI' | 'UK' | 'US'>('US');
   const [slugEdited, setSlugEdited] = useState(false);
   const [skuEdited, setSkuEdited] = useState(false);
+  const [translatingName, setTranslatingName] = useState(false);
+
+  const autoTranslateName = useCallback(async (sourceLang: 'US' | 'UK' | 'VI') => {
+    const usName = form.getFieldValue('name') || '';
+    const ukName = form.getFieldValue('nameUK') || '';
+    const viName = form.getFieldValue('nameVI') || '';
+
+    let sourceText = '';
+    if (sourceLang === 'US') sourceText = usName;
+    if (sourceLang === 'UK') sourceText = ukName;
+    if (sourceLang === 'VI') sourceText = viName;
+
+    if (!sourceText.trim()) {
+      message.warning(`Please enter a name in ${sourceLang} first.`);
+      return;
+    }
+
+    setTranslatingName(true);
+    try {
+      if (sourceLang === 'US' || sourceLang === 'UK') {
+        const otherEn = sourceLang === 'US' ? 'nameUK' : 'name';
+        form.setFieldValue(otherEn, sourceText);
+
+        const res = await fetch('/api/translate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            text: sourceText, 
+            targetLang: 'vi',
+            sourceLang: 'en'
+          }),
+        });
+        const data = await res.json();
+        if (res.ok && data.translated) {
+          form.setFieldValue('nameVI', data.translated);
+        }
+      } else if (sourceLang === 'VI') {
+        const res = await fetch('/api/translate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            text: sourceText, 
+            targetLang: 'en',
+            sourceLang: 'vi'
+          }),
+        });
+        const data = await res.json();
+        if (res.ok && data.translated) {
+          form.setFieldValue('name', data.translated);
+          form.setFieldValue('nameUK', data.translated);
+        }
+      }
+      message.success(`Translated from ${sourceLang} successfully!`);
+    } catch {
+      message.error('Translation service unavailable.');
+    } finally {
+      setTranslatingName(false);
+    }
+  }, [form]);
 
   const { mutate: mutateUpdate, isPending: isUpdating } = useMutation({
     mutationFn: (payload: Partial<Product>) => {
-      const targetId = initialValues?.slug || initialValues?.id || initialValues?.code || '';
+      const targetId = initialValues?.id || (initialValues as any)?._id || initialValues?.slug || initialValues?.code || '';
       return updateProduct(targetId, payload);
     },
+    retry: false,
     onSuccess: () => {
       message.success('Product updated!');
       queryClient.invalidateQueries({ queryKey: ['product'] });
@@ -416,9 +702,10 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
 
   const { mutate: mutateCreate, isPending: isCreating } = useMutation({
     mutationFn: (payload: Partial<Product>) => createProduct(payload),
+    retry: false,
     onSuccess: () => {
       message.success('Product created!');
-      queryClient.invalidateQueries({ queryKey: ['products'] }); // Ensure list updates
+      queryClient.invalidateQueries({ queryKey: ['products'] });
       router.push('/admin/products');
     },
     onError: (err) => {
@@ -451,13 +738,23 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
 
     setFileList(initialImages);
 
-    // Normalize collection and category to arrays
-    const collections = Array.isArray(initialValues.collection)
-      ? initialValues.collection
-      : initialValues.collection ? [initialValues.collection] : [];
-    const categories = Array.isArray(initialValues.category)
-      ? initialValues.category
-      : initialValues.category ? [initialValues.category] : [];
+    // Normalize collection to array of strings for Select component
+    const rawCol = initialValues.collection;
+    const collections: string[] = Array.isArray(rawCol)
+      ? rawCol
+      : typeof rawCol === 'string' && rawCol ? rawCol.split(',').map((s: string) => s.trim()).filter(Boolean)
+        : [];
+
+    // Normalize category: from I18nText { us, uk, vi } → extract .us into array for Select
+    const rawCat = initialValues.category as any;
+    let categories: string[] = [];
+    if (Array.isArray(rawCat)) {
+      categories = rawCat.map((c: any) => (typeof c === 'object' && c?.us) ? c.us : String(c));
+    } else if (rawCat && typeof rawCat === 'object' && rawCat.us) {
+      categories = rawCat.us.split(',').map((s: string) => s.trim()).filter(Boolean);
+    } else if (typeof rawCat === 'string' && rawCat) {
+      categories = rawCat.split(',').map((s: string) => s.trim()).filter(Boolean);
+    }
 
     const flatInit: any = { ...initialValues };
     if (initialValues?.name && typeof initialValues.name === 'object') {
@@ -475,20 +772,57 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       flatInit.longDescriptionUK = initialValues.longDescription?.uk || '';
       flatInit.longDescriptionVI = initialValues.longDescription?.vi || '';
     }
-    if (initialValues?.material && typeof initialValues.material === 'object') {
-      flatInit.material = initialValues.material?.us || '';
-    } else if (Array.isArray(initialValues?.material)) {
-      flatInit.material = (initialValues.material as any[]).map(m => m?.us || m || '').join(', ');
+    const getTagArray = (val: any) => {
+      if (!val) return [];
+      if (Array.isArray(val)) return val;
+      return String(val).split(',').map(s => s.trim()).filter(Boolean);
+    };
+
+    if (initialValues?.material) {
+      if (typeof initialValues.material === 'object' && !Array.isArray(initialValues.material)) {
+        flatInit.material = getTagArray(initialValues.material.us);
+        flatInit.materialUK = getTagArray(initialValues.material.uk);
+        flatInit.materialVI = getTagArray(initialValues.material.vi);
+      } else {
+        flatInit.material = getTagArray(initialValues.material);
+      }
     }
-    if (initialValues?.color && typeof initialValues.color === 'object') {
-      flatInit.color = initialValues.color?.us || '';
+    if (initialValues?.color) {
+      if (typeof initialValues.color === 'object' && !Array.isArray(initialValues.color)) {
+        flatInit.color = getTagArray(initialValues.color.us);
+        flatInit.colorUK = getTagArray(initialValues.color.uk);
+        flatInit.colorVI = getTagArray(initialValues.color.vi);
+      } else {
+        flatInit.color = getTagArray(initialValues.color);
+      }
     }
-    if (initialValues?.style && typeof initialValues.style === 'object') {
-      flatInit.style = initialValues.style?.us || '';
+    if (initialValues?.style) {
+      if (typeof initialValues.style === 'object' && !Array.isArray(initialValues.style)) {
+        flatInit.style = getTagArray(initialValues.style.us);
+        flatInit.styleUK = getTagArray(initialValues.style.uk);
+        flatInit.styleVI = getTagArray(initialValues.style.vi);
+      } else {
+        flatInit.style = getTagArray(initialValues.style);
+      }
     }
-    if (initialValues?.category && typeof initialValues.category === 'object') {
-      flatInit.category = initialValues.category?.us || '';
-    }
+
+    const parseI18nList = (val: any) => {
+      if (!val) return [{ us: '', uk: '', vi: '' }];
+      if (Array.isArray(val)) return val.length ? val.map((Item: any) => typeof Item === 'string' ? { us: Item, uk: '', vi: '' } : Item) : [{ us: '', uk: '', vi: '' }];
+      if (typeof val === 'object' && Array.isArray(val.us)) {
+        const len = Math.max(val.us.length, val.uk?.length || 0, val.vi?.length || 0);
+        if (len === 0) return [{ us: '', uk: '', vi: '' }];
+        return Array.from({ length: len }).map((_, i) => ({
+          us: val.us[i] || '',
+          uk: val.uk?.[i] || '',
+          vi: val.vi?.[i] || '',
+        }));
+      }
+      return [{ us: '', uk: '', vi: '' }];
+    };
+    flatInit.features = parseI18nList(initialValues?.features);
+    flatInit.careInstructions = parseI18nList(initialValues?.careInstructions);
+    flatInit.usageSettings = parseI18nList(initialValues?.usageSettings);
 
     form.setFieldsValue({
       ...flatInit,
@@ -552,8 +886,10 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
   }, []);
 
   const onFinish = (values: Partial<Product>) => {
+    // Prevent double submission
+    if (isUpdating || isCreating) return;
     const uploadedImages = fileList.map((f) => f.url || f.response?.url || '').filter(Boolean);
-    
+
     let finalVideo = values.video || '';
     if (finalVideo) {
       const ytMatch = finalVideo.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
@@ -567,21 +903,53 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       }
     }
 
+    // Extract string values from form arrays (Select mode="multiple"/"tags" returns arrays)
+    const v = values as any;
+    const catArr: string[] = Array.isArray(v.category) ? v.category : (v.category ? [v.category] : []);
+    const colArr: string[] = Array.isArray(v.collection) ? v.collection : (v.collection ? [v.collection] : []);
+    const categoryUs = catArr.join(', ');
+    const collectionStr = colArr.join(', '); // collection is plain String in schema
+
+    const serializeI18nList = (arr: any) => {
+      if (!Array.isArray(arr)) return { us: [], uk: [], vi: [] };
+      return {
+        us: arr.map((x: any) => typeof x === 'string' ? x : x?.us || '').filter(Boolean),
+        uk: arr.map((x: any) => typeof x === 'string' ? '' : x?.uk || ''),
+        vi: arr.map((x: any) => typeof x === 'string' ? '' : x?.vi || ''),
+      };
+    };
+
     const payload: any = {
       ...values,
       video: finalVideo,
       image: uploadedImages[0] || values.image || '',
       images: uploadedImages,
       // Map to I18nText nested objects
-      name: { us: (values as any).name || '', uk: (values as any).nameUK || '', vi: (values as any).nameVI || '' },
-      description: { us: (values as any).description || '', uk: (values as any).descriptionUK || '', vi: (values as any).descriptionVI || '' },
-      longDescription: { us: (values as any).longDescription || '', uk: (values as any).longDescriptionUK || '', vi: (values as any).longDescriptionVI || '' },
-      material: { us: (values as any).material || '', uk: '', vi: '' },
-      color: { us: (values as any).color || '', uk: '', vi: '' },
-      style: { us: (values as any).style || '', uk: '', vi: '' },
-      category: { us: (values as any).category || '', uk: '', vi: '' },
-      collection: { us: (values as any).collection || '', uk: '', vi: '' },
+      name: { us: v.name || '', uk: v.nameUK || '', vi: v.nameVI || '' },
+      description: { us: v.description || '', uk: v.descriptionUK || '', vi: v.descriptionVI || '' },
+      longDescription: { us: v.longDescription || '', uk: v.longDescriptionUK || '', vi: v.longDescriptionVI || '' },
+      material: { us: Array.isArray(v.material) ? v.material.join(', ') : (v.material || ''), uk: Array.isArray(v.materialUK) ? v.materialUK.join(', ') : (v.materialUK || ''), vi: Array.isArray(v.materialVI) ? v.materialVI.join(', ') : (v.materialVI || '') },
+      color: { us: Array.isArray(v.color) ? v.color.join(', ') : (v.color || ''), uk: Array.isArray(v.colorUK) ? v.colorUK.join(', ') : (v.colorUK || ''), vi: Array.isArray(v.colorVI) ? v.colorVI.join(', ') : (v.colorVI || '') },
+      style: { us: Array.isArray(v.style) ? v.style.join(', ') : (v.style || ''), uk: Array.isArray(v.styleUK) ? v.styleUK.join(', ') : (v.styleUK || ''), vi: Array.isArray(v.styleVI) ? v.styleVI.join(', ') : (v.styleVI || '') },
+      category: { us: categoryUs, uk: '', vi: '' },
+      collection: collectionStr || 'Outdoor',
+      features: serializeI18nList(v.features),
+      careInstructions: serializeI18nList(v.careInstructions),
+      usageSettings: serializeI18nList(v.usageSettings),
     };
+    // Clean up flat form fields that shouldn't be sent to API
+    delete payload.nameUK;
+    delete payload.nameVI;
+    delete payload.descriptionUK;
+    delete payload.descriptionVI;
+    delete payload.longDescriptionUK;
+    delete payload.longDescriptionVI;
+    delete payload.materialUK;
+    delete payload.materialVI;
+    delete payload.styleUK;
+    delete payload.styleVI;
+    delete payload.colorUK;
+    delete payload.colorVI;
     if (isEdit) {
       mutateUpdate(payload);
     } else {
@@ -610,9 +978,8 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
           <button
             type="button"
             onClick={() => setNameLang(l)}
-            className={`flex items-center gap-1 text-[10px] px-2 py-0.5 rounded font-bold transition-all ${
-              nameLang === l ? 'bg-orange text-white shadow-sm' : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
-            }`}
+            className={`flex items-center gap-1 text-[10px] px-2 py-0.5 rounded font-bold transition-all ${nameLang === l ? 'bg-orange text-white shadow-sm' : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
+              }`}
           >
             <span>{nameFlagMap[l]}</span>{l}
           </button>
@@ -650,29 +1017,107 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
     </div>
   );
 
-  // ── Dynamic list helper ──────────────────────────────────────────────────
+  const TranslatableListRow = ({ fieldName, parentName, remove, placeholder }: { fieldName: number; parentName: string; remove: () => void; placeholder: string }) => {
+    const [lang, setLang] = useState<'VI' | 'UK' | 'US'>('US');
+    const [translating, setTranslating] = useState(false);
+  
+    const valField = lang === 'VI' ? 'vi' : lang === 'UK' ? 'uk' : 'us';
+  
+    const handleTranslate = async () => {
+      const text = form.getFieldValue([parentName, fieldName, valField]) || '';
+      if (!text.trim()) {
+        if (typeof window !== 'undefined') (window as any).antdMessage?.warning(`Please enter text in ${lang} first`);
+        return;
+      }
+      setTranslating(true);
+      try {
+        const isVI = lang === 'VI';
+        const res = await fetch('/api/translate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            text, 
+            targetLang: isVI ? 'en' : 'vi',
+            sourceLang: isVI ? 'vi' : 'en' 
+          }),
+        });
+        const data = await res.json();
+        if (res.ok && data.translated) {
+          if (isVI) {
+            form.setFieldValue([parentName, fieldName, 'us'], data.translated);
+            form.setFieldValue([parentName, fieldName, 'uk'], data.translated);
+          } else {
+            const otherEn = lang === 'US' ? 'uk' : 'us';
+            form.setFieldValue([parentName, fieldName, otherEn], text);
+            form.setFieldValue([parentName, fieldName, 'vi'], data.translated);
+          }
+          if (typeof window !== 'undefined') (window as any).antdMessage?.success('Translated!');
+        }
+      } catch {
+        if (typeof window !== 'undefined') (window as any).antdMessage?.error('Translation failed');
+      } finally {
+        setTranslating(false);
+      }
+    };
+  
+    return (
+      <div className="flex flex-col gap-1.5 p-3 sm:px-4 sm:py-3 rounded-xl border border-gray-100 bg-gray-50/60 hover:border-orange/30 group transition-all">
+        <div className="flex items-center justify-between pointer-events-auto">
+          <div className="flex gap-1 items-center">
+            {(['VI', 'UK', 'US'] as const).map((l) => (
+              <button
+                key={l}
+                type="button"
+                onClick={() => setLang(l)}
+                className={`text-[9px] px-1.5 py-0.5 rounded font-bold transition-colors ${lang === l ? 'bg-orange text-white' : 'bg-gray-100 text-gray-400 hover:bg-gray-200'}`}
+              >
+                {l}
+              </button>
+            ))}
+            <div className="w-px h-3 bg-gray-300 mx-1"></div>
+            <button
+              type="button"
+              onClick={handleTranslate}
+              disabled={translating}
+              className="flex items-center gap-1 text-[9px] bg-orange/10 text-orange px-1.5 py-0.5 rounded transition-colors hover:bg-orange/20 font-semibold disabled:opacity-50"
+            >
+              {translating ? <LoadingOutlined spin /> : <TranslationOutlined />} Dịch tự động
+            </button>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <Form.Item name={[fieldName, valField]} noStyle>
+            <Input placeholder={`${placeholder} (${lang})`} className="rounded-lg border-gray-200 text-sm" />
+          </Form.Item>
+          <button
+            type="button"
+            onClick={remove}
+            className="text-red-400 hover:text-red-600 opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
+          >
+            <MinusCircleOutlined />
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   const DynamicList = ({ name, placeholder, btnLabel }: { name: string; placeholder: string; btnLabel: string }) => (
     <Form.List name={name}>
       {(fields, { add, remove }) => (
         <div className="space-y-2">
           {fields.map((field) => (
-            <div key={field.key} className="flex items-center gap-2 group">
-              <Form.Item {...field} noStyle>
-                <Input placeholder={placeholder} className="rounded-lg border-gray-200" />
-              </Form.Item>
-               <button
-                type="button"
-                onClick={() => remove(field.name)}
-                className="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600 transition-opacity shrink-0"
-              >
-                <MinusCircleOutlined />
-              </button>
-            </div>
+            <TranslatableListRow
+              key={field.key}
+              fieldName={field.name}
+              parentName={name}
+              remove={() => remove(field.name)}
+              placeholder={placeholder}
+            />
           ))}
           <button
             type="button"
-            onClick={() => add()}
-            className="flex items-center gap-1.5 text-sm text-orange hover:text-orange/70 mt-1 transition-colors"
+            onClick={() => add({ us: '', uk: '', vi: '' })}
+            className="flex items-center justify-center w-full gap-1.5 text-sm py-2 text-orange border border-dashed border-orange/30 rounded-lg hover:border-orange/60 hover:bg-orange/5 mt-1 transition-all"
           >
             <PlusOutlined className="text-xs" /> {btnLabel}
           </button>
@@ -680,6 +1125,184 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       )}
     </Form.List>
   );
+
+  // ── Tag Lang Helper (Material/Style/Color) ──────────────────────────────────────────────────
+  const TagLangBlock = ({ fieldName, label, options, isColor }: { fieldName: string; label: string; options: string[]; isColor?: boolean }) => {
+    const colorTagRender = isColor ? (props: any) => {
+      const { label, value, closable, onClose } = props;
+      const strValue = String(value);
+      const match = strValue.match(/^\[(#[A-Fa-f0-9]+)\]/);
+      return (
+        <Tag
+          color="default"
+          onMouseDown={(e: React.MouseEvent) => { e.preventDefault(); e.stopPropagation(); }}
+          closable={closable}
+          onClose={onClose}
+          style={{ marginRight: 3, display: 'inline-flex', alignItems: 'center', gap: '4px', padding: '2px 8px' }}
+        >
+          {match && <div className="w-3 h-3 rounded-full border border-black/10 shrink-0 shadow-sm" style={{ backgroundColor: match[1] }} />}
+          <span className="text-xs">{label}</span>
+        </Tag>
+      );
+    } : undefined;
+
+    const colorOptionRender = isColor ? (option: any) => {
+      const strValue = String(option.value);
+      const match = strValue.match(/^\[(#[A-Fa-f0-9]+)\]/);
+      return (
+        <div className="flex items-center gap-2">
+          {match && <div className="w-4 h-4 rounded-full border border-black/10 shrink-0 shadow-sm" style={{ backgroundColor: match[1] }} />}
+          <span>{option.label}</span>
+        </div>
+      );
+    } : undefined;
+
+    const handleTagTranslate = async (sourceLang: 'US' | 'UK' | 'VI') => {
+      const shortUs = fieldName;
+      const shortUk = fieldName + 'UK';
+      const shortVi = fieldName + 'VI';
+      
+      let sourceTags = form.getFieldValue(sourceLang === 'US' ? shortUs : sourceLang === 'UK' ? shortUk : shortVi) || [];
+      if (typeof sourceTags === 'string') sourceTags = sourceTags.split(',').map((s: string) => s.trim());
+      if (!sourceTags.length) {
+        message.warning(`Please enter ${label} in ${sourceLang} first.`);
+        return;
+      }
+      const sourceText = sourceTags.join(', ');
+
+      const hideMsg = message.loading(`Translating ${label} from ${sourceLang}...`, 0);
+      try {
+        if (sourceLang === 'US' || sourceLang === 'UK') {
+          const otherEn = sourceLang === 'US' ? shortUk : shortUs;
+          form.setFieldValue(otherEn, sourceTags);
+
+          const res = await fetch('/api/translate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: sourceText, targetLang: 'vi', sourceLang: 'en' }),
+          });
+          const data = await res.json();
+          if (res.ok && data.translated) {
+            form.setFieldValue(shortVi, data.translated.split(',').map((s: string) => s.trim()));
+          }
+        } else if (sourceLang === 'VI') {
+          const res = await fetch('/api/translate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: sourceText, targetLang: 'en', sourceLang: 'vi' }),
+          });
+          const data = await res.json();
+          if (res.ok && data.translated) {
+            const translatedArr = data.translated.split(',').map((s: string) => s.trim());
+            form.setFieldValue(shortUs, translatedArr);
+            form.setFieldValue(shortUk, translatedArr);
+          }
+        }
+        message.success(`${label} translated successfully!`);
+      } catch {
+        message.error('Translation failed.');
+      } finally {
+        hideMsg();
+      }
+    };
+
+    return (
+      <div className="space-y-4 mb-2 bg-gray-50/50 p-5 rounded-xl border border-gray-100 shadow-sm relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-1 h-full bg-linear-to-b from-gray-200 to-gray-100" />
+        <div className="flex items-center justify-between mb-2">
+          <span className="font-bold text-gray-700 text-sm">{label} <span className="text-gray-400 font-normal text-xs ml-1">(Multi-lang)</span></span>
+        </div>
+        
+        {/* US */}
+        <div className="flex flex-col gap-1.5 border border-orange/20 rounded-lg p-3 bg-white">
+          <div className="flex items-center justify-between">
+             <span className="text-[11px] font-semibold text-gray-500 flex items-center gap-1.5"><GlobalOutlined className="text-orange" />🇺🇸 US (Primary)</span>
+             <div className="flex items-center gap-2">
+               {isColor && (
+                 <ColorPicker
+                   size="small"
+                   onChangeComplete={async (colorObj) => {
+                      const hex = colorObj.toHexString();
+                      const currentUS = form.getFieldValue(fieldName) || [];
+                      // Optimistically add hex (in case API fails)
+                      let bestName = hex;
+
+                      const hideMsg = message.loading('Sensing color...', 0);
+                      try {
+                        const res = await fetch(`https://www.thecolorapi.com/id?hex=${hex.replace('#', '')}`);
+                        const data = await res.json();
+                        if (data?.name?.value) {
+                           bestName = `[${hex.toUpperCase()}] ${data.name.value}`;
+                        } else {
+                           bestName = `[${hex.toUpperCase()}] Color`;
+                        }
+
+                        const newUS = [...currentUS, bestName];
+                        form.setFieldValue(fieldName, newUS);
+
+                        // Auto-translate to VI
+                        const resVi = await fetch('/api/translate', {
+                           method: 'POST',
+                           headers: { 'Content-Type': 'application/json' },
+                           body: JSON.stringify({ text: data.name.value || 'Color', targetLang: 'vi', sourceLang: 'en' }),
+                        });
+                        const dataVi = await resVi.json();
+                        if (dataVi?.translated) {
+                           const currentVI = form.getFieldValue(`${fieldName}VI`) || [];
+                           form.setFieldValue(`${fieldName}VI`, [...currentVI, `[${hex.toUpperCase()}] ${dataVi.translated}`]);
+                        }
+
+                        // Auto-inherit for UK
+                        const currentUK = form.getFieldValue(`${fieldName}UK`) || [];
+                        form.setFieldValue(`${fieldName}UK`, [...currentUK, bestName]);
+                        message.success('Color recognized & translated!');
+                      } catch {
+                        const newUS = [...currentUS, `[${hex.toUpperCase()}] Color`];
+                        form.setFieldValue(fieldName, newUS);
+                      } finally {
+                        hideMsg();
+                      }
+                   }}
+                 />
+               )}
+               <button type="button" onClick={() => handleTagTranslate('US')} className="text-[10px] bg-orange/10 text-orange px-2 py-0.5 rounded transition-colors hover:bg-orange/20 font-semibold w-auto">Translate to UK & VI</button>
+             </div>
+          </div>
+          <Form.Item name={fieldName} rules={[{ required: true, message: 'Bắt buộc nhập' }]} noStyle>
+            <Select mode="tags" allowClear className="rounded-lg w-full" placeholder={isColor ? "Ex: Natural Walnut" : "Ex: Walnut Wood"} tagRender={colorTagRender} optionRender={colorOptionRender}>
+              {options.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
+            </Select>
+          </Form.Item>
+        </div>
+
+        {/* UK */}
+        <div className="flex flex-col gap-1.5 border border-blue-100 rounded-lg p-3 bg-white">
+           <div className="flex items-center justify-between">
+             <span className="text-[11px] font-semibold text-gray-500 flex items-center gap-1.5"><GlobalOutlined className="text-blue-400" />🇬🇧 UK</span>
+             <button type="button" onClick={() => handleTagTranslate('UK')} className="text-[10px] bg-blue-50 text-blue-500 px-2 py-0.5 rounded transition-colors hover:bg-blue-100 font-semibold w-auto">Translate to US & VI</button>
+          </div>
+          <Form.Item name={`${fieldName}UK`} noStyle>
+            <Select mode="tags" allowClear className="rounded-lg w-full" placeholder="Inherits US if empty" tagRender={colorTagRender} optionRender={colorOptionRender}>
+              {options.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
+            </Select>
+          </Form.Item>
+        </div>
+
+        {/* VI */}
+        <div className="flex flex-col gap-1.5 border border-red-100 rounded-lg p-3 bg-white">
+           <div className="flex items-center justify-between">
+             <span className="text-[11px] font-semibold text-gray-500 flex items-center gap-1.5"><GlobalOutlined className="text-red-400" />🇻🇳 VI</span>
+             <button type="button" onClick={() => handleTagTranslate('VI')} className="text-[10px] bg-red-50 text-red-500 px-2 py-0.5 rounded transition-colors hover:bg-red-100 font-semibold w-auto">Translate to US & UK</button>
+          </div>
+          <Form.Item name={`${fieldName}VI`} noStyle>
+            <Select mode="tags" allowClear className="rounded-lg w-full" placeholder="Ex: Gỗ Sồi" tagRender={colorTagRender} optionRender={colorOptionRender}>
+              {options.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
+            </Select>
+          </Form.Item>
+        </div>
+      </div>
+    );
+  };
 
   // ── Tab items ────────────────────────────────────────────────────────────
   const tabItems = [
@@ -691,20 +1314,27 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
         <div className="pt-5 space-y-6">
           {/* ── Name (US primary + UK/VI toggle) ── */}
           <SectionLabel>{t('admin.products.form.productName')}</SectionLabel>
-          <div className="rounded-xl border border-orange/20 overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(249,115,22,0.04), rgba(251,191,36,0.06))' }}>
-            <div className="p-4">
-              {/* Toggle bar */}
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-semibold text-gray-500 flex items-center gap-1.5">
-                  <GlobalOutlined className="text-orange" />
-                  {nameFlagMap[nameLang]} {({ VI: 'Vietnamese', UK: 'British English', US: 'American English' } as Record<string,string>)[nameLang]}
-                  {nameLang === 'US'
-                    ? <span className="text-[10px] text-gray-400 font-normal ml-1">(primary — auto-generates slug & SKU)</span>
-                    : <span className="text-[10px] text-gray-400 font-normal ml-1">— blank inherits US</span>}
-                </span>
-                <NameLangToggle />
-              </div>
-              {nameLang === 'US' ? (
+          <div className="space-y-4">
+            {/* US - Primary */}
+            <div className="rounded-xl border border-orange/20 overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(249,115,22,0.04), rgba(251,191,36,0.06))' }}>
+              <div className="p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-semibold text-gray-500 flex items-center gap-1.5">
+                    <GlobalOutlined className="text-orange" />
+                    🇺🇸 American English
+                    <span className="text-[10px] text-gray-400 font-normal ml-1">(primary — auto-generates slug &amp; SKU)</span>
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => autoTranslateName('US')}
+                    disabled={translatingName}
+                    className="flex items-center gap-1.5 text-[10px] font-semibold px-2.5 py-1 rounded-md transition-all duration-200 hover:shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                    style={{ backgroundColor: 'hsl(var(--orange)/0.1)', color: 'hsl(var(--orange))' }}
+                  >
+                    {translatingName ? <LoadingOutlined spin /> : <TranslationOutlined />}
+                    Translate to UK & VI
+                  </button>
+                </div>
                 <Form.Item name="name" rules={[{ required: true, message: 'Product name is required' }]} noStyle>
                   <Input
                     size="large"
@@ -713,15 +1343,65 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
                     className="rounded-lg border-orange/20"
                   />
                 </Form.Item>
-              ) : (
-                <Form.Item name={nameFieldMap[nameLang]} noStyle>
+              </div>
+            </div>
+
+            {/* UK */}
+            <div className="rounded-xl border border-gray-100 overflow-hidden bg-gray-50/50">
+              <div className="p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-semibold text-gray-500 flex items-center gap-1.5">
+                    <GlobalOutlined className="text-blue-400" />
+                    🇬🇧 British English
+                    <span className="text-[10px] text-gray-400 font-normal ml-1">— blank inherits US</span>
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => autoTranslateName('UK')}
+                    disabled={translatingName}
+                    className="flex items-center gap-1.5 text-[10px] font-semibold px-2.5 py-1 rounded-md transition-all duration-200 hover:bg-gray-200 text-gray-500 disabled:opacity-50 disabled:cursor-not-allowed bg-gray-100"
+                  >
+                    {translatingName ? <LoadingOutlined spin /> : <TranslationOutlined />}
+                    Translate to US & VI
+                  </button>
+                </div>
+                <Form.Item name="nameUK" noStyle>
                   <Input
                     size="large"
-                    placeholder={namePlaceholder[nameLang]}
+                    placeholder={namePlaceholder['UK']}
                     className="rounded-lg border-gray-200"
                   />
                 </Form.Item>
-              )}
+              </div>
+            </div>
+
+            {/* VI */}
+            <div className="rounded-xl border border-gray-100 overflow-hidden bg-gray-50/50">
+              <div className="p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-semibold text-gray-500 flex items-center gap-1.5">
+                    <GlobalOutlined className="text-red-400" />
+                    🇻🇳 Vietnamese
+                    <span className="text-[10px] text-gray-400 font-normal ml-1">— blank inherits US</span>
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => autoTranslateName('VI')}
+                    disabled={translatingName}
+                    className="flex items-center gap-1.5 text-[10px] font-semibold px-2.5 py-1 rounded-md transition-all duration-200 hover:bg-red-50 text-red-500 disabled:opacity-50 disabled:cursor-not-allowed bg-white border border-red-200"
+                  >
+                    {translatingName ? <LoadingOutlined spin /> : <TranslationOutlined />}
+                    Translate to US & UK
+                  </button>
+                </div>
+                <Form.Item name="nameVI" noStyle>
+                  <Input
+                    size="large"
+                    placeholder={namePlaceholder['VI']}
+                    className="rounded-lg border-gray-200"
+                  />
+                </Form.Item>
+              </div>
             </div>
           </div>
 
@@ -762,6 +1442,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
                   placeholder="Select collections…"
                   className="rounded-lg"
                   allowClear
+                  onChange={() => form.setFieldValue('category', [])}
                 >
                   {COLLECTIONS.map((c) => (
                     <Option key={c} value={c}>
@@ -780,7 +1461,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
                   className="rounded-lg"
                   allowClear
                 >
-                  {CATEGORIES.map((c) => (
+                  {availableCategories.map((c) => (
                     <Option key={c} value={c}>{c}</Option>
                   ))}
                 </Select>
@@ -825,26 +1506,14 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
               </Col>
             </Row>
             <Row gutter={[16, 16]}>
-              <Col xs={24} md={8}>
-                <Form.Item name="material" label={t('admin.products.form.material')} rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
-                  <Select placeholder="Walnut Wood" className="rounded-lg" allowClear mode="tags">
-                    {MATERIALS.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
-                  </Select>
-                </Form.Item>
+              <Col xs={24} md={12}>
+                <TagLangBlock fieldName="material" label={t('admin.products.form.material')} options={MATERIALS} />
               </Col>
-              <Col xs={24} md={8}>
-                <Form.Item name="style" label={t('admin.products.form.style')} rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
-                  <Select placeholder="Mid-Century Modern" className="rounded-lg" allowClear mode="tags">
-                    {STYLES.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
-                  </Select>
-                </Form.Item>
+              <Col xs={24} md={12}>
+                <TagLangBlock fieldName="style" label={t('admin.products.form.style')} options={STYLES} />
               </Col>
-              <Col xs={24} md={8}>
-                <Form.Item name="color" label={t('admin.products.form.color')} rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
-                  <Select placeholder="Natural Walnut" className="rounded-lg" allowClear mode="tags">
-                    {COLORS.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
-                  </Select>
-                </Form.Item>
+              <Col xs={24} md={24}>
+                <TagLangBlock fieldName="color" label={t('admin.products.form.color')} options={COLORS} isColor={true} />
               </Col>
             </Row>
           </div>
@@ -858,7 +1527,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
               These appear as icon cards on the product catalogue page (e.g. Dimensions, Material, Style).
               Each row supports labels & values in US / UK / VI.
             </p>
-  
+
             <Form.List name="attributes">
               {(fields, { add, remove }) => (
                 <div className="space-y-3">
@@ -869,7 +1538,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
                       remove={() => remove(field.name)}
                     />
                   ))}
-  
+
                   <button
                     type="button"
                     onClick={() => add({ icon: 'ProfileOutlined', titleUS: '', valueUS: '' })}
@@ -1009,7 +1678,9 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
                   </Tag>
                 ))}
                 <span className="text-xs text-gray-400">
-                  {[initialValues?.category].flat().filter(Boolean).join(', ')}
+                  {typeof initialValues?.category === 'object' && initialValues?.category !== null
+                    ? (initialValues.category as any).us
+                    : [initialValues?.category].flat().filter(Boolean).join(', ')}
                 </span>
               </div>
             </div>
@@ -1022,7 +1693,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
             <Button
               type="primary"
               icon={<SaveOutlined />}
-              loading={isUpdating}
+              loading={isUpdating || isCreating}
               onClick={() => form.submit()}
               size="large"
               className="rounded-lg border-none font-semibold px-4 sm:px-6 shadow-md flex-1 sm:flex-none"
@@ -1036,7 +1707,24 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
 
       {/* ── Form body ─────────────────────────────────────────────────────── */}
       <div className="max-w-6xl mx-auto px-2 sm:px-6 py-4 sm:py-6 relative z-10">
-        <Form layout="vertical" form={form} onFinish={onFinish}>
+        <Form
+          layout="vertical"
+          form={form}
+          onFinish={onFinish}
+          onFinishFailed={(errorInfo) => {
+            message.error('Validation failed! Please check tabs for missing required fields (marked in red).');
+            console.warn('Form validation errors:', errorInfo);
+            if (errorInfo.errorFields.length > 0) {
+              const firstFieldName = errorInfo.errorFields[0].name[0];
+              const fieldStr = String(firstFieldName);
+              if (['name', 'slug', 'code', 'category', 'collection', 'description', 'descriptionUK', 'descriptionVI'].includes(fieldStr)) {
+                setActiveTab('info');
+              } else if (['moq', 'dimensions', 'weight', 'material', 'style', 'color'].includes(fieldStr)) {
+                setActiveTab('attributes');
+              }
+            }
+          }}
+        >
           <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden" style={{ boxShadow: '0 2px 20px rgba(0,0,0,0.04)' }}>
             <Tabs
               activeKey={activeTab}

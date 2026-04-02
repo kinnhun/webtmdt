@@ -2,6 +2,7 @@ import React from 'react';
 import { Table, Button, Space, Tag, Badge, Tooltip } from 'antd';
 import { EditOutlined, DeleteOutlined, PictureOutlined, GlobalOutlined } from '@ant-design/icons';
 import type { Product } from '@/domains/product/product.types';
+import { OUTDOOR_CATEGORIES, INDOOR_CATEGORIES } from '@/domains/product/product.types';
 import Link from 'next/link';
 
 interface ProductTableProps {
@@ -50,21 +51,50 @@ export function ProductTable({ data, onEdit, onDelete, loading }: ProductTablePr
       dataIndex: 'category',
       key: 'category',
       filters: [
-        { text: 'Sofa', value: 'Sofa' },
-        { text: 'Dining', value: 'Dining' },
-        { text: 'Lounge', value: 'Lounge' },
+        {
+          text: 'Collection',
+          value: 'group_collection',
+          children: [
+            { text: 'Indoor', value: 'COL##Indoor' },
+            { text: 'Outdoor', value: 'COL##Outdoor' },
+          ],
+        },
+        {
+          text: 'Category',
+          value: 'group_category',
+          children: [...OUTDOOR_CATEGORIES, ...INDOOR_CATEGORIES].map(c => ({ text: c, value: `CAT##${c}` })),
+        }
       ],
       onFilter: (value: React.Key | boolean, record: Product) => {
-        const catArray = Array.isArray(record.category) ? record.category : [record.category];
-        return catArray.some(c => (c?.us || '').includes(String(value)));
+        const valStr = String(value);
+        if (valStr.startsWith('COL##')) {
+          const col = valStr.replace('COL##', '');
+          const collectionsRaw = Array.isArray(record.collection) ? record.collection : String(record.collection || '').split(',').map(s => s.trim()).filter(Boolean);
+          return collectionsRaw.includes(col);
+        }
+        if (valStr.startsWith('CAT##')) {
+          const cat = valStr.replace('CAT##', '');
+          const catArray = Array.isArray(record.category) ? record.category : [record.category];
+          return catArray.some(c => (c?.us || '').includes(cat));
+        }
+        return false;
       },
       render: (_: unknown, record: Product) => {
-        const collections = Array.isArray(record.collection) ? record.collection : [record.collection];
+        const collectionsRaw = Array.isArray(record.collection) ? record.collection : String(record.collection || '').split(',').map(s => s.trim()).filter(Boolean);
         const categories = Array.isArray(record.category) ? record.category : [record.category];
         return (
           <div className="flex flex-col gap-1 items-start">
-            {collections.map((c, i) => <Tag key={i} color="cyan" className="m-0 border-0">{c}</Tag>)}
-            {categories.map((c, i) => <span key={i} className="text-xs text-navy/70">{c?.us || c || ''}</span>)}
+            <div className="flex flex-wrap gap-1">
+              {collectionsRaw.map((c, i) => <Tag key={i} color="cyan" className="m-0 border-0">{c}</Tag>)}
+            </div>
+            {categories.map((c, i) => {
+              const str = c?.us || c || '';
+              return (
+                <Tooltip key={i} title={str} placement="topLeft">
+                  <div className="text-xs text-navy/70 truncate max-w-[200px]">{str}</div>
+                </Tooltip>
+              );
+            })}
           </div>
         )
       },
@@ -77,7 +107,9 @@ export function ProductTable({ data, onEdit, onDelete, loading }: ProductTablePr
         const mats = Array.isArray(record.material) ? record.material : [record.material];
         return (
           <div className="flex flex-col gap-1">
-            <span className="text-sm font-medium">{mats.map(m => m?.us || m || '').join(', ')}</span>
+            <span className="text-sm font-medium">
+              {mats.map(m => (typeof m === 'object' && m !== null) ? (m.us || '') : (typeof m === 'string' ? m : '')).filter(Boolean).join(', ')}
+            </span>
             {record.moq && <span className="text-xs text-orange bg-orange/10 px-1.5 py-0.5 rounded-sm w-fit">MOQ: {record.moq}</span>}
           </div>
         )
@@ -98,7 +130,7 @@ export function ProductTable({ data, onEdit, onDelete, loading }: ProductTablePr
             </Link>
           </Tooltip>
           <Tooltip title="Edit Product">
-            <Link href={`/admin/products/edit/${record.slug || record.id}`}>
+            <Link href={`/admin/products/edit/${record.id || (record as any)._id || record.code || record.slug}`}>
               <Button 
                 type="text" 
                 icon={<EditOutlined />} 
@@ -111,7 +143,7 @@ export function ProductTable({ data, onEdit, onDelete, loading }: ProductTablePr
               type="text" 
               danger 
               icon={<DeleteOutlined />} 
-              onClick={() => onDelete(record.slug || record.id)} 
+              onClick={() => onDelete(record.id || (record as any)._id || record.code || record.slug)} 
               className="hover:bg-red-50"
             />
           </Tooltip>

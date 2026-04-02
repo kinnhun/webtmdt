@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "@/lib/mongodb";
 import Product from "@/models/Product";
-import { featuredProductsData } from "@/data/products";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "GET") {
@@ -14,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     let products = await Product.find().limit(8).lean();
 
     if (!products.length) {
-      return res.status(200).json(featuredProductsData);
+      return res.status(200).json([]);
     }
 
     const mapped = products.map((p) => ({
@@ -35,6 +34,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     return res.status(200).json(mapped);
   } catch {
-    return res.status(200).json(featuredProductsData);
+    return res.status(200).json([]);
   }
 }

@@ -130,17 +130,25 @@ export function useCatalogue(forcedCollection?: Collection) {
       if (!pName.includes(q) && !p.code.toLowerCase().includes(q) && !pCat.includes(q)) return false;
     }
     
-    const checkOverlap = (productStr: string | undefined, selectedFilters: string[]) => {
+    const checkOverlapExt = (fieldData: any, selectedFilters: string[]) => {
       if (!selectedFilters.length) return true;
-      const productArr = (productStr || "").split(',').map(s => s.trim());
-      return selectedFilters.some(f => productArr.includes(f));
+      let arr: string[] = [];
+      if (typeof fieldData === 'string') {
+        arr = fieldData.split(',').map(s => s.trim());
+      } else if (fieldData && typeof fieldData === 'object') {
+        arr = [
+          ...(fieldData.us || "").split(','),
+          ...(fieldData[langId] || "").split(',')
+        ].map((s: string) => s.trim());
+      }
+      return selectedFilters.some(f => arr.includes(f));
     };
 
-    if (!checkOverlap(p.category?.us, filters.category)) return false;
-    if (!checkOverlap(p.material?.us, filters.material)) return false;
+    if (!checkOverlapExt(p.category, filters.category)) return false;
+    if (!checkOverlapExt(p.material, filters.material)) return false;
     if (filters.moq.length && (!p.moq || !filters.moq.includes(p.moq))) return false;
-    if (!checkOverlap(p.color?.us, filters.color)) return false;
-    if (!checkOverlap(p.style?.us, filters.style)) return false;
+    if (!checkOverlapExt(p.color, filters.color)) return false;
+    if (!checkOverlapExt(p.style, filters.style)) return false;
 
     return true;
   });
@@ -155,12 +163,24 @@ export function useCatalogue(forcedCollection?: Collection) {
   const safePage = Math.min(page, totalPages);
   const paginated = filtered.slice((safePage - 1) * ITEMS_PER_PAGE, safePage * ITEMS_PER_PAGE);
 
+  const getDynamicOptions = (key: 'material' | 'color' | 'style'): string[] => {
+    const opts = new Set<string>();
+    collectionProducts.forEach((p: Product) => {
+      const valStr = p[key]?.[langId] || p[key]?.us || "";
+      valStr.split(',').forEach((s: string) => {
+        const trimmed = s.trim();
+        if (trimmed) opts.add(trimmed);
+      });
+    });
+    return Array.from(opts).sort();
+  };
+
   const filterGroups: { key: keyof FilterState; label: string; options: string[] }[] = [
     { key: "category", label: t("catalogue.category"), options: collection === "Outdoor" ? OUTDOOR_CATEGORIES : INDOOR_CATEGORIES },
-    { key: "material", label: t("catalogue.material"), options: MATERIALS },
+    { key: "material", label: t("catalogue.material"), options: getDynamicOptions('material') },
     { key: "moq", label: t("catalogue.moq"), options: MOQ_OPTIONS },
-    { key: "color", label: t("catalogue.color"), options: COLORS },
-    { key: "style", label: t("catalogue.style"), options: STYLES },
+    { key: "color", label: t("catalogue.color"), options: getDynamicOptions('color') },
+    { key: "style", label: t("catalogue.style"), options: getDynamicOptions('style') },
   ];
 
   return {

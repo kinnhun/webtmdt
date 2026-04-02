@@ -2,6 +2,7 @@ import React from 'react';
 import { Table, Button, Space, Tag, Badge, Tooltip } from 'antd';
 import { EditOutlined, DeleteOutlined, PictureOutlined, GlobalOutlined } from '@ant-design/icons';
 import type { Product } from '@/domains/product/product.types';
+import { OUTDOOR_CATEGORIES, INDOOR_CATEGORIES } from '@/domains/product/product.types';
 import Link from 'next/link';
 
 interface ProductTableProps {
@@ -49,22 +50,27 @@ export function ProductTable({ data, onEdit, onDelete, loading }: ProductTablePr
       title: 'Classification',
       dataIndex: 'category',
       key: 'category',
-      filters: [
-        { text: 'Sofa', value: 'Sofa' },
-        { text: 'Dining', value: 'Dining' },
-        { text: 'Lounge', value: 'Lounge' },
-      ],
+      filters: [...OUTDOOR_CATEGORIES, ...INDOOR_CATEGORIES].map(c => ({ text: c, value: c })),
       onFilter: (value: React.Key | boolean, record: Product) => {
         const catArray = Array.isArray(record.category) ? record.category : [record.category];
         return catArray.some(c => (c?.us || '').includes(String(value)));
       },
       render: (_: unknown, record: Product) => {
-        const collections = Array.isArray(record.collection) ? record.collection : [record.collection];
+        const collectionsRaw = Array.isArray(record.collection) ? record.collection : String(record.collection || '').split(',').map(s => s.trim()).filter(Boolean);
         const categories = Array.isArray(record.category) ? record.category : [record.category];
         return (
           <div className="flex flex-col gap-1 items-start">
-            {collections.map((c, i) => <Tag key={i} color="cyan" className="m-0 border-0">{c}</Tag>)}
-            {categories.map((c, i) => <span key={i} className="text-xs text-navy/70">{c?.us || c || ''}</span>)}
+            <div className="flex flex-wrap gap-1">
+              {collectionsRaw.map((c, i) => <Tag key={i} color="cyan" className="m-0 border-0">{c}</Tag>)}
+            </div>
+            {categories.map((c, i) => {
+              const str = c?.us || c || '';
+              return (
+                <Tooltip key={i} title={str} placement="topLeft">
+                  <div className="text-xs text-navy/70 truncate max-w-[200px]">{str}</div>
+                </Tooltip>
+              );
+            })}
           </div>
         )
       },

@@ -7,15 +7,12 @@ import {
   ShoppingOutlined,
   InboxOutlined,
   TeamOutlined,
-  FileTextOutlined,
   SettingOutlined,
   UserOutlined,
   LogoutOutlined,
   BellOutlined,
   GlobalOutlined,
-  BarChartOutlined,
   EditOutlined,
-  FolderOpenOutlined,
 } from '@ant-design/icons';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -50,51 +47,12 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     {
       key: '/admin/products',
       icon: <ShoppingOutlined className="text-[1.1rem]" />,
-      label: <span className="font-body text-sm font-medium">{t('admin.menu.products', 'Products')}</span>,
-      children: [
-        {
-          key: '/admin/products/manage',
-          icon: <EditOutlined />,
-          label: <Link href="/admin/products" className="font-body text-sm">Manage Products</Link>,
-        },
-        {
-          key: '/admin/products/attributes',
-          icon: <SettingOutlined />,
-          label: <Link href="/admin/products/attributes" className="font-body text-sm">Attributes & Filters</Link>,
-        },
-      ],
+      label: <Link href="/admin/products" className="font-body text-sm font-medium">{t('admin.menu.products', 'Products')}</Link>,
     },
     {
       key: '/admin/inquiries',
       icon: <InboxOutlined className="text-[1.1rem]" />,
       label: <Link href="/admin/inquiries" className="font-body text-sm font-medium">{t('admin.menu.inquiries', 'Inquiries')}</Link>,
-    },
-    {
-      key: '/admin/customers',
-      icon: <TeamOutlined className="text-[1.1rem]" />,
-      label: <Link href="/admin/customers" className="font-body text-sm font-medium">{t('admin.menu.customers', 'Customers')}</Link>,
-    },
-    {
-      key: '/admin/blog',
-      icon: <FileTextOutlined className="text-[1.1rem]" />,
-      label: <span className="font-body text-sm font-medium">{t('admin.menu.blog', 'Blog Posts')}</span>,
-      children: [
-        {
-          key: '/admin/blog/overview',
-          icon: <BarChartOutlined />,
-          label: <Link href="/admin/blog" className="font-body text-sm">Overview</Link>,
-        },
-        {
-          key: '/admin/blog/manage',
-          icon: <EditOutlined />,
-          label: <Link href="/admin/blog/manage" className="font-body text-sm">Manage Posts</Link>,
-        },
-        {
-          key: '/admin/blog/categories',
-          icon: <FolderOpenOutlined />,
-          label: <Link href="/admin/blog/categories" className="font-body text-sm">Categories</Link>,
-        },
-      ],
     },
     {
       key: '/admin/settings',
@@ -134,14 +92,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   if (!mounted) return null;
 
   const getSelectedKey = () => {
-    if (router.pathname === '/admin/blog') return '/admin/blog/overview';
-    if (router.pathname === '/admin/products') return '/admin/products/manage';
     return router.pathname;
   };
 
   const getOpenKeys = () => {
-    if (router.pathname.startsWith('/admin/blog')) return ['/admin/blog'];
-    if (router.pathname.startsWith('/admin/products')) return ['/admin/products'];
     return [];
   };
 

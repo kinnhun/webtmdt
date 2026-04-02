@@ -5,7 +5,7 @@ import CategoryShowcase from "./components/CategoryShowcase";
 import FeaturedProducts from "./components/FeaturedProducts";
 import WhyChooseUs from "./components/WhyChooseUs";
 import MaterialsSection from "./components/MaterialsSection";
-
+import ReadyToWorkTogether from "./components/ReadyToWorkTogether";
 export default function HomeContainer() {
   return (
     <>
@@ -16,6 +16,7 @@ export default function HomeContainer() {
       <FeaturedProducts />
       <WhyChooseUs />
       <MaterialsSection />
+      <ReadyToWorkTogether />
     </>
   );
 }

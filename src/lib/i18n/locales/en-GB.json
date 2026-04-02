@@ -15,7 +15,9 @@
       "requestQuote": "Contact Us"
     },
     "cta": {
-      "browseCatalogue": "Browse Catalogue"
+      "browseCatalogue": "Browse Catalogue",
+      "description": "Get our latest catalogue, pricing, and product details for your next order.",
+      "btn1": "GET FULL CATALOGUE"
     },
     "materials": {
       "linenVelvet": {

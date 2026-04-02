@@ -206,11 +206,13 @@
       ]
     },
     "cta": {
-      "heading": "Sẵn sàng trang bị không gian của bạn?",
-      "description": "Liên hệ đội ngũ chúng tôi để nhận báo giá tùy chỉnh, đặt hàng số lượng lớn và tư vấn dự án. Giao hàng toàn cầu.",
+      "heading": "Đang tìm kiếm nhà cung cấp nội thất ngoài trời uy tín?",
+      "description": "Nhận catalog, bảng giá và thông tin sản phẩm mới nhất cho đơn đặt hàng tiếp theo của bạn.",
       "sendInquiry": "Gửi yêu cầu",
       "browseCatalogue": "Xem danh mục",
-      "slogan": "Chế Tác Nội Thất Ngoài Trời Cao Cấp Từ 2008"
+      "slogan": "Chế Tác Nội Thất Ngoài Trời Cao Cấp Từ 2008",
+      "btn1": "NHẬN TOÀN BỘ CATALOG",
+      "btn2": "Yêu cầu báo giá →"
     }
   },
   "about": {
@@ -355,24 +357,28 @@
       }
     },
     "welcome": {
-      "heading": "LỜI CHÀO\nMỪNG",
-      "intro": "DHT Furniture Vietnam – Nhà sản xuất và chuyên xuất khẩu nội thất gỗ ngoài trời, trụ sở tại Quy Nhơn.",
-      "d": {
-        "letter": "D",
-        "word": "EDICATION",
-        "desc": "Cam kết và tận tâm trên từng sản phẩm."
-      },
-      "h": {
-        "letter": "H",
-        "word": "ONESTY",
-        "desc": "Minh bạch và trung thực trong mọi giao dịch."
-      },
-      "t": {
-        "letter": "T",
-        "word": "ENACITY",
-        "desc": "Kiên trì theo đuổi chất lượng và các mục tiêu dài hạn."
-      }
-    }
+      "title": "Tại Sao Khách Hàng Toàn Cầu Chọn DHT?",
+      "description": "DHT đồng hành cùng nhà bán lẻ, nhà phân phối và khách hàng dự án với sản xuất nội thất ngoài trời đáng tin cậy tại Việt Nam. Chúng tôi tập trung vào chất lượng ổn định, sản xuất linh hoạt và quan hệ đối tác lâu dài.",
+      "values": [
+        {
+          "title": "Sản Xuất Đáng Tin Cậy",
+          "desc": "QC nghiêm ngặt, chất lượng ổn định xuyên suốt các đơn hàng"
+        },
+        {
+          "title": "Dành Cho Khách Hàng B2B",
+          "desc": "OEM / ODM, ghép container, sản xuất quy mô"
+        },
+        {
+          "title": "Sẵn Sàng Xuất Khẩu",
+          "desc": "Giao hàng đúng hạn, kinh nghiệm vận chuyển toàn cầu"
+        }
+      ]
+    },
+    "marquee": [
+      "Hơn 18 Năm Kinh Nghiệm",
+      "50.000 Sản Phẩm / Tháng",
+      "Hơn 35 Quốc Gia Xuất Khẩu"
+    ]
   },
   "catalogue": {
     "seo": {

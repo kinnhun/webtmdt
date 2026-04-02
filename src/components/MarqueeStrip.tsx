@@ -4,9 +4,13 @@ const separatorDot = (
   <span className="inline-block w-1.5 h-1.5 rounded-full mx-5 align-middle" style={{ backgroundColor: "hsl(var(--orange))" }} />
 );
 
-export default function MarqueeStrip() {
+interface MarqueeStripProps {
+  items?: string[];
+}
+
+export default function MarqueeStrip({ items: customItems }: MarqueeStripProps) {
   const { t } = useTranslation();
-  const items = t("marquee.items", { returnObjects: true }) as string[];
+  const items = customItems ?? (t("marquee.items", { returnObjects: true }) as string[]);
 
   const content = items.flatMap((item, i) => [
     <span key={`item-${i}`} className="inline-block whitespace-nowrap font-body font-medium text-sm tracking-widest uppercase">{item}</span>,

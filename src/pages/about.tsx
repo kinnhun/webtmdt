@@ -1,10 +1,16 @@
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import Head from "next/head";
 import Link from "next/link";
 import { Award, Users, Shield, Globe, Leaf, ArrowDown, ChevronRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import MarqueeStrip from "@/components/MarqueeStrip";
+
+const storyImages = [
+  "/img/readyToWork/1.png",
+  "/img/readyToWork/2.png",
+  "/img/readyToWork/3.png",
+];
 
 export default function AboutPage() {
   const { t } = useTranslation();
@@ -12,6 +18,14 @@ export default function AboutPage() {
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+  const [storyImgIdx, setStoryImgIdx] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setStoryImgIdx((prev) => (prev + 1) % storyImages.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
 
   const values = [
     { icon: Award, title: t("about.values.quality.title"), desc: t("about.values.quality.desc") },
@@ -34,7 +48,7 @@ export default function AboutPage() {
         {/* ── 1. Hero Parallax ── */}
         <section ref={heroRef} className="relative h-[100svh] flex items-center justify-center overflow-hidden bg-black">
           <motion.div style={{ y, opacity }} className="absolute inset-0">
-            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=2400&auto=format&fit=crop&q=90" alt="Factory" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+            <img src="/img/about/image.png" alt="Factory" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
           </motion.div>
           <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black" />
           
@@ -55,7 +69,7 @@ export default function AboutPage() {
           </motion.div>
         </section>
 
-        <MarqueeStrip />
+        <MarqueeStrip items={t("about.marquee", { returnObjects: true }) as string[]} />
 
         {/* ── 2. Welcome Message (DHT) ── */}
         <section className="relative py-32 overflow-hidden" style={{ backgroundColor: "hsl(var(--navy-deep))" }}>
@@ -124,9 +138,20 @@ export default function AboutPage() {
                   <p>{t("about.story.paragraph3")}</p>
                 </motion.div>
                 
-                <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.4 }} className="mt-16 rounded-sm overflow-hidden aspect-[16/9] shadow-2xl relative group">
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-1000 z-10" />
-                  <img src="https://images.unsplash.com/photo-1549497538-303791108f95?auto=format&fit=crop&w=1600&q=90" alt="DHT production" className="w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-[2s] ease-out" />
+                <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.4 }} className="mt-16 rounded-sm overflow-hidden aspect-video shadow-2xl relative group">
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-1000 z-20" />
+                  <AnimatePresence mode="popLayout">
+                    <motion.img
+                      key={storyImgIdx}
+                      src={storyImages[storyImgIdx]}
+                      alt="DHT production"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 1.2, ease: "easeInOut" }}
+                      className="absolute inset-0 w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-[2s] ease-out"
+                    />
+                  </AnimatePresence>
                 </motion.div>
               </div>
             </div>

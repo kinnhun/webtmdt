@@ -26,17 +26,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const newToday = await Contact.countDocuments({ createdAt: { $gte: startOfToday } });
     const newLast7Days = await Contact.countDocuments({ createdAt: { $gte: startOf7DaysAgo } });
     const newLast30Days = await Contact.countDocuments({ createdAt: { $gte: startOf30DaysAgo } });
-    const pendingInquiries = await Contact.countDocuments({ status: "pending" });
+    const pendingInquiries = await Contact.countDocuments({ status: { $in: ["new", "pending", "processing"] } });
 
     // Pipeline by Status
     const pipelineStatusRaw = await Contact.aggregate([
       { $group: { _id: "$status", count: { $sum: 1 } } }
     ]);
-    const pipelineStatus = {
-      pending: pipelineStatusRaw.find((s: any) => s._id === "pending")?.count || 0,
-      processing: pipelineStatusRaw.find((s: any) => s._id === "processing")?.count || 0,
-      resolved: pipelineStatusRaw.find((s: any) => s._id === "resolved")?.count || 0,
-    };
+    const pipelineStatus = pipelineStatusRaw.reduce((acc: any, curr: any) => {
+      acc[curr._id] = curr.count;
+      return acc;
+    }, {});
 
     // Queries for Products
     const totalProducts = await Product.countDocuments();

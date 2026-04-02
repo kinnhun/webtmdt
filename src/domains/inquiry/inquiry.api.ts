@@ -8,3 +8,8 @@ export const fetchInquiries = async (): Promise<Inquiry[]> => {
 export const editInquiry = async (id: string, payload: UpdateInquiryPayload): Promise<Inquiry> => {
   return inquiryService.updateInquiry(id, payload);
 };
+
+export const fetchSettings = async (): Promise<any[]> => inquiryService.getInquirySettings();
+export const createSetting = async (payload: any): Promise<any> => inquiryService.createInquirySetting(payload);
+export const updateSetting = async (id: string, payload: any): Promise<any> => inquiryService.updateInquirySetting(id, payload);
+export const deleteSetting = async (id: string): Promise<any> => inquiryService.deleteInquirySetting(id);

@@ -10,9 +10,10 @@ interface ProductTableProps {
   onEdit: (slugOrId: string) => void;
   onDelete: (slugOrId: string) => void;
   loading?: boolean;
+  canManage?: boolean;
 }
 
-export function ProductTable({ data, onEdit, onDelete, loading }: ProductTableProps) {
+export function ProductTable({ data, onEdit, onDelete, loading, canManage = true }: ProductTableProps) {
   const columns = [
     {
       title: 'Media',
@@ -129,24 +130,28 @@ export function ProductTable({ data, onEdit, onDelete, loading }: ProductTablePr
               />
             </Link>
           </Tooltip>
-          <Tooltip title="Edit Product">
-            <Link href={`/admin/products/edit/${record.id || (record as any)._id || record.code || record.slug}`}>
-              <Button 
-                type="text" 
-                icon={<EditOutlined />} 
-                className="text-blue-600 hover:bg-blue-50"
-              />
-            </Link>
-          </Tooltip>
-          <Tooltip title="Delete">
-            <Button 
-              type="text" 
-              danger 
-              icon={<DeleteOutlined />} 
-              onClick={() => onDelete(record.id || (record as any)._id || record.code || record.slug)} 
-              className="hover:bg-red-50"
-            />
-          </Tooltip>
+          {canManage && (
+            <>
+              <Tooltip title="Edit Product">
+                <Link href={`/admin/products/edit/${record.id || (record as any)._id || record.code || record.slug}`}>
+                  <Button 
+                    type="text" 
+                    icon={<EditOutlined />} 
+                    className="text-blue-600 hover:bg-blue-50"
+                  />
+                </Link>
+              </Tooltip>
+              <Tooltip title="Delete">
+                <Button 
+                  type="text" 
+                  danger 
+                  icon={<DeleteOutlined />} 
+                  onClick={() => onDelete(record.id || (record as any)._id || record.code || record.slug)} 
+                  className="hover:bg-red-50"
+                />
+              </Tooltip>
+            </>
+          )}
         </Space>
       ),
       width: 100,

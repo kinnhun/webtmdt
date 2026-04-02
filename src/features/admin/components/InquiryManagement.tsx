@@ -10,11 +10,19 @@ const { Title, Text, Paragraph } = Typography;
 const { Option } = Select;
 
 const STATUS_COLORS: Record<string, string> = {
-  new: 'processing',
-  pending: 'warning',
-  replied: 'magenta',
-  quoted: 'purple',
-  closed: 'default',
+  pending: 'processing',
+  processing: 'warning',
+  resolved: 'success',
+  cancelled: 'default',
+};
+
+const CATEGORY_LABELS: Record<string, string> = {
+  consulting: 'Tư vấn sản phẩm',
+  support: 'Hỗ trợ kỹ thuật',
+  complaint: 'Khiếu nại',
+  cooperation: 'Hợp tác',
+  quotation: 'Báo giá',
+  other: 'Khác',
 };
 
 export default function InquiryManagement() {
@@ -24,6 +32,7 @@ export default function InquiryManagement() {
 
   const [searchText, setSearchText] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [categoryFilter, setCategoryFilter] = useState<string>('all');
   
   // Drawer state
   const [drawerVisible, setDrawerVisible] = useState(false);
@@ -39,14 +48,16 @@ export default function InquiryManagement() {
       item._id.toLowerCase().includes(searchText.toLowerCase());
     
     const matchesStatus = statusFilter === 'all' || item.status === statusFilter;
+    const matchesCategory = categoryFilter === 'all' || item.category === categoryFilter;
     
-    return matchesSearch && matchesStatus;
+    return matchesSearch && matchesStatus && matchesCategory;
   });
 
   const handleView = (record: Inquiry) => {
     setSelectedInquiry(record);
     form.setFieldsValue({
       status: record.status,
+      category: record.category,
       interestedProduct: record.interestedProduct && typeof record.interestedProduct === 'object' ? record.interestedProduct._id : record.interestedProduct,
       internalNotes: record.internalNotes,
     });
@@ -134,10 +145,10 @@ export default function InquiryManagement() {
                 rel="noopener noreferrer"
                 className="group flex flex-col gap-1 hover:bg-orange-50 p-1.5 rounded-lg transition-colors border border-transparent hover:border-orange-100"
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
                   {record.interestedProduct.image ? (
                     <div className="w-8 h-8 rounded bg-gray-100 shrink-0 overflow-hidden border border-gray-200">
-                      <img src={record.interestedProduct.image} alt={record.interestedProduct.name} className="w-full h-full object-cover" />
+                      <img src={record.interestedProduct.image} alt={typeof (record.interestedProduct as any).name === 'object' ? (record.interestedProduct as any).name.us : (record.interestedProduct as any).name} className="w-full h-full object-cover" />
                     </div>
                   ) : (
                     <div className="w-8 h-8 rounded bg-gray-100 shrink-0 border border-gray-200 flex items-center justify-center text-gray-400">
@@ -146,10 +157,10 @@ export default function InquiryManagement() {
                   )}
                   <div className="overflow-hidden">
                     <div className="text-xs font-semibold text-gray-900 line-clamp-1 group-hover:text-orange-600 transition-colors">
-                      {record.interestedProduct.name}
+                      {typeof (record.interestedProduct as any).name === 'object' ? (record.interestedProduct as any).name.us : (record.interestedProduct as any).name}
                     </div>
                     <div className="text-[10px] text-gray-500 line-clamp-1 uppercase tracking-wider">
-                      {record.interestedProduct.code}
+                      {(record.interestedProduct as any).code}
                     </div>
                   </div>
                 </div>
@@ -160,28 +171,46 @@ export default function InquiryManagement() {
 
         return (
           <div onClick={(e) => e.stopPropagation()}>
-            <Tag color="orange" className="border-0 m-0 rounded-full px-2 py-0 text-[10px] leading-tight flex items-center gap-1 shadow-sm w-fit">
-              <ShoppingOutlined /> Product Linked
-            </Tag>
+            <a 
+              href={`/catalogue/${record.interestedProduct}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block"
+            >
+              <Tag color="orange" className="border-0 m-0 rounded-full px-2 py-0 text-[10px] leading-tight flex items-center gap-1 shadow-sm w-fit hover:bg-orange-100 transition-colors cursor-pointer">
+                <ShoppingOutlined /> Product Linked ({record.interestedProduct})
+              </Tag>
+            </a>
           </div>
         );
       }
+    },
+    {
+      title: 'Category',
+      dataIndex: 'category',
+      key: 'category',
+      render: (category: string) => (
+        <Tag color="geekblue" className="rounded-full px-2 py-0 border-0 font-medium">
+          {CATEGORY_LABELS[category] || category || 'Khác'}
+        </Tag>
+      ),
+      filters: Object.entries(CATEGORY_LABELS).map(([k, v]) => ({ text: v, value: k })),
+      onFilter: (value: boolean | React.Key, record: Inquiry) => record.category === value,
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
       render: (status: string) => (
-        <Tag color={STATUS_COLORS[status]} className="rounded-full px-3 py-0.5 capitalize shadow-sm border-0 font-medium tracking-wide">
+        <Tag color={STATUS_COLORS[status] || 'default'} className="rounded-full px-3 py-0.5 capitalize shadow-sm border-0 font-medium tracking-wide">
           {status}
         </Tag>
       ),
       filters: [
-        { text: 'New', value: 'new' },
         { text: 'Pending', value: 'pending' },
-        { text: 'Replied', value: 'replied' },
-        { text: 'Quoted', value: 'quoted' },
-        { text: 'Closed', value: 'closed' },
+        { text: 'Processing', value: 'processing' },
+        { text: 'Resolved', value: 'resolved' },
+        { text: 'Cancelled', value: 'cancelled' },
       ],
       onFilter: (value: boolean | React.Key, record: Inquiry) => record.status === value,
     },
@@ -235,11 +264,21 @@ export default function InquiryManagement() {
               onChange={setStatusFilter}
             >
               <Option value="all">All Statuses</Option>
-              <Option value="new">New</Option>
               <Option value="pending">Pending</Option>
-              <Option value="replied">Replied</Option>
-              <Option value="quoted">Quoted</Option>
-              <Option value="closed">Closed</Option>
+              <Option value="processing">Processing</Option>
+              <Option value="resolved">Resolved</Option>
+              <Option value="cancelled">Cancelled</Option>
+            </Select>
+            <Select
+              className="w-40"
+              size="large"
+              value={categoryFilter}
+              onChange={setCategoryFilter}
+            >
+              <Option value="all">All Categories</Option>
+              {Object.entries(CATEGORY_LABELS).map(([k, v]) => (
+                <Option key={k} value={k}>{v}</Option>
+              ))}
             </Select>
           </div>
           <div className="flex items-center">
@@ -332,11 +371,11 @@ export default function InquiryManagement() {
                 </Paragraph>
               </div>
 
-              {selectedInquiry.interestedProduct && typeof selectedInquiry.interestedProduct === 'object' && (
+              {selectedInquiry.interestedProduct && typeof selectedInquiry.interestedProduct === 'object' ? (
                 <div className="bg-white p-5 rounded-xl border border-orange-100 shadow-sm mb-6 flex items-start gap-4">
-                  {selectedInquiry.interestedProduct.image && (
+                  {(selectedInquiry.interestedProduct as any).image && (
                     <div className="w-16 h-16 rounded overflow-hidden bg-gray-100 shrink-0 border border-gray-200">
-                      <img src={selectedInquiry.interestedProduct.image} alt="Product" className="w-full h-full object-cover" />
+                      <img src={(selectedInquiry.interestedProduct as any).image} alt="Product" className="w-full h-full object-cover" />
                     </div>
                   )}
                   <div className="flex-1">
@@ -344,35 +383,60 @@ export default function InquiryManagement() {
                       <ShoppingOutlined /> Interested In
                     </Text>
                     <a 
-                      href={`/catalogue/${selectedInquiry.interestedProduct.slug}`} 
+                      href={`/catalogue/${(selectedInquiry.interestedProduct as any).slug}`} 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="font-semibold text-base text-gray-900 hover:text-orange block"
                     >
-                      {selectedInquiry.interestedProduct.name}
+                      {typeof (selectedInquiry.interestedProduct as any).name === 'object' ? (selectedInquiry.interestedProduct as any).name.us : (selectedInquiry.interestedProduct as any).name}
                     </a>
-                    <div className="text-xs text-gray-500 mt-1 uppercase tracking-wider">{selectedInquiry.interestedProduct.code}</div>
+                    <div className="text-xs text-gray-500 mt-1 uppercase tracking-wider">{(selectedInquiry.interestedProduct as any).code}</div>
                   </div>
                 </div>
-              )}
+              ) : selectedInquiry.interestedProduct ? (
+                <div className="bg-white p-5 rounded-xl border border-orange-100 shadow-sm mb-6 flex items-start gap-4">
+                  <div className="flex-1">
+                    <Text type="secondary" className="text-[10px] uppercase tracking-wider font-bold text-orange mb-1 flex items-center gap-1">
+                      <ShoppingOutlined /> Product Linked
+                    </Text>
+                    <a 
+                      href={`/catalogue/${selectedInquiry.interestedProduct}`} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="font-semibold text-base text-gray-900 hover:text-orange block"
+                    >
+                      {selectedInquiry.interestedProduct}
+                    </a>
+                    <div className="text-xs text-gray-500 mt-1 uppercase tracking-wider">Details unavailable</div>
+                  </div>
+                </div>
+              ) : null}
 
               {/* Admin Actions Form */}
               <div className="bg-white p-5 rounded-xl border border-indigo-50 shadow-sm border-l-4 border-l-indigo-500">
                 <Title level={5} className="font-display m-0 mb-4" style={{ color: 'hsl(var(--navy-deep))' }}>Admin Processing</Title>
                 <Form form={form} layout="vertical">
                   <Row gutter={16}>
-                    <Col span={12}>
-                      <Form.Item name="status" label="Inquiry Status" rules={[{ required: true }]}>
+                    <Col span={8}>
+                      <Form.Item name="category" label="Category" rules={[{ required: true }]}>
                         <Select size="large" className="rounded-lg">
-                          <Option value="new">New</Option>
-                          <Option value="pending">Pending Review</Option>
-                          <Option value="replied">Replied (Info Given)</Option>
-                          <Option value="quoted">Quote Sent</Option>
-                          <Option value="closed">Closed / Resolved</Option>
+                          {Object.entries(CATEGORY_LABELS).map(([k, v]) => (
+                            <Option key={k} value={k}>{v}</Option>
+                          ))}
                         </Select>
                       </Form.Item>
                     </Col>
-                    <Col span={12}>
+                    <Col span={8}>
+                      <Form.Item name="status" label="Inquiry Status" rules={[{ required: true }]}>
+                        <Select size="large" className="rounded-lg">
+                          <Option value="pending">Pending (Chưa xử lý)</Option>
+                          <Option value="processing">Processing (Đang xử lý)</Option>
+                          <Option value="resolved">Resolved (Đã xử lý)</Option>
+                          <Option value="cancelled">Cancelled (Đã huỷ)</Option>
+                        </Select>
+                      </Form.Item>
+                    </Col>
+                    <Col span={8}>
                       <Form.Item name="interestedProduct" label="Interested Product">
                         <Select 
                           showSearch 

@@ -648,23 +648,32 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       flatInit.longDescriptionUK = initialValues.longDescription?.uk || '';
       flatInit.longDescriptionVI = initialValues.longDescription?.vi || '';
     }
-    // Flatten I18nText fields: Select mode="tags" expects array, DB supplies string (comma separated)
-    const extractTags = (val: any) => {
+    const getTagArray = (val: any) => {
       if (!val) return [];
-      const txt = typeof val === 'object' ? val.us : String(val);
-      if (!txt) return [];
-      if (Array.isArray(txt)) return txt;
-      return txt.split(',').map((s: string) => s.trim()).filter(Boolean);
+      if (Array.isArray(val)) return val;
+      return String(val).split(',').map(s => s.trim()).filter(Boolean);
     };
 
     if (initialValues?.material) {
-      flatInit.material = extractTags(initialValues.material);
+      if (typeof initialValues.material === 'object' && !Array.isArray(initialValues.material)) {
+        flatInit.material = getTagArray(initialValues.material.us);
+        flatInit.materialUK = getTagArray(initialValues.material.uk);
+        flatInit.materialVI = getTagArray(initialValues.material.vi);
+      } else {
+        flatInit.material = getTagArray(initialValues.material);
+      }
     }
     if (initialValues?.color) {
-      flatInit.color = extractTags(initialValues.color);
+      flatInit.color = getTagArray(initialValues.color);
     }
     if (initialValues?.style) {
-      flatInit.style = extractTags(initialValues.style);
+      if (typeof initialValues.style === 'object' && !Array.isArray(initialValues.style)) {
+        flatInit.style = getTagArray(initialValues.style.us);
+        flatInit.styleUK = getTagArray(initialValues.style.uk);
+        flatInit.styleVI = getTagArray(initialValues.style.vi);
+      } else {
+        flatInit.style = getTagArray(initialValues.style);
+      }
     }
 
     const extractList = (val: any) => {
@@ -771,9 +780,9 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       name: { us: v.name || '', uk: v.nameUK || '', vi: v.nameVI || '' },
       description: { us: v.description || '', uk: v.descriptionUK || '', vi: v.descriptionVI || '' },
       longDescription: { us: v.longDescription || '', uk: v.longDescriptionUK || '', vi: v.longDescriptionVI || '' },
-      material: { us: Array.isArray(v.material) ? v.material.join(', ') : (v.material || ''), uk: '', vi: '' },
+      material: { us: Array.isArray(v.material) ? v.material.join(', ') : (v.material || ''), uk: Array.isArray(v.materialUK) ? v.materialUK.join(', ') : (v.materialUK || ''), vi: Array.isArray(v.materialVI) ? v.materialVI.join(', ') : (v.materialVI || '') },
       color: { us: Array.isArray(v.color) ? v.color.join(', ') : (v.color || ''), uk: '', vi: '' },
-      style: { us: Array.isArray(v.style) ? v.style.join(', ') : (v.style || ''), uk: '', vi: '' },
+      style: { us: Array.isArray(v.style) ? v.style.join(', ') : (v.style || ''), uk: Array.isArray(v.styleUK) ? v.styleUK.join(', ') : (v.styleUK || ''), vi: Array.isArray(v.styleVI) ? v.styleVI.join(', ') : (v.styleVI || '') },
       category: { us: categoryUs, uk: '', vi: '' },
       collection: collectionStr || 'Outdoor',
       features: { us: v.features?.filter(Boolean) || [], uk: [], vi: [] },
@@ -787,6 +796,10 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
     delete payload.descriptionVI;
     delete payload.longDescriptionUK;
     delete payload.longDescriptionVI;
+    delete payload.materialUK;
+    delete payload.materialVI;
+    delete payload.styleUK;
+    delete payload.styleVI;
     if (isEdit) {
       mutateUpdate(payload);
     } else {
@@ -884,6 +897,106 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       )}
     </Form.List>
   );
+
+  // ── Tag Lang Helper (Material/Style) ──────────────────────────────────────────────────
+  const TagLangBlock = ({ fieldName, label, options }: { fieldName: string; label: string; options: string[] }) => {
+    const handleTagTranslate = async (sourceLang: 'US' | 'UK' | 'VI') => {
+      const shortUs = fieldName;
+      const shortUk = fieldName + 'UK';
+      const shortVi = fieldName + 'VI';
+      
+      let sourceTags = form.getFieldValue(sourceLang === 'US' ? shortUs : sourceLang === 'UK' ? shortUk : shortVi) || [];
+      if (typeof sourceTags === 'string') sourceTags = sourceTags.split(',').map((s: string) => s.trim());
+      if (!sourceTags.length) {
+        message.warning(`Please enter ${label} in ${sourceLang} first.`);
+        return;
+      }
+      const sourceText = sourceTags.join(', ');
+
+      const hideMsg = message.loading(`Translating ${label} from ${sourceLang}...`, 0);
+      try {
+        if (sourceLang === 'US' || sourceLang === 'UK') {
+          const otherEn = sourceLang === 'US' ? shortUk : shortUs;
+          form.setFieldValue(otherEn, sourceTags);
+
+          const res = await fetch('/api/translate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: sourceText, targetLang: 'vi', sourceLang: 'en' }),
+          });
+          const data = await res.json();
+          if (res.ok && data.translated) {
+            form.setFieldValue(shortVi, data.translated.split(',').map((s: string) => s.trim()));
+          }
+        } else if (sourceLang === 'VI') {
+          const res = await fetch('/api/translate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: sourceText, targetLang: 'en', sourceLang: 'vi' }),
+          });
+          const data = await res.json();
+          if (res.ok && data.translated) {
+            const translatedArr = data.translated.split(',').map((s: string) => s.trim());
+            form.setFieldValue(shortUs, translatedArr);
+            form.setFieldValue(shortUk, translatedArr);
+          }
+        }
+        message.success(`${label} translated successfully!`);
+      } catch {
+        message.error('Translation failed.');
+      } finally {
+        hideMsg();
+      }
+    };
+
+    return (
+      <div className="space-y-4 mb-2 bg-gray-50/50 p-5 rounded-xl border border-gray-100 shadow-sm relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-1 h-full bg-linear-to-b from-gray-200 to-gray-100" />
+        <div className="flex items-center justify-between mb-2">
+          <span className="font-bold text-gray-700 text-sm">{label} <span className="text-gray-400 font-normal text-xs ml-1">(Multi-lang)</span></span>
+        </div>
+        
+        {/* US */}
+        <div className="flex flex-col gap-1.5 border border-orange/20 rounded-lg p-3 bg-white">
+          <div className="flex items-center justify-between">
+             <span className="text-[11px] font-semibold text-gray-500 flex items-center gap-1.5"><GlobalOutlined className="text-orange" />🇺🇸 US (Primary)</span>
+             <button type="button" onClick={() => handleTagTranslate('US')} className="text-[10px] bg-orange/10 text-orange px-2 py-0.5 rounded transition-colors hover:bg-orange/20 font-semibold w-auto">Translate to UK & VI</button>
+          </div>
+          <Form.Item name={fieldName} rules={[{ required: true, message: 'Bắt buộc nhập' }]} noStyle>
+            <Select mode="tags" allowClear className="rounded-lg w-full" placeholder="Ex: Walnut Wood">
+              {options.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
+            </Select>
+          </Form.Item>
+        </div>
+
+        {/* UK */}
+        <div className="flex flex-col gap-1.5 border border-blue-100 rounded-lg p-3 bg-white">
+           <div className="flex items-center justify-between">
+             <span className="text-[11px] font-semibold text-gray-500 flex items-center gap-1.5"><GlobalOutlined className="text-blue-400" />🇬🇧 UK</span>
+             <button type="button" onClick={() => handleTagTranslate('UK')} className="text-[10px] bg-blue-50 text-blue-500 px-2 py-0.5 rounded transition-colors hover:bg-blue-100 font-semibold w-auto">Translate to US & VI</button>
+          </div>
+          <Form.Item name={`${fieldName}UK`} noStyle>
+            <Select mode="tags" allowClear className="rounded-lg w-full" placeholder="Inherits US if empty">
+              {options.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
+            </Select>
+          </Form.Item>
+        </div>
+
+        {/* VI */}
+        <div className="flex flex-col gap-1.5 border border-red-100 rounded-lg p-3 bg-white">
+           <div className="flex items-center justify-between">
+             <span className="text-[11px] font-semibold text-gray-500 flex items-center gap-1.5"><GlobalOutlined className="text-red-400" />🇻🇳 VI</span>
+             <button type="button" onClick={() => handleTagTranslate('VI')} className="text-[10px] bg-red-50 text-red-500 px-2 py-0.5 rounded transition-colors hover:bg-red-100 font-semibold w-auto">Translate to US & UK</button>
+          </div>
+          <Form.Item name={`${fieldName}VI`} noStyle>
+            <Select mode="tags" allowClear className="rounded-lg w-full" placeholder="Ex: Gỗ Sồi">
+              {options.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
+            </Select>
+          </Form.Item>
+        </div>
+      </div>
+    );
+  };
 
   // ── Tab items ────────────────────────────────────────────────────────────
   const tabItems = [
@@ -1087,21 +1200,13 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
               </Col>
             </Row>
             <Row gutter={[16, 16]}>
-              <Col xs={24} md={8}>
-                <Form.Item name="material" label={t('admin.products.form.material')} rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
-                  <Select placeholder="Walnut Wood" className="rounded-lg" allowClear mode="tags">
-                    {MATERIALS.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
-                  </Select>
-                </Form.Item>
+              <Col xs={24} md={12}>
+                <TagLangBlock fieldName="material" label={t('admin.products.form.material')} options={MATERIALS} />
               </Col>
-              <Col xs={24} md={8}>
-                <Form.Item name="style" label={t('admin.products.form.style')} rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
-                  <Select placeholder="Mid-Century Modern" className="rounded-lg" allowClear mode="tags">
-                    {STYLES.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
-                  </Select>
-                </Form.Item>
+              <Col xs={24} md={12}>
+                <TagLangBlock fieldName="style" label={t('admin.products.form.style')} options={STYLES} />
               </Col>
-              <Col xs={24} md={8}>
+              <Col xs={24} md={24}>
                 <Form.Item name="color" label={t('admin.products.form.color')} rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
                   <Select placeholder="Natural Walnut" className="rounded-lg" allowClear mode="tags">
                     {COLORS.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}

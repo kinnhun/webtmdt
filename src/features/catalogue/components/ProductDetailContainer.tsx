@@ -5,7 +5,7 @@ import Link from "next/link";
 import {
   ArrowLeft, ChevronLeft, ChevronRight, Play,
   Ruler, Weight, Shield, Sparkles, Settings2, MapPin,
-  ArrowUpRight, Share2
+  ArrowUpRight, Share2, Palette
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { Product } from "@/domains/product/product.types";
@@ -185,6 +185,26 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
   const pUsage = getList(product.usageSettings, langId);
   const pLongDesc = product.longDescription?.[langId] || product.longDescription?.us || "";
 
+  const pColorStr = product.color?.[langId] || product.color?.us || "";
+  const colorList = typeof pColorStr === 'string' ? pColorStr.split(',').map(s => s.trim()).filter(Boolean) : [];
+
+  const renderColorItem = (colorStr: string) => {
+    const match = colorStr.match(/^\[(#[A-Fa-f0-9]+)\]\s*(.*)$/);
+    if (match) {
+      return (
+        <div key={colorStr} className="flex items-center gap-1.5 bg-white border border-gray-100 rounded-full pr-2 p-0.5 shadow-sm shrink-0">
+          <div className="w-3.5 h-3.5 rounded-full border border-black/10 shrink-0" style={{ backgroundColor: match[1] }} />
+          <span className="text-[10px] font-medium text-gray-700">{match[2]}</span>
+        </div>
+      );
+    }
+    return (
+      <span key={colorStr} className="px-2 py-1 bg-white flex items-center border border-gray-100 rounded-full text-[10px] shadow-sm shrink-0">
+        {colorStr}
+      </span>
+    );
+  };
+
   const handleShare = useCallback(() => {
     if (typeof navigator !== "undefined") navigator.clipboard.writeText(window.location.href);
   }, []);
@@ -263,6 +283,17 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
                   <p className="font-body text-xs font-semibold" style={{ color: "hsl(var(--navy-deep))" }}>{pStyle}</p>
                 </div>
               </div>
+              {colorList.length > 0 && (
+                <div className="flex items-start gap-2.5 p-3 rounded-lg col-span-2" style={{ backgroundColor: "hsl(var(--navy)/0.03)" }}>
+                  <Palette size={16} className="mt-0.5 shrink-0" style={{ color: "hsl(var(--orange))" }} />
+                  <div className="w-full flex-1 overflow-hidden">
+                    <p className="font-body text-[10px] uppercase tracking-wider font-medium mb-1.5" style={{ color: "hsl(var(--navy)/0.4)" }}>{t("productDetail.color") || "Color"}</p>
+                    <div className="flex flex-wrap gap-1.5">
+                       {colorList.map(renderColorItem)}
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Features */}

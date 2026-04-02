@@ -11,7 +11,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import {
   Form, Input, Button, Select, Row, Col, message, Upload, Divider,
-  Tabs, Tag, Badge, Tooltip, Modal, Space,
+  Tabs, Tag, Badge, Tooltip, Modal, Space, ColorPicker
 } from 'antd';
 import {
   ArrowLeftOutlined, UploadOutlined, PlusOutlined, MinusCircleOutlined,
@@ -664,7 +664,13 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       }
     }
     if (initialValues?.color) {
-      flatInit.color = getTagArray(initialValues.color);
+      if (typeof initialValues.color === 'object' && !Array.isArray(initialValues.color)) {
+        flatInit.color = getTagArray(initialValues.color.us);
+        flatInit.colorUK = getTagArray(initialValues.color.uk);
+        flatInit.colorVI = getTagArray(initialValues.color.vi);
+      } else {
+        flatInit.color = getTagArray(initialValues.color);
+      }
     }
     if (initialValues?.style) {
       if (typeof initialValues.style === 'object' && !Array.isArray(initialValues.style)) {
@@ -781,7 +787,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       description: { us: v.description || '', uk: v.descriptionUK || '', vi: v.descriptionVI || '' },
       longDescription: { us: v.longDescription || '', uk: v.longDescriptionUK || '', vi: v.longDescriptionVI || '' },
       material: { us: Array.isArray(v.material) ? v.material.join(', ') : (v.material || ''), uk: Array.isArray(v.materialUK) ? v.materialUK.join(', ') : (v.materialUK || ''), vi: Array.isArray(v.materialVI) ? v.materialVI.join(', ') : (v.materialVI || '') },
-      color: { us: Array.isArray(v.color) ? v.color.join(', ') : (v.color || ''), uk: '', vi: '' },
+      color: { us: Array.isArray(v.color) ? v.color.join(', ') : (v.color || ''), uk: Array.isArray(v.colorUK) ? v.colorUK.join(', ') : (v.colorUK || ''), vi: Array.isArray(v.colorVI) ? v.colorVI.join(', ') : (v.colorVI || '') },
       style: { us: Array.isArray(v.style) ? v.style.join(', ') : (v.style || ''), uk: Array.isArray(v.styleUK) ? v.styleUK.join(', ') : (v.styleUK || ''), vi: Array.isArray(v.styleVI) ? v.styleVI.join(', ') : (v.styleVI || '') },
       category: { us: categoryUs, uk: '', vi: '' },
       collection: collectionStr || 'Outdoor',
@@ -800,6 +806,8 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
     delete payload.materialVI;
     delete payload.styleUK;
     delete payload.styleVI;
+    delete payload.colorUK;
+    delete payload.colorVI;
     if (isEdit) {
       mutateUpdate(payload);
     } else {
@@ -898,8 +906,37 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
     </Form.List>
   );
 
-  // ── Tag Lang Helper (Material/Style) ──────────────────────────────────────────────────
-  const TagLangBlock = ({ fieldName, label, options }: { fieldName: string; label: string; options: string[] }) => {
+  // ── Tag Lang Helper (Material/Style/Color) ──────────────────────────────────────────────────
+  const TagLangBlock = ({ fieldName, label, options, isColor }: { fieldName: string; label: string; options: string[]; isColor?: boolean }) => {
+    const colorTagRender = isColor ? (props: any) => {
+      const { label, value, closable, onClose } = props;
+      const strValue = String(value);
+      const match = strValue.match(/^\[(#[A-Fa-f0-9]+)\]/);
+      return (
+        <Tag
+          color="default"
+          onMouseDown={(e: React.MouseEvent) => { e.preventDefault(); e.stopPropagation(); }}
+          closable={closable}
+          onClose={onClose}
+          style={{ marginRight: 3, display: 'inline-flex', alignItems: 'center', gap: '4px', padding: '2px 8px' }}
+        >
+          {match && <div className="w-3 h-3 rounded-full border border-black/10 flex-shrink-0 shadow-sm" style={{ backgroundColor: match[1] }} />}
+          <span className="text-xs">{label}</span>
+        </Tag>
+      );
+    } : undefined;
+
+    const colorOptionRender = isColor ? (option: any) => {
+      const strValue = String(option.value);
+      const match = strValue.match(/^\[(#[A-Fa-f0-9]+)\]/);
+      return (
+        <div className="flex items-center gap-2">
+          {match && <div className="w-4 h-4 rounded-full border border-black/10 flex-shrink-0 shadow-sm" style={{ backgroundColor: match[1] }} />}
+          <span>{option.label}</span>
+        </div>
+      );
+    } : undefined;
+
     const handleTagTranslate = async (sourceLang: 'US' | 'UK' | 'VI') => {
       const shortUs = fieldName;
       const shortUk = fieldName + 'UK';
@@ -960,10 +997,59 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
         <div className="flex flex-col gap-1.5 border border-orange/20 rounded-lg p-3 bg-white">
           <div className="flex items-center justify-between">
              <span className="text-[11px] font-semibold text-gray-500 flex items-center gap-1.5"><GlobalOutlined className="text-orange" />🇺🇸 US (Primary)</span>
-             <button type="button" onClick={() => handleTagTranslate('US')} className="text-[10px] bg-orange/10 text-orange px-2 py-0.5 rounded transition-colors hover:bg-orange/20 font-semibold w-auto">Translate to UK & VI</button>
+             <div className="flex items-center gap-2">
+               {isColor && (
+                 <ColorPicker
+                   size="small"
+                   onChangeComplete={async (colorObj) => {
+                      const hex = colorObj.toHexString();
+                      const currentUS = form.getFieldValue(fieldName) || [];
+                      // Optimistically add hex (in case API fails)
+                      let bestName = hex;
+
+                      const hideMsg = message.loading('Sensing color...', 0);
+                      try {
+                        const res = await fetch(`https://www.thecolorapi.com/id?hex=${hex.replace('#', '')}`);
+                        const data = await res.json();
+                        if (data?.name?.value) {
+                           bestName = `[${hex.toUpperCase()}] ${data.name.value}`;
+                        } else {
+                           bestName = `[${hex.toUpperCase()}] Color`;
+                        }
+
+                        const newUS = [...currentUS, bestName];
+                        form.setFieldValue(fieldName, newUS);
+
+                        // Auto-translate to VI
+                        const resVi = await fetch('/api/translate', {
+                           method: 'POST',
+                           headers: { 'Content-Type': 'application/json' },
+                           body: JSON.stringify({ text: data.name.value || 'Color', targetLang: 'vi', sourceLang: 'en' }),
+                        });
+                        const dataVi = await resVi.json();
+                        if (dataVi?.translated) {
+                           const currentVI = form.getFieldValue(`${fieldName}VI`) || [];
+                           form.setFieldValue(`${fieldName}VI`, [...currentVI, `[${hex.toUpperCase()}] ${dataVi.translated}`]);
+                        }
+
+                        // Auto-inherit for UK
+                        const currentUK = form.getFieldValue(`${fieldName}UK`) || [];
+                        form.setFieldValue(`${fieldName}UK`, [...currentUK, bestName]);
+                        message.success('Color recognized & translated!');
+                      } catch {
+                        const newUS = [...currentUS, `[${hex.toUpperCase()}] Color`];
+                        form.setFieldValue(fieldName, newUS);
+                      } finally {
+                        hideMsg();
+                      }
+                   }}
+                 />
+               )}
+               <button type="button" onClick={() => handleTagTranslate('US')} className="text-[10px] bg-orange/10 text-orange px-2 py-0.5 rounded transition-colors hover:bg-orange/20 font-semibold w-auto">Translate to UK & VI</button>
+             </div>
           </div>
           <Form.Item name={fieldName} rules={[{ required: true, message: 'Bắt buộc nhập' }]} noStyle>
-            <Select mode="tags" allowClear className="rounded-lg w-full" placeholder="Ex: Walnut Wood">
+            <Select mode="tags" allowClear className="rounded-lg w-full" placeholder={isColor ? "Ex: Natural Walnut" : "Ex: Walnut Wood"} tagRender={colorTagRender} optionRender={colorOptionRender}>
               {options.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
             </Select>
           </Form.Item>
@@ -976,7 +1062,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
              <button type="button" onClick={() => handleTagTranslate('UK')} className="text-[10px] bg-blue-50 text-blue-500 px-2 py-0.5 rounded transition-colors hover:bg-blue-100 font-semibold w-auto">Translate to US & VI</button>
           </div>
           <Form.Item name={`${fieldName}UK`} noStyle>
-            <Select mode="tags" allowClear className="rounded-lg w-full" placeholder="Inherits US if empty">
+            <Select mode="tags" allowClear className="rounded-lg w-full" placeholder="Inherits US if empty" tagRender={colorTagRender} optionRender={colorOptionRender}>
               {options.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
             </Select>
           </Form.Item>
@@ -989,7 +1075,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
              <button type="button" onClick={() => handleTagTranslate('VI')} className="text-[10px] bg-red-50 text-red-500 px-2 py-0.5 rounded transition-colors hover:bg-red-100 font-semibold w-auto">Translate to US & UK</button>
           </div>
           <Form.Item name={`${fieldName}VI`} noStyle>
-            <Select mode="tags" allowClear className="rounded-lg w-full" placeholder="Ex: Gỗ Sồi">
+            <Select mode="tags" allowClear className="rounded-lg w-full" placeholder="Ex: Gỗ Sồi" tagRender={colorTagRender} optionRender={colorOptionRender}>
               {options.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
             </Select>
           </Form.Item>
@@ -1207,11 +1293,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
                 <TagLangBlock fieldName="style" label={t('admin.products.form.style')} options={STYLES} />
               </Col>
               <Col xs={24} md={24}>
-                <Form.Item name="color" label={t('admin.products.form.color')} rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
-                  <Select placeholder="Natural Walnut" className="rounded-lg" allowClear mode="tags">
-                    {COLORS.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
-                  </Select>
-                </Form.Item>
+                <TagLangBlock fieldName="color" label={t('admin.products.form.color')} options={COLORS} isColor={true} />
               </Col>
             </Row>
           </div>

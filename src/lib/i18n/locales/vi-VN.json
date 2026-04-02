@@ -459,6 +459,23 @@
       "title": "Cảm ơn bạn!",
       "description": "Yêu cầu của bạn đã được gửi. Chúng tôi sẽ phản hồi trong vòng 24 giờ.",
       "sendAnother": "Gửi yêu cầu khác"
+    },
+    "locations": {
+      "title": "Mạng lưới toàn cầu",
+      "hqTitle": "Nhà máy DHT Furniture Việt Nam",
+      "hqSubtitle": "Sản xuất & Vận hành",
+      "showroomTitle": "Showroom DHT Private Garden",
+      "showroomSubtitle": "Trưng bày độc quyền",
+      "officeTitle": "Văn phòng DHT Furniture Việt Nam",
+      "officeSubtitle": "Bộ phận Thương mại & CSKH",
+      "distributorTitle": "JDD Global Furnishing Co. Ltd",
+      "distributorSubtitle": "Phân phối toàn cầu",
+      "timingsFactory": "Từ 8:00 Sáng - 17:00 Chiều (Giờ VN)",
+      "timings247": "Xuyên suốt 24/7"
+    },
+    "formSection": {
+      "title": "Gửi yêu cầu",
+      "subtitle": "Điền vào biểu mẫu bên dưới và đội ngũ của chúng tôi sẽ liên hệ lại trong vòng 24 giờ."
     }
   },
   "notFound": {

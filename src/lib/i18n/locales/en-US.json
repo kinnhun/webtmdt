@@ -460,6 +460,23 @@
       "title": "Thank You!",
       "description": "Your inquiry has been submitted. We'll respond within 24 hours.",
       "sendAnother": "Send another inquiry"
+    },
+    "locations": {
+      "title": "Our Global Presence",
+      "hqTitle": "DHT Furniture Vietnam Factory",
+      "hqSubtitle": "Manufacturing & Production",
+      "showroomTitle": "DHT Private Garden Showroom",
+      "showroomSubtitle": "Exclusive Displays",
+      "officeTitle": "DHT Furniture Vietnam Office",
+      "officeSubtitle": "Commercial & CS Dept.",
+      "distributorTitle": "JDD Global Furnishing Co. Ltd",
+      "distributorSubtitle": "Global Distribution",
+      "timingsFactory": "From 8:00 AM - 17:00 PM (VN Time)",
+      "timings247": "24/7"
+    },
+    "formSection": {
+      "title": "Send an Inquiry",
+      "subtitle": "Fill out the form below and our team will get back to you within 24 hours."
     }
   },
   "notFound": {

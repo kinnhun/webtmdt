@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const { id } = req.query;
-    const { status, interestedProduct, internalNotes } = req.body;
+    const { status, category, interestedProduct, internalNotes } = req.body;
 
     if (!id || typeof id !== "string") {
       return res.status(400).json({ error: "Invalid inquiry ID" });
@@ -21,6 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       id,
       {
         ...(status && { status }),
+        ...(category && { category }),
         ...(typeof interestedProduct !== "undefined" && { interestedProduct }),
         ...(typeof internalNotes !== "undefined" && { internalNotes }),
       },

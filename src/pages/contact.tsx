@@ -37,36 +37,36 @@ export default function ContactPage() {
 
   const locations = [
     {
-      title: "DHT Furniture Vietnam Factory",
-      subtitle: "Manufacturing & Production",
+      title: t("contact.locations.hqTitle"),
+      subtitle: t("contact.locations.hqSubtitle"),
       address: "19 National Highway, Nguyen Hue Ward, Phuoc Loc, Tuy Phuoc District, Binh Dinh Province, Vietnam",
       phone: "+84 902 907 399",
       href: "tel:+84902907399",
-      hours: "From 8:00 AM - 17:00 PM (VN Time)"
+      hours: t("contact.locations.timingsFactory")
     },
     {
-      title: "DHT Private Garden Showroom",
-      subtitle: "Exclusive Displays",
+      title: t("contact.locations.showroomTitle"),
+      subtitle: t("contact.locations.showroomSubtitle"),
       address: "Vinh Thanh 2 Hamlet, Tuy Phuoc Commune, Gia Lai Province, Vietnam",
       phone: "+84 907 386 898",
       href: "tel:+84907386898",
-      hours: "From 8:00 AM - 17:00 PM (VN Time)"
+      hours: t("contact.locations.timingsFactory")
     },
     {
-      title: "DHT Furniture Vietnam Office",
-      subtitle: "Commercial & CS Dept.",
+      title: t("contact.locations.officeTitle"),
+      subtitle: t("contact.locations.officeSubtitle"),
       address: "72 Le Thanh Ton Street, Sai Gon Ward, Ho Chi Minh City, Vietnam",
       phone: "+84 907 386 898",
       href: "tel:+84907386898",
-      hours: "24/7"
+      hours: t("contact.locations.timings247")
     },
     {
-      title: "JDD Global Furnishing Co. Ltd",
-      subtitle: "Global Distribution",
+      title: t("contact.locations.distributorTitle"),
+      subtitle: t("contact.locations.distributorSubtitle"),
       address: "226 Go Dua Street, Tam Binh Ward, Thu Duc City, Ho Chi Minh City, Vietnam",
       phone: "+84 932 058 545",
       href: "tel:+84932058545",
-      hours: "From 8:00 AM - 17:00 PM (VN Time)"
+      hours: t("contact.locations.timingsFactory")
     }
   ];
 
@@ -85,7 +85,7 @@ export default function ContactPage() {
         <div className="container mx-auto px-4 sm:px-6 py-20">
           {/* LOCATIONS GRID */}
           <div className="mb-24">
-            <h2 className="font-display text-3xl font-bold text-center mb-12" style={{ color: "hsl(var(--navy-deep))" }}>Our Global Presence</h2>
+            <h2 className="font-display text-3xl font-bold text-center mb-12" style={{ color: "hsl(var(--navy-deep))" }}>{t("contact.locations.title")}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {locations.map((loc, i) => (
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * i, duration: 0.5 }} key={loc.title} className="bg-white p-6 rounded-sm border border-border flex flex-col h-full hover:shadow-lg transition-shadow">
@@ -113,8 +113,8 @@ export default function ContactPage() {
           {/* FORM SECTION */}
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-10">
-              <h2 className="font-display text-3xl font-bold mb-4" style={{ color: "hsl(var(--navy-deep))" }}>Send an Inquiry</h2>
-              <p className="font-body text-muted-foreground">Fill out the form below and our team will get back to you within 24 hours.</p>
+              <h2 className="font-display text-3xl font-bold mb-4" style={{ color: "hsl(var(--navy-deep))" }}>{t("contact.formSection.title")}</h2>
+              <p className="font-body text-muted-foreground">{t("contact.formSection.subtitle")}</p>
             </div>
             {sent ? (
               <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-20 bg-white rounded-sm border border-border">

@@ -4,6 +4,7 @@ import Contact from "@/models/Contact";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import AdminUser from "@/models/AdminUser";
+import Role from "@/models/Role";
 
 const JWT_SECRET = process.env.JWT_SECRET || "fallback_secret_for_admin_rbacs";
 

@@ -4,6 +4,7 @@ import Contact from "@/models/Contact";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import AdminUser from "@/models/AdminUser";
+import Role from "@/models/Role";
 import Product from "@/models/Product";
 
 const JWT_SECRET = process.env.JWT_SECRET || "fallback_secret_for_admin_rbacs";
@@ -40,13 +41,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const scope = req.query.scope; // 'my_assigned'
 
     let filter: any = {};
-    if (!isAdmin) {
-      // If not admin, FORCE query to only return assigned to this user
-      filter.assignedTo = user._id;
-    } else if (scope === "my_assigned") {
-      // Admin but specifically requested their own
+    if (scope === "my_assigned") {
+      // Specifically requested their own assigned inquiries
       filter.assignedTo = user._id;
     }
+    // All authenticated accounts can view the full inquiry list
 
     // Models are already imported or registered top-level
 

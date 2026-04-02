@@ -18,7 +18,7 @@ export default function InquiryManagement() {
   const { data: productsData } = useProducts(emptyFilters, '');
 
   const [searchText, setSearchText] = useState('');
-  const [statusFilter, setStatusFilter] = useState<string>('active');
+  const [statusFilter, setStatusFilter] = useState<string>('all');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);

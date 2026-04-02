@@ -50,10 +50,34 @@ export function ProductTable({ data, onEdit, onDelete, loading }: ProductTablePr
       title: 'Classification',
       dataIndex: 'category',
       key: 'category',
-      filters: [...OUTDOOR_CATEGORIES, ...INDOOR_CATEGORIES].map(c => ({ text: c, value: c })),
+      filters: [
+        {
+          text: 'Collection',
+          value: 'group_collection',
+          children: [
+            { text: 'Indoor', value: 'COL##Indoor' },
+            { text: 'Outdoor', value: 'COL##Outdoor' },
+          ],
+        },
+        {
+          text: 'Category',
+          value: 'group_category',
+          children: [...OUTDOOR_CATEGORIES, ...INDOOR_CATEGORIES].map(c => ({ text: c, value: `CAT##${c}` })),
+        }
+      ],
       onFilter: (value: React.Key | boolean, record: Product) => {
-        const catArray = Array.isArray(record.category) ? record.category : [record.category];
-        return catArray.some(c => (c?.us || '').includes(String(value)));
+        const valStr = String(value);
+        if (valStr.startsWith('COL##')) {
+          const col = valStr.replace('COL##', '');
+          const collectionsRaw = Array.isArray(record.collection) ? record.collection : String(record.collection || '').split(',').map(s => s.trim()).filter(Boolean);
+          return collectionsRaw.includes(col);
+        }
+        if (valStr.startsWith('CAT##')) {
+          const cat = valStr.replace('CAT##', '');
+          const catArray = Array.isArray(record.category) ? record.category : [record.category];
+          return catArray.some(c => (c?.us || '').includes(cat));
+        }
+        return false;
       },
       render: (_: unknown, record: Product) => {
         const collectionsRaw = Array.isArray(record.collection) ? record.collection : String(record.collection || '').split(',').map(s => s.trim()).filter(Boolean);
@@ -83,7 +107,9 @@ export function ProductTable({ data, onEdit, onDelete, loading }: ProductTablePr
         const mats = Array.isArray(record.material) ? record.material : [record.material];
         return (
           <div className="flex flex-col gap-1">
-            <span className="text-sm font-medium">{mats.map(m => m?.us || m || '').join(', ')}</span>
+            <span className="text-sm font-medium">
+              {mats.map(m => (typeof m === 'object' && m !== null) ? (m.us || '') : (typeof m === 'string' ? m : '')).filter(Boolean).join(', ')}
+            </span>
             {record.moq && <span className="text-xs text-orange bg-orange/10 px-1.5 py-0.5 rounded-sm w-fit">MOQ: {record.moq}</span>}
           </div>
         )

@@ -18,7 +18,7 @@ import {
   SaveOutlined, InfoCircleOutlined, ToolOutlined, HeartOutlined,
   PictureOutlined, GlobalOutlined, CheckCircleFilled,
   ExclamationCircleOutlined, SwapOutlined, AppstoreOutlined,
-  SearchOutlined,
+  SearchOutlined, TranslationOutlined, LoadingOutlined,
 } from '@ant-design/icons';
 import * as AntIcons from '@ant-design/icons';
 import { useRouter } from 'next/router';
@@ -141,9 +141,8 @@ function IconPicker({ value, onChange }: { value?: string; onChange?: (v: string
               key={ic.name}
               type="button"
               onClick={() => { onChange?.(ic.name); setOpen(false); }}
-              className={`flex flex-col items-center gap-1.5 p-3 rounded-xl border transition-all cursor-pointer hover:border-orange hover:bg-orange/5 ${
-                value === ic.name ? 'border-orange bg-orange/5' : 'border-gray-100'
-              }`}
+              className={`flex flex-col items-center gap-1.5 p-3 rounded-xl border transition-all cursor-pointer hover:border-orange hover:bg-orange/5 ${value === ic.name ? 'border-orange bg-orange/5' : 'border-gray-100'
+                }`}
             >
               <span className="text-2xl">{renderIcon(ic.name, value === ic.name ? 'text-orange' : 'text-gray-500')}</span>
               <span className="text-[10px] text-gray-400 leading-none">{ic.label}</span>
@@ -183,9 +182,8 @@ function AttributeRow({ fieldName, remove }: { fieldName: number; remove: () => 
                   key={l}
                   type="button"
                   onClick={() => setLang(l)}
-                  className={`text-[9px] px-1.5 py-0.5 rounded font-bold transition-all ${
-                    lang === l ? 'bg-orange text-white' : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
-                  }`}
+                  className={`text-[9px] px-1.5 py-0.5 rounded font-bold transition-all ${lang === l ? 'bg-orange text-white' : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
+                    }`}
                 >
                   {l}
                 </button>
@@ -238,9 +236,8 @@ function SpecRow({ fieldName, remove }: { fieldName: number; remove: () => void 
                   key={l}
                   type="button"
                   onClick={() => setLang(l)}
-                  className={`text-[9px] px-1.5 py-0.5 rounded font-bold transition-all ${
-                    lang === l ? 'bg-orange text-white' : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
-                  }`}
+                  className={`text-[9px] px-1.5 py-0.5 rounded font-bold transition-all ${lang === l ? 'bg-orange text-white' : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
+                    }`}
                 >
                   {l}
                 </button>
@@ -292,73 +289,165 @@ const LONG_FIELD: Record<AllLang, string> = {
 
 function DescriptionFields({ form }: { form: ReturnType<typeof Form.useForm>[0] }) {
   const { t } = useTranslation();
-  const [lang, setLang] = useState<AllLang>('US');
+  const [translating, setTranslating] = useState(false);
 
-  const LangBar = () => (
-    <div className="flex gap-1 flex-wrap">
-      {ALL_LANGS.map((l) => (
-        <button
-          key={l}
-          type="button"
-          onClick={() => setLang(l)}
-          className={`flex items-center gap-1 text-[10px] px-2.5 py-1 rounded-md font-bold transition-all ${
-            lang === l
-              ? 'bg-orange text-white shadow-sm'
-              : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
-          }`}
-        >
-          <span>{LANG_FLAGS[l]}</span>{l}
-        </button>
-      ))}
-    </div>
-  );
+  const autoTranslateDesc = async (sourceLang: 'US' | 'UK' | 'VI') => {
+    const fields = {
+      US: { short: 'description', long: 'longDescription' },
+      UK: { short: 'descriptionUK', long: 'longDescriptionUK' },
+      VI: { short: 'descriptionVI', long: 'longDescriptionVI' },
+    };
+
+    const sourceShort = form.getFieldValue(fields[sourceLang].short) || '';
+    const sourceLong = form.getFieldValue(fields[sourceLang].long) || '';
+
+    if (!sourceShort.trim() && !sourceLong.trim()) {
+      message.warning(`Please enter a description in ${sourceLang} first.`);
+      return;
+    }
+    
+    setTranslating(true);
+    try {
+      const translateText = async (text: string, targetLang: string) => {
+        if (!text.trim()) return '';
+        const res = await fetch('/api/translate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            text, 
+            targetLang, 
+            sourceLang: sourceLang === 'VI' ? 'vi' : 'en' 
+          }),
+        });
+        const data = await res.json();
+        return res.ok && data.translated ? data.translated : '';
+      };
+
+      if (sourceLang === 'US' || sourceLang === 'UK') {
+        const otherEn = sourceLang === 'US' ? fields.UK : fields.US;
+        if (sourceShort) form.setFieldValue(otherEn.short, sourceShort);
+        if (sourceLong) form.setFieldValue(otherEn.long, sourceLong);
+
+        const [viShortRes, viLongRes] = await Promise.all([
+          sourceShort ? translateText(sourceShort, 'vi') : Promise.resolve(''),
+          sourceLong ? translateText(sourceLong, 'vi') : Promise.resolve(''),
+        ]);
+        if (viShortRes) form.setFieldValue(fields.VI.short, viShortRes);
+        if (viLongRes) form.setFieldValue(fields.VI.long, viLongRes);
+
+      } else if (sourceLang === 'VI') {
+        const [enShortRes, enLongRes] = await Promise.all([
+          sourceShort ? translateText(sourceShort, 'en') : Promise.resolve(''),
+          sourceLong ? translateText(sourceLong, 'en') : Promise.resolve(''),
+        ]);
+        if (enShortRes) {
+          form.setFieldValue(fields.US.short, enShortRes);
+          form.setFieldValue(fields.UK.short, enShortRes);
+        }
+        if (enLongRes) {
+          form.setFieldValue(fields.US.long, enLongRes);
+          form.setFieldValue(fields.UK.long, enLongRes);
+        }
+      }
+
+      message.success(`Descriptions translated from ${sourceLang}!`);
+    } catch {
+      message.error('Translation failed.');
+    } finally {
+      setTranslating(false);
+    }
+  };
+
+  const renderLangBlock = (
+    lang: AllLang,
+    shortField: string,
+    longField: string,
+    isPrimary: boolean,
+  ) => {
+    const iconColor = lang === 'US' ? 'text-orange' : lang === 'UK' ? 'text-blue-400' : 'text-red-400';
+    const borderClass = isPrimary ? 'border-orange/20' : 'border-gray-100';
+    const bgStyle = isPrimary
+      ? { background: 'linear-gradient(135deg, rgba(249,115,22,0.04), rgba(251,191,36,0.06))' }
+      : {};
+    const bgClass = isPrimary ? '' : 'bg-gray-50/50';
+
+    return (
+      <div className={`rounded-xl border ${borderClass} overflow-hidden ${bgClass}`} style={bgStyle}>
+        <div className="p-4 space-y-3">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-semibold text-gray-500 flex items-center gap-1.5">
+              <GlobalOutlined className={iconColor} />
+              {LANG_FLAGS[lang]} {LANG_LABELS[lang]}
+              {isPrimary
+                ? <span className="text-[10px] text-gray-400 font-normal ml-1">(primary)</span>
+                : <span className="text-[10px] text-gray-400 font-normal ml-1">— blank inherits US</span>}
+            </span>
+            <button
+              type="button"
+              onClick={() => autoTranslateDesc(lang)}
+              disabled={translating}
+              className={`flex items-center gap-1.5 text-[10px] font-semibold px-2.5 py-1 rounded-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${
+                lang === 'US'
+                  ? 'hover:shadow-sm'
+                  : lang === 'UK'
+                  ? 'hover:bg-gray-200 text-gray-500 bg-gray-100'
+                  : 'hover:bg-red-50 text-red-500 bg-white border border-red-200'
+              }`}
+              style={lang === 'US' ? { backgroundColor: 'hsl(var(--orange)/0.1)', color: 'hsl(var(--orange))' } : {}}
+            >
+              {translating ? <LoadingOutlined spin /> : <TranslationOutlined />}
+              {lang === 'US' ? 'Translate to UK & VI' : lang === 'UK' ? 'Translate to US & VI' : 'Translate to US & UK'}
+            </button>
+          </div>
+
+          {/* Short Description */}
+          <div>
+            <p className="text-[10px] font-semibold text-gray-400 uppercase mb-1">
+              {t('admin.products.form.shortDescription')}
+              {isPrimary && <span className="ml-1 text-orange font-normal normal-case">(required)</span>}
+            </p>
+            <Form.Item
+              name={shortField}
+              rules={isPrimary ? [{ required: true, message: 'Short description required' }] : []}
+              noStyle
+            >
+              <Input.TextArea
+                rows={2}
+                placeholder={`${LANG_LABELS[lang]} short description…`}
+                className="rounded-lg border-gray-200 w-full"
+              />
+            </Form.Item>
+          </div>
+
+          {/* Long Description */}
+          <div>
+            <p className="text-[10px] font-semibold text-gray-400 uppercase mb-1">
+              {t('admin.products.form.longDescription')} <span className="text-gray-300 font-normal">(rich text)</span>
+            </p>
+            <RichTextEditorControl
+              fieldName={longField}
+              form={form}
+              minHeight={180}
+              placeholder={`${LANG_LABELS[lang]} long description…`}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="space-y-4">
       <SectionLabel>Descriptions</SectionLabel>
 
-      {/* Lang switcher */}
-      <div className="flex items-center justify-between p-3 rounded-xl bg-gray-50 border border-gray-100">
-        <span className="text-xs text-gray-500 font-medium">
-          Editing: <strong>{LANG_FLAGS[lang]} {LANG_LABELS[lang]}</strong>
-          {lang !== 'US' && <span className="text-gray-400 font-normal"> — blank inherits US</span>}
-        </span>
-        <LangBar />
-      </div>
+      {/* US - Primary */}
+      {renderLangBlock('US', SHORT_FIELD.US, LONG_FIELD.US, true)}
 
-      {/* Short Description */}
-      <div>
-        <p className="text-xs font-semibold text-gray-500 mb-1.5">
-          {t('admin.products.form.shortDescription')}
-          {lang === 'US' && <span className="ml-1 text-[10px] text-orange font-normal">(required)</span>}
-        </p>
-        <Form.Item
-          name={SHORT_FIELD[lang]}
-          rules={lang === 'US' ? [{ required: true, message: 'Short description required' }] : []}
-          noStyle
-        >
-          <Input.TextArea
-            key={lang}
-            rows={2}
-            placeholder={`${LANG_LABELS[lang]} short description…`}
-            className="rounded-lg border-gray-200 w-full"
-          />
-        </Form.Item>
-      </div>
+      {/* UK */}
+      {renderLangBlock('UK', SHORT_FIELD.UK, LONG_FIELD.UK, false)}
 
-      {/* Long Description (Rich Text) */}
-      <div>
-        <p className="text-xs font-semibold text-gray-500 mb-1.5">
-          {t('admin.products.form.longDescription')} <span className="text-[10px] text-gray-400 font-normal">(rich text)</span>
-        </p>
-        <RichTextEditorControl
-          key={lang}
-          fieldName={LONG_FIELD[lang]}
-          form={form}
-          minHeight={220}
-          placeholder={`${LANG_LABELS[lang]} long description…`}
-        />
-      </div>
+      {/* VI */}
+      {renderLangBlock('VI', SHORT_FIELD.VI, LONG_FIELD.VI, false)}
     </div>
   );
 }
@@ -396,9 +485,9 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
   const [form] = Form.useForm();
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [activeTab, setActiveTab] = useState('info');
-  
+
   const selectedCollections = Form.useWatch('collection', form) || [];
-  
+
   const availableCategories = React.useMemo(() => {
     if (!selectedCollections || selectedCollections.length === 0) return CATEGORIES;
     let cats: string[] = [];
@@ -410,6 +499,65 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
   const [nameLang, setNameLang] = useState<'VI' | 'UK' | 'US'>('US');
   const [slugEdited, setSlugEdited] = useState(false);
   const [skuEdited, setSkuEdited] = useState(false);
+  const [translatingName, setTranslatingName] = useState(false);
+
+  const autoTranslateName = useCallback(async (sourceLang: 'US' | 'UK' | 'VI') => {
+    const usName = form.getFieldValue('name') || '';
+    const ukName = form.getFieldValue('nameUK') || '';
+    const viName = form.getFieldValue('nameVI') || '';
+
+    let sourceText = '';
+    if (sourceLang === 'US') sourceText = usName;
+    if (sourceLang === 'UK') sourceText = ukName;
+    if (sourceLang === 'VI') sourceText = viName;
+
+    if (!sourceText.trim()) {
+      message.warning(`Please enter a name in ${sourceLang} first.`);
+      return;
+    }
+
+    setTranslatingName(true);
+    try {
+      if (sourceLang === 'US' || sourceLang === 'UK') {
+        const otherEn = sourceLang === 'US' ? 'nameUK' : 'name';
+        form.setFieldValue(otherEn, sourceText);
+
+        const res = await fetch('/api/translate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            text: sourceText, 
+            targetLang: 'vi',
+            sourceLang: 'en'
+          }),
+        });
+        const data = await res.json();
+        if (res.ok && data.translated) {
+          form.setFieldValue('nameVI', data.translated);
+        }
+      } else if (sourceLang === 'VI') {
+        const res = await fetch('/api/translate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            text: sourceText, 
+            targetLang: 'en',
+            sourceLang: 'vi'
+          }),
+        });
+        const data = await res.json();
+        if (res.ok && data.translated) {
+          form.setFieldValue('name', data.translated);
+          form.setFieldValue('nameUK', data.translated);
+        }
+      }
+      message.success(`Translated from ${sourceLang} successfully!`);
+    } catch {
+      message.error('Translation service unavailable.');
+    } finally {
+      setTranslatingName(false);
+    }
+  }, [form]);
 
   const { mutate: mutateUpdate, isPending: isUpdating } = useMutation({
     mutationFn: (payload: Partial<Product>) => {
@@ -471,7 +619,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
     const collections: string[] = Array.isArray(rawCol)
       ? rawCol
       : typeof rawCol === 'string' && rawCol ? rawCol.split(',').map((s: string) => s.trim()).filter(Boolean)
-      : [];
+        : [];
 
     // Normalize category: from I18nText { us, uk, vi } → extract .us into array for Select
     const rawCat = initialValues.category as any;
@@ -593,7 +741,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
     // Prevent double submission
     if (isUpdating || isCreating) return;
     const uploadedImages = fileList.map((f) => f.url || f.response?.url || '').filter(Boolean);
-    
+
     let finalVideo = values.video || '';
     if (finalVideo) {
       const ytMatch = finalVideo.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
@@ -667,9 +815,8 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
           <button
             type="button"
             onClick={() => setNameLang(l)}
-            className={`flex items-center gap-1 text-[10px] px-2 py-0.5 rounded font-bold transition-all ${
-              nameLang === l ? 'bg-orange text-white shadow-sm' : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
-            }`}
+            className={`flex items-center gap-1 text-[10px] px-2 py-0.5 rounded font-bold transition-all ${nameLang === l ? 'bg-orange text-white shadow-sm' : 'bg-gray-100 text-gray-400 hover:bg-gray-200'
+              }`}
           >
             <span>{nameFlagMap[l]}</span>{l}
           </button>
@@ -717,7 +864,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
               <Form.Item {...field} noStyle>
                 <Input placeholder={placeholder} className="rounded-lg border-gray-200" />
               </Form.Item>
-               <button
+              <button
                 type="button"
                 onClick={() => remove(field.name)}
                 className="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-600 transition-opacity shrink-0"
@@ -748,20 +895,27 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
         <div className="pt-5 space-y-6">
           {/* ── Name (US primary + UK/VI toggle) ── */}
           <SectionLabel>{t('admin.products.form.productName')}</SectionLabel>
-          <div className="rounded-xl border border-orange/20 overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(249,115,22,0.04), rgba(251,191,36,0.06))' }}>
-            <div className="p-4">
-              {/* Toggle bar */}
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-xs font-semibold text-gray-500 flex items-center gap-1.5">
-                  <GlobalOutlined className="text-orange" />
-                  {nameFlagMap[nameLang]} {({ VI: 'Vietnamese', UK: 'British English', US: 'American English' } as Record<string,string>)[nameLang]}
-                  {nameLang === 'US'
-                    ? <span className="text-[10px] text-gray-400 font-normal ml-1">(primary — auto-generates slug & SKU)</span>
-                    : <span className="text-[10px] text-gray-400 font-normal ml-1">— blank inherits US</span>}
-                </span>
-                <NameLangToggle />
-              </div>
-              {nameLang === 'US' ? (
+          <div className="space-y-4">
+            {/* US - Primary */}
+            <div className="rounded-xl border border-orange/20 overflow-hidden" style={{ background: 'linear-gradient(135deg, rgba(249,115,22,0.04), rgba(251,191,36,0.06))' }}>
+              <div className="p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-semibold text-gray-500 flex items-center gap-1.5">
+                    <GlobalOutlined className="text-orange" />
+                    🇺🇸 American English
+                    <span className="text-[10px] text-gray-400 font-normal ml-1">(primary — auto-generates slug &amp; SKU)</span>
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => autoTranslateName('US')}
+                    disabled={translatingName}
+                    className="flex items-center gap-1.5 text-[10px] font-semibold px-2.5 py-1 rounded-md transition-all duration-200 hover:shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                    style={{ backgroundColor: 'hsl(var(--orange)/0.1)', color: 'hsl(var(--orange))' }}
+                  >
+                    {translatingName ? <LoadingOutlined spin /> : <TranslationOutlined />}
+                    Translate to UK & VI
+                  </button>
+                </div>
                 <Form.Item name="name" rules={[{ required: true, message: 'Product name is required' }]} noStyle>
                   <Input
                     size="large"
@@ -770,15 +924,65 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
                     className="rounded-lg border-orange/20"
                   />
                 </Form.Item>
-              ) : (
-                <Form.Item name={nameFieldMap[nameLang]} noStyle>
+              </div>
+            </div>
+
+            {/* UK */}
+            <div className="rounded-xl border border-gray-100 overflow-hidden bg-gray-50/50">
+              <div className="p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-semibold text-gray-500 flex items-center gap-1.5">
+                    <GlobalOutlined className="text-blue-400" />
+                    🇬🇧 British English
+                    <span className="text-[10px] text-gray-400 font-normal ml-1">— blank inherits US</span>
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => autoTranslateName('UK')}
+                    disabled={translatingName}
+                    className="flex items-center gap-1.5 text-[10px] font-semibold px-2.5 py-1 rounded-md transition-all duration-200 hover:bg-gray-200 text-gray-500 disabled:opacity-50 disabled:cursor-not-allowed bg-gray-100"
+                  >
+                    {translatingName ? <LoadingOutlined spin /> : <TranslationOutlined />}
+                    Translate to US & VI
+                  </button>
+                </div>
+                <Form.Item name="nameUK" noStyle>
                   <Input
                     size="large"
-                    placeholder={namePlaceholder[nameLang]}
+                    placeholder={namePlaceholder['UK']}
                     className="rounded-lg border-gray-200"
                   />
                 </Form.Item>
-              )}
+              </div>
+            </div>
+
+            {/* VI */}
+            <div className="rounded-xl border border-gray-100 overflow-hidden bg-gray-50/50">
+              <div className="p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-semibold text-gray-500 flex items-center gap-1.5">
+                    <GlobalOutlined className="text-red-400" />
+                    🇻🇳 Vietnamese
+                    <span className="text-[10px] text-gray-400 font-normal ml-1">— blank inherits US</span>
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => autoTranslateName('VI')}
+                    disabled={translatingName}
+                    className="flex items-center gap-1.5 text-[10px] font-semibold px-2.5 py-1 rounded-md transition-all duration-200 hover:bg-red-50 text-red-500 disabled:opacity-50 disabled:cursor-not-allowed bg-white border border-red-200"
+                  >
+                    {translatingName ? <LoadingOutlined spin /> : <TranslationOutlined />}
+                    Translate to US & UK
+                  </button>
+                </div>
+                <Form.Item name="nameVI" noStyle>
+                  <Input
+                    size="large"
+                    placeholder={namePlaceholder['VI']}
+                    className="rounded-lg border-gray-200"
+                  />
+                </Form.Item>
+              </div>
             </div>
           </div>
 
@@ -916,7 +1120,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
               These appear as icon cards on the product catalogue page (e.g. Dimensions, Material, Style).
               Each row supports labels & values in US / UK / VI.
             </p>
-  
+
             <Form.List name="attributes">
               {(fields, { add, remove }) => (
                 <div className="space-y-3">
@@ -927,7 +1131,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
                       remove={() => remove(field.name)}
                     />
                   ))}
-  
+
                   <button
                     type="button"
                     onClick={() => add({ icon: 'ProfileOutlined', titleUS: '', valueUS: '' })}
@@ -1067,8 +1271,8 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
                   </Tag>
                 ))}
                 <span className="text-xs text-gray-400">
-                  {typeof initialValues?.category === 'object' && initialValues?.category !== null 
-                    ? (initialValues.category as any).us 
+                  {typeof initialValues?.category === 'object' && initialValues?.category !== null
+                    ? (initialValues.category as any).us
                     : [initialValues?.category].flat().filter(Boolean).join(', ')}
                 </span>
               </div>
@@ -1096,9 +1300,9 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
 
       {/* ── Form body ─────────────────────────────────────────────────────── */}
       <div className="max-w-6xl mx-auto px-2 sm:px-6 py-4 sm:py-6 relative z-10">
-        <Form 
-          layout="vertical" 
-          form={form} 
+        <Form
+          layout="vertical"
+          form={form}
           onFinish={onFinish}
           onFinishFailed={(errorInfo) => {
             message.error('Validation failed! Please check tabs for missing required fields (marked in red).');

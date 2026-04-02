@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { productsData } from "@/data/products";
 import { OUTDOOR_CATEGORIES, INDOOR_CATEGORIES, MATERIALS, MOQ_OPTIONS, COLORS, STYLES } from "@/domains/product/product.types";
 import type { Product, FilterState, Collection } from "@/domains/product/product.types";
+import { useProducts } from "@/domains/product/product.hooks";
 import { useTranslation } from "react-i18next";
 
 export function useCatalogue(forcedCollection?: Collection) {
@@ -20,6 +20,10 @@ export function useCatalogue(forcedCollection?: Collection) {
   const ITEMS_PER_PAGE = 12;
 
   const [initialized, setInitialized] = useState(false);
+
+  // Fetch all live products and use existing client-side filtering logic
+  const emptyFilters: FilterState = { category: [], material: [], moq: [], color: [], style: [] };
+  const { data: rawProducts = [], isLoading } = useProducts(emptyFilters, "");
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -110,11 +114,13 @@ export function useCatalogue(forcedCollection?: Collection) {
 
   const activeCount = Object.values(filters).flat().length + (search ? 1 : 0);
 
-  let collectionProducts = productsData.filter(p => 
+  const productsToFilter = Array.isArray(rawProducts) ? rawProducts : (rawProducts as any)?.data || [];
+
+  let collectionProducts = productsToFilter.filter((p: Product) => 
     Array.isArray(p.collection) ? p.collection.includes(collection) : p.collection === collection
   );
 
-  let filtered = collectionProducts.filter((p) => {
+  let filtered = collectionProducts.filter((p: Product) => {
     if (search) {
       const q = search.toLowerCase();
       const pName = (p.name?.[langId] || p.name?.us || "").toLowerCase();
@@ -172,6 +178,7 @@ export function useCatalogue(forcedCollection?: Collection) {
     totalPages,
     safePage,
     filterGroups,
-    t
+    t,
+    isLoading
   };
 }

@@ -7,7 +7,7 @@ export interface IContact extends Document {
   company?: string;
   subject: string;
   message: string;
-  status: "pending" | "processing" | "resolved" | "cancelled";
+  status: "new" | "pending" | "processing" | "resolved" | "cancelled";
   category: "consulting" | "support" | "complaint" | "cooperation" | "quotation" | "other" | null;
   source: string;
   interestedProduct?: string;
@@ -26,12 +26,10 @@ const ContactSchema = new Schema<IContact>(
     message: { type: String, required: true },
     status: {
       type: String,
-      enum: ["pending", "processing", "resolved", "cancelled"],
-      default: "pending",
+      default: "new",
     },
     category: {
       type: String,
-      enum: ["consulting", "support", "complaint", "cooperation", "quotation", "other"],
       default: "other",
     },
     source: { type: String, default: "Website Contact Form" },

@@ -3,6 +3,7 @@ import { useProductManagement } from '@/features/admin/hooks/useProductManagemen
 import { ProductHeader } from './product-management/ProductHeader';
 import { ProductSearch } from './product-management/ProductSearch';
 import { ProductTable } from './product-management/ProductTable';
+import { useAdminAuth } from '@/hooks/useAdminAuth';
 
 export default function ProductManagement() {
   const {
@@ -15,9 +16,12 @@ export default function ProductManagement() {
     handleEditProduct,
   } = useProductManagement();
 
+  const { hasPermission } = useAdminAuth();
+  const canManage = hasPermission('product.manage');
+
   return (
     <div className="space-y-4">
-      <ProductHeader onCreateProduct={handleCreateProduct} />
+      <ProductHeader onCreateProduct={handleCreateProduct} canManage={canManage} />
       
       <ProductSearch 
         searchText={searchText} 
@@ -29,6 +33,7 @@ export default function ProductManagement() {
         onEdit={handleEditProduct} 
         onDelete={handleDelete}
         loading={isLoading}
+        canManage={canManage}
       />
     </div>
   );

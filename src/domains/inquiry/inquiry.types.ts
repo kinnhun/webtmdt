@@ -6,8 +6,8 @@ export interface Inquiry {
   company?: string;
   subject: string;
   message: string;
-  status: 'pending' | 'processing' | 'resolved' | 'cancelled';
-  category: 'consulting' | 'support' | 'complaint' | 'cooperation' | 'quotation' | 'other';
+  status: string;
+  category: string;
   source: string;
   interestedProduct?: string | {
     _id: string;
@@ -27,4 +27,14 @@ export interface UpdateInquiryPayload {
   category?: Inquiry['category'];
   interestedProduct?: string;
   internalNotes?: string;
+}
+
+export interface InquirySetting {
+  _id: string;
+  type: 'category' | 'status';
+  key: string;
+  label: string;
+  color?: string;
+  order: number;
+  isActive: boolean;
 }

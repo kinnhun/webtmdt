@@ -3,41 +3,35 @@ import Link from 'next/link';
 import { Table, Button, Input, Space, Tag, Drawer, Form, Select, Typography, Row, Col, message } from 'antd';
 import { SearchOutlined, EyeOutlined, MailOutlined, InboxOutlined, UserOutlined, ClockCircleOutlined, InfoCircleOutlined, ShoppingOutlined } from '@ant-design/icons';
 import { format } from 'date-fns';
-import { useInquiries, useUpdateInquiry, type Inquiry } from '@/domains/inquiry';
+import { useInquiries, useUpdateInquiry, useInquirySettings, type Inquiry } from '@/domains/inquiry';
 import { useProducts, emptyFilters } from '@/domains/product';
+import InquirySettingsModal from './InquirySettingsModal';
 
 const { Title, Text, Paragraph } = Typography;
 const { Option } = Select;
 
-const STATUS_COLORS: Record<string, string> = {
-  pending: 'processing',
-  processing: 'warning',
-  resolved: 'success',
-  cancelled: 'default',
-};
-
-const CATEGORY_LABELS: Record<string, string> = {
-  consulting: 'Tư vấn sản phẩm',
-  support: 'Hỗ trợ kỹ thuật',
-  complaint: 'Khiếu nại',
-  cooperation: 'Hợp tác',
-  quotation: 'Báo giá',
-  other: 'Khác',
-};
-
 export default function InquiryManagement() {
   const { data: inquiries = [], isLoading } = useInquiries();
   const { mutate: updateInquiry, isPending: isUpdating } = useUpdateInquiry();
+  const { data: settings = [] } = useInquirySettings();
   const { data: productsData } = useProducts(emptyFilters, '');
 
   const [searchText, setSearchText] = useState('');
-  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [statusFilter, setStatusFilter] = useState<string>('active');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   
-  // Drawer state
+  const [settingsModalOpen, setSettingsModalOpen] = useState(false);
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
   const [form] = Form.useForm();
+
+  // Helper maps for settings
+  const categories = settings.filter((s: { type: string; }) => s.type === 'category' && s.isActive).sort((a: { order: number; }, b: { order: number; }) => a.order - b.order);
+  const statuses = settings.filter((s: { type: string; }) => s.type === 'status' && s.isActive).sort((a: { order: number; }, b: { order: number; }) => a.order - b.order);
+  
+  const categoryMap = Object.fromEntries(categories.map((c: any) => [c.key, c.label]));
+  const statusLabels = Object.fromEntries(statuses.map((s: any) => [s.key, s.label]));
+  const statusColors = Object.fromEntries(statuses.map((s: any) => [s.key, s.color || 'default']));
 
   // Filtered data
   const filteredData = inquiries.filter((item) => {
@@ -47,7 +41,13 @@ export default function InquiryManagement() {
       item.subject.toLowerCase().includes(searchText.toLowerCase()) ||
       item._id.toLowerCase().includes(searchText.toLowerCase());
     
-    const matchesStatus = statusFilter === 'all' || item.status === statusFilter;
+    let matchesStatus = true;
+    if (statusFilter === 'active') {
+      matchesStatus = item.status === 'new' || item.status === 'pending' || item.status === 'processing';
+    } else if (statusFilter !== 'all') {
+      matchesStatus = item.status === statusFilter;
+    }
+
     const matchesCategory = categoryFilter === 'all' || item.category === categoryFilter;
     
     return matchesSearch && matchesStatus && matchesCategory;
@@ -99,7 +99,16 @@ export default function InquiryManagement() {
           </div>
         </div>
       ),
-      sorter: (a: Inquiry, b: Inquiry) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+      sorter: (a: Inquiry, b: Inquiry) => {
+        const getWeight = (statusKey: string) => {
+          const s = statuses.find((x: any) => x.key === statusKey);
+          return s ? s.order : 99; // Lower order is higher priority, but if missing, put last
+        };
+        const wA = getWeight(a.status);
+        const wB = getWeight(b.status);
+        if (wA !== wB) return wA - wB; // Sort by configured order
+        return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+      },
       defaultSortOrder: 'descend' as const,
     },
     {
@@ -191,10 +200,10 @@ export default function InquiryManagement() {
       key: 'category',
       render: (category: string) => (
         <Tag color="geekblue" className="rounded-full px-2 py-0 border-0 font-medium">
-          {CATEGORY_LABELS[category] || category || 'Khác'}
+          {categoryMap[category] || category || 'Khác'}
         </Tag>
       ),
-      filters: Object.entries(CATEGORY_LABELS).map(([k, v]) => ({ text: v, value: k })),
+      filters: categories.map((c: any) => ({ text: c.label, value: c.key })),
       onFilter: (value: boolean | React.Key, record: Inquiry) => record.category === value,
     },
     {
@@ -202,16 +211,11 @@ export default function InquiryManagement() {
       dataIndex: 'status',
       key: 'status',
       render: (status: string) => (
-        <Tag color={STATUS_COLORS[status] || 'default'} className="rounded-full px-3 py-0.5 capitalize shadow-sm border-0 font-medium tracking-wide">
-          {status}
+        <Tag color={statusColors[status] || 'default'} className="rounded-full px-3 py-0.5 capitalize shadow-sm border-0 font-medium tracking-wide">
+          {statusLabels[status] || status}
         </Tag>
       ),
-      filters: [
-        { text: 'Pending', value: 'pending' },
-        { text: 'Processing', value: 'processing' },
-        { text: 'Resolved', value: 'resolved' },
-        { text: 'Cancelled', value: 'cancelled' },
-      ],
+      filters: statuses.map((s: any) => ({ text: s.label, value: s.key })),
       onFilter: (value: boolean | React.Key, record: Inquiry) => record.status === value,
     },
     {
@@ -242,6 +246,7 @@ export default function InquiryManagement() {
           </h2>
           <p className="text-sm text-gray-500 m-0 mt-1">Manage wholesale inquiries, trade applications, and direct leads.</p>
         </div>
+        <Button onClick={() => setSettingsModalOpen(true)}>Manage Settings</Button>
       </div>
 
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden text-black font-body">
@@ -263,11 +268,11 @@ export default function InquiryManagement() {
               value={statusFilter}
               onChange={setStatusFilter}
             >
+              <Option value="active">Needs Action</Option>
               <Option value="all">All Statuses</Option>
-              <Option value="pending">Pending</Option>
-              <Option value="processing">Processing</Option>
-              <Option value="resolved">Resolved</Option>
-              <Option value="cancelled">Cancelled</Option>
+              {statuses.map((s: any) => (
+                <Option key={s.key} value={s.key}>{s.label}</Option>
+              ))}
             </Select>
             <Select
               className="w-40"
@@ -276,8 +281,8 @@ export default function InquiryManagement() {
               onChange={setCategoryFilter}
             >
               <Option value="all">All Categories</Option>
-              {Object.entries(CATEGORY_LABELS).map(([k, v]) => (
-                <Option key={k} value={k}>{v}</Option>
+              {categories.map((c: any) => (
+                <Option key={c.key} value={c.key}>{c.label}</Option>
               ))}
             </Select>
           </div>
@@ -311,8 +316,8 @@ export default function InquiryManagement() {
               {selectedInquiry?._id.slice(-6)}
             </span>
             {selectedInquiry && (
-              <Tag color={STATUS_COLORS[selectedInquiry.status]} className="capitalize m-0 rounded-full border-0">
-                {selectedInquiry.status}
+              <Tag color={statusColors[selectedInquiry.status] || 'default'} className="capitalize m-0 rounded-full border-0">
+                {statusLabels[selectedInquiry.status] || selectedInquiry.status}
               </Tag>
             )}
           </div>
@@ -420,8 +425,8 @@ export default function InquiryManagement() {
                     <Col span={8}>
                       <Form.Item name="category" label="Category" rules={[{ required: true }]}>
                         <Select size="large" className="rounded-lg">
-                          {Object.entries(CATEGORY_LABELS).map(([k, v]) => (
-                            <Option key={k} value={k}>{v}</Option>
+                          {categories.map((c: any) => (
+                            <Option key={c.key} value={c.key}>{c.label}</Option>
                           ))}
                         </Select>
                       </Form.Item>
@@ -429,10 +434,9 @@ export default function InquiryManagement() {
                     <Col span={8}>
                       <Form.Item name="status" label="Inquiry Status" rules={[{ required: true }]}>
                         <Select size="large" className="rounded-lg">
-                          <Option value="pending">Pending (Chưa xử lý)</Option>
-                          <Option value="processing">Processing (Đang xử lý)</Option>
-                          <Option value="resolved">Resolved (Đã xử lý)</Option>
-                          <Option value="cancelled">Cancelled (Đã huỷ)</Option>
+                          {statuses.map((s: any) => (
+                            <Option key={s.key} value={s.key}>{s.label}</Option>
+                          ))}
                         </Select>
                       </Form.Item>
                     </Col>
@@ -466,6 +470,11 @@ export default function InquiryManagement() {
           </div>
         )}
       </Drawer>
+
+      <InquirySettingsModal 
+        open={settingsModalOpen} 
+        onClose={() => setSettingsModalOpen(false)} 
+      />
     </div>
   );
 }

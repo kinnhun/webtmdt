@@ -13,10 +13,12 @@ import {
   BellOutlined,
   GlobalOutlined,
   EditOutlined,
+  SafetyCertificateOutlined
 } from '@ant-design/icons';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
+import { useAdminAuth } from '@/hooks/useAdminAuth';
 
 const { Header, Sider, Content } = Layout;
 
@@ -29,6 +31,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
   const { t, i18n } = useTranslation();
+  const { user, loading, hasPermission } = useAdminAuth();
 
   React.useEffect(() => {
     setMounted(true);
@@ -44,22 +47,32 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       icon: <DashboardOutlined className="text-[1.1rem]" />,
       label: <Link href="/admin" className="font-body text-sm font-medium">{t('admin.menu.dashboard', 'Dashboard')}</Link>,
     },
-    {
+    (hasPermission('product.view') || hasPermission('product.manage')) ? {
       key: '/admin/products',
       icon: <ShoppingOutlined className="text-[1.1rem]" />,
       label: <Link href="/admin/products" className="font-body text-sm font-medium">{t('admin.menu.products', 'Products')}</Link>,
-    },
-    {
+    } : null,
+    (hasPermission('inquiry.view') || hasPermission('inquiry.manage')) ? {
       key: '/admin/inquiries',
       icon: <InboxOutlined className="text-[1.1rem]" />,
       label: <Link href="/admin/inquiries" className="font-body text-sm font-medium">{t('admin.menu.inquiries', 'Inquiries')}</Link>,
-    },
-    {
+    } : null,
+    (hasPermission('staff.view') || hasPermission('staff.manage')) ? {
+      key: '/admin/users',
+      icon: <TeamOutlined className="text-[1.1rem]" />,
+      label: <Link href="/admin/users" className="font-body text-sm font-medium">{t('admin.menu.users', 'Staff Accounts')}</Link>,
+    } : null,
+    (hasPermission('staff.view') || hasPermission('staff.manage')) ? {
+      key: '/admin/roles',
+      icon: <SafetyCertificateOutlined className="text-[1.1rem]" />,
+      label: <Link href="/admin/roles" className="font-body text-sm font-medium">{t('admin.menu.roles', 'Roles')}</Link>,
+    } : null,
+    (hasPermission('setting.manage')) ? {
       key: '/admin/settings',
       icon: <SettingOutlined className="text-[1.1rem]" />,
       label: <Link href="/admin/settings" className="font-body text-sm font-medium">{t('admin.menu.settings', 'Settings')}</Link>,
-    },
-  ];
+    } : null,
+  ].filter(Boolean) as any[];
 
   const userMenu = {
     items: [
@@ -76,7 +89,13 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         icon: <LogoutOutlined />,
         label: <span className="font-body text-sm">{t('admin.header.logout', 'Logout')}</span>,
         danger: true,
-        onClick: () => router.push('/'),
+        onClick: async () => {
+          try {
+            await fetch('/api/admin/auth/logout', { method: 'POST' });
+          } finally {
+            router.push('/admin/login');
+          }
+        },
       },
     ],
   };
@@ -89,9 +108,40 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     ],
   };
 
-  if (!mounted) return null;
+  // Route Permission Mapping
+  const routePermissions: Record<string, string[]> = {
+    '/admin/products/create': ['product.manage'],
+    '/admin/products/edit': ['product.manage'],
+    '/admin/products': ['product.view', 'product.manage'],
+    '/admin/inquiries': ['inquiry.view', 'inquiry.manage'],
+    '/admin/users': ['staff.view', 'staff.manage'],
+    '/admin/roles': ['staff.view', 'staff.manage'],
+    '/admin/settings': ['setting.manage'],
+  };
+
+  const checkRouteAccess = () => {
+    if (loading) return true; // Let loading state bypass
+    const currentPath = router.pathname;
+    
+    // Sort keys by length descending to match longest prefix first
+    const sortedRoutes = Object.keys(routePermissions).sort((a, b) => b.length - a.length);
+    const requiredPerms = sortedRoutes.find(route => currentPath.startsWith(route));
+    
+    if (!requiredPerms) return true; // Open routes like /admin
+
+    const allowed = routePermissions[requiredPerms];
+    return allowed.some(perm => hasPermission(perm));
+  };
+
+  if (!mounted || loading) return null; // Avoid hydration mismatch or flicker
 
   const getSelectedKey = () => {
+    // If we are deep inside products like /admin/products/create, hilight the main tab
+    if (router.pathname.startsWith('/admin/products')) return '/admin/products';
+    if (router.pathname.startsWith('/admin/inquiries')) return '/admin/inquiries';
+    if (router.pathname.startsWith('/admin/users')) return '/admin/users';
+    if (router.pathname.startsWith('/admin/roles')) return '/admin/roles';
+    if (router.pathname.startsWith('/admin/settings')) return '/admin/settings';
     return router.pathname;
   };
 
@@ -186,8 +236,12 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               <div className="flex items-center gap-3 cursor-pointer pl-2 pr-4 py-1.5 rounded-full hover:bg-black/5 transition-colors border border-transparent hover:border-black/5">
                 <Avatar icon={<UserOutlined />} style={{ backgroundColor: "hsl(var(--orange))" }} />
                 <div className="hidden sm:flex flex-col items-start leading-tight">
-                  <span className="font-body font-semibold text-sm text-foreground">{t('admin.header.adminUser', 'Admin User')}</span>
-                  <span className="font-body text-[11px] font-medium" style={{ color: "hsl(var(--navy)/0.45)" }}>Master Admin</span>
+                  <span className="font-body font-semibold text-sm text-foreground">
+                    {user?.name || t('admin.header.adminUser', 'Admin User')}
+                  </span>
+                  <span className="font-body text-[11px] font-medium" style={{ color: "hsl(var(--navy)/0.45)" }}>
+                    {user?.role || 'Staff'}
+                  </span>
                 </div>
               </div>
             </Dropdown>
@@ -196,7 +250,23 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
         <Content className="m-6 bg-transparent">
           <div className="bg-white rounded-xl shadow-sm border p-6 md:p-8 min-h-[calc(100vh-160px)]" style={{ borderColor: "hsl(var(--navy)/0.06)" }}>
-            {children}
+            {checkRouteAccess() ? (
+              children
+            ) : (
+              <div className="flex flex-col items-center justify-center h-full text-center p-12">
+                <div className="text-red-500 mb-4">
+                  <SafetyCertificateOutlined className="text-6xl opacity-50" />
+                </div>
+                <h2 className="text-2xl font-display font-bold text-navy-deep">403 Forbidden</h2>
+                <p className="text-gray-500 mt-2">
+                  Bạn không có đủ thẩm quyền để truy cập phân hệ này.<br/>
+                  Vui lòng liên hệ quản trị viên cấp cao nếu cần cấp quyền.
+                </p>
+                <Link href="/admin">
+                  <Button type="primary" className="mt-6 bg-navy-deep hover:bg-navy">Trở về Dashboard</Button>
+                </Link>
+              </div>
+            )}
           </div>
         </Content>
 

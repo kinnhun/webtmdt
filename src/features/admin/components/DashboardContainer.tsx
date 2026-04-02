@@ -11,6 +11,7 @@ import type { Inquiry } from '@/types/admin';
 
 import { useQuery } from '@tanstack/react-query';
 import http from '@/lib/http/client';
+import { useInquirySettings } from '@/domains/inquiry';
 
 const { Title, Text } = Typography;
 
@@ -27,7 +28,11 @@ export default function DashboardContainer() {
     refetchInterval: 60000 // refresh every 1 minute
   });
 
+  const { data: settings = [] } = useInquirySettings();
   const d = dashboardData || {};
+
+  const statuses = settings.filter((s: { type: string; }) => s.type === 'status' && s.isActive).sort((a: { order: number; }, b: { order: number; }) => a.order - b.order);
+  
   const recentInquiries = d.recentInquiries || [];
   
   const inquiryColumns = [
@@ -124,18 +129,25 @@ export default function DashboardContainer() {
             </Row>
             <Divider className="my-4" />
             <div className="space-y-4">
-              <div>
-                <div className="flex justify-between text-sm mb-1"><Text>Pending / Unread</Text><Text strong>{isLoading ? '-' : d.pipelineStatus?.pending || 0}</Text></div>
-                <Progress percent={!d.totalInquiries ? 0 : Math.round(((d.pipelineStatus?.pending || 0) / d.totalInquiries) * 100)} showInfo={false} strokeColor="#ef4444" railColor="#fee2e2" />
-              </div>
-              <div>
-                <div className="flex justify-between text-sm mb-1"><Text>Processing</Text><Text strong>{isLoading ? '-' : d.pipelineStatus?.processing || 0}</Text></div>
-                <Progress percent={!d.totalInquiries ? 0 : Math.round(((d.pipelineStatus?.processing || 0) / d.totalInquiries) * 100)} showInfo={false} strokeColor="#3b82f6" railColor="#dbeafe" />
-              </div>
-              <div>
-                <div className="flex justify-between text-sm mb-1"><Text>Resolved (Closed)</Text><Text strong>{isLoading ? '-' : d.pipelineStatus?.resolved || 0}</Text></div>
-                <Progress percent={!d.totalInquiries ? 0 : Math.round(((d.pipelineStatus?.resolved || 0) / d.totalInquiries) * 100)} showInfo={false} strokeColor="#22c55e" railColor="#dcfce7" />
-              </div>
+              {statuses.map((s: any) => {
+                const count = d.pipelineStatus?.[s.key] || 0;
+                return (
+                  <div key={s.key}>
+                    <div className="flex justify-between text-sm mb-1">
+                      <Text>{s.label}</Text>
+                      <Text strong>{isLoading ? '-' : count}</Text>
+                    </div>
+                    <Progress 
+                      percent={!d.totalInquiries ? 0 : Math.round((count / d.totalInquiries) * 100)} 
+                      showInfo={false} 
+                      strokeColor={s.color !== 'default' ? s.color : '#94a3b8'} 
+                    />
+                  </div>
+                );
+              })}
+              {statuses.length === 0 && !isLoading && (
+                <div className="text-gray-400 text-sm text-center py-4">No statuses configured.</div>
+              )}
             </div>
           </Card>
         </Col>

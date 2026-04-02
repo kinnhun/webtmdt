@@ -8,9 +8,10 @@ import { useTranslation } from "react-i18next";
 export default function ContactPage() {
   const router = useRouter();
   const { t } = useTranslation();
-  const [form, setForm] = useState({ name: "", email: "", phone: "", company: "", subject: "", message: "", interestedProduct: "" });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", company: "", subject: "", message: "", interestedProduct: "", category: "other" });
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+  const [categories, setCategories] = useState<{key: string, label: string}[]>([]);
 
   useEffect(() => {
     const { product, code } = router.query;
@@ -24,13 +25,29 @@ export default function ContactPage() {
     }
   }, [router.query, t]);
 
+  useEffect(() => {
+    // Fetch categories dynamically
+    fetch("/api/admin/inquiries/settings")
+      .then(res => res.json())
+      .then((data: any[]) => {
+        if (Array.isArray(data)) {
+          const cats = data.filter(s => s.type === 'category' && s.isActive).sort((a,b) => a.order - b.order);
+          setCategories(cats);
+          if (cats.length > 0) {
+            setForm(prev => ({ ...prev, category: cats[0].key }));
+          }
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
     try {
       await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) });
       setSent(true);
-      setForm({ name: "", email: "", phone: "", company: "", subject: "", message: "", interestedProduct: "" });
+      setForm({ name: "", email: "", phone: "", company: "", subject: "", message: "", interestedProduct: "", category: categories.length > 0 ? categories[0].key : "other" });
     } catch { /* ignore */ }
     setSending(false);
   };
@@ -144,6 +161,16 @@ export default function ContactPage() {
                     <label className="font-body text-xs text-muted-foreground uppercase tracking-wider mb-1.5 block">{t("contact.form.company")}</label>
                     <input type="text" value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} className="w-full px-4 py-3 border border-border rounded-sm font-body text-sm outline-none focus:ring-2 focus:ring-orange/30 transition shadow-sm" />
                   </div>
+                </div>
+                <div className="mb-5">
+                  <label className="font-body text-xs text-muted-foreground uppercase tracking-wider mb-1.5 block">{t('contact.form.category', 'Inquiry Category')} *</label>
+                  <select required value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} className="w-full px-4 py-3 border border-border rounded-sm font-body text-sm outline-none focus:ring-2 focus:ring-orange/30 transition shadow-sm bg-white">
+                    {categories.length > 0 ? categories.map(c => (
+                      <option key={c.key} value={c.key}>{c.label}</option>
+                    )) : (
+                      <option value="other">Other</option>
+                    )}
+                  </select>
                 </div>
                 <div className="space-y-5">
                   <div>

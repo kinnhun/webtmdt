@@ -400,7 +400,7 @@ export default function ProductAttributeManagement() {
           <div className="bg-white rounded-lg overflow-hidden border border-gray-200">
             {isLoading ? (
               <div className="flex items-center justify-center py-20">
-                <Spin size="large" tip="Loading attributes..." />
+                <Spin size="large" description="Loading attributes..." />
               </div>
             ) : isError ? (
               <div className="py-16 text-center">

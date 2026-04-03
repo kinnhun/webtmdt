@@ -69,7 +69,7 @@ export default function ProfileManagement() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <Spin size="large" tip={t('admin.profile.loading', 'Đang tải hồ sơ...')} />
+        <Spin size="large" description={t('admin.profile.loading', 'Đang tải hồ sơ...')} />
       </div>
     );
   }
@@ -205,7 +205,7 @@ export default function ProfileManagement() {
                               const { text, color } = getActionLabel(a.action);
                               return {
                                 color,
-                                children: (
+                                content: (
                                   <div className="text-sm">
                                     <div className="flex items-center gap-2 mb-1">
                                       <Tag color={color} className="border-0 m-0 px-1.5 py-0 text-[10px]">{text}</Tag>

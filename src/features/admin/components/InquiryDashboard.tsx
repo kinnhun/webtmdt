@@ -55,22 +55,25 @@ function getActionLabel(action: string, t: any): { text: string; color: string }
 function MiniBarChart({ data, maxHeight = 80, t }: { data: DashboardDayItem[]; maxHeight?: number; t: any }) {
   const maxVal = Math.max(...data.map(d => Math.max(d.created, d.resolved)), 1);
   return (
-    <div className="flex items-end gap-1.5 w-full" style={{ height: maxHeight }}>
+    <div className="flex items-end justify-between w-full relative border-b border-gray-100 pb-2">
       {data.map((d, i) => {
         const createdH = (d.created / maxVal) * maxHeight;
         const resolvedH = (d.resolved / maxVal) * maxHeight;
         const dayLabel = format(new Date(d.date), 'dd/MM');
         return (
           <Tooltip key={i} title={t('admin.inquiryDashboard.tooltip.barChart', { day: dayLabel, created: d.created, resolved: d.resolved })}>
-            <div className="flex-1 flex items-end gap-px">
-              <div
-                className="flex-1 rounded-t-sm transition-all duration-300"
-                style={{ height: Math.max(createdH, 2), backgroundColor: 'hsl(var(--orange))' }}
-              />
-              <div
-                className="flex-1 rounded-t-sm transition-all duration-300"
-                style={{ height: Math.max(resolvedH, 2), backgroundColor: '#52c41a' }}
-              />
+            <div className="flex flex-col items-center flex-1 group cursor-pointer hover:bg-gray-50/50 rounded-lg pt-2 transition-colors">
+              <div className="flex items-end gap-[2px] sm:gap-1 justify-center w-full" style={{ height: maxHeight }}>
+                <div
+                  className="w-2.5 sm:w-3.5 rounded-t-[2px] transition-all duration-300 group-hover:brightness-110 shadow-sm"
+                  style={{ height: Math.max(createdH, 2), backgroundColor: 'hsl(var(--orange))' }}
+                />
+                <div
+                  className="w-2.5 sm:w-3.5 rounded-t-[2px] transition-all duration-300 group-hover:brightness-110 shadow-sm"
+                  style={{ height: Math.max(resolvedH, 2), backgroundColor: '#52c41a' }}
+                />
+              </div>
+              <span className="text-[10px] text-gray-400 mt-2 pb-1 font-medium">{dayLabel}</span>
             </div>
           </Tooltip>
         );
@@ -118,7 +121,7 @@ export default function InquiryDashboard() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <Spin size="large" tip={t('admin.inquiryDashboard.loading')} />
+        <Spin size="large" description={t('admin.inquiryDashboard.loading')} />
       </div>
     );
   }
@@ -345,11 +348,8 @@ export default function InquiryDashboard() {
               </div>
             }
           >
-            <MiniBarChart data={byDay} maxHeight={120} t={t} />
-            <div className="flex justify-between mt-2 text-[10px] text-gray-400">
-              {byDay.map((d, i) => (
-                <span key={i} className="flex-1 text-center">{format(new Date(d.date), 'dd/MM')}</span>
-              ))}
+            <div className="mt-4">
+              <MiniBarChart data={byDay} maxHeight={120} t={t} />
             </div>
           </Card>
         </Col>
@@ -533,7 +533,7 @@ export default function InquiryDashboard() {
                   const { text, color } = getActionLabel(a.action, t);
                   return {
                     color,
-                    children: (
+                    content: (
                       <div className="text-sm py-0.5">
                         <div className="flex items-center gap-2 flex-wrap">
                           <Tag color={color} className="border-0 rounded text-[10px] px-1.5 py-0 m-0">{text}</Tag>

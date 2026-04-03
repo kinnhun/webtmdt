@@ -105,7 +105,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       { $match: { createdAt: { $gte: days7Ago } } },
       {
         $group: {
-          _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt", timezone: "+07:00" } },
           created: { $sum: 1 },
         },
       },
@@ -116,7 +116,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       { $match: { resolvedAt: { $gte: days7Ago } } },
       {
         $group: {
-          _id: { $dateToString: { format: "%Y-%m-%d", date: "$resolvedAt" } },
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$resolvedAt", timezone: "+07:00" } },
           resolved: { $sum: 1 },
         },
       },
@@ -127,7 +127,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const byDay: Array<{ date: string; created: number; resolved: number }> = [];
     for (let i = 6; i >= 0; i--) {
       const d = new Date(startOfToday.getTime() - i * 24 * 60 * 60 * 1000);
-      const dateStr = d.toISOString().split("T")[0];
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      const dateStr = `${y}-${m}-${day}`;
+      
       const createdEntry = byDayCreated.find((x) => x._id === dateStr);
       const resolvedEntry = byDayResolved.find((x) => x._id === dateStr);
       byDay.push({

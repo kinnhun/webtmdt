@@ -1,8 +1,8 @@
 import * as inquiryService from "@/services/inquiry.service";
-import type { Inquiry, UpdateInquiryPayload } from "./inquiry.types";
+import type { Inquiry, UpdateInquiryPayload, InquiryDashboardData } from "./inquiry.types";
 
-export const fetchInquiries = async (): Promise<Inquiry[]> => {
-  return inquiryService.getInquiries();
+export const fetchInquiries = async (params?: { scope?: string }): Promise<Inquiry[]> => {
+  return inquiryService.getInquiries(params);
 };
 
 export const editInquiry = async (id: string, payload: UpdateInquiryPayload): Promise<Inquiry> => {
@@ -13,3 +13,8 @@ export const fetchSettings = async (): Promise<any[]> => inquiryService.getInqui
 export const createSetting = async (payload: any): Promise<any> => inquiryService.createInquirySetting(payload);
 export const updateSetting = async (id: string, payload: any): Promise<any> => inquiryService.updateInquirySetting(id, payload);
 export const deleteSetting = async (id: string): Promise<any> => inquiryService.deleteInquirySetting(id);
+
+// Dashboard
+export const fetchInquiryDashboard = async (): Promise<InquiryDashboardData> => {
+  return inquiryService.getInquiryDashboard();
+};

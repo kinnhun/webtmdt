@@ -2,6 +2,12 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "@/lib/mongodb";
 import Contact from "@/models/Contact";
 import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
+import AdminUser from "@/models/AdminUser";
+import Role from "@/models/Role";
+import Product from "@/models/Product";
+
+const JWT_SECRET = process.env.JWT_SECRET || "fallback_secret_for_admin_rbacs";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "GET") {
@@ -11,11 +17,44 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     await dbConnect();
     
-    // Ensure Product model is registered
-    require("@/models/Product");
+    // Auth Check
+    const token = req.cookies.admin_token;
+    if (!token) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+    
+    let decoded: any;
+    try {
+      decoded = jwt.verify(token, JWT_SECRET);
+    } catch (e) {
+      return res.status(401).json({ error: "Invalid token" });
+    }
 
-    // Sort by descending createdAt (newest first)
-    const inquiries = await Contact.find().sort({ createdAt: -1 }).lean();
+    const user = await AdminUser.findById(decoded.id).populate("roleId").lean();
+    if (!user || user.status !== "active") {
+      return res.status(403).json({ error: "Account inactive or not found" });
+    }
+
+    const roleName = user.roleId ? (user.roleId as any).name : "Unknown";
+    const rolePermissions: string[] = user.roleId ? (user.roleId as any).permissions || [] : [];
+    const isAdmin = roleName === "Admin" || roleName === "Super Admin" || rolePermissions.includes("system.all");
+    const scope = req.query.scope; // 'my_assigned'
+
+    let filter: any = {};
+    if (scope === "my_assigned") {
+      // Specifically requested their own assigned inquiries
+      filter.assignedTo = user._id;
+    }
+    // All authenticated accounts can view the full inquiry list
+
+    // Models are already imported or registered top-level
+
+    // Populate assignedTo and assignedBy
+    const inquiries = await Contact.find(filter)
+      .sort({ createdAt: -1 })
+      .populate("assignedTo", "name username")
+      .populate("assignedBy", "name username")
+      .lean();
     
     // Manually populate interestedProduct to avoid ObjectId cast errors
     // Some older records might have product code instead of ObjectId
@@ -50,7 +89,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
     }
 
-    return res.status(200).json({ success: true, data: inquiries });
+    return res.status(200).json(inquiries);
   } catch (error: unknown) {
     if (error instanceof Error) {
       return res.status(500).json({ error: error.message });

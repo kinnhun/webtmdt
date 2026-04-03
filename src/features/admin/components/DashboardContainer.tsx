@@ -12,11 +12,13 @@ import type { Inquiry } from '@/types/admin';
 import { useQuery } from '@tanstack/react-query';
 import http from '@/lib/http/client';
 import { useInquirySettings } from '@/domains/inquiry';
+import { useTranslation } from 'react-i18next';
 
 const { Title, Text } = Typography;
 
 export default function DashboardContainer() {
   const router = useRouter();
+  const { t } = useTranslation();
 
   // Fetch Dashboard aggregate data from our new API
   const { data: dashboardData, isLoading } = useQuery({
@@ -31,19 +33,19 @@ export default function DashboardContainer() {
   const { data: settings = [] } = useInquirySettings();
   const d = dashboardData || {};
 
-  const statuses = settings.filter((s: { type: string; }) => s.type === 'status' && s.isActive).sort((a: { order: number; }, b: { order: number; }) => a.order - b.order);
+  const statuses = settings.filter((s: any) => s.type === 'status' && s.isActive).sort((a: any, b: any) => a.order - b.order);
   
   const recentInquiries = d.recentInquiries || [];
   
   const inquiryColumns = [
-    { title: 'Date', dataIndex: 'date', key: 'date', render: (t: string) => <Text type="secondary" className="text-xs">{t}</Text> },
-    { title: 'Client Info', key: 'client', render: (_: unknown, r: any) => (
+    { title: t('admin.dashboard.colDate', 'Date'), dataIndex: 'date', key: 'date', render: (t: string) => <Text type="secondary" className="text-xs">{t}</Text> },
+    { title: t('admin.dashboard.colClientInfo', 'Client Info'), key: 'client', render: (_: unknown, r: any) => (
       <div>
         <div className="font-medium text-navy-deep">{r.name}</div>
         <div className="text-xs text-navy/60 truncate max-w-[200px]" title={r.company}>{r.company}</div>
       </div>
     )},
-    { title: 'Interest', dataIndex: 'product', key: 'product', render: (p: string, r: any) => (
+    { title: t('admin.dashboard.colInterest', 'Interest'), dataIndex: 'product', key: 'product', render: (p: string, r: any) => (
       r.slug ? (
         <Link href={`/catalogue/${r.slug}`} target="_blank" className="hover:text-orange transition-colors">
           <Text className="font-medium text-xs wrap-break-word cursor-pointer hover:text-orange" style={{ maxWidth: 200 }}>{p}</Text>
@@ -53,7 +55,7 @@ export default function DashboardContainer() {
       )
     )},
     { 
-      title: 'Status', 
+      title: t('admin.dashboard.colStatus', 'Status'), 
       key: 'status', 
       dataIndex: 'status',
       render: (status: string) => {
@@ -76,12 +78,12 @@ export default function DashboardContainer() {
       {/* HEADER & QUICK ACTIONS */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <Title level={2} className="m-0 font-display text-navy-deep" style={{ fontSize: '1.75rem' }}>Dashboard Overview</Title>
-          <Text className="text-navy/60">Welcome back! Here's what's happening today.</Text>
+          <Title level={2} className="m-0 font-display text-navy-deep" style={{ fontSize: '1.75rem' }}>{t('admin.dashboard.title', 'Dashboard Overview')}</Title>
+          <Text className="text-navy/60">{t('admin.dashboard.subtitle', "Welcome back! Here's what's happening today.")}</Text>
         </div>
         <Space className="w-full sm:w-auto flex-wrap" size="small">
-          <Button type="primary" icon={<PlusOutlined />} onClick={() => router.push('/admin/products/create')} className="bg-orange hover:bg-orange/90 border-0 shadow-sm font-medium">Add Product</Button>
-          <Button icon={<MessageOutlined />} onClick={() => router.push('/admin/inquiries')}>View Inquiries</Button>
+          <Button type="primary" icon={<PlusOutlined />} onClick={() => router.push('/admin/products/create')} className="bg-orange hover:bg-orange/90 border-0 shadow-sm font-medium">{t('admin.dashboard.btnAddProduct', 'Add Product')}</Button>
+          <Button icon={<MessageOutlined />} onClick={() => router.push('/admin/inquiries')}>{t('admin.dashboard.btnViewInquiries', 'View Inquiries')}</Button>
         </Space>
       </div>
 
@@ -89,22 +91,22 @@ export default function DashboardContainer() {
       <Row gutter={[16, 16]}>
         <Col xs={12} sm={12} lg={6}>
           <Card variant="borderless" className="shadow-sm h-full" styles={{ body: { padding: '20px' } }}>
-            <Statistic title={<span className="text-navy/60 text-xs font-semibold uppercase tracking-wider">Total Inquiries</span>} value={isLoading ? '-' : d.totalInquiries} styles={{ content: { color: 'hsl(var(--navy-deep))', fontWeight: 600 } }} />
+            <Statistic title={<span className="text-navy/60 text-xs font-semibold uppercase tracking-wider">{t('admin.dashboard.statTotalInquiries', 'Total Inquiries')}</span>} value={isLoading ? '-' : d.totalInquiries} styles={{ content: { color: 'hsl(var(--navy-deep))', fontWeight: 600 } }} />
           </Card>
         </Col>
         <Col xs={12} sm={12} lg={6}>
           <Card variant="borderless" className="shadow-sm h-full" styles={{ body: { padding: '20px' } }}>
-            <Statistic title={<span className="text-orange text-xs font-semibold uppercase tracking-wider">New Today</span>} value={isLoading ? '-' : d.newToday} styles={{ content: { color: 'hsl(var(--orange))', fontWeight: 600 } }} prefix={<ArrowUpOutlined className="text-sm" />} />
+            <Statistic title={<span className="text-orange text-xs font-semibold uppercase tracking-wider">{t('admin.dashboard.statNewToday', 'New Today')}</span>} value={isLoading ? '-' : d.newToday} styles={{ content: { color: 'hsl(var(--orange))', fontWeight: 600 } }} prefix={<ArrowUpOutlined className="text-sm" />} />
           </Card>
         </Col>
         <Col xs={12} sm={12} lg={6}>
           <Card variant="borderless" className="shadow-sm h-full bg-red-50/50" styles={{ body: { padding: '20px' } }}>
-            <Statistic title={<span className="text-red-500 text-xs font-semibold uppercase tracking-wider">Pending</span>} value={isLoading ? '-' : d.pendingInquiries} styles={{ content: { color: '#ef4444', fontWeight: 600 } }} />
+            <Statistic title={<span className="text-red-500 text-xs font-semibold uppercase tracking-wider">{t('admin.dashboard.statPending', 'Pending')}</span>} value={isLoading ? '-' : d.pendingInquiries} styles={{ content: { color: '#ef4444', fontWeight: 600 } }} />
           </Card>
         </Col>
         <Col xs={12} sm={12} lg={6}>
           <Card variant="borderless" className="shadow-sm h-full" styles={{ body: { padding: '20px' } }}>
-            <Statistic title={<span className="text-navy/60 text-xs font-semibold uppercase tracking-wider">Total Products</span>} value={isLoading ? '-' : d.totalProducts} styles={{ content: { color: 'hsl(var(--navy-deep))', fontWeight: 600 } }} />
+            <Statistic title={<span className="text-navy/60 text-xs font-semibold uppercase tracking-wider">{t('admin.dashboard.statTotalProducts', 'Total Products')}</span>} value={isLoading ? '-' : d.totalProducts} styles={{ content: { color: 'hsl(var(--navy-deep))', fontWeight: 600 } }} />
           </Card>
         </Col>
       </Row>
@@ -112,18 +114,18 @@ export default function DashboardContainer() {
       {/* ROW 2: INQUIRY TREND */}
       <Row gutter={[24, 24]}>
         <Col xs={24} lg={24}>
-          <Card title={<span className="font-display font-medium text-lg text-navy-deep">Inquiry Pipeline</span>} variant="borderless" className="shadow-sm h-full">
+          <Card title={<span className="font-display font-medium text-lg text-navy-deep">{t('admin.dashboard.titlePipeline', 'Inquiry Pipeline')}</span>} variant="borderless" className="shadow-sm h-full">
             <Row gutter={24} className="mb-6">
               <Col span={8}>
-                <div className="text-xs text-navy/60 uppercase tracking-wide mb-1">Today</div>
+                <div className="text-xs text-navy/60 uppercase tracking-wide mb-1">{t('admin.dashboard.today', 'Today')}</div>
                 <div className="text-2xl font-bold text-navy-deep">{isLoading ? '-' : d.newToday}</div>
               </Col>
               <Col span={8}>
-                <div className="text-xs text-navy/60 uppercase tracking-wide mb-1">Last 7 Days</div>
+                <div className="text-xs text-navy/60 uppercase tracking-wide mb-1">{t('admin.dashboard.last7Days', 'Last 7 Days')}</div>
                 <div className="text-2xl font-bold text-navy-deep">{isLoading ? '-' : d.newLast7Days}</div>
               </Col>
               <Col span={8}>
-                <div className="text-xs text-navy/60 uppercase tracking-wide mb-1">Last 30 Days</div>
+                <div className="text-xs text-navy/60 uppercase tracking-wide mb-1">{t('admin.dashboard.last30Days', 'Last 30 Days')}</div>
                 <div className="text-2xl font-bold text-navy-deep">{isLoading ? '-' : d.newLast30Days}</div>
               </Col>
             </Row>
@@ -146,7 +148,7 @@ export default function DashboardContainer() {
                 );
               })}
               {statuses.length === 0 && !isLoading && (
-                <div className="text-gray-400 text-sm text-center py-4">No statuses configured.</div>
+                <div className="text-gray-400 text-sm text-center py-4">{t('admin.dashboard.noStatusesConfigured', 'No statuses configured.')}</div>
               )}
             </div>
           </Card>
@@ -156,38 +158,38 @@ export default function DashboardContainer() {
       {/* ROW 3: PRODUCT BREAKDOWNS */}
       <Row gutter={[16, 16]}>
         <Col xs={24} md={8}>
-          <Card title={<Text className="font-display font-medium text-navy-deep">By Category</Text>} size="small" variant="borderless" className="shadow-sm h-full">
+          <Card title={<Text className="font-display font-medium text-navy-deep">{t('admin.dashboard.titleByCategory', 'By Category')}</Text>} size="small" variant="borderless" className="shadow-sm h-full">
             <div className="flex flex-col">
               {(d.productsByCategory || []).map((i: any, idx: number) => (
                 <div key={idx} className="px-0 py-2 border-b border-gray-50 flex justify-between last:border-b-0">
                   <Text className="text-sm truncate w-2/3" title={i.n}>{i.n}</Text><Text type="secondary" className="text-sm shrink-0">{i.c}</Text>
                 </div>
               ))}
-              {!isLoading && (d.productsByCategory?.length === 0) && <Text type="secondary" className="text-xs py-2">No data yet</Text>}
+              {!isLoading && (d.productsByCategory?.length === 0) && <Text type="secondary" className="text-xs py-2">{t('admin.dashboard.noDataYet', 'No data yet')}</Text>}
             </div>
           </Card>
         </Col>
         <Col xs={24} md={8}>
-          <Card title={<Text className="font-display font-medium text-navy-deep">By Material</Text>} size="small" variant="borderless" className="shadow-sm h-full">
+          <Card title={<Text className="font-display font-medium text-navy-deep">{t('admin.dashboard.titleByMaterial', 'By Material')}</Text>} size="small" variant="borderless" className="shadow-sm h-full">
             <div className="flex flex-col">
               {(d.productsByMaterial || []).map((i: any, idx: number) => (
                 <div key={idx} className="px-0 py-2 border-b border-gray-50 flex justify-between last:border-b-0">
                   <Text className="text-sm truncate w-2/3" title={i.n}>{i.n}</Text><Text type="secondary" className="text-sm shrink-0">{i.c}</Text>
                 </div>
               ))}
-              {!isLoading && (d.productsByMaterial?.length === 0) && <Text type="secondary" className="text-xs py-2">No data yet</Text>}
+              {!isLoading && (d.productsByMaterial?.length === 0) && <Text type="secondary" className="text-xs py-2">{t('admin.dashboard.noDataYet', 'No data yet')}</Text>}
             </div>
           </Card>
         </Col>
         <Col xs={24} md={8}>
-          <Card title={<Text className="font-display font-medium text-navy-deep">By MOQ</Text>} size="small" variant="borderless" className="shadow-sm h-full">
+          <Card title={<Text className="font-display font-medium text-navy-deep">{t('admin.dashboard.titleByMOQ', 'By MOQ')}</Text>} size="small" variant="borderless" className="shadow-sm h-full">
             <div className="flex flex-col">
               {(d.productsByMOQ || []).map((i: any, idx: number) => (
                 <div key={idx} className="px-0 py-2 border-b border-gray-50 flex justify-between last:border-b-0">
                   <Text className="text-sm truncate w-2/3" title={i.n}>{i.n}</Text><Text type="secondary" className="text-sm shrink-0">{i.c}</Text>
                 </div>
               ))}
-              {!isLoading && (d.productsByMOQ?.length === 0) && <Text type="secondary" className="text-xs py-2">No data yet</Text>}
+              {!isLoading && (d.productsByMOQ?.length === 0) && <Text type="secondary" className="text-xs py-2">{t('admin.dashboard.noDataYet', 'No data yet')}</Text>}
             </div>
           </Card>
         </Col>
@@ -197,8 +199,8 @@ export default function DashboardContainer() {
       <Row gutter={[24, 24]}>
         <Col xs={24} lg={16}>
           <Card 
-            title={<span className="font-display font-medium text-lg text-navy-deep">Recent Inquiries</span>} 
-            extra={<Button type="link" onClick={() => router.push('/admin/inquiries')}>View All <ArrowRightOutlined /></Button>}
+            title={<span className="font-display font-medium text-lg text-navy-deep">{t('admin.dashboard.titleRecentInquiries', 'Recent Inquiries')}</span>} 
+            extra={<Button type="link" onClick={() => router.push('/admin/inquiries')}>{t('admin.dashboard.btnViewAll', 'View All')} <ArrowRightOutlined /></Button>}
             variant="borderless" 
             className="shadow-sm h-full"
             styles={{ body: { padding: 0 } }}
@@ -214,7 +216,7 @@ export default function DashboardContainer() {
         </Col>
         <Col xs={24} lg={8}>
           <div className="flex flex-col gap-6 h-full">
-            <Card title={<Text className="font-display font-medium text-navy-deep">Top Viewed Products</Text>} size="small" variant="borderless" className="shadow-sm flex-1">
+            <Card title={<Text className="font-display font-medium text-navy-deep">{t('admin.dashboard.titleTopViewed', 'Top Viewed Products')}</Text>} size="small" variant="borderless" className="shadow-sm flex-1">
               <div className="flex flex-col">
                 {topViewedProducts.map((item: any, i: number) => (
                   <div key={i} className="px-0 py-2 flex items-center justify-between border-b border-transparent">
@@ -230,7 +232,7 @@ export default function DashboardContainer() {
               </div>
             </Card>
             
-            <Card title={<Text className="font-display font-medium text-navy-deep">Top Inquired Products</Text>} size="small" variant="borderless" className="shadow-sm flex-1">
+            <Card title={<Text className="font-display font-medium text-navy-deep">{t('admin.dashboard.titleTopInquired', 'Top Inquired Products')}</Text>} size="small" variant="borderless" className="shadow-sm flex-1">
               <div className="flex flex-col">
                 {topInquiredProducts.map((item: any, i: number) => (
                   <div key={i} className="px-0 py-2 flex items-center justify-between border-b border-transparent">
@@ -240,7 +242,7 @@ export default function DashboardContainer() {
                         <Text className="text-sm cursor-pointer hover:text-navy-deep" title={item.title}>{item.title}</Text>
                       </Link>
                     </div>
-                    <Text type="secondary" className="text-xs whitespace-nowrap text-green-600 font-medium shrink-0">{item.count} leads</Text>
+                    <Text type="secondary" className="text-xs whitespace-nowrap text-green-600 font-medium shrink-0">{item.count} {t('admin.dashboard.unitLeads', 'leads')}</Text>
                   </div>
                 ))}
               </div>

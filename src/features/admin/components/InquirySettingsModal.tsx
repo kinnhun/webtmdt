@@ -126,7 +126,7 @@ export default function InquirySettingsModal({ open, onClose }: SettingsModalPro
       onCancel={onClose}
       footer={null}
       width={800}
-      destroyOnClose
+      destroyOnHidden
     >
       <div className="pt-2">
         <h2 className="text-xl font-display font-semibold mb-4 text-navy-deep">Inquiry Settings</h2>

@@ -388,7 +388,7 @@ export default function InquiryManagement() {
         size="large"
         onClose={() => setDrawerVisible(false)}
         open={drawerVisible}
-        destroyOnClose
+        destroyOnHidden
         extra={
           <Button
             type="primary"

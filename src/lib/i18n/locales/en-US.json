@@ -664,6 +664,15 @@
       "form": {
         "productName": "Product Name",
         "collection": "Collection",
+        "validation": {
+          "nameRequired": "Please enter a product name",
+          "slugRequired": "Please enter a URL slug",
+          "skuRequired": "Please enter a SKU code",
+          "collectionRequired": "Please select a collection",
+          "categoryRequired": "Please select a category",
+          "shortDescRequired": "Short description is required",
+          "b2bRequired": "Required"
+        },
         "productNamePlaceholderVI": "Vietnamese Name",
         "productNamePlaceholderUK": "British English Name",
         "productNamePlaceholderUS": "American English Name",

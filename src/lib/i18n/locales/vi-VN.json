@@ -663,6 +663,15 @@
       "form": {
         "productName": "Tên sản phẩm",
         "collection": "Bộ sưu tập",
+        "validation": {
+          "nameRequired": "Vui lòng nhập tên sản phẩm",
+          "slugRequired": "Vui lòng nhập đường dẫn URL (slug)",
+          "skuRequired": "Vui lòng nhập mã SKU",
+          "collectionRequired": "Vui lòng chọn Bộ sưu tập",
+          "categoryRequired": "Vui lòng chọn Danh mục",
+          "shortDescRequired": "Vui lòng nhập mô tả ngắn",
+          "b2bRequired": "Bắt buộc nhập"
+        },
         "productNamePlaceholderVI": "Tên tiếng Việt",
         "productNamePlaceholderUK": "Tên tiếng Anh (Anh)",
         "productNamePlaceholderUS": "Tên tiếng Anh (Mỹ)",

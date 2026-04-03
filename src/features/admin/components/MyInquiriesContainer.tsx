@@ -235,7 +235,7 @@ export default function MyInquiriesContainer() {
         size="large"
         onClose={() => setDrawerVisible(false)}
         open={drawerVisible}
-        destroyOnClose
+        destroyOnHidden
         styles={{ body: { backgroundColor: '#fafafb', padding: 0 } }}
       >
         {selectedInquiry && (

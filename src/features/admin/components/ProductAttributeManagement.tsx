@@ -465,7 +465,7 @@ export default function ProductAttributeManagement() {
             fontWeight: 600,
           },
         }}
-        destroyOnClose
+        destroyOnHidden
       >
         <Form form={form} layout="vertical" className="mt-5">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">

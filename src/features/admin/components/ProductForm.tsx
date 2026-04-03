@@ -532,7 +532,7 @@ function DescriptionFields({ form }: { form: ReturnType<typeof Form.useForm>[0] 
             </p>
             <Form.Item
               name={shortField}
-              rules={isPrimary ? [{ required: true, message: 'Short description required' }] : []}
+              rules={isPrimary ? [{ required: true, message: t('admin.products.form.validation.shortDescRequired') }] : []}
               noStyle
             >
               <Input.TextArea
@@ -1268,7 +1268,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
                <button type="button" onClick={() => handleTagTranslate('US')} className="text-[10px] bg-orange/10 text-orange px-2 py-0.5 rounded transition-colors hover:bg-orange/20 font-semibold w-auto">Translate to UK & VI</button>
              </div>
           </div>
-          <Form.Item name={fieldName} rules={[{ required: true, message: 'Bắt buộc nhập' }]} noStyle>
+          <Form.Item name={fieldName} rules={[{ required: true, message: t('admin.products.form.validation.b2bRequired') }]} noStyle>
             <Select mode="tags" allowClear className="rounded-lg w-full" placeholder={isColor ? "Ex: Natural Walnut" : "Ex: Walnut Wood"} tagRender={colorTagRender} optionRender={colorOptionRender}>
               {options.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
             </Select>
@@ -1335,7 +1335,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
                     Translate to UK & VI
                   </button>
                 </div>
-                <Form.Item name="name" rules={[{ required: true, message: 'Product name is required' }]} noStyle>
+                <Form.Item name="name" rules={[{ required: true, message: t('admin.products.form.validation.nameRequired') }]} noStyle>
                   <Input
                     size="large"
                     placeholder="Aria Dining Table"
@@ -1411,7 +1411,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
           <Row gutter={[16, 16]}>
             <Col xs={24} md={14}>
               <SectionLabel>{t('admin.products.form.urlSlug')}</SectionLabel>
-              <Form.Item name="slug" rules={[{ required: true }]}>
+              <Form.Item name="slug" rules={[{ required: true, message: t('admin.products.form.validation.slugRequired') }]}>
                 <Input
                   prefix={<span className="text-gray-400 text-xs pr-1.5 mr-1.5 border-r border-gray-200">/catalogue/</span>}
                   placeholder="aria-dining-table"
@@ -1422,7 +1422,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
             </Col>
             <Col xs={24} md={10}>
               <SectionLabel>{t('admin.products.form.skuCode')}</SectionLabel>
-              <Form.Item name="code" rules={[{ required: true }]}>
+              <Form.Item name="code" rules={[{ required: true, message: t('admin.products.form.validation.skuRequired') }]}>
                 <Input
                   placeholder="DIN-ARI-0327"
                   className="font-mono rounded-lg border-gray-200"
@@ -1436,7 +1436,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <SectionLabel>{t('admin.products.form.collection')}</SectionLabel>
-              <Form.Item name="collection" rules={[{ required: true }]}>
+              <Form.Item name="collection" rules={[{ required: true, message: t('admin.products.form.validation.collectionRequired') }]}>
                 <Select
                   mode="multiple"
                   placeholder="Select collections…"
@@ -1454,7 +1454,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
             </div>
             <div>
               <SectionLabel>{t('admin.products.form.category')}</SectionLabel>
-              <Form.Item name="category" rules={[{ required: true }]}>
+              <Form.Item name="category" rules={[{ required: true, message: t('admin.products.form.validation.categoryRequired') }]}>
                 <Select
                   mode="tags"
                   placeholder="Type or select categories…"
@@ -1488,19 +1488,19 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
             <p className="text-xs text-gray-400 -mt-3 mb-4">Core fields used for storefront filtering and categorization.</p>
             <Row gutter={[16, 16]}>
               <Col xs={24} md={8}>
-                <Form.Item name="moq" label={t('admin.products.form.moq')} rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
+                <Form.Item name="moq" label={t('admin.products.form.moq')} rules={[{ required: true, message: t('admin.products.form.validation.b2bRequired') }]}>
                   <Select placeholder="50–100 pcs" className="rounded-lg" allowClear>
                     {MOQ_OPTIONS.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
                   </Select>
                 </Form.Item>
               </Col>
               <Col xs={24} md={8}>
-                <Form.Item name="dimensions" label={t('admin.products.form.dimensions')} rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
+                <Form.Item name="dimensions" label={t('admin.products.form.dimensions')} rules={[{ required: true, message: t('admin.products.form.validation.b2bRequired') }]}>
                   <Input placeholder="220 × 100 × 76 cm" className="rounded-lg border-gray-200" />
                 </Form.Item>
               </Col>
               <Col xs={24} md={8}>
-                <Form.Item name="weight" label={t('admin.products.form.weight')} rules={[{ required: true, message: 'Bắt buộc nhập' }]}>
+                <Form.Item name="weight" label={t('admin.products.form.weight')} rules={[{ required: true, message: t('admin.products.form.validation.b2bRequired') }]}>
                   <Input placeholder="52 kg" className="rounded-lg border-gray-200" />
                 </Form.Item>
               </Col>

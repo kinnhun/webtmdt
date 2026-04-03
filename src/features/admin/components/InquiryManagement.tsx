@@ -7,11 +7,13 @@ import { useInquiries, useUpdateInquiry, useInquirySettings, type Inquiry } from
 import { useQuery } from '@tanstack/react-query';
 import { useProducts, emptyFilters } from '@/domains/product';
 import InquirySettingsModal from './InquirySettingsModal';
+import { useAdminAuth } from '@/hooks/useAdminAuth';
 
 const { Title, Text, Paragraph } = Typography;
 const { Option } = Select;
 
 export default function InquiryManagement() {
+  const { user } = useAdminAuth();
   const { data: inquiries = [], isLoading } = useInquiries();
   const { mutate: updateInquiry, isPending: isUpdating } = useUpdateInquiry();
   const { data: settings = [] } = useInquirySettings();
@@ -20,7 +22,7 @@ export default function InquiryManagement() {
   const [searchText, setSearchText] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
-  
+
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
@@ -29,19 +31,19 @@ export default function InquiryManagement() {
   // Helper maps for settings
   const categories = settings.filter((s: any) => s.type === 'category' && s.isActive).sort((a: any, b: any) => a.order - b.order);
   const statuses = settings.filter((s: any) => s.type === 'status' && s.isActive).sort((a: any, b: any) => a.order - b.order);
-  
+
   const categoryMap = Object.fromEntries(categories.map((c: any) => [c.key, c.label]));
   const statusLabels = Object.fromEntries(statuses.map((s: any) => [s.key, s.label]));
   const statusColors = Object.fromEntries(statuses.map((s: any) => [s.key, s.color || 'default']));
 
   // Filtered data
   const filteredData = inquiries.filter((item) => {
-    const matchesSearch = 
+    const matchesSearch =
       item.name.toLowerCase().includes(searchText.toLowerCase()) ||
       item.company?.toLowerCase().includes(searchText.toLowerCase()) ||
       item.subject.toLowerCase().includes(searchText.toLowerCase()) ||
       item._id.toLowerCase().includes(searchText.toLowerCase());
-    
+
     let matchesStatus = true;
     if (statusFilter === 'active') {
       matchesStatus = item.status === 'new' || item.status === 'pending' || item.status === 'processing';
@@ -50,7 +52,7 @@ export default function InquiryManagement() {
     }
 
     const matchesCategory = categoryFilter === 'all' || item.category === categoryFilter;
-    
+
     return matchesSearch && matchesStatus && matchesCategory;
   });
 
@@ -95,6 +97,20 @@ export default function InquiryManagement() {
         );
       }
     });
+  };
+
+  const handleQuickAssign = (id: string, userId: string) => {
+    updateInquiry(
+      { id, payload: { assignedTo: userId } },
+      {
+        onSuccess: () => {
+          message.success('Đã nhận liên hệ thành công');
+        },
+        onError: (err) => {
+          message.error(err.message || 'Failed to assign inquiry');
+        }
+      }
+    );
   };
 
   const columns = [
@@ -157,11 +173,11 @@ export default function InquiryManagement() {
         if (!record.interestedProduct) {
           return <span className="text-gray-400 text-xs italic">General Inquiry</span>;
         }
-        
+
         if (typeof record.interestedProduct === 'object') {
           return (
             <div onClick={(e) => e.stopPropagation()}>
-              <a 
+              <a
                 href={`/catalogue/${(record.interestedProduct as any).slug}`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -193,7 +209,7 @@ export default function InquiryManagement() {
 
         return (
           <div onClick={(e) => e.stopPropagation()}>
-            <a 
+            <a
               href={`/catalogue/${record.interestedProduct}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -248,17 +264,34 @@ export default function InquiryManagement() {
     {
       title: 'Action',
       key: 'action',
-      render: (_: unknown, record: Inquiry) => (
-        <Button 
-          type="text" 
-          icon={<EyeOutlined />} 
-          onClick={() => handleView(record)}
-          className="text-blue-600 hover:bg-blue-50"
-        >
-          Review
-        </Button>
-      ),
-      width: 100,
+      render: (_: unknown, record: Inquiry) => {
+        const assignedId = record.assignedTo && typeof record.assignedTo === 'object' ? (record.assignedTo as any)._id : record.assignedTo;
+        const isAssignedToMe = assignedId === user?.id;
+
+        return (
+          <Space size="small" onClick={(e) => e.stopPropagation()}>
+            <Button
+              type="text"
+              icon={<EyeOutlined />}
+              onClick={(e) => { e.stopPropagation(); handleView(record); }}
+              className="text-blue-600 hover:bg-blue-50 px-2"
+            >
+              Review
+            </Button>
+            {user && !isAssignedToMe && (
+              <Button
+                type="text"
+                size="small"
+                onClick={(e) => { e.stopPropagation(); handleQuickAssign(record._id, user.id); }}
+                className="text-orange hover:bg-orange-50 border border-orange-200"
+              >
+                Nhận
+              </Button>
+            )}
+          </Space>
+        );
+      },
+      width: 150,
     },
   ];
 
@@ -355,9 +388,9 @@ export default function InquiryManagement() {
         open={drawerVisible}
         destroyOnClose
         extra={
-          <Button 
-            type="primary" 
-            onClick={handleSave} 
+          <Button
+            type="primary"
+            onClick={handleSave}
             loading={isUpdating}
             className="bg-orange hover:bg-orange/90 border-none font-semibold px-6 shadow-md rounded-lg"
           >
@@ -396,7 +429,7 @@ export default function InquiryManagement() {
               <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm mb-6">
                 <Text type="secondary" className="text-xs uppercase tracking-wider font-semibold block mb-3">Subject</Text>
                 <div className="font-semibold text-lg mb-4" style={{ color: 'hsl(var(--navy-deep))' }}>{selectedInquiry.subject}</div>
-                
+
                 <Text type="secondary" className="text-xs uppercase tracking-wider font-semibold block mb-2">Message</Text>
                 <Paragraph className="text-sm leading-relaxed text-gray-700 whitespace-pre-wrap mb-0">
                   {selectedInquiry.message}
@@ -414,9 +447,9 @@ export default function InquiryManagement() {
                     <Text type="secondary" className="text-[10px] uppercase tracking-wider font-bold text-orange mb-1 flex items-center gap-1">
                       <ShoppingOutlined /> Interested In
                     </Text>
-                    <a 
-                      href={`/catalogue/${(selectedInquiry.interestedProduct as any).slug}`} 
-                      target="_blank" 
+                    <a
+                      href={`/catalogue/${(selectedInquiry.interestedProduct as any).slug}`}
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="font-semibold text-base text-gray-900 hover:text-orange block"
                     >
@@ -431,9 +464,9 @@ export default function InquiryManagement() {
                     <Text type="secondary" className="text-[10px] uppercase tracking-wider font-bold text-orange mb-1 flex items-center gap-1">
                       <ShoppingOutlined /> Product Linked
                     </Text>
-                    <a 
-                      href={`/catalogue/${selectedInquiry.interestedProduct}`} 
-                      target="_blank" 
+                    <a
+                      href={`/catalogue/${selectedInquiry.interestedProduct}`}
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="font-semibold text-base text-gray-900 hover:text-orange block"
                     >
@@ -468,22 +501,27 @@ export default function InquiryManagement() {
                       </Form.Item>
                     </Col>
                     <Col span={8}>
-                      <Form.Item name="assignedTo" label="Assign To Manager">
-                        <Select showSearch placeholder="Select a manager" allowClear size="large">
-                          {staffMembers.map((m: any) => (
-                            <Option key={m._id} value={m._id}>{m.name}</Option>
-                          ))}
-                        </Select>
+                      <Form.Item label="Assign To Manager" className="mb-0">
+                        <div className="flex gap-2">
+                          <Form.Item name="assignedTo" className="mb-0 flex-1">
+                            <Select showSearch placeholder="Select a manager" allowClear size="large">
+                              {staffMembers.map((m: any) => (
+                                <Option key={m._id} value={m._id}>{m.name}</Option>
+                              ))}
+                            </Select>
+                          </Form.Item>
+
+                        </div>
                       </Form.Item>
                     </Col>
                   </Row>
-                  
+
                   <Row gutter={16}>
                     <Col span={24}>
                       <Form.Item name="interestedProduct" label="Interested Product">
-                        <Select 
-                          showSearch 
-                          placeholder="Link to product..." 
+                        <Select
+                          showSearch
+                          placeholder="Link to product..."
                           size="large"
                           className="rounded-lg"
                           allowClear
@@ -495,12 +533,12 @@ export default function InquiryManagement() {
                       </Form.Item>
                     </Col>
                   </Row>
-                  
+
                   <Form.Item name="internalNotes" label="Internal Notes (Not visible to customer)">
-                    <Input.TextArea 
-                      rows={4} 
+                    <Input.TextArea
+                      rows={4}
                       placeholder="Add processing notes, quote IDs, or next steps..."
-                      className="rounded-lg bg-yellow-50/50 focus:bg-yellow-50" 
+                      className="rounded-lg bg-yellow-50/50 focus:bg-yellow-50"
                     />
                   </Form.Item>
                 </Form>
@@ -510,9 +548,9 @@ export default function InquiryManagement() {
         )}
       </Drawer>
 
-      <InquirySettingsModal 
-        open={settingsModalOpen} 
-        onClose={() => setSettingsModalOpen(false)} 
+      <InquirySettingsModal
+        open={settingsModalOpen}
+        onClose={() => setSettingsModalOpen(false)}
       />
     </div>
   );

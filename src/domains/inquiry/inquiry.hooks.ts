@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { fetchInquiries, editInquiry, fetchSettings, createSetting, updateSetting, deleteSetting } from "./inquiry.api";
+import { fetchInquiries, editInquiry, fetchSettings, createSetting, updateSetting, deleteSetting, fetchInquiryDashboard } from "./inquiry.api";
 import { inquiryKeys } from "./inquiry.keys";
 import type { UpdateInquiryPayload } from "./inquiry.types";
 
@@ -17,7 +17,7 @@ export function useUpdateInquiry() {
     mutationFn: ({ id, payload }: { id: string; payload: UpdateInquiryPayload }) =>
       editInquiry(id, payload),
     onSuccess: () => {
-      // Invalidate and refetch all inquiry lists
+      // Invalidate and refetch all inquiry lists + dashboard
       queryClient.invalidateQueries({ queryKey: inquiryKeys.all });
     },
   });
@@ -52,5 +52,14 @@ export function useDeleteInquirySetting() {
   return useMutation({
     mutationFn: deleteSetting,
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['inquiry-settings'] }),
+  });
+}
+
+// --- Dashboard Hook ---
+export function useInquiryDashboard() {
+  return useQuery({
+    queryKey: inquiryKeys.dashboard,
+    queryFn: fetchInquiryDashboard,
+    refetchInterval: 60000, // refresh every 60 seconds
   });
 }

@@ -18,6 +18,8 @@ export interface IContact extends Document {
   acceptedAt?: Date;
   rejectedAt?: Date;
   closedAt?: Date;
+  firstResponseAt?: Date;
+  resolvedAt?: Date;
   priority: "low" | "normal" | "high" | "urgent";
   lastActionBy?: mongoose.Types.ObjectId;
   createdAt: Date;
@@ -49,6 +51,8 @@ const ContactSchema = new Schema<IContact>(
     acceptedAt: { type: Date },
     rejectedAt: { type: Date },
     closedAt: { type: Date },
+    firstResponseAt: { type: Date },
+    resolvedAt: { type: Date },
     priority: { type: String, enum: ["low", "normal", "high", "urgent"], default: "normal" },
     lastActionBy: { type: Schema.Types.ObjectId, ref: "AdminUser" },
   },

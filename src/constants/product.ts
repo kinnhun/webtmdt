@@ -7,6 +7,7 @@ export const emptyFilters: FilterState = {
   color: [],
   style: [],
 };
+//hi
 
 // ── Outdoor categories ──────────────────────────────────────────
 export const OUTDOOR_CATEGORIES = [

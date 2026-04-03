@@ -1,0 +1,34 @@
+name: CI/CD Deployment
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' # You can change this to 20 or matching your version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Restart application with PM2
+        # Tự động tải PM2 nếu chưa có và khởi chạy/restart server
+        shell: bash
+        run: |
+          npm install -g pm2
+          pm2 restart webtmdt --env production || pm2 start ecosystem.config.js --env production
+          pm2 save

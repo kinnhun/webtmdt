@@ -85,6 +85,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         key: 'profile',
         icon: <UserOutlined />,
         label: <span className="font-body text-sm">{t('admin.header.profile', 'Profile')}</span>,
+        onClick: () => router.push('/admin/profile'),
       },
       {
         type: 'divider' as const,

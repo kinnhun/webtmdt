@@ -8,6 +8,7 @@ import {
   EyeOutlined, SyncOutlined
 } from '@ant-design/icons';
 import { format, formatDistanceToNow } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 import { useInquiryDashboard } from '@/domains/inquiry';
 import type {
   StaffPerformance, CriticalCaseItem, InquiryActivityItem,
@@ -17,41 +18,41 @@ import type {
 const { Text, Title } = Typography;
 
 // ===== Helpers =====
-function formatMinutes(minutes: number): string {
-  if (minutes === 0) return 'N/A';
-  if (minutes < 60) return `${minutes} phút`;
+function formatMinutes(minutes: number, t: any): string {
+  if (minutes === 0) return t('admin.inquiryDashboard.time.na');
+  if (minutes < 60) return t('admin.inquiryDashboard.time.minutes', { count: minutes });
   const h = Math.floor(minutes / 60);
   const m = minutes % 60;
-  if (h < 24) return m > 0 ? `${h}h ${m}m` : `${h} giờ`;
+  if (h < 24) return m > 0 ? t('admin.inquiryDashboard.time.hoursMins', { h, m }) : t('admin.inquiryDashboard.time.hours', { count: h });
   const d = Math.floor(h / 24);
   const rh = h % 24;
-  return rh > 0 ? `${d}d ${rh}h` : `${d} ngày`;
+  return rh > 0 ? t('admin.inquiryDashboard.time.daysHours', { d, h: rh }) : t('admin.inquiryDashboard.time.days', { count: d });
 }
 
-function getLoadStatus(load: number): { label: string; color: string } {
-  if (load === 0) return { label: 'Rảnh', color: '#52c41a' };
-  if (load <= 5) return { label: 'Bình thường', color: '#1890ff' };
-  if (load <= 10) return { label: 'Bận', color: '#faad14' };
-  return { label: 'Quá tải', color: '#ff4d4f' };
+function getLoadStatus(load: number, t: any): { label: string; color: string } {
+  if (load === 0) return { label: t('admin.inquiryDashboard.loadStatus.free'), color: '#52c41a' };
+  if (load <= 5) return { label: t('admin.inquiryDashboard.loadStatus.normal'), color: '#1890ff' };
+  if (load <= 10) return { label: t('admin.inquiryDashboard.loadStatus.busy'), color: '#faad14' };
+  return { label: t('admin.inquiryDashboard.loadStatus.overloaded'), color: '#ff4d4f' };
 }
 
-function getActionLabel(action: string): { text: string; color: string } {
+function getActionLabel(action: string, t: any): { text: string; color: string } {
   const map: Record<string, { text: string; color: string }> = {
-    created: { text: 'Inquiry mới', color: '#1890ff' },
-    assigned: { text: 'Đã phân công', color: '#722ed1' },
-    accepted: { text: 'Đã nhận', color: '#52c41a' },
-    rejected: { text: 'Từ chối', color: '#ff4d4f' },
-    status_changed: { text: 'Đổi trạng thái', color: '#fa8c16' },
-    note_updated: { text: 'Cập nhật ghi chú', color: '#8c8c8c' },
-    resolved: { text: 'Hoàn tất', color: '#52c41a' },
-    closed: { text: 'Đã đóng', color: '#595959' },
-    unassigned: { text: 'Gỡ phân công', color: '#faad14' },
+    created: { text: t('admin.inquiryDashboard.actions.created'), color: '#1890ff' },
+    assigned: { text: t('admin.inquiryDashboard.actions.assigned'), color: '#722ed1' },
+    accepted: { text: t('admin.inquiryDashboard.actions.accepted'), color: '#52c41a' },
+    rejected: { text: t('admin.inquiryDashboard.actions.rejected'), color: '#ff4d4f' },
+    status_changed: { text: t('admin.inquiryDashboard.actions.status_changed'), color: '#fa8c16' },
+    note_updated: { text: t('admin.inquiryDashboard.actions.note_updated'), color: '#8c8c8c' },
+    resolved: { text: t('admin.inquiryDashboard.actions.resolved'), color: '#52c41a' },
+    closed: { text: t('admin.inquiryDashboard.actions.closed'), color: '#595959' },
+    unassigned: { text: t('admin.inquiryDashboard.actions.unassigned'), color: '#faad14' },
   };
   return map[action] || { text: action, color: '#8c8c8c' };
 }
 
 // ===== Mini Bar Chart (CSS-only) =====
-function MiniBarChart({ data, maxHeight = 80 }: { data: DashboardDayItem[]; maxHeight?: number }) {
+function MiniBarChart({ data, maxHeight = 80, t }: { data: DashboardDayItem[]; maxHeight?: number; t: any }) {
   const maxVal = Math.max(...data.map(d => Math.max(d.created, d.resolved)), 1);
   return (
     <div className="flex items-end gap-1.5 w-full" style={{ height: maxHeight }}>
@@ -60,7 +61,7 @@ function MiniBarChart({ data, maxHeight = 80 }: { data: DashboardDayItem[]; maxH
         const resolvedH = (d.resolved / maxVal) * maxHeight;
         const dayLabel = format(new Date(d.date), 'dd/MM');
         return (
-          <Tooltip key={i} title={`${dayLabel}: ${d.created} mới, ${d.resolved} xong`}>
+          <Tooltip key={i} title={t('admin.inquiryDashboard.tooltip.barChart', { day: dayLabel, created: d.created, resolved: d.resolved })}>
             <div className="flex-1 flex items-end gap-px">
               <div
                 className="flex-1 rounded-t-sm transition-all duration-300"
@@ -110,19 +111,20 @@ function KPICard({
 
 // ===== MAIN COMPONENT =====
 export default function InquiryDashboard() {
+  const { t } = useTranslation();
   const { data, isLoading } = useInquiryDashboard();
   const [critTab, setCritTab] = useState('unassigned');
 
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <Spin size="large" tip="Đang tải dashboard..." />
+        <Spin size="large" tip={t('admin.inquiryDashboard.loading')} />
       </div>
     );
   }
 
   if (!data) {
-    return <Empty description="Không thể tải dữ liệu dashboard" />;
+    return <Empty description={t('admin.inquiryDashboard.loadError')} />;
   }
 
   const { summary, byCategory, byStatus, byDay, staffPerformance, criticalCases, recentActivity, recentInquiries, responseMetrics } = data;
@@ -140,12 +142,12 @@ export default function InquiryDashboard() {
   // ===== Staff Performance Columns =====
   const staffColumns = [
     {
-      title: 'Nhân viên',
+      title: t('admin.inquiryDashboard.staffColumns.staff'),
       key: 'name',
       render: (_: unknown, r: StaffPerformance) => (
         <div className="flex items-center gap-2">
           <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white"
-            style={{ backgroundColor: getLoadStatus(r.currentLoad).color }}>
+            style={{ backgroundColor: getLoadStatus(r.currentLoad, t).color }}>
             {r.name.charAt(0).toUpperCase()}
           </div>
           <div>
@@ -155,26 +157,26 @@ export default function InquiryDashboard() {
         </div>
       ),
     },
-    { title: 'Được giao', dataIndex: 'assigned', key: 'assigned', align: 'center' as const, width: 80 },
-    { title: 'Đang xử lý', dataIndex: 'inProgress', key: 'inProgress', align: 'center' as const, width: 90 },
-    { title: 'Hoàn tất', dataIndex: 'resolved', key: 'resolved', align: 'center' as const, width: 80 },
+    { title: t('admin.inquiryDashboard.staffColumns.assigned'), dataIndex: 'assigned', key: 'assigned', align: 'center' as const, width: 80 },
+    { title: t('admin.inquiryDashboard.staffColumns.inProgress'), dataIndex: 'inProgress', key: 'inProgress', align: 'center' as const, width: 90 },
+    { title: t('admin.inquiryDashboard.staffColumns.resolved'), dataIndex: 'resolved', key: 'resolved', align: 'center' as const, width: 80 },
     {
-      title: 'Quá hạn', dataIndex: 'overdue', key: 'overdue', align: 'center' as const, width: 80,
+      title: t('admin.inquiryDashboard.staffColumns.overdue'), dataIndex: 'overdue', key: 'overdue', align: 'center' as const, width: 80,
       render: (v: number) => v > 0 ? <span className="text-red-500 font-bold">{v}</span> : <span className="text-gray-300">0</span>,
     },
     {
-      title: 'FRT TB',
+      title: t('admin.inquiryDashboard.staffColumns.frt'),
       key: 'frt',
       align: 'center' as const,
       width: 90,
       render: (_: unknown, r: StaffPerformance) => (
         <span className={r.avgFirstResponseMinutes > 60 ? 'text-orange-500 font-semibold' : 'text-gray-600'}>
-          {formatMinutes(r.avgFirstResponseMinutes)}
+          {formatMinutes(r.avgFirstResponseMinutes, t)}
         </span>
       ),
     },
     {
-      title: 'Tỷ lệ',
+      title: t('admin.inquiryDashboard.staffColumns.rate'),
       key: 'rate',
       align: 'center' as const,
       width: 90,
@@ -189,12 +191,12 @@ export default function InquiryDashboard() {
       ),
     },
     {
-      title: 'Trạng thái',
+      title: t('admin.inquiryDashboard.staffColumns.status'),
       key: 'status',
       align: 'center' as const,
       width: 100,
       render: (_: unknown, r: StaffPerformance) => {
-        const s = getLoadStatus(r.currentLoad);
+        const s = getLoadStatus(r.currentLoad, t);
         return (
           <Tag color={s.color} className="border-0 rounded-full px-2 shadow-sm font-medium text-xs" style={{ color: '#fff', backgroundColor: s.color }}>
             {s.label}
@@ -208,7 +210,7 @@ export default function InquiryDashboard() {
   const critData = criticalCases[critTab as keyof typeof criticalCases] || [];
   const critColumns = [
     {
-      title: 'ID',
+      title: t('admin.inquiryDashboard.criticalColumns.id'),
       key: 'id',
       width: 70,
       render: (_: unknown, r: CriticalCaseItem) => (
@@ -216,7 +218,7 @@ export default function InquiryDashboard() {
       ),
     },
     {
-      title: 'Khách hàng',
+      title: t('admin.inquiryDashboard.criticalColumns.customer'),
       key: 'name',
       render: (_: unknown, r: CriticalCaseItem) => (
         <div>
@@ -226,14 +228,14 @@ export default function InquiryDashboard() {
       ),
     },
     {
-      title: 'Chủ đề',
+      title: t('admin.inquiryDashboard.criticalColumns.subject'),
       key: 'subject',
       render: (_: unknown, r: CriticalCaseItem) => (
         <span className="text-sm line-clamp-1">{r.subject}</span>
       ),
     },
     {
-      title: 'Thời gian',
+      title: t('admin.inquiryDashboard.criticalColumns.time'),
       key: 'time',
       width: 120,
       render: (_: unknown, r: CriticalCaseItem) => {
@@ -244,17 +246,17 @@ export default function InquiryDashboard() {
               {formatDistanceToNow(new Date(ts), { addSuffix: true })}
             </span>
           </Tooltip>
-        ) : <span className="text-xs text-gray-400">N/A</span>;
+        ) : <span className="text-xs text-gray-400">{t('admin.inquiryDashboard.time.na')}</span>;
       },
     },
     {
-      title: 'Phụ trách',
+      title: t('admin.inquiryDashboard.criticalColumns.assignedTo'),
       key: 'assignedTo',
       width: 100,
       render: (_: unknown, r: CriticalCaseItem) => (
         r.assignedTo ? (
           <span className="text-xs font-medium text-blue-600">{r.assignedTo}</span>
-        ) : <span className="text-xs text-gray-400 italic">Chưa phân công</span>
+        ) : <span className="text-xs text-gray-400 italic">{t('admin.inquiryDashboard.criticalColumns.unassigned')}</span>
       ),
     },
   ];
@@ -262,7 +264,7 @@ export default function InquiryDashboard() {
   // ===== Recent Inquiry Columns =====
   const recentCols = [
     {
-      title: 'Ngày',
+      title: t('admin.inquiryDashboard.recentColumns.date'),
       key: 'date',
       width: 90,
       render: (_: unknown, r: DashboardRecentInquiry) => (
@@ -270,7 +272,7 @@ export default function InquiryDashboard() {
       ),
     },
     {
-      title: 'Khách hàng',
+      title: t('admin.inquiryDashboard.recentColumns.customer'),
       key: 'name',
       render: (_: unknown, r: DashboardRecentInquiry) => (
         <div>
@@ -280,7 +282,7 @@ export default function InquiryDashboard() {
       ),
     },
     {
-      title: 'Trạng thái',
+      title: t('admin.inquiryDashboard.recentColumns.status'),
       key: 'status',
       width: 100,
       render: (_: unknown, r: DashboardRecentInquiry) => (
@@ -288,7 +290,7 @@ export default function InquiryDashboard() {
       ),
     },
     {
-      title: 'Phụ trách',
+      title: t('admin.inquiryDashboard.recentColumns.assigned'),
       key: 'assigned',
       width: 100,
       render: (_: unknown, r: DashboardRecentInquiry) => (
@@ -306,27 +308,27 @@ export default function InquiryDashboard() {
         <div>
           <h2 className="font-display font-semibold text-2xl m-0 tracking-tight" style={{ color: 'hsl(var(--navy-deep))' }}>
             <InboxOutlined className="mr-2" style={{ color: 'hsl(var(--orange))' }} />
-            Inquiries Dashboard
+            {t('admin.inquiryDashboard.header.title')}
           </h2>
           <p className="text-sm text-gray-500 m-0 mt-1">
-            Tổng quan toàn bộ inquiries & hiệu suất chăm sóc khách hàng
+            {t('admin.inquiryDashboard.header.subtitle')}
           </p>
         </div>
         <div className="flex items-center gap-2 text-xs text-gray-400">
           <SyncOutlined spin className="text-green-500" />
-          <span>Tự động cập nhật mỗi 60s</span>
+          <span>{t('admin.inquiryDashboard.header.updating')}</span>
         </div>
       </div>
 
       {/* ===== BLOCK 1: KPI CARDS ===== */}
       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
-        <KPICard title="Tổng" value={summary.total} icon={<InboxOutlined />} color="hsl(var(--navy-deep))" bgColor="hsl(var(--navy-deep) / 0.03)" />
-        <KPICard title="Mới hôm nay" value={summary.newToday} icon={<ArrowUpOutlined />} color="hsl(var(--orange))" bgColor="hsl(var(--orange) / 0.05)" />
-        <KPICard title="Chưa phân công" value={summary.unassigned} icon={<ExclamationCircleOutlined />} color="#faad14" bgColor="#fffbe6" highlight={summary.unassigned > 0} />
-        <KPICard title="Chờ nhận" value={summary.waitingAccept} icon={<ClockCircleOutlined />} color="#722ed1" bgColor="#f9f0ff" />
-        <KPICard title="Đang xử lý" value={summary.inProgress} icon={<SyncOutlined />} color="#1890ff" bgColor="#e6f4ff" />
-        <KPICard title="Hoàn tất" value={summary.resolved} icon={<CheckCircleOutlined />} color="#52c41a" bgColor="#f6ffed" />
-        <KPICard title="Quá SLA" value={summary.overdue} icon={<FireOutlined />} color="#ff4d4f" bgColor="#fff1f0" highlight={summary.overdue > 0} />
+        <KPICard title={t('admin.inquiryDashboard.kpi.total')} value={summary.total} icon={<InboxOutlined />} color="hsl(var(--navy-deep))" bgColor="hsl(var(--navy-deep) / 0.03)" />
+        <KPICard title={t('admin.inquiryDashboard.kpi.newToday')} value={summary.newToday} icon={<ArrowUpOutlined />} color="hsl(var(--orange))" bgColor="hsl(var(--orange) / 0.05)" />
+        <KPICard title={t('admin.inquiryDashboard.kpi.unassigned')} value={summary.unassigned} icon={<ExclamationCircleOutlined />} color="#faad14" bgColor="#fffbe6" highlight={summary.unassigned > 0} />
+        <KPICard title={t('admin.inquiryDashboard.kpi.waitingAccept')} value={summary.waitingAccept} icon={<ClockCircleOutlined />} color="#722ed1" bgColor="#f9f0ff" />
+        <KPICard title={t('admin.inquiryDashboard.kpi.inProgress')} value={summary.inProgress} icon={<SyncOutlined />} color="#1890ff" bgColor="#e6f4ff" />
+        <KPICard title={t('admin.inquiryDashboard.kpi.resolved')} value={summary.resolved} icon={<CheckCircleOutlined />} color="#52c41a" bgColor="#f6ffed" />
+        <KPICard title={t('admin.inquiryDashboard.kpi.overdue')} value={summary.overdue} icon={<FireOutlined />} color="#ff4d4f" bgColor="#fff1f0" highlight={summary.overdue > 0} />
       </div>
 
       {/* ===== BLOCK 2: CHARTS + RESPONSE METRICS ===== */}
@@ -334,16 +336,16 @@ export default function InquiryDashboard() {
         {/* Inquiries by Day */}
         <Col xs={24} lg={10}>
           <Card
-            title={<span className="font-display font-medium text-navy-deep">Xu hướng 7 ngày</span>}
+            title={<span className="font-display font-medium text-navy-deep">{t('admin.inquiryDashboard.charts.trend7Days')}</span>}
             variant="borderless" className="shadow-sm h-full"
             extra={
               <div className="flex items-center gap-3 text-[10px]">
-                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm inline-block" style={{ backgroundColor: 'hsl(var(--orange))' }} /> Mới</span>
-                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm inline-block bg-green-500" /> Xong</span>
+                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm inline-block" style={{ backgroundColor: 'hsl(var(--orange))' }} /> {t('admin.inquiryDashboard.charts.new')}</span>
+                <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-sm inline-block bg-green-500" /> {t('admin.inquiryDashboard.charts.resolved')}</span>
               </div>
             }
           >
-            <MiniBarChart data={byDay} maxHeight={120} />
+            <MiniBarChart data={byDay} maxHeight={120} t={t} />
             <div className="flex justify-between mt-2 text-[10px] text-gray-400">
               {byDay.map((d, i) => (
                 <span key={i} className="flex-1 text-center">{format(new Date(d.date), 'dd/MM')}</span>
@@ -354,25 +356,25 @@ export default function InquiryDashboard() {
 
         {/* Response Metrics */}
         <Col xs={24} sm={12} lg={7}>
-          <Card title={<span className="font-display font-medium text-navy-deep">Hiệu suất phản hồi</span>} variant="borderless" className="shadow-sm h-full">
+          <Card title={<span className="font-display font-medium text-navy-deep">{t('admin.inquiryDashboard.charts.responseMetrics')}</span>} variant="borderless" className="shadow-sm h-full">
             <div className="space-y-5">
               <div>
                 <div className="flex justify-between text-xs mb-1">
-                  <span className="text-gray-500 flex items-center gap-1"><ThunderboltOutlined /> First Response Time TB</span>
-                  <span className="font-bold text-navy-deep">{formatMinutes(responseMetrics.avgFRTMinutes)}</span>
+                  <span className="text-gray-500 flex items-center gap-1"><ThunderboltOutlined /> {t('admin.inquiryDashboard.charts.frtAvg')}</span>
+                  <span className="font-bold text-navy-deep">{formatMinutes(responseMetrics.avgFRTMinutes, t)}</span>
                 </div>
                 <Progress percent={Math.min(100, responseMetrics.avgFRTMinutes > 0 ? Math.round((60 / responseMetrics.avgFRTMinutes) * 100) : 100)} showInfo={false} strokeColor="#1890ff" size="small" />
               </div>
               <div>
                 <div className="flex justify-between text-xs mb-1">
-                  <span className="text-gray-500 flex items-center gap-1"><FieldTimeOutlined /> Handling Time TB</span>
-                  <span className="font-bold text-navy-deep">{formatMinutes(responseMetrics.avgHandlingMinutes)}</span>
+                  <span className="text-gray-500 flex items-center gap-1"><FieldTimeOutlined /> {t('admin.inquiryDashboard.charts.handlingAvg')}</span>
+                  <span className="font-bold text-navy-deep">{formatMinutes(responseMetrics.avgHandlingMinutes, t)}</span>
                 </div>
                 <Progress percent={Math.min(100, responseMetrics.avgHandlingMinutes > 0 ? Math.round((480 / responseMetrics.avgHandlingMinutes) * 100) : 100)} showInfo={false} strokeColor="#faad14" size="small" />
               </div>
               <div>
                 <div className="flex justify-between text-xs mb-1">
-                  <span className="text-gray-500 flex items-center gap-1"><SafetyCertificateOutlined /> SLA Compliance</span>
+                  <span className="text-gray-500 flex items-center gap-1"><SafetyCertificateOutlined /> {t('admin.inquiryDashboard.charts.slaCompliance')}</span>
                   <span className="font-bold" style={{ color: responseMetrics.slaCompliance >= 90 ? '#52c41a' : responseMetrics.slaCompliance >= 70 ? '#faad14' : '#ff4d4f' }}>
                     {responseMetrics.slaCompliance}%
                   </span>
@@ -390,9 +392,9 @@ export default function InquiryDashboard() {
 
         {/* By Category + By Status */}
         <Col xs={24} sm={12} lg={7}>
-          <Card title={<span className="font-display font-medium text-navy-deep">Phân bổ</span>} variant="borderless" className="shadow-sm h-full">
+          <Card title={<span className="font-display font-medium text-navy-deep">{t('admin.inquiryDashboard.charts.distribution')}</span>} variant="borderless" className="shadow-sm h-full">
             <div className="mb-4">
-              <Text className="text-[10px] uppercase tracking-wider text-gray-400 font-semibold block mb-2">Theo category</Text>
+              <Text className="text-[10px] uppercase tracking-wider text-gray-400 font-semibold block mb-2">{t('admin.inquiryDashboard.charts.byCategory')}</Text>
               {byCategory.slice(0, 5).map((c, i) => (
                 <div key={i} className="flex items-center gap-2 mb-1.5">
                   <span className="text-xs text-gray-600 w-20 truncate">{c.label}</span>
@@ -410,7 +412,7 @@ export default function InquiryDashboard() {
               ))}
             </div>
             <div>
-              <Text className="text-[10px] uppercase tracking-wider text-gray-400 font-semibold block mb-2">Theo status</Text>
+              <Text className="text-[10px] uppercase tracking-wider text-gray-400 font-semibold block mb-2">{t('admin.inquiryDashboard.charts.byStatus')}</Text>
               {byStatus.map((s, i) => (
                 <div key={i} className="flex items-center gap-2 mb-1.5">
                   <span className="text-xs text-gray-600 w-20 truncate">{s.label}</span>
@@ -436,7 +438,7 @@ export default function InquiryDashboard() {
         title={
           <span className="font-display font-medium text-lg" style={{ color: 'hsl(var(--navy-deep))' }}>
             <TeamOutlined className="mr-2 text-blue-500" />
-            Hiệu suất nhân viên
+            {t('admin.inquiryDashboard.blocks.staffPerformance')}
           </span>
         }
         variant="borderless"
@@ -454,7 +456,7 @@ export default function InquiryDashboard() {
             if (record.currentLoad === 0 && record.assigned > 0) return 'bg-green-50/30';
             return '';
           }}
-          locale={{ emptyText: <Empty description="Chưa có nhân viên nào được giao inquiry" /> }}
+          locale={{ emptyText: <Empty description={t('admin.inquiryDashboard.blocks.noStaff')} /> }}
         />
       </Card>
 
@@ -463,7 +465,7 @@ export default function InquiryDashboard() {
         title={
           <span className="font-display font-medium text-lg" style={{ color: 'hsl(var(--navy-deep))' }}>
             <AlertOutlined className="mr-2 text-red-500" />
-            Inquiry cần chú ý
+            {t('admin.inquiryDashboard.blocks.criticalCases')}
             {totalCritical > 0 && (
               <Badge count={totalCritical} className="ml-2" style={{ backgroundColor: '#ff4d4f' }} />
             )}
@@ -481,19 +483,19 @@ export default function InquiryDashboard() {
             items={[
               {
                 key: 'unassigned',
-                label: <span>Chưa phân công {critCounts.unassigned > 0 && <Badge count={critCounts.unassigned} size="small" style={{ backgroundColor: '#faad14' }} />}</span>,
+                label: <span>{t('admin.inquiryDashboard.tabs.unassigned')} {critCounts.unassigned > 0 && <Badge count={critCounts.unassigned} size="small" style={{ backgroundColor: '#faad14' }} />}</span>,
               },
               {
                 key: 'waitingAccept',
-                label: <span>Chờ nhận {critCounts.waitingAccept > 0 && <Badge count={critCounts.waitingAccept} size="small" style={{ backgroundColor: '#722ed1' }} />}</span>,
+                label: <span>{t('admin.inquiryDashboard.tabs.waitingAccept')} {critCounts.waitingAccept > 0 && <Badge count={critCounts.waitingAccept} size="small" style={{ backgroundColor: '#722ed1' }} />}</span>,
               },
               {
                 key: 'overdue',
-                label: <span>Quá SLA {critCounts.overdue > 0 && <Badge count={critCounts.overdue} size="small" style={{ backgroundColor: '#ff4d4f' }} />}</span>,
+                label: <span>{t('admin.inquiryDashboard.tabs.overdue')} {critCounts.overdue > 0 && <Badge count={critCounts.overdue} size="small" style={{ backgroundColor: '#ff4d4f' }} />}</span>,
               },
               {
                 key: 'stale',
-                label: <span>Không cập nhật {critCounts.stale > 0 && <Badge count={critCounts.stale} size="small" style={{ backgroundColor: '#8c8c8c' }} />}</span>,
+                label: <span>{t('admin.inquiryDashboard.tabs.stale')} {critCounts.stale > 0 && <Badge count={critCounts.stale} size="small" style={{ backgroundColor: '#8c8c8c' }} />}</span>,
               },
             ]}
           />
@@ -504,7 +506,7 @@ export default function InquiryDashboard() {
           rowKey="_id"
           pagination={false}
           size="small"
-          locale={{ emptyText: <Empty description="Không có trường hợp cần chú ý" image={Empty.PRESENTED_IMAGE_SIMPLE} /> }}
+          locale={{ emptyText: <Empty description={t('admin.inquiryDashboard.blocks.noCriticalCases')} image={Empty.PRESENTED_IMAGE_SIMPLE} /> }}
         />
       </Card>
 
@@ -516,7 +518,7 @@ export default function InquiryDashboard() {
             title={
               <span className="font-display font-medium text-lg" style={{ color: 'hsl(var(--navy-deep))' }}>
                 <ClockCircleOutlined className="mr-2 text-purple-500" />
-                Hoạt động gần đây
+                {t('admin.inquiryDashboard.blocks.recentActivity')}
               </span>
             }
             variant="borderless"
@@ -524,11 +526,11 @@ export default function InquiryDashboard() {
             styles={{ body: { maxHeight: 420, overflowY: 'auto' } }}
           >
             {recentActivity.length === 0 ? (
-              <Empty description="Chưa có hoạt động nào" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+              <Empty description={t('admin.inquiryDashboard.blocks.noActivity')} image={Empty.PRESENTED_IMAGE_SIMPLE} />
             ) : (
               <Timeline
                 items={recentActivity.map((a: InquiryActivityItem) => {
-                  const { text, color } = getActionLabel(a.action);
+                  const { text, color } = getActionLabel(a.action, t);
                   return {
                     color,
                     children: (
@@ -568,7 +570,7 @@ export default function InquiryDashboard() {
             title={
               <span className="font-display font-medium text-lg" style={{ color: 'hsl(var(--navy-deep))' }}>
                 <InboxOutlined className="mr-2" style={{ color: 'hsl(var(--orange))' }} />
-                Inquiry mới nhất
+                {t('admin.inquiryDashboard.blocks.recentInquiries')}
               </span>
             }
             variant="borderless"
@@ -582,7 +584,7 @@ export default function InquiryDashboard() {
               pagination={false}
               size="small"
               scroll={{ y: 360 }}
-              locale={{ emptyText: <Empty description="Chưa có inquiry" image={Empty.PRESENTED_IMAGE_SIMPLE} /> }}
+              locale={{ emptyText: <Empty description={t('admin.inquiryDashboard.blocks.noRecentInquiries')} image={Empty.PRESENTED_IMAGE_SIMPLE} /> }}
             />
           </Card>
         </Col>

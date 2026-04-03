@@ -8,11 +8,13 @@ import { useQuery } from '@tanstack/react-query';
 import { useProducts, emptyFilters } from '@/domains/product';
 import InquirySettingsModal from './InquirySettingsModal';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
+import { useTranslation } from 'react-i18next';
 
 const { Title, Text, Paragraph } = Typography;
 const { Option } = Select;
 
 export default function InquiryManagement() {
+  const { t } = useTranslation();
   const { user } = useAdminAuth();
   const { data: inquiries = [], isLoading } = useInquiries();
   const { mutate: updateInquiry, isPending: isUpdating } = useUpdateInquiry();
@@ -86,12 +88,12 @@ export default function InquiryManagement() {
           { id: selectedInquiry._id, payload: values },
           {
             onSuccess: () => {
-              message.success(`Inquiry ${selectedInquiry._id.slice(-6)} updated successfully.`);
+              message.success(t('admin.inquiry.successUpdate', { id: selectedInquiry._id.slice(-6) }));
               setDrawerVisible(false);
               setSelectedInquiry({ ...selectedInquiry, ...values });
             },
             onError: (err) => {
-              message.error(err.message || 'Failed to update inquiry');
+              message.error(err.message || t('admin.inquiry.errorUpdate', 'Failed to update inquiry'));
             }
           }
         );
@@ -104,10 +106,10 @@ export default function InquiryManagement() {
       { id, payload: { assignedTo: userId } },
       {
         onSuccess: () => {
-          message.success('Đã nhận liên hệ thành công');
+          message.success(t('admin.inquiry.successAccept', 'Đã nhận liên hệ thành công'));
         },
         onError: (err) => {
-          message.error(err.message || 'Failed to assign inquiry');
+          message.error(err.message || t('admin.inquiry.errorAccept', 'Failed to assign inquiry'));
         }
       }
     );
@@ -115,7 +117,7 @@ export default function InquiryManagement() {
 
   const columns = [
     {
-      title: 'Date / ID',
+      title: t('admin.inquiry.colDate', 'Date / ID'),
       dataIndex: 'createdAt',
       key: 'createdAt',
       render: (date: string, record: Inquiry) => (
@@ -141,7 +143,7 @@ export default function InquiryManagement() {
       defaultSortOrder: 'descend' as const,
     },
     {
-      title: 'Customer',
+      title: t('admin.inquiry.colCustomer', 'Customer'),
       key: 'customer',
       render: (_: unknown, record: Inquiry) => (
         <div>
@@ -151,7 +153,7 @@ export default function InquiryManagement() {
       ),
     },
     {
-      title: 'Subject',
+      title: t('admin.inquiry.colSubject', 'Subject'),
       dataIndex: 'subject',
       key: 'subject',
       render: (subject: string, record: Inquiry) => (
@@ -166,12 +168,12 @@ export default function InquiryManagement() {
       ),
     },
     {
-      title: 'Interested Product',
+      title: t('admin.inquiry.colProduct', 'Interested Product'),
       key: 'interestedProduct',
       width: 200,
       render: (_: unknown, record: Inquiry) => {
         if (!record.interestedProduct) {
-          return <span className="text-gray-400 text-xs italic">General Inquiry</span>;
+          return <span className="text-gray-400 text-xs italic">{t('admin.inquiry.generalInquiry', 'General Inquiry')}</span>;
         }
 
         if (typeof record.interestedProduct === 'object') {
@@ -216,7 +218,7 @@ export default function InquiryManagement() {
               className="inline-block"
             >
               <Tag color="orange" className="border-0 m-0 rounded-full px-2 py-0 text-[10px] leading-tight flex items-center gap-1 shadow-sm w-fit hover:bg-orange-100 transition-colors cursor-pointer">
-                <ShoppingOutlined /> Product Linked ({record.interestedProduct})
+                <ShoppingOutlined /> {t('admin.inquiry.productLinked', 'Product Linked')} ({record.interestedProduct})
               </Tag>
             </a>
           </div>
@@ -224,7 +226,7 @@ export default function InquiryManagement() {
       }
     },
     {
-      title: 'Category',
+      title: t('admin.inquiry.colCategory', 'Category'),
       dataIndex: 'category',
       key: 'category',
       render: (category: string) => (
@@ -236,7 +238,7 @@ export default function InquiryManagement() {
       onFilter: (value: boolean | React.Key, record: Inquiry) => record.category === value,
     },
     {
-      title: 'Status',
+      title: t('admin.inquiry.colStatus', 'Status'),
       dataIndex: 'status',
       key: 'status',
       render: (status: string) => (
@@ -248,10 +250,10 @@ export default function InquiryManagement() {
       onFilter: (value: boolean | React.Key, record: Inquiry) => record.status === value,
     },
     {
-      title: 'Assigned To',
+      title: t('admin.inquiry.colAssignee', 'Assigned To'),
       key: 'assignedTo',
       render: (_: unknown, record: Inquiry) => {
-        if (!record.assignedTo) return <span className="text-gray-400 text-xs italic">Unassigned</span>;
+        if (!record.assignedTo) return <span className="text-gray-400 text-xs italic">{t('admin.inquiry.unassigned', 'Unassigned')}</span>;
         const assignedName = typeof record.assignedTo === 'object' ? (record.assignedTo as any).name : record.assignedTo;
         return (
           <div className="flex items-center gap-1.5">
@@ -262,7 +264,7 @@ export default function InquiryManagement() {
       }
     },
     {
-      title: 'Action',
+      title: t('admin.inquiry.colAction', 'Action'),
       key: 'action',
       render: (_: unknown, record: Inquiry) => {
         const assignedId = record.assignedTo && typeof record.assignedTo === 'object' ? (record.assignedTo as any)._id : record.assignedTo;
@@ -276,7 +278,7 @@ export default function InquiryManagement() {
               onClick={(e) => { e.stopPropagation(); handleView(record); }}
               className="text-blue-600 hover:bg-blue-50 px-2"
             >
-              Review
+              {t('admin.inquiry.btnReview', 'Review')}
             </Button>
             {user && !isAssignedToMe && (
               <Button
@@ -285,7 +287,7 @@ export default function InquiryManagement() {
                 onClick={(e) => { e.stopPropagation(); handleQuickAssign(record._id, user.id); }}
                 className="text-orange hover:bg-orange-50 border border-orange-200"
               >
-                Nhận
+                {t('admin.inquiry.btnAccept', 'Nhận')}
               </Button>
             )}
           </Space>
@@ -302,11 +304,11 @@ export default function InquiryManagement() {
         <div>
           <h2 className="font-display font-semibold text-2xl m-0 tracking-tight" style={{ color: 'hsl(var(--navy-deep))' }}>
             <InboxOutlined className="mr-2" style={{ color: 'hsl(var(--orange))' }} />
-            Inquiries & Leads
+            {t('admin.inquiry.title', 'Inquiries & Leads')}
           </h2>
-          <p className="text-sm text-gray-500 m-0 mt-1">Manage wholesale inquiries, trade applications, and direct leads.</p>
+          <p className="text-sm text-gray-500 m-0 mt-1">{t('admin.inquiry.subtitle', 'Manage wholesale inquiries, trade applications, and direct leads.')}</p>
         </div>
-        <Button onClick={() => setSettingsModalOpen(true)}>Manage Settings</Button>
+        <Button onClick={() => setSettingsModalOpen(true)}>{t('admin.inquiry.btnSettings', 'Manage Settings')}</Button>
       </div>
 
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden text-black font-body">
@@ -314,7 +316,7 @@ export default function InquiryManagement() {
           {/* Filters */}
           <div className="flex flex-wrap items-center gap-3 flex-1">
             <Input
-              placeholder="Search by name, company, or ID..."
+              placeholder={t('admin.inquiry.searchPlaceholder', "Search by name, company, or ID...")}
               prefix={<SearchOutlined className="text-gray-400" />}
               className="max-w-md rounded-lg"
               size="large"
@@ -328,8 +330,8 @@ export default function InquiryManagement() {
               value={statusFilter}
               onChange={setStatusFilter}
             >
-              <Option value="active">Needs Action</Option>
-              <Option value="all">All Statuses</Option>
+              <Option value="active">{t('admin.inquiry.filterNeedsAction', 'Needs Action')}</Option>
+              <Option value="all">{t('admin.inquiry.filterAllStatuses', 'All Statuses')}</Option>
               {statuses.map((s: any) => (
                 <Option key={s.key} value={s.key}>{s.label}</Option>
               ))}
@@ -340,7 +342,7 @@ export default function InquiryManagement() {
               value={categoryFilter}
               onChange={setCategoryFilter}
             >
-              <Option value="all">All Categories</Option>
+              <Option value="all">{t('admin.inquiry.filterAllCategories', 'All Categories')}</Option>
               {categories.map((c: any) => (
                 <Option key={c.key} value={c.key}>{c.label}</Option>
               ))}
@@ -348,7 +350,7 @@ export default function InquiryManagement() {
           </div>
           <div className="flex items-center">
             <span className="text-xs text-gray-500 font-medium bg-white border border-gray-200 px-3 py-1.5 rounded-full shadow-sm">
-              {filteredData.length} records found
+              {t('admin.inquiry.recordsFound', '{{count}} records found', { count: filteredData.length })}
             </span>
           </div>
         </div>
@@ -394,7 +396,7 @@ export default function InquiryManagement() {
             loading={isUpdating}
             className="bg-orange hover:bg-orange/90 border-none font-semibold px-6 shadow-md rounded-lg"
           >
-            Save Changes
+            {t('admin.inquiry.btnSave', 'Save Changes')}
           </Button>
         }
         styles={{ body: { backgroundColor: '#fafafb', padding: 0 } }}
@@ -405,7 +407,7 @@ export default function InquiryManagement() {
             <div className="bg-white p-6 border-b border-gray-100 shadow-sm relative z-10">
               <Row gutter={[24, 24]}>
                 <Col span={12}>
-                  <Text type="secondary" className="text-xs uppercase tracking-wider font-semibold block mb-1">Customer</Text>
+                  <Text type="secondary" className="text-xs uppercase tracking-wider font-semibold block mb-1">{t('admin.inquiry.customerOverview', 'Customer')}</Text>
                   <div className="flex items-center gap-2">
                     <UserOutlined className="text-gray-400" />
                     <span className="font-semibold text-base" style={{ color: 'hsl(var(--navy-deep))' }}>{selectedInquiry.name}</span>
@@ -413,24 +415,24 @@ export default function InquiryManagement() {
                   <div className="text-sm text-gray-500 mt-1 pl-6">{selectedInquiry.company}</div>
                 </Col>
                 <Col span={12}>
-                  <Text type="secondary" className="text-xs uppercase tracking-wider font-semibold block mb-1">Contact Details</Text>
+                  <Text type="secondary" className="text-xs uppercase tracking-wider font-semibold block mb-1">{t('admin.inquiry.contactDetails', 'Contact Details')}</Text>
                   <div className="text-sm mb-1"><a href={`mailto:${selectedInquiry.email}`} className="text-blue-600 hover:underline">{selectedInquiry.email}</a></div>
                   <div className="text-sm font-mono text-gray-700">{selectedInquiry.phone}</div>
                 </Col>
               </Row>
               <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between text-xs text-gray-500">
-                <span>Received: {selectedInquiry.createdAt ? format(new Date(selectedInquiry.createdAt), 'PPpp') : 'N/A'}</span>
-                <span>Source: <span className="font-medium text-gray-700">{selectedInquiry.source || 'Website Contact Form'}</span></span>
+                <span>{t('admin.inquiry.receivedAt', 'Received:')} {selectedInquiry.createdAt ? format(new Date(selectedInquiry.createdAt), 'PPpp') : 'N/A'}</span>
+                <span>{t('admin.inquiry.source', 'Source:')} <span className="font-medium text-gray-700">{selectedInquiry.source || t('admin.inquiry.defaultSource', 'Website Contact Form')}</span></span>
               </div>
             </div>
 
             {/* Message Body */}
             <div className="p-6 flex-1 overflow-auto">
               <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm mb-6">
-                <Text type="secondary" className="text-xs uppercase tracking-wider font-semibold block mb-3">Subject</Text>
+                <Text type="secondary" className="text-xs uppercase tracking-wider font-semibold block mb-3">{t('admin.inquiry.colSubject', 'Subject')}</Text>
                 <div className="font-semibold text-lg mb-4" style={{ color: 'hsl(var(--navy-deep))' }}>{selectedInquiry.subject}</div>
 
-                <Text type="secondary" className="text-xs uppercase tracking-wider font-semibold block mb-2">Message</Text>
+                <Text type="secondary" className="text-xs uppercase tracking-wider font-semibold block mb-2">{t('admin.inquiry.messageLabel', 'Message')}</Text>
                 <Paragraph className="text-sm leading-relaxed text-gray-700 whitespace-pre-wrap mb-0">
                   {selectedInquiry.message}
                 </Paragraph>
@@ -445,7 +447,7 @@ export default function InquiryManagement() {
                   )}
                   <div className="flex-1">
                     <Text type="secondary" className="text-[10px] uppercase tracking-wider font-bold text-orange mb-1 flex items-center gap-1">
-                      <ShoppingOutlined /> Interested In
+                      <ShoppingOutlined /> {t('admin.inquiry.interestedIn', 'Interested In')}
                     </Text>
                     <a
                       href={`/catalogue/${(selectedInquiry.interestedProduct as any).slug}`}
@@ -462,7 +464,7 @@ export default function InquiryManagement() {
                 <div className="bg-white p-5 rounded-xl border border-orange-100 shadow-sm mb-6 flex items-start gap-4">
                   <div className="flex-1">
                     <Text type="secondary" className="text-[10px] uppercase tracking-wider font-bold text-orange mb-1 flex items-center gap-1">
-                      <ShoppingOutlined /> Product Linked
+                      <ShoppingOutlined /> {t('admin.inquiry.productLinked', 'Product Linked')}
                     </Text>
                     <a
                       href={`/catalogue/${selectedInquiry.interestedProduct}`}
@@ -472,18 +474,18 @@ export default function InquiryManagement() {
                     >
                       {selectedInquiry.interestedProduct}
                     </a>
-                    <div className="text-xs text-gray-500 mt-1 uppercase tracking-wider">Details unavailable</div>
+                    <div className="text-xs text-gray-500 mt-1 uppercase tracking-wider">{t('admin.inquiry.productDetailsUnavailable', 'Details unavailable')}</div>
                   </div>
                 </div>
               ) : null}
 
               {/* Admin Actions Form */}
               <div className="bg-white p-5 rounded-xl border border-indigo-50 shadow-sm border-l-4 border-l-indigo-500">
-                <Title level={5} className="font-display m-0 mb-4" style={{ color: 'hsl(var(--navy-deep))' }}>Admin Processing</Title>
+                <Title level={5} className="font-display m-0 mb-4" style={{ color: 'hsl(var(--navy-deep))' }}>{t('admin.inquiry.adminProcessing', 'Admin Processing')}</Title>
                 <Form form={form} layout="vertical">
                   <Row gutter={16}>
                     <Col span={8}>
-                      <Form.Item name="category" label="Category" rules={[{ required: true }]}>
+                      <Form.Item name="category" label={t('admin.inquiry.colCategory', 'Category')} rules={[{ required: true }]}>
                         <Select size="large" className="rounded-lg">
                           {categories.map((c: any) => (
                             <Option key={c.key} value={c.key}>{c.label}</Option>
@@ -492,7 +494,7 @@ export default function InquiryManagement() {
                       </Form.Item>
                     </Col>
                     <Col span={8}>
-                      <Form.Item name="status" label="Inquiry Status" rules={[{ required: true }]}>
+                      <Form.Item name="status" label={t('admin.inquiry.formStatus', 'Inquiry Status')} rules={[{ required: true }]}>
                         <Select size="large" className="rounded-lg">
                           {statuses.map((s: any) => (
                             <Option key={s.key} value={s.key}>{s.label}</Option>
@@ -501,10 +503,10 @@ export default function InquiryManagement() {
                       </Form.Item>
                     </Col>
                     <Col span={8}>
-                      <Form.Item label="Assign To Manager" className="mb-0">
+                      <Form.Item label={t('admin.inquiry.formAssign', 'Assign To Manager')} className="mb-0">
                         <div className="flex gap-2">
                           <Form.Item name="assignedTo" className="mb-0 flex-1">
-                            <Select showSearch placeholder="Select a manager" allowClear size="large">
+                            <Select showSearch placeholder={t('admin.inquiry.formAssignPlaceholder', "Select a manager")} allowClear size="large">
                               {staffMembers.map((m: any) => (
                                 <Option key={m._id} value={m._id}>{m.name}</Option>
                               ))}
@@ -518,10 +520,10 @@ export default function InquiryManagement() {
 
                   <Row gutter={16}>
                     <Col span={24}>
-                      <Form.Item name="interestedProduct" label="Interested Product">
+                      <Form.Item name="interestedProduct" label={t('admin.inquiry.colProduct', 'Interested Product')}>
                         <Select
                           showSearch
-                          placeholder="Link to product..."
+                          placeholder={t('admin.inquiry.formLinkProduct', "Link to product...")}
                           size="large"
                           className="rounded-lg"
                           allowClear
@@ -534,10 +536,10 @@ export default function InquiryManagement() {
                     </Col>
                   </Row>
 
-                  <Form.Item name="internalNotes" label="Internal Notes (Not visible to customer)">
+                  <Form.Item name="internalNotes" label={t('admin.inquiry.formNotes', 'Internal Notes (Not visible to customer)')}>
                     <Input.TextArea
                       rows={4}
-                      placeholder="Add processing notes, quote IDs, or next steps..."
+                      placeholder={t('admin.inquiry.formNotesPlaceholder', "Add processing notes, quote IDs, or next steps...")}
                       className="rounded-lg bg-yellow-50/50 focus:bg-yellow-50"
                     />
                   </Form.Item>

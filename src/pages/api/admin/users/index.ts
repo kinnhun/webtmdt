@@ -39,7 +39,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       
       // Don't send back passwordHash
       const userRes = newUser.toObject();
-      delete userRes.passwordHash;
+      delete (userRes as any).passwordHash;
 
       return res.status(201).json({ success: true, data: userRes });
     }

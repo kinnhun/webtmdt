@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     "Set-Cookie",
     serialize("admin_token", "", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: false, // Allow HTTP as requested by user
       sameSite: "lax",
       maxAge: -1, // Expire immediately
       path: "/",

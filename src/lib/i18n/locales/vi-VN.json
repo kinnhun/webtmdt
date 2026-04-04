@@ -2,160 +2,160 @@
   "nav": {
     "home": "Trang chủ",
     "about": "Giới thiệu",
-    "catalogue": "Ngoại thất",
-    "indoorCollection": "Nội thất",
+    "catalogue": "Bộ sưu tập",
     "contact": "Liên hệ",
-    "getQuote": "Báo giá",
+    "getQuote": "Nhận báo giá",
     "whatsapp": "WhatsApp",
-    "outdoorFurniture": "Nội thất ngoài trời",
+    "outdoorFurniture": "Đồ nội thất ngoài trời",
     "search": "Tìm kiếm",
-    "blog": "Blog"
+    "indoorCollection": "Bộ sưu tập trong nhà"
   },
   "footer": {
-    "description": "Chúng tôi là nhà sản xuất tại Việt Nam chuyên về nội thất ngoài trời cao cấp cho các thương hiệu và nhà bán lẻ toàn cầu. Tập trung vào độ bền, tay nghề thủ công và sản xuất quy mô, chúng tôi cung cấp giải pháp OEM/ODM phù hợp cho thị trường quốc tế.",
+    "description": "Nhà cung cấp đồ nội thất ngoài trời tại Việt Nam, OEM / ODM Acacia, Teak & Aluminum cho người mua toàn cầu",
     "quickLinks": "Liên kết nhanh",
     "collections": "Bộ sưu tập",
     "contact": "Liên hệ",
     "copyright": "© 2025 DHT Outdoor Furniture Production. Bảo lưu mọi quyền.",
-    "tagline": "Nhà sản xuất & Cung cấp nội thất"
+    "tagline": "Nhà sản xuất & cung cấp đồ nội thất"
   },
   "home": {
     "seo": {
-      "title": "DHT Outdoor Furniture — Nhà sản xuất & Cung cấp nội thất cao cấp",
-      "description": "DHT Outdoor Furniture Production — nhà sản xuất nội thất ngoài trời & trong nhà cao cấp. Gỗ teak, gỗ nguyên khối, đặt hàng theo yêu cầu. Chứng nhận ISO. Xuất khẩu 25+ quốc gia."
+      "title": "DHT Outdoor Furniture — Nhà sản xuất & Cung cấp Nội thất Cao cấp",
+      "description": "DHT Outdoor Furniture Production — nhà sản xuất nội thất ngoài trời & trong nhà cao cấp. Gỗ teak, gỗ tự nhiên, đặt hàng theo yêu cầu. Chứng nhận ISO. Xuất khẩu 25+ quốc gia."
     },
     "hero": {
-      "badge": "DHT · Sản xuất nội thất ngoài trời",
-      "title1": "Nhà Cung Cấp Nội Thất Ngoài Trời Uy Tín Từ Việt Nam",
-      "title2": "Gia Công Cho Nhà Bán Lẻ. Sản Xuất Quy Mô Lớn",
+      "badge": "Keo | Bạch đàn | Teak | Nhôm | Hỗ trợ đóng container ghép",
+      "title1": "Nhà cung cấp nội thất ngoài trời uy tín từ Việt Nam",
+      "title2": "Sản xuất cho nhà bán lẻ. Quy mô linh hoạt",
       "exploreProducts": "Khám phá sản phẩm",
       "getQuote": "Nhận báo giá",
       "stats": {
         "yearsExperience": "Năm kinh nghiệm",
         "unitsMonth": "Sản phẩm / Tháng",
-        "products": "Sản phẩm",
+        "products": "Mẫu thiết kế sẵn",
         "exportCountries": "Quốc gia xuất khẩu"
       }
     },
     "intro": {
-      "label": "Chúng tôi là ai",
-      "heading1": "Nhà Sản Xuất Nội Thất Ngoài Trời",
-      "heading2": "Chuyên Gia Công Cho",
-      "heading3": "Nhà Bán Lẻ & Dự Án",
-      "paragraph1": "Chúng tôi giúp các nhà bán lẻ, nhà phân phối và ban quản lý dự án tìm kiếm nguồn cung nội thất ngoài trời đáng tin cậy Sản Xuất Tại Việt Nam, Trụ Sở Sản Xuất Bình Định — với chất lượng ổn định, linh hoạt sản xuất và giao hàng đúng tiến độ. Từ khâu phát triển mẫu đến đóng xếp container, mọi quy trình đều tuân thủ tiêu chuẩn quốc tế.",
-      "paragraph2": "✔ Chất lượng đồng nhất với quy trình QC toàn diện\n✔ Tuỳ chỉnh OEM / ODM cho thương hiệu riêng\n✔ Năng suất ổn định lên đến 50.000 sản phẩm/tháng\n✔ Giao hàng đúng tiến độ với quy trình xuất khẩu chuẩn xác\n✔ Kinh nghiệm dày dặn với thị trường Mỹ, EU và toàn cầu",
+      "label": "Về chúng tôi",
+      "heading1": "Nhà sản xuất nội thất",
+      "heading2": "ngoài trời Việt Nam cho",
+      "heading3": "Nhà bán lẻ & Dự án",
+      "paragraph1": "Chúng tôi hỗ trợ nhà bán lẻ, nhà phân phối và người mua dự án tìm nguồn nội thất ngoài trời uy tín Sản xuất tại Việt Nam, Cơ sở sản xuất Bình Định — với chất lượng ổn định, sản xuất linh hoạt và giao hàng đúng hạn. Từ phát triển mẫu đến xếp container, mọi bước đều được kiểm soát theo tiêu chuẩn quốc tế.",
+      "paragraph2": "✔ Chất lượng đồng nhất với kiểm soát QC toàn diện\n✔ Tùy chỉnh OEM / ODM cho nhãn hàng riêng\n✔ Công suất ổn định lên đến 50.000 sản phẩm/tháng\n✔ Giao hàng đúng hạn với quy trình sẵn sàng xuất khẩu\n✔ Giàu kinh nghiệm thị trường Mỹ, EU & toàn cầu",
       "ourStory": "Câu chuyện của chúng tôi",
-      "isoCertified": "Chứng nhận ISO 9001:2015",
+      "isoCertified": "Chứng nhận 9001:2015",
       "location": "Bình Định, Việt Nam",
-      "statsYears": "Hơn 18 năm xuất khẩu",
-      "statsUnits": "Năng lực 50.000 SP/tháng",
-      "statsCraftspeople": "Hơn 35 quốc gia",
-      "statsExport": "Hỗ trợ OEM / ODM",
-      "subline": "Acacia • Bạch Đàn • Teak • Nhôm | OEM / ODM | Hỗ Trợ Ghép Container",
+      "statsYears": "18+ Năm kinh nghiệm xuất khẩu",
+      "statsUnits": "Công suất 50.000 sản phẩm / Tháng",
+      "statsCraftspeople": "35+ Quốc gia xuất khẩu",
+      "statsExport": "OEM / ODM sẵn sàng",
+      "subline": "Keo • Bạch đàn • Teak • Nhôm | OEM / ODM | Hỗ trợ đóng container ghép",
       "buttons": {
-        "catalog": "NHẬN TOÀN BỘ CATALOG",
+        "catalog": "TẢI CATALOG ĐẦY ĐỦ",
         "quote": "YÊU CẦU BÁO GIÁ",
-        "factory": "Xem Hình Ảnh Xưởng →"
+        "factory": "Xem nhà máy →"
       }
     },
     "categories": {
       "label": "Bộ sưu tập",
-      "heading1": "Nội thất ngoài trời,",
-      "heading2": "Hoàn hảo cho mọi dự án",
+      "heading1": "Nội thất ngoài trời cho",
+      "heading2": "Nhà bán lẻ & Dự án",
       "viewAll": "Xem tất cả",
       "outdoorSofa": {
-        "name": "Bộ Sofa Ngoài Trời",
+        "name": "Bộ sưu tập Sofa ngoài trời",
         "tagline": "Thoải mái cho mọi sân thượng",
         "count": "36 sản phẩm"
       },
       "outdoorDining": {
-        "name": "Bộ Bàn Ăn Ngoài Trời",
-        "tagline": "Thưởng thức bữa ăn ngoài trời",
+        "name": "Bộ bàn ăn ngoài trời",
+        "tagline": "Dùng bữa ngoài trời đẳng cấp",
         "count": "28 sản phẩm"
       },
       "aluminium": {
-        "name": "Nội Thất Nhôm",
-        "tagline": "Nhẹ & chống thời tiết",
+        "name": "Nội thất nhôm",
+        "tagline": "Nhẹ & chống chịu thời tiết",
         "count": "42 sản phẩm"
       },
       "indoor": {
-        "name": "Nội Thất Trong Nhà (Đặt Hàng Riêng)",
-        "tagline": "Nội thất trong nhà cao cấp",
+        "name": "Nội thất trong nhà (Chỉ đặt hàng riêng)",
+        "tagline": "Sản phẩm nội thất trong nhà cao cấp",
         "sub": {
           "livingRoom": "Phòng khách",
           "diningRoom": "Phòng ăn",
           "bathroom": "Phòng tắm"
         }
       },
+      "subline": "Keo • Teak • Nhôm | OEM / ODM | Hỗ trợ đóng container ghép",
       "sunlounger": {
-        "name": "Giường Tắm Nắng",
+        "name": "Ghế tắm nắng & Giường ngoài trời",
         "tagline": "",
         "count": "(Đặt hàng riêng)"
       }
     },
     "featured": {
-      "label": "Bán chạy",
-      "heading": "Nội Thất Ngoài Trời Bán Chạy",
-      "description": "Sản xuất tại Việt Nam phục vụ nhà bán lẻ, nhà phân phối và dự án",
-      "fullCatalogue": "Xem toàn bộ danh mục",
+      "label": "Sản phẩm bán chạy",
+      "heading": "Nội thất ngoài trời bán chạy nhất",
+      "description": "Sản xuất tại Việt Nam cho nhà bán lẻ, nhà phân phối và người mua dự án",
+      "fullCatalogue": "Tải Catalog đầy đủ",
       "seeAllProducts": "Xem tất cả sản phẩm",
       "noProducts": "Chưa có sản phẩm nổi bật trong danh mục này.",
       "new": "Mới",
-      "inquire": "Hỏi giá",
+      "inquire": "Yêu cầu báo giá",
       "filterAll": "Tất cả",
       "filterOutdoorSofas": "Sofa ngoài trời",
       "filterDiningSets": "Bộ bàn ăn",
-      "filterLoungeDaybeds": "Giường tắm nắng",
+      "filterLoungeDaybeds": "Ghế tắm nắng",
       "filterTables": "Bàn ngoài trời",
       "filterChairs": "Nội thất nhôm",
-      "subline": "Sản xuất tại Việt Nam phục vụ nhà bán lẻ, nhà phân phối và dự án"
+      "subline": "Sản xuất tại Việt Nam cho nhà bán lẻ, nhà phân phối và người mua dự án"
     },
     "whyUs": {
       "label": "Tại sao chọn DHT",
-      "heading": "Tại sao chọn DHT cho nội thất ngoài trời",
-      "description": "Chúng tôi đồng hành cùng các nhà bán lẻ, nhà phân phối và khách hàng dự án với năng lực sản xuất đáng tin cậy, chất lượng đồng nhất và giao hàng đúng tiến độ.",
+      "heading": "Tại sao người mua chọn DHT cho nội thất ngoài trời",
+      "description": "Chúng tôi hỗ trợ nhà bán lẻ, nhà phân phối và người mua dự án với sản xuất ổn định, chất lượng đồng nhất và giao hàng đúng hạn.",
       "points": [
-        "Chất lượng đồng nhất – quy trình QC nghiêm ngặt ở mọi giai đoạn",
-        "Năng lực sản xuất ổn định đáp ứng các đơn hàng lớn",
-        "Sản xuất OEM / ODM linh hoạt cho các thương hiệu",
-        "Hỗ trợ ghép container giúp tối ưu chi phí",
-        "Giao hàng đúng hạn với quy trình xuất khẩu chuyên nghiệp"
+        "Chất lượng đồng nhất – kiểm soát QC nghiêm ngặt ở mọi giai đoạn",
+        "Công suất sản xuất ổn định cho đơn hàng lớn",
+        "OEM / ODM linh hoạt cho nhãn hàng riêng",
+        "Đóng container ghép để tối ưu chi phí",
+        "Giao hàng đúng hạn với quy trình sẵn sàng xuất khẩu"
       ],
-      "requestQuote": "Liên hệ ngay",
+      "requestQuote": "Liên hệ chúng tôi",
       "viewCatalogue": "Tải Catalog",
-      "btn1": "TẢI TOÀN BỘ CATALOG",
+      "btn1": "TẢI CATALOG ĐẦY ĐỦ",
       "btn2": "Yêu cầu báo giá →"
     },
     "materials": {
-      "label": "Chất liệu",
-      "heading1": "Vật liệu Tiêu chuẩn",
-      "heading2": "Ngoài trời",
-      "description": "Chúng tôi sử dụng các vật liệu chịu thời tiết được thiết kế cho độ bền, sự ổn định và sử dụng lâu dài ngoài trời.",
+      "label": "Vật liệu",
+      "heading1": "Vật liệu được thiết kế cho",
+      "heading2": "Hiệu suất ngoài trời",
+      "description": "Chúng tôi sử dụng vật liệu chống chịu thời tiết, được thiết kế cho độ bền, ổn định và sử dụng ngoài trời lâu dài.",
       "solidOak": {
-        "name": "Gỗ Tràm (Acacia)",
-        "desc": "Hiệu quả về chi phí & phù hợp cho các chương trình bán lẻ"
+        "name": "Gỗ keo",
+        "desc": "Hiệu quả chi phí & phù hợp cho chương trình bán lẻ"
       },
       "walnutWood": {
         "name": "Gỗ óc chó",
-        "desc": "Sắc nâu chocolate đậm, kết cấu mịn, ấm áp phong cách mid-century"
+        "desc": "Sắc nâu sô-cô-la, vân mịn, phong cách giữa thế kỷ"
       },
       "premiumTeak": {
-        "name": "Gỗ Tếch (Teak)",
-        "desc": "Độ bền cực cao trong môi trường ngoài trời"
+        "name": "Gỗ teak",
+        "desc": "Độ bền cao cho môi trường ngoài trời"
       },
       "linenVelvet": {
-        "name": "Vải Ngoài Trời",
-        "desc": "Gồm các dòng Olefin / Sunbrella kháng tia cực tím cực mạnh & chống nước"
+        "name": "Vải ngoài trời",
+        "desc": "Có sẵn Olefin / Sunbrella chống tia UV & chống nước"
       },
       "aluminium": {
-        "name": "Nhôm Sơn Tĩnh Điện",
-        "desc": "Chống gỉ sét & trọng lượng nhẹ"
+        "name": "Nhôm sơn tĩnh điện",
+        "desc": "Chống gỉ & nhẹ"
       }
     },
     "rooms": {
       "label": "Cảm hứng",
-      "heading": "Từng căn phòng",
-      "description": "Mỗi không gian kể một câu chuyện. Khám phá nội thất được chọn lọc cho từng căn phòng trong ngôi nhà bạn.",
+      "heading": "Từng không gian",
+      "description": "Mỗi không gian kể một câu chuyện. Khám phá nội thất được tuyển chọn cho mỗi phòng trong ngôi nhà của bạn.",
       "masterBedroom": {
         "name": "Phòng ngủ chính",
         "label": "Phòng ngủ",
@@ -164,12 +164,12 @@
       "livingRoom": {
         "name": "Phòng khách",
         "label": "Phòng khách",
-        "tagline": "Trái tim của mọi ngôi nhà"
+        "tagline": "Trái tim của mỗi ngôi nhà"
       },
       "familyDining": {
         "name": "Phòng ăn gia đình",
         "label": "Phòng ăn",
-        "tagline": "Chế tác cho những khoảnh khắc chia sẻ"
+        "tagline": "Được chế tác cho những khoảnh khắc chia sẻ"
       },
       "homeOffice": {
         "name": "Văn phòng tại nhà",
@@ -177,7 +177,7 @@
         "tagline": "Tập trung gặp phong cách"
       },
       "outdoorPatio": {
-        "name": "Sân ngoài trời",
+        "name": "Sân hiên ngoài trời",
         "label": "Ngoài trời",
         "tagline": "Thiết kế không giới hạn"
       }
@@ -187,78 +187,79 @@
       "heading": "Được tin tưởng bởi các nhà thiết kế",
       "quotes": [
         {
-          "quote": "DHT đã giao đúng hạn 200 sản phẩm với chất lượng hoàn thiện xuất sắc. Chuyên nghiệp và phản hồi nhanh chóng.",
+          "quote": "DHT giao đúng hạn toàn bộ 200 đơn vị với chất lượng hoàn thiện xuất sắc. Chuyên nghiệp và phản hồi nhanh suốt quá trình.",
           "name": "James Lim",
           "role": "Nhà thiết kế nội thất, Singapore",
           "project": "Căn hộ 200 đơn vị"
         },
         {
-          "quote": "Chúng tôi đã hợp tác với DHT cho ba dự án khách sạn. Chất lượng ổn định và hậu cần thuận lợi.",
+          "quote": "Chúng tôi đã hợp tác với DHT cho ba dự án khách sạn. Chất lượng ổn định và logistics không rắc rối.",
           "name": "Sophie Tan",
-          "role": "Giám đốc mua hàng, KL",
-          "project": "3x Trang bị Khách sạn"
+          "role": "Quản lý thu mua, KL",
+          "project": "3 dự án trang bị khách sạn"
         },
         {
-          "quote": "Bộ phòng ngủ đặt riêng vượt xa kỳ vọng. Tay nghề thủ công thật sự với giá cạnh tranh.",
+          "quote": "Bộ nội thất phòng ngủ tùy chỉnh vượt ngoài mong đợi. Tay nghề thủ công thực sự với giá cạnh tranh.",
           "name": "Marco Rossi",
-          "role": "Chủ đầu tư, Bali",
-          "project": "Biệt thự sang trọng"
+          "role": "Nhà phát triển bất động sản, Bali",
+          "project": "Biệt thự cao cấp"
         }
       ]
     },
     "cta": {
-      "heading": "Đang tìm kiếm nhà cung cấp nội thất ngoài trời uy tín?",
-      "description": "Nhận catalog, bảng giá và thông tin sản phẩm mới nhất cho đơn đặt hàng tiếp theo của bạn.",
+      "heading": "Đang tìm nhà cung cấp nội thất ngoài trời uy tín?",
+      "description": "Nhận catalog mới nhất, bảng giá và thông tin sản phẩm cho đơn hàng tiếp theo của bạn.",
       "sendInquiry": "Gửi yêu cầu",
-      "browseCatalogue": "Xem danh mục",
-      "slogan": "Chế Tác Nội Thất Ngoài Trời Cao Cấp Từ 2008",
-      "btn1": "NHẬN TOÀN BỘ CATALOG",
+      "browseCatalogue": "Xem Bộ sưu tập",
+      "slogan": "Chế tác nội thất ngoài trời cao cấp từ năm 2008",
+      "btn1": "TẢI CATALOG ĐẦY ĐỦ",
       "btn2": "Yêu cầu báo giá →"
     }
   },
   "about": {
     "seo": {
       "title": "Giới thiệu — DHT Outdoor Furniture",
-      "description": "Tìm hiểu về DHT Outdoor Furniture — hơn 15 năm xuất sắc trong sản xuất nội thất."
+      "description": "Tìm hiểu về DHT Outdoor Furniture — 15+ năm kinh nghiệm sản xuất nội thất chất lượng."
     },
     "hero": {
-      "title": "Về DHT",
-      "subtitle": "Nhà sản xuất và xuất khẩu nội thất gỗ ngoài trời, trụ sở tại Quy Nhơn."
+      "title": "Nhà sản xuất nội thất ngoài trời Việt Nam",
+      "subtitle": "Keo • Teak • Bạch đàn • Nhôm OEM / ODM • Container ghép • Xuất khẩu toàn cầu",
+      "description": "DHT là nhà cung cấp nội thất ngoài trời tại Việt Nam, hỗ trợ nhà bán lẻ, nhà phân phối và người mua dự án. Chúng tôi mang đến chất lượng ổn định, sản xuất linh hoạt và giải pháp xuất khẩu đáng tin cậy cho đối tác toàn cầu."
     },
     "story": {
-      "label": "Câu chuyện",
-      "heading": "Từ Gia Công OEM Đến Thương Hiệu Toàn Cầu",
-      "paragraph1": "DHT khởi đầu là một nhà sản xuất OEM. Khi thị trường thay đổi, chúng tôi quyết định làm chủ hành trình xuất khẩu của chính mình.",
-      "paragraph2": "Đó là một quá trình đầy thử thách: tái cấu trúc sản xuất, đầu tư vào công nghệ, đào tạo đội ngũ và học cách phục vụ khách hàng toàn cầu.",
-      "paragraph3": "Nhờ sự kiên trì và hơn 30 năm kinh nghiệm, DHT hiện đã xuất khẩu đến hơn 20 quốc gia – từ Mỹ, Úc cho đến khắp Châu Âu. \"Chúng tôi không chỉ bán gỗ – chúng tôi trao gửi câu chuyện về sự kiên cường của người Việt.\""
+      "label": "Câu chuyện của chúng tôi",
+      "heading": "Từ OEM đến thương hiệu toàn cầu",
+      "paragraph1": "DHT khởi đầu là nhà sản xuất OEM. Khi thị trường thay đổi, chúng tôi quyết định tự mình mở đường xuất khẩu.",
+      "paragraph2": "Đó là một quá trình đầy thử thách: tái cơ cấu sản xuất, đầu tư công nghệ, đào tạo đội ngũ và học cách phục vụ khách hàng toàn cầu.",
+      "paragraph3": "Nhờ sự kiên trì và hơn 30 năm kinh nghiệm, DHT hiện xuất khẩu đến hơn 20 quốc gia – từ Mỹ và Úc đến khắp Châu Âu. \"Chúng tôi không chỉ bán gỗ – chúng tôi mang đến câu chuyện về sự bền bỉ của Việt Nam.\""
     },
     "values": {
-      "label": "Giá trị của chúng tôi",
-      "heading": "Giá Trị Cốt Lõi",
+      "label": "Giá trị cốt lõi",
+      "heading": "Giá trị cốt lõi",
       "quality": {
-        "title": "Chất Lượng",
-        "desc": "Kiểm soát chặt chẽ từ nguyên liệu thô đến sản phẩm hoàn thiện."
+        "title": "Chất lượng",
+        "desc": "Kiểm soát nghiêm ngặt từ nguyên liệu đến thành phẩm."
       },
       "transparency": {
-        "title": "Minh Bạch",
-        "desc": "Chính sách giá cả rõ ràng, báo cáo tiến độ minh bạch."
+        "title": "Minh bạch",
+        "desc": "Chính sách giá minh bạch, báo cáo tiến độ rõ ràng."
       },
       "creativity": {
-        "title": "Sáng Tạo",
-        "desc": "Liên tục phát triển các mẫu mã mới."
+        "title": "Sáng tạo",
+        "desc": "Liên tục phát triển các mẫu thiết kế mới."
       },
       "sustainability": {
-        "title": "Bền Vững",
-        "desc": "Sử dụng gỗ được chứng nhận FSC."
+        "title": "Bền vững",
+        "desc": "Sử dụng gỗ có chứng nhận FSC."
       },
       "dedication": {
-        "title": "Tận Tâm",
+        "title": "Tận tâm",
         "desc": "Hợp tác lâu dài và hỗ trợ khách hàng."
       }
     },
     "timeline": {
       "label": "Hành trình",
-      "heading": "Hình thành & Phát triển",
+      "heading": "Thành lập & Phát triển",
       "items": [
         {
           "year": "2016",
@@ -268,7 +269,7 @@
         {
           "year": "2018–2020",
           "title": "Mở rộng nhà máy",
-          "desc": "Mở rộng nhà máy, đầu tư vào CNC, dây chuyền sơn UV và lò sấy gỗ."
+          "desc": "Mở rộng nhà máy, đầu tư CNC, dây chuyền sơn UV và lò sấy gỗ."
         },
         {
           "year": "2021–2024",
@@ -277,126 +278,126 @@
         },
         {
           "year": "2025",
-          "title": "Đối tác chiến lược",
-          "desc": "Hướng tới mục tiêu trở thành đối tác chiến lược của các chuỗi bán lẻ quốc tế."
+          "title": "Hợp tác chiến lược",
+          "desc": "Hướng tới trở thành đối tác chiến lược của các chuỗi bán lẻ quốc tế."
         }
       ]
     },
     "team": {
-      "label": "Ban lãnh đạo",
-      "heading": "Ban Điều Hành",
+      "label": "Lãnh đạo",
+      "heading": "Ban điều hành",
       "john": {
-        "role": "Nhà sáng lập & Giám đốc Kinh doanh",
-        "quote": "DHT đã, đang và sẽ tiếp tục nỗ lực mang lại giá trị lớn hơn cho khách hàng, xây dựng niềm tin bền vững và mang niềm tự hào về tay nghề Việt Nam từ Quy Nhơn ra thế giới."
+        "role": "Nhà sáng lập & Giám đốc kinh doanh",
+        "quote": "DHT đã, đang và sẽ tiếp tục nỗ lực mang đến giá trị lớn hơn cho khách hàng, xây dựng niềm tin bền vững và mang niềm tự hào của nghề thủ công Việt Nam từ Quy Nhơn đến thế giới."
       },
       "tyler": {
-        "role": "Đồng sáng lập & CEO",
+        "role": "Đồng sáng lập & Tổng giám đốc điều hành",
         "quote": "Tại DHT, chúng tôi không chỉ sản xuất nội thất ngoài trời — chúng tôi kiến tạo không gian nơi mọi người kết nối, chia sẻ câu chuyện và tạo nên những kỷ niệm đáng nhớ."
       },
       "dylan": {
-        "role": "Tổng Giám đốc",
-        "quote": "Mỗi dự án chúng tôi thực hiện đều mang trong mình cam kết về sự chính xác, độ bền và tay nghề thủ công Việt Nam — điều tạo nên bản sắc DHT."
+        "role": "Tổng giám đốc",
+        "quote": "Mỗi dự án chúng tôi giao đều mang lời hứa về sự chính xác, độ bền và tay nghề thủ công Việt Nam – đặc trưng của DHT."
       },
       "david": {
-        "role": "Giám đốc Phát triển Sản phẩm",
-        "quote": "Đổi mới là sự kết hợp giữa gỗ teak cổ điển với thiết kế hiện đại để tạo ra nội thất vững chãi dưới mọi bầu trời."
+        "role": "Giám đốc phát triển sản phẩm",
+        "quote": "Đổi mới là kết hợp gỗ teak vượt thời gian với thiết kế hiện đại để tạo ra nội thất bền vững dưới mọi bầu trời."
       },
       "alicia": {
-        "role": "Giám đốc Tài chính",
-        "quote": "Tài chính vững mạnh nuôi dưỡng quan hệ đối tác bền chặt. Tại DHT, mỗi đơn hàng đều được đảm bảo bởi niềm tin, minh bạch và tăng trưởng bền vững."
+        "role": "Giám đốc tài chính",
+        "quote": "Tài chính vững mạnh nuôi dưỡng quan hệ đối tác bền vững. Tại DHT, chúng tôi đảm bảo mọi đơn hàng đều được hậu thuẫn bởi sự tin tưởng, minh bạch và tăng trưởng bền vững."
       }
     },
     "cta": {
-      "heading": "Sẵn sàng hợp tác?",
-      "button": "Liên hệ"
+      "heading": "Sẵn sàng hợp tác cùng nhau?",
+      "button": "Liên hệ chúng tôi"
     },
     "stats": {
-      "heading": "Năng Lực & Quy Mô Sản Xuất",
-      "subtitle": "Được trang bị máy móc hiện đại và nhà máy rộng 80.000m², chúng tôi đảm bảo khả năng mở rộng quy mô, sự chính xác và giao hàng đáng tin cậy cho toàn cầu.",
-      "factorySize": "Diện Tích Xưởng",
-      "yearlyOutput": "Sản Phẩm / Năm",
+      "heading": "Số liệu sản xuất & Công suất",
+      "subtitle": "Trang bị máy móc hiện đại và cơ sở rộng 80.000 m², chúng tôi đảm bảo khả năng mở rộng, độ chính xác và thực hiện đơn hàng đáng tin cậy cho thị trường toàn cầu.",
+      "factorySize": "Diện tích nhà máy",
+      "yearlyOutput": "Sản phẩm / Năm",
       "monthlyContainers": "Container / Tháng",
-      "workers": "Công Nhân Sản Xuất"
+      "workers": "Công nhân sản xuất"
     },
     "hr": {
-      "heading": "Nhân Sự & R&D",
-      "prodWorkers": "250 công nhân sản xuất tận tâm với chất lượng đồng nhất.",
-      "techStaff": "30 nhân sự kỹ thuật & quản lý giám sát mọi quy trình.",
-      "rndModels": "40–50 mẫu mới được phát triển mỗi năm bởi đội ngũ R&D."
+      "heading": "Nhân sự & Nghiên cứu phát triển",
+      "prodWorkers": "250 công nhân sản xuất chuyên tâm đảm bảo chất lượng đồng nhất.",
+      "techStaff": "30 nhân viên kỹ thuật & quản lý giám sát vận hành.",
+      "rndModels": "40–50 mẫu thiết kế mới được phát triển hàng năm bởi đội ngũ R&D."
     },
     "machinery": {
-      "heading": "Máy Móc Trọng Điểm",
-      "panelSaws": "Máy cắt ván & máy cưa bàn trượt",
-      "planers": "Máy bào 2 mặt & máy bào cuốn",
-      "pressing": "Máy ghép dọc & máy ép nóng/lạnh",
-      "cnc": "Máy CNC 3 trục",
-      "coating": "Dây chuyền sơn UV/PU/Dầu",
-      "kilns": "Lò sấy gỗ chuẩn xuất khẩu",
+      "heading": "Máy móc chủ lực",
+      "panelSaws": "Máy cưa panel & máy cưa bàn trượt",
+      "planers": "Máy bào hai mặt & máy bào thicknessing",
+      "pressing": "Máy ghép ngón & máy ép nóng/lạnh",
+      "cnc": "Máy CNC ba trục",
+      "coating": "Dây chuyền sơn UV/PU/dầu",
+      "kilns": "Lò sấy gỗ tiêu chuẩn xuất khẩu",
       "packaging": "Máy đóng gói & hút chân không"
     },
     "locations": {
-      "heading": "Các Cơ Sở Hệ Thống",
+      "heading": "Địa điểm của chúng tôi",
       "factory": {
-        "name": "Nhà máy DHT Furniture Vietnam",
-        "address": "Quốc lộ 19, Phường Nguyễn Văn Cừ, Phước Lộc, Huyện Tuy Phước, Tỉnh Bình Định, Việt Nam",
+        "name": "Nhà máy DHT Furniture Việt Nam",
+        "address": "Quốc lộ 19, Phường Nguyễn Huệ, Phước Lộc, Huyện Tuy Phước, Tỉnh Bình Định, Việt Nam",
         "hotline": "Hotline: +84 902 907 399"
       },
       "office": {
-        "name": "Văn Phòng Thương Mại & CSKH",
-        "address": "72 Lê Thánh Tôn, Quận 1, TP. Hồ Chí Minh, Việt Nam",
+        "name": "Văn phòng Thương mại & Chăm sóc khách hàng",
+        "address": "72 Lê Thánh Tôn, Quận 1, Thành phố Hồ Chí Minh, Việt Nam",
         "hotline": "Hotline: +84 907 386 898 (24/7)"
       },
       "showroom": {
-        "name": "Showroom DHT Private Garden",
+        "name": "Showroom Vườn riêng DHT",
         "address": "Thôn Vĩnh Thạnh 2, Xã Tuy Phước, Tỉnh Bình Định, Việt Nam",
         "hotline": "Hotline: +84 907 386 898"
       },
       "jdd": {
         "name": "Công ty TNHH JDD Global Furnishing",
-        "address": "226 Gò Dưa, Phường Tam Bình, TP. Thủ Đức, TP. Hồ Chí Minh, Việt Nam",
+        "address": "226 Đường Gò Dưa, Phường Tam Bình, Thành phố Thủ Đức, TP. Hồ Chí Minh, Việt Nam",
         "hotline": "Hotline: +84 932 058 545"
       }
     },
     "welcome": {
-      "title": "Tại Sao Khách Hàng Toàn Cầu Chọn DHT?",
-      "description": "DHT đồng hành cùng nhà bán lẻ, nhà phân phối và khách hàng dự án với sản xuất nội thất ngoài trời đáng tin cậy tại Việt Nam. Chúng tôi tập trung vào chất lượng ổn định, sản xuất linh hoạt và quan hệ đối tác lâu dài.",
+      "title": "Tại sao người mua toàn cầu chọn DHT?",
+      "description": "DHT hỗ trợ nhà bán lẻ, nhà phân phối và người mua dự án với sản xuất nội thất ngoài trời đáng tin cậy từ Việt Nam. Chúng tôi tập trung vào chất lượng ổn định, sản xuất linh hoạt và quan hệ đối tác lâu dài.",
       "values": [
         {
-          "title": "Sản Xuất Đáng Tin Cậy",
-          "desc": "QC nghiêm ngặt, chất lượng ổn định xuyên suốt các đơn hàng"
+          "title": "Sản xuất đáng tin cậy",
+          "desc": "QC nghiêm ngặt, chất lượng ổn định qua từng đơn hàng"
         },
         {
-          "title": "Dành Cho Khách Hàng B2B",
-          "desc": "OEM / ODM, ghép container, sản xuất quy mô"
+          "title": "Xây dựng cho người mua B2B",
+          "desc": "OEM / ODM, container ghép, sản xuất mở rộng"
         },
         {
-          "title": "Sẵn Sàng Xuất Khẩu",
+          "title": "Sẵn sàng xuất khẩu",
           "desc": "Giao hàng đúng hạn, kinh nghiệm vận chuyển toàn cầu"
         }
       ]
     },
     "marquee": [
-      "Hơn 18 Năm Kinh Nghiệm",
-      "50.000 Sản Phẩm / Tháng",
-      "Hơn 35 Quốc Gia Xuất Khẩu"
+      "18+ Năm kinh nghiệm",
+      "50.000 Sản phẩm / Tháng",
+      "35+ Quốc gia xuất khẩu"
     ]
   },
   "catalogue": {
     "seo": {
-      "title": "Danh mục — DHT Outdoor Furniture",
-      "description": "Khám phá bộ sưu tập đầy đủ nội thất ngoài trời cao cấp."
+      "title": "Bộ sưu tập — DHT Outdoor Furniture",
+      "description": "Khám phá bộ sưu tập đầy đủ nội thất ngoài trời cao cấp của chúng tôi."
     },
     "searchPlaceholder": "Tìm theo tên, mã hoặc danh mục...",
     "collection": "Bộ sưu tập",
-    "outdoorCollection": "Bộ sưu tập Ngoài trời",
-    "indoorCollection": "Bộ sưu tập Trong nhà",
+    "outdoorCollection": "Bộ sưu tập ngoài trời",
+    "indoorCollection": "Bộ sưu tập trong nhà",
     "filters": "Bộ lọc",
     "clearAll": "Xóa tất cả",
     "category": "Danh mục",
-    "material": "Chất liệu",
+    "material": "Vật liệu",
     "color": "Màu sắc",
     "style": "Phong cách",
-    "moq": "SL đặt hàng tối thiểu",
+    "moq": "Số lượng đặt tối thiểu (MOQ)",
     "moqOptions": {
       "under10": "Dưới 10",
       "10to50": "10–50",
@@ -404,12 +405,12 @@
       "100plus": "100+"
     },
     "colorOptions": {
-      "naturalWood": "Mũ vân gỗ tự nhiên",
+      "naturalWood": "Gỗ tự nhiên",
       "brown": "Nâu",
       "black": "Đen",
       "white": "Trắng",
       "grey": "Xám",
-      "beige": "Beige",
+      "beige": "Be",
       "green": "Xanh lá"
     },
     "styleOptions": {
@@ -423,25 +424,25 @@
     "clearAllFilters": "Xóa tất cả bộ lọc",
     "productsFound": "Hiển thị {{count}} sản phẩm",
     "quickView": "Xem nhanh",
-    "inquire": "Hỏi giá"
+    "inquire": "Yêu cầu báo giá"
   },
   "contact": {
     "seo": {
       "title": "Liên hệ — DHT Outdoor Furniture",
-      "description": "Liên hệ để nhận báo giá, đặt hàng tùy chỉnh và yêu cầu dự án."
+      "description": "Liên hệ để nhận báo giá, đặt hàng tùy chỉnh và yêu cầu cho dự án."
     },
     "hero": {
       "title": "Liên hệ với chúng tôi",
-      "subtitle": "Liên hệ đội ngũ để nhận báo giá tùy chỉnh, đặt hàng và yêu cầu"
+      "subtitle": "Liên hệ đội ngũ của chúng tôi để nhận báo giá, đặt hàng và tư vấn"
     },
     "info": {
       "phone": "Điện thoại",
       "email": "Email",
       "factory": "Nhà máy",
       "hours": "Giờ làm việc",
-      "hoursValue": "Thứ 2–Thứ 6, 08:00 – 17:00 WIB",
+      "hoursValue": "Thứ Hai – Thứ Sáu, 08:00 – 17:00 (Giờ VN)",
       "export": "Xuất khẩu",
-      "exportValue": "Giao hàng toàn cầu"
+      "exportValue": "Vận chuyển toàn cầu"
     },
     "form": {
       "name": "Họ tên",
@@ -449,33 +450,33 @@
       "phone": "Điện thoại",
       "company": "Công ty",
       "subject": "Chủ đề",
-      "message": "Tin nhắn",
+      "message": "Nội dung",
       "sending": "Đang gửi...",
       "sendInquiry": "Gửi yêu cầu",
-      "inquirySubject": "Yêu cầu: {{product}}{{code}}",
-      "inquiryMessage": "Xin chào, tôi muốn hỏi về {{product}}{{code}}.\n\nVui lòng cung cấp thông tin giá và tình trạng hàng.\n\nCảm ơn."
+      "inquirySubject": "Yêu cầu báo giá: {{product}}{{code}}",
+      "inquiryMessage": "Xin chào, tôi muốn yêu cầu báo giá về {{product}}{{code}}.\n\nVui lòng cung cấp thông tin giá và tình trạng sẵn có.\n\nCảm ơn."
     },
     "success": {
       "title": "Cảm ơn bạn!",
-      "description": "Yêu cầu của bạn đã được gửi. Chúng tôi sẽ phản hồi trong vòng 24 giờ.",
+      "description": "Yêu cầu của bạn đã được gửi thành công. Chúng tôi sẽ phản hồi trong vòng 24 giờ.",
       "sendAnother": "Gửi yêu cầu khác"
     },
     "locations": {
-      "title": "Mạng lưới toàn cầu",
+      "title": "Mạng lưới toàn cầu của chúng tôi",
       "hqTitle": "Nhà máy DHT Furniture Việt Nam",
-      "hqSubtitle": "Sản xuất & Vận hành",
-      "showroomTitle": "Showroom DHT Private Garden",
+      "hqSubtitle": "Sản xuất & Chế tạo",
+      "showroomTitle": "Showroom Vườn riêng DHT",
       "showroomSubtitle": "Trưng bày độc quyền",
       "officeTitle": "Văn phòng DHT Furniture Việt Nam",
-      "officeSubtitle": "Bộ phận Thương mại & CSKH",
-      "distributorTitle": "JDD Global Furnishing Co. Ltd",
+      "officeSubtitle": "Phòng Thương mại & CSKH",
+      "distributorTitle": "Công ty TNHH JDD Global Furnishing",
       "distributorSubtitle": "Phân phối toàn cầu",
-      "timingsFactory": "Từ 8:00 Sáng - 17:00 Chiều (Giờ VN)",
-      "timings247": "Xuyên suốt 24/7"
+      "timingsFactory": "Từ 8:00 sáng - 17:00 chiều (Giờ VN)",
+      "timings247": "24/7"
     },
     "formSection": {
       "title": "Gửi yêu cầu",
-      "subtitle": "Điền vào biểu mẫu bên dưới và đội ngũ của chúng tôi sẽ liên hệ lại trong vòng 24 giờ."
+      "subtitle": "Điền vào mẫu dưới đây và đội ngũ của chúng tôi sẽ phản hồi trong vòng 24 giờ."
     }
   },
   "notFound": {
@@ -490,9 +491,9 @@
     "quickView": "Xem nhanh",
     "viewDetails": "Xem chi tiết",
     "sendInquiry": "Gửi yêu cầu cho sản phẩm này",
-    "whatsappUs": "Liên hệ WhatsApp",
+    "whatsappUs": "Nhắn tin WhatsApp",
     "category": "Danh mục",
-    "material": "Chất liệu",
+    "material": "Vật liệu",
     "color": "Màu sắc",
     "size": "Kích thước",
     "style": "Phong cách"
@@ -501,26 +502,26 @@
     "specifications": "Thông số kỹ thuật",
     "care": "Hướng dẫn bảo quản",
     "usage": "Không gian phù hợp",
-    "features": "Đặc điểm nổi bật",
+    "features": "Tính năng chính",
     "dimensions": "Kích thước",
     "weight": "Trọng lượng",
-    "material": "Chất liệu",
+    "material": "Vật liệu",
     "style": "Phong cách",
     "inquire": "Yêu cầu báo giá",
     "videoTitle": "Video sản phẩm",
-    "relatedProducts": "Sản phẩm liên quan"
+    "relatedProducts": "Có thể bạn cũng thích"
   },
   "marquee": {
     "items": [
       "OEM / ODM",
-      "Mixed Container",
+      "Container ghép",
       "BSCI / SMETA",
-      "Chất lượng Đồng nhất",
-      "Giao hàng Đúng hạn"
+      "Chất lượng đồng nhất",
+      "Giao hàng đúng hạn"
     ]
   },
   "search": {
-    "placeholder": "Tìm theo tên sản phẩm hoặc mã...",
+    "placeholder": "Tìm kiếm theo tên hoặc mã sản phẩm...",
     "noResults": "Không tìm thấy sản phẩm cho \"{{query}}\""
   },
   "language": {
@@ -530,32 +531,32 @@
   },
   "blog": {
     "seo": {
-      "title": "Blog — DHT Nội Thất Ngoài Trời",
-      "description": "Kiến thức, mẹo và câu chuyện từ đội ngũ sản xuất nội thất của chúng tôi."
+      "title": "Blog — DHT Outdoor Furniture",
+      "description": "Góc nhìn chuyên sâu, mẹo hữu ích và câu chuyện từ các chuyên gia sản xuất nội thất."
     },
     "hero": {
-      "label": "Blog & Kiến Thức",
-      "heading": "Câu Chuyện, Mẹo & Chuyên Môn",
-      "description": "Cảm hứng thiết kế, hướng dẫn chất liệu và câu chuyện hậu trường từ đội ngũ sản xuất."
+      "label": "Blog & Góc nhìn",
+      "heading": "Câu chuyện, Mẹo & Chuyên môn",
+      "description": "Cảm hứng thiết kế, hướng dẫn vật liệu và câu chuyện hậu trường từ đội ngũ sản xuất của chúng tôi."
     },
     "filterAll": "Tất cả",
     "backToList": "Quay lại Blog",
     "readTime": "đọc",
     "related": {
-      "label": "Đọc Thêm",
-      "heading": "Bài Viết Liên Quan"
+      "label": "Đọc thêm",
+      "heading": "Bài viết liên quan"
     }
   },
   "admin": {
     "inquiryDashboard": {
-      "loading": "Đang tải dashboard...",
-      "loadError": "Không thể tải dữ liệu dashboard",
+      "loading": "Đang tải bảng điều khiển...",
+      "loadError": "Không thể tải dữ liệu bảng điều khiển",
       "time": {
         "na": "N/A",
         "minutes": "{{count}} phút",
-        "hoursMins": "{{h}}h {{m}}m",
+        "hoursMins": "{{h}} giờ {{m}} phút",
         "hours": "{{count}} giờ",
-        "daysHours": "{{d}}d {{h}}h",
+        "daysHours": "{{d}} ngày {{h}} giờ",
         "days": "{{count}} ngày"
       },
       "loadStatus": {
@@ -565,84 +566,84 @@
         "overloaded": "Quá tải"
       },
       "actions": {
-        "created": "Inquiry mới",
+        "created": "Yêu cầu mới",
         "assigned": "Đã phân công",
-        "accepted": "Đã nhận",
-        "rejected": "Từ chối",
-        "status_changed": "Đổi trạng thái",
-        "note_updated": "Cập nhật ghi chú",
-        "resolved": "Hoàn tất",
+        "accepted": "Đã chấp nhận",
+        "rejected": "Đã từ chối",
+        "status_changed": "Đã đổi trạng thái",
+        "note_updated": "Đã cập nhật ghi chú",
+        "resolved": "Đã giải quyết",
         "closed": "Đã đóng",
-        "unassigned": "Gỡ phân công"
+        "unassigned": "Chưa phân công"
       },
       "tooltip": {
-        "barChart": "{{day}}: {{created}} mới, {{resolved}} xong"
+        "barChart": "{{day}}: {{created}} mới, {{resolved}} đã giải quyết"
       },
       "staffColumns": {
         "staff": "Nhân viên",
-        "assigned": "Được giao",
+        "assigned": "Được phân công",
         "inProgress": "Đang xử lý",
-        "resolved": "Hoàn tất",
+        "resolved": "Đã giải quyết",
         "overdue": "Quá hạn",
-        "frt": "FRT TB",
+        "frt": "TG phản hồi TB",
         "rate": "Tỷ lệ",
         "status": "Trạng thái"
       },
       "criticalColumns": {
-        "id": "ID",
+        "id": "Mã",
         "customer": "Khách hàng",
         "subject": "Chủ đề",
         "time": "Thời gian",
-        "assignedTo": "Phụ trách",
+        "assignedTo": "Phân công cho",
         "unassigned": "Chưa phân công"
       },
       "recentColumns": {
         "date": "Ngày",
         "customer": "Khách hàng",
         "status": "Trạng thái",
-        "assigned": "Phụ trách"
+        "assigned": "Phân công"
       },
       "header": {
-        "title": "Inquiries Dashboard",
-        "subtitle": "Tổng quan toàn bộ inquiries & hiệu suất chăm sóc khách hàng",
-        "updating": "Tự động cập nhật mỗi 60s"
+        "title": "Bảng điều khiển yêu cầu",
+        "subtitle": "Tổng quan tất cả yêu cầu & theo dõi hiệu suất chăm sóc khách hàng",
+        "updating": "Tự động cập nhật mỗi 60 giây"
       },
       "kpi": {
-        "total": "Tổng",
+        "total": "Tổng cộng",
         "newToday": "Mới hôm nay",
         "unassigned": "Chưa phân công",
-        "waitingAccept": "Chờ nhận",
+        "waitingAccept": "Chờ chấp nhận",
         "inProgress": "Đang xử lý",
-        "resolved": "Hoàn tất",
-        "overdue": "Quá SLA"
+        "resolved": "Đã giải quyết",
+        "overdue": "Quá hạn SLA"
       },
       "charts": {
         "trend7Days": "Xu hướng 7 ngày",
         "new": "Mới",
-        "resolved": "Xong",
+        "resolved": "Đã giải quyết",
         "responseMetrics": "Hiệu suất phản hồi",
-        "frtAvg": "First Response Time TB",
-        "handlingAvg": "Handling Time TB",
-        "slaCompliance": "SLA Compliance",
-        "distribution": "Phân bổ",
-        "byCategory": "Theo category",
-        "byStatus": "Theo status"
+        "frtAvg": "TG phản hồi đầu tiên TB",
+        "handlingAvg": "TG xử lý TB",
+        "slaCompliance": "Tuân thủ SLA",
+        "distribution": "Phân bố",
+        "byCategory": "Theo danh mục",
+        "byStatus": "Theo trạng thái"
       },
       "blocks": {
         "staffPerformance": "Hiệu suất nhân viên",
-        "noStaff": "Chưa có nhân viên nào được giao inquiry",
-        "criticalCases": "Inquiry cần chú ý",
-        "noCriticalCases": "Không có trường hợp cần chú ý",
+        "noStaff": "Chưa có nhân viên nào được phân công",
+        "criticalCases": "Yêu cầu cấp bách",
+        "noCriticalCases": "Không có yêu cầu cấp bách",
         "recentActivity": "Hoạt động gần đây",
         "noActivity": "Chưa có hoạt động nào",
-        "recentInquiries": "Inquiry mới nhất",
-        "noRecentInquiries": "Chưa có inquiry"
+        "recentInquiries": "Yêu cầu gần đây",
+        "noRecentInquiries": "Chưa có yêu cầu nào"
       },
       "tabs": {
         "unassigned": "Chưa phân công",
-        "waitingAccept": "Chờ nhận",
-        "overdue": "Quá SLA",
-        "stale": "Không cập nhật"
+        "waitingAccept": "Chờ chấp nhận",
+        "overdue": "Quá hạn SLA",
+        "stale": "Lâu không xử lý"
       }
     },
     "menu": {
@@ -665,12 +666,12 @@
         "collection": "Bộ sưu tập",
         "validation": {
           "nameRequired": "Vui lòng nhập tên sản phẩm",
-          "slugRequired": "Vui lòng nhập đường dẫn URL (slug)",
+          "slugRequired": "Vui lòng nhập đường dẫn URL",
           "skuRequired": "Vui lòng nhập mã SKU",
-          "collectionRequired": "Vui lòng chọn Bộ sưu tập",
-          "categoryRequired": "Vui lòng chọn Danh mục",
-          "shortDescRequired": "Vui lòng nhập mô tả ngắn",
-          "b2bRequired": "Bắt buộc nhập"
+          "collectionRequired": "Vui lòng chọn bộ sưu tập",
+          "categoryRequired": "Vui lòng chọn danh mục",
+          "shortDescRequired": "Mô tả ngắn là bắt buộc",
+          "b2bRequired": "Bắt buộc"
         },
         "productNamePlaceholderVI": "Tên tiếng Việt",
         "productNamePlaceholderUK": "Tên tiếng Anh (Anh)",
@@ -681,165 +682,168 @@
         "skuCode": "Mã SKU",
         "category": "Danh mục",
         "b2bDetails": "Thông tin B2B (Bắt buộc)",
-        "moq": "Số lượng tối thiểu (MOQ)",
+        "moq": "Số lượng đặt tối thiểu",
         "dimensions": "Kích thước (D×R×C)",
         "weight": "Trọng lượng",
-        "material": "Chất liệu",
+        "material": "Vật liệu",
         "style": "Phong cách",
         "color": "Màu sắc / Hoàn thiện",
-        "visualAttributeCards": "Thẻ thuộc tính nổi bật",
+        "visualAttributeCards": "Thẻ thuộc tính trực quan",
         "addAttributeCard": "Thêm thẻ thuộc tính",
-        "specificationRows": "Bảng thông số kỹ thuật",
-        "addSpecRow": "Thêm thông số",
+        "specificationRows": "Bảng thông số",
+        "addSpecRow": "Thêm dòng thông số",
         "careInstructions": "Hướng dẫn bảo quản",
         "addInstruction": "Thêm hướng dẫn",
-        "usageSettings": "Môi trường sử dụng",
-        "addSetting": "Thêm môi trường",
+        "usageSettings": "Không gian sử dụng",
+        "addSetting": "Thêm không gian",
         "productImages": "Hình ảnh sản phẩm",
         "upload": "Tải lên",
-        "videoUrl": "Đường dẫn Video",
+        "videoUrl": "Đường dẫn video",
         "tabBasicInfo": "Thông tin cơ bản",
         "tabAttributes": "Thuộc tính & Thông số",
         "tabCare": "Bảo quản",
-        "tabMedia": "Hình ảnh & Video",
+        "tabMedia": "Đa phương tiện",
         "editProduct": "Chỉnh sửa sản phẩm",
-        "newProduct": "Thêm sản phẩm mới",
+        "newProduct": "Sản phẩm mới",
         "saveChanges": "Lưu thay đổi",
         "publish": "Xuất bản",
-        "discard": "Huỷ bỏ"
+        "discard": "Hủy bỏ"
       }
     },
     "dashboard": {
-      "title": "Tổng quan Bảng điều khiển",
-      "subtitle": "Chào mừng trở lại! Dưới đây là tình hình hoạt động hôm nay.",
+      "title": "Tổng quan bảng điều khiển",
+      "subtitle": "Chào mừng trở lại! Đây là những gì đang diễn ra hôm nay.",
       "btnAddProduct": "Thêm sản phẩm",
-      "btnViewInquiries": "Xem Liên hệ",
-      "statTotalInquiries": "Tổng Liên hệ",
-      "statNewToday": "Mới Hôm nay",
-      "statPending": "Chưa xử lý",
-      "statTotalProducts": "Tổng Sản phẩm",
-      "titlePipeline": "Tiến trình Liên hệ",
+      "btnViewInquiries": "Xem yêu cầu",
+      "statTotalInquiries": "Tổng yêu cầu",
+      "statNewToday": "Mới hôm nay",
+      "statPending": "Đang chờ",
+      "statTotalProducts": "Tổng sản phẩm",
+      "titlePipeline": "Quy trình xử lý yêu cầu",
       "today": "Hôm nay",
       "last7Days": "7 ngày qua",
       "last30Days": "30 ngày qua",
-      "noStatusesConfigured": "Chưa cấu hình trạng thái nào.",
-      "titleByCategory": "Theo Danh mục",
-      "titleByMaterial": "Theo Chất liệu",
+      "noStatusesConfigured": "Chưa cấu hình trạng thái.",
+      "titleByCategory": "Theo danh mục",
+      "titleByMaterial": "Theo vật liệu",
       "titleByMOQ": "Theo MOQ",
       "noDataYet": "Chưa có dữ liệu",
-      "titleRecentInquiries": "Liên hệ Gần đây",
-      "titleTopViewed": "Sản phẩm Mọi người quan tâm nhiều",
-      "titleTopInquired": "Sản phẩm được Hỏi giá nhiều",
+      "titleRecentInquiries": "Yêu cầu gần đây",
+      "titleTopViewed": "Sản phẩm xem nhiều nhất",
+      "titleTopInquired": "Sản phẩm được hỏi nhiều nhất",
       "btnViewAll": "Xem tất cả",
       "colDate": "Ngày",
-      "colClientInfo": "Khách hàng",
-      "colInterest": "Sản phẩm",
+      "colClientInfo": "Thông tin khách hàng",
+      "colInterest": "Quan tâm",
       "colStatus": "Trạng thái",
       "unitLeads": "liên hệ"
     },
     "profile": {
       "loading": "Đang tải hồ sơ...",
-      "errorLoad": "Không tải được dữ liệu hồ sơ",
-      "successUpdateName": "Cập nhật tên thành công",
-      "errorUpdateName": "Cập nhật thất bại",
+      "errorLoad": "Không thể tải dữ liệu hồ sơ",
+      "successUpdateName": "Đã cập nhật tên thành công",
+      "errorUpdateName": "Không thể cập nhật tên",
       "errorPasswordMatch": "Mật khẩu xác nhận không khớp!",
-      "successUpdatePassword": "Đổi mật khẩu thành công",
-      "errorUpdatePassword": "Đổi mật khẩu thất bại",
+      "successUpdatePassword": "Đã cập nhật mật khẩu thành công",
+      "errorUpdatePassword": "Không thể cập nhật mật khẩu",
       "dashboardTab": "Tổng quan cá nhân",
-      "settingsTab": "Đổi thông tin",
+      "settingsTab": "Cập nhật thông tin",
       "securityTab": "Đổi mật khẩu",
-      "kpiAssigned": "Được giao",
+      "kpiAssigned": "Được phân công",
       "kpiInProgress": "Đang xử lý",
-      "kpiResolved": "Hoàn tất",
-      "kpiOverdue": "Quá SLA",
+      "kpiResolved": "Đã giải quyết",
+      "kpiOverdue": "Quá hạn SLA",
       "qualityMetrics": "Chỉ số chất lượng",
-      "frt": "Thời gian phản hồi đầu",
-      "completionRate": "Tỷ lệ hoàn tất",
+      "frt": "Thời gian phản hồi đầu tiên",
+      "completionRate": "Tỷ lệ hoàn thành",
       "performance": "Hiệu suất",
-      "completed": "hoàn tất",
+      "completed": "hoàn thành",
       "inquiryCode": "Mã yêu cầu",
       "customer": "Khách hàng",
       "recentActivity": "Hoạt động gần đây của bạn",
-      "noActivity": "Bạn chưa có hoạt động nào",
+      "noActivity": "Bạn chưa có hoạt động gần đây nào",
       "personalInfo": "Thông tin cá nhân",
       "username": "Tên đăng nhập",
-      "role": "Chức vụ",
+      "role": "Vai trò",
       "displayName": "Tên hiển thị",
       "displayNamePlaceholder": "Nhập tên hiển thị của bạn",
       "displayNameRequired": "Vui lòng nhập tên hiển thị",
       "saveChanges": "Lưu thay đổi",
-      "usernameNoteTitle": "Lưu ý về Tên đăng nhập",
-      "usernameNoteDesc": "Tên đăng nhập (username) là định danh duy nhất để đăng nhập hệ thống và không thể thay đổi để đảm bảo tính toàn vẹn bảo mật. Bạn chỉ có thể sửa đổi Tên hiển thị.",
+      "usernameNoteTitle": "Lưu ý về tên đăng nhập",
+      "usernameNoteDesc": "Tên đăng nhập là định danh duy nhất dùng để đăng nhập hệ thống và không thể thay đổi vì lý do bảo mật. Bạn chỉ có thể chỉnh sửa Tên hiển thị.",
       "securityTitle": "Bảo mật tài khoản",
-      "oldPassword": "Mật khẩu cũ",
+      "oldPassword": "Mật khẩu hiện tại",
       "oldPasswordPlaceholder": "Nhập mật khẩu hiện tại",
-      "oldPasswordRequired": "Vui lòng nhập mật khẩu cũ",
+      "oldPasswordRequired": "Vui lòng nhập mật khẩu hiện tại",
       "newPassword": "Mật khẩu mới",
       "newPasswordPlaceholder": "Nhập mật khẩu mới",
       "newPasswordRequired": "Vui lòng nhập mật khẩu mới",
-      "newPasswordMin": "Mật khẩu phải từ 6 ký tự",
+      "newPasswordMin": "Mật khẩu phải có ít nhất 6 ký tự",
       "confirmPassword": "Xác nhận mật khẩu mới",
       "confirmPasswordPlaceholder": "Nhập lại mật khẩu mới",
       "confirmPasswordRequired": "Vui lòng xác nhận mật khẩu mới",
       "updatePasswordBtn": "Cập nhật mật khẩu",
       "action": {
-        "created": "Tạo mới",
-        "assigned": "Được giao",
-        "accepted": "Đã nhận",
-        "rejected": "Từ chối",
-        "status_changed": "Đổi trạng thái",
-        "note_updated": "Ghi chú",
-        "resolved": "Hoàn tất",
+        "created": "Đã tạo",
+        "assigned": "Đã phân công",
+        "accepted": "Đã chấp nhận",
+        "rejected": "Đã từ chối",
+        "status_changed": "Đã đổi trạng thái",
+        "note_updated": "Đã cập nhật ghi chú",
+        "resolved": "Đã giải quyết",
         "closed": "Đã đóng"
       },
       "time": {
         "minutes": "phút",
         "hours": "giờ",
-        "days": "ngày"
+        "days": "ngày",
+        "h": "g",
+        "m": "p",
+        "d": "n"
       }
     },
     "inquiry": {
-      "title": "Quản lý Liên hệ",
-      "subtitle": "Quản lý các yêu cầu sỉ, đơn đăng ký đại lý và liên hệ trực tiếp.",
-      "btnSettings": "Quản lý Cấu hình",
-      "searchPlaceholder": "Tìm kiếm theo tên, công ty hoặc ID...",
-      "filterNeedsAction": "Cần Xử Lý",
-      "filterAllStatuses": "Tất cả Trạng thái",
-      "filterAllCategories": "Tất cả Danh mục",
-      "recordsFound": "{{count}} bản ghi",
-      "colDate": "Ngày / ID",
+      "title": "Yêu cầu & Khách hàng tiềm năng",
+      "subtitle": "Quản lý yêu cầu mua sỉ, đơn đăng ký thương mại và liên hệ trực tiếp.",
+      "btnSettings": "Quản lý cài đặt",
+      "searchPlaceholder": "Tìm theo tên, công ty hoặc mã...",
+      "filterNeedsAction": "Cần xử lý",
+      "filterAllStatuses": "Tất cả trạng thái",
+      "filterAllCategories": "Tất cả danh mục",
+      "recordsFound": "Tìm thấy {{count}} bản ghi",
+      "colDate": "Ngày / Mã",
       "colCustomer": "Khách hàng",
-      "colSubject": "Tiêu đề",
-      "colProduct": "Sản phẩm Quan tâm",
+      "colSubject": "Chủ đề",
+      "colProduct": "Sản phẩm quan tâm",
       "colCategory": "Danh mục",
       "colStatus": "Trạng thái",
-      "colAssignee": "Người Xử Lý",
+      "colAssignee": "Phân công cho",
       "colAction": "Thao tác",
-      "btnReview": "Xem",
-      "btnAccept": "Nhận",
-      "unassigned": "Chưa giao",
-      "generalInquiry": "Liên hệ chung",
-      "productLinked": "Sản phẩm liên kết",
-      "productDetailsUnavailable": "Không có thông tin",
+      "btnReview": "Xem xét",
+      "btnAccept": "Chấp nhận",
+      "unassigned": "Chưa phân công",
+      "generalInquiry": "Yêu cầu chung",
+      "productLinked": "Đã liên kết sản phẩm",
+      "productDetailsUnavailable": "Không có thông tin chi tiết",
       "btnSave": "Lưu thay đổi",
-      "customerOverview": "Thông tin Khách hàng",
-      "contactDetails": "Thông tin Liên hệ",
-      "receivedAt": "Ngày nhận:",
+      "customerOverview": "Tổng quan khách hàng",
+      "contactDetails": "Thông tin liên hệ",
+      "receivedAt": "Nhận lúc:",
       "source": "Nguồn:",
-      "defaultSource": "Form Liên Hệ Website",
-      "messageLabel": "Nội dung tin nhắn",
-      "interestedIn": "Sản phẩm Quan tâm",
-      "adminProcessing": "Xử lý thông tin",
-      "formStatus": "Trạng thái Yêu cầu",
-      "formAssign": "Giao cho Quản lý",
+      "defaultSource": "Biểu mẫu liên hệ trên website",
+      "messageLabel": "Nội dung",
+      "interestedIn": "Quan tâm đến",
+      "adminProcessing": "Xử lý quản trị",
+      "formStatus": "Trạng thái yêu cầu",
+      "formAssign": "Phân công cho quản lý",
       "formAssignPlaceholder": "Chọn quản lý",
-      "formNotes": "Ghi chú Nội bộ (Khách hàng không thấy)",
-      "formNotesPlaceholder": "Thêm ghi chú xử lý, mã báo giá, hoặc bước tiếp theo...",
-      "formLinkProduct": "Liên kết với sản phẩm...",
-      "successUpdate": "Cập nhật yêu cầu {{id}} thành công.",
-      "errorUpdate": "Cập nhật yêu cầu thất bại",
-      "successAccept": "Đã nhận liên hệ thành công",
-      "errorAccept": "Nhận liên hệ thất bại"
+      "formNotes": "Ghi chú nội bộ (Khách hàng không nhìn thấy)",
+      "formNotesPlaceholder": "Thêm ghi chú xử lý, mã báo giá hoặc bước tiếp theo...",
+      "formLinkProduct": "Liên kết sản phẩm...",
+      "successUpdate": "Đã cập nhật yêu cầu {{id}} thành công.",
+      "errorUpdate": "Không thể cập nhật yêu cầu",
+      "successAccept": "Đã chấp nhận yêu cầu thành công",
+      "errorAccept": "Không thể chấp nhận yêu cầu"
     }
   }
 }

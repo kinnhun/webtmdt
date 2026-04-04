@@ -354,7 +354,7 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
       {/* Long description */}
       {product.longDescription && (
         <section className="container mx-auto px-6 py-10 md:py-14">
-          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="max-w-3xl mx-auto prose-dht" dangerouslySetInnerHTML={{ __html: pLongDesc }} />
+          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="max-w-3xl mx-auto prose-dht" dangerouslySetInnerHTML={{ __html: pLongDesc.replace(/&nbsp;/g, ' ') }} />
         </section>
       )}
 

@@ -95,7 +95,7 @@ body {
   color: hsl(215 35% 25%);
   line-height: 1.85;
   font-size: 1.05rem;
-  word-break: break-word;
+  word-break: normal;
   overflow-wrap: break-word; /* fixes horizontal overflow */
 }
 .prose-dht h2 {
@@ -119,6 +119,7 @@ body {
   margin-bottom: 1.25rem;
   color: hsl(215 25% 35%);
   text-align: justify; /* Căn đều 2 bên (Justify) theo format của khách */
+  text-justify: inter-word; /* Prevents character spreading */
 }
 .prose-dht ul, .prose-dht ol {
   padding-left: 1.5rem;

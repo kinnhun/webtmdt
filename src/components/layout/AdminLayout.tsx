@@ -72,11 +72,11 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       icon: <SafetyCertificateOutlined className="text-[1.1rem]" />,
       label: <Link href="/admin/roles" className="font-body text-sm font-medium">{t('admin.menu.roles', 'Roles')}</Link>,
     } : null,
-    (hasPermission('setting.manage')) ? {
-      key: '/admin/settings',
-      icon: <SettingOutlined className="text-[1.1rem]" />,
-      label: <Link href="/admin/settings" className="font-body text-sm font-medium">{t('admin.menu.settings', 'Settings')}</Link>,
-    } : null,
+    // (hasPermission('setting.manage')) ? {
+    //   key: '/admin/settings',
+    //   icon: <SettingOutlined className="text-[1.1rem]" />,
+    //   label: <Link href="/admin/settings" className="font-body text-sm font-medium">{t('admin.menu.settings', 'Settings')}</Link>,
+    // } : null,
   ].filter(Boolean) as any[];
 
   const userMenu = {
@@ -128,11 +128,11 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   const checkRouteAccess = () => {
     if (loading) return true; // Let loading state bypass
     const currentPath = router.pathname;
-    
+
     // Sort keys by length descending to match longest prefix first
     const sortedRoutes = Object.keys(routePermissions).sort((a, b) => b.length - a.length);
     const requiredPerms = sortedRoutes.find(route => currentPath.startsWith(route));
-    
+
     if (!requiredPerms) return true; // Open routes like /admin
 
     const allowed = routePermissions[requiredPerms];
@@ -157,9 +157,9 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
   return (
     <Layout className="min-h-screen font-body" style={{ backgroundColor: "hsl(var(--warm-cream))" }}>
-      <Sider 
-        trigger={null} 
-        collapsible 
+      <Sider
+        trigger={null}
+        collapsible
         collapsed={collapsed}
         theme="light"
         width={260}
@@ -179,8 +179,8 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       >
         <div className="h-20 flex items-center justify-center border-b" style={{ borderColor: "hsl(var(--navy)/0.06)" }}>
           <Link href="/admin">
-            <h1 className="font-display font-bold m-0 tracking-tight transition-all duration-300" style={{ 
-              color: "hsl(var(--navy-deep))", 
+            <h1 className="font-display font-bold m-0 tracking-tight transition-all duration-300" style={{
+              color: "hsl(var(--navy-deep))",
               fontSize: collapsed ? "1.5rem" : "1.75rem",
               letterSpacing: collapsed ? "0" : "-0.02em"
             }}>
@@ -202,10 +202,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       </Sider>
 
       <Layout className="site-layout transition-all duration-300" style={{ marginLeft: collapsed ? 80 : 260 }}>
-        <Header 
-          className="p-0 flex items-center justify-between sticky top-0 z-30 px-6 bg-white" 
-          style={{ 
-            height: "80px", 
+        <Header
+          className="p-0 flex items-center justify-between sticky top-0 z-30 px-6 bg-white"
+          style={{
+            height: "80px",
             backgroundColor: "#ffffff",
             borderBottom: "1px solid hsl(var(--navy)/0.06)",
             boxShadow: "0 1px 2px rgba(0,0,0,0.02)"
@@ -265,7 +265,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                 </div>
                 <h2 className="text-2xl font-display font-bold text-navy-deep">403 Forbidden</h2>
                 <p className="text-gray-500 mt-2">
-                  Bạn không có đủ thẩm quyền để truy cập phân hệ này.<br/>
+                  Bạn không có đủ thẩm quyền để truy cập phân hệ này.<br />
                   Vui lòng liên hệ quản trị viên cấp cao nếu cần cấp quyền.
                 </p>
                 <Link href="/admin">

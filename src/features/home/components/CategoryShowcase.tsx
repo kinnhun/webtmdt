@@ -13,29 +13,29 @@ export default function CategoryShowcase() {
   const categories = [
     {
       key: "outdoorSofa",
-      image: "https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800&auto=format&fit=crop&q=80",
+      image: "/img/category/outdoorsofas.png",
       href: "/catalogue/outdoor?category=Outdoor+Sofas",
     },
     {
       key: "outdoorDining",
-      image: "https://images.unsplash.com/photo-1617806118233-18e1de247200?w=800&auto=format&fit=crop&q=80",
+      image: "/img/category/diningset.png",
       href: "/catalogue/outdoor?category=Dining+Sets",
     },
     {
       key: "sunlounger",
-      image: "https://plus.unsplash.com/premium_photo-1675806655104-58e5f20f0165?w=800&auto=format&fit=crop&q=80",
+      image: "/img/category/sunlounger.png",
       href: "/catalogue/outdoor?category=Lounge+Daybeds",
     },
     {
       key: "aluminium",
-      image: "https://images.unsplash.com/photo-1520587337572-92e75e9b6c0b?w=800&auto=format&fit=crop&q=80",
+      image: "/img/category/aluminum.png",
       href: "/catalogue/outdoor?category=Tables",
     }
   ];
 
   const indoorCategory = {
     key: "indoor",
-    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1200&auto=format&fit=crop&q=80",
+    image: "/img/category/chairs.png",
     href: "/catalogue/indoor?category=Chairs",
   };
 

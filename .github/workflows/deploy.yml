@@ -14,11 +14,11 @@ jobs:
 
       - name: Deploy to VPS
         env:
+          SSHPASS: ${{ secrets.SERVER_PASSWORD }}
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
           SERVER_USER: ${{ secrets.SERVER_USER }}
-          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
         run: |
-          sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 22 "$SERVER_USER@$SERVER_HOST" << 'DEPLOY_SCRIPT'
+          sshpass -e ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 22 "${SERVER_USER}@${SERVER_HOST}" << 'DEPLOY_SCRIPT'
             cd /var/www/webtmdt
             git reset --hard
             git pull origin main

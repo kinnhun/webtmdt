@@ -7,14 +7,21 @@ import {
   Ruler, Weight, Shield, Sparkles, Settings2, MapPin,
   ArrowUpRight, Share2, Palette
 } from "lucide-react";
+import * as AntIcons from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
-import type { Product } from "@/domains/product/product.types";
+import type { Product, ProductAttribute } from "@/domains/product/product.types";
 import ProductInquiryModal from "./ProductInquiryModal";
 
 interface Props {
   product: Product;
   relatedProducts: Product[];
 }
+
+const renderAntIcon = (name: string, size = 16) => {
+  if (!name) return null;
+  const Comp = (AntIcons as any)[name];
+  return Comp ? <Comp style={{ fontSize: size, color: "hsl(var(--orange))" }} /> : null;
+};
 
 /* ── Image Gallery ── */
 function ImageGallery({ images, name }: { images: string[]; name: string }) {
@@ -106,8 +113,8 @@ function DetailTabs({ product }: { product: Product }) {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
                 {Array.isArray(product.specifications) ? (
                   product.specifications.map((spec: any, i) => {
-                    const key = spec[`name${langId}`] || spec.nameUS;
-                    const val = spec[`value${langId}`] || spec.valueUS;
+                    const key = spec[`name${langId.toUpperCase()}`] || spec.nameUS;
+                    const val = spec[`value${langId.toUpperCase()}`] || spec.valueUS;
                     if (!key) return null;
                     return (
                       <div key={i} className="flex justify-between py-2 border-b" style={{ borderColor: "hsl(var(--navy)/0.06)" }}>
@@ -289,25 +296,54 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
                   <div className="w-full flex-1 overflow-hidden">
                     <p className="font-body text-[10px] uppercase tracking-wider font-medium mb-1.5" style={{ color: "hsl(var(--navy)/0.4)" }}>{t("productDetail.color") || "Color"}</p>
                     <div className="flex flex-wrap gap-1.5">
-                       {colorList.map(renderColorItem)}
+                      {colorList.map(renderColorItem)}
                     </div>
                   </div>
                 </div>
               )}
             </div>
 
+            {/* Visual Attributes */}
+            {product.attributes && product.attributes.length > 0 && (
+               <div className="grid grid-cols-2 gap-3 mb-6">
+                 {product.attributes.map((attr, i) => {
+                   const dynAttr = attr as any;
+                   const tLabel = dynAttr[`title${langId.toUpperCase()}`] || dynAttr.titleUS;
+                   const tVal = dynAttr[`value${langId.toUpperCase()}`] || dynAttr.valueUS;
+                   if (!tLabel && !tVal) return null;
+                   return (
+                     <div key={i} className="flex items-start gap-2.5 p-3 rounded-lg" style={{ backgroundColor: "hsl(var(--navy)/0.03)" }}>
+                       <div className="mt-0.5 shrink-0">
+                         {renderAntIcon(attr.icon, 16)}
+                       </div>
+                       <div className="w-full flex-1 overflow-hidden">
+                         <p className="font-body text-[10px] uppercase tracking-wider font-medium mb-1" style={{ color: "hsl(var(--navy)/0.4)" }} title={tLabel as string}>
+                           {tLabel as string}
+                         </p>
+                         <p className="font-body text-xs font-semibold leading-snug" style={{ color: "hsl(var(--navy-deep))" }}>
+                           {tVal as string}
+                         </p>
+                       </div>
+                     </div>
+                   );
+                 })}
+               </div>
+            )}
+
             {/* Features */}
-            <div className="mb-6">
-              <h3 className="font-display font-semibold text-sm mb-3" style={{ color: "hsl(var(--navy-deep))" }}>{t("productDetail.features")}</h3>
-              <ul className="space-y-2">
-                {pFeatures.map((f: string, i: number) => (
-                  <li key={i} className="flex items-start gap-2.5">
-                    <div className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0" style={{ backgroundColor: "hsl(var(--orange))" }} />
-                    <span className="font-body text-sm" style={{ color: "hsl(var(--navy)/0.6)" }}>{f}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {pFeatures && pFeatures.length > 0 && (
+              <div className="mb-6">
+                <h3 className="font-display font-semibold text-sm mb-3" style={{ color: "hsl(var(--navy-deep))" }}>{t("productDetail.features")}</h3>
+                <ul className="space-y-2">
+                  {pFeatures.map((f: string, i: number) => (
+                    <li key={i} className="flex items-start gap-2.5">
+                      <div className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0" style={{ backgroundColor: "hsl(var(--orange))" }} />
+                      <span className="font-body text-sm" style={{ color: "hsl(var(--navy)/0.6)" }}>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {/* CTAs */}
             <div className="flex gap-3">

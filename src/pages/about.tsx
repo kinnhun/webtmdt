@@ -8,7 +8,10 @@ import {
   Cpu, Battery, Phone, Mail, MapPin, Clock, Calendar, MessageCircle, AlertCircle, 
   Info, Flag, Sun, Moon, TreePine, Droplet, Flame, Lightbulb, Link as LucideLink, Lock, Search, 
   Send, ThumbsUp, TrendingUp, Compass, Anchor, Layout, Code, Coffee, Activity, 
-  Gem, Key, Map as MapIcon, Layers, LayoutGrid, LayoutTemplate, PenTool
+  Gem, Key, Map as MapIcon, Layers, LayoutGrid, LayoutTemplate, PenTool,
+  Camera, Video, Monitor, Smartphone, Tablet, Watch, Speaker, Headphones, Mic, 
+  Wifi, Bluetooth, Share, Download, Cloud, Server, Database, Save, Edit, 
+  Trash, Settings, Wrench, Menu, Home, User, Smile, Eye, Music, Play
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import MarqueeStrip from "@/components/MarqueeStrip";
@@ -23,7 +26,10 @@ const ICON_MAP: Record<string, React.ComponentType<{ size?: number; className?: 
   Cpu, Battery, Phone, Mail, MapPin, Clock, Calendar, MessageCircle, AlertCircle,
   Info, Flag, Sun, Moon, TreePine, Droplet, Flame, Lightbulb, Link: LucideLink, Lock, Search,
   Send, ThumbsUp, TrendingUp, Compass, Anchor, Layout, Code, Coffee, Activity,
-  Gem, Key, Map: MapIcon, Layers, LayoutGrid, LayoutTemplate, PenTool
+  Gem, Key, Map: MapIcon, Layers, LayoutGrid, LayoutTemplate, PenTool,
+  Camera, Video, Monitor, Smartphone, Tablet, Watch, Speaker, Headphones, Mic, 
+  Wifi, Bluetooth, Share, Download, Cloud, Server, Database, Save, Edit, 
+  Trash, Settings, Wrench, Menu, Home, User, Smile, Eye, Music, Play
 };
 
 const DEFAULT_STORY_IMAGES = [
@@ -79,15 +85,17 @@ export default function AboutPage({ dbData }: AboutPageProps) {
 
   /* ── Helper: get text from DB or fallback to i18n ── */
   const d = (dbPath: string[], i18nKey: string): string => {
-    if (hasDB) {
+    if (hasDB && dbData) {
       let val: any = dbData;
       for (const key of dbPath) {
         val = val?.[key];
       }
       if (val && typeof val === 'object' && ('us' in val || 'uk' in val || 'vi' in val)) {
-        return txt(val, langKey);
+        const textValue = txt(val, langKey);
+        if (textValue.trim() !== '') return textValue;
+      } else if (typeof val === 'string' && val.trim() !== '') {
+        return val;
       }
-      if (typeof val === 'string') return val;
     }
     return t(i18nKey);
   };
@@ -106,36 +114,39 @@ export default function AboutPage({ dbData }: AboutPageProps) {
   const heroBg = (hasDB && dbData.hero?.backgroundImage) ? dbData.hero.backgroundImage : "/img/about/image.png";
 
   /* ── Values ── */
+  const defaultValues = [
+    { icon: Award, title: t("about.values.quality.title"), desc: t("about.values.quality.desc") },
+    { icon: Shield, title: t("about.values.transparency.title"), desc: t("about.values.transparency.desc") },
+    { icon: Globe, title: t("about.values.creativity.title"), desc: t("about.values.creativity.desc") },
+    { icon: Leaf, title: t("about.values.sustainability.title"), desc: t("about.values.sustainability.desc") },
+    { icon: Users, title: t("about.values.dedication.title"), desc: t("about.values.dedication.desc") },
+  ];
   const values = hasDB && dbData.values?.items?.length
-    ? dbData.values.items.map((v: any) => ({
-        icon: ICON_MAP[v.icon] || Award,
-        title: txt(v.title, langKey),
-        desc: txt(v.desc, langKey),
+    ? dbData.values.items.map((v: any, idx: number) => ({
+        icon: ICON_MAP[v.icon] || defaultValues[idx]?.icon || Award,
+        title: txt(v.title, langKey)?.trim() || defaultValues[idx]?.title || '',
+        desc: txt(v.desc, langKey)?.trim() || defaultValues[idx]?.desc || '',
       }))
-    : [
-        { icon: Award, title: t("about.values.quality.title"), desc: t("about.values.quality.desc") },
-        { icon: Shield, title: t("about.values.transparency.title"), desc: t("about.values.transparency.desc") },
-        { icon: Globe, title: t("about.values.creativity.title"), desc: t("about.values.creativity.desc") },
-        { icon: Leaf, title: t("about.values.sustainability.title"), desc: t("about.values.sustainability.desc") },
-        { icon: Users, title: t("about.values.dedication.title"), desc: t("about.values.dedication.desc") },
-      ];
+    : defaultValues;
 
   /* ── Timeline ── */
+  const defaultTimeline = t("about.timeline.items", { returnObjects: true }) as Array<{ year: string; title: string; desc: string }>;
   const timeline = hasDB && dbData.timeline?.items?.length
-    ? dbData.timeline.items.map((item: any) => ({
-        year: item.year,
-        title: txt(item.title, langKey),
-        desc: txt(item.desc, langKey),
+    ? dbData.timeline.items.map((item: any, idx: number) => ({
+        year: item.year?.trim() || defaultTimeline[idx]?.year || '',
+        title: txt(item.title, langKey)?.trim() || defaultTimeline[idx]?.title || '',
+        desc: txt(item.desc, langKey)?.trim() || defaultTimeline[idx]?.desc || '',
       }))
-    : t("about.timeline.items", { returnObjects: true }) as Array<{ year: string; title: string; desc: string }>;
+    : defaultTimeline;
 
   /* ── Welcome values ── */
+  const defaultWelcomeValues = t("about.welcome.values", { returnObjects: true }) as Array<{ title: string; desc: string }>;
   const welcomeValues = hasDB && dbData.welcome?.values?.length
-    ? dbData.welcome.values.map((v: any) => ({
-        title: txt(v.title, langKey),
-        desc: txt(v.desc, langKey),
+    ? dbData.welcome.values.map((v: any, idx: number) => ({
+        title: txt(v.title, langKey)?.trim() || defaultWelcomeValues[idx]?.title || '',
+        desc: txt(v.desc, langKey)?.trim() || defaultWelcomeValues[idx]?.desc || '',
       }))
-    : (t("about.welcome.values", { returnObjects: true }) as Array<{ title: string; desc: string }>);
+    : defaultWelcomeValues;
 
   /* ── Marquee ── */
   const marqueeItems = hasDB && dbData.marquee?.[langKey === 'uk' ? 'uk' : langKey === 'vi' ? 'vi' : 'us']?.length
@@ -143,75 +154,107 @@ export default function AboutPage({ dbData }: AboutPageProps) {
     : (hasDB && dbData.marquee?.us?.length ? dbData.marquee.us : undefined);
 
   /* ── Stats ── */
+  const defaultStats = [
+    { value: "80K", suffix: "m²", label: t("about.stats.factorySize") },
+    { value: "350K", suffix: "+", label: t("about.stats.yearlyOutput") },
+    { value: "60-70", suffix: "", label: t("about.stats.monthlyContainers") },
+    { value: "250", suffix: "+", label: t("about.stats.workers") },
+  ];
   const statItems = hasDB && dbData.stats?.items?.length
-    ? dbData.stats.items.map((s: any) => ({
-        value: s.value,
-        suffix: s.suffix,
-        label: txt(s.label, langKey),
+    ? dbData.stats.items.map((s: any, idx: number) => ({
+        value: s.value?.trim() || defaultStats[idx]?.value || '',
+        suffix: s.suffix || defaultStats[idx]?.suffix || '',
+        label: txt(s.label, langKey)?.trim() || defaultStats[idx]?.label || '',
       }))
-    : [
-        { value: "80K", suffix: "m²", label: t("about.stats.factorySize") },
-        { value: "350K", suffix: "+", label: t("about.stats.yearlyOutput") },
-        { value: "60-70", suffix: "", label: t("about.stats.monthlyContainers") },
-        { value: "250", suffix: "+", label: t("about.stats.workers") },
-      ];
+    : defaultStats;
 
   /* ── HR Items ── */
+  const defaultHr = [t("about.hr.prodWorkers"), t("about.hr.techStaff"), t("about.hr.rndModels")];
   const hrItems = hasDB && dbData.stats?.hr?.items?.length
-    ? dbData.stats.hr.items.map((item: any) => txt(item, langKey))
-    : [t("about.hr.prodWorkers"), t("about.hr.techStaff"), t("about.hr.rndModels")];
+    ? dbData.stats.hr.items.map((item: any, idx: number) => {
+        const val = txt(item, langKey)?.trim();
+        return val || defaultHr[idx] || '';
+      })
+    : defaultHr;
 
   /* ── Machinery Items ── */
+  const defaultMachinery = [
+    { count: "15+", label: t("about.machinery.panelSaws") },
+    { count: "12", label: t("about.machinery.planers") },
+    { count: "5", label: t("about.machinery.pressing") },
+    { count: "4", label: t("about.machinery.cnc") },
+    { count: "8", label: t("about.machinery.coating") },
+    { count: "5", label: t("about.machinery.kilns") },
+    { count: "3", label: t("about.machinery.packaging") },
+  ];
   const machineryItems = hasDB && dbData.stats?.machinery?.items?.length
-    ? dbData.stats.machinery.items.map((m: any) => ({
-        count: m.count,
-        label: txt(m.label, langKey),
+    ? dbData.stats.machinery.items.map((m: any, idx: number) => ({
+        count: m.count?.trim() || defaultMachinery[idx]?.count || '',
+        label: txt(m.label, langKey)?.trim() || defaultMachinery[idx]?.label || '',
       }))
-    : [
-        { count: "15+", label: t("about.machinery.panelSaws") },
-        { count: "12", label: t("about.machinery.planers") },
-        { count: "5", label: t("about.machinery.pressing") },
-        { count: "4", label: t("about.machinery.cnc") },
-        { count: "8", label: t("about.machinery.coating") },
-        { count: "5", label: t("about.machinery.kilns") },
-        { count: "3", label: t("about.machinery.packaging") },
-      ];
+    : defaultMachinery;
 
   /* ── Team ── */
-  const teamLeader = hasDB && dbData.team?.leader?.name
-    ? {
-        name: dbData.team.leader.name,
-        role: txt(dbData.team.leader.role, langKey),
-        quote: txt(dbData.team.leader.quote, langKey),
-        email: dbData.team.leader.email,
-        phone: dbData.team.leader.phone,
-        image: dbData.team.leader.image,
-      }
-    : {
-        name: "John Vo",
-        role: t("about.team.john.role"),
-        quote: t("about.team.john.quote"),
-        email: "sales@dhtcompany.com",
-        phone: "+84 932 058 545",
-        image: "/img/profile/johnvo.png",
-      };
+  const allMembers: any[] = [];
+  if (hasDB && dbData?.team) {
+    if (Array.isArray(dbData.team.members)) {
+      dbData.team.members.forEach((m: any, idx: number) => {
+        allMembers.push({
+          name: m.name?.trim() || '',
+          key: m.key || `m${idx}`,
+          isLeader: !!m.isLeader,
+          role: txt(m.role, langKey)?.trim() || '',
+          quote: txt(m.quote, langKey)?.trim() || '',
+          email: m.email,
+          phone: m.phone,
+          image: m.image,
+        });
+      });
+    }
+  }
 
-  const teamMembers = hasDB && dbData.team?.members?.length
-    ? dbData.team.members.map((m: any) => ({
-        name: m.name,
-        key: m.key,
-        role: txt(m.role, langKey),
-        quote: txt(m.quote, langKey),
-        email: m.email,
-        phone: m.phone,
-        image: m.image,
-      }))
-    : [
-        { name: "Tyler Lê", key: "tyler", email: "tyler@dhtcompany.com", phone: "+84 902 907 399", image: "/img/profile/tylerle.png", role: t("about.team.tyler.role"), quote: t("about.team.tyler.quote") },
-        { name: "Dylan", key: "dylan", email: "dylan@dhtcompany.com", phone: "+84 907 386 898", image: "/img/profile/dylan.png", role: t("about.team.dylan.role"), quote: t("about.team.dylan.quote") },
-        { name: "David", key: "david", email: "david@dhtcompany.com", phone: "+84 932 057 861", image: "/img/profile/david.png", role: t("about.team.david.role"), quote: t("about.team.david.quote") },
-        { name: "Alicia", key: "alicia", email: "alicia@dhtcompany.com", phone: "+84 964 256 456", image: "/img/profile/alicia.png", role: t("about.team.alicia.role"), quote: t("about.team.alicia.quote") },
-      ];
+  if (allMembers.length === 0) {
+     allMembers.push({
+        name: "JOHN VO",
+        isLeader: true,
+        role: t("about.team.leader.role"),
+        quote: "Our goal is not just to manufacture furniture, but to create lasting value for our partners worldwide.",
+        email: "dht.company@vnn.vn",
+        phone: "+84 274 362 5599",
+        image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&q=80"
+     });
+     const mFallback = [
+       {
+         name: "Tyler Lê",
+         role: { us: "Co-Founder & CEO", uk: "Co-Founder & CEO", vi: "Đồng Sáng Lập & Giám đốc Điều hành" },
+       },
+       {
+         name: "Dylan",
+         role: { us: "General Director", uk: "General Director", vi: "Tổng Giám Đốc Điều Hành" },
+       },
+       {
+         name: "David",
+         role: { us: "Product Development Director", uk: "Product Development Director", vi: "GĐ Phát Triển Sản Phẩm" },
+       },
+       {
+         name: "Alicia",
+         role: { us: "Sales Manager", uk: "Sales Manager", vi: "Trưởng Phòng Kinh Doanh" },
+       }
+     ];
+     mFallback.forEach((m: any, i: number) => {
+        allMembers.push({
+           name: m.name,
+           key: `fallback-${i}`,
+           isLeader: false,
+           role: txt(m.role, langKey),
+           quote: "", email: "", phone: "",
+           image: i === 0 ? "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80" : "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=800&q=80"
+        });
+     });
+  }
+
+  const teamLeader = allMembers.find((m: any) => m.isLeader) || allMembers[0] || {};
+  const teamMembers = allMembers.filter((m: any) => m !== teamLeader);
 
   /* ── Locations ── */
   const locationKeys = ['factory', 'office', 'showroom', 'jdd'];
@@ -245,7 +288,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
           <div className="absolute inset-0 bg-linear-to-b from-black/30 via-transparent to-black" />
           
           <div className="container mx-auto px-6 relative z-10 text-center mt-20">
-            <motion.span initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.2 }} className="font-body text-[hsl(var(--orange))] tracking-[0.2em] md:tracking-[0.4em] uppercase text-xs md:text-sm mb-8 block font-bold">
+            <motion.span initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.2 }} className="font-body text-[hsl(var(--orange))] tracking-widest md:tracking-[0.4em] uppercase text-xs md:text-sm mb-8 block font-bold">
               {d(['hero', 'subtitle'], "about.hero.subtitle")}
             </motion.span>
             <motion.h1 initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2, delay: 0.4 }} className="font-display font-black text-white italic tracking-tighter uppercase mb-6 leading-[0.85]" style={{ fontSize: "clamp(3rem, 10vw, 8rem)" }}>
@@ -270,30 +313,30 @@ export default function AboutPage({ dbData }: AboutPageProps) {
             <div className="absolute inset-0 bg-black/40" />
           </div>
           <div className="container mx-auto px-6 relative z-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
               {/* Left Column */}
-              <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8 }}>
-                <h2 className="font-display font-black uppercase italic tracking-tighter text-white mb-8 leading-[0.85] whitespace-pre-line" style={{ fontSize: "clamp(3rem, 8vw, 6rem)", color: "hsl(var(--orange))" }}>
+              <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8 }} className="min-w-0 w-full">
+                <h2 className="font-display font-black uppercase italic tracking-tighter text-white mb-8 leading-[0.85] whitespace-pre-line" style={{ fontSize: "clamp(3rem, 7vw, 5.5rem)", color: "hsl(var(--orange))" }}>
                   {d(['welcome', 'title'], "about.welcome.title")}
                 </h2>
                 <div className="w-16 h-16 mb-10 rounded-full flex items-center justify-center bg-[hsl(var(--orange))] shadow-2xl shadow-[hsl(var(--orange))]/30">
                   <span className="text-4xl text-[hsl(var(--navy-deep))] transform -translate-y-1">❞</span>
                 </div>
                 <div 
-                  className="font-body text-white text-xl sm:text-2xl leading-relaxed max-w-md font-light about-rich-text"
-                  dangerouslySetInnerHTML={{ __html: d(['welcome', 'description'], "about.welcome.description") }}
+                  className="font-body text-white text-xl sm:text-2xl leading-relaxed max-w-md lg:max-w-xl font-light about-rich-text"
+                  dangerouslySetInnerHTML={{ __html: String(d(['welcome', 'description'], "about.welcome.description")).replace(/&nbsp;/g, ' ') }}
                 />
               </motion.div>
 
               {/* Right Column */}
-              <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8, delay: 0.3 }} className="space-y-16">
+              <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8, delay: 0.3 }} className="space-y-12 lg:space-y-16 min-w-0 w-full">
                 {welcomeValues.map((val: any, i: number) => (
-                  <div key={i} className="flex items-start gap-6 sm:gap-10 group">
-                    <div className="font-display font-black leading-none group-hover:scale-110 transition-transform duration-500 origin-bottom-left" style={{ fontSize: "clamp(4rem, 10vw, 6rem)", color: "hsl(var(--orange))", marginTop: "-0.1em" }}>
+                  <div key={i} className="flex items-start gap-5 sm:gap-8 group">
+                    <div className="flex-grow font-display font-black leading-none group-hover:scale-110 transition-transform duration-500 origin-bottom-left shrink-0" style={{ fontSize: "clamp(3.5rem, 8vw, 5.5rem)", color: "hsl(var(--orange))", marginTop: "-0.1em" }}>
                       {String(i + 1).padStart(2, '0')}
                     </div>
-                    <div className="pt-2 sm:pt-4">
-                      <h3 className="font-display font-bold text-white text-xl sm:text-3xl tracking-[0.1em] mb-2 uppercase">
+                    <div className="pt-2 sm:pt-4 min-w-0">
+                      <h3 className="font-display font-bold text-white text-xl sm:text-3xl tracking-widest mb-2 uppercase">
                         {val.title}
                       </h3>
                       <p className="font-body text-white/60 text-base sm:text-lg leading-relaxed font-light">
@@ -315,7 +358,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
                 <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8 }}>
                   <div className="flex items-center gap-4 mb-8">
                     <span className="h-px w-16 bg-[hsl(var(--orange))]" />
-                    <span className="font-body text-xs tracking-[0.3em] uppercase font-bold text-[hsl(var(--orange))]">{d(['story', 'label'], "about.story.label")}</span>
+                    <span className="font-body text-xs tracking-widest uppercase font-bold text-[hsl(var(--orange))]">{d(['story', 'label'], "about.story.label")}</span>
                   </div>
                   <h2 className="font-display font-black text-foreground leading-[1.1] tracking-tight mb-8" style={{ fontSize: "clamp(3rem, 6vw, 5rem)" }}>
                     {d(['story', 'heading'], "about.story.heading")}
@@ -326,9 +369,9 @@ export default function AboutPage({ dbData }: AboutPageProps) {
               
               <div className="lg:col-span-7">
                 <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8, delay: 0.2 }} className="prose prose-lg md:prose-xl prose-stone font-body text-muted-foreground leading-relaxed max-w-none">
-                  <div className="text-2xl md:text-3xl text-foreground font-light leading-snug mb-10 about-rich-text" dangerouslySetInnerHTML={{ __html: d(['story', 'paragraph1'], "about.story.paragraph1") }} />
-                  <div className="mb-8 about-rich-text" dangerouslySetInnerHTML={{ __html: d(['story', 'paragraph2'], "about.story.paragraph2") }} />
-                  <div className="about-rich-text" dangerouslySetInnerHTML={{ __html: d(['story', 'paragraph3'], "about.story.paragraph3") }} />
+                  <div className="text-2xl md:text-3xl text-foreground font-light leading-snug mb-10 about-rich-text" dangerouslySetInnerHTML={{ __html: String(d(['story', 'paragraph1'], "about.story.paragraph1")).replace(/&nbsp;/g, ' ') }} />
+                  <div className="mb-8 about-rich-text" dangerouslySetInnerHTML={{ __html: String(d(['story', 'paragraph2'], "about.story.paragraph2")).replace(/&nbsp;/g, ' ') }} />
+                  <div className="about-rich-text" dangerouslySetInnerHTML={{ __html: String(d(['story', 'paragraph3'], "about.story.paragraph3")).replace(/&nbsp;/g, ' ') }} />
                 </motion.div>
                 
                 <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.4 }} className="mt-16 rounded-sm overflow-hidden aspect-video shadow-2xl relative group">
@@ -357,7 +400,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8 }} className="text-center mb-20 lg:mb-28">
               <div className="flex items-center gap-4 justify-center mb-8">
                 <span className="h-px w-8 bg-[hsl(var(--orange))]" />
-                <span className="font-body text-xs tracking-[0.3em] uppercase font-bold text-[hsl(var(--orange))]">{d(['values', 'label'], "about.values.label")}</span>
+                <span className="font-body text-xs tracking-widest uppercase font-bold text-[hsl(var(--orange))]">{d(['values', 'label'], "about.values.label")}</span>
                 <span className="h-px w-8 bg-[hsl(var(--orange))]" />
               </div>
               <h2 className="font-display font-black text-foreground" style={{ fontSize: "clamp(3rem, 6vw, 4.5rem)" }}>{d(['values', 'heading'], "about.values.heading")}</h2>
@@ -365,8 +408,8 @@ export default function AboutPage({ dbData }: AboutPageProps) {
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10">
               {values.map(({ icon: Icon, title, desc }: any, i: number) => (
-                <motion.div key={title} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.8, delay: i * 0.1 }} className="group relative bg-white p-10 lg:p-12 border border-border/60 hover:border-[hsl(var(--orange))]/30 transition-all duration-500 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] scroll-smooth overflow-hidden">
-                  <div className="absolute -top-10 -right-4 font-display font-black text-[12rem] leading-none text-black/[0.02] group-hover:text-[hsl(var(--orange))]/[0.05] transition-colors duration-700 pointer-events-none select-none z-0">
+                <motion.div key={title} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.8, delay: i * 0.1 }} className="group relative bg-white/20 p-10 lg:p-12 border border-border/10 hover:border-[hsl(var(--orange))]/30 transition-all duration-500 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] scroll-smooth overflow-hidden">
+                  <div className="absolute -top-10 -right-4 font-display font-black text-[12rem] leading-none text-black/20 group-hover:text-[hsl(var(--orange))]/5 transition-colors duration-700 pointer-events-none select-none z-0">
                     {i + 1}
                   </div>
                   <div className="w-20 h-20 rounded-full flex items-center justify-center bg-[hsl(var(--warm-cream))] mb-10 group-hover:bg-[hsl(var(--orange))] transition-colors duration-500 relative z-10">
@@ -386,7 +429,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="text-center mb-24 lg:mb-32">
               <div className="flex items-center gap-4 justify-center mb-8">
                 <span className="h-px w-8 bg-[hsl(var(--orange))]" />
-                <span className="font-body text-xs tracking-[0.3em] uppercase font-bold text-[hsl(var(--orange))]">{d(['timeline', 'label'], "about.timeline.label")}</span>
+                <span className="font-body text-xs tracking-widest uppercase font-bold text-[hsl(var(--orange))]">{d(['timeline', 'label'], "about.timeline.label")}</span>
                 <span className="h-px w-8 bg-[hsl(var(--orange))]" />
               </div>
               <h2 className="font-display font-black text-foreground" style={{ fontSize: "clamp(3rem, 6vw, 4.5rem)" }}>{d(['timeline', 'heading'], "about.timeline.heading")}</h2>
@@ -404,7 +447,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
                     
                     <div className={`w-full md:w-1/2 pl-16 md:pl-0 ${isEven ? 'md:pr-24 md:text-right' : 'md:pl-24 md:ml-auto'}`}>
                       <motion.div initial={{ opacity: 0, x: isEven ? -40 : 40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8, delay: 0.1 }}>
-                        <span className="font-body font-bold tracking-tight text-5xl md:text-6xl text-[hsl(var(--orange))] mb-6 block leading-none">{year}</span>
+                        <span suppressHydrationWarning translate="no" className="notranslate font-body font-bold tracking-tight text-5xl md:text-6xl text-[hsl(var(--orange))] mb-6 block leading-none">{year}</span>
                         <h3 className="font-display font-bold text-2xl md:text-3xl text-foreground mb-4">{title}</h3>
                         <p className="font-body text-muted-foreground leading-relaxed text-lg">{desc}</p>
                       </motion.div>
@@ -432,10 +475,10 @@ export default function AboutPage({ dbData }: AboutPageProps) {
                   {/* Subtle Top Accent Line */}
                   <div className="absolute top-0 left-0 right-0 h-1 bg-[hsl(var(--orange))] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
                   
-                  <div className="font-body font-bold text-4xl sm:text-5xl lg:text-5xl tracking-tight mb-4 text-white group-hover:text-[hsl(var(--orange))] transition-colors duration-500">
+                  <div suppressHydrationWarning translate="no" className="notranslate font-body font-bold text-4xl sm:text-5xl lg:text-5xl tracking-tight mb-4 text-white group-hover:text-[hsl(var(--orange))] transition-colors duration-500">
                     {stat.value}<span className="text-xl sm:text-2xl lg:text-3xl ml-1 font-medium">{stat.suffix}</span>
                   </div>
-                  <p className="font-body font-bold text-[10px] sm:text-xs uppercase tracking-[0.2em] text-white/50 leading-relaxed">{stat.label}</p>
+                  <p className="font-body font-bold text-[10px] sm:text-xs uppercase tracking-widest text-white/50 leading-relaxed">{stat.label}</p>
                 </motion.div>
               ))}
             </div>
@@ -469,7 +512,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-10 gap-x-12">
                   {machineryItems.map((item: any, i: number) => (
                     <li key={i} className="flex flex-col gap-3 relative pl-5 border-l-2 border-[hsl(var(--orange))/0.2] hover:border-[hsl(var(--orange))] transition-colors duration-300">
-                      <span className="font-body font-bold tracking-tight text-3xl md:text-4xl leading-none text-[hsl(var(--orange))]">{item.count}</span> 
+                      <span suppressHydrationWarning translate="no" className="notranslate font-body font-bold tracking-tight text-3xl md:text-4xl leading-none text-[hsl(var(--orange))]">{item.count}</span> 
                       <span className="font-body text-white/70 leading-relaxed font-light text-sm sm:text-base">{item.label}</span>
                     </li>
                   ))}
@@ -495,29 +538,37 @@ export default function AboutPage({ dbData }: AboutPageProps) {
             </motion.div>
 
             {/* Featured Leader */}
-            <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.1 }} className="flex flex-col md:flex-row gap-10 lg:gap-16 items-center lg:items-start bg-[#FAFAFA] p-8 lg:p-12 border border-border/60 rounded-sm mb-16 hover:shadow-2xl hover:shadow-black/[0.03] transition-all duration-500">
-              <div className="w-48 sm:w-64 lg:w-[22rem] aspect-[3/4] overflow-hidden shrink-0 shadow-lg rounded-sm">
+            <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.1 }} className="flex flex-col md:flex-row gap-10 lg:gap-16 items-center lg:items-start bg-[#FAFAFA] p-8 lg:p-12 border border-border/60 rounded-sm mb-16 hover:shadow-2xl hover:shadow-black/3 transition-all duration-500">
+              <div className="w-48 sm:w-64 lg:w-88 aspect-3/4 overflow-hidden shrink-0 shadow-lg rounded-sm">
                 <img src={teamLeader.image} alt={teamLeader.name} className="w-full h-full object-cover object-top" />
               </div>
               <div className="pt-2 flex-grow text-center md:text-left flex flex-col justify-center h-full">
-                <h3 className="font-display font-black text-4xl sm:text-5xl uppercase tracking-wider mb-4 text-foreground">{teamLeader.name}</h3>
-                <div className="mb-10">
-                  <span className="inline-block px-5 py-2.5 text-xs font-body font-bold uppercase tracking-[0.2em] bg-[hsl(var(--orange))] text-white rounded-sm">
-                    {teamLeader.role}
-                  </span>
-                </div>
+                {teamLeader.name && <h3 className="font-display font-black text-4xl sm:text-5xl uppercase tracking-wider mb-4 text-foreground">{teamLeader.name}</h3>}
+                {teamLeader.role && (
+                  <div className="mb-10">
+                    <span className="inline-block px-5 py-2.5 text-xs font-body font-bold uppercase tracking-widest bg-[hsl(var(--orange))] text-white rounded-sm">
+                      {teamLeader.role}
+                    </span>
+                  </div>
+                )}
                 
-                <p className="font-display italic text-2xl sm:text-3xl text-muted-foreground leading-relaxed mb-12 md:border-l-4 md:pl-8 border-[hsl(var(--orange))/0.4]">
-                  &ldquo;{teamLeader.quote}&rdquo;
-                </p>
+                {teamLeader.quote && teamLeader.quote.trim() !== '' && (
+                  <p className="font-display italic text-2xl sm:text-3xl text-muted-foreground leading-relaxed mb-12 md:border-l-4 md:pl-8 border-[hsl(var(--orange))/0.4]">
+                    &ldquo;{teamLeader.quote}&rdquo;
+                  </p>
+                )}
 
                 <div className="flex flex-col sm:flex-row gap-8 font-body text-base text-muted-foreground font-medium justify-center md:justify-start">
-                  <a href={`mailto:${teamLeader.email}`} className="flex items-center gap-3 hover:text-[hsl(var(--orange))] transition-colors">
-                    <span className="text-[hsl(var(--orange))] text-xl">✉</span> {teamLeader.email}
-                  </a>
-                  <a href={`tel:${teamLeader.phone.replace(/\s/g, "")}`} className="flex items-center gap-3 hover:text-[hsl(var(--orange))] transition-colors">
-                    <span className="text-[hsl(var(--orange))] text-xl">✆</span> {teamLeader.phone}
-                  </a>
+                  {teamLeader.email && teamLeader.email.trim() !== '' && (
+                    <a href={`mailto:${teamLeader.email}`} className="flex items-center gap-3 hover:text-[hsl(var(--orange))] transition-colors">
+                      <span className="text-[hsl(var(--orange))] text-xl">✉</span> {teamLeader.email}
+                    </a>
+                  )}
+                  {teamLeader.phone && teamLeader.phone.trim() !== '' && (
+                    <a href={`tel:${teamLeader.phone.replace(/\s/g, "")}`} className="flex items-center gap-3 hover:text-[hsl(var(--orange))] transition-colors">
+                      <span className="text-[hsl(var(--orange))] text-xl">✆</span> {teamLeader.phone}
+                    </a>
+                  )}
                 </div>
               </div>
             </motion.div>
@@ -525,17 +576,19 @@ export default function AboutPage({ dbData }: AboutPageProps) {
             {/* Team Members */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {teamMembers.map((m: any, i: number) => (
-                <motion.div key={m.name} initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: i * 0.1 }} className="flex flex-col bg-white border border-border/60 hover:border-[hsl(var(--orange))/0.4] hover:shadow-xl hover:shadow-[hsl(var(--orange))]/5 transition-all duration-500 rounded-sm overflow-hidden group">
-                  <div className="w-full aspect-[4/5] overflow-hidden bg-[#FAFAFA]">
+                <motion.div key={m.key || i} initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: i * 0.1 }} className="flex flex-col bg-white border border-border/60 hover:border-[hsl(var(--orange))/0.4] hover:shadow-xl hover:shadow-[hsl(var(--orange))]/5 transition-all duration-500 rounded-sm overflow-hidden group">
+                  <div className="w-full aspect-4/5 overflow-hidden bg-[#FAFAFA]">
                     <img src={m.image} alt={m.name} className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
                   </div>
                   <div className="p-8 flex flex-col grow text-center">
-                    <h3 className="font-display font-black text-2xl uppercase tracking-wider mb-2 text-foreground group-hover:text-[hsl(var(--orange))] transition-colors duration-500">{m.name}</h3>
-                    <span className="text-[10px] font-body font-bold uppercase tracking-[0.2em] mb-6 text-[hsl(var(--orange))]">{m.role}</span>
+                    {m.name && <h3 className="font-display font-black text-2xl uppercase tracking-wider mb-2 text-foreground group-hover:text-[hsl(var(--orange))] transition-colors duration-500">{m.name}</h3>}
+                    {m.role && <span className="text-[10px] font-body font-bold uppercase tracking-widest mb-6 text-[hsl(var(--orange))]">{m.role}</span>}
                     
-                    <p className="font-display italic text-sm text-muted-foreground leading-relaxed mb-8 grow">
-                      &ldquo;{m.quote}&rdquo;
-                    </p>
+                    {m.quote && m.quote.trim() !== '' && (
+                      <p className="font-display italic text-sm text-muted-foreground leading-relaxed mb-8 grow">
+                        &ldquo;{m.quote}&rdquo;
+                      </p>
+                    )}
 
                     <div className="space-y-4 font-body text-sm text-muted-foreground font-medium border-t border-border/50 pt-6">
                       <a href={`mailto:${m.email}`} className="flex items-center justify-center gap-3 hover:text-black transition-colors">

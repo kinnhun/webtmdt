@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import {
   Collapse, Form, Input, Button, message, Upload, Divider, Space, Tooltip,
   Spin, Card, Row, Col, Select, Modal, Drawer, Popconfirm, List, Typography, Alert,
-  Tabs, Segmented
+  Tabs, Segmented, Checkbox
 } from 'antd';
 import type { CollapseProps } from 'antd';
 import {
@@ -20,7 +20,10 @@ import {
   Cpu, Battery, Phone, Mail, MapPin, Clock, Calendar, MessageCircle, AlertCircle, 
   Info, Flag, Sun, Moon, TreePine, Droplet, Flame, Lightbulb, Link as LucideLink, Lock, Search, 
   Send, ThumbsUp, TrendingUp, Compass, Anchor, Layout, Code, Coffee, Activity, 
-  Gem, Key, Map as MapIcon, Layers, LayoutGrid, LayoutTemplate, PenTool
+  Gem, Key, Map as MapIcon, Layers, LayoutGrid, LayoutTemplate, PenTool,
+  Camera, Video, Monitor, Smartphone, Tablet, Watch, Speaker, Headphones, Mic, 
+  Wifi, Bluetooth, Share, Download, Cloud, Server, Database, Save, Edit, 
+  Trash, Settings, Wrench, Menu, Home, User, Smile, Eye, Music, Play
 } from 'lucide-react';
 import type { UploadFile, UploadProps } from 'antd';
 import dynamic from 'next/dynamic';
@@ -49,7 +52,17 @@ const iconMap: Record<string, React.ReactElement> = {
   Anchor: <Anchor size={16} />, Layout: <Layout size={16} />, Code: <Code size={16} />, 
   Coffee: <Coffee size={16} />, Activity: <Activity size={16} />, Gem: <Gem size={16} />, 
   Key: <Key size={16} />, Map: <MapIcon size={16} />, Layers: <Layers size={16} />, 
-  LayoutGrid: <LayoutGrid size={16} />, LayoutTemplate: <LayoutTemplate size={16} />, PenTool: <PenTool size={16} />
+  LayoutGrid: <LayoutGrid size={16} />, LayoutTemplate: <LayoutTemplate size={16} />, PenTool: <PenTool size={16} />,
+  Camera: <Camera size={16} />, Video: <Video size={16} />, Monitor: <Monitor size={16} />, 
+  Smartphone: <Smartphone size={16} />, Tablet: <Tablet size={16} />, Watch: <Watch size={16} />, 
+  Speaker: <Speaker size={16} />, Headphones: <Headphones size={16} />, Mic: <Mic size={16} />, 
+  Wifi: <Wifi size={16} />, Bluetooth: <Bluetooth size={16} />, Share: <Share size={16} />, 
+  Download: <Download size={16} />, Cloud: <Cloud size={16} />, Server: <Server size={16} />, 
+  Database: <Database size={16} />, Save: <Save size={16} />, Edit: <Edit size={16} />, 
+  Trash: <Trash size={16} />, Settings: <Settings size={16} />, 
+  Wrench: <Wrench size={16} />, Menu: <Menu size={16} />, Home: <Home size={16} />, 
+  User: <User size={16} />, Smile: <Smile size={16} />, Eye: <Eye size={16} />, 
+  Music: <Music size={16} />, Play: <Play size={16} />
 };
 
 const ICON_OPTIONS = Object.keys(iconMap).map(key => ({
@@ -967,35 +980,7 @@ export default function AboutEditor() {
       children: (
         <div className="space-y-4 p-2">
           <I18nTextField form={form} baseName={['team', 'heading']} label="Section Heading" />
-
-          {/* Leader */}
-          <Divider className="my-2" />
-          <SectionLabel>Featured Leader</SectionLabel>
-          <Card className="border-orange-200 bg-orange-50/30 shadow-sm">
-            <Row gutter={16}>
-              <Col xs={24} md={12}>
-                <Form.Item name={['team', 'leader', 'name']} label="Name" className="mb-3">
-                  <Input placeholder="John Vo" className="rounded-lg border-gray-200" />
-                </Form.Item>
-                <Form.Item name={['team', 'leader', 'email']} label="Email" className="mb-3">
-                  <Input placeholder="email@company.com" className="rounded-lg border-gray-200" />
-                </Form.Item>
-                <Form.Item name={['team', 'leader', 'phone']} label="Phone" className="mb-3">
-                  <Input placeholder="+84 xxx xxx xxx" className="rounded-lg border-gray-200" />
-                </Form.Item>
-              </Col>
-              <Col xs={24} md={12}>
-                <Form.Item name={['team', 'leader', 'image']} noStyle>
-                  <ImageUploadField label="Profile Photo" />
-                </Form.Item>
-              </Col>
-            </Row>
-            <I18nTextField form={form} baseName={['team', 'leader', 'role']} label="Role / Title" />
-            <div className="mt-3">
-              <I18nTextField form={form} baseName={['team', 'leader', 'quote']} label="Quote" textarea rows={3} />
-            </div>
-          </Card>
-
+          
           {/* Team Members */}
           <Divider className="my-2" />
           <SectionLabel>Team Members</SectionLabel>
@@ -1024,9 +1009,20 @@ export default function AboutEditor() {
                         </Form.Item>
                       </Col>
                     </Row>
-                    <Form.Item name={[field.name, 'key']} label="Key (unique ID)" className="mb-2">
-                      <Input placeholder="e.g. tyler, dylan" className="rounded-lg border-gray-200" />
-                    </Form.Item>
+                    
+                    <Row gutter={12} className="items-center mb-2">
+                      <Col xs={12} md={8}>
+                        <Form.Item name={[field.name, 'key']} label="Key (unique ID)" className="mb-0">
+                          <Input placeholder="e.g. tyler, dylan" className="rounded-lg border-gray-200" />
+                        </Form.Item>
+                      </Col>
+                      <Col xs={12} md={8} className="pt-7">
+                        <Form.Item name={[field.name, 'isLeader']} valuePropName="checked" className="mb-0">
+                          <Checkbox className="font-medium text-orange-600">Featured Leader</Checkbox>
+                        </Form.Item>
+                      </Col>
+                    </Row>
+
                     <Form.Item name={[field.name, 'image']} noStyle>
                       <ImageUploadField label="Profile Photo" />
                     </Form.Item>
@@ -1039,7 +1035,7 @@ export default function AboutEditor() {
                   </Card>
                 ))}
                 <Button type="dashed" onClick={() => add({
-                  name: '', key: '', email: '', phone: '', image: '',
+                  name: '', key: '', isLeader: false, email: '', phone: '', image: '',
                   role: { us: '', uk: '', vi: '' }, quote: { us: '', uk: '', vi: '' },
                 })} icon={<PlusOutlined />} className="w-full rounded-lg">
                   Add Team Member

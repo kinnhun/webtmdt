@@ -138,15 +138,7 @@ export const aboutDefaults = {
     ],
   },
   team: {
-    heading: { us: "Executive Board", uk: "Executive Board", vi: "Đội Ngũ Ban Lãnh Đạo" },
-    leader: {
-      name: "Tyler Lê",
-      role: { us: "Co-Founder & CEO", uk: "Co-Founder & CEO", vi: "Đồng Sáng Lập & Giám đốc Điều hành" },
-      quote: { us: "At DHT, we don't just build outdoor furniture — we craft spaces where people connect, share stories, and create lasting memories.", uk: "At DHT, we don't just build outdoor furniture — we craft spaces where people connect, share stories, and create lasting memories.", vi: "Tại DHT, chúng tôi không chỉ sản xuất đồ gỗ - chúng tôi kiến tạo không gian nơi con người gắn kết, chia sẻ và lưu giữ kỷ niệm." },
-      email: "tyler@dhtcompany.com",
-      phone: "+84 902 907 399",
-      image: "/img/profile/tylerle.png",
-    },
+    heading: { us: "Executive Board", uk: "Executive Board", vi: "Ban Giám Đốc" },
     members: [
       {
         key: "john",

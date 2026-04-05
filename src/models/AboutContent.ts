@@ -78,17 +78,10 @@ export interface IAboutContent extends Document {
   };
   team: {
     heading: { us: string; uk: string; vi: string };
-    leader: {
-      name: string;
-      role: { us: string; uk: string; vi: string };
-      quote: { us: string; uk: string; vi: string };
-      email: string;
-      phone: string;
-      image: string;
-    };
     members: Array<{
       name: string;
       key: string;
+      isLeader: boolean;
       role: { us: string; uk: string; vi: string };
       quote: { us: string; uk: string; vi: string };
       email: string;

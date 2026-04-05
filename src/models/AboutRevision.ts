@@ -4,6 +4,7 @@ export interface IAboutRevision extends Document {
   aboutContentId: Types.ObjectId;
   data: any;
   note?: string;
+  isDefault?: boolean;
   createdBy?: string;
   createdAt: Date;
 }
@@ -22,6 +23,10 @@ const AboutRevisionSchema = new Schema<IAboutRevision>(
     note: {
       type: String,
       default: "",
+    },
+    isDefault: {
+      type: Boolean,
+      default: false,
     },
     createdBy: {
       type: String,

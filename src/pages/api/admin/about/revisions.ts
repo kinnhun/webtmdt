@@ -71,10 +71,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(400).json({ error: "Missing revision id" });
       }
 
-      const deleted = await AboutRevision.findByIdAndDelete(id);
-      if (!deleted) {
+      const revision = await AboutRevision.findById(id);
+      if (!revision) {
         return res.status(404).json({ error: "Revision not found" });
       }
+
+      if (revision.isDefault) {
+        return res.status(400).json({ error: "Không được xóa bản mặc định" });
+      }
+
+      await AboutRevision.findByIdAndDelete(id);
       
       return res.status(200).json({ success: true, message: "Revision deleted" });
     } catch (error) {

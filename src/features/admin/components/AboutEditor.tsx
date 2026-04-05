@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   Collapse, Form, Input, Button, message, Upload, Divider, Space, Tooltip,
-  Spin, Card, Row, Col, Select, Modal, Drawer, Popconfirm, List, Typography, Alert,
+  Spin, Card, Row, Col, Select, Modal, Drawer, Popconfirm, Typography, Alert,
   Tabs, Segmented, Checkbox
 } from 'antd';
 import type { CollapseProps } from 'antd';
@@ -13,7 +13,7 @@ import {
   ReadOutlined, TrophyOutlined, HistoryOutlined,
   BarChartOutlined, TeamOutlined, EnvironmentOutlined,
   RocketOutlined, RollbackOutlined, FileTextOutlined,
-  UpOutlined, DownOutlined
+  UpOutlined, DownOutlined, ReloadOutlined, StarOutlined
 } from '@ant-design/icons';
 import { 
   Award, Users, Shield, Globe, Leaf, Star, Heart, Zap, Target, CheckCircle,
@@ -620,6 +620,52 @@ export default function AboutEditor() {
     });
   };
 
+  const handleSetDefault = async () => {
+    Modal.confirm({
+      title: 'Set as Custom Default?',
+      content: 'This will save the current form data as the permanent default template. If you "Load Default" later, it will restore this exact data instead of the factory default. It cannot be deleted from history. Are you sure?',
+      onOk: async () => {
+        try {
+          const values = await form.validateFields();
+          setSaving(true);
+          const res = await fetch('/api/admin/about/default', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(values),
+          });
+          const json = await res.json();
+          if (json.success) {
+            message.success('Current data is now set as the Default Template!');
+            if (historyOpen) fetchRevisions();
+          } else {
+            message.error(json.error || 'Failed to set default');
+          }
+        } catch {
+          message.error('Validation failed or request failed.');
+        } finally {
+          setSaving(false);
+        }
+      }
+    });
+  };
+
+  const fetchDefaultAndSet = async () => {
+    try {
+      const res = await fetch('/api/admin/about/default');
+      const json = await res.json();
+      if (json.success && json.data) {
+        form.setFieldsValue(json.data);
+        message.success('Custom Default loaded. Please verify before saving.');
+      } else {
+        form.setFieldsValue(aboutDefaults);
+        message.success('Factory Default loaded.');
+      }
+    } catch {
+      form.setFieldsValue(aboutDefaults);
+      message.error("Failed to load custom default, using factory default.");
+    }
+  };
+
   const handleRollback = async (id: string) => {
     Modal.confirm({
       title: 'Confirm Rollback',
@@ -1135,22 +1181,26 @@ export default function AboutEditor() {
         </div>
         <div className="flex items-center gap-2">
           <Button
+            icon={<StarOutlined />}
+            onClick={handleSetDefault}
+            className="rounded-lg border-gray-200 text-orange-600 hover:text-orange-700"
+          >
+            Set As Default
+          </Button>
+          <Button
             icon={<FileTextOutlined />}
             onClick={() => {
               Modal.confirm({
                 title: 'Load Default Template?',
-                content: 'This will replace all current inputs with the default template. You still need to click "Save All" to apply changes. Are you sure?',
+                content: 'This will replace all current inputs with the custom default template (or factory default if none set). You still need to click "Save All" to apply changes. Are you sure?',
                 okText: 'Yes, load defaults',
                 cancelText: 'Cancel',
-                onOk: () => {
-                  form.setFieldsValue(aboutDefaults);
-                  message.success('Default template loaded into the form.');
-                }
+                onOk: fetchDefaultAndSet
               });
             }}
             className="rounded-lg border-gray-200"
           >
-            Using Default Template
+            Load Default
           </Button>
           <Button
             icon={<HistoryOutlined />}
@@ -1248,32 +1298,34 @@ export default function AboutEditor() {
         {fetchingRevisions ? (
           <div className="flex justify-center p-10"><Spin /></div>
         ) : revisions.length > 0 ? (
-          <List
-            itemLayout="horizontal"
-            dataSource={revisions}
-            renderItem={(item, index) => (
-              <List.Item
-                actions={[
+          <div className="flex flex-col">
+            {revisions.map((item, index) => (
+              <div key={item._id || index} className="flex flex-row items-center justify-between py-3 border-b border-gray-100 last:border-b-0">
+                <div className="flex-1">
+                  <div className="font-semibold text-sm mb-1">
+                    {item.note || 'No note'} 
+                    {index === 0 && <span className="text-xs ml-2 text-green-600 bg-green-100 px-1.5 py-0.5 rounded">Latest</span>}
+                  </div>
+                  <div className="text-xs text-gray-500 flex flex-col gap-0.5">
+                    <div>{new Date(item.createdAt).toLocaleString()}</div>
+                    <div>By: {item.createdBy}</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2">
                   <Popconfirm title="Rollback" description="Are you sure?" onConfirm={() => handleRollback(item._id)} okText="Yes" cancelText="No">
                     <Button type="link" size="small" icon={<RollbackOutlined />}>Rollback</Button>
-                  </Popconfirm>,
-                  <Popconfirm title="Delete" description="Are you sure?" onConfirm={() => handleDeleteRevision(item._id)} okText="Yes" cancelText="No">
-                    <Button type="link" danger size="small" icon={<DeleteOutlined />} />
                   </Popconfirm>
-                ]}
-              >
-                <List.Item.Meta
-                  title={<span className="font-semibold">{item.note || 'No note'} {index === 0 && <span className="text-xs ml-2 text-green-600 bg-green-100 px-1 rounded">Latest</span>}</span>}
-                  description={
-                    <div className="text-xs text-gray-500">
-                      <div>{new Date(item.createdAt).toLocaleString()}</div>
-                      <div>By: {item.createdBy}</div>
-                    </div>
-                  }
-                />
-              </List.Item>
-            )}
-          />
+                  {item.isDefault ? (
+                    <span className="text-xs text-orange-500 font-medium px-2 py-1 bg-orange-50 rounded">Mặc định</span>
+                  ) : (
+                    <Popconfirm title="Delete" description="Are you sure?" onConfirm={() => handleDeleteRevision(item._id)} okText="Yes" cancelText="No">
+                      <Button type="link" danger size="small" icon={<DeleteOutlined />} />
+                    </Popconfirm>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
         ) : (
           <div className="text-center text-gray-500 mt-10">No revisions found</div>
         )}

@@ -291,7 +291,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
             <motion.span initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.2 }} className="font-body text-[hsl(var(--orange))] tracking-widest md:tracking-[0.4em] uppercase text-xs md:text-sm mb-8 block font-bold">
               {d(['hero', 'subtitle'], "about.hero.subtitle")}
             </motion.span>
-            <motion.h1 initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2, delay: 0.4 }} className="font-display font-black text-white italic tracking-tighter uppercase mb-6 leading-[0.85]" style={{ fontSize: "clamp(3rem, 10vw, 8rem)" }}>
+            <motion.h1 initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2, delay: 0.4 }} className="font-display font-black text-white italic tracking-tighter uppercase mb-6 leading-[1.1] max-w-6xl mx-auto text-balance" style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)", textWrap: "balance" }}>
               {d(['hero', 'title'], "about.hero.title")}
             </motion.h1>
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.2, delay: 0.8 }} className="font-body text-white/80 text-lg md:text-2xl max-w-3xl mx-auto font-light leading-relaxed">
@@ -332,7 +332,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
               <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8, delay: 0.3 }} className="space-y-12 lg:space-y-16 min-w-0 w-full">
                 {welcomeValues.map((val: any, i: number) => (
                   <div key={i} className="flex items-start gap-5 sm:gap-8 group">
-                    <div className="flex-grow font-display font-black leading-none group-hover:scale-110 transition-transform duration-500 origin-bottom-left shrink-0" style={{ fontSize: "clamp(3.5rem, 8vw, 5.5rem)", color: "hsl(var(--orange))", marginTop: "-0.1em" }}>
+                    <div className="grow font-display font-black leading-none group-hover:scale-110 transition-transform duration-500 origin-bottom-left shrink-0" style={{ fontSize: "clamp(3.5rem, 8vw, 5.5rem)", color: "hsl(var(--orange))", marginTop: "-0.1em" }}>
                       {String(i + 1).padStart(2, '0')}
                     </div>
                     <div className="pt-2 sm:pt-4 min-w-0">

@@ -13,7 +13,8 @@ import {
   BellOutlined,
   GlobalOutlined,
   EditOutlined,
-  SafetyCertificateOutlined
+  SafetyCertificateOutlined,
+  FileTextOutlined
 } from '@ant-design/icons';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -72,6 +73,11 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       icon: <SafetyCertificateOutlined className="text-[1.1rem]" />,
       label: <Link href="/admin/roles" className="font-body text-sm font-medium">{t('admin.menu.roles', 'Roles')}</Link>,
     } : null,
+    {
+      key: '/admin/about',
+      icon: <FileTextOutlined className="text-[1.1rem]" />,
+      label: <Link href="/admin/about" className="font-body text-sm font-medium">About Page</Link>,
+    },
     // (hasPermission('setting.manage')) ? {
     //   key: '/admin/settings',
     //   icon: <SettingOutlined className="text-[1.1rem]" />,
@@ -148,6 +154,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     if (router.pathname.startsWith('/admin/users')) return '/admin/users';
     if (router.pathname.startsWith('/admin/roles')) return '/admin/roles';
     if (router.pathname.startsWith('/admin/settings')) return '/admin/settings';
+    if (router.pathname.startsWith('/admin/about')) return '/admin/about';
     return router.pathname;
   };
 

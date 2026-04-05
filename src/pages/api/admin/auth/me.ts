@@ -10,9 +10,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ error: "Method not allowed" });
   }
 
+  const clearCookieAndReturn401 = (message: string) => {
+    res.setHeader(
+      "Set-Cookie",
+      "admin_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; SameSite=Lax"
+    );
+    return res.status(401).json({ error: message });
+  };
+
   const token = req.cookies.admin_token;
   if (!token) {
-    return res.status(401).json({ error: "Unauthorized" });
+    return clearCookieAndReturn401("Unauthorized");
   }
 
   try {
@@ -23,10 +31,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const user = await AdminUser.findById(decoded.id).populate("roleId").lean();
 
     if (!user) {
-      return res.status(401).json({ error: "User not found" });
+      return clearCookieAndReturn401("User not found");
     }
 
     if (user.status !== "active") {
+      res.setHeader(
+        "Set-Cookie",
+        "admin_token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; SameSite=Lax"
+      );
       return res.status(403).json({ error: "Account locked" });
     }
 
@@ -43,6 +55,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       },
     });
   } catch (error) {
-    return res.status(401).json({ error: "Invalid token" });
+    return clearCookieAndReturn401("Invalid token");
   }
 }

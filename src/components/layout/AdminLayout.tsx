@@ -74,16 +74,16 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       icon: <SafetyCertificateOutlined className="text-[1.1rem]" />,
       label: <Link href="/admin/roles" className="font-body text-sm font-medium">{t('admin.menu.roles', 'Roles')}</Link>,
     } : null,
-    {
+    hasPermission('system.all') ? {
       key: '/admin/about',
       icon: <FileTextOutlined className="text-[1.1rem]" />,
       label: <Link href="/admin/about" className="font-body text-sm font-medium">About Page</Link>,
-    },
-    {
+    } : null,
+    hasPermission('system.all') ? {
       key: '/admin/contact',
       icon: <PhoneOutlined className="text-[1.1rem]" />,
       label: <Link href="/admin/contact" className="font-body text-sm font-medium">Contact Page</Link>,
-    },
+    } : null,
   ].filter(Boolean) as any[];
 
   const userMenu = {
@@ -130,10 +130,12 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     '/admin/users': ['staff.view', 'staff.manage'],
     '/admin/roles': ['staff.view', 'staff.manage'],
     '/admin/settings': ['setting.manage'],
+    '/admin/about': ['system.all'],
+    '/admin/contact': ['system.all'],
   };
 
   const checkRouteAccess = () => {
-    if (loading) return true; // Let loading state bypass
+    if (loading || !user) return true; // Let loading state bypass, or if no user (since we return null early)
     const currentPath = router.pathname;
 
     // Sort keys by length descending to match longest prefix first
@@ -146,7 +148,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     return allowed.some(perm => hasPermission(perm));
   };
 
-  if (!mounted || loading) return null; // Avoid hydration mismatch or flicker
+  if (!mounted || loading || !user) return null; // Avoid hydration mismatch, flicker, and unauthenticated layout flash
 
   const getSelectedKey = () => {
     // If we are deep inside products like /admin/products/create, hilight the main tab

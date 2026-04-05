@@ -183,13 +183,13 @@ export default function ContactPage({ dbData }: { dbData: any }) {
                   <div className="space-y-4 font-body text-sm text-muted-foreground flex-1">
                     <div className="flex items-start gap-3">
                       <MapPin size={16} className="mt-0.5 shrink-0" style={{ color: "hsl(var(--orange))" }} />
-                      <span className="leading-relaxed rt-reset block flex-1 break-words min-w-0" dangerouslySetInnerHTML={{ __html: loc.address }} />
+                      <span className="leading-relaxed rt-reset block flex-1 wrap-break-word min-w-0" dangerouslySetInnerHTML={{ __html: loc.address }} />
                     </div>
                     <div className="flex items-start gap-3">
                       <Phone size={16} className="mt-0.5 shrink-0" style={{ color: "hsl(var(--orange))" }} />
-                      <div className="flex-1 min-w-0 break-words">
-                        <a href={loc.href} className="font-medium hover:text-orange transition-colors block mb-0.5 text-foreground break-words">{loc.phone}</a>
-                        <span className="text-xs opacity-80 block rt-reset break-words" dangerouslySetInnerHTML={{ __html: loc.hours }} />
+                      <div className="flex-1 min-w-0 wrap-break-word">
+                        <a href={loc.href} className="font-medium hover:text-orange transition-colors block mb-0.5 text-foreground wrap-break-word">{loc.phone}</a>
+                        <span className="text-xs opacity-80 block rt-reset wrap-break-word" dangerouslySetInnerHTML={{ __html: loc.hours }} />
                       </div>
                     </div>
                   </div>

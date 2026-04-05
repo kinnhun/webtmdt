@@ -3,10 +3,81 @@ import Link from "next/link";
 import Image from "next/image";
 import { Facebook, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { fadeUp, stagger } from "@/lib/animations";
+import { fadeUp, stagger } from "@/lib/animations";import { useQuery } from "@tanstack/react-query";
 
 export default function SiteFooter() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  const langKey = (() => {
+    const lang = i18n.language;
+    if (lang === 'vi-VN' || lang === 'vi') return 'vi';
+    if (lang === 'en-GB') return 'uk';
+    return 'us';
+  })();
+
+  const txt = (obj: any, lKey: string) => {
+    if (!obj) return '';
+    const val = obj[lKey];
+    if (val) return val;
+    return obj.us || '';
+  };
+
+  const { data: dbData } = useQuery({
+    queryKey: ['footerContactContent'],
+    queryFn: async () => {
+      const res = await fetch('/api/contact-content');
+      if (!res.ok) return null;
+      const json = await res.json();
+      return json.data;
+    },
+    staleTime: 5 * 60 * 1000, // Cache for 5 mins
+  });
+
+  const hasDB = !!dbData;
+
+  const contactLocations = (hasDB && dbData.locations?.items?.length) 
+    ? dbData.locations.items.map((loc: any) => ({
+        title: txt(loc.title, langKey),
+        subtitle: txt(loc.subtitle, langKey),
+        address: txt(loc.address, langKey),
+        phone: loc.phone || "",
+        href: loc.href || `tel:${(loc.phone || "").replace(/\s/g, "")}`,
+        hours: txt(loc.hours, langKey)
+      }))
+    : [
+        {
+          title: "DHT Furniture Vietnam Factory",
+          subtitle: "",
+          address: "19 National Highway, Nguyen Hue Ward, Phuoc Loc, Tuy Phuoc District, Binh Dinh Province, Vietnam",
+          phone: "+84 902 907 399",
+          href: "tel:+84902907399",
+          hours: "(From 8:00 AM - 17:00 PM Vietnam local time)"
+        },
+        {
+          title: "DHT Private Garden Showroom",
+          subtitle: "",
+          address: "Vinh Thanh 2 Hamlet, Tuy Phuoc Commune, Gia Lai Province, Vietnam",
+          phone: "+84 907 386 898",
+          href: "tel:+84907386898",
+          hours: "(From 8:00 AM - 17:00 PM Vietnam local time)"
+        },
+        {
+          title: "DHT Furniture Vietnam Office",
+          subtitle: "Commercial & CS Dept.",
+          address: "72 Le Thanh Ton Street, Sai Gon Ward, Ho Chi Minh City, Vietnam",
+          phone: "+84 907 386 898",
+          href: "tel:+84907386898",
+          hours: "(24/7)"
+        },
+        {
+          title: "JDD Global Furnishing Co. Ltd",
+          subtitle: "",
+          address: "226 Go Dua Street, Tam Binh Ward, Thu Duc City, Ho Chi Minh City, Vietnam",
+          phone: "+84 932 058 545",
+          href: "tel:+84932058545",
+          hours: "(From 8:00 AM - 17:00 PM Vietnam local time)"
+        }
+      ];
 
   const quickLinks = [
     { label: t("nav.home"), href: "/" },
@@ -96,78 +167,37 @@ export default function SiteFooter() {
             <h4 className="font-display text-white font-semibold text-base mb-6">{t("footer.contact")}</h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-8">
 
-              {/* Factory */}
-              <div>
-                <h5 className="text-white font-bold text-sm mb-3">DHT Furniture Vietnam Factory</h5>
-                <ul className="space-y-3">
-                  <li className="flex items-start gap-2">
-                    <MapPin size={16} className="mt-0.5 flex-shrink-0 text-[hsl(var(--orange))]" />
-                    <span className="font-body text-xs text-white/60 leading-relaxed">19 National Highway, Nguyen Hue Ward, Phuoc Loc, Tuy Phuoc District, Binh Dinh Province, Vietnam</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Phone size={16} className="mt-0.5 flex-shrink-0 text-[hsl(var(--orange))]" />
-                    <span className="font-body text-xs text-white/60 leading-relaxed">
-                      <a href="tel:+84902907399" className="hover:text-white transition-colors block mb-1">Hotline: +84 902 907 399</a>
-                      <span className="text-white/40 block">(From 8:00 AM - 17:00 PM Vietnam local time)</span>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Showroom */}
-              <div>
-                <h5 className="text-white font-bold text-sm mb-3">DHT Private Garden Showroom</h5>
-                <ul className="space-y-3">
-                  <li className="flex items-start gap-2">
-                    <MapPin size={16} className="mt-0.5 flex-shrink-0 text-[hsl(var(--orange))]" />
-                    <span className="font-body text-xs text-white/60 leading-relaxed">Vinh Thanh 2 Hamlet, Tuy Phuoc Commune, Gia Lai Province, Vietnam</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Phone size={16} className="mt-0.5 flex-shrink-0 text-[hsl(var(--orange))]" />
-                    <span className="font-body text-xs text-white/60 leading-relaxed">
-                      <a href="tel:+84907386898" className="hover:text-white transition-colors block mb-1">Hotline: +84 907 386 898</a>
-                      <span className="text-white/40 block">(From 8:00 AM - 17:00 PM Vietnam local time)</span>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Office */}
-              <div>
-                <h5 className="text-white font-bold text-sm mb-3">DHT Furniture Vietnam Office<br /><span className="text-[10px] text-[hsl(var(--orange))]/80 uppercase tracking-widest block mt-1">Commercial & CS Dept.</span></h5>
-                <ul className="space-y-3">
-                  <li className="flex items-start gap-2">
-                    <MapPin size={16} className="mt-0.5 flex-shrink-0 text-[hsl(var(--orange))]" />
-                    <span className="font-body text-xs text-white/60 leading-relaxed">72 Le Thanh Ton Street, Sai Gon Ward, Ho Chi Minh City, Vietnam</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Phone size={16} className="mt-0.5 flex-shrink-0 text-[hsl(var(--orange))]" />
-                    <span className="font-body text-xs text-white/60 leading-relaxed">
-                      <a href="tel:+84907386898" className="hover:text-white transition-colors block mb-1">Hotline: +84 907 386 898</a>
-                      <span className="text-white/40 block">(24/7)</span>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-
-              {/* JDD */}
-              <div>
-                <h5 className="text-white font-bold text-sm mb-3 mt-4 sm:mt-0">JDD Global Furnishing Co. Ltd</h5>
-                <ul className="space-y-3">
-                  <li className="flex items-start gap-2">
-                    <MapPin size={16} className="mt-0.5 flex-shrink-0 text-[hsl(var(--orange))]" />
-                    <span className="font-body text-xs text-white/60 leading-relaxed">226 Go Dua Street, Tam Binh Ward, Thu Duc City, Ho Chi Minh City, Vietnam</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Phone size={16} className="mt-0.5 flex-shrink-0 text-[hsl(var(--orange))]" />
-                    <span className="font-body text-xs text-white/60 leading-relaxed">
-                      <a href="tel:+84932058545" className="hover:text-white transition-colors block mb-1">Hotline: +84 932 058 545</a>
-                      <span className="text-white/40 block">(From 8:00 AM - 17:00 PM Vietnam local time)</span>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-
+              {contactLocations.map((loc: any, i: number) => (
+                <div key={i}>
+                  <h5 className="text-white font-bold text-sm mb-3">
+                    <span dangerouslySetInnerHTML={{ __html: loc.title }} className="rt-reset" />
+                    {loc.subtitle && (
+                      <span className="text-[10px] text-[hsl(var(--orange))]/80 uppercase tracking-widest block mt-1 rt-reset" dangerouslySetInnerHTML={{ __html: loc.subtitle }} />
+                    )}
+                  </h5>
+                  <ul className="space-y-3">
+                    {loc.address && (
+                      <li className="flex items-start gap-2">
+                        <MapPin size={16} className="mt-0.5 shrink-0 text-[hsl(var(--orange))]" />
+                        <span className="font-body text-xs text-white/60 leading-relaxed block flex-1 overflow-hidden" style={{ overflowWrap: 'anywhere' }} dangerouslySetInnerHTML={{ __html: loc.address }} />
+                      </li>
+                    )}
+                    {loc.phone && (
+                      <li className="flex items-start gap-2">
+                        <Phone size={16} className="mt-0.5 shrink-0 text-[hsl(var(--orange))]" />
+                        <span className="font-body text-xs text-white/60 leading-relaxed block flex-1 overflow-hidden">
+                          <a href={loc.href || `tel:${loc.phone.replace(/\s/g, "")}`} className="hover:text-white transition-colors block mb-1">
+                            {loc.phone}
+                          </a>
+                          {loc.hours && (
+                            <span className="text-white/40 block rt-reset wrap-break-word" dangerouslySetInnerHTML={{ __html: loc.hours }} />
+                          )}
+                        </span>
+                      </li>
+                    )}
+                  </ul>
+                </div>
+              ))}
             </div>
 
             {/* <div className="mt-8 pt-6 border-t border-white/5">

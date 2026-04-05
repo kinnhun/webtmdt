@@ -430,13 +430,27 @@ export default function InquiryManagement() {
             <div className="p-6 flex-1 overflow-auto">
               <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm mb-6">
                 <Text type="secondary" className="text-xs uppercase tracking-wider font-semibold block mb-3">{t('admin.inquiry.colSubject', 'Subject')}</Text>
-                <div className="font-semibold text-lg mb-4" style={{ color: 'hsl(var(--navy-deep))' }}>{selectedInquiry.subject}</div>
+                <div className="font-semibold text-lg mb-4" style={{ color: 'hsl(var(--navy-deep))' }}>{selectedInquiry.subject || 'No Subject'}</div>
 
                 <Text type="secondary" className="text-xs uppercase tracking-wider font-semibold block mb-2">{t('admin.inquiry.messageLabel', 'Message')}</Text>
                 <Paragraph className="text-sm leading-relaxed text-gray-700 whitespace-pre-wrap mb-0">
-                  {selectedInquiry.message}
+                  {selectedInquiry.message || 'No Message'}
                 </Paragraph>
               </div>
+
+              {selectedInquiry.dynamicData && Object.keys(selectedInquiry.dynamicData).length > 0 && (
+                <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm mb-6">
+                  <Text type="secondary" className="text-xs uppercase tracking-wider font-semibold block mb-3">Additional Form Fields</Text>
+                  <div className="grid grid-cols-2 gap-4">
+                    {Object.entries(selectedInquiry.dynamicData).map(([key, value]) => (
+                       <div key={key} className="mb-1">
+                         <Text type="secondary" className="text-[11px] uppercase tracking-wider font-semibold block mb-1 text-gray-400">{key.replace(/_/g, ' ')}</Text>
+                         <div className="text-sm font-medium text-gray-800 whitespace-pre-wrap">{String(value)}</div>
+                       </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {selectedInquiry.interestedProduct && typeof selectedInquiry.interestedProduct === 'object' ? (
                 <div className="bg-white p-5 rounded-xl border border-orange-100 shadow-sm mb-6 flex items-start gap-4">

@@ -6,6 +6,7 @@ export interface Inquiry {
   company?: string;
   subject: string;
   message: string;
+  dynamicData?: Record<string, any>;
   status: string;
   category: string;
   source: string;

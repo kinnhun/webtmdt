@@ -8,23 +8,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const { name, email, phone, company, subject, message, interestedProduct, category } = req.body;
-
-    if (!name || !email || !subject || !message) {
-      return res.status(400).json({ error: "Missing required fields: name, email, subject, message" });
-    }
+    const { name, email, phone, company, subject, message, interestedProduct, category, ...rest } = req.body;
 
     await dbConnect();
 
     await Contact.create({
-      name,
-      email,
+      name: name || "Anonymous",
+      email: email || "No Email",
       phone: phone || "",
       company: company || "",
-      subject,
-      message,
+      subject: subject || "Website Inquiry",
+      message: message || "No explicit message provided.",
       category: category || "other",
       interestedProduct: interestedProduct || null,
+      dynamicData: Object.keys(rest).length > 0 ? rest : undefined,
     });
 
     return res.status(201).json({ success: true, message: "Inquiry submitted successfully" });

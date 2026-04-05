@@ -14,7 +14,8 @@ import {
   GlobalOutlined,
   EditOutlined,
   SafetyCertificateOutlined,
-  FileTextOutlined
+  FileTextOutlined,
+  PhoneOutlined
 } from '@ant-design/icons';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -78,11 +79,11 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       icon: <FileTextOutlined className="text-[1.1rem]" />,
       label: <Link href="/admin/about" className="font-body text-sm font-medium">About Page</Link>,
     },
-    // (hasPermission('setting.manage')) ? {
-    //   key: '/admin/settings',
-    //   icon: <SettingOutlined className="text-[1.1rem]" />,
-    //   label: <Link href="/admin/settings" className="font-body text-sm font-medium">{t('admin.menu.settings', 'Settings')}</Link>,
-    // } : null,
+    {
+      key: '/admin/contact',
+      icon: <PhoneOutlined className="text-[1.1rem]" />,
+      label: <Link href="/admin/contact" className="font-body text-sm font-medium">Contact Page</Link>,
+    },
   ].filter(Boolean) as any[];
 
   const userMenu = {

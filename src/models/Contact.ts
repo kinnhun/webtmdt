@@ -1,12 +1,13 @@
 import mongoose, { Schema, type Document } from "mongoose";
 
 export interface IContact extends Document {
-  name: string;
-  email: string;
+  name?: string;
+  email?: string;
   phone?: string;
   company?: string;
-  subject: string;
-  message: string;
+  subject?: string;
+  message?: string;
+  dynamicData?: Record<string, any>;
   status: string;
   category: string | null;
   source: string;
@@ -28,12 +29,13 @@ export interface IContact extends Document {
 
 const ContactSchema = new Schema<IContact>(
   {
-    name: { type: String, required: true },
-    email: { type: String, required: true },
+    name: { type: String },
+    email: { type: String },
     phone: { type: String },
     company: { type: String },
-    subject: { type: String, required: true },
-    message: { type: String, required: true },
+    subject: { type: String },
+    message: { type: String },
+    dynamicData: { type: Schema.Types.Mixed },
     status: {
       type: String,
       default: "new",

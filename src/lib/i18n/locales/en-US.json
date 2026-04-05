@@ -986,6 +986,8 @@
     "title": "About Page Content",
     "description": "Manage the company story, team, and stats displayed on the public About Us page",
     "noCustomData": "No custom data yet",
+    "msgBackupLoaded": "Backup loaded into form (not saved yet).",
+    "revEditLoadBtn": "Edit (Load form)",
     "noCustomDataDesc": "You are seeing the default template. Please review, edit the content, and click 'Save All Changes' below to publish.",
     "tabMain": "Main Setup",
     "tabStory": "Story & Features",

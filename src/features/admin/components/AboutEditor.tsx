@@ -13,7 +13,8 @@ import {
   ReadOutlined, TrophyOutlined, HistoryOutlined,
   BarChartOutlined, TeamOutlined, EnvironmentOutlined,
   RocketOutlined, RollbackOutlined, FileTextOutlined,
-  UpOutlined, DownOutlined, ReloadOutlined, StarOutlined, EditOutlined
+  UpOutlined, DownOutlined, ReloadOutlined, StarOutlined, EditOutlined,
+  FormOutlined
 } from '@ant-design/icons';
 import { 
   Award, Users, Shield, Globe, Leaf, Star, Heart, Zap, Target, CheckCircle,
@@ -676,16 +677,26 @@ export default function AboutEditor() {
       const res = await fetch('/api/admin/about/default');
       const json = await res.json();
       if (json.success && json.data) {
+        form.resetFields();
         form.setFieldsValue(json.data);
         message.success('Custom Default loaded. Please verify before saving.');
       } else {
+        form.resetFields();
         form.setFieldsValue(aboutDefaults);
         message.success('Factory Default loaded.');
       }
     } catch {
+      form.resetFields();
       form.setFieldsValue(aboutDefaults);
       message.error("Failed to load custom default, using factory default.");
     }
+  };
+
+  const handleLoadRevisionToForm = (revisionData: any) => {
+    form.resetFields();
+    form.setFieldsValue(revisionData);
+    message.info(t('adminAbout.msgBackupLoaded') || 'Backup loaded into form (not saved yet).');
+    setHistoryOpen(false);
   };
 
   const handleRollback = async (id: string) => {
@@ -1337,6 +1348,15 @@ export default function AboutEditor() {
                   <Popconfirm title={t('adminAbout.revRestoreTitle')} description={t('adminAbout.revRestoreDesc')} onConfirm={() => handleRollback(item._id)} okText={t('adminAbout.btnOk')} cancelText={t('adminAbout.btnCancel')}>
                     <Button size="small" type="default" icon={<RollbackOutlined />} className="rounded-lg text-xs">{t('adminAbout.revRestoreBtn')}</Button>
                   </Popconfirm>
+                  <Button 
+                    size="small" 
+                    type="default" 
+                    icon={<FormOutlined />} 
+                    onClick={() => handleLoadRevisionToForm(item.data)} 
+                    className="rounded-lg text-xs text-blue-600 border-blue-200 hover:border-blue-400"
+                  >
+                    {t('adminAbout.revEditLoadBtn') || 'Sửa (Tải vào form)'}
+                  </Button>
                   <Button size="small" type="default" icon={<EditOutlined />} onClick={() => handleEditRevision(item._id, item.note || '')} className="rounded-lg text-xs">{t('adminAbout.revEditBtn')}</Button>
                   {item.isDefault ? (
                     <Tooltip title={t('adminAbout.revDefaultTooltip')}>

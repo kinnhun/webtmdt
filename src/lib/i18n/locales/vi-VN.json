@@ -986,6 +986,8 @@
     "title": "Nội Dung Trang Giới Thiệu (About)",
     "description": "Quản lý câu chuyện công ty, đội ngũ và thống kê hiển thị trên trang About Us công khai",
     "noCustomData": "Chưa có dữ liệu tùy chỉnh",
+    "msgBackupLoaded": "Đã tải bản sao lưu vào form (chưa lưu).",
+    "revEditLoadBtn": "Sửa (Tải vào form)",
     "noCustomDataDesc": "Bạn đang xem mẫu mặc định. Vui lòng xem, chỉnh sửa nội dung và nhấn 'Lưu toàn bộ' bên dưới để xuất bản.",
     "tabMain": "Cài Đặt Chính",
     "tabStory": "Câu Chuyện & Đặc Điểm",

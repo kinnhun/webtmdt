@@ -19,7 +19,7 @@ export interface IAboutContent extends Document {
     title: { us: string; uk: string; vi: string };
     subtitle: { us: string; uk: string; vi: string };
     description: { us: string; uk: string; vi: string };
-    backgroundImage: string;
+    backgroundImages: string[];
   };
   marquee: { us: string[]; uk: string[]; vi: string[] };
   welcome: {
@@ -117,7 +117,7 @@ const AboutContentSchema = new Schema<IAboutContent>(
       title: I18nTextRequired,
       subtitle: I18nTextSchema,
       description: I18nTextSchema,
-      backgroundImage: { type: String, default: "/img/about/image.png" },
+      backgroundImages: [{ type: String }],
     },
     marquee: {
       us: [{ type: String }],

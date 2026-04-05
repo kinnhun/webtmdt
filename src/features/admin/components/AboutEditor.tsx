@@ -353,7 +353,7 @@ function I18nRichTextField({
   );
 }
 
-/* ── Image Upload Helper ── */
+/* ── Base64 Image Upload Helper (single image) ── */
 function ImageUploadField({
   value,
   onChange,
@@ -371,30 +371,18 @@ function ImageUploadField({
     try {
       const reader = new FileReader();
       reader.readAsDataURL(file as Blob);
-      reader.onload = async () => {
-        const base64Data = reader.result as string;
-        const response = await fetch('/api/upload', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            base64Data,
-            mimeType: (file as File).type || 'image/png',
-            filename: (file as File).name || 'upload.png',
-            size: (file as File).size || 0,
-          }),
-        });
-        if (!response.ok) throw new Error('Upload failed');
-        const data = await response.json();
-        onChange?.(data.url);
-        message.success('Image uploaded!');
+      reader.onload = () => {
+        const base64 = reader.result as string;
+        onChange?.(base64);
+        message.success('Ảnh đã được tải lên!');
         setUploading(false);
       };
       reader.onerror = () => {
-        message.error('File read failed');
+        message.error('Đọc file thất bại');
         setUploading(false);
       };
     } catch {
-      message.error('Upload failed');
+      message.error('Upload thất bại');
       setUploading(false);
     }
   };
@@ -421,13 +409,13 @@ function ImageUploadField({
           accept="image/*"
         >
           <Button icon={uploading ? <LoadingOutlined spin /> : <UploadOutlined />} loading={uploading} size="small">
-            {value ? 'Change' : 'Upload'}
+            {value ? 'Đổi ảnh' : 'Tải ảnh'}
           </Button>
         </Upload>
         <Input
           value={value}
           onChange={(e) => onChange?.(e.target.value)}
-          placeholder="Or paste URL…"
+          placeholder="Hoặc dán URL…"
           className="rounded-lg border-gray-200 flex-1"
           size="small"
         />
@@ -436,7 +424,7 @@ function ImageUploadField({
   );
 }
 
-/* ── Multi-Image Upload ── */
+/* ── Base64 Multi-Image Upload (slider support) ── */
 function MultiImageField({
   value,
   onChange,
@@ -457,26 +445,18 @@ function MultiImageField({
     try {
       const reader = new FileReader();
       reader.readAsDataURL(file as Blob);
-      reader.onload = async () => {
-        const base64Data = reader.result as string;
-        const response = await fetch('/api/upload', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            base64Data,
-            mimeType: (file as File).type || 'image/png',
-            filename: (file as File).name || 'upload.png',
-            size: (file as File).size || 0,
-          }),
-        });
-        if (!response.ok) throw new Error('Upload failed');
-        const data = await response.json();
-        onChange?.([...images, data.url]);
-        message.success('Image uploaded!');
+      reader.onload = () => {
+        const base64 = reader.result as string;
+        onChange?.([...images, base64]);
+        message.success('Ảnh đã được tải lên!');
+        setUploading(false);
+      };
+      reader.onerror = () => {
+        message.error('Đọc file thất bại');
         setUploading(false);
       };
     } catch {
-      message.error('Upload failed');
+      message.error('Upload thất bại');
       setUploading(false);
     }
   };
@@ -488,7 +468,7 @@ function MultiImageField({
 
   return (
     <div>
-      <span className="text-xs font-semibold text-gray-600 block mb-1.5">{label}</span>
+      <span className="text-xs font-semibold text-gray-600 block mb-1.5">{label} {images.length > 1 && <span className="text-orange-500">(Slider: {images.length} ảnh)</span>}</span>
       <div className="flex flex-wrap gap-3 mb-2">
         {images.map((url, i) => (
           <div key={i} className="relative w-24 h-16 rounded-lg overflow-hidden border border-gray-200 shadow-sm group">
@@ -772,8 +752,8 @@ export default function AboutEditor() {
           <I18nTextField form={form} baseName={['hero', 'title']} label="Title" required />
           <I18nTextField form={form} baseName={['hero', 'subtitle']} label="Subtitle" />
           <I18nTextField form={form} baseName={['hero', 'description']} label="Description" textarea rows={3} />
-          <Form.Item name={['hero', 'backgroundImage']} noStyle>
-            <ImageUploadField label="Background Image" />
+          <Form.Item name={['hero', 'backgroundImages']} noStyle>
+            <MultiImageField label="Background Images (2+ ảnh = slider tự động)" max={10} />
           </Form.Item>
         </div>
       ),

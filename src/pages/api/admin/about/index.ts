@@ -3,6 +3,15 @@ import dbConnect from "@/lib/mongodb";
 import AboutContent from "@/models/AboutContent";
 import AboutRevision from "@/models/AboutRevision";
 
+// Increase body size limit for base64 images
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '50mb',
+    },
+  },
+};
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   await dbConnect();
 

@@ -15,7 +15,7 @@ export const aboutDefaults = {
       uk: "DHT is a Vietnam-based outdoor furniture supplier supporting retailers, distributors, and project buyers. We deliver stable quality, flexible production, and reliable export solutions for global partners.",
       vi: "DHT là nhà cung cấp nội thất ngoài trời tại Việt Nam, hỗ trợ các nhà bán lẻ, nhà phân phối và nhà mua hàng dự án. Chúng tôi mang đến chất lượng ổn định, sản xuất linh hoạt và giải pháp xuất khẩu đáng tin cậy.",
     },
-    backgroundImage: "/img/about/image.png",
+    backgroundImages: ["/img/about/image.png"],
   },
   marquee: {
     us: [

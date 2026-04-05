@@ -110,8 +110,19 @@ export default function AboutPage({ dbData }: AboutPageProps) {
     return () => clearInterval(timer);
   }, [storyImages.length]);
 
-  /* ── Hero background ── */
-  const heroBg = (hasDB && dbData.hero?.backgroundImage) ? dbData.hero.backgroundImage : "/img/about/image.png";
+  /* ── Hero background images (slider support) ── */
+  const heroImages: string[] = (hasDB && dbData.hero?.backgroundImages?.length)
+    ? dbData.hero.backgroundImages
+    : (hasDB && dbData.hero?.backgroundImage) ? [dbData.hero.backgroundImage]
+    : ["/img/about/image.png"];
+  const [heroImgIdx, setHeroImgIdx] = useState(0);
+  useEffect(() => {
+    if (heroImages.length <= 1) return;
+    const timer = setInterval(() => {
+      setHeroImgIdx((prev) => (prev + 1) % heroImages.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [heroImages.length]);
 
   /* ── Values ── */
   const defaultValues = [
@@ -283,7 +294,18 @@ export default function AboutPage({ dbData }: AboutPageProps) {
         {/* ── 1. Hero Parallax ── */}
         <section ref={heroRef} className="relative h-svh flex items-center justify-center overflow-hidden bg-black">
           <motion.div style={{ y, opacity }} className="absolute inset-0">
-            <img src={heroBg} alt="Factory" className="w-full h-full object-cover opacity-40 mix-blend-luminosity" />
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={heroImgIdx}
+                src={heroImages[heroImgIdx]}
+                alt="Factory"
+                className="w-full h-full object-cover opacity-40 mix-blend-luminosity"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 1.2 }}
+              />
+            </AnimatePresence>
           </motion.div>
           <div className="absolute inset-0 bg-linear-to-b from-black/30 via-transparent to-black" />
           

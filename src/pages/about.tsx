@@ -506,7 +506,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
             {/* Info Cards */}
             <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
               {/* Human Resources & R&D */}
-              <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="p-10 lg:p-16 bg-white/[0.02] backdrop-blur-md border border-white/5 rounded-sm hover:bg-white/[0.04] hover:border-white/10 transition-colors duration-500">
+              <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="p-10 lg:p-16 bg-white/2 backdrop-blur-md border border-white/5 rounded-sm hover:bg-white/4 hover:border-white/10 transition-colors duration-500">
                 <h3 className="font-display font-black text-3xl lg:text-4xl mb-12 text-white flex items-center gap-4">
                   <span className="w-12 h-1 bg-[hsl(var(--orange))]" />
                   {d(['stats', 'hr', 'heading'], "about.hr.heading")}
@@ -524,7 +524,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
               </motion.div>
 
               {/* Machinery */}
-              <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.2 }} className="p-10 lg:p-16 bg-white/[0.02] backdrop-blur-md border border-white/5 rounded-sm hover:bg-white/[0.04] hover:border-white/10 transition-colors duration-500">
+              <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.2 }} className="p-10 lg:p-16 bg-white/2 backdrop-blur-md border border-white/5 rounded-sm hover:bg-white/4 hover:border-white/10 transition-colors duration-500">
                 <h3 className="font-display font-black text-3xl lg:text-4xl mb-12 text-white flex items-center gap-4">
                   <span className="w-12 h-1 bg-[hsl(var(--orange))]" />
                   {d(['stats', 'machinery', 'heading'], "about.machinery.heading")}
@@ -562,7 +562,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
               <div className="w-48 sm:w-64 lg:w-88 aspect-3/4 overflow-hidden shrink-0 shadow-lg rounded-sm">
                 <img src={teamLeader.image} alt={teamLeader.name} className="w-full h-full object-cover object-top" />
               </div>
-              <div className="pt-2 flex-grow text-center md:text-left flex flex-col justify-center h-full">
+              <div className="pt-2 grow text-center md:text-left flex flex-col justify-center h-full">
                 {teamLeader.name && <h3 className="font-display font-black text-4xl sm:text-5xl uppercase tracking-wider mb-4 text-foreground">{teamLeader.name}</h3>}
                 {teamLeader.role && (
                   <div className="mb-10">

@@ -28,6 +28,7 @@ import {
 } from 'lucide-react';
 import type { UploadFile, UploadProps } from 'antd';
 import dynamic from 'next/dynamic';
+import { useTranslation } from 'react-i18next';
 import { aboutDefaults } from '../constants/aboutDefaults';
 import 'react-quill-new/dist/quill.snow.css';
 
@@ -139,28 +140,34 @@ function I18nTextField({
 
   const handleTranslate = async () => {
     if (!form) return;
-    const usVal = form.getFieldValue(getPath('us')) || '';
-    const ukVal = form.getFieldValue(getPath('uk')) || '';
-    const viVal = form.getFieldValue(getPath('vi')) || '';
+    const pathUs = getPath('us');
+    const pathUk = getPath('uk');
+    const pathVi = getPath('vi');
+    
+    const usVal = form.getFieldValue(pathUs);
+    const ukVal = form.getFieldValue(pathUk);
+    const viVal = form.getFieldValue(pathVi);
+
+    const stringUsVal = typeof usVal === 'string' ? usVal : '';
+    const stringUkVal = typeof ukVal === 'string' ? ukVal : '';
+    const stringViVal = typeof viVal === 'string' ? viVal : '';
 
     let sourceText = '';
-    if (lang === 'US') sourceText = usVal;
-    else if (lang === 'UK') sourceText = ukVal;
-    else sourceText = viVal;
+    if (lang === 'US') sourceText = stringUsVal;
+    else if (lang === 'UK') sourceText = stringUkVal;
+    else sourceText = stringViVal;
 
     if (!sourceText.trim()) {
-      message.warning(`Please enter ${label} in ${lang} first.`);
+      message.warning(`Please enter ${label} in ${lang} first. Path: ${pathUs.join('.')}`);
       return;
     }
 
     setTranslating(true);
     try {
       if (lang === 'US' || lang === 'UK') {
-        // Copy to the other English field
         const otherEnField = lang === 'US' ? 'uk' : 'us';
         form.setFieldValue(getPath(otherEnField), sourceText);
 
-        // Translate to Vietnamese
         const res = await fetch('/api/translate', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -502,6 +509,7 @@ function MultiImageField({
    ══════════════════════════════════════════════════════════════════════════ */
 export default function AboutEditor() {
   const [form] = Form.useForm();
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   
@@ -744,14 +752,14 @@ export default function AboutEditor() {
   const collapseItems: CollapseProps['items'] = [
     {
       key: 'hero',
-      label: panelHeader(<PictureOutlined />, 'Hero Section', 'Full-screen banner with title'),
+      label: panelHeader(<PictureOutlined />, t('adminAbout.heroSection'), t('adminAbout.heroSectionDesc')),
       className: 'mb-3 rounded-xl overflow-hidden border border-gray-100 shadow-sm',
       style: { background: '#fff' },
       children: (
         <div className="space-y-4 p-2">
-          <I18nTextField form={form} baseName={['hero', 'title']} label="Title" required />
-          <I18nTextField form={form} baseName={['hero', 'subtitle']} label="Subtitle" />
-          <I18nTextField form={form} baseName={['hero', 'description']} label="Description" textarea rows={3} />
+          <I18nTextField form={form} baseName={['hero', 'title']} label={t('adminAbout.lblTitle')} required />
+          <I18nTextField form={form} baseName={['hero', 'subtitle']} label={t('adminAbout.lblSubtitle')} />
+          <I18nTextField form={form} baseName={['hero', 'description']} label={t('adminAbout.lblDescription')} textarea rows={3} />
           <Form.Item name={['hero', 'backgroundImages']} noStyle>
             <MultiImageField label="Background Images (2+ ảnh = slider tự động)" max={10} />
           </Form.Item>
@@ -760,7 +768,7 @@ export default function AboutEditor() {
     },
     {
       key: 'marquee',
-      label: panelHeader(<SoundOutlined />, 'Marquee Strip', 'Scrolling text banner'),
+      label: panelHeader(<SoundOutlined />, t('adminAbout.marqueeStrip'), t('adminAbout.marqueeStripDesc')),
       className: 'mb-3 rounded-xl overflow-hidden border border-gray-100 shadow-sm',
       style: { background: '#fff' },
       children: (
@@ -773,12 +781,12 @@ export default function AboutEditor() {
                 {fields.map((field) => (
                   <div key={field.key} className="flex gap-2">
                     <Form.Item {...(({key, ...rest}) => rest)(field)} className="flex-1 mb-0">
-                      <Input placeholder="Marquee item (US)…" className="rounded-lg border-gray-200" />
+                      <Input placeholder={t('adminAbout.phMarqueeUS')} className="rounded-lg border-gray-200" />
                     </Form.Item>
                     <Button icon={<MinusCircleOutlined />} type="text" danger onClick={() => remove(field.name)} />
                   </div>
                 ))}
-                <Button type="dashed" onClick={() => add('')} icon={<PlusOutlined />} className="w-full rounded-lg">Add Item</Button>
+                <Button type="dashed" onClick={() => add('')} icon={<PlusOutlined />} className="w-full rounded-lg">{t('adminAbout.btnAddItem')}</Button>
               </div>
             )}
           </Form.List>
@@ -795,7 +803,7 @@ export default function AboutEditor() {
                     <Button icon={<MinusCircleOutlined />} type="text" danger onClick={() => remove(field.name)} />
                   </div>
                 ))}
-                <Button type="dashed" onClick={() => add('')} icon={<PlusOutlined />} className="w-full rounded-lg">Add Item</Button>
+                <Button type="dashed" onClick={() => add('')} icon={<PlusOutlined />} className="w-full rounded-lg">{t('adminAbout.btnAddItem')}</Button>
               </div>
             )}
           </Form.List>
@@ -807,12 +815,12 @@ export default function AboutEditor() {
                 {fields.map((field) => (
                   <div key={field.key} className="flex gap-2">
                     <Form.Item {...(({key, ...rest}) => rest)(field)} className="flex-1 mb-0">
-                      <Input placeholder="Marquee item (UK)…" className="rounded-lg border-gray-200" />
+                      <Input placeholder={t('adminAbout.phMarqueeUK')} className="rounded-lg border-gray-200" />
                     </Form.Item>
                     <Button icon={<MinusCircleOutlined />} type="text" danger onClick={() => remove(field.name)} />
                   </div>
                 ))}
-                <Button type="dashed" onClick={() => add('')} icon={<PlusOutlined />} className="w-full rounded-lg">Add Item</Button>
+                <Button type="dashed" onClick={() => add('')} icon={<PlusOutlined />} className="w-full rounded-lg">{t('adminAbout.btnAddItem')}</Button>
               </div>
             )}
           </Form.List>
@@ -821,13 +829,13 @@ export default function AboutEditor() {
     },
     {
       key: 'welcome',
-      label: panelHeader(<SmileOutlined />, 'Welcome Message', 'Company introduction with value points'),
+      label: panelHeader(<SmileOutlined />, t('adminAbout.welcomeMsg'), t('adminAbout.welcomeMsgDesc')),
       className: 'mb-3 rounded-xl overflow-hidden border border-gray-100 shadow-sm',
       style: { background: '#fff' },
       children: (
         <div className="space-y-4 p-2">
-          <I18nTextField form={form} baseName={['welcome', 'title']} label="Title" required />
-          <I18nRichTextField form={form} baseName={['welcome', 'description']} label="Description" />
+          <I18nTextField form={form} baseName={['welcome', 'title']} label={t('adminAbout.lblTitle')} required />
+          <I18nRichTextField form={form} baseName={['welcome', 'description']} label={t('adminAbout.lblDescription')} />
           <Divider className="my-3" />
           <SectionLabel>Value Points (displayed on the right)</SectionLabel>
           <Form.List name={['welcome', 'values']}>
@@ -838,9 +846,9 @@ export default function AboutEditor() {
                     extra={<Button icon={<MinusCircleOutlined />} type="text" danger size="small" onClick={() => remove(field.name)} />}
                     title={<span className="text-xs font-bold text-gray-500">Value {idx + 1}</span>}
                   >
-                    <I18nTextField form={form} listPath={['welcome', 'values']} baseName={[field.name, 'title']} label="Title" />
+                    <I18nTextField form={form} listPath={['welcome', 'values']} baseName={[field.name, 'title']} label={t('adminAbout.lblTitle')} />
                     <div className="mt-3">
-                      <I18nTextField form={form} listPath={['welcome', 'values']} baseName={[field.name, 'desc']} label="Description" />
+                      <I18nTextField form={form} listPath={['welcome', 'values']} baseName={[field.name, 'desc']} label={t('adminAbout.lblDescription')} />
                     </div>
                   </Card>
                 ))}
@@ -855,13 +863,13 @@ export default function AboutEditor() {
     },
     {
       key: 'story',
-      label: panelHeader(<ReadOutlined />, 'Our Story', 'Company history narrative'),
+      label: panelHeader(<ReadOutlined />, t('adminAbout.ourStory'), t('adminAbout.ourStoryDesc')),
       className: 'mb-3 rounded-xl overflow-hidden border border-gray-100 shadow-sm',
       style: { background: '#fff' },
       children: (
         <div className="space-y-4 p-2">
           <I18nTextField form={form} baseName={['story', 'label']} label="Section Label" />
-          <I18nTextField form={form} baseName={['story', 'heading']} label="Heading" required />
+          <I18nTextField form={form} baseName={['story', 'heading']} label={t('adminAbout.lblHeading')} required />
           <Divider className="my-2" />
           <I18nRichTextField form={form} baseName={['story', 'content']} label="Story Content" required />
           <Divider className="my-2" />
@@ -873,13 +881,13 @@ export default function AboutEditor() {
     },
     {
       key: 'values',
-      label: panelHeader(<TrophyOutlined />, 'Core Values', 'Company value cards with icons'),
+      label: panelHeader(<TrophyOutlined />, t('adminAbout.coreValues'), t('adminAbout.coreValuesDesc')),
       className: 'mb-3 rounded-xl overflow-hidden border border-gray-100 shadow-sm',
       style: { background: '#fff' },
       children: (
         <div className="space-y-4 p-2">
           <I18nTextField form={form} baseName={['values', 'label']} label="Section Label" />
-          <I18nTextField form={form} baseName={['values', 'heading']} label="Heading" />
+          <I18nTextField form={form} baseName={['values', 'heading']} label={t('adminAbout.lblHeading')} />
           <Divider className="my-2" />
           <Form.List name={['values', 'items']}>
             {(fields, { add, remove }) => (
@@ -892,9 +900,9 @@ export default function AboutEditor() {
                     <Form.Item name={[field.name, 'icon']} label="Icon" className="mb-3">
                       <Select options={ICON_OPTIONS} placeholder="Select icon" className="w-full" />
                     </Form.Item>
-                    <I18nTextField form={form} listPath={['values', 'items']} baseName={[field.name, 'title']} label="Title" />
+                    <I18nTextField form={form} listPath={['values', 'items']} baseName={[field.name, 'title']} label={t('adminAbout.lblTitle')} />
                     <div className="mt-3">
-                      <I18nTextField form={form} listPath={['values', 'items']} baseName={[field.name, 'desc']} label="Description" />
+                      <I18nTextField form={form} listPath={['values', 'items']} baseName={[field.name, 'desc']} label={t('adminAbout.lblDescription')} />
                     </div>
                   </Card>
                 ))}
@@ -909,13 +917,13 @@ export default function AboutEditor() {
     },
     {
       key: 'timeline',
-      label: panelHeader(<HistoryOutlined />, 'Timeline', 'Company milestones'),
+      label: panelHeader(<HistoryOutlined />, t('adminAbout.timeline'), t('adminAbout.timelineDesc')),
       className: 'mb-3 rounded-xl overflow-hidden border border-gray-100 shadow-sm',
       style: { background: '#fff' },
       children: (
         <div className="space-y-4 p-2">
           <I18nTextField form={form} baseName={['timeline', 'label']} label="Section Label" />
-          <I18nTextField form={form} baseName={['timeline', 'heading']} label="Heading" />
+          <I18nTextField form={form} baseName={['timeline', 'heading']} label={t('adminAbout.lblHeading')} />
           <Divider className="my-2" />
           <Form.List name={['timeline', 'items']}>
             {(fields, { add, remove }) => (
@@ -925,12 +933,12 @@ export default function AboutEditor() {
                     extra={<Button icon={<MinusCircleOutlined />} type="text" danger size="small" onClick={() => remove(field.name)} />}
                     title={<span className="text-xs font-bold text-gray-500">Milestone {idx + 1}</span>}
                   >
-                    <Form.Item name={[field.name, 'year']} label="Year" className="mb-3">
+                    <Form.Item name={[field.name, 'year']} label={t('adminAbout.lblYear')} className="mb-3">
                       <Input placeholder="E.g. 2016, 2018–2020" className="rounded-lg border-gray-200" />
                     </Form.Item>
-                    <I18nTextField form={form} listPath={['timeline', 'items']} baseName={[field.name, 'title']} label="Title" />
+                    <I18nTextField form={form} listPath={['timeline', 'items']} baseName={[field.name, 'title']} label={t('adminAbout.lblTitle')} />
                     <div className="mt-3">
-                      <I18nTextField form={form} listPath={['timeline', 'items']} baseName={[field.name, 'desc']} label="Description" />
+                      <I18nTextField form={form} listPath={['timeline', 'items']} baseName={[field.name, 'desc']} label={t('adminAbout.lblDescription')} />
                     </div>
                   </Card>
                 ))}
@@ -945,13 +953,13 @@ export default function AboutEditor() {
     },
     {
       key: 'stats',
-      label: panelHeader(<BarChartOutlined />, 'Stats & Capabilities', 'Production figures, HR, machinery'),
+      label: panelHeader(<BarChartOutlined />, t('adminAbout.stats'), t('adminAbout.statsDesc')),
       className: 'mb-3 rounded-xl overflow-hidden border border-gray-100 shadow-sm',
       style: { background: '#fff' },
       children: (
         <div className="space-y-4 p-2">
-          <I18nTextField form={form} baseName={['stats', 'heading']} label="Section Heading" />
-          <I18nTextField form={form} baseName={['stats', 'subtitle']} label="Subtitle" textarea rows={2} />
+          <I18nTextField form={form} baseName={['stats', 'heading']} label={t('adminAbout.lblHeading')} />
+          <I18nTextField form={form} baseName={['stats', 'subtitle']} label={t('adminAbout.lblSubtitle')} textarea rows={2} />
 
           {/* Stat Cards */}
           <Divider className="my-2" />
@@ -966,7 +974,7 @@ export default function AboutEditor() {
                   >
                     <Row gutter={12}>
                       <Col span={8}>
-                        <Form.Item name={[field.name, 'value']} label="Value" className="mb-2">
+                        <Form.Item name={[field.name, 'value']} label={t('adminAbout.lblValue')} className="mb-2">
                           <Input placeholder="80K" className="rounded-lg border-gray-200" />
                         </Form.Item>
                       </Col>
@@ -976,7 +984,7 @@ export default function AboutEditor() {
                         </Form.Item>
                       </Col>
                       <Col span={12}>
-                        <I18nTextField form={form} listPath={['stats', 'items']} baseName={[field.name, 'label']} label="Label" />
+                        <I18nTextField form={form} listPath={['stats', 'items']} baseName={[field.name, 'label']} label={t('adminAbout.lblLabel')} />
                       </Col>
                     </Row>
                   </Card>
@@ -1037,16 +1045,16 @@ export default function AboutEditor() {
     },
     {
       key: 'team',
-      label: panelHeader(<TeamOutlined />, 'Executive Team', 'Leader and team member profiles'),
+      label: panelHeader(<TeamOutlined />, t('adminAbout.team'), t('adminAbout.teamDesc')),
       className: 'mb-3 rounded-xl overflow-hidden border border-gray-100 shadow-sm',
       style: { background: '#fff' },
       children: (
         <div className="space-y-4 p-2">
-          <I18nTextField form={form} baseName={['team', 'heading']} label="Section Heading" />
+          <I18nTextField form={form} baseName={['team', 'heading']} label={t('adminAbout.lblHeading')} />
           
           {/* Team Members */}
           <Divider className="my-2" />
-          <SectionLabel>Team Members</SectionLabel>
+          <SectionLabel>{t('adminAbout.team')}</SectionLabel>
           <Form.List name={['team', 'members']}>
             {(fields, { add, remove, move }) => (
               <div className="space-y-3">
@@ -1063,17 +1071,17 @@ export default function AboutEditor() {
                   >
                     <Row gutter={12}>
                       <Col xs={24} md={8}>
-                        <Form.Item name={[field.name, 'name']} label="Name" className="mb-2">
-                          <Input placeholder="Full Name" className="rounded-lg border-gray-200" />
+                        <Form.Item name={[field.name, 'name']} label={t('adminAbout.lblName')} className="mb-2">
+                          <Input placeholder={t('adminAbout.lblFullName')} className="rounded-lg border-gray-200" />
                         </Form.Item>
                       </Col>
                       <Col xs={24} md={8}>
-                        <Form.Item name={[field.name, 'email']} label="Email" className="mb-2">
+                        <Form.Item name={[field.name, 'email']} label={t('adminAbout.lblEmail')} className="mb-2">
                           <Input placeholder="email@company.com" className="rounded-lg border-gray-200" />
                         </Form.Item>
                       </Col>
                       <Col xs={24} md={8}>
-                        <Form.Item name={[field.name, 'phone']} label="Phone" className="mb-2">
+                        <Form.Item name={[field.name, 'phone']} label={t('adminAbout.lblPhone')} className="mb-2">
                           <Input placeholder="+84 xxx" className="rounded-lg border-gray-200" />
                         </Form.Item>
                       </Col>
@@ -1081,13 +1089,13 @@ export default function AboutEditor() {
                     
                     <Row gutter={12} className="items-center mb-2">
                       <Col xs={12} md={8}>
-                        <Form.Item name={[field.name, 'key']} label="Key (unique ID)" className="mb-0">
-                          <Input placeholder="e.g. tyler, dylan" className="rounded-lg border-gray-200" />
+                        <Form.Item name={[field.name, 'key']} label={t('adminAbout.lblKey')} className="mb-0">
+                          <Input placeholder={t('adminAbout.phKey')} className="rounded-lg border-gray-200" />
                         </Form.Item>
                       </Col>
                       <Col xs={12} md={8} className="pt-7">
                         <Form.Item name={[field.name, 'isLeader']} valuePropName="checked" className="mb-0">
-                          <Checkbox className="font-medium text-orange-600">Featured Leader</Checkbox>
+                          <Checkbox className="font-medium text-orange-600">{t('adminAbout.lblFeaturedLeader')}</Checkbox>
                         </Form.Item>
                       </Col>
                     </Row>
@@ -1099,7 +1107,7 @@ export default function AboutEditor() {
                       <I18nTextField form={form} listPath={['team', 'members']} baseName={[field.name, 'role']} label="Role / Title" />
                     </div>
                     <div className="mt-3">
-                      <I18nTextField form={form} listPath={['team', 'members']} baseName={[field.name, 'quote']} label="Quote" textarea rows={2} />
+                      <I18nTextField form={form} listPath={['team', 'members']} baseName={[field.name, 'quote']} label={t('adminAbout.lblQuote')} textarea rows={2} />
                     </div>
                   </Card>
                 ))}
@@ -1117,12 +1125,12 @@ export default function AboutEditor() {
     },
     {
       key: 'locations',
-      label: panelHeader(<EnvironmentOutlined />, 'Locations', 'Office, factory, showroom addresses'),
+      label: panelHeader(<EnvironmentOutlined />, t('adminAbout.locations'), t('adminAbout.locationsDesc')),
       className: 'mb-3 rounded-xl overflow-hidden border border-gray-100 shadow-sm',
       style: { background: '#fff' },
       children: (
         <div className="space-y-4 p-2">
-          <I18nTextField form={form} baseName={['locations', 'heading']} label="Section Heading" />
+          <I18nTextField form={form} baseName={['locations', 'heading']} label={t('adminAbout.lblHeading')} />
           <Divider className="my-2" />
           <Form.List name={['locations', 'items']}>
             {(fields, { add, remove }) => (
@@ -1135,9 +1143,9 @@ export default function AboutEditor() {
                     <Form.Item name={[field.name, 'key']} label="Key" className="mb-3">
                       <Input placeholder="factory, office, showroom…" className="rounded-lg border-gray-200" />
                     </Form.Item>
-                    <I18nTextField form={form} listPath={['locations', 'items']} baseName={[field.name, 'name']} label="Location Name" />
+                    <I18nTextField form={form} listPath={['locations', 'items']} baseName={[field.name, 'name']} label={t('adminAbout.lblLocation')} />
                     <div className="mt-3">
-                      <I18nTextField form={form} listPath={['locations', 'items']} baseName={[field.name, 'address']} label="Address" textarea rows={2} />
+                      <I18nTextField form={form} listPath={['locations', 'items']} baseName={[field.name, 'address']} label={t('adminAbout.lblAddress')} textarea rows={2} />
                     </div>
                     <Form.Item name={[field.name, 'hotline']} label="Hotline" className="mt-3 mb-0">
                       <Input placeholder="Hotline: +84 xxx xxx xxx" className="rounded-lg border-gray-200" />
@@ -1158,13 +1166,13 @@ export default function AboutEditor() {
     },
     {
       key: 'cta',
-      label: panelHeader(<RocketOutlined />, 'Call to Action', 'Bottom banner with contact button'),
+      label: panelHeader(<RocketOutlined />, t('adminAbout.cta'), t('adminAbout.ctaDesc')),
       className: 'mb-3 rounded-xl overflow-hidden border border-gray-100 shadow-sm',
       style: { background: '#fff' },
       children: (
         <div className="space-y-4 p-2">
-          <I18nTextField form={form} baseName={['cta', 'heading']} label="Heading" />
-          <I18nTextField form={form} baseName={['cta', 'button']} label="Button Text" />
+          <I18nTextField form={form} baseName={['cta', 'heading']} label={t('adminAbout.lblHeading')} />
+          <I18nTextField form={form} baseName={['cta', 'button']} label={t('adminAbout.lblButtonText')} />
         </div>
       ),
     },
@@ -1174,8 +1182,8 @@ export default function AboutEditor() {
     <Form form={form} layout="vertical" className="relative">
       {isDefault && (
         <Alert 
-          message="No Custom Data Found" 
-          description="You are currently viewing the default template. Please review and edit the content, then click 'Save All Changes' below to publish." 
+          message={t("adminAbout.noCustomData")} 
+          description={t("adminAbout.noCustomDataDesc")} 
           type="warning" showIcon className="mb-4 rounded-xl border-orange-200 bg-orange-50" 
         />
       )}
@@ -1187,10 +1195,10 @@ export default function AboutEditor() {
       >
         <div>
           <h1 className="text-2xl font-bold text-gray-900 m-0 leading-tight font-display">
-            About Page Content
+            {t("adminAbout.title")}
           </h1>
           <p className="text-[13px] m-0 mt-1 text-gray-500">
-            Manage your company story, team, and statistics shown on the public About Us page
+            {t("adminAbout.description")}
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -1207,21 +1215,21 @@ export default function AboutEditor() {
             }}
             className="rounded-lg border-gray-200"
           >
-            Load Default
+            {t("adminAbout.loadDefault")}
           </Button>
           <Button
             icon={<HistoryOutlined />}
             onClick={() => { setHistoryOpen(true); fetchRevisions(); }}
             className="rounded-lg border-gray-200"
           >
-            History
+            {t("adminAbout.history")}
           </Button>
           <Button
             icon={<EyeOutlined />}
             onClick={() => setPreviewOpen(true)}
             className="rounded-lg border-gray-200"
           >
-            Preview
+            {t("adminAbout.preview")}
           </Button>
           <Button
             type="primary"
@@ -1232,7 +1240,7 @@ export default function AboutEditor() {
             className="rounded-lg border-none font-semibold px-6 shadow-md"
             style={{ background: 'linear-gradient(135deg, #f97316, #ea580c)' }}
           >
-            Save All
+            {t("adminAbout.saveAll")}
           </Button>
         </div>
       </div>
@@ -1247,18 +1255,18 @@ export default function AboutEditor() {
           items={[
             {
               key: 'main',
-              label: <span className="font-semibold text-[15px] px-2"><PictureOutlined className="mr-2"/>Main Settings</span>,
+              label: <span className="font-semibold text-[15px] px-2"><PictureOutlined className="mr-2"/>{t("adminAbout.tabMain")}</span>,
               children: <div className="p-6 bg-gray-50/30"><Collapse defaultActiveKey={['hero']} items={collapseItems.filter(i => ['hero', 'marquee', 'cta'].includes(i.key as string))} className="about-editor-collapse" style={{ background: 'transparent', border: 'none' }} /></div>
             },
             {
-              key: 'about',
-              label: <span className="font-semibold text-[15px] px-2"><ReadOutlined className="mr-2"/>Company Story</span>,
-              children: <div className="p-6 bg-gray-50/30"><Collapse defaultActiveKey={['welcome']} items={collapseItems.filter(i => ['welcome', 'story', 'values', 'timeline'].includes(i.key as string))} className="about-editor-collapse" style={{ background: 'transparent', border: 'none' }} /></div>
+              key: 'story',
+              label: <span className="font-semibold text-[15px] px-2"><ReadOutlined className="mr-2"/>{t("adminAbout.tabStory")}</span>,
+              children: <div className="p-6 bg-gray-50/30"><Collapse defaultActiveKey={['welcome', 'story']} items={collapseItems.filter(i => ['welcome', 'story', 'values', 'timeline'].includes(i.key as string))} className="about-editor-collapse" style={{ background: 'transparent', border: 'none' }} /></div>
             },
             {
-              key: 'assets',
-              label: <span className="font-semibold text-[15px] px-2"><TeamOutlined className="mr-2"/>People & Facilities</span>,
-              children: <div className="p-6 bg-gray-50/30"><Collapse defaultActiveKey={['stats']} items={collapseItems.filter(i => ['team', 'stats', 'locations'].includes(i.key as string))} className="about-editor-collapse" style={{ background: 'transparent', border: 'none' }} /></div>
+              key: 'team',
+              label: <span className="font-semibold text-[15px] px-2"><TeamOutlined className="mr-2"/>{t("adminAbout.tabTeam")}</span>,
+              children: <div className="p-6 bg-gray-50/30"><Collapse defaultActiveKey={['stats', 'team']} items={collapseItems.filter(i => ['stats', 'team', 'locations'].includes(i.key as string))} className="about-editor-collapse" style={{ background: 'transparent', border: 'none' }} /></div>
             }
           ]}
         />
@@ -1326,20 +1334,20 @@ export default function AboutEditor() {
                 </div>
                 {/* Row 3: Actions */}
                 <div className="flex items-center gap-1 flex-wrap">
-                  <Popconfirm title="Khôi phục bản này?" description="Dữ liệu hiện tại sẽ được backup trước khi khôi phục." onConfirm={() => handleRollback(item._id)} okText="Đồng ý" cancelText="Hủy">
-                    <Button size="small" type="default" icon={<RollbackOutlined />} className="rounded-lg text-xs">Khôi phục</Button>
+                  <Popconfirm title={t('adminAbout.revRestoreTitle')} description={t('adminAbout.revRestoreDesc')} onConfirm={() => handleRollback(item._id)} okText={t('adminAbout.btnOk')} cancelText={t('adminAbout.btnCancel')}>
+                    <Button size="small" type="default" icon={<RollbackOutlined />} className="rounded-lg text-xs">{t('adminAbout.revRestoreBtn')}</Button>
                   </Popconfirm>
-                  <Button size="small" type="default" icon={<EditOutlined />} onClick={() => handleEditRevision(item._id, item.note || '')} className="rounded-lg text-xs">Sửa</Button>
+                  <Button size="small" type="default" icon={<EditOutlined />} onClick={() => handleEditRevision(item._id, item.note || '')} className="rounded-lg text-xs">{t('adminAbout.revEditBtn')}</Button>
                   {item.isDefault ? (
-                    <Tooltip title="Đây là bản mặc định hiện tại">
-                      <Button size="small" disabled icon={<StarOutlined />} className="rounded-lg text-xs">Mặc định</Button>
+                    <Tooltip title={t('adminAbout.revDefaultTooltip')}>
+                      <Button size="small" disabled icon={<StarOutlined />} className="rounded-lg text-xs">{t('adminAbout.revDefaultBtn')}</Button>
                     </Tooltip>
                   ) : (
                     <>
-                      <Popconfirm title="Đặt làm Mặc Định?" description="Bản này sẽ không thể bị xoá." onConfirm={() => handleSetDefault(item._id)} okText="Đồng ý" cancelText="Hủy">
-                        <Button size="small" type="default" icon={<StarOutlined />} className="rounded-lg text-xs text-orange-500 border-orange-200 hover:border-orange-400">Mặc định</Button>
+                      <Popconfirm title={t('adminAbout.revDefaultTitle')} description={t('adminAbout.revDefaultDesc')} onConfirm={() => handleSetDefault(item._id)} okText={t('adminAbout.btnOk')} cancelText={t('adminAbout.btnCancel')}>
+                        <Button size="small" type="default" icon={<StarOutlined />} className="rounded-lg text-xs text-orange-500 border-orange-200 hover:border-orange-400">{t('adminAbout.revDefaultBtn')}</Button>
                       </Popconfirm>
-                      <Popconfirm title="Xóa bản này?" description="Không thể hoàn tác." onConfirm={() => handleDeleteRevision(item._id)} okText="Xóa" cancelText="Hủy">
+                      <Popconfirm title={t('adminAbout.revDeleteTitle')} description={t('adminAbout.revDeleteDesc')} onConfirm={() => handleDeleteRevision(item._id)} okText={t('adminAbout.revDeleteBtn')} cancelText={t('adminAbout.btnCancel')}>
                         <Button size="small" type="text" danger icon={<DeleteOutlined />} className="rounded-lg text-xs" />
                       </Popconfirm>
                     </>
@@ -1349,7 +1357,7 @@ export default function AboutEditor() {
             ))}
           </div>
         ) : (
-          <div className="text-center text-gray-500 mt-10">No revisions found</div>
+          <div className="text-center text-gray-500 mt-10">{t('adminAbout.noCustomData')}</div>
         )}
       </Drawer>
 

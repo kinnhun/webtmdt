@@ -88,8 +88,8 @@ export default function FeaturedProducts() {
   const filtered = activeFilter === "All"
     ? featuredProductsData
     : featuredProductsData.filter(p => p.category?.us === FILTER_MAPPING[activeFilter]);
-  const targetUrl = activeFilter === "All" 
-    ? `/catalogue/outdoor` 
+  const targetUrl = activeFilter === "All"
+    ? `/catalogue/outdoor`
     : `/catalogue/outdoor?category=${encodeURIComponent(FILTER_MAPPING[activeFilter])}`;
 
   return (

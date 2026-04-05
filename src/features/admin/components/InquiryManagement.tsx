@@ -163,6 +163,9 @@ export default function InquiryManagement() {
             <div className="text-xs text-blue-500 flex items-center gap-1 shrink-0">
               <InfoCircleOutlined /> {record.source}
             </div>
+            {record.dynamicData && Object.keys(record.dynamicData).length > 0 && (
+              <Tag color="cyan" className="border-0 rounded-full text-[9px] px-1.5 py-0 m-0 leading-tight">+{Object.keys(record.dynamicData).length} {t('admin.inquiry.dynamicFieldsCount', 'fields')}</Tag>
+            )}
           </div>
         </div>
       ),
@@ -438,16 +441,25 @@ export default function InquiryManagement() {
                 </Paragraph>
               </div>
 
+              {/* Dynamic Form Data — adapts to form schema changes */}
               {selectedInquiry.dynamicData && Object.keys(selectedInquiry.dynamicData).length > 0 && (
                 <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm mb-6">
-                  <Text type="secondary" className="text-xs uppercase tracking-wider font-semibold block mb-3">Additional Form Fields</Text>
-                  <div className="grid grid-cols-2 gap-4">
-                    {Object.entries(selectedInquiry.dynamicData).map(([key, value]) => (
-                       <div key={key} className="mb-1">
-                         <Text type="secondary" className="text-[11px] uppercase tracking-wider font-semibold block mb-1 text-gray-400">{key.replace(/_/g, ' ')}</Text>
-                         <div className="text-sm font-medium text-gray-800 whitespace-pre-wrap">{String(value)}</div>
-                       </div>
-                    ))}
+                  <div className="flex items-center justify-between mb-3">
+                    <Text type="secondary" className="text-xs uppercase tracking-wider font-semibold block">{t('admin.inquiry.dynamicFieldsTitle', 'Additional Information')}</Text>
+                    <Tag color="blue" className="border-0 rounded-full text-[10px] m-0">{t('admin.inquiry.dynamicFieldsBadge', 'Custom Fields')}</Tag>
+                  </div>
+                  <div className="space-y-3">
+                    {Object.entries(selectedInquiry.dynamicData).map(([key, value]) => {
+                      const label = key.replace(/[_-]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+                      const strVal = String(value ?? '');
+                      const isLong = strVal.length > 80;
+                      return (
+                        <div key={key} className={`rounded-lg border border-gray-50 bg-gray-50/60 ${isLong ? 'p-3' : 'flex items-center gap-3 px-3 py-2'}`}>
+                          <Text className="text-[11px] uppercase tracking-wider font-semibold text-gray-400 shrink-0 block" style={isLong ? { marginBottom: 4 } : { minWidth: 120 }}>{label}</Text>
+                          <div className={`text-sm font-medium text-gray-800 ${isLong ? 'whitespace-pre-wrap leading-relaxed' : 'flex-1 truncate'}`} title={strVal}>{strVal || <span className="text-gray-300 italic">—</span>}</div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               )}

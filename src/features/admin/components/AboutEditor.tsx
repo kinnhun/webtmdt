@@ -12,7 +12,8 @@ import {
   TranslationOutlined, SoundOutlined, SmileOutlined,
   ReadOutlined, TrophyOutlined, HistoryOutlined,
   BarChartOutlined, TeamOutlined, EnvironmentOutlined,
-  RocketOutlined, RollbackOutlined, FileTextOutlined
+  RocketOutlined, RollbackOutlined, FileTextOutlined,
+  UpOutlined, DownOutlined
 } from '@ant-design/icons';
 import { 
   Award, Users, Shield, Globe, Leaf, Star, Heart, Zap, Target, CheckCircle,
@@ -115,6 +116,7 @@ function LangToggle({ value, onChange }: { value: Lang; onChange: (l: Lang) => v
 /* ── i18n Text Field Group = 3 inputs for us/uk/vi + auto-translate ── */
 function I18nTextField({
   baseName,
+  listPath,
   label,
   textarea = false,
   rows = 3,
@@ -122,6 +124,7 @@ function I18nTextField({
   form,
 }: {
   baseName: (string | number)[];
+  listPath?: (string | number)[];
   label: string;
   textarea?: boolean;
   rows?: number;
@@ -132,11 +135,13 @@ function I18nTextField({
   const [translating, setTranslating] = useState(false);
   const InputComp = textarea ? TextArea : Input;
 
+  const getPath = (langKey: string) => listPath ? [...listPath, ...baseName, langKey] : [...baseName, langKey];
+
   const handleTranslate = async () => {
     if (!form) return;
-    const usVal = form.getFieldValue([...baseName, 'us']) || '';
-    const ukVal = form.getFieldValue([...baseName, 'uk']) || '';
-    const viVal = form.getFieldValue([...baseName, 'vi']) || '';
+    const usVal = form.getFieldValue(getPath('us')) || '';
+    const ukVal = form.getFieldValue(getPath('uk')) || '';
+    const viVal = form.getFieldValue(getPath('vi')) || '';
 
     let sourceText = '';
     if (lang === 'US') sourceText = usVal;
@@ -153,7 +158,7 @@ function I18nTextField({
       if (lang === 'US' || lang === 'UK') {
         // Copy to the other English field
         const otherEnField = lang === 'US' ? 'uk' : 'us';
-        form.setFieldValue([...baseName, otherEnField], sourceText);
+        form.setFieldValue(getPath(otherEnField), sourceText);
 
         // Translate to Vietnamese
         const res = await fetch('/api/translate', {
@@ -163,7 +168,7 @@ function I18nTextField({
         });
         const data = await res.json();
         if (res.ok && data.translated) {
-          form.setFieldValue([...baseName, 'vi'], data.translated);
+          form.setFieldValue(getPath('vi'), data.translated);
         }
       } else {
         // Translate from Vietnamese to English
@@ -174,8 +179,8 @@ function I18nTextField({
         });
         const data = await res.json();
         if (res.ok && data.translated) {
-          form.setFieldValue([...baseName, 'us'], data.translated);
-          form.setFieldValue([...baseName, 'uk'], data.translated);
+          form.setFieldValue(getPath('us'), data.translated);
+          form.setFieldValue(getPath('uk'), data.translated);
         }
       }
       message.success(`Translated ${label} from ${lang}!`);
@@ -773,9 +778,9 @@ export default function AboutEditor() {
                     extra={<Button icon={<MinusCircleOutlined />} type="text" danger size="small" onClick={() => remove(field.name)} />}
                     title={<span className="text-xs font-bold text-gray-500">Value {idx + 1}</span>}
                   >
-                    <I18nTextField form={form} baseName={[field.name, 'title']} label="Title" />
+                    <I18nTextField form={form} listPath={['welcome', 'values']} baseName={[field.name, 'title']} label="Title" />
                     <div className="mt-3">
-                      <I18nTextField form={form} baseName={[field.name, 'desc']} label="Description" />
+                      <I18nTextField form={form} listPath={['welcome', 'values']} baseName={[field.name, 'desc']} label="Description" />
                     </div>
                   </Card>
                 ))}
@@ -798,9 +803,7 @@ export default function AboutEditor() {
           <I18nTextField form={form} baseName={['story', 'label']} label="Section Label" />
           <I18nTextField form={form} baseName={['story', 'heading']} label="Heading" required />
           <Divider className="my-2" />
-          <I18nRichTextField form={form} baseName={['story', 'paragraph1']} label="Paragraph 1 (large intro text)" />
-          <I18nRichTextField form={form} baseName={['story', 'paragraph2']} label="Paragraph 2" />
-          <I18nRichTextField form={form} baseName={['story', 'paragraph3']} label="Paragraph 3" />
+          <I18nRichTextField form={form} baseName={['story', 'content']} label="Story Content" required />
           <Divider className="my-2" />
           <Form.Item name={['story', 'images']} noStyle>
             <MultiImageField label="Story Slideshow Images (rotates every 4s)" max={6} />
@@ -829,9 +832,9 @@ export default function AboutEditor() {
                     <Form.Item name={[field.name, 'icon']} label="Icon" className="mb-3">
                       <Select options={ICON_OPTIONS} placeholder="Select icon" className="w-full" />
                     </Form.Item>
-                    <I18nTextField form={form} baseName={[field.name, 'title']} label="Title" />
+                    <I18nTextField form={form} listPath={['values', 'items']} baseName={[field.name, 'title']} label="Title" />
                     <div className="mt-3">
-                      <I18nTextField form={form} baseName={[field.name, 'desc']} label="Description" />
+                      <I18nTextField form={form} listPath={['values', 'items']} baseName={[field.name, 'desc']} label="Description" />
                     </div>
                   </Card>
                 ))}
@@ -865,9 +868,9 @@ export default function AboutEditor() {
                     <Form.Item name={[field.name, 'year']} label="Year" className="mb-3">
                       <Input placeholder="E.g. 2016, 2018–2020" className="rounded-lg border-gray-200" />
                     </Form.Item>
-                    <I18nTextField form={form} baseName={[field.name, 'title']} label="Title" />
+                    <I18nTextField form={form} listPath={['timeline', 'items']} baseName={[field.name, 'title']} label="Title" />
                     <div className="mt-3">
-                      <I18nTextField form={form} baseName={[field.name, 'desc']} label="Description" />
+                      <I18nTextField form={form} listPath={['timeline', 'items']} baseName={[field.name, 'desc']} label="Description" />
                     </div>
                   </Card>
                 ))}
@@ -913,7 +916,7 @@ export default function AboutEditor() {
                         </Form.Item>
                       </Col>
                       <Col span={12}>
-                        <I18nTextField form={form} baseName={[field.name, 'label']} label="Label" />
+                        <I18nTextField form={form} listPath={['stats', 'items']} baseName={[field.name, 'label']} label="Label" />
                       </Col>
                     </Row>
                   </Card>
@@ -935,7 +938,7 @@ export default function AboutEditor() {
                 {fields.map((field, idx) => (
                   <div key={field.key} className="flex gap-2 items-start">
                     <div className="flex-1">
-                      <I18nTextField form={form} baseName={[field.name]} label={`HR Item ${idx + 1}`} />
+                      <I18nTextField form={form} listPath={['stats', 'hr', 'items']} baseName={[field.name]} label={`HR Item ${idx + 1}`} />
                     </div>
                     <Button icon={<MinusCircleOutlined />} type="text" danger onClick={() => remove(field.name)} className="mt-6" />
                   </div>
@@ -960,7 +963,7 @@ export default function AboutEditor() {
                       </Form.Item>
                     </div>
                     <div className="flex-1">
-                      <I18nTextField form={form} baseName={[field.name, 'label']} label="Machine Label" />
+                      <I18nTextField form={form} listPath={['stats', 'machinery', 'items']} baseName={[field.name, 'label']} label="Machine Label" />
                     </div>
                     <Button icon={<MinusCircleOutlined />} type="text" danger onClick={() => remove(field.name)} className="mt-6" />
                   </div>
@@ -985,11 +988,17 @@ export default function AboutEditor() {
           <Divider className="my-2" />
           <SectionLabel>Team Members</SectionLabel>
           <Form.List name={['team', 'members']}>
-            {(fields, { add, remove }) => (
+            {(fields, { add, remove, move }) => (
               <div className="space-y-3">
                 {fields.map((field, idx) => (
                   <Card key={field.key} size="small" className="border-gray-100 shadow-sm"
-                    extra={<Button icon={<MinusCircleOutlined />} type="text" danger size="small" onClick={() => remove(field.name)} />}
+                    extra={
+                      <Space>
+                        <Button icon={<UpOutlined />} size="small" onClick={() => move(field.name, field.name - 1)} disabled={field.name === 0} />
+                        <Button icon={<DownOutlined />} size="small" onClick={() => move(field.name, field.name + 1)} disabled={field.name === fields.length - 1} />
+                        <Button icon={<MinusCircleOutlined />} type="text" danger size="small" onClick={() => remove(field.name)} />
+                      </Space>
+                    }
                     title={<span className="text-xs font-bold text-gray-500">Member {idx + 1}</span>}
                   >
                     <Row gutter={12}>
@@ -1027,10 +1036,10 @@ export default function AboutEditor() {
                       <ImageUploadField label="Profile Photo" />
                     </Form.Item>
                     <div className="mt-3">
-                      <I18nTextField form={form} baseName={[field.name, 'role']} label="Role / Title" />
+                      <I18nTextField form={form} listPath={['team', 'members']} baseName={[field.name, 'role']} label="Role / Title" />
                     </div>
                     <div className="mt-3">
-                      <I18nTextField form={form} baseName={[field.name, 'quote']} label="Quote" textarea rows={2} />
+                      <I18nTextField form={form} listPath={['team', 'members']} baseName={[field.name, 'quote']} label="Quote" textarea rows={2} />
                     </div>
                   </Card>
                 ))}
@@ -1066,9 +1075,9 @@ export default function AboutEditor() {
                     <Form.Item name={[field.name, 'key']} label="Key" className="mb-3">
                       <Input placeholder="factory, office, showroom…" className="rounded-lg border-gray-200" />
                     </Form.Item>
-                    <I18nTextField form={form} baseName={[field.name, 'name']} label="Location Name" />
+                    <I18nTextField form={form} listPath={['locations', 'items']} baseName={[field.name, 'name']} label="Location Name" />
                     <div className="mt-3">
-                      <I18nTextField form={form} baseName={[field.name, 'address']} label="Address" textarea rows={2} />
+                      <I18nTextField form={form} listPath={['locations', 'items']} baseName={[field.name, 'address']} label="Address" textarea rows={2} />
                     </div>
                     <Form.Item name={[field.name, 'hotline']} label="Hotline" className="mt-3 mb-0">
                       <Input placeholder="Hotline: +84 xxx xxx xxx" className="rounded-lg border-gray-200" />

@@ -369,9 +369,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
               
               <div className="lg:col-span-7">
                 <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8, delay: 0.2 }} className="prose prose-lg md:prose-xl prose-stone font-body text-muted-foreground leading-relaxed max-w-none">
-                  <div className="text-2xl md:text-3xl text-foreground font-light leading-snug mb-10 about-rich-text" dangerouslySetInnerHTML={{ __html: String(d(['story', 'paragraph1'], "about.story.paragraph1")).replace(/&nbsp;/g, ' ') }} />
-                  <div className="mb-8 about-rich-text" dangerouslySetInnerHTML={{ __html: String(d(['story', 'paragraph2'], "about.story.paragraph2")).replace(/&nbsp;/g, ' ') }} />
-                  <div className="about-rich-text" dangerouslySetInnerHTML={{ __html: String(d(['story', 'paragraph3'], "about.story.paragraph3")).replace(/&nbsp;/g, ' ') }} />
+                  <div className="text-lg md:text-xl text-foreground font-light leading-relaxed about-rich-text" dangerouslySetInnerHTML={{ __html: String(d(['story', 'content'], "about.story.content")).replace(/&nbsp;/g, ' ') }} />
                 </motion.div>
                 
                 <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.4 }} className="mt-16 rounded-sm overflow-hidden aspect-video shadow-2xl relative group">

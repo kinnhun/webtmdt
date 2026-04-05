@@ -63,20 +63,10 @@ export const aboutDefaults = {
   story: {
     label: { us: "Our Story", uk: "Our Story", vi: "Câu Chuyện Của Chúng Tôi" },
     heading: { us: "From OEM to Global Brand", uk: "From OEM to Global Brand", vi: "Từ OEM Đến Thương Hiệu Toàn Cầu" },
-    paragraph1: {
-      us: "DHT started as an OEM manufacturer. As the market shifted, we decided to take control of our own export journey.",
-      uk: "DHT started as an OEM manufacturer. As the market shifted, we decided to take control of our own export journey.",
-      vi: "DHT khởi nguyên từ một nhà máy sản xuất gia công. Đứng trước sự thay đổi của thị trường, chúng tôi quyết định làm chủ hành trình xuất khẩu của chính mình.",
-    },
-    paragraph2: {
-      us: "It was a challenging process: restructuring production, investing in technology, training our team, and learning to serve global customers.",
-      uk: "It was a challenging process: restructuring production, investing in technology, training our team, and learning to serve global customers.",
-      vi: "Đó là một quá trình vô cùng thử thách: từ việc cơ cấu lại hệ thống sản xuất, đầu tư vào máy móc công nghệ, đào tạo đội ngũ nhân lực, đến việc học hỏi cách làm việc với các đối tác lớn trên toàn thế giới.",
-    },
-    paragraph3: {
-      us: "Thanks to perseverance and over 30 years of experience, DHT now exports to more than 20 countries – from the US and Australia to across Europe. \"We don't just sell wood – we deliver a story of Vietnamese resilience.\"",
-      uk: "Thanks to perseverance and over 30 years of experience, DHT now exports to more than 20 countries – from the US and Australia to across Europe. \"We don't just sell wood – we deliver a story of Vietnamese resilience.\"",
-      vi: "Nhờ vào nỗ lực không ngừng nghỉ cùng bề dày kinh nghiệm làm mộc, nội thất ngoài trời DHT hiện đã có mặt tại hơn 20 quốc gia. \"Chúng tôi không bán một món đồ gỗ vô tri, chúng tôi muốn kể câu chuyện về năng lực và sự kiên trì của người Việt\".",
+    content: {
+      us: "<p>DHT started as an OEM manufacturer. As the market shifted, we decided to take control of our own export journey.</p><p>It was a challenging process: restructuring production, investing in technology, training our team, and learning to serve global customers.</p><p>Thanks to perseverance and over 30 years of experience, DHT now exports to more than 20 countries – from the US and Australia to across Europe. <em>\"We don't just sell wood – we deliver a story of Vietnamese resilience.\"</em></p>",
+      uk: "<p>DHT started as an OEM manufacturer. As the market shifted, we decided to take control of our own export journey.</p><p>It was a challenging process: restructuring production, investing in technology, training our team, and learning to serve global customers.</p><p>Thanks to perseverance and over 30 years of experience, DHT now exports to more than 20 countries – from the US and Australia to across Europe. <em>\"We don't just sell wood – we deliver a story of Vietnamese resilience.\"</em></p>",
+      vi: "<p>DHT khởi nguyên từ một nhà máy sản xuất gia công. Đứng trước sự thay đổi của thị trường, chúng tôi quyết định làm chủ hành trình xuất khẩu của chính mình.</p><p>Đó là một quá trình vô cùng thử thách: từ việc cơ cấu lại hệ thống sản xuất, đầu tư vào máy móc công nghệ, đào tạo đội ngũ nhân lực, đến việc học hỏi cách làm việc với các đối tác lớn trên toàn thế giới.</p><p>Nhờ vào nỗ lực không ngừng nghỉ cùng bề dày kinh nghiệm làm mộc, nội thất ngoài trời DHT hiện đã có mặt tại hơn 20 quốc gia. <em>\"Chúng tôi không bán một món đồ gỗ vô tri, chúng tôi muốn kể câu chuyện về năng lực và sự kiên trì của người Việt\".</em></p>",
     },
     images: ["/img/readyToWork/1.png", "/img/readyToWork/2.png", "/img/readyToWork/3.png"],
   },

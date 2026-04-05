@@ -33,9 +33,7 @@ export interface IAboutContent extends Document {
   story: {
     label: { us: string; uk: string; vi: string };
     heading: { us: string; uk: string; vi: string };
-    paragraph1: { us: string; uk: string; vi: string };
-    paragraph2: { us: string; uk: string; vi: string };
-    paragraph3: { us: string; uk: string; vi: string };
+    content: { us: string; uk: string; vi: string };
     images: string[];
   };
   values: {
@@ -78,6 +76,14 @@ export interface IAboutContent extends Document {
   };
   team: {
     heading: { us: string; uk: string; vi: string };
+    leader: {
+      name: string;
+      role: { us: string; uk: string; vi: string };
+      quote: { us: string; uk: string; vi: string };
+      email: string;
+      phone: string;
+      image: string;
+    };
     members: Array<{
       name: string;
       key: string;
@@ -131,9 +137,7 @@ const AboutContentSchema = new Schema<IAboutContent>(
     story: {
       label: I18nTextSchema,
       heading: I18nTextSchema,
-      paragraph1: I18nTextSchema,
-      paragraph2: I18nTextSchema,
-      paragraph3: I18nTextSchema,
+      content: I18nTextSchema,
       images: [{ type: String }],
     },
     values: {
@@ -196,6 +200,7 @@ const AboutContentSchema = new Schema<IAboutContent>(
         {
           name: { type: String },
           key: { type: String },
+          isLeader: { type: Boolean, default: false },
           role: I18nTextSchema,
           quote: I18nTextSchema,
           email: { type: String, default: "" },

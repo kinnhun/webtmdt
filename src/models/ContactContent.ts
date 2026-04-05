@@ -71,6 +71,7 @@ export interface IContactContent extends Document {
     successDescSuffix: { us: string; uk: string; vi: string };
     closeBtn: { us: string; uk: string; vi: string };
     whatsappText: { us: string; uk: string; vi: string };
+    whatsappNumber: string;
   };
 }
 
@@ -145,6 +146,7 @@ const ContactContentSchema = new Schema<IContactContent>(
       successDescSuffix: I18nTextSchema,
       closeBtn: I18nTextSchema,
       whatsappText: I18nTextSchema,
+      whatsappNumber: { type: String, default: "" },
     },
   },
   { timestamps: true }

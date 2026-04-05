@@ -1,41 +1,39 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import mongoose from "mongoose";
 import dbConnect from "@/lib/mongodb";
 import AboutRevision from "@/models/AboutRevision";
-import AboutContent from "@/models/AboutContent";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   await dbConnect();
 
+  // POST: Set a specific revision as default (by revisionId)
   if (req.method === "POST") {
     try {
-      const bodyData = req.body;
-      if (!bodyData || typeof bodyData !== "object") {
-        return res.status(400).json({ error: "Invalid request body" });
+      const { revisionId } = req.body;
+      if (!revisionId) {
+        return res.status(400).json({ error: "Missing revisionId" });
       }
 
-      // Find current actual doc ID to associate
-      const currentDoc = await AboutContent.findOne().lean();
+      const revision = await AboutRevision.findById(revisionId);
+      if (!revision) {
+        return res.status(404).json({ error: "Revision not found" });
+      }
 
       // Clear previous defaults
       await AboutRevision.updateMany({ isDefault: true }, { $set: { isDefault: false } });
 
-      // Create new default revision
-      const doc = await AboutRevision.create({
-        aboutContentId: currentDoc?._id || new mongoose.Types.ObjectId(), // fallbacks
-        data: bodyData,
-        note: "Bản Phục Hồi Mặc Định (Set by Admin)",
-        isDefault: true,
-        createdBy: "Admin"
-      });
+      // Set this revision as default
+      revision.isDefault = true;
+      revision.note = revision.note || "Bản Mặc Định";
+      await revision.save();
 
-      return res.status(200).json({ success: true, data: doc, message: "Đã lưu bản mặc định." });
+      return res.status(200).json({ success: true, message: "Đã đặt làm bản mặc định." });
     } catch (error) {
       console.error("Set Default Error:", error);
       return res.status(500).json({ error: "Failed to set default" });
     }
   }
 
+  // GET: Fetch the current default revision data
   if (req.method === "GET") {
     try {
       const defaultRev = await AboutRevision.findOne({ isDefault: true }).lean();

@@ -89,5 +89,29 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   }
 
+  // PATCH: Update revision note
+  if (req.method === "PATCH") {
+    try {
+      const { id } = req.query;
+      const { note } = req.body;
+      if (!id) {
+        return res.status(400).json({ error: "Missing revision id" });
+      }
+
+      const revision = await AboutRevision.findById(id);
+      if (!revision) {
+        return res.status(404).json({ error: "Revision not found" });
+      }
+
+      if (note !== undefined) revision.note = note;
+      await revision.save();
+
+      return res.status(200).json({ success: true, message: "Revision updated" });
+    } catch (error) {
+      console.error("Admin AboutRevisions PATCH Error:", error);
+      return res.status(500).json({ error: "Failed to update revision" });
+    }
+  }
+
   return res.status(405).json({ error: "Method not allowed" });
 }

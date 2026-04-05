@@ -13,7 +13,7 @@ import {
   ReadOutlined, TrophyOutlined, HistoryOutlined,
   BarChartOutlined, TeamOutlined, EnvironmentOutlined,
   RocketOutlined, RollbackOutlined, FileTextOutlined,
-  UpOutlined, DownOutlined, ReloadOutlined, StarOutlined
+  UpOutlined, DownOutlined, ReloadOutlined, StarOutlined, EditOutlined
 } from '@ant-design/icons';
 import { 
   Award, Users, Shield, Globe, Leaf, Star, Heart, Zap, Target, CheckCircle,
@@ -620,30 +620,64 @@ export default function AboutEditor() {
     });
   };
 
-  const handleSetDefault = async () => {
+  const handleSetDefault = (revisionId: string) => {
     Modal.confirm({
-      title: 'Set as Custom Default?',
-      content: 'This will save the current form data as the permanent default template. If you "Load Default" later, it will restore this exact data instead of the factory default. It cannot be deleted from history. Are you sure?',
+      title: 'Đặt làm bản Mặc Định?',
+      content: 'Bản này sẽ trở thành mặc định. Khi bấm "Load Default" sẽ khôi phục dữ liệu của bản này. Bản mặc định không thể bị xoá. Bạn có chắc?',
+      okText: 'Đồng ý',
+      cancelText: 'Hủy',
       onOk: async () => {
         try {
-          const values = await form.validateFields();
-          setSaving(true);
           const res = await fetch('/api/admin/about/default', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(values),
+            body: JSON.stringify({ revisionId }),
           });
           const json = await res.json();
           if (json.success) {
-            message.success('Current data is now set as the Default Template!');
-            if (historyOpen) fetchRevisions();
+            message.success('Đã đặt làm bản mặc định!');
+            fetchRevisions();
           } else {
-            message.error(json.error || 'Failed to set default');
+            message.error(json.error || 'Thất bại');
           }
         } catch {
-          message.error('Validation failed or request failed.');
-        } finally {
-          setSaving(false);
+          message.error('Lỗi kết nối!');
+        }
+      }
+    });
+  };
+
+  const handleEditRevision = (revisionId: string, currentNote: string) => {
+    let newNote = currentNote;
+    Modal.confirm({
+      title: 'Sửa ghi chú',
+      content: (
+        <div className="mt-3">
+          <Input
+            defaultValue={currentNote}
+            placeholder="Nhập ghi chú mới..."
+            onChange={(e) => newNote = e.target.value}
+          />
+        </div>
+      ),
+      okText: 'Lưu',
+      cancelText: 'Hủy',
+      onOk: async () => {
+        try {
+          const res = await fetch(`/api/admin/about/revisions?id=${revisionId}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ note: newNote }),
+          });
+          const json = await res.json();
+          if (json.success) {
+            message.success('Đã cập nhật ghi chú!');
+            fetchRevisions();
+          } else {
+            message.error(json.error || 'Cập nhật thất bại');
+          }
+        } catch {
+          message.error('Lỗi kết nối!');
         }
       }
     });
@@ -1181,13 +1215,6 @@ export default function AboutEditor() {
         </div>
         <div className="flex items-center gap-2">
           <Button
-            icon={<StarOutlined />}
-            onClick={handleSetDefault}
-            className="rounded-lg border-gray-200 text-orange-600 hover:text-orange-700"
-          >
-            Set As Default
-          </Button>
-          <Button
             icon={<FileTextOutlined />}
             onClick={() => {
               Modal.confirm({
@@ -1298,29 +1325,44 @@ export default function AboutEditor() {
         {fetchingRevisions ? (
           <div className="flex justify-center p-10"><Spin /></div>
         ) : revisions.length > 0 ? (
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-1">
             {revisions.map((item, index) => (
-              <div key={item._id || index} className="flex flex-row items-center justify-between py-3 border-b border-gray-100 last:border-b-0">
-                <div className="flex-1">
-                  <div className="font-semibold text-sm mb-1">
-                    {item.note || 'No note'} 
-                    {index === 0 && <span className="text-xs ml-2 text-green-600 bg-green-100 px-1.5 py-0.5 rounded">Latest</span>}
-                  </div>
-                  <div className="text-xs text-gray-500 flex flex-col gap-0.5">
-                    <div>{new Date(item.createdAt).toLocaleString()}</div>
-                    <div>By: {item.createdBy}</div>
-                  </div>
+              <div key={item._id || index} className={`rounded-xl border p-3 transition-colors ${
+                item.isDefault 
+                  ? 'border-orange-300 bg-orange-50/50' 
+                  : 'border-gray-100 bg-white hover:border-gray-200'
+              }`}>
+                {/* Row 1: Title + badges */}
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className="font-semibold text-sm text-gray-800 truncate flex-1">
+                    {item.note || 'No note'}
+                  </span>
+                  {index === 0 && <span className="text-[10px] text-green-700 bg-green-100 px-1.5 py-0.5 rounded-full font-bold shrink-0">Latest</span>}
+                  {item.isDefault && <span className="text-[10px] text-orange-600 bg-orange-100 px-1.5 py-0.5 rounded-full font-bold shrink-0">★ Mặc định</span>}
                 </div>
-                <div className="flex items-center gap-2">
-                  <Popconfirm title="Rollback" description="Are you sure?" onConfirm={() => handleRollback(item._id)} okText="Yes" cancelText="No">
-                    <Button type="link" size="small" icon={<RollbackOutlined />}>Rollback</Button>
+                {/* Row 2: Metadata */}
+                <div className="text-[11px] text-gray-400 mb-2.5">
+                  {new Date(item.createdAt).toLocaleString()} · {item.createdBy}
+                </div>
+                {/* Row 3: Actions */}
+                <div className="flex items-center gap-1 flex-wrap">
+                  <Popconfirm title="Khôi phục bản này?" description="Dữ liệu hiện tại sẽ được backup trước khi khôi phục." onConfirm={() => handleRollback(item._id)} okText="Đồng ý" cancelText="Hủy">
+                    <Button size="small" type="default" icon={<RollbackOutlined />} className="rounded-lg text-xs">Khôi phục</Button>
                   </Popconfirm>
+                  <Button size="small" type="default" icon={<EditOutlined />} onClick={() => handleEditRevision(item._id, item.note || '')} className="rounded-lg text-xs">Sửa</Button>
                   {item.isDefault ? (
-                    <span className="text-xs text-orange-500 font-medium px-2 py-1 bg-orange-50 rounded">Mặc định</span>
+                    <Tooltip title="Đây là bản mặc định hiện tại">
+                      <Button size="small" disabled icon={<StarOutlined />} className="rounded-lg text-xs">Mặc định</Button>
+                    </Tooltip>
                   ) : (
-                    <Popconfirm title="Delete" description="Are you sure?" onConfirm={() => handleDeleteRevision(item._id)} okText="Yes" cancelText="No">
-                      <Button type="link" danger size="small" icon={<DeleteOutlined />} />
-                    </Popconfirm>
+                    <>
+                      <Popconfirm title="Đặt làm Mặc Định?" description="Bản này sẽ không thể bị xoá." onConfirm={() => handleSetDefault(item._id)} okText="Đồng ý" cancelText="Hủy">
+                        <Button size="small" type="default" icon={<StarOutlined />} className="rounded-lg text-xs text-orange-500 border-orange-200 hover:border-orange-400">Mặc định</Button>
+                      </Popconfirm>
+                      <Popconfirm title="Xóa bản này?" description="Không thể hoàn tác." onConfirm={() => handleDeleteRevision(item._id)} okText="Xóa" cancelText="Hủy">
+                        <Button size="small" type="text" danger icon={<DeleteOutlined />} className="rounded-lg text-xs" />
+                      </Popconfirm>
+                    </>
                   )}
                 </div>
               </div>

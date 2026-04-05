@@ -1,4 +1,5 @@
-import Head from "next/head";
+import SEO from "@/components/SEO";
+import Schema from "@/components/Schema";
 import ProductDetailContainer from "./ProductDetailContainer";
 import { useProductDetail } from "../hooks/useProductDetail";
 import { useTranslation } from "react-i18next";
@@ -25,10 +26,29 @@ export default function ProductDetailWrapper() {
 
   return (
     <>
-      <Head>
-        <title>{pName} — DHT Furniture</title>
-        <meta name="description" content={pDesc} />
-      </Head>
+      <SEO 
+        title={`${pName} — DHT Furniture`} 
+        description={pDesc} 
+        image={product.images?.[0]}
+      />
+      <Schema 
+        type="Product"
+        data={{
+          name: pName,
+          description: pDesc,
+          image: product.images,
+          brand: {
+            "@type": "Brand",
+            name: "DHT Company"
+          },
+          offers: {
+            "@type": "Offer",
+            url: `https://dhtcompany.com/catalogue/${(product as any).slug || (product as any).id || (product as any)._id}`,
+            availability: "https://schema.org/InStock",
+            itemCondition: "https://schema.org/NewCondition"
+          }
+        }}
+      />
       <ProductDetailContainer product={product} relatedProducts={relatedProducts} />
     </>
   );

@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
-import Head from "next/head";
+import SEO from "@/components/SEO";
+import Schema from "@/components/Schema";
 import { Mail, Phone, MapPin, Send, Clock, Globe } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { GetServerSideProps } from "next";
@@ -160,10 +161,29 @@ export default function ContactPage({ dbData }: { dbData: any }) {
 
   return (
     <>
-      <Head>
-        <title>{d(['seo', 'title'], "contact.seo.title")}</title>
-        <meta name="description" content={d(['seo', 'description'], "contact.seo.description")} />
-      </Head>
+      <SEO title={d(['seo', 'title'], "contact.seo.title")} description={d(['seo', 'description'], "contact.seo.description")} />
+      <Schema 
+        type="LocalBusiness"
+        data={{
+          name: "DHT Company (nemark)",
+          image: "https://dhtcompany.com/img/logo-no-text.png",
+          telephone: "+84 902 907 399",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "19 National Highway, Nguyen Hue Ward, Phuoc Loc",
+            addressLocality: "Tuy Phuoc District",
+            addressRegion: "Binh Dinh Province",
+            addressCountry: "VN"
+          },
+          geo: {
+            "@type": "GeoCoordinates",
+            latitude: 13.834010,
+            longitude: 109.136270
+          },
+          url: "https://dhtcompany.com/contact",
+          priceRange: "$$$"
+        }}
+      />
       <div className="pt-20" style={{ minHeight: "100vh", backgroundColor: "hsl(var(--warm-cream))" }}>
         <div className="py-20 text-center" style={{ backgroundColor: "hsl(var(--navy-deep))" }}>
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="font-display font-bold text-white mb-4 rt-reset" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }} dangerouslySetInnerHTML={{ __html: d(['hero', 'title'], "contact.hero.title") }} />

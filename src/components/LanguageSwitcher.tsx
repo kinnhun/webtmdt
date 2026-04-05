@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useRouter } from "next/router";
 import type { ReactNode } from "react";
 
 const FLAGS: Record<string, ReactNode> = {
@@ -36,6 +37,7 @@ const LANGUAGES = [
 
 export default function LanguageSwitcher() {
   const { i18n } = useTranslation();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -84,7 +86,11 @@ export default function LanguageSwitcher() {
             return (
               <button
                 key={lang.code}
-                onClick={() => { i18n.changeLanguage(lang.code); setOpen(false); }}
+                onClick={async () => {
+                  setOpen(false);
+                  const { pathname, asPath, query } = router;
+                  await router.push({ pathname, query }, asPath, { locale: lang.code });
+                }}
                 className="w-full flex items-center gap-2.5 px-4 py-2.5 font-body text-sm transition-colors text-left"
                 style={{
                   color: isActive ? "hsl(var(--orange))" : "rgba(255,255,255,0.7)",

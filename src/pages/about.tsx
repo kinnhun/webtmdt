@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
-import Head from "next/head";
+import SEO from "@/components/SEO";
 import Link from "next/link";
 import { 
   Award, Users, Shield, Globe, Leaf, ArrowDown, ChevronRight, Star, Heart, Zap, Target, CheckCircle,
@@ -285,10 +285,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
 
   return (
     <>
-      <Head>
-        <title>{d(['hero', 'title'], "about.seo.title")}</title>
-        <meta name="description" content={d(['hero', 'description'], "about.seo.description")} />
-      </Head>
+      <SEO title={d(['hero', 'title'], "about.seo.title")} description={d(['hero', 'description'], "about.seo.description")} />
 
       <div className="bg-white">
         {/* ── 1. Hero Parallax ── */}

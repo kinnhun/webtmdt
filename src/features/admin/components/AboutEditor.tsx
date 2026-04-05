@@ -528,11 +528,11 @@ export default function AboutEditor() {
         const res = await fetch('/api/admin/about');
         const json = await res.json();
         if (json.success && json.data) {
-          form.setFieldsValue(json.data);
+          setTimeout(() => form.setFieldsValue(json.data), 0);
           setIsDefault(false);
         } else {
           // Fallback to default
-          form.setFieldsValue(aboutDefaults);
+          setTimeout(() => form.setFieldsValue(aboutDefaults), 0);
           setIsDefault(true);
           message.info("No saved data found. Loaded default template.");
         }
@@ -678,24 +678,26 @@ export default function AboutEditor() {
       const json = await res.json();
       if (json.success && json.data) {
         form.resetFields();
-        form.setFieldsValue(json.data);
+        setTimeout(() => form.setFieldsValue(json.data), 0);
         message.success('Custom Default loaded. Please verify before saving.');
       } else {
         form.resetFields();
-        form.setFieldsValue(aboutDefaults);
+        setTimeout(() => form.setFieldsValue(aboutDefaults), 0);
         message.success('Factory Default loaded.');
       }
     } catch {
       form.resetFields();
-      form.setFieldsValue(aboutDefaults);
+      setTimeout(() => form.setFieldsValue(aboutDefaults), 0);
       message.error("Failed to load custom default, using factory default.");
     }
   };
 
   const handleLoadRevisionToForm = (revisionData: any) => {
     form.resetFields();
-    form.setFieldsValue(revisionData);
-    message.info(t('adminAbout.msgBackupLoaded') || 'Backup loaded into form (not saved yet).');
+    setTimeout(() => {
+      form.setFieldsValue(revisionData);
+      message.info(t('adminAbout.msgBackupLoaded') || 'Backup loaded into form (not saved yet).');
+    }, 0);
     setHistoryOpen(false);
   };
 

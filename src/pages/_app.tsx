@@ -14,22 +14,30 @@ import QueryProvider from "@/providers/QueryProvider";
 import SiteHeader from "@/components/layout/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
 import SearchOverlay from "@/components/SearchOverlay";
+import SEO from "@/components/SEO";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [searchOpen, setSearchOpen] = useState(false);
   const router = useRouter();
   const isAdminRoute = router.pathname.startsWith('/admin');
 
-  // Restore saved language AFTER hydration to avoid SSR mismatch
+  // Synchronize react-i18next with Next.js i18n router
+  if (router.locale && i18n.language !== router.locale) {
+    i18n.changeLanguage(router.locale);
+  }
+
+  // Handle client-side persistence if user manually changes language
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved && (SUPPORTED_LANGS as readonly string[]).includes(saved) && saved !== i18n.language) {
-      i18n.changeLanguage(saved);
-    }
-  }, []);
+    const handleRouteChange = (url: string, { shallow }: any) => {
+       // Optional: Log path changes
+    };
+    router.events.on('routeChangeComplete', handleRouteChange);
+    return () => router.events.off('routeChangeComplete', handleRouteChange);
+  }, [router.events]);
 
   return (
     <QueryProvider>
+      <SEO />
       {!isAdminRoute && <SiteHeader onSearchOpen={() => setSearchOpen(true)} />}
       <main>
         <Component {...pageProps} />

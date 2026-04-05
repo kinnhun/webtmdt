@@ -26,10 +26,10 @@ i18n
     },
   });
 
-// Persist language changes to localStorage
+// Persist language changes to Next.js cookie for automatic subpath mapping
 i18n.on('languageChanged', (lng) => {
   if (typeof window !== 'undefined') {
-    localStorage.setItem(STORAGE_KEY, lng);
+    document.cookie = `NEXT_LOCALE=${lng}; path=/; max-age=31536000; SameSite=Lax`;
   }
 });
 

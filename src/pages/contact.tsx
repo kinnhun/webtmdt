@@ -195,26 +195,53 @@ export default function ContactPage({ dbData }: { dbData: any }) {
           <div className="mb-24">
             <h2 className="font-display text-3xl font-bold text-center mb-12 rt-reset" style={{ color: "hsl(var(--navy-deep))" }} dangerouslySetInnerHTML={{ __html: d(['locations', 'heading'], "contact.locations.title") }} />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {locations.map((loc: any, i: number) => (
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * i, duration: 0.5 }} key={i} className="bg-white p-6 rounded-sm border border-border flex flex-col h-full hover:shadow-lg transition-shadow">
-                  <h3 className="font-display font-bold text-lg mb-1 leading-tight rt-reset" style={{ color: "hsl(var(--navy-deep))" }} dangerouslySetInnerHTML={{ __html: loc.title }} />
-                  <div className="font-body text-[10px] tracking-wider uppercase font-semibold mb-5 rt-reset" style={{ color: "hsl(var(--orange))" }} dangerouslySetInnerHTML={{ __html: loc.subtitle }} />
+              {locations.map((loc: any, i: number) => {
+                const titleStr = typeof loc.title === 'string' ? loc.title : '';
+                const subtitleStr = typeof loc.subtitle === 'string' ? loc.subtitle : '';
+                const addressStr = typeof loc.address === 'string' ? loc.address : '';
+                const phoneStr = typeof loc.phone === 'string' ? loc.phone : '';
+                const hoursStr = typeof loc.hours === 'string' ? loc.hours : '';
+                
+                const hasTitle = titleStr && titleStr.replace(/<[^>]*>?/gm, '').trim() !== '';
+                const hasSubtitle = subtitleStr && subtitleStr.replace(/<[^>]*>?/gm, '').trim() !== '';
+                const hasAddress = addressStr && addressStr.replace(/<[^>]*>?/gm, '').trim() !== '';
+                const hasPhone = phoneStr && phoneStr.replace(/<[^>]*>?/gm, '').trim() !== '';
+                const hasHours = hoursStr && hoursStr.replace(/<[^>]*>?/gm, '').trim() !== '';
+                const hasAnyContent = hasTitle || hasSubtitle || hasAddress || hasPhone || hasHours;
+                if (!hasAnyContent) return null;
+
+                return (
+                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * i, duration: 0.5 }} key={i} className="bg-white p-6 rounded-sm border border-border flex flex-col h-full hover:shadow-lg transition-shadow overflow-hidden">
+                  {hasTitle && (
+                    <h3 className="font-display font-bold text-lg mb-1 leading-tight rt-reset wrap-break-word" style={{ color: "hsl(var(--navy-deep))" }} dangerouslySetInnerHTML={{ __html: loc.title }} />
+                  )}
+                  {hasSubtitle && (
+                    <div className="font-body text-[10px] tracking-wider uppercase font-semibold mb-5 rt-reset wrap-break-word" style={{ color: "hsl(var(--orange))" }} dangerouslySetInnerHTML={{ __html: loc.subtitle }} />
+                  )}
                   
                   <div className="space-y-4 font-body text-sm text-muted-foreground flex-1">
-                    <div className="flex items-start gap-3">
-                      <MapPin size={16} className="mt-0.5 shrink-0" style={{ color: "hsl(var(--orange))" }} />
-                      <span className="leading-relaxed rt-reset block flex-1 wrap-break-word min-w-0" dangerouslySetInnerHTML={{ __html: loc.address }} />
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <Phone size={16} className="mt-0.5 shrink-0" style={{ color: "hsl(var(--orange))" }} />
-                      <div className="flex-1 min-w-0 wrap-break-word">
-                        <a href={loc.href} className="font-medium hover:text-orange transition-colors block mb-0.5 text-foreground wrap-break-word">{loc.phone}</a>
-                        <span className="text-xs opacity-80 block rt-reset wrap-break-word" dangerouslySetInnerHTML={{ __html: loc.hours }} />
+                    {hasAddress && (
+                      <div className="flex items-start gap-3">
+                        <MapPin size={16} className="mt-0.5 shrink-0" style={{ color: "hsl(var(--orange))" }} />
+                        <span className="leading-relaxed rt-reset block flex-1 wrap-break-word min-w-0" dangerouslySetInnerHTML={{ __html: loc.address }} />
                       </div>
-                    </div>
+                    )}
+                    {(hasPhone || hasHours) && (
+                      <div className="flex items-start gap-3">
+                        <Phone size={16} className="mt-0.5 shrink-0" style={{ color: "hsl(var(--orange))" }} />
+                        <div className="flex-1 min-w-0 wrap-break-word">
+                          {hasPhone && (
+                            <a href={loc.href} className="font-medium hover:text-orange transition-colors block mb-0.5 text-foreground wrap-break-word">{loc.phone}</a>
+                          )}
+                          {hasHours && (
+                            <span className="text-xs opacity-80 block rt-reset wrap-break-word" dangerouslySetInnerHTML={{ __html: loc.hours }} />
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </motion.div>
-              ))}
+              )})}
             </div>
           </div>
 

@@ -513,6 +513,7 @@ export default function AboutEditor() {
   const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [translatingMarquee, setTranslatingMarquee] = useState(false);
   
   // Revisions & Preview States
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -817,7 +818,53 @@ export default function AboutEditor() {
           <Form.List name={['marquee', 'us']}>
             {(fields, { add, remove }) => (
               <div className="space-y-2">
-                <span className="text-xs font-semibold text-gray-500 flex items-center gap-1"><GlobalOutlined className="text-orange-500" /> US</span>
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-semibold text-gray-500 flex items-center gap-1"><GlobalOutlined className="text-orange-500" /> US</span>
+                  <Button
+                    size="small"
+                    type="link"
+                    icon={<TranslationOutlined />}
+                    onClick={async () => {
+                      if (!form) return;
+                      const usItems = form.getFieldValue(['marquee', 'us']) || [];
+                      if (!usItems.length || !usItems.some((s: string) => s?.trim())) {
+                        message.warning('Please add at least one item in US first.');
+                        return;
+                      }
+                      setTranslatingMarquee(true);
+                      try {
+                        const ukItems = [...usItems];
+                        form.setFieldValue(['marquee', 'uk'], ukItems);
+
+                        const viItems = await Promise.all(
+                          usItems.map(async (text: string) => {
+                            if (!text?.trim()) return text;
+                            try {
+                              const res = await fetch('/api/translate', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ text, targetLang: 'vi', sourceLang: 'en' }),
+                              });
+                              const data = await res.json();
+                              return data.translated || text;
+                            } catch {
+                              return text;
+                            }
+                          })
+                        );
+                        form.setFieldValue(['marquee', 'vi'], viItems);
+                        message.success('Translated Marquee items to VI and copied to UK!');
+                      } catch (err) {
+                        message.error('Translation failed.');
+                      } finally {
+                        setTranslatingMarquee(false);
+                      }
+                    }}
+                    loading={translatingMarquee}
+                  >
+                    Auto Translate to VI & UK
+                  </Button>
+                </div>
                 {fields.map((field) => (
                   <div key={field.key} className="flex gap-2">
                     <Form.Item {...(({key, ...rest}) => rest)(field)} className="flex-1 mb-0">

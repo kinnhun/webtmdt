@@ -521,6 +521,26 @@ export default function AboutEditor() {
   const [fetchingRevisions, setFetchingRevisions] = useState(false);
   const [isDefault, setIsDefault] = useState(false);
 
+  /* ── Deep-clean Mongoose _id / __v from nested objects & arrays ── */
+  const deepCleanMongoFields = useCallback((obj: Record<string, unknown>): Record<string, unknown> => {
+    if (Array.isArray(obj)) {
+      return obj.map((item) =>
+        item && typeof item === 'object' ? deepCleanMongoFields(item as Record<string, unknown>) : item
+      ) as unknown as Record<string, unknown>;
+    }
+    if (obj && typeof obj === 'object') {
+      const cleaned: Record<string, unknown> = {};
+      for (const [key, value] of Object.entries(obj)) {
+        if (key === '_id' || key === '__v') continue;
+        cleaned[key] = value && typeof value === 'object'
+          ? deepCleanMongoFields(value as Record<string, unknown>)
+          : value;
+      }
+      return cleaned;
+    }
+    return obj;
+  }, []);
+
   /* ── Fetch existing data ── */
   useEffect(() => {
     (async () => {
@@ -528,7 +548,9 @@ export default function AboutEditor() {
         const res = await fetch('/api/admin/about');
         const json = await res.json();
         if (json.success && json.data) {
-          setTimeout(() => form.setFieldsValue(json.data), 0);
+          // Clean Mongoose _id/__v from loaded data before setting form
+          const cleanedData = deepCleanMongoFields(json.data as Record<string, unknown>);
+          setTimeout(() => form.setFieldsValue(cleanedData), 0);
           setIsDefault(false);
         } else {
           // Fallback to default
@@ -542,7 +564,7 @@ export default function AboutEditor() {
         setLoading(false);
       }
     })();
-  }, [form]);
+  }, [form, deepCleanMongoFields]);
 
   /* ── Fetch Revisions ── */
   const fetchRevisions = async () => {
@@ -558,13 +580,18 @@ export default function AboutEditor() {
     }
   };
 
+
   /* ── Save ── */
   const handleSave = async (note: string = "Manual Update") => {
+    setSaving(true);
     try {
-      const values = await form.validateFields();
-      setSaving(true);
+      // Use getFieldsValue instead of validateFields to avoid blocking on hidden i18n fields
+      const rawValues = form.getFieldsValue(true);
 
-      // Clean up Mongoose fields that shouldn't be sent back
+      // Deep-clean all Mongoose metadata from nested subdocuments
+      const values = deepCleanMongoFields(rawValues) as Record<string, unknown>;
+
+      // Remove top-level Mongoose fields
       delete values._id;
       delete values.__v;
       delete values.createdAt;
@@ -588,7 +615,7 @@ export default function AboutEditor() {
       }
     } catch (err) {
       console.error('Save error:', err);
-      message.error('Validation failed. Please check all fields.');
+      message.error('Lỗi khi lưu. Vui lòng thử lại.');
     } finally {
       setSaving(false);
     }
@@ -770,7 +797,7 @@ export default function AboutEditor() {
       style: { background: '#fff' },
       children: (
         <div className="space-y-4 p-2">
-          <I18nTextField form={form} baseName={['hero', 'title']} label={t('adminAbout.lblTitle')} required />
+          <I18nTextField form={form} baseName={['hero', 'title']} label={t('adminAbout.lblTitle')} />
           <I18nTextField form={form} baseName={['hero', 'subtitle']} label={t('adminAbout.lblSubtitle')} />
           <I18nTextField form={form} baseName={['hero', 'description']} label={t('adminAbout.lblDescription')} textarea rows={3} />
           <Form.Item name={['hero', 'backgroundImages']} noStyle>
@@ -847,7 +874,7 @@ export default function AboutEditor() {
       style: { background: '#fff' },
       children: (
         <div className="space-y-4 p-2">
-          <I18nTextField form={form} baseName={['welcome', 'title']} label={t('adminAbout.lblTitle')} required />
+          <I18nTextField form={form} baseName={['welcome', 'title']} label={t('adminAbout.lblTitle')} />
           <I18nRichTextField form={form} baseName={['welcome', 'description']} label={t('adminAbout.lblDescription')} />
           <Divider className="my-3" />
           <SectionLabel>Value Points (displayed on the right)</SectionLabel>
@@ -882,9 +909,9 @@ export default function AboutEditor() {
       children: (
         <div className="space-y-4 p-2">
           <I18nTextField form={form} baseName={['story', 'label']} label="Section Label" />
-          <I18nTextField form={form} baseName={['story', 'heading']} label={t('adminAbout.lblHeading')} required />
+          <I18nTextField form={form} baseName={['story', 'heading']} label={t('adminAbout.lblHeading')} />
           <Divider className="my-2" />
-          <I18nRichTextField form={form} baseName={['story', 'content']} label="Story Content" required />
+          <I18nRichTextField form={form} baseName={['story', 'content']} label="Story Content" />
           <Divider className="my-2" />
           <Form.Item name={['story', 'images']} noStyle>
             <MultiImageField label="Story Slideshow Images (rotates every 4s)" max={6} />

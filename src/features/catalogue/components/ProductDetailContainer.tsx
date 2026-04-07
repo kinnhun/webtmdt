@@ -241,24 +241,32 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
 
           {/* Right — Info */}
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>
-            <div className="flex items-center gap-2 mb-3">
-              <span className="px-2.5 py-1 rounded-sm font-body text-[10px] font-semibold tracking-wider uppercase text-white" style={{ backgroundColor: "hsl(var(--orange))" }}>
-                {pCategory}
-              </span>
-              <span className="font-body text-xs" style={{ color: "hsl(var(--navy)/0.4)" }}>{product.code}</span>
-            </div>
+            {(pCategory || product.code) && (
+              <div className="flex items-center gap-2 mb-3">
+                {pCategory && pCategory.trim() !== "" && (
+                  <span className="px-2.5 py-1 rounded-sm font-body text-[10px] font-semibold tracking-wider uppercase text-white" style={{ backgroundColor: "hsl(var(--orange))" }}>
+                    {pCategory}
+                  </span>
+                )}
+                {product.code && product.code.trim() !== "" && (
+                  <span className="font-body text-xs" style={{ color: "hsl(var(--navy)/0.4)" }}>{product.code}</span>
+                )}
+              </div>
+            )}
 
             <h1 className="font-display font-bold leading-tight mb-3" style={{ fontSize: "clamp(1.6rem, 3.5vw, 2.4rem)", color: "hsl(var(--navy-deep))" }}>
               {pName}
             </h1>
 
-            <p className="font-body text-sm leading-relaxed mb-6" style={{ color: "hsl(var(--navy)/0.55)" }}>
-              {pDesc}
-            </p>
+            {pDesc && pDesc.replace(/<[^>]*>?/gm, '').trim() !== "" && (
+              <p className="font-body text-sm leading-relaxed mb-6" style={{ color: "hsl(var(--navy)/0.55)" }}>
+                {pDesc}
+              </p>
+            )}
 
             {/* Quick specs */}
             <div className="grid grid-cols-2 gap-3 mb-6">
-              {product.dimensions && (
+              {product.dimensions && product.dimensions.trim() !== "" && (
                 <div className="flex items-center gap-2.5 p-3 rounded-lg" style={{ backgroundColor: "hsl(var(--navy)/0.03)" }}>
                   <Ruler size={16} style={{ color: "hsl(var(--orange))" }} />
                   <div>
@@ -267,7 +275,7 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
                   </div>
                 </div>
               )}
-              {product.weight && (
+              {product.weight && product.weight.trim() !== "" && (
                 <div className="flex items-center gap-2.5 p-3 rounded-lg" style={{ backgroundColor: "hsl(var(--navy)/0.03)" }}>
                   <Weight size={16} style={{ color: "hsl(var(--orange))" }} />
                   <div>
@@ -276,20 +284,24 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
                   </div>
                 </div>
               )}
-              <div className="flex items-center gap-2.5 p-3 rounded-lg" style={{ backgroundColor: "hsl(var(--navy)/0.03)" }}>
-                <Sparkles size={16} style={{ color: "hsl(var(--orange))" }} />
-                <div>
-                  <p className="font-body text-[10px] uppercase tracking-wider font-medium" style={{ color: "hsl(var(--navy)/0.4)" }}>{t("productDetail.material")}</p>
-                  <p className="font-body text-xs font-semibold" style={{ color: "hsl(var(--navy-deep))" }}>{pMat}</p>
+              {pMat && pMat.trim() !== "" && (
+                <div className="flex items-center gap-2.5 p-3 rounded-lg" style={{ backgroundColor: "hsl(var(--navy)/0.03)" }}>
+                  <Sparkles size={16} style={{ color: "hsl(var(--orange))" }} />
+                  <div>
+                    <p className="font-body text-[10px] uppercase tracking-wider font-medium" style={{ color: "hsl(var(--navy)/0.4)" }}>{t("productDetail.material")}</p>
+                    <p className="font-body text-xs font-semibold" style={{ color: "hsl(var(--navy-deep))" }}>{pMat}</p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center gap-2.5 p-3 rounded-lg" style={{ backgroundColor: "hsl(var(--navy)/0.03)" }}>
-                <Settings2 size={16} style={{ color: "hsl(var(--orange))" }} />
-                <div>
-                  <p className="font-body text-[10px] uppercase tracking-wider font-medium" style={{ color: "hsl(var(--navy)/0.4)" }}>{t("productDetail.style")}</p>
-                  <p className="font-body text-xs font-semibold" style={{ color: "hsl(var(--navy-deep))" }}>{pStyle}</p>
+              )}
+              {pStyle && pStyle.trim() !== "" && (
+                <div className="flex items-center gap-2.5 p-3 rounded-lg" style={{ backgroundColor: "hsl(var(--navy)/0.03)" }}>
+                  <Settings2 size={16} style={{ color: "hsl(var(--orange))" }} />
+                  <div>
+                    <p className="font-body text-[10px] uppercase tracking-wider font-medium" style={{ color: "hsl(var(--navy)/0.4)" }}>{t("productDetail.style")}</p>
+                    <p className="font-body text-xs font-semibold" style={{ color: "hsl(var(--navy-deep))" }}>{pStyle}</p>
+                  </div>
                 </div>
-              </div>
+              )}
               {colorList.length > 0 && (
                 <div className="flex items-start gap-2.5 p-3 rounded-lg col-span-2" style={{ backgroundColor: "hsl(var(--navy)/0.03)" }}>
                   <Palette size={16} className="mt-0.5 shrink-0" style={{ color: "hsl(var(--orange))" }} />

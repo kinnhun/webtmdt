@@ -26,6 +26,7 @@ export interface IContact extends Document {
   createdAt: Date;
   updatedAt: Date;
 }
+// testci/cd
 
 const ContactSchema = new Schema<IContact>(
   {

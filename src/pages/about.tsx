@@ -631,22 +631,43 @@ export default function AboutPage({ dbData }: AboutPageProps) {
             </motion.div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {locationItems.map((loc: any, i: number) => (
-                <motion.div key={loc.key} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: i * 0.1 }} className="group p-10 bg-white border border-border hover:border-[hsl(var(--orange))] hover:shadow-2xl hover:shadow-[hsl(var(--orange))]/10 transition-all duration-500 flex flex-col h-full">
+              {locationItems.map((loc: any, i: number) => {
+                const nameStr = typeof loc.name === 'string' ? loc.name : '';
+                const addressStr = typeof loc.address === 'string' ? loc.address : '';
+                const hotlineStr = typeof loc.hotline === 'string' ? loc.hotline : '';
+                
+                const hasName = nameStr && nameStr.replace(/<[^>]*>?/gm, '').trim() !== '';
+                const hasAddress = addressStr && addressStr.replace(/<[^>]*>?/gm, '').trim() !== '';
+                const hasHotline = hotlineStr && hotlineStr.replace(/<[^>]*>?/gm, '').trim() !== '';
+                
+                const hasAnyContent = hasName || hasAddress || hasHotline;
+                if (!hasAnyContent) return null;
+
+                return (
+                <motion.div key={loc.key} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: i * 0.1 }} className="group p-10 bg-white border border-border hover:border-[hsl(var(--orange))] hover:shadow-2xl hover:shadow-[hsl(var(--orange))]/10 transition-all duration-500 flex flex-col h-full overflow-hidden">
                   <div className="w-16 h-16 bg-[hsl(var(--warm-cream))] rounded-full flex items-center justify-center mb-8 shrink-0 group-hover:bg-[hsl(var(--orange))] transition-colors duration-500">
                     <Globe size={24} className="text-foreground group-hover:text-white transition-colors duration-500" />
                   </div>
-                  <h3 className="font-display font-black text-2xl mb-4 text-foreground uppercase tracking-wide">{loc.name}</h3>
-                  <p className="font-body text-muted-foreground mb-8 leading-loose font-light grow">
-                    {loc.address}
-                  </p>
-                  <div className="mt-auto border-t pt-6 border-border/50">
-                    <a href={`tel:${loc.hotline.replace(/\\s/g, "")}`} className="font-body font-bold text-lg text-[hsl(var(--orange))] hover:text-black transition-colors block line-clamp-1">
-                      {loc.hotline}
-                    </a>
-                  </div>
+                  {hasName && (
+                    <h3 className="font-display font-black text-2xl mb-4 text-foreground uppercase tracking-wide wrap-break-word">{loc.name}</h3>
+                  )}
+                  {hasAddress ? (
+                    <p className="font-body text-muted-foreground mb-8 leading-loose font-light grow wrap-break-word">
+                      {loc.address}
+                    </p>
+                  ) : (
+                    <div className="grow" />
+                  )}
+                  {hasHotline && (
+                    <div className="mt-auto border-t pt-6 border-border/50">
+                      <a href={`tel:${loc.hotline.replace(/\\s/g, "")}`} className="font-body font-bold text-lg text-[hsl(var(--orange))] hover:text-black transition-colors block line-clamp-1 wrap-break-word">
+                        {loc.hotline}
+                      </a>
+                    </div>
+                  )}
                 </motion.div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>

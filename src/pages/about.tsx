@@ -593,10 +593,10 @@ export default function AboutPage({ dbData }: AboutPageProps) {
             </motion.div>
 
             {/* Team Members */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 auto-rows-fr">
               {teamMembers.map((m: any, i: number) => (
-                <motion.div key={m.key || i} initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: i * 0.1 }} className="flex flex-col bg-white border border-border/60 hover:border-[hsl(var(--orange))/0.4] hover:shadow-xl hover:shadow-[hsl(var(--orange))]/5 transition-all duration-500 rounded-sm overflow-hidden group">
-                  <div className="w-full aspect-4/5 overflow-hidden bg-[#FAFAFA]">
+                <motion.div key={m.key || i} initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: i * 0.1 }} className="flex flex-col bg-white border border-border/60 hover:border-[hsl(var(--orange))/0.4] hover:shadow-xl hover:shadow-[hsl(var(--orange))]/5 transition-all duration-500 rounded-sm overflow-hidden group h-full">
+                  <div className="w-full aspect-4/5 overflow-hidden bg-[#FAFAFA] shrink-0">
                     <img src={m.image} alt={m.name} className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
                   </div>
                   <div className="p-8 flex flex-col grow text-center">
@@ -608,8 +608,9 @@ export default function AboutPage({ dbData }: AboutPageProps) {
                         &ldquo;{m.quote}&rdquo;
                       </p>
                     )}
+                    {!m.quote || m.quote.trim() === '' ? <div className="grow" /> : null}
 
-                    <div className="space-y-4 font-body text-sm text-muted-foreground font-medium border-t border-border/50 pt-6">
+                    <div className="space-y-4 font-body text-sm text-muted-foreground font-medium border-t border-border/50 pt-6 mt-auto">
                       <a href={`mailto:${m.email}`} className="flex items-center justify-center gap-3 hover:text-black transition-colors">
                         <span className="text-[hsl(var(--orange))]">✉</span> <span className="truncate">{m.email}</span>
                       </a>

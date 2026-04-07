@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import MarqueeStrip from "@/components/MarqueeStrip";
-import type { GetServerSideProps } from "next";
+import type { GetStaticProps } from "next";
 import dbConnect from "@/lib/mongodb";
 import AboutContent from "@/models/AboutContent";
 
@@ -59,7 +59,8 @@ interface AboutPageProps {
   dbData: Record<string, any> | null;
 }
 
-export const getServerSideProps: GetServerSideProps<AboutPageProps> = async () => {
+/* ── ISR: pre-render at build, revalidate every 60s ── */
+export const getStaticProps: GetStaticProps<AboutPageProps> = async () => {
   try {
     await dbConnect();
     const doc = await AboutContent.findOne().lean();
@@ -67,9 +68,10 @@ export const getServerSideProps: GetServerSideProps<AboutPageProps> = async () =
       props: {
         dbData: doc ? JSON.parse(JSON.stringify(doc)) : null,
       },
+      revalidate: 60, // re-generate page every 60 seconds
     };
   } catch {
-    return { props: { dbData: null } };
+    return { props: { dbData: null }, revalidate: 60 };
   }
 };
 

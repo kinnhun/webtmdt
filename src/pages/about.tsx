@@ -600,17 +600,17 @@ export default function AboutPage({ dbData }: AboutPageProps) {
                     <img src={m.image} alt={m.name} className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
                   </div>
                   <div className="p-8 flex flex-col grow text-center">
-                    {m.name && <h3 className="font-display font-black text-2xl uppercase tracking-wider mb-2 text-foreground group-hover:text-[hsl(var(--orange))] transition-colors duration-500">{m.name}</h3>}
-                    {m.role && <span className="text-[10px] font-body font-bold uppercase tracking-widest mb-6 text-[hsl(var(--orange))]">{m.role}</span>}
+                    {m.name && <h3 className="font-display font-black text-4xl sm:text-2xl uppercase tracking-wider mb-2 text-foreground group-hover:text-[hsl(var(--orange))] transition-colors duration-500">{m.name}</h3>}
+                    {m.role && <span className="text-xs sm:text-[10px] font-body font-bold uppercase tracking-widest mb-6 text-[hsl(var(--orange))]">{m.role}</span>}
                     
                     {m.quote && m.quote.trim() !== '' && (
-                      <p className="font-display italic text-sm text-muted-foreground leading-relaxed mb-8 grow">
+                      <p className="font-display italic text-2xl sm:text-sm text-muted-foreground leading-relaxed mb-8 grow">
                         &ldquo;{m.quote}&rdquo;
                       </p>
                     )}
                     {!m.quote || m.quote.trim() === '' ? <div className="grow" /> : null}
 
-                    <div className="space-y-4 font-body text-sm text-muted-foreground font-medium border-t border-border/50 pt-6 mt-auto">
+                    <div className="space-y-4 font-body text-base sm:text-sm text-muted-foreground font-medium border-t border-border/50 pt-6 mt-auto">
                       <a href={`mailto:${m.email}`} className="flex items-center justify-center gap-3 hover:text-black transition-colors">
                         <span className="text-[hsl(var(--orange))]">✉</span> <span className="truncate">{m.email}</span>
                       </a>

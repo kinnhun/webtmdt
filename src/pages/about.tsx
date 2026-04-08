@@ -557,11 +557,11 @@ export default function AboutPage({ dbData }: AboutPageProps) {
             </motion.div>
 
             {/* Featured Leader */}
-            <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.1 }} className="flex flex-col md:flex-row gap-10 lg:gap-16 items-center lg:items-start bg-[#FAFAFA] p-8 lg:p-12 border border-border/60 rounded-sm mb-16 hover:shadow-2xl hover:shadow-black/3 transition-all duration-500">
-              <div className="w-48 sm:w-64 lg:w-88 aspect-3/4 overflow-hidden shrink-0 shadow-lg rounded-sm">
+            <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.1 }} className="flex flex-col md:flex-row md:gap-10 lg:gap-16 items-center md:items-start bg-white md:bg-[#FAFAFA] border border-border/60 rounded-sm overflow-hidden mb-16 hover:shadow-2xl hover:shadow-black/3 transition-all duration-500 md:p-8 lg:p-12">
+              <div className="w-full md:w-64 lg:w-88 aspect-4/5 md:aspect-3/4 overflow-hidden shrink-0 md:shadow-lg md:rounded-sm bg-[#FAFAFA]">
                 <img src={teamLeader.image} alt={teamLeader.name} className="w-full h-full object-cover object-top" />
               </div>
-              <div className="pt-2 grow text-center md:text-left flex flex-col justify-center h-full">
+              <div className="p-8 pb-10 md:p-0 md:pt-2 grow text-center md:text-left flex flex-col justify-center h-full w-full">
                 {teamLeader.name && <h3 className="font-display font-black text-4xl sm:text-5xl uppercase tracking-wider mb-4 text-foreground">{teamLeader.name}</h3>}
                 {teamLeader.role && (
                   <div className="mb-10">

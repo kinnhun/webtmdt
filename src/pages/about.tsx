@@ -2,15 +2,15 @@ import { useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import SEO from "@/components/SEO";
 import Link from "next/link";
-import { 
+import {
   Award, Users, Shield, Globe, Leaf, ArrowDown, ChevronRight, Star, Heart, Zap, Target, CheckCircle,
-  Factory, Truck, Package, ShoppingCart, ShoppingBag, Box, Building, Briefcase, 
-  Cpu, Battery, Phone, Mail, MapPin, Clock, Calendar, MessageCircle, AlertCircle, 
-  Info, Flag, Sun, Moon, TreePine, Droplet, Flame, Lightbulb, Link as LucideLink, Lock, Search, 
-  Send, ThumbsUp, TrendingUp, Compass, Anchor, Layout, Code, Coffee, Activity, 
+  Factory, Truck, Package, ShoppingCart, ShoppingBag, Box, Building, Briefcase,
+  Cpu, Battery, Phone, Mail, MapPin, Clock, Calendar, MessageCircle, AlertCircle,
+  Info, Flag, Sun, Moon, TreePine, Droplet, Flame, Lightbulb, Link as LucideLink, Lock, Search,
+  Send, ThumbsUp, TrendingUp, Compass, Anchor, Layout, Code, Coffee, Activity,
   Gem, Key, Map as MapIcon, Layers, LayoutGrid, LayoutTemplate, PenTool,
-  Camera, Video, Monitor, Smartphone, Tablet, Watch, Speaker, Headphones, Mic, 
-  Wifi, Bluetooth, Share, Download, Cloud, Server, Database, Save, Edit, 
+  Camera, Video, Monitor, Smartphone, Tablet, Watch, Speaker, Headphones, Mic,
+  Wifi, Bluetooth, Share, Download, Cloud, Server, Database, Save, Edit,
   Trash, Settings, Wrench, Menu, Home, User, Smile, Eye, Music, Play
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -27,8 +27,8 @@ const ICON_MAP: Record<string, React.ComponentType<{ size?: number; className?: 
   Info, Flag, Sun, Moon, TreePine, Droplet, Flame, Lightbulb, Link: LucideLink, Lock, Search,
   Send, ThumbsUp, TrendingUp, Compass, Anchor, Layout, Code, Coffee, Activity,
   Gem, Key, Map: MapIcon, Layers, LayoutGrid, LayoutTemplate, PenTool,
-  Camera, Video, Monitor, Smartphone, Tablet, Watch, Speaker, Headphones, Mic, 
-  Wifi, Bluetooth, Share, Download, Cloud, Server, Database, Save, Edit, 
+  Camera, Video, Monitor, Smartphone, Tablet, Watch, Speaker, Headphones, Mic,
+  Wifi, Bluetooth, Share, Download, Cloud, Server, Database, Save, Edit,
   Trash, Settings, Wrench, Menu, Home, User, Smile, Eye, Music, Play
 };
 
@@ -116,7 +116,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
   const heroImages: string[] = (hasDB && dbData.hero?.backgroundImages?.length)
     ? dbData.hero.backgroundImages
     : (hasDB && dbData.hero?.backgroundImage) ? [dbData.hero.backgroundImage]
-    : ["/img/about/image.png"];
+      : ["/img/about/image.png"];
   const [heroImgIdx, setHeroImgIdx] = useState(0);
   useEffect(() => {
     if (heroImages.length <= 1) return;
@@ -136,29 +136,29 @@ export default function AboutPage({ dbData }: AboutPageProps) {
   ];
   const values = hasDB && dbData.values?.items?.length
     ? dbData.values.items.map((v: any, idx: number) => ({
-        icon: ICON_MAP[v.icon] || defaultValues[idx]?.icon || Award,
-        title: txt(v.title, langKey)?.trim() || defaultValues[idx]?.title || '',
-        desc: txt(v.desc, langKey)?.trim() || defaultValues[idx]?.desc || '',
-      }))
+      icon: ICON_MAP[v.icon] || defaultValues[idx]?.icon || Award,
+      title: txt(v.title, langKey)?.trim() || defaultValues[idx]?.title || '',
+      desc: txt(v.desc, langKey)?.trim() || defaultValues[idx]?.desc || '',
+    }))
     : defaultValues;
 
   /* ── Timeline ── */
   const defaultTimeline = t("about.timeline.items", { returnObjects: true }) as Array<{ year: string; title: string; desc: string }>;
   const timeline = hasDB && dbData.timeline?.items?.length
     ? dbData.timeline.items.map((item: any, idx: number) => ({
-        year: item.year?.trim() || defaultTimeline[idx]?.year || '',
-        title: txt(item.title, langKey)?.trim() || defaultTimeline[idx]?.title || '',
-        desc: txt(item.desc, langKey)?.trim() || defaultTimeline[idx]?.desc || '',
-      }))
+      year: item.year?.trim() || defaultTimeline[idx]?.year || '',
+      title: txt(item.title, langKey)?.trim() || defaultTimeline[idx]?.title || '',
+      desc: txt(item.desc, langKey)?.trim() || defaultTimeline[idx]?.desc || '',
+    }))
     : defaultTimeline;
 
   /* ── Welcome values ── */
   const defaultWelcomeValues = t("about.welcome.values", { returnObjects: true }) as Array<{ title: string; desc: string }>;
   const welcomeValues = hasDB && dbData.welcome?.values?.length
     ? dbData.welcome.values.map((v: any, idx: number) => ({
-        title: txt(v.title, langKey)?.trim() || defaultWelcomeValues[idx]?.title || '',
-        desc: txt(v.desc, langKey)?.trim() || defaultWelcomeValues[idx]?.desc || '',
-      }))
+      title: txt(v.title, langKey)?.trim() || defaultWelcomeValues[idx]?.title || '',
+      desc: txt(v.desc, langKey)?.trim() || defaultWelcomeValues[idx]?.desc || '',
+    }))
     : defaultWelcomeValues;
 
   /* ── Marquee ── */
@@ -175,19 +175,19 @@ export default function AboutPage({ dbData }: AboutPageProps) {
   ];
   const statItems = hasDB && dbData.stats?.items?.length
     ? dbData.stats.items.map((s: any, idx: number) => ({
-        value: s.value?.trim() || defaultStats[idx]?.value || '',
-        suffix: s.suffix || defaultStats[idx]?.suffix || '',
-        label: txt(s.label, langKey)?.trim() || defaultStats[idx]?.label || '',
-      }))
+      value: s.value?.trim() || defaultStats[idx]?.value || '',
+      suffix: s.suffix || defaultStats[idx]?.suffix || '',
+      label: txt(s.label, langKey)?.trim() || defaultStats[idx]?.label || '',
+    }))
     : defaultStats;
 
   /* ── HR Items ── */
   const defaultHr = [t("about.hr.prodWorkers"), t("about.hr.techStaff"), t("about.hr.rndModels")];
   const hrItems = hasDB && dbData.stats?.hr?.items?.length
     ? dbData.stats.hr.items.map((item: any, idx: number) => {
-        const val = txt(item, langKey)?.trim();
-        return val || defaultHr[idx] || '';
-      })
+      const val = txt(item, langKey)?.trim();
+      return val || defaultHr[idx] || '';
+    })
     : defaultHr;
 
   /* ── Machinery Items ── */
@@ -202,9 +202,9 @@ export default function AboutPage({ dbData }: AboutPageProps) {
   ];
   const machineryItems = hasDB && dbData.stats?.machinery?.items?.length
     ? dbData.stats.machinery.items.map((m: any, idx: number) => ({
-        count: m.count?.trim() || defaultMachinery[idx]?.count || '',
-        label: txt(m.label, langKey)?.trim() || defaultMachinery[idx]?.label || '',
-      }))
+      count: m.count?.trim() || defaultMachinery[idx]?.count || '',
+      label: txt(m.label, langKey)?.trim() || defaultMachinery[idx]?.label || '',
+    }))
     : defaultMachinery;
 
   /* ── Team ── */
@@ -227,43 +227,43 @@ export default function AboutPage({ dbData }: AboutPageProps) {
   }
 
   if (allMembers.length === 0) {
-     allMembers.push({
-        name: "JOHN VO",
-        isLeader: true,
-        role: t("about.team.leader.role"),
-        quote: "Our goal is not just to manufacture furniture, but to create lasting value for our partners worldwide.",
-        email: "dht.company@vnn.vn",
-        phone: "+84 274 362 5599",
-        image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&q=80"
-     });
-     const mFallback = [
-       {
-         name: "Tyler Lê",
-         role: { us: "Co-Founder & CEO", uk: "Co-Founder & CEO", vi: "Đồng Sáng Lập & Giám đốc Điều hành" },
-       },
-       {
-         name: "Dylan",
-         role: { us: "General Director", uk: "General Director", vi: "Tổng Giám Đốc Điều Hành" },
-       },
-       {
-         name: "David",
-         role: { us: "Product Development Director", uk: "Product Development Director", vi: "GĐ Phát Triển Sản Phẩm" },
-       },
-       {
-         name: "Alicia",
-         role: { us: "Sales Manager", uk: "Sales Manager", vi: "Trưởng Phòng Kinh Doanh" },
-       }
-     ];
-     mFallback.forEach((m: any, i: number) => {
-        allMembers.push({
-           name: m.name,
-           key: `fallback-${i}`,
-           isLeader: false,
-           role: txt(m.role, langKey),
-           quote: "", email: "", phone: "",
-           image: i === 0 ? "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80" : "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=800&q=80"
-        });
-     });
+    allMembers.push({
+      name: "JOHN VO",
+      isLeader: true,
+      role: t("about.team.leader.role"),
+      quote: "Our goal is not just to manufacture furniture, but to create lasting value for our partners worldwide.",
+      email: "dht.company@vnn.vn",
+      phone: "+84 274 362 5599",
+      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&q=80"
+    });
+    const mFallback = [
+      {
+        name: "Tyler Lê",
+        role: { us: "Co-Founder & CEO", uk: "Co-Founder & CEO", vi: "Đồng Sáng Lập & Giám đốc Điều hành" },
+      },
+      {
+        name: "Dylan",
+        role: { us: "General Director", uk: "General Director", vi: "Tổng Giám Đốc Điều Hành" },
+      },
+      {
+        name: "David",
+        role: { us: "Product Development Director", uk: "Product Development Director", vi: "GĐ Phát Triển Sản Phẩm" },
+      },
+      {
+        name: "Alicia",
+        role: { us: "Sales Manager", uk: "Sales Manager", vi: "Trưởng Phòng Kinh Doanh" },
+      }
+    ];
+    mFallback.forEach((m: any, i: number) => {
+      allMembers.push({
+        name: m.name,
+        key: `fallback-${i}`,
+        isLeader: false,
+        role: txt(m.role, langKey),
+        quote: "", email: "", phone: "",
+        image: i === 0 ? "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80" : "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=800&q=80"
+      });
+    });
   }
 
   const teamLeader = allMembers.find((m: any) => m.isLeader) || allMembers[0] || {};
@@ -273,17 +273,17 @@ export default function AboutPage({ dbData }: AboutPageProps) {
   const locationKeys = ['factory', 'office', 'showroom', 'jdd'];
   const locationItems = hasDB && dbData.locations?.items?.length
     ? dbData.locations.items.map((loc: any) => ({
-        key: loc.key,
-        name: txt(loc.name, langKey),
-        address: txt(loc.address, langKey),
-        hotline: loc.hotline,
-      }))
+      key: loc.key,
+      name: txt(loc.name, langKey),
+      address: txt(loc.address, langKey),
+      hotline: loc.hotline,
+    }))
     : locationKeys.map((key) => ({
-        key,
-        name: t(`about.locations.${key}.name`),
-        address: t(`about.locations.${key}.address`),
-        hotline: t(`about.locations.${key}.hotline`),
-      }));
+      key,
+      name: t(`about.locations.${key}.name`),
+      address: t(`about.locations.${key}.address`),
+      hotline: t(`about.locations.${key}.hotline`),
+    }));
 
   return (
     <>
@@ -307,7 +307,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
             </AnimatePresence>
           </motion.div>
           <div className="absolute inset-0 bg-linear-to-b from-black/30 via-transparent to-black" />
-          
+
           <div className="container mx-auto px-6 relative z-10 text-center mt-20">
             <motion.span initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.2 }} className="font-body text-[hsl(var(--orange))] tracking-widest md:tracking-[0.4em] uppercase text-xs md:text-sm mb-8 block font-bold">
               {d(['hero', 'subtitle'], "about.hero.subtitle")}
@@ -319,7 +319,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
               {d(['hero', 'description'], "about.hero.description")}
             </motion.p>
           </div>
-          
+
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1.5 }} className="absolute bottom-12 left-1/2 -translate-x-1/2 text-white/50 animate-bounce">
             <ArrowDown size={32} strokeWidth={1} />
           </motion.div>
@@ -343,7 +343,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
                 <div className="w-16 h-16 mb-10 rounded-full flex items-center justify-center bg-[hsl(var(--orange))] shadow-2xl shadow-[hsl(var(--orange))]/30">
                   <span className="text-4xl text-[hsl(var(--navy-deep))] transform -translate-y-1">❞</span>
                 </div>
-                <div 
+                <div
                   className="font-body text-white text-xl sm:text-2xl leading-relaxed max-w-md lg:max-w-xl font-light about-rich-text"
                   dangerouslySetInnerHTML={{ __html: String(d(['welcome', 'description'], "about.welcome.description")).replace(/&nbsp;/g, ' ') }}
                 />
@@ -387,12 +387,12 @@ export default function AboutPage({ dbData }: AboutPageProps) {
                   <div className="w-24 h-2 bg-[hsl(var(--orange))] mb-10" />
                 </motion.div>
               </div>
-              
+
               <div className="lg:col-span-7">
                 <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8, delay: 0.2 }} className="prose prose-lg md:prose-xl prose-stone font-body text-muted-foreground leading-relaxed max-w-none">
                   <div className="text-lg md:text-xl text-foreground font-light leading-relaxed about-rich-text" dangerouslySetInnerHTML={{ __html: String(d(['story', 'content'], "about.story.content")).replace(/&nbsp;/g, ' ') }} />
                 </motion.div>
-                
+
                 <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.4 }} className="mt-16 rounded-sm overflow-hidden aspect-video shadow-2xl relative group">
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-1000 z-20" />
                   <AnimatePresence mode="popLayout">
@@ -424,7 +424,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
               </div>
               <h2 className="font-display font-black text-foreground" style={{ fontSize: "clamp(3rem, 6vw, 4.5rem)" }}>{d(['values', 'heading'], "about.values.heading")}</h2>
             </motion.div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10">
               {values.map(({ icon: Icon, title, desc }: any, i: number) => (
                 <motion.div key={title} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.8, delay: i * 0.1 }} className="group relative bg-white/20 p-10 lg:p-12 border border-border/10 hover:border-[hsl(var(--orange))]/30 transition-all duration-500 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] scroll-smooth overflow-hidden">
@@ -457,13 +457,13 @@ export default function AboutPage({ dbData }: AboutPageProps) {
             <div className="relative max-w-5xl mx-auto">
               {/* Central Axis */}
               <div className="absolute left-6 md:left-1/2 top-4 bottom-4 w-px bg-border/60 md:-translate-x-1/2" />
-              
+
               {timeline.map(({ year, title, desc }: any, i: number) => {
                 const isEven = i % 2 === 0;
                 return (
                   <div key={year} className="relative flex flex-col md:flex-row items-center mb-16 lg:mb-24 last:mb-0 group">
                     <motion.div initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6, delay: 0.2 }} className="absolute left-6 md:left-1/2 w-4 h-4 rounded-full bg-[hsl(var(--orange))] shadow-[0_0_0_8px_white] md:-translate-x-1/2 z-10 group-hover:scale-150 transition-transform duration-500" />
-                    
+
                     <div className={`w-full md:w-1/2 pl-16 md:pl-0 ${isEven ? 'md:pr-24 md:text-right' : 'md:pl-24 md:ml-auto'}`}>
                       <motion.div initial={{ opacity: 0, x: isEven ? -40 : 40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8, delay: 0.1 }}>
                         <span suppressHydrationWarning translate="no" className="notranslate font-body font-bold tracking-tight text-5xl md:text-6xl text-[hsl(var(--orange))] mb-6 block leading-none">{year}</span>
@@ -493,7 +493,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
                 <motion.div key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: i * 0.1 }} className="relative bg-white/[0.02] border border-white/5 p-6 sm:p-8 lg:p-10 hover:bg-white/[0.04] hover:border-white/10 transition-colors duration-500 rounded-sm overflow-hidden group hover:shadow-2xl">
                   {/* Subtle Top Accent Line */}
                   <div className="absolute top-0 left-0 right-0 h-1 bg-[hsl(var(--orange))] transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-                  
+
                   <div suppressHydrationWarning translate="no" className="notranslate font-body font-bold text-4xl sm:text-5xl lg:text-5xl tracking-tight mb-4 text-white group-hover:text-[hsl(var(--orange))] transition-colors duration-500">
                     {stat.value}<span className="text-xl sm:text-2xl lg:text-3xl ml-1 font-medium">{stat.suffix}</span>
                   </div>
@@ -515,7 +515,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
                     <li key={i} className="flex items-start gap-5 group">
                       <div className="shrink-0 mt-1.5 flex items-center justify-center w-6 h-6 rounded-full bg-[hsl(var(--orange))/0.15] text-[hsl(var(--orange))] group-hover:bg-[hsl(var(--orange))] group-hover:text-black transition-colors duration-300">
                         <div className="w-2 h-2 rounded-full bg-current" />
-                      </div> 
+                      </div>
                       <span className="font-body text-white/80 text-lg leading-relaxed font-light">{item}</span>
                     </li>
                   ))}
@@ -531,7 +531,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-10 gap-x-12">
                   {machineryItems.map((item: any, i: number) => (
                     <li key={i} className="flex flex-col gap-3 relative pl-5 border-l-2 border-[hsl(var(--orange))/0.2] hover:border-[hsl(var(--orange))] transition-colors duration-300">
-                      <span suppressHydrationWarning translate="no" className="notranslate font-body font-bold tracking-tight text-3xl md:text-4xl leading-none text-[hsl(var(--orange))]">{item.count}</span> 
+                      <span suppressHydrationWarning translate="no" className="notranslate font-body font-bold tracking-tight text-3xl md:text-4xl leading-none text-[hsl(var(--orange))]">{item.count}</span>
                       <span className="font-body text-white/70 leading-relaxed font-light text-sm sm:text-base">{item.label}</span>
                     </li>
                   ))}
@@ -570,7 +570,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
                     </span>
                   </div>
                 )}
-                
+
                 {teamLeader.quote && teamLeader.quote.trim() !== '' && (
                   <p className="font-display italic text-2xl sm:text-3xl text-muted-foreground leading-relaxed mb-12 md:border-l-4 md:pl-8 border-[hsl(var(--orange))/0.4]">
                     &ldquo;{teamLeader.quote}&rdquo;
@@ -602,7 +602,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
                   <div className="p-8 flex flex-col grow text-center">
                     {m.name && <h3 className="font-display font-black text-4xl sm:text-2xl uppercase tracking-wider mb-2 text-foreground group-hover:text-[hsl(var(--orange))] transition-colors duration-500">{m.name}</h3>}
                     {m.role && <span className="text-xs sm:text-[10px] font-body font-bold uppercase tracking-widest mb-6 text-[hsl(var(--orange))]">{m.role}</span>}
-                    
+
                     {m.quote && m.quote.trim() !== '' && (
                       <p className="font-display italic text-2xl sm:text-sm text-muted-foreground leading-relaxed mb-8 grow">
                         &ldquo;{m.quote}&rdquo;
@@ -632,43 +632,43 @@ export default function AboutPage({ dbData }: AboutPageProps) {
               <h2 className="font-display font-black text-foreground mb-6" style={{ fontSize: "clamp(3rem, 6vw, 4.5rem)" }}>{d(['locations', 'heading'], "about.locations.heading")}</h2>
               <div className="w-24 h-1 bg-[hsl(var(--orange))] mx-auto" />
             </motion.div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {locationItems.map((loc: any, i: number) => {
                 const nameStr = typeof loc.name === 'string' ? loc.name : '';
                 const addressStr = typeof loc.address === 'string' ? loc.address : '';
                 const hotlineStr = typeof loc.hotline === 'string' ? loc.hotline : '';
-                
+
                 const hasName = nameStr && nameStr.replace(/<[^>]*>?/gm, '').trim() !== '';
                 const hasAddress = addressStr && addressStr.replace(/<[^>]*>?/gm, '').trim() !== '';
                 const hasHotline = hotlineStr && hotlineStr.replace(/<[^>]*>?/gm, '').trim() !== '';
-                
+
                 const hasAnyContent = hasName || hasAddress || hasHotline;
                 if (!hasAnyContent) return null;
 
                 return (
-                <motion.div key={loc.key} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: i * 0.1 }} className="group p-10 bg-white border border-border hover:border-[hsl(var(--orange))] hover:shadow-2xl hover:shadow-[hsl(var(--orange))]/10 transition-all duration-500 flex flex-col h-full overflow-hidden">
-                  <div className="w-16 h-16 bg-[hsl(var(--warm-cream))] rounded-full flex items-center justify-center mb-8 shrink-0 group-hover:bg-[hsl(var(--orange))] transition-colors duration-500">
-                    <Globe size={24} className="text-foreground group-hover:text-white transition-colors duration-500" />
-                  </div>
-                  {hasName && (
-                    <h3 className="font-display font-black text-2xl mb-4 text-foreground uppercase tracking-wide wrap-break-word">{loc.name}</h3>
-                  )}
-                  {hasAddress ? (
-                    <p className="font-body text-muted-foreground mb-8 leading-loose font-light grow wrap-break-word">
-                      {loc.address}
-                    </p>
-                  ) : (
-                    <div className="grow" />
-                  )}
-                  {hasHotline && (
-                    <div className="mt-auto border-t pt-6 border-border/50">
-                      <a href={`tel:${loc.hotline.replace(/\\s/g, "")}`} className="font-body font-bold text-lg text-[hsl(var(--orange))] hover:text-black transition-colors block line-clamp-1 wrap-break-word">
-                        {loc.hotline}
-                      </a>
+                  <motion.div key={loc.key} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: i * 0.1 }} className="group p-10 bg-white border border-border hover:border-[hsl(var(--orange))] hover:shadow-2xl hover:shadow-[hsl(var(--orange))]/10 transition-all duration-500 flex flex-col h-full overflow-hidden">
+                    <div className="w-16 h-16 bg-[hsl(var(--warm-cream))] rounded-full flex items-center justify-center mb-8 shrink-0 group-hover:bg-[hsl(var(--orange))] transition-colors duration-500">
+                      <Globe size={24} className="text-foreground group-hover:text-white transition-colors duration-500" />
                     </div>
-                  )}
-                </motion.div>
+                    {hasName && (
+                      <h3 className="font-display font-black text-2xl mb-4 text-foreground uppercase tracking-wide wrap-break-word">{loc.name}</h3>
+                    )}
+                    {hasAddress ? (
+                      <p className="font-body text-muted-foreground mb-8 leading-loose font-light grow wrap-break-word">
+                        {loc.address}
+                      </p>
+                    ) : (
+                      <div className="grow" />
+                    )}
+                    {hasHotline && (
+                      <div className="mt-auto border-t pt-6 border-border/50">
+                        <a href={`tel:${loc.hotline.replace(/\\s/g, "")}`} className="font-body font-bold text-lg text-[hsl(var(--orange))] hover:text-black transition-colors block line-clamp-1 wrap-break-word">
+                          {loc.hotline}
+                        </a>
+                      </div>
+                    )}
+                  </motion.div>
                 );
               })}
             </div>

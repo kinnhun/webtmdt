@@ -79,21 +79,21 @@ export interface IContactContent extends Document {
 const ContactContentSchema = new Schema<IContactContent>(
   {
     seo: {
-      title: I18nTextRequired,
+      title: I18nTextSchema,
       description: I18nTextSchema,
     },
     hero: {
-      title: I18nTextRequired,
+      title: I18nTextSchema,
       subtitle: I18nTextSchema,
     },
     locations: {
       heading: I18nTextSchema,
       items: [
         {
-          key: { type: String, required: true },
-          title: I18nTextRequired,
+          key: { type: String },
+          title: I18nTextSchema,
           subtitle: I18nTextSchema,
-          address: I18nTextRequired,
+          address: I18nTextSchema,
           phone: { type: String, default: "" },
           href: { type: String, default: "" },
           hours: I18nTextSchema,
@@ -101,7 +101,7 @@ const ContactContentSchema = new Schema<IContactContent>(
       ],
     },
     formSection: {
-      title: I18nTextRequired,
+      title: I18nTextSchema,
       subtitle: I18nTextSchema,
       successTitle: I18nTextSchema,
       successDesc: I18nTextSchema,
@@ -109,9 +109,9 @@ const ContactContentSchema = new Schema<IContactContent>(
       fields: {
         type: [
           {
-            id: { type: String, required: true },
-            key: { type: String, required: true },
-            label: I18nTextRequired,
+            id: { type: String },
+            key: { type: String },
+            label: I18nTextSchema,
             type: { type: String, enum: ['text', 'email', 'tel', 'textarea', 'select', 'category'], default: 'text' },
             required: { type: Boolean, default: false },
             width: { type: String, enum: ['half', 'full'], default: 'full' },
@@ -139,7 +139,7 @@ const ContactContentSchema = new Schema<IContactContent>(
       },
     },
     inquiryModal: {
-      title: I18nTextRequired,
+      title: I18nTextSchema,
       subtitlePrefix: I18nTextSchema,
       successTitle: I18nTextSchema,
       successDescPrefix: I18nTextSchema,
@@ -152,4 +152,5 @@ const ContactContentSchema = new Schema<IContactContent>(
   { timestamps: true }
 );
 
-export default mongoose.models.ContactContent || mongoose.model<IContactContent>("ContactContent", ContactContentSchema);
+delete mongoose.models.ContactContent;
+export default mongoose.model<IContactContent>("ContactContent", ContactContentSchema);

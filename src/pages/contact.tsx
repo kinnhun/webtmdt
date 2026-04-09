@@ -61,7 +61,7 @@ export default function ContactPage({ dbData }: { dbData: any }) {
   };
 
   const legacy = dbData?.formSection?.labels || {};
-  const fields = dbData?.formSection?.fields?.length > 0 ? dbData.formSection.fields : [
+  const fields = hasDB ? (dbData?.formSection?.fields || []) : [
     { id: 'f1', key: 'name', type: 'text', required: true, width: 'half', label: legacy.name || { us: '<p>Name</p>', uk: '<p>Name</p>', vi: '<p>Họ tên</p>' } },
     { id: 'f2', key: 'email', type: 'email', required: true, width: 'half', label: legacy.email || { us: '<p>Email</p>', uk: '<p>Email</p>', vi: '<p>Email</p>' } },
     { id: 'f3', key: 'phone', type: 'tel', required: false, width: 'half', label: legacy.phone || { us: '<p>Phone</p>', uk: '<p>Phone</p>', vi: '<p>Số điện thoại</p>' } },
@@ -115,8 +115,8 @@ export default function ContactPage({ dbData }: { dbData: any }) {
     setSending(false);
   };
 
-  const locations = (hasDB && dbData.locations?.items?.length) 
-    ? dbData.locations.items.map((loc: any) => ({
+  const locations = hasDB
+    ? (dbData.locations?.items || []).map((loc: any) => ({
         title: txt(loc.title, langKey),
         subtitle: txt(loc.subtitle, langKey),
         address: txt(loc.address, langKey),
@@ -246,94 +246,96 @@ export default function ContactPage({ dbData }: { dbData: any }) {
           </div>
 
           {/* FORM SECTION */}
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-10">
-              <h2 className="font-display text-3xl font-bold mb-4 rt-reset" style={{ color: "hsl(var(--navy-deep))" }} dangerouslySetInnerHTML={{ __html: d(['formSection', 'title'], "contact.formSection.title") }} />
-              <div 
-                className="font-body text-muted-foreground contact-subtitle-rt" 
-                dangerouslySetInnerHTML={{ __html: d(['formSection', 'subtitle'], "contact.formSection.subtitle") }} 
-              />
-            </div>
-            {sent ? (
-              <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-20 bg-white rounded-sm border border-border">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style={{ backgroundColor: "hsl(var(--orange)/0.1)" }}>
-                  <Send size={24} style={{ color: "hsl(var(--orange))" }} />
-                </div>
-                <h3 className="font-display font-bold text-xl text-foreground mb-2 rt-reset" dangerouslySetInnerHTML={{ __html: d(['formSection', 'successTitle'], "contact.success.title") }} />
+          {fields.length > 0 && (
+            <div className="max-w-3xl mx-auto">
+              <div className="text-center mb-10">
+                <h2 className="font-display text-3xl font-bold mb-4 rt-reset" style={{ color: "hsl(var(--navy-deep))" }} dangerouslySetInnerHTML={{ __html: d(['formSection', 'title'], "contact.formSection.title") }} />
                 <div 
-                  className="font-body text-sm text-muted-foreground mb-6" 
-                  dangerouslySetInnerHTML={{ __html: d(['formSection', 'successDesc'], "contact.success.description") }} 
+                  className="font-body text-muted-foreground contact-subtitle-rt" 
+                  dangerouslySetInnerHTML={{ __html: d(['formSection', 'subtitle'], "contact.formSection.subtitle") }} 
                 />
-                <button onClick={() => setSent(false)} className="font-body text-sm font-medium rt-reset" style={{ color: "hsl(var(--orange))" }} dangerouslySetInnerHTML={{ __html: d(['formSection', 'sendAnotherBtn'], "contact.success.sendAnother") }} />
-              </motion.div>
-            ) : (
-              <form onSubmit={handleSubmit} className="bg-white rounded-sm border border-border p-6 sm:p-10 shadow-sm">
-                <div className="flex flex-wrap -mx-2.5">
-                  {fields.map((f: any, idx: number) => {
-                    const labelText = txt(f.label, langKey) || f.key;
-                    const isHalf = f.width === 'half';
-                    
-                    return (
-                      <div key={f.key || f.id || `field-${idx}`} className={`px-2.5 mb-5 ${isHalf ? 'w-full md:w-1/2' : 'w-full'}`}>
-                        <label className="font-body text-xs text-muted-foreground uppercase tracking-wider mb-1.5 block rt-reset">
-                          <span dangerouslySetInnerHTML={{ __html: labelText }} /> {f.required && "*"}
-                        </label>
-                        
-                        {f.type === 'textarea' ? (
-                          <textarea 
-                            rows={5} 
-                            required={f.required} 
-                            value={form[f.key] || ""} 
-                            onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} 
-                            className="w-full px-4 py-3 border border-border rounded-sm font-body text-sm outline-none focus:ring-2 focus:ring-orange/30 transition resize-none shadow-sm" 
-                          />
-                        ) : f.type === 'category' ? (
-                          <select 
-                            required={f.required} 
-                            value={form[f.key] || ""} 
-                            onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} 
-                            className="w-full px-4 py-3 border border-border rounded-sm font-body text-sm outline-none focus:ring-2 focus:ring-orange/30 transition shadow-sm bg-white"
-                          >
-                            {categories.length > 0 ? categories.map((c, cIdx) => (
-                              <option key={c.key || `cat-${cIdx}`} value={c.key}>{c.label}</option>
-                            )) : (
-                              <option value="other">Other</option>
-                            )}
-                          </select>
-                        ) : f.type === 'select' ? (
-                           <select 
-                             required={f.required} 
-                             value={form[f.key] || ""} 
-                             onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} 
-                             className="w-full px-4 py-3 border border-border rounded-sm font-body text-sm outline-none focus:ring-2 focus:ring-orange/30 transition shadow-sm bg-white"
-                           >
-                             <option value="" disabled>Select an option</option>
-                             {(f.options || []).map((o: any, oIdx: number) => (
-                               <option key={o.key || `opt-${oIdx}`} value={txt(o.label, langKey)}>{txt(o.label, langKey)}</option>
-                             ))}
-                           </select>
-                        ) : (
-                          <input 
-                            type={f.type === 'tel' ? 'tel' : f.type === 'email' ? 'email' : 'text'} 
-                            required={f.required} 
-                            value={form[f.key] || ""} 
-                            onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} 
-                            className="w-full px-4 py-3 border border-border rounded-sm font-body text-sm outline-none focus:ring-2 focus:ring-orange/30 transition shadow-sm" 
-                          />
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-                <div className="mt-2">
-                  <button type="submit" disabled={sending} className="w-full inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90 disabled:opacity-60" style={{ backgroundColor: "hsl(var(--orange))" }}>
-                    {!sending && <Send size={16} />}
-                    <span className="rt-reset" dangerouslySetInnerHTML={{ __html: sending ? d(['formSection', 'labels', 'sendingBtn'], "contact.form.sending") : d(['formSection', 'labels', 'sendBtn'], "contact.form.sendInquiry") }} />
-                  </button>
-                </div>
-              </form>
-            )}
-          </div>
+              </div>
+              {sent ? (
+                <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-20 bg-white rounded-sm border border-border">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style={{ backgroundColor: "hsl(var(--orange)/0.1)" }}>
+                    <Send size={24} style={{ color: "hsl(var(--orange))" }} />
+                  </div>
+                  <h3 className="font-display font-bold text-xl text-foreground mb-2 rt-reset" dangerouslySetInnerHTML={{ __html: d(['formSection', 'successTitle'], "contact.success.title") }} />
+                  <div 
+                    className="font-body text-sm text-muted-foreground mb-6" 
+                    dangerouslySetInnerHTML={{ __html: d(['formSection', 'successDesc'], "contact.success.description") }} 
+                  />
+                  <button onClick={() => setSent(false)} className="font-body text-sm font-medium rt-reset" style={{ color: "hsl(var(--orange))" }} dangerouslySetInnerHTML={{ __html: d(['formSection', 'sendAnotherBtn'], "contact.success.sendAnother") }} />
+                </motion.div>
+              ) : (
+                <form onSubmit={handleSubmit} className="bg-white rounded-sm border border-border p-6 sm:p-10 shadow-sm">
+                  <div className="flex flex-wrap -mx-2.5">
+                    {fields.map((f: any, idx: number) => {
+                      const labelText = txt(f.label, langKey) || f.key;
+                      const isHalf = f.width === 'half';
+                      
+                      return (
+                        <div key={f.key || f.id || `field-${idx}`} className={`px-2.5 mb-5 ${isHalf ? 'w-full md:w-1/2' : 'w-full'}`}>
+                          <label className="font-body text-xs text-muted-foreground uppercase tracking-wider mb-1.5 block rt-reset">
+                            <span dangerouslySetInnerHTML={{ __html: labelText }} /> {f.required && "*"}
+                          </label>
+                          
+                          {f.type === 'textarea' ? (
+                            <textarea 
+                              rows={5} 
+                              required={f.required} 
+                              value={form[f.key] || ""} 
+                              onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} 
+                              className="w-full px-4 py-3 border border-border rounded-sm font-body text-sm outline-none focus:ring-2 focus:ring-orange/30 transition resize-none shadow-sm" 
+                            />
+                          ) : f.type === 'category' ? (
+                            <select 
+                              required={f.required} 
+                              value={form[f.key] || ""} 
+                              onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} 
+                              className="w-full px-4 py-3 border border-border rounded-sm font-body text-sm outline-none focus:ring-2 focus:ring-orange/30 transition shadow-sm bg-white"
+                            >
+                              {categories.length > 0 ? categories.map((c, cIdx) => (
+                                <option key={c.key || `cat-${cIdx}`} value={c.key}>{c.label}</option>
+                              )) : (
+                                <option value="other">Other</option>
+                              )}
+                            </select>
+                          ) : f.type === 'select' ? (
+                             <select 
+                               required={f.required} 
+                               value={form[f.key] || ""} 
+                               onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} 
+                               className="w-full px-4 py-3 border border-border rounded-sm font-body text-sm outline-none focus:ring-2 focus:ring-orange/30 transition shadow-sm bg-white"
+                             >
+                               <option value="" disabled>Select an option</option>
+                               {(f.options || []).map((o: any, oIdx: number) => (
+                                 <option key={o.key || `opt-${oIdx}`} value={txt(o.label, langKey)}>{txt(o.label, langKey)}</option>
+                               ))}
+                             </select>
+                          ) : (
+                            <input 
+                              type={f.type === 'tel' ? 'tel' : f.type === 'email' ? 'email' : 'text'} 
+                              required={f.required} 
+                              value={form[f.key] || ""} 
+                              onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} 
+                              className="w-full px-4 py-3 border border-border rounded-sm font-body text-sm outline-none focus:ring-2 focus:ring-orange/30 transition shadow-sm" 
+                            />
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="mt-2">
+                    <button type="submit" disabled={sending} className="w-full inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90 disabled:opacity-60" style={{ backgroundColor: "hsl(var(--orange))" }}>
+                      {!sending && <Send size={16} />}
+                      <span className="rt-reset" dangerouslySetInnerHTML={{ __html: sending ? d(['formSection', 'labels', 'sendingBtn'], "contact.form.sending") : d(['formSection', 'labels', 'sendBtn'], "contact.form.sendInquiry") }} />
+                    </button>
+                  </div>
+                </form>
+              )}
+            </div>
+          )}
         </div>
       </div>
       <style jsx global>{`

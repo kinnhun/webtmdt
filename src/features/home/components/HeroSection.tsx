@@ -23,10 +23,8 @@ export default function HeroSection() {
             title="DHT Furniture Hero Background"
             className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-85 mix-blend-screen"
             style={{
-              width: "calc(100vw + 200px)",
-              height: "calc(100vh + 200px)",
-              minWidth: "177.78vh",
-              minHeight: "56.25vw",
+              width: "max(100vw, 177.78vh)",
+              height: "max(100vh, 56.25vw)",
               border: "none",
             }}
             allow="autoplay; encrypted-media"

@@ -63,7 +63,8 @@ interface AboutPageProps {
 export const getStaticProps: GetStaticProps<AboutPageProps> = async () => {
   try {
     await dbConnect();
-    const doc = await AboutContent.findOne().lean();
+    // Exclude internal top-level Mongoose fields to keep page data small
+    const doc = await AboutContent.findOne().select('-_id -__v -createdAt -updatedAt').lean();
     return {
       props: {
         dbData: doc ? JSON.parse(JSON.stringify(doc)) : null,
@@ -200,7 +201,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
     { count: "5", label: t("about.machinery.kilns") },
     { count: "3", label: t("about.machinery.packaging") },
   ];
-  const machineryItems = hasDB && dbData.stats?.machinery?.items?.length
+  const machineryItems = hasDB && Array.isArray(dbData.stats?.machinery?.items)
     ? dbData.stats.machinery.items.map((m: any, idx: number) => ({
       count: m.count?.trim() || defaultMachinery[idx]?.count || '',
       label: txt(m.label, langKey)?.trim() || defaultMachinery[idx]?.label || '',
@@ -503,12 +504,13 @@ export default function AboutPage({ dbData }: AboutPageProps) {
             </div>
 
             {/* Info Cards */}
-            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+            <div className={`grid gap-8 lg:gap-12 ${machineryItems.length > 0 ? "lg:grid-cols-2" : "grid-cols-1 max-w-4xl mx-auto w-full"}`}>
               {/* Human Resources & R&D */}
-              <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="p-10 lg:p-16 bg-white/2 backdrop-blur-md border border-white/5 rounded-sm hover:bg-white/4 hover:border-white/10 transition-colors duration-500">
-                <h3 className="font-display font-black text-3xl lg:text-4xl mb-12 text-white flex items-center gap-4">
-                  <span className="w-12 h-1 bg-[hsl(var(--orange))]" />
+              <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className={`p-10 lg:p-16 bg-white/2 backdrop-blur-md border border-white/5 rounded-sm hover:bg-white/4 hover:border-white/10 transition-colors duration-500 ${machineryItems.length === 0 ? "text-center flex flex-col items-center" : ""}`}>
+                <h3 className={`font-display font-black text-3xl lg:text-4xl mb-12 text-white flex items-center gap-4 ${machineryItems.length === 0 ? "justify-center" : ""}`}>
+                  {machineryItems.length > 0 && <span className="w-12 h-1 bg-[hsl(var(--orange))]" />}
                   {d(['stats', 'hr', 'heading'], "about.hr.heading")}
+                  {machineryItems.length === 0 && <span className="w-12 h-1 bg-[hsl(var(--orange))]" />}
                 </h3>
                 <ul className="space-y-8">
                   {hrItems.map((item: string, i: number) => (
@@ -523,20 +525,22 @@ export default function AboutPage({ dbData }: AboutPageProps) {
               </motion.div>
 
               {/* Machinery */}
-              <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.2 }} className="p-10 lg:p-16 bg-white/2 backdrop-blur-md border border-white/5 rounded-sm hover:bg-white/4 hover:border-white/10 transition-colors duration-500">
-                <h3 className="font-display font-black text-3xl lg:text-4xl mb-12 text-white flex items-center gap-4">
-                  <span className="w-12 h-1 bg-[hsl(var(--orange))]" />
-                  {d(['stats', 'machinery', 'heading'], "about.machinery.heading")}
-                </h3>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-10 gap-x-12">
-                  {machineryItems.map((item: any, i: number) => (
-                    <li key={i} className="flex flex-col gap-3 relative pl-5 border-l-2 border-[hsl(var(--orange))/0.2] hover:border-[hsl(var(--orange))] transition-colors duration-300">
-                      <span suppressHydrationWarning translate="no" className="notranslate font-body font-bold tracking-tight text-3xl md:text-4xl leading-none text-[hsl(var(--orange))]">{item.count}</span>
-                      <span className="font-body text-white/70 leading-relaxed font-light text-sm sm:text-base">{item.label}</span>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
+              {machineryItems.length > 0 && (
+                <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.2 }} className="p-10 lg:p-16 bg-white/2 backdrop-blur-md border border-white/5 rounded-sm hover:bg-white/4 hover:border-white/10 transition-colors duration-500">
+                  <h3 className="font-display font-black text-3xl lg:text-4xl mb-12 text-white flex items-center gap-4">
+                    <span className="w-12 h-1 bg-[hsl(var(--orange))]" />
+                    {d(['stats', 'machinery', 'heading'], "about.machinery.heading")}
+                  </h3>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-10 gap-x-12">
+                    {machineryItems.map((item: any, i: number) => (
+                      <li key={i} className="flex flex-col gap-3 relative pl-5 border-l-2 border-[hsl(var(--orange))/0.2] hover:border-[hsl(var(--orange))] transition-colors duration-300">
+                        <span suppressHydrationWarning translate="no" className="notranslate font-body font-bold tracking-tight text-3xl md:text-4xl leading-none text-[hsl(var(--orange))]">{item.count}</span>
+                        <span className="font-body text-white/70 leading-relaxed font-light text-sm sm:text-base">{item.label}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.div>
+              )}
             </div>
           </div>
         </section>

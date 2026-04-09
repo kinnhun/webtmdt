@@ -38,6 +38,7 @@ const AboutRevisionSchema = new Schema<IAboutRevision>(
 
 AboutRevisionSchema.index({ createdAt: -1 });
 AboutRevisionSchema.index({ aboutContentId: 1, createdAt: -1 });
+AboutRevisionSchema.index({ isDefault: 1 });
 
 if (process.env.NODE_ENV !== "production" && mongoose.models.AboutRevision) {
   delete mongoose.models.AboutRevision;

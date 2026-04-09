@@ -8,9 +8,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   if (req.method === "GET") {
     try {
-      // Allow pagination later if needed. For now just sort by newest
+      const { id } = req.query;
+
+      // Single revision with full data (for "Edit / Load form")
+      if (id && typeof id === "string") {
+        const revision = await AboutRevision.findById(id).lean();
+        if (!revision) {
+          return res.status(404).json({ error: "Revision not found" });
+        }
+        return res.status(200).json({ success: true, data: revision });
+      }
+
+      // Listing: metadata only (exclude heavy `data` field)
       const limit = Number(req.query.limit) || 100;
       const revisions = await AboutRevision.find()
+        .select('-data')
         .sort({ createdAt: -1 })
         .limit(limit)
         .lean();

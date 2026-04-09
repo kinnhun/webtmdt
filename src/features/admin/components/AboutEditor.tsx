@@ -361,7 +361,7 @@ function I18nRichTextField({
   );
 }
 
-/* ── Base64 Image Upload Helper (single image) ── */
+/* ── Image Upload Helper (single image) → uploads via /api/upload, stores URL ── */
 function ImageUploadField({
   value,
   onChange,
@@ -379,11 +379,31 @@ function ImageUploadField({
     try {
       const reader = new FileReader();
       reader.readAsDataURL(file as Blob);
-      reader.onload = () => {
+      reader.onload = async () => {
         const base64 = reader.result as string;
-        onChange?.(base64);
-        message.success('Ảnh đã được tải lên!');
-        setUploading(false);
+        try {
+          const res = await fetch('/api/upload', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              base64Data: base64,
+              filename: (file as File).name || `upload-${Date.now()}`,
+              mimeType: (file as File).type || 'image/jpeg',
+              size: (file as File).size,
+            }),
+          });
+          const json = await res.json();
+          if (json.url) {
+            onChange?.(json.url);
+            message.success('Ảnh đã được tải lên!');
+          } else {
+            message.error(json.message || 'Upload thất bại');
+          }
+        } catch {
+          message.error('Upload thất bại');
+        } finally {
+          setUploading(false);
+        }
       };
       reader.onerror = () => {
         message.error('Đọc file thất bại');
@@ -432,7 +452,7 @@ function ImageUploadField({
   );
 }
 
-/* ── Base64 Multi-Image Upload (slider support) ── */
+/* ── Multi-Image Upload (slider support) → uploads via /api/upload, stores URLs ── */
 function MultiImageField({
   value,
   onChange,
@@ -453,11 +473,31 @@ function MultiImageField({
     try {
       const reader = new FileReader();
       reader.readAsDataURL(file as Blob);
-      reader.onload = () => {
+      reader.onload = async () => {
         const base64 = reader.result as string;
-        onChange?.([...images, base64]);
-        message.success('Ảnh đã được tải lên!');
-        setUploading(false);
+        try {
+          const res = await fetch('/api/upload', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              base64Data: base64,
+              filename: (file as File).name || `upload-${Date.now()}`,
+              mimeType: (file as File).type || 'image/jpeg',
+              size: (file as File).size,
+            }),
+          });
+          const json = await res.json();
+          if (json.url) {
+            onChange?.([...images, json.url]);
+            message.success('Ảnh đã được tải lên!');
+          } else {
+            message.error(json.message || 'Upload thất bại');
+          }
+        } catch {
+          message.error('Upload thất bại');
+        } finally {
+          setUploading(false);
+        }
       };
       reader.onerror = () => {
         message.error('Đọc file thất bại');
@@ -720,13 +760,25 @@ export default function AboutEditor() {
     }
   };
 
-  const handleLoadRevisionToForm = (revisionData: any) => {
-    form.resetFields();
-    setTimeout(() => {
-      form.setFieldsValue(revisionData);
-      message.info(t('adminAbout.msgBackupLoaded') || 'Backup loaded into form (not saved yet).');
-    }, 0);
-    setHistoryOpen(false);
+  const handleLoadRevisionToForm = async (revisionId: string) => {
+    try {
+      message.loading({ content: 'Đang tải dữ liệu...', key: 'loadRevision' });
+      const res = await fetch(`/api/admin/about/revisions?id=${revisionId}`);
+      const json = await res.json();
+      if (json.success && json.data?.data) {
+        const cleanedData = deepCleanMongoFields(json.data.data as Record<string, unknown>);
+        form.resetFields();
+        setTimeout(() => {
+          form.setFieldsValue(cleanedData);
+          message.success({ content: t('adminAbout.msgBackupLoaded') || 'Backup loaded into form (not saved yet).', key: 'loadRevision' });
+        }, 0);
+        setHistoryOpen(false);
+      } else {
+        message.error({ content: json.error || 'Không tải được dữ liệu', key: 'loadRevision' });
+      }
+    } catch {
+      message.error({ content: 'Lỗi kết nối!', key: 'loadRevision' });
+    }
   };
 
   const handleRollback = async (id: string) => {
@@ -1104,29 +1156,59 @@ export default function AboutEditor() {
           </Form.List>
 
           {/* Machinery */}
-          <Divider className="my-2" />
-          <SectionLabel>Key Machinery</SectionLabel>
-          <I18nTextField form={form} baseName={['stats', 'machinery', 'heading']} label="Machinery Section Title" />
-          <Form.List name={['stats', 'machinery', 'items']}>
-            {(fields, { add, remove }) => (
-              <div className="space-y-3 mt-2">
-                {fields.map((field, idx) => (
-                  <div key={field.key} className="flex gap-2 items-start p-3 rounded-lg border border-gray-100 bg-gray-50/50">
-                    <div className="w-20 shrink-0">
-                      <Form.Item name={[field.name, 'count']} label="Count" className="mb-0">
-                        <Input placeholder="15+" className="rounded-lg border-gray-200" />
-                      </Form.Item>
-                    </div>
-                    <div className="flex-1">
-                      <I18nTextField form={form} listPath={['stats', 'machinery', 'items']} baseName={[field.name, 'label']} label="Machine Label" />
-                    </div>
-                    <Button icon={<MinusCircleOutlined />} type="text" danger onClick={() => remove(field.name)} className="mt-6" />
+          <Form.Item noStyle shouldUpdate={(prevValues, currentValues) => prevValues.stats?.machinery?.items !== currentValues.stats?.machinery?.items}>
+            {({ getFieldValue }) => {
+              const machineryItems = getFieldValue(['stats', 'machinery', 'items']);
+              if (!machineryItems || machineryItems.length === 0) {
+                return (
+                  <div className="mt-6 mb-2">
+                    <Button 
+                      type="dashed" 
+                      onClick={() => {
+                        const currentStats = getFieldValue('stats') || {};
+                        const currentMachinery = currentStats.machinery || {};
+                        form.setFieldValue(['stats', 'machinery', 'items'], [{ count: '', label: { us: '', uk: '', vi: '' } }]);
+                        if (!currentMachinery.heading || !currentMachinery.heading.us) {
+                          form.setFieldValue(['stats', 'machinery', 'heading'], { us: 'Key Machinery', uk: 'Key Machinery', vi: 'Máy móc chủ lực' });
+                        }
+                      }} 
+                      icon={<PlusOutlined />} 
+                      className="w-full rounded-lg border-orange-300 text-orange-600 bg-orange-50/50 hover:bg-orange-100"
+                    >
+                      Bật lại phần "Key Machinery" (Thêm máy móc)
+                    </Button>
                   </div>
-                ))}
-                <Button type="dashed" onClick={() => add({ count: '', label: { us: '', uk: '', vi: '' } })} icon={<PlusOutlined />} className="w-full rounded-lg">Add Machine</Button>
-              </div>
-            )}
-          </Form.List>
+                );
+              }
+              return (
+                <>
+                  <Divider className="my-2" />
+                  <SectionLabel>Key Machinery</SectionLabel>
+                  <I18nTextField form={form} baseName={['stats', 'machinery', 'heading']} label="Machinery Section Title" />
+                  <Form.List name={['stats', 'machinery', 'items']}>
+                    {(fields, { add, remove }) => (
+                      <div className="space-y-3 mt-2">
+                        {fields.map((field, idx) => (
+                          <div key={field.key} className="flex gap-2 items-start p-3 rounded-lg border border-gray-100 bg-gray-50/50">
+                            <div className="w-20 shrink-0">
+                              <Form.Item name={[field.name, 'count']} label="Count" className="mb-0">
+                                <Input placeholder="15+" className="rounded-lg border-gray-200" />
+                              </Form.Item>
+                            </div>
+                            <div className="flex-1">
+                              <I18nTextField form={form} listPath={['stats', 'machinery', 'items']} baseName={[field.name, 'label']} label="Machine Label" />
+                            </div>
+                            <Button icon={<MinusCircleOutlined />} type="text" danger onClick={() => remove(field.name)} className="mt-6" />
+                          </div>
+                        ))}
+                        <Button type="dashed" onClick={() => add({ count: '', label: { us: '', uk: '', vi: '' } })} icon={<PlusOutlined />} className="w-full rounded-lg">Add Machine</Button>
+                      </div>
+                    )}
+                  </Form.List>
+                </>
+              );
+            }}
+          </Form.Item>
         </div>
       ),
     },
@@ -1428,7 +1510,7 @@ export default function AboutEditor() {
                     size="small" 
                     type="default" 
                     icon={<FormOutlined />} 
-                    onClick={() => handleLoadRevisionToForm(item.data)} 
+                    onClick={() => handleLoadRevisionToForm(item._id)} 
                     className="rounded-lg text-xs text-blue-600 border-blue-200 hover:border-blue-400"
                   >
                     {t('adminAbout.revEditLoadBtn') || 'Sửa (Tải vào form)'}

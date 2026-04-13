@@ -19,8 +19,33 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         payload.collection = payload.collection.join(', ');
       }
 
-      // Provide defaults for strictly required schema fields if missing
-      payload.productId = payload.productId || payload.code || `p_${Date.now()}`;
+      let { productId, code, slug } = payload;
+      
+      productId = productId || code || `p_${Date.now()}`;
+      code = code || `SDK-${Date.now()}`;
+      slug = slug || `slug-${Date.now()}`;
+
+      let isUnique = false;
+      let suffix = '';
+      while (!isUnique) {
+        const testProductId = suffix ? `${productId}-${suffix}` : productId;
+        const testCode = suffix ? `${code}-${suffix}` : code;
+        const testSlug = suffix ? `${slug}-${suffix}` : slug;
+
+        const existing = await Product.findOne({
+          $or: [{ productId: testProductId }, { code: testCode }, { slug: testSlug }]
+        }).lean();
+
+        if (!existing) {
+          payload.productId = testProductId;
+          payload.code = testCode;
+          payload.slug = testSlug;
+          isUnique = true;
+        } else {
+          suffix = Math.floor(1000 + Math.random() * 9000).toString();
+        }
+      }
+
       payload.room = payload.room || { us: 'General', uk: 'General', vi: 'General' };
       
       if (!payload.image || typeof payload.image !== 'string' || payload.image.trim() === '') {

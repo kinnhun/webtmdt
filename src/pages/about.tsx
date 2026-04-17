@@ -558,7 +558,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
 
               {timeline.map(({ year, title, desc }: any, i: number) => {
                 const isEven = i % 2 === 0;
-                
+
                 // Icon per milestone
                 let TimelineIcon = Factory; // 2016 → 🏭
                 if (year.includes("2018") || year.includes("2020") || year.includes("2019")) TimelineIcon = Settings; // ⚙️
@@ -572,11 +572,11 @@ export default function AboutPage({ dbData }: AboutPageProps) {
                     className="tl-item relative flex flex-col md:flex-row items-center mb-20 lg:mb-32 last:mb-0 cursor-default"
                   >
                     {/* ─── Popping Dot with Icon ─── */}
-                    <motion.div 
-                      initial={{ scale: 0.6, opacity: 0 }} 
-                      whileInView={{ scale: 1, opacity: 1 }} 
-                      viewport={{ once: true, margin: "-80px" }} 
-                      transition={{ duration: 0.5, delay: 0.1, type: "spring", stiffness: 260, damping: 20 }} 
+                    <motion.div
+                      initial={{ scale: 0.6, opacity: 0 }}
+                      whileInView={{ scale: 1, opacity: 1 }}
+                      viewport={{ once: true, margin: "-80px" }}
+                      transition={{ duration: 0.5, delay: 0.1, type: "spring", stiffness: 260, damping: 20 }}
                       className="tl-dot absolute left-6 md:left-1/2 w-12 h-12 -ml-6 md:ml-0 rounded-full bg-white border-2 border-[hsl(var(--orange))] md:-translate-x-1/2 z-10 flex items-center justify-center transition-all duration-400"
                       style={{
                         boxShadow: "0 0 0 4px rgba(245,166,35,0.08), 0 0 20px rgba(245,166,35,0.15)",
@@ -589,17 +589,17 @@ export default function AboutPage({ dbData }: AboutPageProps) {
 
                     {/* ─── Content Card with slide animation ─── */}
                     <div className={`w-full md:w-1/2 pl-20 md:pl-0 ${isEven ? 'md:pr-20 lg:md:pr-28 md:text-right' : 'md:pl-20 lg:md:pl-28 md:ml-auto'}`}>
-                      <motion.div 
-                        initial={{ opacity: 0, x: isEven ? -50 : 50, y: 10 }} 
-                        whileInView={{ opacity: 1, x: 0, y: 0 }} 
-                        viewport={{ once: true, margin: "-80px" }} 
+                      <motion.div
+                        initial={{ opacity: 0, x: isEven ? -50 : 50, y: 10 }}
+                        whileInView={{ opacity: 1, x: 0, y: 0 }}
+                        viewport={{ once: true, margin: "-80px" }}
                         transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
                         className="tl-card relative bg-white/60 backdrop-blur-sm p-7 md:p-8 rounded-xl transition-all duration-400 border border-transparent"
                       >
                         {/* Year — HERO treatment with gradient + glow */}
-                        <span 
-                          suppressHydrationWarning 
-                          translate="no" 
+                        <span
+                          suppressHydrationWarning
+                          translate="no"
                           className="tl-year notranslate font-display font-black tracking-tight mb-4 block leading-none transition-transform duration-400"
                           style={{
                             fontSize: "clamp(3.5rem, 8vw, 5.5rem)",
@@ -621,12 +621,12 @@ export default function AboutPage({ dbData }: AboutPageProps) {
                 );
               })}
             </div>
-            
+
             {/* ─── Closing Statement ─── */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }} 
-              whileInView={{ opacity: 1, y: 0 }} 
-              viewport={{ once: true, margin: "-50px" }} 
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.8, delay: 0.3 }}
               className="mt-8 text-center"
             >
@@ -669,7 +669,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
                 <h3 className={`font-display font-black text-3xl lg:text-4xl mb-12 text-white flex items-center gap-4 ${machineryItems.length === 0 ? "justify-center" : ""}`}>
                   {machineryItems.length > 0 && <span className="w-12 h-1 bg-[hsl(var(--orange))]" />}
                   {d(['stats', 'hr', 'heading'], "about.hr.heading")}
-                  {machineryItems.length === 0 && <span className="w-12 h-1 bg-[hsl(var(--orange))]" />}
+                  {/* {machineryItems.length === 0 && <span className="w-12 h-1 bg-[hsl(var(--orange))]" />} */}
                 </h3>
                 <ul className="space-y-8">
                   {hrItems.map((item: string, i: number) => (

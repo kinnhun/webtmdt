@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import SEO from "@/components/SEO";
 import Link from "next/link";
 import {
@@ -79,10 +79,58 @@ export const getStaticProps: GetStaticProps<AboutPageProps> = async () => {
 export default function AboutPage({ dbData }: AboutPageProps) {
   const { t } = useTranslation();
   const langKey = useLang();
-  const heroRef = useRef(null);
+  const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: tlProgress } = useScroll({ target: timelineRef, offset: ["start center", "end center"] });
+
+  // ── Timeline line: direct DOM refs (zero React re-renders) ──
+  const tlLineRef = useRef<HTMLDivElement>(null);
+  const tlTipRef = useRef<HTMLDivElement>(null);
+  const tlWrapRef = useRef<HTMLDivElement>(null); // inner wrapper containing line + items
+  const tlItemsRef = useRef<(HTMLDivElement | null)[]>([]);
+  useMotionValueEvent(tlProgress, "change", (v: number) => {
+    if (tlLineRef.current) tlLineRef.current.style.transform = `scaleY(${v})`;
+    if (tlTipRef.current) tlTipRef.current.style.opacity = v > 0.01 ? "1" : "0";
+    // Toggle active + focus classes on milestones
+    const wrap = tlWrapRef.current;
+    if (!wrap) return;
+    const wrapH = wrap.offsetHeight;
+    const lineBottomPx = wrapH * v;
+    const viewportCenter = window.innerHeight / 2;
+    let closestIdx = -1;
+    let closestDist = Infinity;
+    tlItemsRef.current.forEach((el, idx) => {
+      if (!el) return;
+      const elCenter = el.offsetTop + el.offsetHeight * 0.3;
+      // Active: line has passed this milestone
+      if (lineBottomPx >= elCenter) {
+        el.classList.add("tl-active");
+      } else {
+        el.classList.remove("tl-active");
+      }
+      // Focus: find milestone closest to viewport center
+      const rect = el.getBoundingClientRect();
+      const elViewCenter = rect.top + rect.height * 0.4;
+      const dist = Math.abs(elViewCenter - viewportCenter);
+      if (dist < closestDist) {
+        closestDist = dist;
+        closestIdx = idx;
+      }
+    });
+    // Apply focus class only to the closest milestone
+    tlItemsRef.current.forEach((el, idx) => {
+      if (!el) return;
+      if (idx === closestIdx && closestDist < window.innerHeight * 0.6) {
+        el.classList.add("tl-focus");
+      } else {
+        el.classList.remove("tl-focus");
+      }
+    });
+  });
 
   const hasDB = !!dbData;
 
@@ -354,10 +402,10 @@ export default function AboutPage({ dbData }: AboutPageProps) {
               <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8, delay: 0.3 }} className="space-y-12 lg:space-y-16 min-w-0 w-full">
                 {welcomeValues.map((val: any, i: number) => (
                   <div key={i} className="flex items-start gap-5 sm:gap-8 group">
-                    <div className="grow font-display font-black leading-none group-hover:scale-110 transition-transform duration-500 origin-bottom-left shrink-0" style={{ fontSize: "clamp(3.5rem, 8vw, 5.5rem)", color: "hsl(var(--orange))", marginTop: "-0.1em" }}>
+                    <div className="w-16 sm:w-24 shrink-0 text-left font-display font-black leading-none group-hover:scale-110 transition-transform duration-500 origin-bottom-left" style={{ fontSize: "clamp(3.5rem, 8vw, 5.5rem)", color: "hsl(var(--orange))", marginTop: "-0.1em" }}>
                       {String(i + 1).padStart(2, '0')}
                     </div>
-                    <div className="pt-2 sm:pt-4 min-w-0">
+                    <div className="pt-2 sm:pt-4 min-w-0 flex-1">
                       <h3 className="font-display font-bold text-white text-xl sm:text-3xl tracking-widest mb-2 uppercase">
                         {val.title}
                       </h3>
@@ -443,10 +491,32 @@ export default function AboutPage({ dbData }: AboutPageProps) {
           </div>
         </section>
 
-        {/* ── 5. Timeline (Elegant Vertical) ── */}
-        <section className="py-32 bg-white overflow-hidden">
-          <div className="container mx-auto px-6">
-            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="text-center mb-24 lg:mb-32">
+        {/* ── 5. Timeline (Interactive Storytelling) ── */}
+        <section className="py-32 relative overflow-hidden bg-white">
+          {/* Subtle Background Motion — moving gradient orbs for depth */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <motion.div
+              animate={{ x: ["-10%", "10%"], y: ["-10%", "10%"] }}
+              transition={{ repeat: Infinity, repeatType: "reverse", duration: 15, ease: "easeInOut" }}
+              className="absolute top-0 right-0 w-[800px] h-[800px] rounded-full blur-[120px]"
+              style={{ background: "radial-gradient(circle, hsl(var(--orange) / 0.04), transparent 70%)" }}
+            />
+            <motion.div
+              animate={{ x: ["10%", "-10%"], y: ["10%", "-10%"] }}
+              transition={{ repeat: Infinity, repeatType: "reverse", duration: 20, ease: "easeInOut" }}
+              className="absolute bottom-0 left-0 w-[600px] h-[600px] rounded-full blur-[100px]"
+              style={{ background: "radial-gradient(circle, hsl(var(--navy) / 0.04), transparent 70%)" }}
+            />
+            <motion.div
+              animate={{ x: ["-5%", "5%"], y: ["5%", "-5%"] }}
+              transition={{ repeat: Infinity, repeatType: "reverse", duration: 25, ease: "easeInOut" }}
+              className="absolute top-1/3 left-1/4 w-[500px] h-[500px] rounded-full blur-[140px]"
+              style={{ background: "radial-gradient(circle, hsl(var(--orange) / 0.025), transparent 70%)" }}
+            />
+          </div>
+
+          <div className="container mx-auto px-6 relative z-10" ref={timelineRef}>
+            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.8 }} className="text-center mb-24 lg:mb-32">
               <div className="flex items-center gap-4 justify-center mb-8">
                 <span className="h-px w-8 bg-[hsl(var(--orange))]" />
                 <span className="font-body text-xs tracking-widest uppercase font-bold text-[hsl(var(--orange))]">{d(['timeline', 'label'], "about.timeline.label")}</span>
@@ -455,27 +525,116 @@ export default function AboutPage({ dbData }: AboutPageProps) {
               <h2 className="font-display font-black text-foreground" style={{ fontSize: "clamp(3rem, 6vw, 4.5rem)" }}>{d(['timeline', 'heading'], "about.timeline.heading")}</h2>
             </motion.div>
 
-            <div className="relative max-w-5xl mx-auto">
-              {/* Central Axis */}
-              <div className="absolute left-6 md:left-1/2 top-4 bottom-4 w-px bg-border/60 md:-translate-x-1/2" />
+            <div ref={tlWrapRef} className="relative max-w-5xl mx-auto pb-16">
+              {/* ─── Center Line: drawn by scroll via scaleY + direct DOM ref (zero re-renders) ─── */}
+              <div className="absolute left-6 md:left-1/2 top-0 bottom-0 md:-translate-x-1/2 pointer-events-none z-0" style={{ width: 2 }}>
+                {/* Background track — always visible */}
+                <div className="absolute inset-0" style={{ width: 2, backgroundColor: "rgba(245,166,35,0.15)" }} />
+                {/* Animated fill line — scaleY via ref, no React state */}
+                <div
+                  ref={tlLineRef}
+                  className="absolute inset-0 origin-top will-change-transform"
+                  style={{
+                    width: 2,
+                    transform: "scaleY(0)",
+                    background: "linear-gradient(to bottom, hsl(var(--orange)), rgba(245,166,35,0.6) 60%, rgba(245,166,35,0.2))",
+                  }}
+                >
+                  {/* Glowing teardrop tip */}
+                  <div
+                    ref={tlTipRef}
+                    className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 animate-pulse"
+                    style={{
+                      width: 10,
+                      height: 14,
+                      backgroundColor: "hsl(var(--orange))",
+                      borderRadius: "50% 50% 50% 50% / 30% 30% 70% 70%",
+                      boxShadow: "0 2px 12px 3px rgba(245,166,35,0.45)",
+                      opacity: 0,
+                    }}
+                  />
+                </div>
+              </div>
 
               {timeline.map(({ year, title, desc }: any, i: number) => {
                 const isEven = i % 2 === 0;
-                return (
-                  <div key={year} className="relative flex flex-col md:flex-row items-center mb-16 lg:mb-24 last:mb-0 group">
-                    <motion.div initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6, delay: 0.2 }} className="absolute left-6 md:left-1/2 w-4 h-4 rounded-full bg-[hsl(var(--orange))] shadow-[0_0_0_8px_white] md:-translate-x-1/2 z-10 group-hover:scale-150 transition-transform duration-500" />
+                
+                // Icon per milestone
+                let TimelineIcon = Factory; // 2016 → 🏭
+                if (year.includes("2018") || year.includes("2020") || year.includes("2019")) TimelineIcon = Settings; // ⚙️
+                else if (year.includes("2021") || year.includes("2022") || year.includes("2023") || year.includes("2024")) TimelineIcon = Globe; // 🌍
+                else if (year.includes("2025")) TimelineIcon = Users; // 🤝
 
-                    <div className={`w-full md:w-1/2 pl-16 md:pl-0 ${isEven ? 'md:pr-24 md:text-right' : 'md:pl-24 md:ml-auto'}`}>
-                      <motion.div initial={{ opacity: 0, x: isEven ? -40 : 40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8, delay: 0.1 }}>
-                        <span suppressHydrationWarning translate="no" className="notranslate font-body font-bold tracking-tight text-5xl md:text-6xl text-[hsl(var(--orange))] mb-6 block leading-none">{year}</span>
-                        <h3 className="font-display font-bold text-2xl md:text-3xl text-foreground mb-4">{title}</h3>
-                        <p className="font-body text-muted-foreground leading-relaxed text-lg">{desc}</p>
+                return (
+                  <div
+                    key={year}
+                    ref={(el) => { tlItemsRef.current[i] = el; }}
+                    className="tl-item relative flex flex-col md:flex-row items-center mb-20 lg:mb-32 last:mb-0 cursor-default"
+                  >
+                    {/* ─── Popping Dot with Icon ─── */}
+                    <motion.div 
+                      initial={{ scale: 0.6, opacity: 0 }} 
+                      whileInView={{ scale: 1, opacity: 1 }} 
+                      viewport={{ once: true, margin: "-80px" }} 
+                      transition={{ duration: 0.5, delay: 0.1, type: "spring", stiffness: 260, damping: 20 }} 
+                      className="tl-dot absolute left-6 md:left-1/2 w-12 h-12 -ml-6 md:ml-0 rounded-full bg-white border-2 border-[hsl(var(--orange))] md:-translate-x-1/2 z-10 flex items-center justify-center transition-all duration-400"
+                      style={{
+                        boxShadow: "0 0 0 4px rgba(245,166,35,0.08), 0 0 20px rgba(245,166,35,0.15)",
+                      }}
+                    >
+                      <TimelineIcon size={18} className="tl-dot-icon text-[hsl(var(--orange))] transition-colors duration-300" />
+                      {/* Hover ring pulse */}
+                      <div className="tl-ring absolute inset-0 rounded-full border-2 border-[hsl(var(--orange))] opacity-0 scale-100 transition-all duration-500 pointer-events-none" />
+                    </motion.div>
+
+                    {/* ─── Content Card with slide animation ─── */}
+                    <div className={`w-full md:w-1/2 pl-20 md:pl-0 ${isEven ? 'md:pr-20 lg:md:pr-28 md:text-right' : 'md:pl-20 lg:md:pl-28 md:ml-auto'}`}>
+                      <motion.div 
+                        initial={{ opacity: 0, x: isEven ? -50 : 50, y: 10 }} 
+                        whileInView={{ opacity: 1, x: 0, y: 0 }} 
+                        viewport={{ once: true, margin: "-80px" }} 
+                        transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                        className="tl-card relative bg-white/60 backdrop-blur-sm p-7 md:p-8 rounded-xl transition-all duration-400 border border-transparent"
+                      >
+                        {/* Year — HERO treatment with gradient + glow */}
+                        <span 
+                          suppressHydrationWarning 
+                          translate="no" 
+                          className="tl-year notranslate font-display font-black tracking-tight mb-4 block leading-none transition-transform duration-400"
+                          style={{
+                            fontSize: "clamp(3.5rem, 8vw, 5.5rem)",
+                            background: "linear-gradient(135deg, hsl(var(--orange)), #F9D079, hsl(var(--orange)))",
+                            backgroundSize: "200% 200%",
+                            WebkitBackgroundClip: "text",
+                            WebkitTextFillColor: "transparent",
+                            filter: "drop-shadow(0 2px 8px rgba(245,166,35,0.25))",
+                            transformOrigin: isEven ? "right center" : "left center",
+                          }}
+                        >
+                          {year}
+                        </span>
+                        <h3 className="tl-title font-display font-bold text-xl md:text-2xl text-foreground mb-3 transition-colors duration-300">{title}</h3>
+                        <p className="tl-desc font-body text-muted-foreground leading-relaxed text-base md:text-lg transition-colors duration-300">{desc}</p>
                       </motion.div>
                     </div>
                   </div>
                 );
               })}
             </div>
+            
+            {/* ─── Closing Statement ─── */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }} 
+              whileInView={{ opacity: 1, y: 0 }} 
+              viewport={{ once: true, margin: "-50px" }} 
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="mt-8 text-center"
+            >
+              <div className="w-16 h-px bg-[hsl(var(--orange))] mx-auto mb-8" />
+              <p className="font-body text-xl md:text-2xl text-muted-foreground font-light italic max-w-3xl mx-auto leading-relaxed">
+                &ldquo;Continuously scaling to meet global demand with consistent quality and reliable delivery.&rdquo;
+              </p>
+            </motion.div>
           </div>
         </section>
 
@@ -701,6 +860,61 @@ export default function AboutPage({ dbData }: AboutPageProps) {
         .about-rich-text p:last-child { margin-bottom: 0; }
         .about-rich-text strong { font-weight: bold; color: inherit; }
         .about-rich-text em { font-style: italic; }
+
+        /* ── Timeline active + hover states ── */
+        .tl-item:hover .tl-dot,
+        .tl-item.tl-active .tl-dot {
+          background-color: hsl(var(--orange)) !important;
+          box-shadow: 0 0 0 6px rgba(245,166,35,0.12), 0 0 30px rgba(245,166,35,0.4) !important;
+          transform: scale(1.1) translateX(-50%);
+        }
+        .tl-item:hover .tl-dot-icon,
+        .tl-item.tl-active .tl-dot-icon {
+          color: white !important;
+        }
+        .tl-item:hover .tl-ring,
+        .tl-item.tl-active .tl-ring {
+          opacity: 1 !important;
+          transform: scale(1.5);
+        }
+        .tl-item:hover .tl-card,
+        .tl-item.tl-active .tl-card {
+          border-color: rgba(245,166,35,0.25) !important;
+          background-color: white !important;
+          box-shadow: 0 20px 50px -12px rgba(245,166,35,0.12) !important;
+          transform: translateY(-6px);
+        }
+        .tl-item:hover .tl-year,
+        .tl-item.tl-active .tl-year {
+          transform: scale(1.06);
+        }
+        .tl-item:hover .tl-title,
+        .tl-item.tl-active .tl-title {
+          color: hsl(var(--navy-deep)) !important;
+        }
+        .tl-item:hover .tl-desc,
+        .tl-item.tl-active .tl-desc {
+          color: rgba(0,0,0,0.7) !important;
+        }
+
+        /* ── Scroll Storytelling: focus + dim ── */
+        .tl-item {
+          opacity: 0.35;
+          transform: scale(0.97);
+          transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .tl-item.tl-active {
+          opacity: 0.55;
+          transform: scale(0.98);
+        }
+        .tl-item.tl-focus {
+          opacity: 1 !important;
+          transform: scale(1) !important;
+        }
+        .tl-item:hover {
+          opacity: 1 !important;
+          transform: scale(1) !important;
+        }
       `}</style>
     </>
   );

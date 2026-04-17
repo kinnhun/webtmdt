@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Eye, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { useTranslation } from "react-i18next";
 import type { Product } from "@/domains/product/product.types";
 
@@ -28,7 +29,11 @@ export default function ProductCard({ product, onQuickView, index = 0 }: Product
       className="group bg-white rounded-lg overflow-hidden border border-border hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
     >
       <div className="relative overflow-hidden bg-beige aspect-4/3">
-        <img src={product.image} alt={pName} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+        {product.image ? (
+          <Image src={product.image} alt={pName} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+        ) : (
+          <div className="w-full h-full bg-gray-200" />
+        )}
         <div className="hidden sm:flex absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center gap-2">
           <button
             onClick={() => onQuickView(product)}
@@ -43,11 +48,11 @@ export default function ProductCard({ product, onQuickView, index = 0 }: Product
         <p className="font-body text-xs text-muted-foreground mb-1">{product.code}</p>
         <h3 className="font-display text-base font-semibold text-foreground leading-tight mb-2 truncate">{pName}</h3>
         <div className="flex flex-wrap gap-1.5 mb-4">
-          {[pMaterial, pStyle].filter(Boolean).map((tag) => (
-            <span key={tag} className="text-xs font-body px-2 py-0.5 rounded-sm bg-muted text-muted-foreground">{tag}</span>
+          {[pMaterial, pStyle].filter(Boolean).map((tag, i) => (
+            <span key={`${tag}-${i}`} className="text-xs font-body px-2 py-0.5 rounded-sm bg-muted text-muted-foreground">{tag}</span>
           ))}
         </div>
-        
+
         {/* Mobile Actions: Side-by-side Quick View and Details */}
         <div className="flex sm:hidden items-center justify-between gap-2 w-full">
           <button

@@ -23,16 +23,16 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
 
   const results = query.length >= 2
     ? productsToFilter.filter((p: any) => {
-        const q = query.toLowerCase();
-        const pName = (p.name?.[langId] || p.name?.us || "").toLowerCase();
-        const pCat = (p.category?.[langId] || p.category?.us || "").toLowerCase();
-          
-        return (
-          pName.includes(q) ||
-          p.code.toLowerCase().includes(q) ||
-          pCat.includes(q)
-        );
-      }).slice(0, 6)
+      const q = query.toLowerCase();
+      const pName = (p.name?.[langId] || p.name?.us || "").toLowerCase();
+      const pCat = (p.category?.[langId] || p.category?.us || "").toLowerCase();
+
+      return (
+        pName.includes(q) ||
+        p.code.toLowerCase().includes(q) ||
+        pCat.includes(q)
+      );
+    }).slice(0, 6)
     : [];
 
   const handleSelect = () => {
@@ -66,11 +66,11 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
 
               {results.length > 0 && (
                 <div className="mt-4 border-t border-border pt-4 grid grid-cols-1 gap-2 max-h-80 overflow-y-auto">
-                  {results.map((p: any) => {
+                  {results.map((p: any, idx: number) => {
                     const pNameItem = p.name?.[langId] || p.name?.us || "";
                     const pCatItem = p.category?.[langId] || p.category?.us || "";
                     return (
-                      <button key={p.id} onClick={handleSelect} className="flex items-center gap-4 p-3 hover:bg-muted rounded-md transition-colors text-left">
+                      <button key={p.id || p.code || idx} onClick={handleSelect} className="flex items-center gap-4 p-3 hover:bg-muted rounded-md transition-colors text-left">
                         <img src={p.image} alt={pNameItem} className="w-12 h-10 rounded object-cover shrink-0" />
                         <div>
                           <p className="font-body font-medium text-sm text-foreground">{pNameItem}</p>

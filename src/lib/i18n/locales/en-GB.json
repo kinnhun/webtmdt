@@ -163,7 +163,7 @@
         "b2bDetails": "B2B Details (Required)",
         "moq": "MOQ",
         "dimensions": "Dimensions (L×W×H)",
-        "weight": "Weight",
+        "fabric": "Fabric",
         "material": "Material",
         "style": "Style",
         "color": "Colour / Finish",

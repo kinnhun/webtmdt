@@ -2,6 +2,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "@/lib/mongodb";
 import { Media } from "@/models/Media";
 
+const imageCache = new Map<string, { buffer: Buffer; mimeType: string }>();
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -17,23 +19,34 @@ export default async function handler(
   }
 
   try {
+    if (imageCache.has(id)) {
+      const cached = imageCache.get(id)!;
+      res.setHeader("Content-Type", cached.mimeType);
+      res.setHeader("Content-Length", cached.buffer.length);
+      res.setHeader("Cache-Control", "public, max-age=2592000, immutable");
+      return res.end(cached.buffer);
+    }
+
     await dbConnect();
 
-    const media = await Media.findById(id);
+    const media = await Media.findById(id).lean();
 
-    if (!media) {
+    if (!media || !media.base64Data) {
       return res.status(404).json({ message: "Image not found" });
     }
 
     // Convert Base64 string directly to binary buffer
-    // The client might have sent `data:image/jpeg;base64,/9j/4AA...` or just the pure base64 string
     const base64Content = media.base64Data.includes("base64,")
       ? media.base64Data.split("base64,")[1]
       : media.base64Data;
 
     const buffer = Buffer.from(base64Content, "base64");
 
-    // Set high-performance headers "cho thật đẹp"
+    // Save to cache for future requests to prevent huge MongoDB network drops
+    if (imageCache.size > 200) imageCache.clear(); // simple eviction
+    imageCache.set(id, { buffer, mimeType: media.mimeType });
+
+    // Set high-performance headers
     res.setHeader("Content-Type", media.mimeType);
     res.setHeader("Content-Length", buffer.length);
     // Cache for 30 days (public) since these are static uploaded assets

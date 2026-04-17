@@ -124,7 +124,7 @@ export default function FeaturedProducts() {
           </motion.div>
           <motion.div layout className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-6 sm:gap-x-5 sm:gap-y-10 md:gap-x-7">
             <AnimatePresence mode="popLayout">
-              {filtered.map((product, i) => (<EditorialProductCard key={product.id} product={product} index={i} onQuickView={setQuickViewProduct} />))}
+              {filtered.map((product, i) => (<EditorialProductCard key={product.id || product.code || i} product={product} index={i} onQuickView={setQuickViewProduct} />))}
             </AnimatePresence>
           </motion.div>
           {filtered.length === 0 && (<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-20"><p className="font-body text-muted-foreground">{t("home.featured.noProducts")}</p></motion.div>)}

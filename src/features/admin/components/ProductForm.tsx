@@ -529,10 +529,10 @@ function DescriptionFields({ form }: { form: ReturnType<typeof Form.useForm>[0] 
               onClick={() => autoTranslateDesc(lang)}
               disabled={translating}
               className={`flex items-center gap-1.5 text-[10px] font-semibold px-2.5 py-1 rounded-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${lang === 'US'
-                  ? 'hover:shadow-sm'
-                  : lang === 'UK'
-                    ? 'hover:bg-gray-200 text-gray-500 bg-gray-100'
-                    : 'hover:bg-red-50 text-red-500 bg-white border border-red-200'
+                ? 'hover:shadow-sm'
+                : lang === 'UK'
+                  ? 'hover:bg-gray-200 text-gray-500 bg-gray-100'
+                  : 'hover:bg-red-50 text-red-500 bg-white border border-red-200'
                 }`}
               style={lang === 'US' ? { backgroundColor: 'hsl(var(--orange)/0.1)', color: 'hsl(var(--orange))' } : {}}
             >
@@ -804,6 +804,15 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
         flatInit.material = getTagArray(initialValues.material);
       }
     }
+    if (initialValues?.fabric) {
+      if (typeof initialValues.fabric === 'object' && !Array.isArray(initialValues.fabric)) {
+        flatInit.fabric = getTagArray(initialValues.fabric.us);
+        flatInit.fabricUK = getTagArray(initialValues.fabric.uk);
+        flatInit.fabricVI = getTagArray(initialValues.fabric.vi);
+      } else {
+        flatInit.fabric = getTagArray(initialValues.fabric);
+      }
+    }
     if (initialValues?.color) {
       if (typeof initialValues.color === 'object' && !Array.isArray(initialValues.color)) {
         flatInit.color = getTagArray(initialValues.color.us);
@@ -945,6 +954,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       name: { us: v.name || '', uk: v.nameUK || '', vi: v.nameVI || '' },
       description: { us: v.description || '', uk: v.descriptionUK || '', vi: v.descriptionVI || '' },
       longDescription: { us: v.longDescription || '', uk: v.longDescriptionUK || '', vi: v.longDescriptionVI || '' },
+      fabric: { us: Array.isArray(v.fabric) ? v.fabric.join(', ') : (v.fabric || ''), uk: Array.isArray(v.fabricUK) ? v.fabricUK.join(', ') : (v.fabricUK || ''), vi: Array.isArray(v.fabricVI) ? v.fabricVI.join(', ') : (v.fabricVI || '') },
       material: { us: Array.isArray(v.material) ? v.material.join(', ') : (v.material || ''), uk: Array.isArray(v.materialUK) ? v.materialUK.join(', ') : (v.materialUK || ''), vi: Array.isArray(v.materialVI) ? v.materialVI.join(', ') : (v.materialVI || '') },
       color: { us: Array.isArray(v.color) ? v.color.join(', ') : (v.color || ''), uk: Array.isArray(v.colorUK) ? v.colorUK.join(', ') : (v.colorUK || ''), vi: Array.isArray(v.colorVI) ? v.colorVI.join(', ') : (v.colorVI || '') },
       style: { us: Array.isArray(v.style) ? v.style.join(', ') : (v.style || ''), uk: Array.isArray(v.styleUK) ? v.styleUK.join(', ') : (v.styleUK || ''), vi: Array.isArray(v.styleVI) ? v.styleVI.join(', ') : (v.styleVI || '') },
@@ -961,6 +971,8 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
     delete payload.descriptionVI;
     delete payload.longDescriptionUK;
     delete payload.longDescriptionVI;
+    delete payload.fabricUK;
+    delete payload.fabricVI;
     delete payload.materialUK;
     delete payload.materialVI;
     delete payload.styleUK;
@@ -1511,25 +1523,23 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
             <SectionLabel>{t('admin.products.form.b2bDetails')}</SectionLabel>
             <p className="text-xs text-gray-400 -mt-3 mb-4">Core fields used for storefront filtering and categorization.</p>
             <Row gutter={[16, 16]}>
-              <Col xs={24} md={8}>
+              <Col xs={24} md={12}>
                 <Form.Item name="moq" label={t('admin.products.form.moq')} rules={[{ required: true, message: t('admin.products.form.validation.b2bRequired') }]}>
                   <Select placeholder="50–100 pcs" className="rounded-lg" allowClear>
                     {MOQ_OPTIONS.map((opt: string) => <Option key={opt} value={opt}>{opt}</Option>)}
                   </Select>
                 </Form.Item>
               </Col>
-              <Col xs={24} md={8}>
+              <Col xs={24} md={12}>
                 <Form.Item name="dimensions" label={t('admin.products.form.dimensions')} rules={[{ required: true, message: t('admin.products.form.validation.b2bRequired') }]}>
                   <Input placeholder="220 × 100 × 76 cm" className="rounded-lg border-gray-200" />
                 </Form.Item>
               </Col>
-              <Col xs={24} md={8}>
-                <Form.Item name="weight" label={t('admin.products.form.weight')} rules={[{ required: true, message: t('admin.products.form.validation.b2bRequired') }]}>
-                  <Input placeholder="52 kg" className="rounded-lg border-gray-200" />
-                </Form.Item>
-              </Col>
             </Row>
             <Row gutter={[16, 16]}>
+              <Col xs={24} md={12}>
+                <TagLangBlock fieldName="fabric" label={t('admin.products.form.fabric')} options={[]} />
+              </Col>
               <Col xs={24} md={12}>
                 <TagLangBlock fieldName="material" label={t('admin.products.form.material')} options={MATERIALS} />
               </Col>

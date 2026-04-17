@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { ChevronLeft, ChevronRight, ArrowUpRight, Eye } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { Product } from "@/domains/product/product.types";
@@ -20,7 +21,7 @@ export function HeroSlider({ products, onQuickView }: { products: Product[]; onQ
     if (featured.length === 0) return;
     const safeCurrent = current >= featured.length ? 0 : current;
     if (safeCurrent !== current) setCurrent(safeCurrent);
-    
+
     timerRef.current = setInterval(() => goTo(safeCurrent + 1), 5000);
     return () => clearInterval(timerRef.current);
   }, [current, goTo, featured.length]);
@@ -28,7 +29,7 @@ export function HeroSlider({ products, onQuickView }: { products: Product[]; onQ
   if (!featured.length) return null;
   const safeCurrent = current >= featured.length ? 0 : current;
   const p = featured[safeCurrent];
-  
+
   const pName = p.name?.[langId] || p.name?.us || "";
   const pCat = p.category?.[langId] || p.category?.us || "";
   const pMat = p.material?.[langId] || p.material?.us || "";
@@ -38,15 +39,19 @@ export function HeroSlider({ products, onQuickView }: { products: Product[]; onQ
   return (
     <div className="relative w-full overflow-hidden" style={{ height: "480px", backgroundColor: "hsl(var(--navy-deep))" }}>
       <AnimatePresence mode="wait">
-        <motion.div key={p.id} initial={{ opacity: 0, scale: 1.05 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.98 }} transition={{ duration: 0.6 }} className="absolute inset-0">
-          <img src={p.images[0]} alt={pName} className="w-full h-full object-cover opacity-60" />
+        <motion.div key={p.id || p.code || safeCurrent} initial={{ opacity: 0, scale: 1.05 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.98 }} transition={{ duration: 0.6 }} className="absolute inset-0">
+          {p.images?.[0] ? (
+            <Image src={p.images[0]} alt={pName} fill priority sizes="100vw" className="object-cover opacity-60" />
+          ) : (
+            <div className="w-full h-full bg-navy opacity-60" />
+          )}
           <div className="absolute inset-0" style={{ background: "linear-gradient(90deg, hsl(var(--navy-deep)) 35%, transparent 80%)" }} />
         </motion.div>
       </AnimatePresence>
       <div className="absolute inset-0 flex items-center z-10">
         <div className="container mx-auto px-10">
           <AnimatePresence mode="wait">
-            <motion.div key={p.id} initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 30 }} transition={{ duration: 0.5 }} className="max-w-md">
+            <motion.div key={p.id || p.code || safeCurrent} initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 30 }} transition={{ duration: 0.5 }} className="max-w-md">
               <span className="font-body text-xs tracking-[0.2em] uppercase font-medium mb-3 block" style={{ color: "hsl(var(--orange))" }}>{pCat} — {p.code}</span>
               <h2 className="font-display font-bold text-white text-4xl leading-tight mb-3">{pName}</h2>
               <p className="font-body text-white/50 text-sm mb-1">{pMat} · {pColor}</p>

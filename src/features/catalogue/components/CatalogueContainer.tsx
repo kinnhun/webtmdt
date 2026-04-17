@@ -104,9 +104,9 @@ export default function CatalogueContainer({ forcedCollection }: { forcedCollect
                     (values as string[]).map((val: string) => {
                       const displayVal = getOptionTranslation(t, key, val);
                       return (
-                      <button key={`${key}-${val}`} onClick={() => toggleFilter(key as keyof FilterState, val)} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm bg-white border border-border font-body text-xs font-medium text-foreground hover:border-red-300 hover:text-red-500 transition-colors group">
-                        {displayVal} <X size={12} className="text-muted-foreground group-hover:text-red-500" />
-                      </button>
+                        <button key={`${key}-${val}`} onClick={() => toggleFilter(key as keyof FilterState, val)} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm bg-white border border-border font-body text-xs font-medium text-foreground hover:border-red-300 hover:text-red-500 transition-colors group">
+                          {displayVal} <X size={12} className="text-muted-foreground group-hover:text-red-500" />
+                        </button>
                       );
                     })
                   )}
@@ -117,7 +117,7 @@ export default function CatalogueContainer({ forcedCollection }: { forcedCollect
               {filtered.length > 0 ? (
                 <>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                    {paginated.map((p: any, i: number) => (<ProductCard key={p.id} product={p} index={i} onQuickView={setQuickViewProduct} />))}
+                    {paginated.map((p: any, i: number) => (<ProductCard key={p.id || p.code || i} product={p} index={i} onQuickView={setQuickViewProduct} />))}
                   </div>
 
                   {totalPages > 1 && (

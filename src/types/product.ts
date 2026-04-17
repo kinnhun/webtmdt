@@ -55,7 +55,7 @@ export interface Product {
   /** Detail page extras */
   video?: string;
   dimensions?: string;
-  weight?: string;
+  fabric?: I18nText;
   specifications?: ProductSpecification[];
   careInstructions?: I18nList;
   usageSettings?: I18nList;

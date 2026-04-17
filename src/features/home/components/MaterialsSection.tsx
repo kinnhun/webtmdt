@@ -36,7 +36,7 @@ export default function MaterialsSection() {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {materials.map((mat, i) => (
               <motion.div key={mat.key} {...cardReveal(i)} onClick={() => setSelectedImage(mat.image)} className="group relative overflow-hidden rounded-sm aspect-[3/4] cursor-pointer">
-                <Image src={mat.image} alt={t(`home.materials.${mat.key}.name`)} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover group-hover:scale-[1.06] transition-transform duration-700" />
+                <Image src={mat.image} alt={t(`home.materials.${mat.key}.name`)} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover group-hover:scale-[1.06] transition-transform duration-700" quality={90} />
                 <div className="absolute inset-0" style={{ background: "linear-gradient(to top, hsl(var(--navy-deep)) 0%, transparent 60%)" }} />
                 <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6">
                   <p className="font-display font-medium text-white mb-2" style={{ fontSize: "clamp(1.1rem, 1.5vw, 1.35rem)" }}>{t(`home.materials.${mat.key}.name`)}</p>

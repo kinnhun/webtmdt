@@ -34,12 +34,13 @@ export default function ReadyToWorkTogether() {
             transition={{ duration: 1.5, ease: "easeInOut" }}
             className="absolute inset-0"
           >
-            <Image 
-              src={backgroundImages[currentImageIdx]} 
+            <Image
+              src={backgroundImages[currentImageIdx]}
               alt="Background Slider"
               fill
               className="object-cover"
               priority={currentImageIdx === 0}
+              quality={90}
             />
           </motion.div>
         </AnimatePresence>

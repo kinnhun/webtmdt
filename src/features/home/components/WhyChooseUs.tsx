@@ -14,8 +14,8 @@ export default function WhyChooseUs() {
   return (
     <section className="relative overflow-hidden">
       <div className="absolute inset-0">
-        <Image src="/img/WhyDHT.png" alt="Factory" fill className="object-cover brightness-110" />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(90deg, hsl(var(--navy-deep)/0.90) 0%, hsl(var(--navy-deep)/0.75) 45%, hsl(var(--navy-deep)/0.25) 100%)" }} />
+        <Image src="/img/WhyDHT.png" alt="Factory" fill className="object-cover" quality={100} priority />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(90deg, hsl(var(--navy-deep)/0.80) 0%, hsl(var(--navy-deep)/0.45) 45%, hsl(var(--navy-deep)/0.15) 100%)" }} />
       </div>
       <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-28">
         <div className="max-w-xl">

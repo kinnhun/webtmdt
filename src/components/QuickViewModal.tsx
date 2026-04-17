@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, Phone } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useTranslation } from "react-i18next";
 import type { Product } from "@/domains/product/product.types";
 import ProductInquiryModal from "@/features/catalogue/components/ProductInquiryModal";
@@ -40,8 +41,8 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
                 <X size={20} />
               </button>
               <div className="grid grid-cols-1 md:grid-cols-2">
-                <div className="relative bg-beige min-h-72">
-                  <img src={product.images[activeImage]} alt={pName} className="w-full h-80 md:h-full object-cover" />
+                <div className="relative bg-beige min-h-72 md:h-full">
+                  <Image src={product.images[activeImage] || "/placeholder.jpg"} alt={pName} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
                   {product.images.length > 1 && (
                     <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2">
                       {product.images.map((_, i) => (
@@ -89,10 +90,10 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
                     ))}
                   </ul>
                   <div className="flex flex-col gap-3 mt-auto pt-2">
-                    <button 
-                      type="button" 
-                      onClick={() => setIsInquiryOpen(true)} 
-                      className="w-full py-3 rounded font-body font-medium text-center text-white text-sm transition-all hover:opacity-90 cursor-pointer border-0" 
+                    <button
+                      type="button"
+                      onClick={() => setIsInquiryOpen(true)}
+                      className="w-full py-3 rounded font-body font-medium text-center text-white text-sm transition-all hover:opacity-90 cursor-pointer border-0"
                       style={{ backgroundColor: "hsl(var(--accent))" }}
                     >
                       {t("product.sendInquiry")}
@@ -110,10 +111,10 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
 
       {/* Inquiry Modal layered on top of Quick View */}
       {product && (
-        <ProductInquiryModal 
-          isOpen={isInquiryOpen} 
-          onClose={() => setIsInquiryOpen(false)} 
-          product={product} 
+        <ProductInquiryModal
+          isOpen={isInquiryOpen}
+          onClose={() => setIsInquiryOpen(false)}
+          product={product}
         />
       )}
     </AnimatePresence>

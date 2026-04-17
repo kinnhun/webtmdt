@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowLeft, ChevronLeft, ChevronRight, Play,
-  Ruler, Weight, Shield, Sparkles, Settings2, MapPin,
+  Ruler, Shirt, Shield, Sparkles, Settings2, MapPin,
   ArrowUpRight, Share2, Palette
 } from "lucide-react";
 import * as AntIcons from "@ant-design/icons";
@@ -176,6 +176,7 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
   const pDesc = product.description?.[langId] || product.description?.us || "";
   const pMat = product.material?.[langId] || product.material?.us || "";
   const pStyle = product.style?.[langId] || product.style?.us || "";
+  const pFabric = product.fabric?.[langId] || product.fabric?.us || "";
   const getList = (field: any, lang: string) => {
     if (Array.isArray(field)) return field;
     if (field && typeof field === 'object') {
@@ -275,12 +276,12 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
                   </div>
                 </div>
               )}
-              {product.weight && product.weight.trim() !== "" && (
+              {pFabric && pFabric.trim() !== "" && (
                 <div className="flex items-center gap-2.5 p-3 rounded-lg" style={{ backgroundColor: "hsl(var(--navy)/0.03)" }}>
-                  <Weight size={16} style={{ color: "hsl(var(--orange))" }} />
+                  <Shirt size={16} style={{ color: "hsl(var(--orange))" }} />
                   <div>
-                    <p className="font-body text-[10px] uppercase tracking-wider font-medium" style={{ color: "hsl(var(--navy)/0.4)" }}>{t("productDetail.weight")}</p>
-                    <p className="font-body text-xs font-semibold" style={{ color: "hsl(var(--navy-deep))" }}>{product.weight}</p>
+                    <p className="font-body text-[10px] uppercase tracking-wider font-medium" style={{ color: "hsl(var(--navy)/0.4)" }}>{t("productDetail.fabric")}</p>
+                    <p className="font-body text-xs font-semibold" style={{ color: "hsl(var(--navy-deep))" }}>{pFabric}</p>
                   </div>
                 </div>
               )}
@@ -317,29 +318,29 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
 
             {/* Visual Attributes */}
             {product.attributes && product.attributes.length > 0 && (
-               <div className="grid grid-cols-2 gap-3 mb-6">
-                 {product.attributes.map((attr, i) => {
-                   const dynAttr = attr as any;
-                   const tLabel = dynAttr[`title${langId.toUpperCase()}`] || dynAttr.titleUS;
-                   const tVal = dynAttr[`value${langId.toUpperCase()}`] || dynAttr.valueUS;
-                   if (!tLabel && !tVal) return null;
-                   return (
-                     <div key={i} className="flex items-start gap-2.5 p-3 rounded-lg" style={{ backgroundColor: "hsl(var(--navy)/0.03)" }}>
-                       <div className="mt-0.5 shrink-0">
-                         {renderAntIcon(attr.icon, 16)}
-                       </div>
-                       <div className="w-full flex-1 overflow-hidden">
-                         <p className="font-body text-[10px] uppercase tracking-wider font-medium mb-1" style={{ color: "hsl(var(--navy)/0.4)" }} title={tLabel as string}>
-                           {tLabel as string}
-                         </p>
-                         <p className="font-body text-xs font-semibold leading-snug" style={{ color: "hsl(var(--navy-deep))" }}>
-                           {tVal as string}
-                         </p>
-                       </div>
-                     </div>
-                   );
-                 })}
-               </div>
+              <div className="grid grid-cols-2 gap-3 mb-6">
+                {product.attributes.map((attr, i) => {
+                  const dynAttr = attr as any;
+                  const tLabel = dynAttr[`title${langId.toUpperCase()}`] || dynAttr.titleUS;
+                  const tVal = dynAttr[`value${langId.toUpperCase()}`] || dynAttr.valueUS;
+                  if (!tLabel && !tVal) return null;
+                  return (
+                    <div key={i} className="flex items-start gap-2.5 p-3 rounded-lg" style={{ backgroundColor: "hsl(var(--navy)/0.03)" }}>
+                      <div className="mt-0.5 shrink-0">
+                        {renderAntIcon(attr.icon, 16)}
+                      </div>
+                      <div className="w-full flex-1 overflow-hidden">
+                        <p className="font-body text-[10px] uppercase tracking-wider font-medium mb-1" style={{ color: "hsl(var(--navy)/0.4)" }} title={tLabel as string}>
+                          {tLabel as string}
+                        </p>
+                        <p className="font-body text-xs font-semibold leading-snug" style={{ color: "hsl(var(--navy-deep))" }}>
+                          {tVal as string}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             )}
 
             {/* Features */}
@@ -423,8 +424,8 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
           <div className="container mx-auto px-6">
             <h2 className="font-display font-bold text-xl mb-6" style={{ color: "hsl(var(--navy-deep))" }}>{t("productDetail.relatedProducts")}</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {relatedProducts.map((p) => (
-                <Link key={p.id} href={`/catalogue/${p.slug}`} className="group block">
+              {relatedProducts.map((p, idx) => (
+                <Link key={p.id || p.code || `related-${idx}`} href={`/catalogue/${p.slug}`} className="group block">
                   <div className="rounded-lg overflow-hidden border border-black/5 transition-all duration-300 group-hover:shadow-lg group-hover:-translate-y-1" style={{ backgroundColor: "#fff" }}>
                     <div className="relative aspect-4/3 overflow-hidden">
                       <Image src={p.image} alt={p.name?.[langId] || p.name?.us || ""} fill className="object-cover transition-transform duration-500 group-hover:scale-105" sizes="(max-width: 768px) 50vw, 25vw" />

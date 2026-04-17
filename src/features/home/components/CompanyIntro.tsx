@@ -42,7 +42,7 @@ export default function CompanyIntro() {
               ].map(({ text, outline, italic, accent }, i) => (
                 <div key={i}>
                   <motion.h2 initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={vp} transition={{ duration: 0.8, delay: i * 0.08, ease }} className={`font-display font-bold leading-[0.92] tracking-tight block${italic ? " italic" : ""}`} style={{ fontSize: "clamp(2.2rem, 5vw, 4.5rem)", color: outline ? "transparent" : "hsl(var(--navy-deep))", WebkitTextStroke: outline ? "1.5px hsl(var(--navy-light))" : undefined }}>
-                    {accent ? (<>{text.replace(".", "")}<span style={{ color: "hsl(var(--orange))" }}>.</span></>) : text}
+                    {accent ? (<>{text.replace(".", "")}<span >.</span></>) : text}
                   </motion.h2>
                 </div>
               ))}
@@ -88,12 +88,12 @@ export default function CompanyIntro() {
               <motion.div initial={{ opacity: 0, x: 14 }} whileInView={{ opacity: 1, x: 0 }} viewport={vp} transition={{ duration: 0.45, delay: 0.65, ease }} className="absolute top-4 right-4 px-3 py-1.5 rounded-full z-20" style={{ backgroundColor: "hsl(var(--orange))" }}>
                 <span className="font-body font-semibold text-xs text-white tracking-wide">{t("home.intro.location")}</span>
               </motion.div>
-              
+
               {/* Slider dots */}
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
                 {images.map((_, i) => (
-                  <button 
-                    key={i} 
+                  <button
+                    key={i}
                     onClick={() => setCurrentImage(i)}
                     className={`h-1.5 rounded-full transition-all duration-300 ${i === currentImage ? "w-6 bg-white" : "w-1.5 bg-white/50"}`}
                     aria-label={`Go to slide ${i + 1}`}

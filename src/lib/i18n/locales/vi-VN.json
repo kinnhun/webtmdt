@@ -509,7 +509,8 @@
     "style": "Phong cách",
     "inquire": "Yêu cầu báo giá",
     "videoTitle": "Video sản phẩm",
-    "relatedProducts": "Có thể bạn cũng thích"
+    "relatedProducts": "Có thể bạn cũng thích",
+    "fabric": "Vải"
   },
   "marquee": {
     "items": [
@@ -684,7 +685,7 @@
         "b2bDetails": "Thông tin B2B (Bắt buộc)",
         "moq": "Số lượng đặt tối thiểu",
         "dimensions": "Kích thước (D×R×C)",
-        "weight": "Trọng lượng",
+        "fabric": "Vải",
         "material": "Vật liệu",
         "style": "Phong cách",
         "color": "Màu sắc / Hoàn thiện",

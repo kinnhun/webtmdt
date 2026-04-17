@@ -32,7 +32,7 @@ export interface IProduct extends Omit<Document, 'collection'> {
   room: I18nText;
   video?: string;
   dimensions?: string;
-  weight?: string;
+  fabric?: string;
   attributes?: {
     icon: string;
     titleUS: string;
@@ -89,7 +89,7 @@ const ProductSchema = new Schema<IProduct>(
     room: I18nTextSchema,
     video: { type: String },
     dimensions: { type: String },
-    weight: { type: String },
+    fabric: I18nTextSchema,
     attributes: [{
       icon: String,
       titleUS: String,
@@ -99,13 +99,13 @@ const ProductSchema = new Schema<IProduct>(
       valueVI: String,
       valueUK: String
     }],
-    specifications: [{ 
-      nameUS: String, 
-      nameVI: String, 
-      nameUK: String, 
-      valueUS: String, 
-      valueVI: String, 
-      valueUK: String 
+    specifications: [{
+      nameUS: String,
+      nameVI: String,
+      nameUK: String,
+      valueUS: String,
+      valueVI: String,
+      valueUK: String
     }],
     careInstructions: I18nListSchema,
     usageSettings: I18nListSchema,

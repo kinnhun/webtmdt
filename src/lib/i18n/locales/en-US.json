@@ -504,12 +504,13 @@
     "usage": "Ideal Settings",
     "features": "Key Features",
     "dimensions": "Dimensions",
-    "weight": "Weight",
+    "weight": "Fabric",
     "material": "Material",
     "style": "Style",
     "inquire": "Request Quote",
     "videoTitle": "Product Video",
-    "relatedProducts": "You May Also Like"
+    "relatedProducts": "You May Also Like",
+    "fabric": "Fabric"
   },
   "marquee": {
     "items": [
@@ -684,7 +685,7 @@
         "b2bDetails": "B2B Details (Required)",
         "moq": "MOQ",
         "dimensions": "Dimensions (L×W×H)",
-        "weight": "Weight",
+        "fabric": "Fabric",
         "material": "Material",
         "style": "Style",
         "color": "Color / Finish",

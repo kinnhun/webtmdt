@@ -643,7 +643,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
           <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=50')] opacity-5 bg-cover bg-center mix-blend-overlay" />
           <div className="container mx-auto px-6 relative z-10">
             <div className="text-center mb-24 lg:mb-32">
-              <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="font-display font-black text-white mb-6" style={{ fontSize: "clamp(3rem, 6vw, 4.5rem)" }}>{d(['stats', 'heading'], "about.stats.heading")}</motion.h2>
+              <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="font-display font-black text-white mb-6 break-words hyphens-auto" style={{ fontSize: "clamp(1.75rem, 8vw, 4.5rem)", wordBreak: "break-word" }}>{d(['stats', 'heading'], "about.stats.heading")}</motion.h2>
               <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.2 }} className="font-body text-white/50 text-xl max-w-2xl mx-auto font-light leading-relaxed">{d(['stats', 'subtitle'], "about.stats.subtitle")}</motion.p>
             </div>
 
@@ -735,7 +735,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
                 )}
 
                 {teamLeader.quote && teamLeader.quote.trim() !== '' && (
-                  <p className="font-display italic text-2xl sm:text-3xl text-muted-foreground leading-relaxed mb-12 md:border-l-4 md:pl-8 border-[hsl(var(--orange))/0.4]">
+                  <p className="text-left font-body italic text-base sm:text-2xl md:text-3xl text-muted-foreground leading-relaxed mb-12 border-l-4 pl-6 md:pl-8 border-[hsl(var(--orange))/0.4]">
                     &ldquo;{teamLeader.quote}&rdquo;
                   </p>
                 )}
@@ -767,7 +767,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
                     {m.role && <span className="text-xs sm:text-[10px] font-body font-bold uppercase tracking-widest mb-6 text-[hsl(var(--orange))]">{m.role}</span>}
 
                     {m.quote && m.quote.trim() !== '' && (
-                      <p className="font-display italic text-2xl sm:text-sm text-muted-foreground leading-relaxed mb-8 grow">
+                      <p className="text-left font-body italic text-sm text-muted-foreground leading-relaxed mb-8 grow border-l-2 pl-4 border-[hsl(var(--orange))/0.3]">
                         &ldquo;{m.quote}&rdquo;
                       </p>
                     )}

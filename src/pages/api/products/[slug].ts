@@ -29,12 +29,35 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(404).json({ error: 'Product not found' });
       }
 
+      // Fetch up to 4 related products (same category or material) in parallel
+      const relatedQuery: Record<string, unknown> = {
+        _id: { $ne: product._id },
+        $or: [] as Record<string, unknown>[],
+      };
+      const orConds: Record<string, unknown>[] = [];
+      if ((product as any).category?.us) orConds.push({ 'category.us': (product as any).category.us });
+      if ((product as any).material?.us) orConds.push({ 'material.us': (product as any).material.us });
+      if (orConds.length > 0) relatedQuery.$or = orConds;
+
+      const relatedProducts = orConds.length > 0
+        ? await Product.find(relatedQuery)
+            .select('name slug code image images category material collection')
+            .limit(4)
+            .lean()
+        : [];
+
       const formatted = {
         ...product,
         id: (product as any).productId || product._id?.toString(),
       };
       
-      return res.status(200).json(formatted);
+      return res.status(200).json({
+        ...formatted,
+        _related: relatedProducts.map((p: any) => ({
+          ...p,
+          id: p.productId || p._id?.toString(),
+        })),
+      });
     } 
 
     if (req.method === 'PUT') {

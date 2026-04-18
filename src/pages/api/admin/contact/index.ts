@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "@/lib/mongodb";
+import { invalidateCache } from "@/lib/cache";
 import ContactContent from "@/models/ContactContent";
 import ContactRevision from "@/models/ContactRevision";
 
@@ -51,6 +52,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           createdBy: "Admin" 
         });
       }
+
+      // 4. Invalidate public contact-content cache
+      invalidateCache("contact-content-public");
 
       return res.status(200).json({ success: true, data: doc });
     } catch (error) {

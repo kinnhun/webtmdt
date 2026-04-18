@@ -5,9 +5,7 @@ import SEO from "@/components/SEO";
 import Schema from "@/components/Schema";
 import { Mail, Phone, MapPin, Send, Clock, Globe } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import type { GetServerSideProps } from "next";
-import dbConnect from "@/lib/mongodb";
-import ContactContent from "@/models/ContactContent";
+import { useQuery } from "@tanstack/react-query";
 
 function useLang() {
   const { i18n } = useTranslation();
@@ -24,21 +22,18 @@ function txt(obj: any, langKey: string): string {
   return obj.us || '';
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  try {
-    await dbConnect();
-    const doc = await ContactContent.findOne().lean();
-    return {
-      props: {
-        dbData: doc ? JSON.parse(JSON.stringify(doc)) : null,
-      },
-    };
-  } catch {
-    return { props: { dbData: null } };
-  }
-};
+export default function ContactPage() {
+  const { data: dbData = null } = useQuery<Record<string, any> | null>({
+    queryKey: ["contact-content"],
+    queryFn: async () => {
+      const res = await fetch("/api/contact-content");
+      if (!res.ok) return null;
+      const json = await res.json();
+      return json?.data || json || null;
+    },
+    staleTime: 5 * 60 * 1000,
+  });
 
-export default function ContactPage({ dbData }: { dbData: any }) {
   const router = useRouter();
   const { t } = useTranslation();
   const langKey = useLang();

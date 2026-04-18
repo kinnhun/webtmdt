@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "@/lib/mongodb";
+import { invalidateCache } from "@/lib/cache";
 import AboutContent from "@/models/AboutContent";
 import AboutRevision from "@/models/AboutRevision";
 
@@ -51,6 +52,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           createdBy: "Admin" // Can be extracted from session later
         });
       }
+
+      // 4. Invalidate public about-content cache so visitors see changes immediately
+      invalidateCache("about-content-public");
 
       return res.status(200).json({ success: true, data: doc });
     } catch (error) {

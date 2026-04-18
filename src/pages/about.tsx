@@ -15,9 +15,7 @@ import {
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import MarqueeStrip from "@/components/MarqueeStrip";
-import type { GetStaticProps } from "next";
-import dbConnect from "@/lib/mongodb";
-import AboutContent from "@/models/AboutContent";
+import { useQuery } from "@tanstack/react-query";
 
 /* ── Icon map for dynamic icon resolution ── */
 const ICON_MAP: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
@@ -55,28 +53,18 @@ function txt(obj: { us?: string; uk?: string; vi?: string } | undefined, langKey
   return obj.us || '';
 }
 
-interface AboutPageProps {
-  dbData: Record<string, any> | null;
-}
+export default function AboutPage() {
+  /* ── Client-side fetch: non-blocking, page renders instantly with i18n fallback ── */
+  const { data: dbData = null } = useQuery<Record<string, any> | null>({
+    queryKey: ["about-content"],
+    queryFn: async () => {
+      const res = await fetch("/api/about-content");
+      if (!res.ok) return null;
+      return res.json();
+    },
+    staleTime: 30 * 1000, // 30s — admin changes show quickly after save
+  });
 
-/* ── ISR: pre-render at build, revalidate every 60s ── */
-export const getStaticProps: GetStaticProps<AboutPageProps> = async () => {
-  try {
-    await dbConnect();
-    // Exclude internal top-level Mongoose fields to keep page data small
-    const doc = await AboutContent.findOne().select('-_id -__v -createdAt -updatedAt').lean();
-    return {
-      props: {
-        dbData: doc ? JSON.parse(JSON.stringify(doc)) : null,
-      },
-      revalidate: 60, // re-generate page every 60 seconds
-    };
-  } catch {
-    return { props: { dbData: null }, revalidate: 60 };
-  }
-};
-
-export default function AboutPage({ dbData }: AboutPageProps) {
   const { t } = useTranslation();
   const langKey = useLang();
   const heroRef = useRef<HTMLDivElement>(null);
@@ -152,9 +140,11 @@ export default function AboutPage({ dbData }: AboutPageProps) {
   };
 
   /* ── Story Images ── */
-  const storyImages = (hasDB && dbData.story?.images?.length) ? dbData.story.images : DEFAULT_STORY_IMAGES;
+  const rawStoryImages = (hasDB && dbData.story?.images?.length) ? dbData.story.images : DEFAULT_STORY_IMAGES;
+  const storyImages = rawStoryImages.filter((s: string) => s && s.trim() !== '');
   const [storyImgIdx, setStoryImgIdx] = useState(0);
   useEffect(() => {
+    if (storyImages.length <= 1) return;
     const timer = setInterval(() => {
       setStoryImgIdx((prev) => (prev + 1) % storyImages.length);
     }, 4000);
@@ -162,10 +152,13 @@ export default function AboutPage({ dbData }: AboutPageProps) {
   }, [storyImages.length]);
 
   /* ── Hero background images (slider support) ── */
-  const heroImages: string[] = (hasDB && dbData.hero?.backgroundImages?.length)
+  const rawHeroImages: string[] = (hasDB && dbData.hero?.backgroundImages?.length)
     ? dbData.hero.backgroundImages
     : (hasDB && dbData.hero?.backgroundImage) ? [dbData.hero.backgroundImage]
       : ["/img/about/image.png"];
+  const heroImages = rawHeroImages.filter((s: string) => s && s.trim() !== '');
+  // Ensure at least one image
+  if (heroImages.length === 0) heroImages.push("/img/about/image.png");
   const [heroImgIdx, setHeroImgIdx] = useState(0);
   useEffect(() => {
     if (heroImages.length <= 1) return;
@@ -269,7 +262,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
           quote: txt(m.quote, langKey)?.trim() || '',
           email: m.email,
           phone: m.phone,
-          image: m.image,
+          image: m.image || '',
         });
       });
     }
@@ -442,6 +435,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
                   <div className="text-lg md:text-xl text-foreground font-light leading-relaxed about-rich-text" dangerouslySetInnerHTML={{ __html: String(d(['story', 'content'], "about.story.content")).replace(/&nbsp;/g, ' ') }} />
                 </motion.div>
 
+                {storyImages.length > 0 && storyImages[storyImgIdx] && (
                 <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.4 }} className="mt-16 rounded-sm overflow-hidden aspect-video shadow-2xl relative group">
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-1000 z-20" />
                   <AnimatePresence mode="popLayout">
@@ -457,6 +451,7 @@ export default function AboutPage({ dbData }: AboutPageProps) {
                     />
                   </AnimatePresence>
                 </motion.div>
+                )}
               </div>
             </div>
           </div>
@@ -722,7 +717,13 @@ export default function AboutPage({ dbData }: AboutPageProps) {
             {/* Featured Leader */}
             <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.1 }} className="flex flex-col md:flex-row md:gap-10 lg:gap-16 items-center md:items-start bg-white md:bg-[#FAFAFA] border border-border/60 rounded-sm overflow-hidden mb-16 hover:shadow-2xl hover:shadow-black/3 transition-all duration-500 md:p-8 lg:p-12">
               <div className="w-full md:w-64 lg:w-88 aspect-4/5 md:aspect-3/4 overflow-hidden shrink-0 md:shadow-lg md:rounded-sm bg-[#FAFAFA]">
-                <img src={teamLeader.image} alt={teamLeader.name} className="w-full h-full object-cover object-top" />
+                {teamLeader.image ? (
+                  <img src={teamLeader.image} alt={teamLeader.name} className="w-full h-full object-cover object-top" />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[hsl(var(--navy-deep))] to-[hsl(var(--navy))]">
+                    <User size={64} className="text-white/30" />
+                  </div>
+                )}
               </div>
               <div className="p-8 pb-10 md:p-0 md:pt-2 grow text-center md:text-left flex flex-col justify-center h-full w-full">
                 {teamLeader.name && <h3 className="font-display font-black text-4xl sm:text-5xl uppercase tracking-wider mb-4 text-foreground">{teamLeader.name}</h3>}
@@ -760,7 +761,13 @@ export default function AboutPage({ dbData }: AboutPageProps) {
               {teamMembers.map((m: any, i: number) => (
                 <motion.div key={m.key || i} initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: i * 0.1 }} className="flex flex-col bg-white border border-border/60 hover:border-[hsl(var(--orange))/0.4] hover:shadow-xl hover:shadow-[hsl(var(--orange))]/5 transition-all duration-500 rounded-sm overflow-hidden group h-full">
                   <div className="w-full aspect-4/5 overflow-hidden bg-[#FAFAFA] shrink-0">
-                    <img src={m.image} alt={m.name} className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
+                    {m.image ? (
+                      <img src={m.image} alt={m.name} className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[hsl(var(--navy-deep))] to-[hsl(var(--navy))]">
+                        <User size={48} className="text-white/30" />
+                      </div>
+                    )}
                   </div>
                   <div className="p-8 flex flex-col grow text-center">
                     {m.name && <h3 className="font-display font-black text-4xl sm:text-2xl uppercase tracking-wider mb-2 text-foreground group-hover:text-[hsl(var(--orange))] transition-colors duration-500">{m.name}</h3>}

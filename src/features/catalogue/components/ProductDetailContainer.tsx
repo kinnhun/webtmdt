@@ -28,7 +28,7 @@ function ImageGallery({ images, name }: { images: string[]; name: string }) {
   const [active, setActive] = useState(0);
 
   return (
-    <div>
+    <div className="w-full min-w-0">
       {/* Main image */}
       <div className="relative aspect-[4/3] rounded-lg overflow-hidden mb-3" style={{ backgroundColor: "hsl(var(--navy)/0.04)" }}>
         <AnimatePresence mode="wait">
@@ -56,9 +56,9 @@ function ImageGallery({ images, name }: { images: string[]; name: string }) {
       </div>
       {/* Thumbnails */}
       {images.length > 1 && (
-        <div className="flex gap-2 overflow-x-auto pb-1">
+        <div className="flex gap-2 overflow-x-auto pb-2 snap-x scroll-smooth w-full [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           {images.map((img, i) => (
-            <button key={i} onClick={() => setActive(i)} className="relative w-20 h-16 rounded-md overflow-hidden border-2 transition-all shrink-0" style={{ borderColor: i === active ? "hsl(var(--orange))" : "transparent", opacity: i === active ? 1 : 0.55 }}>
+            <button key={i} onClick={() => setActive(i)} className="relative w-20 h-16 rounded-md overflow-hidden border-2 transition-all shrink-0 snap-start" style={{ borderColor: i === active ? "hsl(var(--orange))" : "transparent", opacity: i === active ? 1 : 0.55 }}>
               <Image src={img} alt={`${name} ${i + 1}`} fill className="object-cover" sizes="80px" />
             </button>
           ))}
@@ -236,7 +236,7 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
       <section className="container mx-auto px-6 py-8 md:py-12">
         <div className="grid md:grid-cols-2 gap-8 lg:gap-14">
           {/* Left — Gallery */}
-          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
+          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} className="min-w-0 w-full">
             <ImageGallery images={product.images} name={pName} />
           </motion.div>
 

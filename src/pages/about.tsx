@@ -436,21 +436,21 @@ export default function AboutPage() {
                 </motion.div>
 
                 {storyImages.length > 0 && storyImages[storyImgIdx] && (
-                <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.4 }} className="mt-16 rounded-sm overflow-hidden aspect-video shadow-2xl relative group">
-                  <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-1000 z-20" />
-                  <AnimatePresence mode="popLayout">
-                    <motion.img
-                      key={storyImgIdx}
-                      src={storyImages[storyImgIdx]}
-                      alt="DHT production"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 1.2, ease: "easeInOut" }}
-                      className="absolute inset-0 w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-[2s] ease-out"
-                    />
-                  </AnimatePresence>
-                </motion.div>
+                  <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.4 }} className="mt-16 rounded-sm overflow-hidden aspect-video shadow-2xl relative group">
+                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-1000 z-20" />
+                    <AnimatePresence mode="popLayout">
+                      <motion.img
+                        key={storyImgIdx}
+                        src={storyImages[storyImgIdx]}
+                        alt="DHT production"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 1.2, ease: "easeInOut" }}
+                        className="absolute inset-0 w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-[2s] ease-out"
+                      />
+                    </AnimatePresence>
+                  </motion.div>
                 )}
               </div>
             </div>

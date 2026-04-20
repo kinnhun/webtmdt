@@ -247,7 +247,7 @@ export default function AboutPage() {
 
       <div className="bg-white">
         {/* ── 1. Hero Parallax ── */}
-        <section ref={heroRef} className="relative h-svh flex items-center justify-center overflow-hidden bg-black">
+        <section ref={heroRef} className="relative min-h-[100svh] py-24 flex items-center justify-center overflow-hidden bg-black">
           <motion.div style={{ y, opacity }} className="absolute inset-0">
             <AnimatePresence mode="wait">
               <motion.img
@@ -264,14 +264,14 @@ export default function AboutPage() {
           </motion.div>
           <div className="absolute inset-0 bg-linear-to-b from-black/30 via-transparent to-black" />
 
-          <div className="container mx-auto px-6 relative z-10 text-center mt-20">
-            <motion.span initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.2 }} className="font-body text-[hsl(var(--orange))] tracking-widest md:tracking-[0.4em] uppercase text-xs md:text-sm mb-8 block font-bold">
+          <div className="container mx-auto px-4 sm:px-6 relative z-10 text-center mt-12 sm:mt-20">
+            <motion.span initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.2 }} className="font-body text-[hsl(var(--orange))] tracking-widest md:tracking-[0.4em] uppercase text-xs sm:text-sm mb-6 sm:mb-8 block font-bold">
               {d(['hero', 'subtitle'], "about.hero.subtitle")}
             </motion.span>
-            <motion.h1 initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2, delay: 0.4 }} className="font-display font-black text-white italic tracking-tighter uppercase mb-6 leading-[1.1] max-w-6xl mx-auto text-balance" style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)", textWrap: "balance" }}>
+            <motion.h1 initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2, delay: 0.4 }} className="font-display font-black text-white italic tracking-tighter uppercase mb-6 leading-[1.1] max-w-5xl mx-auto break-words" style={{ fontSize: "clamp(1.75rem, 5vw + 1rem, 4.5rem)" }}>
               {d(['hero', 'title'], "about.hero.title")}
             </motion.h1>
-            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.2, delay: 0.8 }} className="font-body text-white/80 text-lg md:text-2xl max-w-3xl mx-auto font-light leading-relaxed">
+            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.2, delay: 0.8 }} className="font-body text-white/80 text-base sm:text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto font-light leading-relaxed">
               {d(['hero', 'description'], "about.hero.description")}
             </motion.p>
           </div>

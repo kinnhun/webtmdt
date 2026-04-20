@@ -169,39 +169,24 @@ export default function AboutPage() {
   }, [heroImages.length]);
 
   /* ── Values ── */
-  const defaultValues = [
-    { icon: Award, title: t("about.values.quality.title"), desc: t("about.values.quality.desc") },
-    { icon: Shield, title: t("about.values.transparency.title"), desc: t("about.values.transparency.desc") },
-    { icon: Globe, title: t("about.values.creativity.title"), desc: t("about.values.creativity.desc") },
-    { icon: Leaf, title: t("about.values.sustainability.title"), desc: t("about.values.sustainability.desc") },
-    { icon: Users, title: t("about.values.dedication.title"), desc: t("about.values.dedication.desc") },
-  ];
-  const values = hasDB && dbData.values?.items?.length
-    ? dbData.values.items.map((v: any, idx: number) => ({
-      icon: ICON_MAP[v.icon] || defaultValues[idx]?.icon || Award,
-      title: txt(v.title, langKey)?.trim() || defaultValues[idx]?.title || '',
-      desc: txt(v.desc, langKey)?.trim() || defaultValues[idx]?.desc || '',
-    }))
-    : defaultValues;
+  const values = dbData?.values?.items?.map((v: any) => ({
+    icon: ICON_MAP[v.icon] || Award,
+    title: txt(v.title, langKey)?.trim() || '',
+    desc: txt(v.desc, langKey)?.trim() || '',
+  })) || [];
 
   /* ── Timeline ── */
-  const defaultTimeline = t("about.timeline.items", { returnObjects: true }) as Array<{ year: string; title: string; desc: string }>;
-  const timeline = hasDB && dbData.timeline?.items?.length
-    ? dbData.timeline.items.map((item: any, idx: number) => ({
-      year: item.year?.trim() || defaultTimeline[idx]?.year || '',
-      title: txt(item.title, langKey)?.trim() || defaultTimeline[idx]?.title || '',
-      desc: txt(item.desc, langKey)?.trim() || defaultTimeline[idx]?.desc || '',
-    }))
-    : defaultTimeline;
+  const timeline = dbData?.timeline?.items?.map((item: any) => ({
+    year: item.year?.trim() || '',
+    title: txt(item.title, langKey)?.trim() || '',
+    desc: txt(item.desc, langKey)?.trim() || '',
+  })) || [];
 
   /* ── Welcome values ── */
-  const defaultWelcomeValues = t("about.welcome.values", { returnObjects: true }) as Array<{ title: string; desc: string }>;
-  const welcomeValues = hasDB && dbData.welcome?.values?.length
-    ? dbData.welcome.values.map((v: any, idx: number) => ({
-      title: txt(v.title, langKey)?.trim() || defaultWelcomeValues[idx]?.title || '',
-      desc: txt(v.desc, langKey)?.trim() || defaultWelcomeValues[idx]?.desc || '',
-    }))
-    : defaultWelcomeValues;
+  const welcomeValues = dbData?.welcome?.values?.map((v: any) => ({
+    title: txt(v.title, langKey)?.trim() || '',
+    desc: txt(v.desc, langKey)?.trim() || '',
+  })) || [];
 
   /* ── Marquee ── */
   const marqueeItems = hasDB && dbData.marquee?.[langKey === 'uk' ? 'uk' : langKey === 'vi' ? 'vi' : 'us']?.length
@@ -209,45 +194,20 @@ export default function AboutPage() {
     : (hasDB && dbData.marquee?.us?.length ? dbData.marquee.us : undefined);
 
   /* ── Stats ── */
-  const defaultStats = [
-    { value: "80K", suffix: "m²", label: t("about.stats.factorySize") },
-    { value: "350K", suffix: "+", label: t("about.stats.yearlyOutput") },
-    { value: "60-70", suffix: "", label: t("about.stats.monthlyContainers") },
-    { value: "250", suffix: "+", label: t("about.stats.workers") },
-  ];
-  const statItems = hasDB && dbData.stats?.items?.length
-    ? dbData.stats.items.map((s: any, idx: number) => ({
-      value: s.value?.trim() || defaultStats[idx]?.value || '',
-      suffix: s.suffix || defaultStats[idx]?.suffix || '',
-      label: txt(s.label, langKey)?.trim() || defaultStats[idx]?.label || '',
-    }))
-    : defaultStats;
+  const statItems = dbData?.stats?.items?.map((s: any) => ({
+    value: s.value?.trim() || '',
+    suffix: s.suffix || '',
+    label: txt(s.label, langKey)?.trim() || '',
+  })) || [];
 
   /* ── HR Items ── */
-  const defaultHr = [t("about.hr.prodWorkers"), t("about.hr.techStaff"), t("about.hr.rndModels")];
-  const hrItems = hasDB && dbData.stats?.hr?.items?.length
-    ? dbData.stats.hr.items.map((item: any, idx: number) => {
-      const val = txt(item, langKey)?.trim();
-      return val || defaultHr[idx] || '';
-    })
-    : defaultHr;
+  const hrItems = dbData?.stats?.hr?.items?.map((item: any) => txt(item, langKey)?.trim() || '') || [];
 
   /* ── Machinery Items ── */
-  const defaultMachinery = [
-    { count: "15+", label: t("about.machinery.panelSaws") },
-    { count: "12", label: t("about.machinery.planers") },
-    { count: "5", label: t("about.machinery.pressing") },
-    { count: "4", label: t("about.machinery.cnc") },
-    { count: "8", label: t("about.machinery.coating") },
-    { count: "5", label: t("about.machinery.kilns") },
-    { count: "3", label: t("about.machinery.packaging") },
-  ];
-  const machineryItems = hasDB && Array.isArray(dbData.stats?.machinery?.items)
-    ? dbData.stats.machinery.items.map((m: any, idx: number) => ({
-      count: m.count?.trim() || defaultMachinery[idx]?.count || '',
-      label: txt(m.label, langKey)?.trim() || defaultMachinery[idx]?.label || '',
-    }))
-    : defaultMachinery;
+  const machineryItems = dbData?.stats?.machinery?.items?.map((m: any) => ({
+    count: m.count?.trim() || '',
+    label: txt(m.label, langKey)?.trim() || '',
+  })) || [];
 
   /* ── Team ── */
   const allMembers: any[] = [];
@@ -268,64 +228,18 @@ export default function AboutPage() {
     }
   }
 
-  if (allMembers.length === 0) {
-    allMembers.push({
-      name: "JOHN VO",
-      isLeader: true,
-      role: t("about.team.leader.role"),
-      quote: "Our goal is not just to manufacture furniture, but to create lasting value for our partners worldwide.",
-      email: "dht.company@vnn.vn",
-      phone: "+84 274 362 5599",
-      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=800&q=80"
-    });
-    const mFallback = [
-      {
-        name: "Tyler Lê",
-        role: { us: "Co-Founder & CEO", uk: "Co-Founder & CEO", vi: "Đồng Sáng Lập & Giám đốc Điều hành" },
-      },
-      {
-        name: "Dylan",
-        role: { us: "General Director", uk: "General Director", vi: "Tổng Giám Đốc Điều Hành" },
-      },
-      {
-        name: "David",
-        role: { us: "Product Development Director", uk: "Product Development Director", vi: "GĐ Phát Triển Sản Phẩm" },
-      },
-      {
-        name: "Alicia",
-        role: { us: "Sales Manager", uk: "Sales Manager", vi: "Trưởng Phòng Kinh Doanh" },
-      }
-    ];
-    mFallback.forEach((m: any, i: number) => {
-      allMembers.push({
-        name: m.name,
-        key: `fallback-${i}`,
-        isLeader: false,
-        role: txt(m.role, langKey),
-        quote: "", email: "", phone: "",
-        image: i === 0 ? "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80" : "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=800&q=80"
-      });
-    });
-  }
+
 
   const teamLeader = allMembers.find((m: any) => m.isLeader) || allMembers[0] || {};
   const teamMembers = allMembers.filter((m: any) => m !== teamLeader);
 
   /* ── Locations ── */
-  const locationKeys = ['factory', 'office', 'showroom', 'jdd'];
-  const locationItems = hasDB && dbData.locations?.items?.length
-    ? dbData.locations.items.map((loc: any) => ({
-      key: loc.key,
-      name: txt(loc.name, langKey),
-      address: txt(loc.address, langKey),
-      hotline: loc.hotline,
-    }))
-    : locationKeys.map((key) => ({
-      key,
-      name: t(`about.locations.${key}.name`),
-      address: t(`about.locations.${key}.address`),
-      hotline: t(`about.locations.${key}.hotline`),
-    }));
+  const locationItems = dbData?.locations?.items?.map((loc: any) => ({
+    key: loc.key || '',
+    name: txt(loc.name, langKey) || '',
+    address: txt(loc.address, langKey) || '',
+    hotline: loc.hotline || '',
+  })) || [];
 
   return (
     <>

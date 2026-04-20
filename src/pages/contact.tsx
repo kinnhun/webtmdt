@@ -154,6 +154,22 @@ export default function ContactPage() {
         }
       ];
 
+  const validLocations = locations.filter((loc: any) => {
+    const titleStr = typeof loc.title === 'string' ? loc.title : '';
+    const subtitleStr = typeof loc.subtitle === 'string' ? loc.subtitle : '';
+    const addressStr = typeof loc.address === 'string' ? loc.address : '';
+    const phoneStr = typeof loc.phone === 'string' ? loc.phone : '';
+    const hoursStr = typeof loc.hours === 'string' ? loc.hours : '';
+    
+    const hasTitle = titleStr && titleStr.replace(/<[^>]*>?/gm, '').trim() !== '';
+    const hasSubtitle = subtitleStr && subtitleStr.replace(/<[^>]*>?/gm, '').trim() !== '';
+    const hasAddress = addressStr && addressStr.replace(/<[^>]*>?/gm, '').trim() !== '';
+    const hasPhone = phoneStr && phoneStr.replace(/<[^>]*>?/gm, '').trim() !== '';
+    const hasHours = hoursStr && hoursStr.replace(/<[^>]*>?/gm, '').trim() !== '';
+    
+    return hasTitle || hasSubtitle || hasAddress || hasPhone || hasHours;
+  });
+
   return (
     <>
       <SEO title={d(['seo', 'title'], "contact.seo.title")} description={d(['seo', 'description'], "contact.seo.description")} />
@@ -179,74 +195,74 @@ export default function ContactPage() {
           priceRange: "$$$"
         }}
       />
-      <div className="pt-20" style={{ minHeight: "100vh", backgroundColor: "hsl(var(--warm-cream))" }}>
-        <div className="py-20 text-center" style={{ backgroundColor: "hsl(var(--navy-deep))" }}>
-          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="font-display font-bold text-white mb-4 rt-reset" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }} dangerouslySetInnerHTML={{ __html: d(['hero', 'title'], "contact.hero.title") }} />
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="font-body text-white/60 text-base max-w-xl mx-auto px-4 rt-reset" dangerouslySetInnerHTML={{ __html: d(['hero', 'subtitle'], "contact.hero.subtitle") }} />
+      <div className="pt-20 overflow-x-hidden w-full flex flex-col" style={{ minHeight: "100vh", backgroundColor: "hsl(var(--warm-cream))" }}>
+        <div className="py-12 md:py-20 text-center" style={{ backgroundColor: "hsl(var(--navy-deep))" }}>
+          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="font-display font-bold text-white mb-4 rt-reset break-words flex flex-col empty:hidden" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }} dangerouslySetInnerHTML={{ __html: d(['hero', 'title'], "contact.hero.title") }} />
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="font-body text-white/60 text-base max-w-xl mx-auto px-4 rt-reset break-words empty:hidden" dangerouslySetInnerHTML={{ __html: d(['hero', 'subtitle'], "contact.hero.subtitle") }} />
         </div>
         
-        <div className="container mx-auto px-4 sm:px-6 py-20">
+        <div className="container mx-auto px-4 sm:px-6 py-12 md:py-20">
           {/* LOCATIONS GRID */}
-          <div className="mb-24">
-            <h2 className="font-display text-3xl font-bold text-center mb-12 rt-reset" style={{ color: "hsl(var(--navy-deep))" }} dangerouslySetInnerHTML={{ __html: d(['locations', 'heading'], "contact.locations.title") }} />
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {locations.map((loc: any, i: number) => {
-                const titleStr = typeof loc.title === 'string' ? loc.title : '';
-                const subtitleStr = typeof loc.subtitle === 'string' ? loc.subtitle : '';
-                const addressStr = typeof loc.address === 'string' ? loc.address : '';
-                const phoneStr = typeof loc.phone === 'string' ? loc.phone : '';
-                const hoursStr = typeof loc.hours === 'string' ? loc.hours : '';
-                
-                const hasTitle = titleStr && titleStr.replace(/<[^>]*>?/gm, '').trim() !== '';
-                const hasSubtitle = subtitleStr && subtitleStr.replace(/<[^>]*>?/gm, '').trim() !== '';
-                const hasAddress = addressStr && addressStr.replace(/<[^>]*>?/gm, '').trim() !== '';
-                const hasPhone = phoneStr && phoneStr.replace(/<[^>]*>?/gm, '').trim() !== '';
-                const hasHours = hoursStr && hoursStr.replace(/<[^>]*>?/gm, '').trim() !== '';
-                const hasAnyContent = hasTitle || hasSubtitle || hasAddress || hasPhone || hasHours;
-                if (!hasAnyContent) return null;
-
-                return (
-                <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * i, duration: 0.5 }} key={i} className="bg-white p-6 rounded-sm border border-border flex flex-col h-full hover:shadow-lg transition-shadow overflow-hidden">
-                  {hasTitle && (
-                    <h3 className="font-display font-bold text-lg mb-1 leading-tight rt-reset wrap-break-word" style={{ color: "hsl(var(--navy-deep))" }} dangerouslySetInnerHTML={{ __html: loc.title }} />
-                  )}
-                  {hasSubtitle && (
-                    <div className="font-body text-[10px] tracking-wider uppercase font-semibold mb-5 rt-reset wrap-break-word" style={{ color: "hsl(var(--orange))" }} dangerouslySetInnerHTML={{ __html: loc.subtitle }} />
-                  )}
+          {validLocations.length > 0 && (
+            <div className="mb-16 md:mb-24">
+              <h2 className="font-display text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12 rt-reset break-words" style={{ color: "hsl(var(--navy-deep))" }} dangerouslySetInnerHTML={{ __html: d(['locations', 'heading'], "contact.locations.title") }} />
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {validLocations.map((loc: any, i: number) => {
+                  const titleStr = typeof loc.title === 'string' ? loc.title : '';
+                  const subtitleStr = typeof loc.subtitle === 'string' ? loc.subtitle : '';
+                  const addressStr = typeof loc.address === 'string' ? loc.address : '';
+                  const phoneStr = typeof loc.phone === 'string' ? loc.phone : '';
+                  const hoursStr = typeof loc.hours === 'string' ? loc.hours : '';
                   
-                  <div className="space-y-4 font-body text-sm text-muted-foreground flex-1">
-                    {hasAddress && (
-                      <div className="flex items-start gap-3">
-                        <MapPin size={16} className="mt-0.5 shrink-0" style={{ color: "hsl(var(--orange))" }} />
-                        <span className="leading-relaxed rt-reset block flex-1 wrap-break-word min-w-0" dangerouslySetInnerHTML={{ __html: loc.address }} />
-                      </div>
+                  const hasTitle = titleStr && titleStr.replace(/<[^>]*>?/gm, '').trim() !== '';
+                  const hasSubtitle = subtitleStr && subtitleStr.replace(/<[^>]*>?/gm, '').trim() !== '';
+                  const hasAddress = addressStr && addressStr.replace(/<[^>]*>?/gm, '').trim() !== '';
+                  const hasPhone = phoneStr && phoneStr.replace(/<[^>]*>?/gm, '').trim() !== '';
+                  const hasHours = hoursStr && hoursStr.replace(/<[^>]*>?/gm, '').trim() !== '';
+
+                  return (
+                  <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * i, duration: 0.5 }} key={i} className="bg-white p-6 rounded-sm border border-border flex flex-col h-full hover:shadow-lg transition-shadow overflow-hidden">
+                    {hasTitle && (
+                      <h3 className="font-display font-bold text-lg mb-1 leading-tight rt-reset wrap-break-word" style={{ color: "hsl(var(--navy-deep))" }} dangerouslySetInnerHTML={{ __html: loc.title }} />
                     )}
-                    {(hasPhone || hasHours) && (
-                      <div className="flex items-start gap-3">
-                        <Phone size={16} className="mt-0.5 shrink-0" style={{ color: "hsl(var(--orange))" }} />
-                        <div className="flex-1 min-w-0 wrap-break-word">
-                          {hasPhone && (
-                            <a href={loc.href} className="font-medium hover:text-orange transition-colors block mb-0.5 text-foreground wrap-break-word">{loc.phone}</a>
-                          )}
-                          {hasHours && (
-                            <span className="text-xs opacity-80 block rt-reset wrap-break-word" dangerouslySetInnerHTML={{ __html: loc.hours }} />
-                          )}
+                    {hasSubtitle && (
+                      <div className="font-body text-[10px] tracking-wider uppercase font-semibold mb-5 rt-reset wrap-break-word" style={{ color: "hsl(var(--orange))" }} dangerouslySetInnerHTML={{ __html: loc.subtitle }} />
+                    )}
+                    
+                    <div className="space-y-4 font-body text-sm text-muted-foreground flex-1">
+                      {hasAddress && (
+                        <div className="flex items-start gap-3">
+                          <MapPin size={16} className="mt-0.5 shrink-0" style={{ color: "hsl(var(--orange))" }} />
+                          <span className="leading-relaxed rt-reset block flex-1 wrap-break-word min-w-0" dangerouslySetInnerHTML={{ __html: loc.address }} />
                         </div>
-                      </div>
-                    )}
-                  </div>
-                </motion.div>
-              )})}
+                      )}
+                      {(hasPhone || hasHours) && (
+                        <div className="flex items-start gap-3">
+                          <Phone size={16} className="mt-0.5 shrink-0" style={{ color: "hsl(var(--orange))" }} />
+                          <div className="flex-1 min-w-0 wrap-break-word">
+                            {hasPhone && (
+                              <a href={loc.href} className="font-medium hover:text-orange transition-colors block mb-0.5 text-foreground wrap-break-word">{loc.phone}</a>
+                            )}
+                            {hasHours && (
+                              <span className="text-xs opacity-80 block rt-reset wrap-break-word" dangerouslySetInnerHTML={{ __html: loc.hours }} />
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </motion.div>
+                )})}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* FORM SECTION */}
           {fields.length > 0 && (
             <div className="max-w-3xl mx-auto">
               <div className="text-center mb-10">
-                <h2 className="font-display text-3xl font-bold mb-4 rt-reset" style={{ color: "hsl(var(--navy-deep))" }} dangerouslySetInnerHTML={{ __html: d(['formSection', 'title'], "contact.formSection.title") }} />
+                <h2 className="font-display text-3xl font-bold mb-4 rt-reset break-words w-full" style={{ color: "hsl(var(--navy-deep))" }} dangerouslySetInnerHTML={{ __html: d(['formSection', 'title'], "contact.formSection.title") }} />
                 <div 
-                  className="font-body text-muted-foreground contact-subtitle-rt" 
+                  className="font-body text-muted-foreground contact-subtitle-rt break-words w-full" 
                   dangerouslySetInnerHTML={{ __html: d(['formSection', 'subtitle'], "contact.formSection.subtitle") }} 
                 />
               </div>
@@ -255,9 +271,9 @@ export default function ContactPage() {
                   <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style={{ backgroundColor: "hsl(var(--orange)/0.1)" }}>
                     <Send size={24} style={{ color: "hsl(var(--orange))" }} />
                   </div>
-                  <h3 className="font-display font-bold text-xl text-foreground mb-2 rt-reset" dangerouslySetInnerHTML={{ __html: d(['formSection', 'successTitle'], "contact.success.title") }} />
+                  <h3 className="font-display font-bold text-xl text-foreground mb-2 rt-reset break-words" dangerouslySetInnerHTML={{ __html: d(['formSection', 'successTitle'], "contact.success.title") }} />
                   <div 
-                    className="font-body text-sm text-muted-foreground mb-6" 
+                    className="font-body text-sm text-muted-foreground mb-6 break-words" 
                     dangerouslySetInnerHTML={{ __html: d(['formSection', 'successDesc'], "contact.success.description") }} 
                   />
                   <button onClick={() => setSent(false)} className="font-body text-sm font-medium rt-reset" style={{ color: "hsl(var(--orange))" }} dangerouslySetInnerHTML={{ __html: d(['formSection', 'sendAnotherBtn'], "contact.success.sendAnother") }} />
@@ -334,11 +350,13 @@ export default function ContactPage() {
         </div>
       </div>
       <style jsx global>{`
-        .contact-subtitle-rt p { margin-bottom: 0.5rem; }
+        .contact-subtitle-rt p { margin-bottom: 0.5rem; word-break: break-word; overflow-wrap: break-word; white-space: normal !important; }
         .contact-subtitle-rt p:last-child { margin-bottom: 0; }
         .contact-subtitle-rt strong { font-weight: bold; color: inherit; }
         .contact-subtitle-rt em { font-style: italic; }
-        .rt-reset p { margin: 0 !important; display: inline !important; }
+        .rt-reset p { margin: 0 !important; display: inline !important; white-space: normal !important; }
+        .rt-reset, .contact-subtitle-rt, .wrap-break-word { word-break: break-word; overflow-wrap: break-word; }
+        .rt-reset *, .contact-subtitle-rt * { max-width: 100%; }
       `}</style>
     </>
   );

@@ -78,7 +78,7 @@ export default function ReadyToWorkTogether() {
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
           <Link
-            href="/catalogue"
+            href="/catalogue/outdoor"
             className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-md font-body font-semibold text-sm text-white transition-all hover:opacity-90 w-full sm:w-auto"
             style={{ backgroundColor: "hsl(var(--orange))" }}
           >

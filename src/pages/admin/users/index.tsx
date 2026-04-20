@@ -226,6 +226,7 @@ export default function UsersManagement() {
           rowKey="_id" 
           loading={loading}
           pagination={false}
+          scroll={{ x: 600 }}
         />
       </Card>
 

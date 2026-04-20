@@ -1348,29 +1348,21 @@ export default function AboutEditor() {
   ];
 
   return (
-    <Form form={form} layout="vertical" className="relative">
-      {isDefault && (
-        <Alert 
-          message={t("adminAbout.noCustomData")} 
-          description={t("adminAbout.noCustomDataDesc")} 
-          type="warning" showIcon className="mb-4 rounded-xl border-orange-200 bg-orange-50" 
-        />
-      )}
-      
+    <div className="-m-4 sm:-m-6 md:-m-8">
       {/* ── Sticky Header ── */}
       <div
-        className="sticky top-[80px] z-20 bg-white/95 backdrop-blur-md border-b px-4 sm:px-6 py-4 -mx-6 md:-mx-8 -mt-6 md:-mt-8 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
+        className="sticky top-[80px] z-30 bg-white/95 backdrop-blur-md border-b px-4 sm:px-6 md:px-8 py-3 sm:py-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-3"
         style={{ borderColor: 'hsl(var(--navy)/0.06)' }}
       >
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 m-0 leading-tight font-display">
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900 m-0 leading-tight font-display">
             {t("adminAbout.title")}
           </h1>
-          <p className="text-[13px] m-0 mt-1 text-gray-500">
+          <p className="text-xs sm:text-[13px] m-0 mt-1 text-gray-500">
             {t("adminAbout.description")}
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="grid grid-cols-3 sm:flex items-center gap-2 mt-2 sm:mt-0 w-full sm:w-auto">
           <Button
             icon={<FileTextOutlined />}
             onClick={() => {
@@ -1382,23 +1374,26 @@ export default function AboutEditor() {
                 onOk: fetchDefaultAndSet
               });
             }}
-            className="rounded-lg border-gray-200"
+            className="rounded-lg border-gray-200 justify-center px-0 sm:px-3"
+            title="Load Defaults"
           >
-            {t("adminAbout.loadDefault")}
+            <span className="hidden sm:inline">{t("adminAbout.loadDefault")}</span>
           </Button>
           <Button
             icon={<HistoryOutlined />}
             onClick={() => { setHistoryOpen(true); fetchRevisions(); }}
-            className="rounded-lg border-gray-200"
+            className="rounded-lg border-gray-200 justify-center px-0 sm:px-3"
+            title="History"
           >
-            {t("adminAbout.history")}
+            <span className="hidden sm:inline">{t("adminAbout.history")}</span>
           </Button>
           <Button
             icon={<EyeOutlined />}
             onClick={() => setPreviewOpen(true)}
-            className="rounded-lg border-gray-200"
+            className="rounded-lg border-gray-200 justify-center px-0 sm:px-3"
+            title="Preview"
           >
-            {t("adminAbout.preview")}
+            <span className="hidden sm:inline">{t("adminAbout.preview")}</span>
           </Button>
           <Button
             type="primary"
@@ -1406,7 +1401,7 @@ export default function AboutEditor() {
             loading={saving}
             onClick={showSaveConfirm}
             size="large"
-            className="rounded-lg border-none font-semibold px-6 shadow-md"
+            className="rounded-lg border-none font-semibold shadow-md justify-center col-span-3 sm:w-auto mt-1 sm:mt-0 px-6"
             style={{ background: 'linear-gradient(135deg, #f97316, #ea580c)' }}
           >
             {t("adminAbout.saveAll")}
@@ -1414,19 +1409,27 @@ export default function AboutEditor() {
         </div>
       </div>
 
-      {/* ── Sections Organized into Tabs ── */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-8">
-        <Tabs
-          defaultActiveKey="main"
-          size="large"
-          className="admin-about-tabs"
-          tabBarStyle={{ padding: '0 24px', marginBottom: 0, backgroundColor: '#fafafa', borderBottom: '1px solid #f0f0f0' }}
-          items={[
-            {
-              key: 'main',
-              label: <span className="font-semibold text-[15px] px-2"><PictureOutlined className="mr-2"/>{t("adminAbout.tabMain")}</span>,
-              children: <div className="p-6 bg-gray-50/30"><Collapse defaultActiveKey={['hero']} items={collapseItems.filter(i => ['hero', 'marquee', 'cta'].includes(i.key as string))} className="about-editor-collapse" style={{ background: 'transparent', border: 'none' }} /></div>
-            },
+      <Form form={form} layout="vertical" className="relative px-4 sm:px-6 md:px-8 py-6">
+        {isDefault && (
+          <Alert 
+            message={t("adminAbout.noCustomData")} 
+            description={t("adminAbout.noCustomDataDesc")} 
+            type="warning" showIcon className="mb-4 rounded-xl border-orange-200 bg-orange-50" 
+          />
+        )}
+        {/* ── Sections Organized into Tabs ── */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-8">
+          <Tabs
+            defaultActiveKey="main"
+            size="large"
+            className="admin-about-tabs"
+            tabBarStyle={{ padding: '0 24px', marginBottom: 0, backgroundColor: '#fafafa', borderBottom: '1px solid #f0f0f0' }}
+            items={[
+              {
+                key: 'main',
+                label: <span className="font-semibold text-[15px] px-2"><PictureOutlined className="mr-2"/>{t("adminAbout.tabMain")}</span>,
+                children: <div className="p-6 bg-gray-50/30"><Collapse defaultActiveKey={['hero']} items={collapseItems.filter(i => ['hero', 'marquee', 'cta'].includes(i.key as string))} className="about-editor-collapse" style={{ background: 'transparent', border: 'none' }} /></div>
+              },
             {
               key: 'story',
               label: <span className="font-semibold text-[15px] px-2"><ReadOutlined className="mr-2"/>{t("adminAbout.tabStory")}</span>,
@@ -1564,5 +1567,6 @@ export default function AboutEditor() {
         }
       `}</style>
     </Form>
+    </div>
   );
 }

@@ -1680,38 +1680,38 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
 
   // ── Render ─────────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-gray-50/60">
+    <div className="-m-3 -mt-4 sm:-m-6 sm:-mt-6 bg-gray-50/30 min-h-screen rounded-xl sm:rounded-2xl overflow-hidden pb-10">
       {/* ── Sticky Header ─────────────────────────────────────────────────── */}
-      <div className="bg-white border-b border-gray-100 shadow-sm sticky top-0 z-30">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-0">
-          <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto overflow-hidden">
+      <div className="bg-white border-b border-gray-200 shadow-sm sticky top-0 sm:top-0 z-30 pt-2 sm:pt-4">
+        <div className="max-w-6xl mx-auto px-3 sm:px-6 py-2 sm:py-3 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-0">
+          <div className="flex items-center gap-2 w-full overflow-hidden">
             <button
               onClick={() => router.push('/admin/products')}
-              className="flex shrink-0 items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-gray-500"
+              className="flex shrink-0 items-center justify-center w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-gray-500"
             >
               <ArrowLeftOutlined className="text-sm" />
             </button>
             {initialValues?.image && (
-              <img src={initialValues.image} alt="" className="w-10 h-10 rounded-lg object-cover border-2 border-white shadow-sm" />
+              <img src={initialValues.image} alt="" className="w-10 h-10 rounded-lg object-cover border border-gray-200 shadow-sm shrink-0" />
             )}
-            <div>
+            <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2 flex-wrap">
-                <h1 className="text-base sm:text-lg font-bold text-gray-900 m-0 leading-tight truncate max-w-[150px] sm:max-w-xs">
+                <h1 className="text-sm sm:text-lg font-bold text-gray-900 m-0 leading-tight truncate">
                   {isEdit ? (initialValues?.name?.us || initialValues?.name?.vi || t('admin.products.form.editProduct')) : t('admin.products.form.newProduct')}
                 </h1>
                 {isEdit && (
-                  <span className="text-[10px] font-mono text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">
+                  <span className="text-[9px] sm:text-[10px] font-mono text-gray-400 bg-gray-100 px-1.5 sm:px-2 py-0.5 rounded-full shrink-0">
                     {initialValues?.code}
                   </span>
                 )}
               </div>
-              <div className="flex items-center gap-2 mt-0.5">
+              <div className="flex items-center gap-1.5 mt-0.5 whitespace-nowrap overflow-x-auto no-scrollbar pb-0.5">
                 {[initialValues?.collection].flat().filter(Boolean).map((c) => (
-                  <Tag key={c} className="text-[10px] border-0 m-0" color={c === 'Outdoor' ? 'green' : 'purple'}>
+                  <Tag key={c} className="text-[9px] sm:text-[10px] border-0 m-0 leading-tight" color={c === 'Outdoor' ? 'green' : 'purple'}>
                     {c}
                   </Tag>
                 ))}
-                <span className="text-xs text-gray-400">
+                <span className="text-[10px] sm:text-xs text-gray-400 truncate">
                   {typeof initialValues?.category === 'object' && initialValues?.category !== null
                     ? (initialValues.category as any).us
                     : [initialValues?.category].flat().filter(Boolean).join(', ')}
@@ -1720,8 +1720,8 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
             </div>
           </div>
 
-          <div className="flex items-center justify-start sm:justify-end gap-2 sm:gap-3 w-full sm:w-auto">
-            <Button onClick={() => router.push('/admin/products')} className="rounded-lg border-gray-200 text-gray-500 flex-1 sm:flex-none">
+          <div className="flex items-center justify-end gap-2 w-full sm:w-auto">
+            <Button onClick={() => router.push('/admin/products')} size="middle" className="rounded-lg border-gray-200 text-gray-500 text-xs sm:text-sm">
               {t('admin.products.form.discard')}
             </Button>
             <Button
@@ -1729,8 +1729,8 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
               icon={<SaveOutlined />}
               loading={isUpdating || isCreating}
               onClick={() => form.submit()}
-              size="large"
-              className="rounded-lg border-none font-semibold px-4 sm:px-6 shadow-md flex-1 sm:flex-none"
+              size="middle"
+              className="rounded-lg border-none font-semibold px-3 sm:px-6 shadow-md text-xs sm:text-sm"
               style={{ background: 'linear-gradient(135deg, #f97316, #ea580c)' }}
             >
               {isEdit ? t('admin.products.form.saveChanges') : t('admin.products.form.publish')}
@@ -1740,14 +1740,13 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       </div>
 
       {/* ── Form body ─────────────────────────────────────────────────────── */}
-      <div className="max-w-6xl mx-auto px-2 sm:px-6 py-4 sm:py-6 relative z-10">
+      <div className="max-w-6xl mx-auto px-2 sm:px-6 py-4 relative z-10 w-full">
         <Form
           layout="vertical"
           form={form}
           onFinish={onFinish}
           onFinishFailed={(errorInfo) => {
             message.error('Validation failed! Please check tabs for missing required fields (marked in red).');
-            console.warn('Form validation errors:', errorInfo);
             if (errorInfo.errorFields.length > 0) {
               const firstFieldName = errorInfo.errorFields[0].name[0];
               const fieldStr = String(firstFieldName);
@@ -1759,25 +1758,33 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
             }
           }}
         >
-          <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden" style={{ boxShadow: '0 2px 20px rgba(0,0,0,0.04)' }}>
+          <div className="bg-white rounded-xl sm:rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
             <Tabs
               activeKey={activeTab}
               onChange={setActiveTab}
               items={tabItems}
-              size="middle"
-              tabBarStyle={{ padding: '0 24px', margin: 0, borderBottom: '1px solid #f3f4f6' }}
-              tabBarGutter={2}
+              size="small"
+              tabBarStyle={{ padding: '0 8px', margin: 0, borderBottom: '1px solid #f3f4f6' }}
+              tabBarGutter={0}
+              className="custom-admin-tabs"
             />
           </div>
 
           <style>{`
-            .ant-tabs-content-holder { padding: 0 24px 32px; }
-            .ant-tabs-tab { padding: 14px 6px !important; font-size: 13px; }
-            .ant-tabs-tab-active .ant-tabs-tab-btn { color: #f97316 !important; font-weight: 600; }
-            .ant-tabs-ink-bar { background: linear-gradient(90deg,#f97316,#ea580c) !important; height: 3px !important; border-radius: 3px 3px 0 0 !important; }
-            .ant-form-item-label > label { font-size: 13px !important; font-weight: 500 !important; color: #374151 !important; }
+            .custom-admin-tabs .ant-tabs-content-holder { padding: 0 12px 24px; }
+            @media (min-width: 640px) {
+              .custom-admin-tabs .ant-tabs-content-holder { padding: 0 24px 32px; }
+              .custom-admin-tabs .ant-tabs-tab { padding: 14px 12px !important; }
+            }
+            .custom-admin-tabs .ant-tabs-tab { padding: 10px 8px !important; font-size: 12px; margin: 0 !important; }
+            .custom-admin-tabs .ant-tabs-tab-active .ant-tabs-tab-btn { color: #f97316 !important; font-weight: 600; }
+            .custom-admin-tabs .ant-tabs-ink-bar { background: linear-gradient(90deg,#f97316,#ea580c) !important; height: 3px !important; border-radius: 3px 3px 0 0 !important; }
+            .ant-form-item-label > label { font-size: 12px !important; font-weight: 600 !important; color: #374151 !important; }
+            @media (min-width: 640px) { .ant-form-item-label > label { font-size: 13px !important; } }
             .ant-upload-select, .ant-upload-list-picture-card .ant-upload-list-item { border-radius: 12px !important; }
             .ant-select-selector { border-radius: 8px !important; }
+            .no-scrollbar::-webkit-scrollbar { display: none; }
+            .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
           `}</style>
         </Form>
       </div>

@@ -506,6 +506,7 @@ export default function InquiryDashboard() {
           rowKey="_id"
           pagination={false}
           size="small"
+          scroll={{ x: 600 }}
           locale={{ emptyText: <Empty description={t('admin.inquiryDashboard.blocks.noCriticalCases')} image={Empty.PRESENTED_IMAGE_SIMPLE} /> }}
         />
       </Card>
@@ -583,7 +584,7 @@ export default function InquiryDashboard() {
               rowKey="_id"
               pagination={false}
               size="small"
-              scroll={{ y: 360 }}
+              scroll={{ x: 500, y: 360 }}
               locale={{ emptyText: <Empty description={t('admin.inquiryDashboard.blocks.noRecentInquiries')} image={Empty.PRESENTED_IMAGE_SIMPLE} /> }}
             />
           </Card>

@@ -723,53 +723,68 @@ export default function ContactEditor() {
   };
 
   return (
-    <div className="w-full h-full bg-slate-50 min-h-screen">
-      <div className="bg-white px-6 py-4 border-b border-gray-200 sticky top-0 z-50 shadow-sm flex items-center justify-between">
+    <div className="-m-4 sm:-m-6 md:-m-8 bg-slate-50 min-h-screen">
+      <div
+        className="sticky top-[80px] z-30 bg-white/95 backdrop-blur-md border-b px-4 sm:px-6 md:px-8 py-3 sm:py-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-3"
+        style={{ borderColor: 'hsl(var(--navy)/0.06)' }}
+      >
          <div className="flex items-center gap-4">
             <div>
-              <h1 className="text-xl font-bold text-navy-deep m-0 leading-tight">
+              <h1 className="text-xl sm:text-2xl font-bold text-navy-deep m-0 leading-tight font-display">
                 {t('admin.adminContact.pageTitle')}
               </h1>
-              <p className="text-xs text-gray-500 m-0 mt-1">
+              <p className="text-xs sm:text-[13px] text-gray-500 m-0 mt-1">
                 {t('admin.adminContact.pageSubtitle')}
               </p>
             </div>
          </div>
          
-         <div className="flex gap-3">
-           <Button icon={<FileTextOutlined />} onClick={() => {
-             Modal.confirm({
-               title: t('adminAbout.loadDefault'),
-               content: t('admin.adminContact.loadDefaultDesc'),
-               okText: t('adminAbout.btnOk'),
-               cancelText: t('adminAbout.btnCancel'),
-               onOk: fetchDefaultAndSet
-             });
-           }}>
-              {t('adminAbout.loadDefault')}
+         <div className="grid grid-cols-2 sm:flex items-center gap-2 mt-2 sm:mt-0 w-full md:w-auto">
+           <Button 
+             icon={<FileTextOutlined />} 
+             className="rounded-lg border-gray-200 justify-center px-0 sm:px-3"
+             title={t('adminAbout.loadDefault')}
+             onClick={() => {
+               Modal.confirm({
+                 title: t('adminAbout.loadDefault'),
+                 content: t('admin.adminContact.loadDefaultDesc'),
+                 okText: t('adminAbout.btnOk'),
+                 cancelText: t('adminAbout.btnCancel'),
+                 onOk: fetchDefaultAndSet
+               });
+             }}
+           >
+              <span className="hidden sm:inline">{t('adminAbout.loadDefault')}</span>
            </Button>
-           <Button icon={<HistoryOutlined />} onClick={() => setHistoryOpen(true)}>
-              {t('adminAbout.history')}
+           <Button 
+             icon={<HistoryOutlined />} 
+             className="rounded-lg border-gray-200 justify-center px-0 sm:px-3"
+             title={t('adminAbout.history')}
+             onClick={() => setHistoryOpen(true)}
+           >
+              <span className="hidden sm:inline">{t('adminAbout.history')}</span>
            </Button>
            <Input 
               placeholder={t('admin.adminContact.notePlaceholder')}
               value={updateNote}
               onChange={e => setUpdateNote(e.target.value)}
-              style={{ width: 220 }}
+              className="col-span-2 sm:col-auto w-full sm:w-[220px] rounded-lg"
            />
            <Button 
              type="primary" 
              icon={<SaveOutlined />} 
              onClick={() => form.submit()} 
+             size="large"
              loading={isSaving} 
-             style={{ backgroundColor: 'hsl(var(--orange))', borderColor: 'hsl(var(--orange))' }}
+             className="col-span-2 sm:col-auto w-full sm:w-auto rounded-lg border-none font-semibold px-6 shadow-md justify-center"
+             style={{ background: 'linear-gradient(135deg, #f97316, #ea580c)' }}
            >
              {t('adminAbout.saveAll')}
            </Button>
          </div>
       </div>
 
-      <div className="p-6 max-w-[1200px] mx-auto">
+      <div className="px-4 sm:px-6 md:px-8 py-6 max-w-[1200px] mx-auto">
          <Form form={form} layout="vertical" onFinish={onFinish}>
             <Tabs items={[
               { forceRender: true, key: '1', label: t('admin.adminContact.tabSeoHero'), children: <SEOHeroTab form={form} t={t} /> },

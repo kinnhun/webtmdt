@@ -30,6 +30,7 @@ interface AdminLayoutProps {
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
   const [collapsed, setCollapsed] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
   const { t, i18n } = useTranslation();
@@ -173,9 +174,13 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         collapsed={collapsed}
         theme="light"
         width={260}
-        className="shadow-sm z-40"
+        collapsedWidth={isMobile ? 0 : 80}
+        className="shadow-sm z-50"
         breakpoint="lg"
-        onBreakpoint={(broken) => setCollapsed(broken)}
+        onBreakpoint={(broken) => {
+          setCollapsed(broken);
+          setIsMobile(broken);
+        }}
         style={{
           overflow: 'auto',
           height: '100vh',
@@ -211,9 +216,16 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
         </div>
       </Sider>
 
-      <Layout className="site-layout transition-all duration-300" style={{ marginLeft: collapsed ? 80 : 260 }}>
+      {isMobile && !collapsed && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 transition-opacity" 
+          onClick={() => setCollapsed(true)} 
+        />
+      )}
+
+      <Layout className="site-layout transition-all duration-300" style={{ marginLeft: isMobile ? 0 : (collapsed ? 80 : 260) }}>
         <Header
-          className="p-0 flex items-center justify-between sticky top-0 z-30 px-6 bg-white"
+          className="p-0 flex items-center justify-between sticky top-0 z-30 px-3 sm:px-6 bg-white"
           style={{
             height: "80px",
             backgroundColor: "#ffffff",
@@ -233,7 +245,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
           <div className="flex items-center gap-6">
             <Dropdown menu={langMenu} placement="bottomRight" trigger={['click']}>
-              <div className="flex items-center gap-2 cursor-pointer text-sm font-medium px-3 py-1.5 rounded-md hover:bg-black/5 transition-colors" style={{ color: "hsl(var(--navy)/0.65)" }}>
+              <div className="flex items-center gap-1 sm:gap-2 cursor-pointer text-sm font-medium px-2 sm:px-3 py-1.5 rounded-md hover:bg-black/5 transition-colors" style={{ color: "hsl(var(--navy)/0.65)" }}>
                 <GlobalOutlined className="text-lg" />
                 <span className="hidden sm:inline-block font-body uppercase text-xs tracking-wider">
                   {i18n.language ? i18n.language.split('-')[0] : 'EN'}
@@ -249,7 +261,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <div className="h-8 w-px bg-black/5 mx-1" />
 
             <Dropdown menu={userMenu} placement="bottomRight" trigger={['click']}>
-              <div className="flex items-center gap-3 cursor-pointer pl-2 pr-4 py-1.5 rounded-full hover:bg-black/5 transition-colors border border-transparent hover:border-black/5">
+              <div className="flex items-center gap-3 cursor-pointer pl-1 sm:pl-2 pr-1 sm:pr-4 py-1.5 rounded-full hover:bg-black/5 transition-colors border border-transparent hover:border-black/5">
                 <Avatar icon={<UserOutlined />} style={{ backgroundColor: "hsl(var(--orange))" }} />
                 <div className="hidden sm:flex flex-col items-start leading-tight">
                   <span className="font-body font-semibold text-sm text-foreground">
@@ -264,8 +276,8 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
           </div>
         </Header>
 
-        <Content className="m-6 bg-transparent">
-          <div className="bg-white rounded-xl shadow-sm border p-6 md:p-8 min-h-[calc(100vh-160px)]" style={{ borderColor: "hsl(var(--navy)/0.06)" }}>
+        <Content className="m-3 sm:m-6 bg-transparent">
+          <div className="bg-white rounded-xl shadow-sm border p-4 sm:p-6 md:p-8 min-h-[calc(100vh-160px)]" style={{ borderColor: "hsl(var(--navy)/0.06)" }}>
             {checkRouteAccess() ? (
               children
             ) : (

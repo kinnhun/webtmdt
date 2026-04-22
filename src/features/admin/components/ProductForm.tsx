@@ -626,6 +626,40 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
   const [form] = Form.useForm();
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [activeTab, setActiveTab] = useState('info');
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState('');
+  const [previewTitle, setPreviewTitle] = useState('');
+  const originalFilesMap = React.useRef<Record<string, File>>({});
+
+  const handlePreview = async (file: UploadFile) => {
+    let src = file.url as string;
+    if (!src && file.preview) {
+      src = file.preview as string;
+    } else if (!src && file.originFileObj) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj as any);
+        reader.onload = () => resolve(reader.result as string);
+      });
+      file.preview = src;
+    }
+
+    if (src) {
+      try {
+        const urlObj = new URL(src, window.location.origin);
+        const orig = urlObj.searchParams.get('original');
+        if (orig) {
+          src = orig;
+        }
+      } catch (e) {
+        // ignore
+      }
+    }
+
+    setPreviewImage(src);
+    setPreviewTitle(file.name || src.substring(src.lastIndexOf('/') + 1) || 'Preview');
+    setPreviewOpen(true);
+  };
 
   const selectedCollections = Form.useWatch('collection', form) || [];
 
@@ -873,37 +907,65 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
 
   const handleCustomUpload = useCallback(async (options: Parameters<NonNullable<import('antd').UploadProps['customRequest']>>[0]) => {
     const { onSuccess, onError, file, onProgress } = options;
+    const rcFile = file as import('antd/es/upload/interface').RcFile;
+    const originalFile = originalFilesMap.current[rcFile.uid] || rcFile;
+
     try {
-      const reader = new FileReader();
-      reader.readAsDataURL(file as Blob);
-      reader.onload = async () => {
-        const base64Data = reader.result as string;
-        if (onProgress) onProgress({ percent: 50 });
+      // 1. Read cropped file
+      const croppedBase64 = await new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(rcFile as Blob);
+        reader.onload = () => resolve(reader.result as string);
+      });
 
-        const response = await fetch('/api/upload', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            base64Data,
-            mimeType: (file as File).type || 'image/png',
-            filename: (file as File).name || 'upload.png',
-            size: (file as File).size || 0,
-          }),
-        });
+      // 2. Read original file
+      const originalBase64 = await new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(originalFile as Blob);
+        reader.onload = () => resolve(reader.result as string);
+      });
 
-        if (!response.ok) {
-          throw new Error('Upload failed');
-        }
+      if (onProgress) onProgress({ percent: 30 });
 
-        const data = await response.json();
-        if (onProgress) onProgress({ percent: 100 });
-        if (onSuccess) onSuccess(data, new XMLHttpRequest());
-      };
-      reader.onerror = () => {
-        if (onError) onError(new Error('File reading failed'));
-      };
-    } catch (err) {
-      if (onError) onError(err instanceof Error ? err : new Error(String(err)));
+      // 3. Upload original file
+      const origRes = await fetch('/api/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          base64Data: originalBase64,
+          mimeType: originalFile.type || 'image/png',
+          filename: `orig-${originalFile.name || 'upload.png'}`,
+          size: originalFile.size || 0,
+        }),
+      });
+      const origData = await origRes.json();
+      if (!origRes.ok) throw new Error(origData.message);
+
+      if (onProgress) onProgress({ percent: 60 });
+
+      // 4. Upload cropped file
+      const cropRes = await fetch('/api/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          base64Data: croppedBase64,
+          mimeType: rcFile.type || 'image/png',
+          filename: `crop-${rcFile.name || 'upload.png'}`,
+          size: rcFile.size || 0,
+        }),
+      });
+      const cropData = await cropRes.json();
+      if (!cropRes.ok) throw new Error(cropData.message);
+
+      if (onProgress) onProgress({ percent: 100 });
+
+      // 5. Combine URLs (Storefront can parse this to get original)
+      const combinedUrl = `${cropData.url}?original=${origData.url}`;
+
+      onSuccess && onSuccess({ url: combinedUrl }, new XMLHttpRequest());
+    } catch (error) {
+      console.error('Upload failed:', error);
+      onError && onError(error as Error);
     }
   }, []);
 
@@ -1654,12 +1716,24 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
           <SectionLabel>{t('admin.products.form.productImages')}</SectionLabel>
           <p className="text-xs text-gray-400 -mt-3 mb-3">First image = cover. Max 10. Drag to reorder.</p>
           {/* @ts-ignore: antd-img-crop type definitions are incomplete for cropperProps overrides */}
-          <ImgCrop rotationSlider aspect={4 / 3} quality={1} fillColor="white" minZoom={0.1} cropperProps={{ restrictPosition: false }}>
+          <ImgCrop 
+            rotationSlider 
+            aspect={4 / 3} 
+            quality={1} 
+            fillColor="white" 
+            minZoom={0.1} 
+            cropperProps={{ restrictPosition: false }}
+            beforeCrop={(file) => {
+              originalFilesMap.current[(file as any).uid] = file;
+              return true;
+            }}
+          >
             <Upload
               customRequest={handleCustomUpload}
               listType="picture-card"
               fileList={fileList}
               onChange={handleUploadChange}
+              onPreview={handlePreview}
             >
               {fileList.length >= 10 ? null : (
                 <div className="flex flex-col items-center py-1">
@@ -1787,6 +1861,16 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
             .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
           `}</style>
         </Form>
+        <Modal 
+          open={previewOpen} 
+          title={previewTitle} 
+          footer={null} 
+          onCancel={() => setPreviewOpen(false)} 
+          centered 
+          width={800}
+        >
+          <img alt="Preview" style={{ width: '100%', objectFit: 'contain' }} src={previewImage} />
+        </Modal>
       </div>
     </div>
   );

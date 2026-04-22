@@ -26,45 +26,127 @@ const renderAntIcon = (name: string, size = 16) => {
 /* ── Image Gallery ── */
 function ImageGallery({ images, name }: { images: string[]; name: string }) {
   const [active, setActive] = useState(0);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const getThumbnailUrl = (url: string) => url?.split('?')[0] || '';
 
   return (
-    <div className="w-full min-w-0">
-      {/* Main image */}
-      <div className="relative aspect-[4/3] rounded-lg overflow-hidden mb-3" style={{ backgroundColor: "hsl(var(--navy)/0.04)" }}>
-        <AnimatePresence mode="wait">
+    <>
+      <div className="w-full min-w-0">
+        {/* Main image */}
+        <div 
+          className="relative aspect-[4/3] rounded-lg overflow-hidden mb-3 cursor-pointer group" 
+          style={{ backgroundColor: "hsl(var(--navy)/0.04)" }}
+          onClick={() => setIsLightboxOpen(true)}
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={active}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="absolute inset-0"
+            >
+              <Image src={getThumbnailUrl(images[active])} alt={name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 55vw" priority />
+            </motion.div>
+          </AnimatePresence>
+          {images.length > 1 && (
+            <>
+              <button 
+                onClick={(e) => { e.stopPropagation(); setActive((active - 1 + images.length) % images.length); }} 
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full flex items-center justify-center bg-white/80 hover:bg-white shadow transition-all z-10 opacity-0 group-hover:opacity-100"
+              >
+                <ChevronLeft size={18} />
+              </button>
+              <button 
+                onClick={(e) => { e.stopPropagation(); setActive((active + 1) % images.length); }} 
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full flex items-center justify-center bg-white/80 hover:bg-white shadow transition-all z-10 opacity-0 group-hover:opacity-100"
+              >
+                <ChevronRight size={18} />
+              </button>
+            </>
+          )}
+        </div>
+        {/* Thumbnails */}
+        {images.length > 1 && (
+          <div className="flex gap-2 overflow-x-auto pb-2 snap-x scroll-smooth w-full [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+            {images.map((img, i) => (
+              <button key={i} onClick={() => setActive(i)} className="relative w-20 h-16 rounded-md overflow-hidden border-2 transition-all shrink-0 snap-start" style={{ borderColor: i === active ? "hsl(var(--orange))" : "transparent", opacity: i === active ? 1 : 0.55 }}>
+                <Image src={getThumbnailUrl(img)} alt={`${name} ${i + 1}`} fill className="object-cover" sizes="80px" />
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Lightbox */}
+      <AnimatePresence>
+        {isLightboxOpen && (
           <motion.div
-            key={active}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="absolute inset-0"
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-md"
+            onClick={() => setIsLightboxOpen(false)}
           >
-            <Image src={images[active]} alt={name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 55vw" priority />
+            <button 
+              className="absolute top-6 right-6 text-white/60 hover:text-white transition-colors z-[10000]"
+              onClick={(e) => { e.stopPropagation(); setIsLightboxOpen(false); }}
+            >
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+
+            <motion.div 
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="relative w-[90vw] h-[90vh]"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Image 
+                src={(() => {
+                  const src = images[active];
+                  if (!src) return '';
+                  try {
+                    const urlObj = new URL(src, window.location.origin);
+                    return urlObj.searchParams.get('original') || src;
+                  } catch {
+                    return src;
+                  }
+                })()} 
+                alt={name} 
+                fill 
+                className="object-contain" 
+                sizes="90vw"
+                priority 
+              />
+            </motion.div>
+
+            {images.length > 1 && (
+              <>
+                <button 
+                  onClick={(e) => { e.stopPropagation(); setActive((active - 1 + images.length) % images.length); }} 
+                  className="absolute left-4 md:left-10 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/25 text-white transition-all z-[10000]"
+                >
+                  <ChevronLeft size={28} />
+                </button>
+                <button 
+                  onClick={(e) => { e.stopPropagation(); setActive((active + 1) % images.length); }} 
+                  className="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/25 text-white transition-all z-[10000]"
+                >
+                  <ChevronRight size={28} />
+                </button>
+              </>
+            )}
           </motion.div>
-        </AnimatePresence>
-        {images.length > 1 && (
-          <>
-            <button onClick={() => setActive((active - 1 + images.length) % images.length)} className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full flex items-center justify-center bg-white/80 hover:bg-white shadow transition-all z-10">
-              <ChevronLeft size={18} />
-            </button>
-            <button onClick={() => setActive((active + 1) % images.length)} className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full flex items-center justify-center bg-white/80 hover:bg-white shadow transition-all z-10">
-              <ChevronRight size={18} />
-            </button>
-          </>
         )}
-      </div>
-      {/* Thumbnails */}
-      {images.length > 1 && (
-        <div className="flex gap-2 overflow-x-auto pb-2 snap-x scroll-smooth w-full [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-          {images.map((img, i) => (
-            <button key={i} onClick={() => setActive(i)} className="relative w-20 h-16 rounded-md overflow-hidden border-2 transition-all shrink-0 snap-start" style={{ borderColor: i === active ? "hsl(var(--orange))" : "transparent", opacity: i === active ? 1 : 0.55 }}>
-              <Image src={img} alt={`${name} ${i + 1}`} fill className="object-cover" sizes="80px" />
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
+      </AnimatePresence>
+    </>
   );
 }
 

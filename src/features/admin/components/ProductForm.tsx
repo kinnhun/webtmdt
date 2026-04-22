@@ -1722,7 +1722,7 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
             quality={1} 
             fillColor="white" 
             minZoom={0.1} 
-            cropperProps={{ restrictPosition: false }}
+            cropperProps={{ restrictPosition: false } as any}
             beforeCrop={(file) => {
               originalFilesMap.current[(file as any).uid] = file;
               return true;

@@ -28,11 +28,6 @@ const FILTER_MAPPING: Record<string, string> = {
   "Aluminum Furniture": "Chairs",
 };
 
-function getProductDetailHref(product: Product) {
-  const identifier = product.slug || product.id || product.code;
-  return identifier ? `/catalogue/${identifier}` : "/catalogue/outdoor";
-}
-
 function EditorialProductCard({ product, index, onQuickView }: { product: Product; index: number; onQuickView: (p: Product) => void }) {
   const { t, i18n } = useTranslation();
   const langEnum: Record<string, 'vi' | 'uk' | 'us'> = { "vi-VN": "vi", "en-GB": "uk", "en-US": "us" };
@@ -40,7 +35,7 @@ function EditorialProductCard({ product, index, onQuickView }: { product: Produc
   const pName = product.name?.[langId] || product.name?.us || "";
   const pMaterial = product.material?.[langId] || product.material?.us || "";
   const pStyle = product.style?.[langId] || product.style?.us || "";
-  const productDetailHref = getProductDetailHref(product);
+  const productDetailHref = `/catalogue/${product.slug}`;
 
   return (
     <motion.div layout initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 16, scale: 0.97 }} transition={{ duration: 0.55, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }} className="group cursor-pointer">
@@ -90,10 +85,11 @@ export default function FeaturedProducts() {
   const [activeFilter, setActiveFilter] = useState("All");
 
   const { data: featuredProductsData = [] } = useFeaturedProducts();
+  const validFeaturedProducts = featuredProductsData.filter((product) => typeof product.slug === "string" && product.slug.trim() !== "");
 
   const filtered = activeFilter === "All"
-    ? featuredProductsData
-    : featuredProductsData.filter(p => p.category?.us === FILTER_MAPPING[activeFilter]);
+    ? validFeaturedProducts
+    : validFeaturedProducts.filter(p => p.category?.us === FILTER_MAPPING[activeFilter]);
   const targetUrl = activeFilter === "All"
     ? `/catalogue/outdoor`
     : `/catalogue/outdoor?category=${encodeURIComponent(FILTER_MAPPING[activeFilter])}`;
@@ -118,7 +114,7 @@ export default function FeaturedProducts() {
           <motion.div initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.35 }} className="flex flex-wrap gap-2.5 mb-8 sm:mb-10">
             {FILTER_KEYS.map((f) => {
               const isActive = activeFilter === f;
-              const count = f === "All" ? featuredProductsData.length : featuredProductsData.filter(p => p.category?.us === FILTER_MAPPING[f]).length;
+              const count = f === "All" ? validFeaturedProducts.length : validFeaturedProducts.filter(p => p.category?.us === FILTER_MAPPING[f]).length;
               if (count === 0) return null;
               return (
                 <button key={f} onClick={() => setActiveFilter(f)} className="relative inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full font-body text-sm font-medium transition-all duration-300 overflow-hidden whitespace-nowrap shrink-0" style={isActive ? { backgroundColor: "hsl(var(--navy-deep))", color: "#fff", boxShadow: "0 4px 14px hsl(var(--navy-deep)/0.25)" } : { backgroundColor: "hsl(var(--warm-beige))", color: "hsl(var(--navy-deep))", border: "1px solid hsl(var(--warm-beige))" }}>

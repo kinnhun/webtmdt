@@ -155,23 +155,46 @@ function DetailTabs({ product }: { product: Product }) {
   const { t, i18n } = useTranslation();
   const langEnum: Record<string, 'vi' | 'uk' | 'us'> = { "vi-VN": "vi", "en-GB": "uk", "en-US": "us" };
   const langId = langEnum[i18n?.language] || "us";
-  const getList = (field: any, lang: string) => {
-    if (Array.isArray(field)) return field;
+  const getList = (field: unknown, lang: string): string[] => {
+    if (Array.isArray(field)) {
+      return field.filter((item): item is string => typeof item === "string" && item.trim() !== "");
+    }
     if (field && typeof field === 'object') {
-      const arr = field[lang];
-      if (Array.isArray(arr) && arr.length > 0) return arr;
-      if (Array.isArray(field.us) && field.us.length > 0) return field.us;
+      const localizedField = field as { [key: string]: unknown; us?: unknown };
+      const arr = localizedField[lang];
+      if (Array.isArray(arr) && arr.length > 0) {
+        return arr.filter((item): item is string => typeof item === "string" && item.trim() !== "");
+      }
+      if (Array.isArray(localizedField.us) && localizedField.us.length > 0) {
+        return localizedField.us.filter((item): item is string => typeof item === "string" && item.trim() !== "");
+      }
     }
     return [];
   };
+
+  const specifications = Array.isArray(product.specifications)
+    ? product.specifications.filter((spec) => {
+        const localizedSpec = spec as ProductAttribute & { [key: string]: string | undefined };
+        const key = localizedSpec[`name${langId.toUpperCase()}`] || localizedSpec.nameUS;
+        const val = localizedSpec[`value${langId.toUpperCase()}`] || localizedSpec.valueUS;
+        return Boolean(key?.trim() || val?.trim());
+      })
+    : [];
+
   const pCare = getList(product.careInstructions, langId);
   const pUsage = getList(product.usageSettings, langId);
+
   const tabs = [
-    { id: "specs", label: t("productDetail.specifications") },
-    { id: "care", label: t("productDetail.care") },
-    { id: "usage", label: t("productDetail.usage") },
-  ];
-  const [activeTab, setActiveTab] = useState("specs");
+    specifications.length > 0 ? { id: "specs", label: t("productDetail.specifications") } : null,
+    pCare.length > 0 ? { id: "care", label: t("productDetail.care") } : null,
+    pUsage.length > 0 ? { id: "usage", label: t("productDetail.usage") } : null,
+  ].filter((tab): tab is { id: string; label: string } => Boolean(tab));
+
+  const [activeTab, setActiveTab] = useState(tabs[0]?.id || "specs");
+
+  if (tabs.length === 0) {
+    return null;
+  }
 
   return (
     <div>
@@ -190,36 +213,28 @@ function DetailTabs({ product }: { product: Product }) {
       </div>
       <div className="py-6">
         <AnimatePresence mode="wait">
-          {activeTab === "specs" && product.specifications && (
+          {activeTab === "specs" && specifications.length > 0 && (
             <motion.div key="specs" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
-                {Array.isArray(product.specifications) ? (
-                  product.specifications.map((spec: any, i) => {
-                    const key = spec[`name${langId.toUpperCase()}`] || spec.nameUS;
-                    const val = spec[`value${langId.toUpperCase()}`] || spec.valueUS;
-                    if (!key) return null;
-                    return (
-                      <div key={i} className="flex justify-between py-2 border-b" style={{ borderColor: "hsl(var(--navy)/0.06)" }}>
-                        <span className="font-body text-sm font-semibold" style={{ color: "hsl(var(--navy-deep))" }}>{key}</span>
-                        <span className="font-body text-sm" style={{ color: "hsl(var(--navy)/0.55)" }}>{val}</span>
-                      </div>
-                    );
-                  })
-                ) : (
-                  Object.entries(product.specifications).map(([key, val]) => (
-                    <div key={key} className="flex justify-between py-2 border-b" style={{ borderColor: "hsl(var(--navy)/0.06)" }}>
+                {specifications.map((spec, i) => {
+                  const localizedSpec = spec as ProductAttribute & { [key: string]: string | undefined };
+                  const key = localizedSpec[`name${langId.toUpperCase()}`] || localizedSpec.nameUS;
+                  const val = localizedSpec[`value${langId.toUpperCase()}`] || localizedSpec.valueUS;
+                  if (!key) return null;
+                  return (
+                    <div key={i} className="flex justify-between py-2 border-b" style={{ borderColor: "hsl(var(--navy)/0.06)" }}>
                       <span className="font-body text-sm font-semibold" style={{ color: "hsl(var(--navy-deep))" }}>{key}</span>
-                      <span className="font-body text-sm" style={{ color: "hsl(var(--navy)/0.55)" }}>{val as React.ReactNode}</span>
+                      <span className="font-body text-sm" style={{ color: "hsl(var(--navy)/0.55)" }}>{val}</span>
                     </div>
-                  ))
-                )}
+                  );
+                })}
               </div>
             </motion.div>
           )}
-          {activeTab === "care" && product.careInstructions && (
+          {activeTab === "care" && pCare.length > 0 && (
             <motion.div key="care" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
               <ul className="space-y-3">
-                {pCare.map((item: string, i: number) => (
+                {pCare.map((item, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <Shield size={16} className="mt-0.5 shrink-0" style={{ color: "hsl(var(--orange))" }} />
                     <span className="font-body text-sm" style={{ color: "hsl(var(--navy)/0.65)" }}>{item}</span>
@@ -228,10 +243,10 @@ function DetailTabs({ product }: { product: Product }) {
               </ul>
             </motion.div>
           )}
-          {activeTab === "usage" && product.usageSettings && (
+          {activeTab === "usage" && pUsage.length > 0 && (
             <motion.div key="usage" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
               <div className="grid grid-cols-2 gap-3">
-                {pUsage.map((setting: string) => (
+                {pUsage.map((setting) => (
                   <div key={setting} className="flex items-center gap-3 p-3 rounded-lg border" style={{ borderColor: "hsl(var(--navy)/0.08)", backgroundColor: "hsl(var(--navy)/0.02)" }}>
                     <MapPin size={15} style={{ color: "hsl(var(--orange))" }} />
                     <span className="font-body text-sm font-medium" style={{ color: "hsl(var(--navy-deep))" }}>{setting}</span>
@@ -490,15 +505,13 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
       )}
 
       {/* Specifications / Care / Usage Tabs */}
-      {(product.specifications || product.careInstructions || product.usageSettings) && (
-        <section className="border-t" style={{ borderColor: "hsl(var(--navy)/0.06)" }}>
-          <div className="container mx-auto px-6 py-8 md:py-12">
-            <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-              <DetailTabs product={product} />
-            </motion.div>
-          </div>
-        </section>
-      )}
+      <section className="border-t" style={{ borderColor: "hsl(var(--navy)/0.06)" }}>
+        <div className="container mx-auto px-6 py-8 md:py-12">
+          <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
+            <DetailTabs product={product} />
+          </motion.div>
+        </div>
+      </section>
 
       {/* Related Products */}
       {relatedProducts.length > 0 && (

@@ -48,10 +48,26 @@ function AppShell({ Component, pageProps }: AppProps) {
 
   // Synchronize react-i18next with Next.js i18n router
   useEffect(() => {
-    if (router.locale && i18n.language !== router.locale) {
-      i18n.changeLanguage(router.locale);
+    if (typeof window === "undefined") return;
+
+    const savedLanguage = window.localStorage.getItem(STORAGE_KEY);
+    const normalizedSavedLanguage = SUPPORTED_LANGS.includes(savedLanguage as typeof SUPPORTED_LANGS[number])
+      ? savedLanguage
+      : null;
+    const targetLanguage = normalizedSavedLanguage ?? router.locale ?? i18n.language;
+
+    if (targetLanguage && i18n.language !== targetLanguage) {
+      void i18n.changeLanguage(targetLanguage);
     }
-  }, [router.locale]);
+
+    if (targetLanguage && router.locale !== targetLanguage) {
+      void router.replace(
+        { pathname: router.pathname, query: router.query },
+        router.asPath,
+        { locale: targetLanguage, shallow: true }
+      );
+    }
+  }, [router, router.locale]);
 
   useRouteLoading();
 

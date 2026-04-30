@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     await dbConnect();
 
-    let products = await Product.find().limit(8).lean();
+    const products = await Product.find().limit(8).lean();
 
     if (!products.length) {
       return res.status(200).json([]);
@@ -18,6 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const mapped = products.map((p) => ({
       id: p.productId || p._id?.toString(),
+      slug: p.slug,
       name: p.name,
       code: p.code,
       category: p.category,

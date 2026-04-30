@@ -15,6 +15,20 @@
     "quickLinks": "Quick Links",
     "collections": "Collections",
     "contact": "Contact",
+    "links": {
+      "outdoorCollection": "Outdoor Collection",
+      "indoorCollection": "Indoor Collection"
+    },
+    "collectionsItems": {
+      "outdoorSofas": "Outdoor Sofas",
+      "diningSets": "Dining Sets",
+      "loungeDaybeds": "Lounge & Daybeds",
+      "tables": "Tables",
+      "chairs": "Chairs",
+      "livingRoomFurniture": "Living Room Furniture",
+      "diningRoomFurniture": "Dining Room Furniture",
+      "bathroomFurniture": "Bathroom Furniture"
+    },
     "copyright": "© 2025 DHT Outdoor Furniture Production. All rights reserved.",
     "tagline": "Interior Manufacturer & Supplier"
   },

@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 import * as AntIcons from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
-import type { Product, ProductAttribute } from "@/domains/product/product.types";
+import type { Product, ProductAttribute, ProductSpecification } from "@/domains/product/product.types";
 import ProductInquiryModal from "./ProductInquiryModal";
 
 interface Props {

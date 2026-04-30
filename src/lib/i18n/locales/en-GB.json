@@ -1,4 +1,23 @@
 {
+  "footer": {
+    "quickLinks": "Quick Links",
+    "collections": "Collections",
+    "contact": "Contact",
+    "links": {
+      "outdoorCollection": "Outdoor Collection",
+      "indoorCollection": "Indoor Collection"
+    },
+    "collectionsItems": {
+      "outdoorSofas": "Outdoor Sofas",
+      "diningSets": "Dining Sets",
+      "loungeDaybeds": "Lounge & Daybeds",
+      "tables": "Tables",
+      "chairs": "Chairs",
+      "livingRoomFurniture": "Living Room Furniture",
+      "diningRoomFurniture": "Dining Room Furniture",
+      "bathroomFurniture": "Bathroom Furniture"
+    }
+  },
   "catalogue": {
     "seo": {
       "title": "Catalogue — DHT Outdoor Furniture"

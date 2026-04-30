@@ -15,6 +15,20 @@
     "quickLinks": "Liên kết nhanh",
     "collections": "Bộ sưu tập",
     "contact": "Liên hệ",
+    "links": {
+      "outdoorCollection": "Bộ sưu tập ngoài trời",
+      "indoorCollection": "Bộ sưu tập trong nhà"
+    },
+    "collectionsItems": {
+      "outdoorSofas": "Sofa ngoài trời",
+      "diningSets": "Bộ bàn ăn",
+      "loungeDaybeds": "Ghế thư giãn & Daybed",
+      "tables": "Bàn",
+      "chairs": "Ghế",
+      "livingRoomFurniture": "Nội thất phòng khách",
+      "diningRoomFurniture": "Nội thất phòng ăn",
+      "bathroomFurniture": "Nội thất phòng tắm"
+    },
     "copyright": "© 2025 DHT Outdoor Furniture Production. Bảo lưu mọi quyền.",
     "tagline": "Nhà sản xuất & cung cấp đồ nội thất"
   },

@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
 import type { ReactNode } from "react";
+import { STORAGE_KEY } from "@/lib/i18n";
 
 const FLAGS: Record<string, ReactNode> = {
   "en-US": (
@@ -87,7 +88,19 @@ export default function LanguageSwitcher() {
               <button
                 key={lang.code}
                 onClick={async () => {
+                  if (lang.code === i18n.language) {
+                    setOpen(false);
+                    return;
+                  }
+
                   setOpen(false);
+
+                  if (typeof window !== "undefined") {
+                    window.localStorage.setItem(STORAGE_KEY, lang.code);
+                  }
+
+                  await i18n.changeLanguage(lang.code);
+
                   const { pathname, asPath, query } = router;
                   await router.push({ pathname, query }, asPath, { locale: lang.code });
                 }}

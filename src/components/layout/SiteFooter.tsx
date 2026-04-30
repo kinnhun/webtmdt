@@ -82,27 +82,28 @@ export default function SiteFooter() {
   const quickLinks = [
     { label: t("nav.home"), href: "/" },
     { label: t("nav.about"), href: "/about" },
-    { label: t("nav.catalogue"), href: "/catalogue/outdoor" },
+    { label: t("footer.links.outdoorCollection"), href: "/catalogue/outdoor" },
+    { label: t("footer.links.indoorCollection"), href: "/catalogue/indoor" },
     { label: t("nav.contact"), href: "/contact" },
   ];
 
   const collectionGroups = [
     {
-      title: "Outdoor Collection",
+      title: t("footer.links.outdoorCollection"),
       items: [
-        { label: "Outdoor Sofas", href: "/catalogue/outdoor?category=Outdoor+Sofas" },
-        { label: "Dining Sets", href: "/catalogue/outdoor?category=Dining+Sets" },
-        { label: "Lounge & Daybeds", href: "/catalogue/outdoor?category=Lounge+%26+Daybeds" },
-        { label: "Tables", href: "/catalogue/outdoor?category=Tables" },
-        { label: "Chairs", href: "/catalogue/outdoor?category=Chairs" },
+        { label: t("footer.collectionsItems.outdoorSofas"), href: "/catalogue/outdoor?category=Outdoor+Sofas" },
+        { label: t("footer.collectionsItems.diningSets"), href: "/catalogue/outdoor?category=Dining+Sets" },
+        { label: t("footer.collectionsItems.loungeDaybeds"), href: "/catalogue/outdoor?category=Lounge+%26+Daybeds" },
+        { label: t("footer.collectionsItems.tables"), href: "/catalogue/outdoor?category=Tables" },
+        { label: t("footer.collectionsItems.chairs"), href: "/catalogue/outdoor?category=Chairs" },
       ],
     },
     {
-      title: "Indoor Collection",
+      title: t("footer.links.indoorCollection"),
       items: [
-        { label: "Living Room Furniture", href: "/catalogue/indoor?category=Living+Room+Furniture" },
-        { label: "Dining Room Furniture", href: "/catalogue/indoor?category=Dining+Room+Furniture" },
-        { label: "Bathroom Furniture", href: "/catalogue/indoor?category=Bathroom+Furniture" },
+        { label: t("footer.collectionsItems.livingRoomFurniture"), href: "/catalogue/indoor?category=Living+Room+Furniture" },
+        { label: t("footer.collectionsItems.diningRoomFurniture"), href: "/catalogue/indoor?category=Dining+Room+Furniture" },
+        { label: t("footer.collectionsItems.bathroomFurniture"), href: "/catalogue/indoor?category=Bathroom+Furniture" },
       ],
     },
   ];

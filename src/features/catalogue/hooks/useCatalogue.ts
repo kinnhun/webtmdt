@@ -130,18 +130,31 @@ export function useCatalogue(forcedCollection?: Collection) {
       if (!pName.includes(q) && !p.code.toLowerCase().includes(q) && !pCat.includes(q)) return false;
     }
     
-    const checkOverlapExt = (fieldData: any, selectedFilters: string[]) => {
+    const checkOverlapExt = (fieldData: Product[keyof Product], selectedFilters: string[]) => {
       if (!selectedFilters.length) return true;
-      let arr: string[] = [];
+
+      const normalizedSelected = selectedFilters
+        .map((value) => value.trim().toLowerCase())
+        .filter(Boolean);
+
+      const normalizedValues = new Set<string>();
+
       if (typeof fieldData === 'string') {
-        arr = fieldData.split(',').map(s => s.trim());
+        fieldData
+          .split(',')
+          .map((value) => value.trim().toLowerCase())
+          .filter(Boolean)
+          .forEach((value) => normalizedValues.add(value));
       } else if (fieldData && typeof fieldData === 'object') {
-        arr = [
-          ...(fieldData.us || "").split(','),
-          ...(fieldData[langId] || "").split(',')
-        ].map((s: string) => s.trim());
+        [fieldData.us, fieldData[langId], fieldData.uk, fieldData.vi]
+          .filter((value): value is string => typeof value === 'string')
+          .flatMap((value) => value.split(','))
+          .map((value) => value.trim().toLowerCase())
+          .filter(Boolean)
+          .forEach((value) => normalizedValues.add(value));
       }
-      return selectedFilters.some(f => arr.includes(f));
+
+      return normalizedSelected.some((value) => normalizedValues.has(value));
     };
 
     if (!checkOverlapExt(p.category, filters.category)) return false;

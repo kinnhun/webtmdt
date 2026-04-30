@@ -130,7 +130,7 @@ export function useCatalogue(forcedCollection?: Collection) {
       if (!pName.includes(q) && !p.code.toLowerCase().includes(q) && !pCat.includes(q)) return false;
     }
     
-    const checkOverlapExt = (fieldData: Product[keyof Product], selectedFilters: string[]) => {
+    const checkOverlapExt = (fieldData: Product['category'] | Product['material'] | Product['color'] | Product['style'] | string | undefined, selectedFilters: string[]) => {
       if (!selectedFilters.length) return true;
 
       const normalizedSelected = selectedFilters
@@ -145,7 +145,7 @@ export function useCatalogue(forcedCollection?: Collection) {
           .map((value) => value.trim().toLowerCase())
           .filter(Boolean)
           .forEach((value) => normalizedValues.add(value));
-      } else if (fieldData && typeof fieldData === 'object') {
+      } else if (fieldData) {
         [fieldData.us, fieldData[langId], fieldData.uk, fieldData.vi]
           .filter((value): value is string => typeof value === 'string')
           .flatMap((value) => value.split(','))

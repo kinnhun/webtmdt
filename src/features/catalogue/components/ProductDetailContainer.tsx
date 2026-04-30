@@ -174,7 +174,7 @@ function DetailTabs({ product }: { product: Product }) {
 
   const specifications = Array.isArray(product.specifications)
     ? product.specifications.filter((spec) => {
-        const localizedSpec = spec as ProductAttribute & { [key: string]: string | undefined };
+        const localizedSpec = spec as ProductSpecification & { [key: string]: string | undefined };
         const key = localizedSpec[`name${langId.toUpperCase()}`] || localizedSpec.nameUS;
         const val = localizedSpec[`value${langId.toUpperCase()}`] || localizedSpec.valueUS;
         return Boolean(key?.trim() || val?.trim());
@@ -217,7 +217,7 @@ function DetailTabs({ product }: { product: Product }) {
             <motion.div key="specs" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
                 {specifications.map((spec, i) => {
-                  const localizedSpec = spec as ProductAttribute & { [key: string]: string | undefined };
+                  const localizedSpec = spec as ProductSpecification & { [key: string]: string | undefined };
                   const key = localizedSpec[`name${langId.toUpperCase()}`] || localizedSpec.nameUS;
                   const val = localizedSpec[`value${langId.toUpperCase()}`] || localizedSpec.valueUS;
                   if (!key) return null;

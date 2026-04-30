@@ -86,11 +86,25 @@ export default function SiteFooter() {
     { label: t("nav.contact"), href: "/contact" },
   ];
 
-  const collections = [
-    { label: t("home.categories.outdoorSofa.name"), category: "Outdoor Sofas" },
-    { label: t("home.categories.outdoorDining.name"), category: "Dining Sets" },
-    { label: t("home.categories.aluminium.name"), category: "Tables" },
-    { label: t("home.categories.indoor.name"), category: "Chairs" },
+  const collectionGroups = [
+    {
+      title: "Outdoor Collection",
+      items: [
+        { label: "Outdoor Sofas", href: "/catalogue/outdoor?category=Outdoor+Sofas" },
+        { label: "Dining Sets", href: "/catalogue/outdoor?category=Dining+Sets" },
+        { label: "Lounge & Daybeds", href: "/catalogue/outdoor?category=Lounge+%26+Daybeds" },
+        { label: "Tables", href: "/catalogue/outdoor?category=Tables" },
+        { label: "Chairs", href: "/catalogue/outdoor?category=Chairs" },
+      ],
+    },
+    {
+      title: "Indoor Collection",
+      items: [
+        { label: "Living Room Furniture", href: "/catalogue/indoor?category=Living+Room+Furniture" },
+        { label: "Dining Room Furniture", href: "/catalogue/indoor?category=Dining+Room+Furniture" },
+        { label: "Bathroom Furniture", href: "/catalogue/indoor?category=Bathroom+Furniture" },
+      ],
+    },
   ];
 
   return (
@@ -151,16 +165,25 @@ export default function SiteFooter() {
 
           <motion.div variants={fadeUp} className="md:col-span-1 lg:col-span-2">
             <h4 className="font-display text-white font-semibold text-base mb-5">{t("footer.collections")}</h4>
-            <ul className="space-y-3">
-              {collections.map(({ label, category }) => (
-                <li key={category}>
-                  <Link href={`/catalogue?category=${encodeURIComponent(category)}`} className="font-body text-sm text-white/60 hover:text-white transition-colors duration-200 group flex items-center gap-1">
-                    <span className="inline-block w-0 group-hover:w-3 h-px transition-all duration-200 mr-0 group-hover:mr-1" style={{ backgroundColor: "hsl(var(--orange))" }} />
-                    {label}
-                  </Link>
-                </li>
+            <div className="space-y-5">
+              {collectionGroups.map((group) => (
+                <div key={group.title}>
+                  <h5 className="font-body text-sm font-semibold text-white mb-3">{group.title}</h5>
+                  {group.items.length > 0 && (
+                    <ul className="space-y-3">
+                      {group.items.map(({ label, href }) => (
+                        <li key={href}>
+                          <Link href={href} className="font-body text-sm text-white/60 hover:text-white transition-colors duration-200 group flex items-center gap-1">
+                            <span className="inline-block w-0 group-hover:w-3 h-px transition-all duration-200 mr-0 group-hover:mr-1" style={{ backgroundColor: "hsl(var(--orange))" }} />
+                            {label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               ))}
-            </ul>
+            </div>
           </motion.div>
 
           <motion.div variants={fadeUp} className="md:col-span-2 lg:col-span-5">

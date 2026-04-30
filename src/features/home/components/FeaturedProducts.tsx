@@ -28,6 +28,11 @@ const FILTER_MAPPING: Record<string, string> = {
   "Aluminum Furniture": "Chairs",
 };
 
+function getProductDetailHref(product: Product) {
+  const identifier = product.slug || product.id || product.code;
+  return identifier ? `/catalogue/${identifier}` : "/catalogue/outdoor";
+}
+
 function EditorialProductCard({ product, index, onQuickView }: { product: Product; index: number; onQuickView: (p: Product) => void }) {
   const { t, i18n } = useTranslation();
   const langEnum: Record<string, 'vi' | 'uk' | 'us'> = { "vi-VN": "vi", "en-GB": "uk", "en-US": "us" };
@@ -35,18 +40,19 @@ function EditorialProductCard({ product, index, onQuickView }: { product: Produc
   const pName = product.name?.[langId] || product.name?.us || "";
   const pMaterial = product.material?.[langId] || product.material?.us || "";
   const pStyle = product.style?.[langId] || product.style?.us || "";
+  const productDetailHref = getProductDetailHref(product);
 
   return (
     <motion.div layout initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 16, scale: 0.97 }} transition={{ duration: 0.55, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }} className="group cursor-pointer">
       <div className="relative overflow-hidden rounded-sm aspect-3/4 mb-4 shadow-md group-hover:shadow-xl transition-shadow duration-500" style={{ backgroundColor: "hsl(var(--warm-beige))" }}>
-        <Link href={`/catalogue/${product.slug}`} className="absolute inset-0 z-0 bg-transparent" />
+        <Link href={productDetailHref} className="absolute inset-0 z-0 bg-transparent" />
         <img src={product.image} alt={pName} className="w-full h-full object-cover group-hover:scale-[1.07] transition-transform duration-700 ease-out pointer-events-none" loading="lazy" />
         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none" />
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-2.5 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
           <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); onQuickView(product); }} className="pointer-events-auto flex items-center justify-center min-w-[140px] gap-2 px-5 py-2.5 rounded-sm font-body font-semibold text-sm text-white shadow-lg translate-y-3 group-hover:translate-y-0 transition-all duration-350 hover:brightness-110 cursor-pointer" style={{ backgroundColor: "hsl(var(--orange))" }}>
             <Eye size={15} /> {t("product.quickView")}
           </button>
-          <Link href={`/catalogue/${product.slug}`} className="pointer-events-auto flex items-center justify-center min-w-[140px] gap-2 px-5 py-2.5 rounded-sm font-body font-semibold text-sm text-white shadow-lg translate-y-3 group-hover:translate-y-0 transition-all duration-350 delay-75 cursor-pointer" style={{ backgroundColor: "hsl(var(--navy-deep)/0.85)", backdropFilter: "blur(4px)" }}>
+          <Link href={productDetailHref} className="pointer-events-auto flex items-center justify-center min-w-[140px] gap-2 px-5 py-2.5 rounded-sm font-body font-semibold text-sm text-white shadow-lg translate-y-3 group-hover:translate-y-0 transition-all duration-350 delay-75 cursor-pointer" style={{ backgroundColor: "hsl(var(--navy-deep)/0.85)", backdropFilter: "blur(4px)" }}>
             <ArrowRight size={15} /> {t("product.viewDetails")}
           </Link>
         </div>
@@ -59,7 +65,7 @@ function EditorialProductCard({ product, index, onQuickView }: { product: Produc
       </div>
       <div className="space-y-1">
         <p className="font-body text-xs tracking-wider" style={{ color: "hsl(var(--orange))" }}>{product.code}</p>
-        <Link href={`/catalogue/${product.slug}`} className="block">
+        <Link href={productDetailHref} className="block">
           <h3 className="font-display font-semibold text-base leading-snug transition-colors duration-200 hover:opacity-75" style={{ color: "hsl(var(--navy-deep))" }}>
             {pName}
           </h3>
@@ -68,7 +74,7 @@ function EditorialProductCard({ product, index, onQuickView }: { product: Produc
           <span className="font-body text-xs text-muted-foreground">
             {pMaterial} · {pStyle}
           </span>
-          <Link href={`/catalogue/${product.slug}`} className="font-body text-xs font-semibold flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:opacity-75" style={{ color: "hsl(var(--orange))" }}>
+          <Link href={productDetailHref} className="font-body text-xs font-semibold flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:opacity-75" style={{ color: "hsl(var(--orange))" }}>
             {t("home.featured.inquire")} <ArrowRight size={11} />
           </Link>
         </div>

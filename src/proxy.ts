@@ -6,7 +6,6 @@ export async function proxy(request: NextRequest) {
 
   // 1. Detect country from common headers (Vercel, Cloudflare, Cloudfront, Next.js geo)
   let country = 
-    request.geo?.country ||
     request.headers.get('x-vercel-ip-country') ||
     request.headers.get('cf-ipcountry') ||
     request.headers.get('cloudfront-viewer-country');
@@ -20,7 +19,7 @@ export async function proxy(request: NextRequest) {
       country = cachedCountry;
     } else {
       // 3. Nếu chưa có Cookie, lấy IP và gọi API miễn phí để kiểm tra quốc gia
-      const ip = request.ip || request.headers.get('x-forwarded-for')?.split(',')[0] || request.headers.get('x-real-ip');
+      const ip = request.headers.get('x-forwarded-for')?.split(',')[0] || request.headers.get('x-real-ip');
       if (ip && ip !== '127.0.0.1' && ip !== '::1') {
         try {
           const res = await fetch(`https://api.country.is/${ip.trim()}`, { cache: 'no-store' });

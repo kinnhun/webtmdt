@@ -63,24 +63,16 @@ export async function proxy(request: NextRequest) {
     }
 
     return attachCookie(new NextResponse(
-      `<!DOCTYPE html>
-<html>
-<head>
-  <title>Access Denied</title>
-  <style>
-    body { font-family: sans-serif; text-align: center; padding: 50px; background-color: #f8f9fa; color: #333; }
-    h1 { font-size: 2em; margin-bottom: 20px; }
-    p { font-size: 1.2em; color: #666; }
-  </style>
-</head>
-<body>
-  <h1>Access Denied</h1>
-  <p>Sorry, this website is not available in your region.</p>
-</body>
-</html>`,
+      `<html><body style="display:flex;justify-content:center;align-items:center;height:100vh;background:#000;color:#fff;font-family:sans-serif;"><h1>ACCESS DENIED: NOT AVAILABLE IN YOUR REGION.</h1></body></html>`,
       { 
         status: 403,
-        headers: { 'content-type': 'text/html' }
+        headers: { 
+          'content-type': 'text/html',
+          'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0',
+          'Surrogate-Control': 'no-store'
+        }
       }
     ));
   }
@@ -113,12 +105,7 @@ export async function proxy(request: NextRequest) {
 // Ensure proxy runs on all paths to apply geo-blocking globally
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico, sitemap.xml, robots.txt (metadata files)
-     */
+    '/',
     '/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
   ],
 };

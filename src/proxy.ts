@@ -37,15 +37,14 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  // Tính năng dành cho môi trường dev (localhost) để test việc chặn IP
-  // Bạn có thể thêm ?testCountry=VN vào URL để thử nghiệm
-  if (process.env.NODE_ENV === 'development') {
-    const forcedCountry = request.nextUrl.searchParams.get('testCountry') || request.headers.get('x-test-country');
-    if (forcedCountry) {
-      country = forcedCountry.toUpperCase();
-      shouldSetCookie = false; // Không lưu cookie khi đang test
-    }
+  // Tính năng test việc chặn IP (có thể dùng trên production)
+  const forcedCountry = request.nextUrl.searchParams.get('testCountry') || request.headers.get('x-test-country');
+  if (forcedCountry) {
+    country = forcedCountry.toUpperCase();
+    shouldSetCookie = false; // Không lưu cookie khi đang test
   }
+
+  console.log("PROXY DEBUG - URL:", pathname, "IP:", request.headers.get('x-forwarded-for'), "Country:", country);
 
   // Hàm tiện ích để gắn cookie vào response nếu cần
   const attachCookie = (res: NextResponse) => {

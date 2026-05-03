@@ -12,17 +12,19 @@ export async function proxy(request: NextRequest) {
 
   let shouldSetCookie = false;
 
+  const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || request.headers.get('x-real-ip')?.trim();
+
   // 2. Fallback: Nếu không có header (ví dụ chạy trên VPS thường), thử lấy từ Cookie đã lưu
   if (!country) {
     const cachedCountry = request.cookies.get('cached_country')?.value;
-    if (cachedCountry) {
-      country = cachedCountry;
+    // Kiểm tra xem cookie có chứa IP hiện tại không
+    if (cachedCountry && ip && cachedCountry.startsWith(`${ip}|`)) {
+      country = cachedCountry.split('|')[1];
     } else {
-      // 3. Nếu chưa có Cookie, lấy IP và gọi API miễn phí để kiểm tra quốc gia
-      const ip = request.headers.get('x-forwarded-for')?.split(',')[0] || request.headers.get('x-real-ip');
+      // 3. Nếu chưa có Cookie hoặc IP đã thay đổi, lấy IP và gọi API miễn phí để kiểm tra quốc gia
       if (ip && ip !== '127.0.0.1' && ip !== '::1') {
         try {
-          const res = await fetch(`https://api.country.is/${ip.trim()}`, { cache: 'no-store' });
+          const res = await fetch(`https://api.country.is/${ip}`, { cache: 'no-store' });
           if (res.ok) {
             const data = await res.json();
             if (data.country) {
@@ -48,9 +50,9 @@ export async function proxy(request: NextRequest) {
 
   // Hàm tiện ích để gắn cookie vào response nếu cần
   const attachCookie = (res: NextResponse) => {
-    if (shouldSetCookie && country) {
-      // Lưu cookie trong 24 giờ để không phải gọi API lại cho mỗi request
-      res.cookies.set('cached_country', country, { maxAge: 60 * 60 * 24, path: '/' });
+    if (shouldSetCookie && country && ip) {
+      // Lưu cookie trong 24 giờ bao gồm IP để khi đổi mạng (VPN) sẽ check lại
+      res.cookies.set('cached_country', `${ip}|${country}`, { maxAge: 60 * 60 * 24, path: '/' });
     }
     return res;
   };

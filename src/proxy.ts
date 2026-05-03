@@ -56,7 +56,7 @@ export async function proxy(request: NextRequest) {
   };
 
   // Block traffic from Vietnam (VN)
-  if (country === 'VN') {
+  if (country && country === 'VN') {
     // If it's an API route, return JSON so it doesn't break fetch requests
     if (pathname.startsWith('/api/')) {
       return attachCookie(NextResponse.json({ error: 'Access Denied: Region Blocked' }, { status: 403 }));

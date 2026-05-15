@@ -197,7 +197,7 @@ export default function ProductInquiryModal({ isOpen, onClose, product }: Props)
                   
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-gray-100 mt-6 pt-5">
                     {(() => {
-                      const rawNumber = dbData?.inquiryModal?.whatsappNumber || "84907386898";
+                      const rawNumber = dbData?.inquiryModal?.whatsappNumber || "0335820765";
                       const cleanNumber = rawNumber.replace(/[^0-9]/g, '');
                       return (
                         <a 

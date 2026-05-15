@@ -140,7 +140,7 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
               <LanguageSwitcher />
 
               <a
-                href={`https://wa.me/${dbData?.inquiryModal?.whatsappNumber?.replace(/\+/g, "").replace(/\s+/g, "") || "1234567890"}`}
+                href={`https://wa.me/${dbData?.inquiryModal?.whatsappNumber?.replace(/\+/g, "").replace(/\s+/g, "") || "0335820765"}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hidden lg:flex items-center gap-1.5 font-body text-sm text-white/60 hover:text-white transition-colors px-2 py-1"

@@ -146,7 +146,7 @@ const ContactContentSchema = new Schema<IContactContent>(
       successDescSuffix: I18nTextSchema,
       closeBtn: I18nTextSchema,
       whatsappText: I18nTextSchema,
-      whatsappNumber: { type: String, default: "" },
+      whatsappNumber: { type: String, default: "0335820765" },
     },
   },
   { timestamps: true }

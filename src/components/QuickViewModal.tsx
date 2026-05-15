@@ -98,7 +98,7 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
                     >
                       {t("product.sendInquiry")}
                     </button>
-                    <a href={`https://wa.me/1234567890?text=Hi, I'd like to inquire about ${encodeURIComponent(pName)} (${product.code})`} target="_blank" rel="noopener noreferrer" className="w-full py-3 rounded font-body font-medium text-center text-sm border transition-all hover:bg-orange/5" style={{ borderColor: "hsl(var(--orange))", color: "hsl(var(--orange))" }}>
+                    <a href={`https://wa.me/0335820765?text=Hi, I'd like to inquire about ${encodeURIComponent(pName)} (${product.code})`} target="_blank" rel="noopener noreferrer" className="w-full py-3 rounded font-body font-medium text-center text-sm border transition-all hover:bg-orange/5" style={{ borderColor: "hsl(var(--orange))", color: "hsl(var(--orange))" }}>
                       <Phone size={14} className="inline mr-2" /> {t("product.whatsappUs")}
                     </a>
                   </div>

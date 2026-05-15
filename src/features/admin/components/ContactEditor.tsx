@@ -449,6 +449,15 @@ const SEOHeroTab = ({ form, t }: { form: any, t: any }) => (
       <I18nTextField form={form} baseName={['seo', 'description']} listPath={[]} textarea label={t('adminAbout.lblDescription')} />
     </Card>
     <Card variant="borderless" className="shadow-sm">
+      <SectionLabel>{t('admin.adminContact.sectionWhatsapp')}</SectionLabel>
+      <Form.Item name={['inquiryModal', 'whatsappNumber']} label={t('admin.adminContact.lblWhatsappNumber')}>
+        <Input placeholder={t('admin.adminContact.phWhatsappNumber')} className="max-w-md" />
+      </Form.Item>
+      <p className="text-[11px] text-gray-400 mt-1 italic">
+        * {t('admin.adminContact.whatsappNote', 'Số này được dùng cho cả nút WhatsApp ở Header và trong Modal hỏi giá sản phẩm.')}
+      </p>
+    </Card>
+    <Card variant="borderless" className="shadow-sm">
       <SectionLabel>{t('admin.adminContact.sectionHero')}</SectionLabel>
       <I18nRichTextField form={form} baseName={['hero', 'title']} listPath={[]} label={t('adminAbout.lblTitle')} />
       <I18nRichTextField form={form} baseName={['hero', 'subtitle']} listPath={[]} label={t('adminAbout.lblSubtitle')} />
@@ -629,11 +638,7 @@ const ModalTab = ({ form, t }: { form: any, t: any }) => (
     <I18nRichTextField form={form} baseName={['inquiryModal', 'successDescSuffix']} label={t('admin.adminContact.lblSuccessDescSuffix')} />
     <I18nRichTextField form={form} baseName={['inquiryModal', 'closeBtn']} label={t('admin.adminContact.lblCloseBtn')} />
     <Divider />
-    <SectionLabel>{t('admin.adminContact.sectionWhatsapp')}</SectionLabel>
     <I18nRichTextField form={form} baseName={['inquiryModal', 'whatsappText']} label={t('admin.adminContact.lblWhatsappBtnText')} />
-    <Form.Item name={['inquiryModal', 'whatsappNumber']} label={t('admin.adminContact.lblWhatsappNumber')}>
-      <Input placeholder={t('admin.adminContact.phWhatsappNumber')} />
-    </Form.Item>
   </Card>
 );
 

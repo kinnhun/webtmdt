@@ -61,7 +61,7 @@ export function useCatalogue(forcedCollection?: Collection) {
     }
     
     setInitialized(true);
-  }, [router.isReady]);
+  }, [router.isReady, router.query, forcedCollection]);
 
   useEffect(() => {
     if (!initialized) return;

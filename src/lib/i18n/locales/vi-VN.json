@@ -946,6 +946,7 @@
       "sectionDynamicFields": "Trường biểu mẫu động",
       "sectionInquiryModal": "Modal hỏi sản phẩm toàn cục",
       "sectionWhatsapp": "Cài đặt WhatsApp",
+      "whatsappNote": "Số này được dùng cho cả nút WhatsApp ở Header và trong Modal hỏi giá sản phẩm.",
       "lblSuccessTitle": "Tiêu đề thành công",
       "lblSuccessDesc": "Mô tả thành công",
       "lblSendAnotherBtn": "Nút gửi lại",

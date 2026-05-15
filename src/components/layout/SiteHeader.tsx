@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, Menu, X, Phone } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "@tanstack/react-query";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 interface SiteHeaderProps {
@@ -16,6 +17,17 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const router = useRouter();
+
+  const { data: dbData } = useQuery({
+    queryKey: ['headerContactContent'],
+    queryFn: async () => {
+      const res = await fetch('/api/contact-content');
+      if (!res.ok) return null;
+      const json = await res.json();
+      return json.data;
+    },
+    staleTime: 5 * 60 * 1000,
+  });
 
   const navLinks = [
     { label: t("nav.home"), href: "/" },
@@ -128,7 +140,7 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
               <LanguageSwitcher />
 
               <a
-                href="https://wa.me/1234567890"
+                href={`https://wa.me/${dbData?.inquiryModal?.whatsappNumber?.replace(/\+/g, "").replace(/\s+/g, "") || "1234567890"}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hidden lg:flex items-center gap-1.5 font-body text-sm text-white/60 hover:text-white transition-colors px-2 py-1"

@@ -946,6 +946,7 @@
       "sectionDynamicFields": "Dynamic Form Fields",
       "sectionInquiryModal": "Global Product Inquiry Modal",
       "sectionWhatsapp": "WhatsApp Settings",
+      "whatsappNote": "This number is used for both the WhatsApp button in the Header and within the product inquiry Modal.",
       "lblSuccessTitle": "Success Title",
       "lblSuccessDesc": "Success Description",
       "lblSendAnotherBtn": "Send Another Button",

@@ -71,6 +71,13 @@
         "factory": "Xem nhà máy →"
       }
     },
+    "video": {
+      "label": "Chế tác",
+      "title1": "Nghệ thuật",
+      "title2": "Chế tác.",
+      "description": "Mỗi sản phẩm nội thất DHT đều bắt nguồn từ đôi bàn tay khéo léo và quy trình sản xuất chuẩn mực. Xem video để bước vào không gian sáng tạo nơi vật liệu tự nhiên hòa quyện cùng thiết kế đương đại.",
+      "productionLabel": "Sản phẩm / Tháng"
+    },
     "categories": {
       "label": "Bộ sưu tập",
       "heading1": "Nội thất ngoài trời cho",

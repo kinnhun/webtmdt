@@ -6,7 +6,7 @@ import { Media } from "@/models/Media";
 export const config = {
   api: {
     bodyParser: {
-      sizeLimit: "20mb", // Allow up to 20MB for Base64 image payload
+      sizeLimit: "500mb", // Allow large video payloads
     },
   },
 };

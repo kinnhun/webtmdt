@@ -38,6 +38,13 @@
       "description": "Get our latest catalogue, pricing, and product details for your next order.",
       "btn1": "GET FULL CATALOGUE"
     },
+    "video": {
+      "label": "Craftsmanship",
+      "title1": "The Art of",
+      "title2": "Creation.",
+      "description": "Every DHT furniture piece originates from skilled hands and standard manufacturing processes. Watch the video to step into a creative space where natural materials blend with contemporary design.",
+      "productionLabel": "Products / Month"
+    },
     "materials": {
       "linenVelvet": {
         "desc": "Curated upholstery fabrics in timeless palettes"

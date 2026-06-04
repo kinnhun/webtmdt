@@ -71,6 +71,13 @@
         "factory": "View Factory →"
       }
     },
+    "video": {
+      "label": "Craftsmanship",
+      "title1": "The Art of",
+      "title2": "Creation.",
+      "description": "Every DHT furniture piece originates from skilled hands and standard manufacturing processes. Watch the video to step into a creative space where natural materials blend with contemporary design.",
+      "productionLabel": "Products / Month"
+    },
     "categories": {
       "label": "Collections",
       "heading1": "Outdoor Furniture for",

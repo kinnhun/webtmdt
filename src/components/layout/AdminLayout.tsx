@@ -76,6 +76,11 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       label: <Link href="/admin/roles" className="font-body text-sm font-medium">{t('admin.menu.roles', 'Roles')}</Link>,
     } : null,
     hasPermission('system.all') ? {
+      key: '/admin/home',
+      icon: <FileTextOutlined className="text-[1.1rem]" />,
+      label: <Link href="/admin/home" className="font-body text-sm font-medium">Home Page</Link>,
+    } : null,
+    hasPermission('system.all') ? {
       key: '/admin/about',
       icon: <FileTextOutlined className="text-[1.1rem]" />,
       label: <Link href="/admin/about" className="font-body text-sm font-medium">About Page</Link>,
@@ -131,6 +136,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     '/admin/users': ['staff.view', 'staff.manage'],
     '/admin/roles': ['staff.view', 'staff.manage'],
     '/admin/settings': ['setting.manage'],
+    '/admin/home': ['system.all'],
     '/admin/about': ['system.all'],
     '/admin/contact': ['system.all'],
   };
@@ -158,6 +164,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     if (router.pathname.startsWith('/admin/users')) return '/admin/users';
     if (router.pathname.startsWith('/admin/roles')) return '/admin/roles';
     if (router.pathname.startsWith('/admin/settings')) return '/admin/settings';
+    if (router.pathname.startsWith('/admin/home')) return '/admin/home';
     if (router.pathname.startsWith('/admin/about')) return '/admin/about';
     return router.pathname;
   };

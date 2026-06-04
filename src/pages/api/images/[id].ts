@@ -8,7 +8,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method !== "GET") {
+  if (req.method !== "GET" && req.method !== "DELETE") {
     return res.status(405).json({ message: "Method not allowed" });
   }
 
@@ -19,6 +19,16 @@ export default async function handler(
   }
 
   try {
+    if (req.method === "DELETE") {
+      await dbConnect();
+      const result = await Media.findByIdAndDelete(id);
+      if (result) {
+        imageCache.delete(id);
+        return res.status(200).json({ success: true, message: "Media deleted successfully" });
+      }
+      return res.status(404).json({ message: "Media not found" });
+    }
+
     if (imageCache.has(id)) {
       const cached = imageCache.get(id)!;
       res.setHeader("Content-Type", cached.mimeType);

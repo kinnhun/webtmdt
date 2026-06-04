@@ -1,6 +1,7 @@
 import HeroSection from "./components/HeroSection";
 import MarqueeStrip from "@/components/MarqueeStrip";
 import CompanyIntro from "./components/CompanyIntro";
+import FactoryVideoSection from "./components/FactoryVideoSection";
 import CategoryShowcase from "./components/CategoryShowcase";
 import FeaturedProducts from "./components/FeaturedProducts";
 import WhyChooseUs from "./components/WhyChooseUs";
@@ -12,6 +13,7 @@ export default function HomeContainer() {
       <HeroSection />
       <MarqueeStrip />
       <CompanyIntro />
+      <FactoryVideoSection />
       <CategoryShowcase />
       <FeaturedProducts />
       <WhyChooseUs />

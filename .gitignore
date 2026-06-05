@@ -39,3 +39,24 @@ yarn-error.log*
 next-env.d.ts
 
 .env.local
+dist/
+
+build/
+
+*.spec
+
+hf_cache/
+
+node_modules/
+
+.next/
+
+venv/
+
+.venv/
+
+env/
+
+*.log
+
+.env

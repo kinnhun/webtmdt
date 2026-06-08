@@ -11,7 +11,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import {
   Form, Input, Button, Select, Row, Col, message, Upload, Divider,
-  Tabs, Tag, Badge, Tooltip, Modal, Space, ColorPicker
+  Tabs, Tag, Badge, Tooltip, Modal, Space, ColorPicker, Radio
 } from 'antd';
 import {
   ArrowLeftOutlined, UploadOutlined, PlusOutlined, MinusCircleOutlined,
@@ -625,6 +625,9 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
   const queryClient = useQueryClient();
   const [form] = Form.useForm();
   const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [landscapeFileList, setLandscapeFileList] = useState<UploadFile[]>([]);
+  const [landscapeUploadMode, setLandscapeUploadMode] = useState<'crop' | 'original'>('crop');
+  const [uploadChoiceOpen, setUploadChoiceOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('info');
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
@@ -787,7 +790,24 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       initialImages.push({ uid: '-0', name: 'cover.png', status: 'done', url: initialValues.image });
     }
 
-    setFileList(initialImages);
+    const rawLandscapeImages = (initialValues as Product & { landscapeImage?: string; landscapeImages?: string[] })?.landscapeImages;
+    const landscapeImages = Array.isArray(rawLandscapeImages) && rawLandscapeImages.length
+      ? rawLandscapeImages
+      : (initialValues as Product & { landscapeImage?: string })?.landscapeImage
+        ? [(initialValues as Product & { landscapeImage?: string }).landscapeImage as string]
+        : [];
+
+    const initialLandscapeFiles: UploadFile[] = landscapeImages.map((url, i) => ({
+      uid: `-landscape-${i}`,
+      name: `landscape-image-${i + 1}.png`,
+      status: 'done',
+      url,
+    }));
+
+    const savedGalleryFiles = initialImages.length ? initialImages : initialLandscapeFiles;
+
+    setFileList(savedGalleryFiles);
+    setLandscapeFileList(initialLandscapeFiles);
 
     // Normalize collection to array of strings for Select component
     const rawCol = initialValues.collection;
@@ -969,14 +989,176 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
     }
   }, []);
 
-  const handleUploadChange = useCallback(({ fileList: fl }: { fileList: UploadFile[] }) => {
-    setFileList(fl);
+  const handleOriginalUpload = useCallback(async (options: Parameters<NonNullable<import('antd').UploadProps['customRequest']>>[0]) => {
+    const { onSuccess, onError, file, onProgress } = options;
+    const rcFile = file as import('antd/es/upload/interface').RcFile;
+
+    try {
+      const base64Data = await new Promise<string>((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(rcFile as Blob);
+        reader.onload = () => resolve(reader.result as string);
+      });
+
+      if (onProgress) onProgress({ percent: 50 });
+
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          base64Data,
+          mimeType: rcFile.type || 'image/png',
+          filename: `original-${rcFile.name || 'upload.png'}`,
+          size: rcFile.size || 0,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message);
+
+      if (onProgress) onProgress({ percent: 100 });
+      onSuccess && onSuccess({ url: data.url }, new XMLHttpRequest());
+    } catch (error) {
+      console.error('Original upload failed:', error);
+      onError && onError(error as Error);
+    }
   }, []);
+
+  const handleMainUploadChange = useCallback(({ fileList: fl }: { fileList: UploadFile[] }) => {
+    setFileList(fl);
+
+    // Sync with landscapeFileList (remove any landscape files that were deleted from main list)
+    setLandscapeFileList((current) => {
+      if (!current.length) return current;
+      const visibleUids = new Set(fl.map((file) => file.uid));
+      return current.filter((file) => visibleUids.has(file.uid));
+    });
+  }, []);
+
+  const handleCrop43UploadChange = useCallback(({ fileList: fl }: { fileList: UploadFile[] }) => {
+    const mapped = fl.map((file) => {
+      if (file.response?.url && !file.url) {
+        return {
+          ...file,
+          status: 'done' as const,
+          url: file.response.url,
+        };
+      }
+      return file;
+    });
+
+    setFileList((current) => {
+      const mappedMap = new Map(mapped.map(f => [f.uid, f]));
+
+      // Update existing files in current
+      const updatedCurrent = current.map(f => {
+        if (mappedMap.has(f.uid)) {
+          return mappedMap.get(f.uid)!;
+        }
+        return f;
+      });
+
+      // Find brand new files from mapped
+      const currentUids = new Set(current.map(f => f.uid));
+      const brandNewFiles = mapped.filter(f => !currentUids.has(f.uid));
+
+      // Append brand new files to the bottom
+      return [...updatedCurrent, ...brandNewFiles];
+    });
+  }, []);
+
+  const handleCropLandscapeUploadChange = useCallback(({ fileList: fl }: { fileList: UploadFile[] }) => {
+    const mapped = fl.map((file) => {
+      if (file.response?.url && !file.url) {
+        return {
+          ...file,
+          status: 'done' as const,
+          url: file.response.url,
+        };
+      }
+      return file;
+    });
+
+    // Update landscapeFileList state
+    setLandscapeFileList((current) => {
+      const mappedMap = new Map(mapped.map(f => [f.uid, f]));
+      const updatedCurrent = current.map(f => {
+        if (mappedMap.has(f.uid)) {
+          return mappedMap.get(f.uid)!;
+        }
+        return f;
+      });
+      const currentUids = new Set(current.map(f => f.uid));
+      const brandNew = mapped.filter(f => !currentUids.has(f.uid));
+      return [...updatedCurrent, ...brandNew];
+    });
+
+    // Update main fileList state
+    setFileList((current) => {
+      const mappedMap = new Map(mapped.map(f => [f.uid, f]));
+      const updatedCurrent = current.map(f => {
+        if (mappedMap.has(f.uid)) {
+          return mappedMap.get(f.uid)!;
+        }
+        return f;
+      });
+      const currentUids = new Set(current.map(f => f.uid));
+      const brandNew = mapped.filter(f => !currentUids.has(f.uid));
+      return [...updatedCurrent, ...brandNew];
+    });
+  }, []);
+
+  const moveUploadFile = useCallback((list: UploadFile[], fromUid: string, toUid: string) => {
+    const fromIndex = list.findIndex((item) => item.uid === fromUid);
+    const toIndex = list.findIndex((item) => item.uid === toUid);
+    if (fromIndex < 0 || toIndex < 0 || fromIndex === toIndex) return list;
+
+    const next = [...list];
+    const [moved] = next.splice(fromIndex, 1);
+    next.splice(toIndex, 0, moved);
+    return next;
+  }, []);
+
+  const renderDraggableUploadItem = useCallback((
+    originNode: React.ReactNode,
+    file: UploadFile,
+    currentList: UploadFile[],
+    setList: React.Dispatch<React.SetStateAction<UploadFile[]>>,
+  ) => (
+    <div
+      draggable
+      onDragStart={(event) => {
+        event.dataTransfer.setData('text/plain', file.uid);
+        event.dataTransfer.effectAllowed = 'move';
+      }}
+      onDragOver={(event) => {
+        event.preventDefault();
+        event.dataTransfer.dropEffect = 'move';
+      }}
+      onDrop={(event) => {
+        event.preventDefault();
+        const fromUid = event.dataTransfer.getData('text/plain');
+        const nextList = moveUploadFile(currentList, fromUid, file.uid);
+        setList(nextList);
+
+        if (setList === setFileList) {
+          const landscapeUids = new Set(landscapeFileList.map((item) => item.uid));
+          setLandscapeFileList(nextList.filter((item) => landscapeUids.has(item.uid)));
+        }
+      }}
+      className="cursor-grab active:cursor-grabbing"
+      title="Kéo thả để sắp xếp thứ tự"
+    >
+      {originNode}
+    </div>
+  ), [landscapeFileList, moveUploadFile]);
 
   const onFinish = (values: Partial<Product>) => {
     // Prevent double submission
     if (isUpdating || isCreating) return;
+
     const uploadedImages = fileList.map((f) => f.url || f.response?.url || '').filter(Boolean);
+    const uploadedLandscapeImages = landscapeFileList.map((f) => f.url || f.response?.url || '').filter(Boolean);
+    const uploadedLandscapeImage = uploadedLandscapeImages[0] || '';
 
     let finalVideo = values.video || '';
     if (finalVideo) {
@@ -1012,6 +1194,8 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       video: finalVideo,
       image: uploadedImages[0] || values.image || '',
       images: uploadedImages,
+      landscapeImage: uploadedLandscapeImage,
+      landscapeImages: uploadedLandscapeImages,
       // Map to I18nText nested objects
       name: { us: v.name || '', uk: v.nameUK || '', vi: v.nameVI || '' },
       description: { us: v.description || '', uk: v.descriptionUK || '', vi: v.descriptionVI || '' },
@@ -1713,36 +1897,122 @@ export default function ProductForm({ initialValues, isEdit = false }: ProductFo
       ),
       children: (
         <div className="pt-5 space-y-5">
-          <SectionLabel>{t('admin.products.form.productImages')}</SectionLabel>
-          <p className="text-xs text-gray-400 -mt-3 mb-3">First image = cover. Max 10. Drag to reorder.</p>
-          {/* @ts-ignore: antd-img-crop type definitions are incomplete for cropperProps overrides */}
-          <ImgCrop 
-            rotationSlider 
-            aspect={4 / 3} 
-            quality={1} 
-            fillColor="white" 
-            minZoom={0.1} 
-            cropperProps={{ restrictPosition: false } as any}
-            beforeCrop={(file) => {
-              originalFilesMap.current[(file as any).uid] = file;
-              return true;
-            }}
-          >
-            <Upload
-              customRequest={handleCustomUpload}
-              listType="picture-card"
-              fileList={fileList}
-              onChange={handleUploadChange}
-              onPreview={handlePreview}
+          <div className="rounded-2xl border border-orange/15 bg-orange/5 p-4 sm:p-5">
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-6">
+              <div>
+                <SectionLabel>{t('admin.products.form.productImages')}</SectionLabel>
+                <p className="text-xs text-gray-500 mt-1 max-w-2xl">
+                  First image = cover. Max 10. Drag to reorder. Bấm Upload để chọn tải ảnh sản phẩm 4:3 hoặc ảnh ngang đúng kích thước. Ảnh sản phẩm 4:3 và ảnh ngang đều nằm chung trong danh sách này.
+                </p>
+              </div>
+              <Button
+                type="primary"
+                icon={<UploadOutlined />}
+                onClick={() => setUploadChoiceOpen(true)}
+                className="rounded-lg border-none font-semibold shrink-0"
+                style={{ background: 'linear-gradient(135deg, #f97316, #ea580c)' }}
+              >
+                Upload
+              </Button>
+            </div>
+
+            <Modal
+              open={uploadChoiceOpen}
+              title="Chọn loại ảnh cần upload"
+              footer={null}
+              centered
+              onCancel={() => setUploadChoiceOpen(false)}
+              width={520}
             >
-              {fileList.length >= 10 ? null : (
-                <div className="flex flex-col items-center py-1">
-                  <UploadOutlined className="text-gray-400 text-xl mb-1" />
-                  <div className="text-xs text-gray-400">{t('admin.products.form.upload')}</div>
-                </div>
-              )}
-            </Upload>
-          </ImgCrop>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                <label className="block cursor-pointer rounded-xl border border-gray-100 bg-white p-4 hover:border-orange/40 hover:bg-orange/5 transition-all">
+                  <div className="flex items-start gap-3">
+                    <div className="w-9 h-9 rounded-lg bg-gray-100 flex items-center justify-center text-gray-500 shrink-0">
+                      <PictureOutlined />
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-gray-800 mb-1">1. Ảnh sản phẩm như cũ</p>
+                      <p className="text-xs text-gray-500 m-0">Crop 4:3, thêm vào Product Images/gallery.</p>
+                    </div>
+                  </div>
+                  {/* @ts-ignore: antd-img-crop type definitions are incomplete for cropperProps overrides */}
+                  <ImgCrop
+                    rotationSlider
+                    aspect={4 / 3}
+                    quality={1}
+                    fillColor="white"
+                    minZoom={0.1}
+                    cropperProps={{ restrictPosition: false } as any}
+                    beforeCrop={(file) => {
+                      originalFilesMap.current[(file as any).uid] = file;
+                      setUploadChoiceOpen(false);
+                      return true;
+                    }}
+                  >
+                    <Upload
+                      customRequest={handleCustomUpload}
+                      onChange={handleCrop43UploadChange}
+                      showUploadList={false}
+                      multiple
+                      accept="image/*"
+                    >
+                      <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-orange">
+                        <UploadOutlined /> Chọn ảnh 4:3
+                      </div>
+                    </Upload>
+                  </ImgCrop>
+                </label>
+
+                <label className="block cursor-pointer rounded-xl border border-orange/20 bg-orange/5 p-4 hover:border-orange/50 hover:bg-orange/10 transition-all">
+                  <div className="flex items-start gap-3">
+                    <div className="w-9 h-9 rounded-lg bg-orange/10 flex items-center justify-center text-orange shrink-0">
+                      <AppstoreOutlined />
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-gray-800 mb-1">2. Ảnh ngang đúng kích thước</p>
+                      <p className="text-xs text-gray-500 m-0">Crop ngang theo tỉ lệ 512×249, lưu làm ảnh collection/detail.</p>
+                    </div>
+                  </div>
+                  <ImgCrop
+                    rotationSlider
+                    aspect={512 / 249}
+                    quality={1}
+                    fillColor="white"
+                    minZoom={0.1}
+                    cropperProps={{ restrictPosition: false } as any}
+                    beforeCrop={(file) => {
+                      originalFilesMap.current[(file as any).uid] = file;
+                      setUploadChoiceOpen(false);
+                      return true;
+                    }}
+                  >
+                    <Upload
+                      customRequest={handleCustomUpload}
+                      onChange={handleCropLandscapeUploadChange}
+                      showUploadList={false}
+                      multiple
+                      accept="image/*"
+                    >
+                      <div className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-orange">
+                        <UploadOutlined /> Chọn ảnh ngang
+                      </div>
+                    </Upload>
+                  </ImgCrop>
+                </label>
+              </div>
+            </Modal>
+
+            <div className="mt-4">
+              <Upload
+                listType="picture-card"
+                fileList={fileList}
+                onChange={handleMainUploadChange}
+                onPreview={handlePreview}
+                itemRender={(originNode, file) => renderDraggableUploadItem(originNode, file, fileList, setFileList)}
+              />
+            </div>
+          </div>
+
           <Divider />
           <Form.Item name="video" label={t('admin.products.form.videoUrl')} help="Nhập link YouTube / Vimeo (có thể là link thường hoặc embed)">
             <Input placeholder="https://youtube.com/watch?v=..." className="rounded-lg border-gray-200" />

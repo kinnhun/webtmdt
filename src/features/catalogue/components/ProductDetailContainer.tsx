@@ -24,7 +24,12 @@ const renderAntIcon = (name: string, size = 16) => {
 };
 
 /* ── Image Gallery ── */
-function ImageGallery({ images, name }: { images: string[]; name: string }) {
+function ImageGallery({ images, name, landscapeImage, landscapeImages }: { images: string[]; name: string; landscapeImage?: string; landscapeImages?: string[] }) {
+  const landscapeList = landscapeImages?.length ? landscapeImages : (landscapeImage ? [landscapeImage] : []);
+  const imageList = Array.isArray(images) ? images.filter(Boolean) : [];
+  const galleryImages = imageList.length
+    ? [...imageList, ...landscapeList.filter((img) => img && !imageList.includes(img))]
+    : landscapeList;
   const [active, setActive] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const getThumbnailUrl = (url: string) => url?.split('?')[0] || '';
@@ -47,19 +52,19 @@ function ImageGallery({ images, name }: { images: string[]; name: string }) {
               transition={{ duration: 0.3 }}
               className="absolute inset-0"
             >
-              <Image src={getThumbnailUrl(images[active])} alt={name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 55vw" priority />
+              <Image src={getThumbnailUrl(galleryImages[active])} alt={name} fill className="object-contain p-2 md:p-3" sizes="(max-width: 768px) 100vw, 55vw" priority />
             </motion.div>
           </AnimatePresence>
-          {images.length > 1 && (
+          {galleryImages.length > 1 && (
             <>
               <button 
-                onClick={(e) => { e.stopPropagation(); setActive((active - 1 + images.length) % images.length); }} 
+                onClick={(e) => { e.stopPropagation(); setActive((active - 1 + galleryImages.length) % galleryImages.length); }} 
                 className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full flex items-center justify-center bg-white/80 hover:bg-white shadow transition-all z-10 opacity-0 group-hover:opacity-100"
               >
                 <ChevronLeft size={18} />
               </button>
               <button 
-                onClick={(e) => { e.stopPropagation(); setActive((active + 1) % images.length); }} 
+                onClick={(e) => { e.stopPropagation(); setActive((active + 1) % galleryImages.length); }} 
                 className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full flex items-center justify-center bg-white/80 hover:bg-white shadow transition-all z-10 opacity-0 group-hover:opacity-100"
               >
                 <ChevronRight size={18} />
@@ -68,11 +73,11 @@ function ImageGallery({ images, name }: { images: string[]; name: string }) {
           )}
         </div>
         {/* Thumbnails */}
-        {images.length > 1 && (
+        {galleryImages.length > 1 && (
           <div className="flex gap-2 overflow-x-auto pb-2 snap-x scroll-smooth w-full [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-            {images.map((img, i) => (
-              <button key={i} onClick={() => setActive(i)} className="relative w-20 h-16 rounded-md overflow-hidden border-2 transition-all shrink-0 snap-start" style={{ borderColor: i === active ? "hsl(var(--orange))" : "transparent", opacity: i === active ? 1 : 0.55 }}>
-                <Image src={getThumbnailUrl(img)} alt={`${name} ${i + 1}`} fill className="object-cover" sizes="80px" />
+            {galleryImages.map((img, i) => (
+              <button key={i} onClick={() => setActive(i)} className="relative w-20 h-16 rounded-md overflow-hidden border-2 transition-all shrink-0 snap-start bg-white" style={{ borderColor: i === active ? "hsl(var(--orange))" : "transparent", opacity: i === active ? 1 : 0.55 }}>
+                <Image src={getThumbnailUrl(img)} alt={`${name} ${i + 1}`} fill className="object-contain p-1" sizes="80px" />
               </button>
             ))}
           </div>
@@ -110,7 +115,7 @@ function ImageGallery({ images, name }: { images: string[]; name: string }) {
             >
               <Image 
                 src={(() => {
-                  const src = images[active];
+                  const src = galleryImages[active];
                   if (!src) return '';
                   try {
                     const urlObj = new URL(src, window.location.origin);
@@ -127,16 +132,16 @@ function ImageGallery({ images, name }: { images: string[]; name: string }) {
               />
             </motion.div>
 
-            {images.length > 1 && (
+            {galleryImages.length > 1 && (
               <>
                 <button 
-                  onClick={(e) => { e.stopPropagation(); setActive((active - 1 + images.length) % images.length); }} 
+                  onClick={(e) => { e.stopPropagation(); setActive((active - 1 + galleryImages.length) % galleryImages.length); }} 
                   className="absolute left-4 md:left-10 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/25 text-white transition-all z-[10000]"
                 >
                   <ChevronLeft size={28} />
                 </button>
                 <button 
-                  onClick={(e) => { e.stopPropagation(); setActive((active + 1) % images.length); }} 
+                  onClick={(e) => { e.stopPropagation(); setActive((active + 1) % galleryImages.length); }} 
                   className="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/25 text-white transition-all z-[10000]"
                 >
                   <ChevronRight size={28} />
@@ -334,7 +339,7 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
         <div className="grid md:grid-cols-2 gap-8 lg:gap-14">
           {/* Left — Gallery */}
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} className="min-w-0 w-full">
-            <ImageGallery images={product.images} name={pName} />
+            <ImageGallery images={product.images} landscapeImage={product.landscapeImage} landscapeImages={product.landscapeImages} name={pName} />
           </motion.div>
 
           {/* Right — Info */}

@@ -27,6 +27,8 @@ export interface IProduct extends Omit<Document, 'collection'> {
   moq?: string;
   image: string;
   images: string[];
+  landscapeImage?: string;
+  landscapeImages?: string[];
   description: I18nText;
   features: I18nList;
   room: I18nText;
@@ -84,6 +86,8 @@ const ProductSchema = new Schema<IProduct>(
     moq: { type: String },
     image: { type: String, required: true },
     images: { type: [String], index: true },
+    landscapeImage: { type: String },
+    landscapeImages: { type: [String], default: [] },
     description: I18nTextSchema,
     features: I18nListSchema,
     room: I18nTextSchema,

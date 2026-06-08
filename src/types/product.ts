@@ -47,6 +47,8 @@ export interface Product {
   moq?: string;
   image: string;
   images: string[];
+  landscapeImage?: string;
+  landscapeImages?: string[];
   description: I18nText;
   features: I18nList;
   room: I18nText;

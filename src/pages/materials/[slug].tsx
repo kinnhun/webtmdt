@@ -145,15 +145,28 @@ function MaterialPage({ article }: { article: MaterialArticle }) {
   );
 }
 
+const MATERIAL_LOCALES = ["en-US", "en-GB", "vi-VN"] as const;
+
 export async function getStaticPaths() {
   return {
-    paths: materialArticles.map((article) => ({ params: { slug: article.slug } })),
+    paths: MATERIAL_LOCALES.flatMap((locale) =>
+      materialArticles.map((article) => ({
+        params: { slug: article.slug },
+        locale,
+      })),
+    ),
     fallback: false,
   };
 }
 
 export async function getStaticProps({ params }: { params: { slug: string } }) {
   const article = getMaterialArticle(params.slug);
+
+  if (!article) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {

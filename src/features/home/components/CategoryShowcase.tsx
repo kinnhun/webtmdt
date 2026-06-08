@@ -13,12 +13,12 @@ export default function CategoryShowcase() {
   const categories = [
     {
       key: "outdoorSofa",
-      image: "/img/category/outdoorsofas.png",
+      image: "/img/category/outdoorsofas1.png",
       href: "/catalogue/outdoor?category=Outdoor+Sofas",
     },
     {
       key: "outdoorDining",
-      image: "/img/category/diningset.png",
+      image: "/img/category/diningset1.png",
       href: "/catalogue/outdoor?category=Dining+Sets",
     },
     {
@@ -28,7 +28,7 @@ export default function CategoryShowcase() {
     },
     {
       key: "aluminium",
-      image: "/img/category/aluminum.png",
+      image: "/img/category/aluminum1.png",
       href: "/catalogue/outdoor?category=Tables",
     }
   ];
@@ -62,8 +62,8 @@ export default function CategoryShowcase() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
           {categories.map((cat, i) => (
             <motion.div key={cat.key} {...fItem(i)}>
-              <Link href={cat.href} className="group block relative overflow-hidden rounded-sm aspect-3/4">
-                <img src={cat.image} alt={t(`home.categories.${cat.key}.name`)} className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.06] transition-transform duration-700 ease-out" loading="lazy" />
+              <Link href={cat.href} className="group block relative overflow-hidden rounded-sm aspect-[2/1]">
+                <img src={cat.image} alt={t(`home.categories.${cat.key}.name`)} className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-[1.035] transition-transform duration-700 ease-out" loading="lazy" />
                 <div className="absolute inset-0" style={{ background: "linear-gradient(to top, hsl(var(--navy-deep)/0.85) 0%, hsl(var(--navy-deep)/0.1) 50%, transparent 100%)" }} />
                 <div className="absolute inset-x-0 bottom-0 p-4">
                   <div className="flex items-end justify-between gap-2">

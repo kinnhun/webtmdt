@@ -146,15 +146,8 @@ function MaterialPage({ article }: { article: MaterialArticle }) {
 }
 
 export async function getStaticPaths() {
-  const locales = ["en-US", "en-GB", "vi-VN"];
-
   return {
-    paths: materialArticles.flatMap((article) =>
-      locales.map((locale) => ({
-        params: { slug: article.slug },
-        locale,
-      }))
-    ),
+    paths: materialArticles.map((article) => ({ params: { slug: article.slug } })),
     fallback: false,
   };
 }

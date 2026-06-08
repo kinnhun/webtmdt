@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { Facebook, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react";
+import { Facebook, Linkedin, Mail, Phone, MapPin } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { fadeUp, stagger } from "@/lib/animations";import { useQuery } from "@tanstack/react-query";
 
@@ -133,13 +133,15 @@ export default function SiteFooter() {
             </p>
             <div className="flex gap-3 lg:justify-center">
               {[
-                { Icon: Instagram, href: "#" },
-                { Icon: Facebook, href: "#" },
-                { Icon: Linkedin, href: "#" },
-              ].map(({ Icon, href }, i) => (
+                { Icon: Facebook, href: "https://www.facebook.com/share/18u8Hk2SxD/?mibextid=wwXIfr", label: "Facebook" },
+                { Icon: Linkedin, href: "https://www.linkedin.com/company/dhtfurniturevietnam/posts/?feedView=all", label: "LinkedIn" },
+              ].map(({ Icon, href, label }) => (
                 <motion.a
-                  key={i}
+                  key={label}
                   href={href}
+                  aria-label={label}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                   className="w-9 h-9 rounded border border-white/20 flex items-center justify-center text-white/50 hover:text-white hover:border-white/50 transition-colors duration-200"

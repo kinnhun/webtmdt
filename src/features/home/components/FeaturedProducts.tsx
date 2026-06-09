@@ -39,9 +39,9 @@ function EditorialProductCard({ product, index, onQuickView }: { product: Produc
 
   return (
     <motion.div layout initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 16, scale: 0.97 }} transition={{ duration: 0.55, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }} className="group cursor-pointer">
-      <div className="relative overflow-hidden rounded-sm aspect-3/4 mb-4 shadow-md group-hover:shadow-xl transition-shadow duration-500" style={{ backgroundColor: "hsl(var(--warm-beige))" }}>
+      <div className="relative overflow-hidden rounded-sm aspect-[4/3] mb-4 shadow-md group-hover:shadow-xl transition-shadow duration-500" style={{ backgroundColor: "hsl(var(--warm-beige))" }}>
         <Link href={productDetailHref} className="absolute inset-0 z-0 bg-transparent" />
-        <img src={product.image} alt={pName} className="w-full h-full object-cover group-hover:scale-[1.07] transition-transform duration-700 ease-out pointer-events-none" loading="lazy" />
+        <img src={product.image} alt={pName} className="w-full h-full object-contain p-3 group-hover:scale-[1.07] transition-transform duration-700 ease-out pointer-events-none" loading="lazy" />
         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none" />
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-2.5 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
           <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); onQuickView(product); }} className="pointer-events-auto flex items-center justify-center min-w-[140px] gap-2 px-5 py-2.5 rounded-sm font-body font-semibold text-sm text-white shadow-lg translate-y-3 group-hover:translate-y-0 transition-all duration-350 hover:brightness-110 cursor-pointer" style={{ backgroundColor: "hsl(var(--orange))" }}>

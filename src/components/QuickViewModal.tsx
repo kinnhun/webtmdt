@@ -41,8 +41,8 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
                 <X size={20} />
               </button>
               <div className="grid grid-cols-1 md:grid-cols-2">
-                <div className="relative bg-beige min-h-72 md:h-full">
-                  <Image src={product.images[activeImage] || "/placeholder.jpg"} alt={pName} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-cover" />
+                <div className="relative min-h-72 md:h-full" style={{ backgroundColor: "hsl(var(--warm-beige))" }}>
+                  <Image src={product.images[activeImage] || "/placeholder.jpg"} alt={pName} fill sizes="(max-width: 768px) 100vw, 50vw" className="object-contain p-4" />
                   {product.images.length > 1 && (
                     <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2">
                       {product.images.map((_, i) => (

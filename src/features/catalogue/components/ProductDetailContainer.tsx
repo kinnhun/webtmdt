@@ -527,8 +527,8 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
               {relatedProducts.map((p, idx) => (
                 <Link key={p.id || p.code || `related-${idx}`} href={`/catalogue/${p.slug}`} className="group block">
                   <div className="rounded-lg overflow-hidden border border-black/5 transition-all duration-300 group-hover:shadow-lg group-hover:-translate-y-1" style={{ backgroundColor: "#fff" }}>
-                    <div className="relative aspect-4/3 overflow-hidden">
-                      <Image src={p.image} alt={p.name?.[langId] || p.name?.us || ""} fill className="object-cover transition-transform duration-500 group-hover:scale-105" sizes="(max-width: 768px) 50vw, 25vw" />
+                    <div className="relative aspect-[4/3] overflow-hidden" style={{ backgroundColor: "hsl(var(--warm-beige))" }}>
+                      <Image src={p.image} alt={p.name?.[langId] || p.name?.us || ""} fill className="object-contain p-3 transition-transform duration-500 group-hover:scale-105" sizes="(max-width: 768px) 50vw, 25vw" />
                     </div>
                     <div className="p-3 md:p-4">
                       <p className="font-body text-[10px] uppercase tracking-wider mb-1" style={{ color: "hsl(var(--navy)/0.4)" }}>{p.code}</p>

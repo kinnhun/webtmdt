@@ -28,11 +28,11 @@ export default function ProductCard({ product, onQuickView, index = 0 }: Product
       transition={{ duration: 0.5, delay: index * 0.07 }}
       className="group bg-white rounded-lg overflow-hidden border border-border hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
     >
-      <div className="relative overflow-hidden bg-beige aspect-4/3">
+      <div className="relative overflow-hidden aspect-[4/3]" style={{ backgroundColor: "hsl(var(--warm-beige))" }}>
         {product.image ? (
-          <Image src={product.image} alt={pName} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+          <Image src={product.image} alt={pName} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-contain p-3 group-hover:scale-105 transition-transform duration-500" loading="lazy" />
         ) : (
-          <div className="w-full h-full bg-gray-200" />
+          <div className="w-full h-full bg-gray-100" />
         )}
         <div className="hidden sm:flex absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center gap-2">
           <button

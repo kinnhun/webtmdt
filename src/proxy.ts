@@ -58,6 +58,7 @@ export async function proxy(request: NextRequest) {
   };
 
   // Block traffic from Vietnam (VN)
+  /*
   if (country && country === 'VN') {
     // If it's an API route, return JSON so it doesn't break fetch requests
     if (pathname.startsWith('/api/')) {
@@ -78,6 +79,7 @@ export async function proxy(request: NextRequest) {
       }
     ));
   }
+  */
 
   const token = request.cookies.get('admin_token')?.value;
 

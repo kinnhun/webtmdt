@@ -74,13 +74,21 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
             style={{ minHeight: scrolled ? "64px" : "80px" }}
           >
             {/* LOGO */}
-            <Link href="/" className="flex items-center flex-shrink-0 group py-1">
+            <Link href="/" className="flex items-center gap-2.5 sm:gap-3.5 flex-shrink-0 group py-1">
               <Image
                 src="/img/logo.png"
-                alt="DHT Furniture Vietnam"
-                width={120}
-                height={50}
-                className="h-10 sm:h-12 w-auto object-contain transition-all duration-200 group-hover:scale-105"
+                alt="DHT Logo"
+                width={48}
+                height={48}
+                className="h-9 sm:h-11 w-auto object-contain transition-all duration-200 group-hover:scale-105"
+                priority
+              />
+              <Image
+                src="/img/text.png"
+                alt="DHT Furniture"
+                width={150}
+                height={42}
+                className="h-6 sm:h-7.5 w-auto object-contain transition-all duration-200"
                 priority
               />
             </Link>

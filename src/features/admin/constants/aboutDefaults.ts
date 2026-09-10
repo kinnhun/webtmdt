@@ -1,40 +1,40 @@
 export const aboutDefaults = {
   hero: {
     title: {
-      us: "Vietnam Outdoor Furniture Manufacturer",
-      uk: "Vietnam Outdoor Furniture Manufacturer",
-      vi: "Nhà Sản Xuất Nội Thất Ngoài Trời Việt Nam",
+      us: "About DHT Furniture Vietnam",
+      uk: "About DHT Furniture Vietnam",
+      vi: "Giới Thiệu DHT Furniture Việt Nam",
     },
     subtitle: {
-      us: "Acacia • Teak • Eucalyptus • Aluminum OEM / ODM • Mixed Container • Export Worldwide",
-      uk: "Acacia • Teak • Eucalyptus • Aluminum OEM / ODM • Mixed Container • Export Worldwide",
-      vi: "Tràm • Giá Tỵ • Bạch Đàn • Nhôm OEM / ODM • Ghép Container • Xuất Khẩu Toàn Cầu",
+      us: "Vietnamese Furniture Manufacturing & Export",
+      uk: "Vietnamese Furniture Manufacturing & Export",
+      vi: "Sản Xuất & Xuất Khẩu Nội Thất Việt Nam",
     },
     description: {
-      us: "DHT is a Vietnam-based outdoor furniture supplier supporting retailers, distributors, and project buyers. We deliver stable quality, flexible production, and reliable export solutions for global partners.",
-      uk: "DHT is a Vietnam-based outdoor furniture supplier supporting retailers, distributors, and project buyers. We deliver stable quality, flexible production, and reliable export solutions for global partners.",
-      vi: "DHT là nhà cung cấp nội thất ngoài trời tại Việt Nam, hỗ trợ các nhà bán lẻ, nhà phân phối và nhà mua hàng dự án. Chúng tôi mang đến chất lượng ổn định, sản xuất linh hoạt và giải pháp xuất khẩu đáng tin cậy.",
+      us: "DHT is a Vietnamese furniture manufacturer and exporter with a family group footprint of 11 facilities and 543,380 m² across Vietnam. We specialise in high-quality outdoor furniture in certified timber, architectural aluminium, and mixed materials, alongside commercial indoor furniture and bespoke project fit-outs for international retail chains, distributors, and contract projects worldwide.",
+      uk: "DHT is a Vietnamese furniture manufacturer and exporter with a family group footprint of 11 facilities and 543,380 m² across Vietnam. We specialise in high-quality outdoor furniture in certified timber, architectural aluminium, and mixed materials, alongside commercial indoor furniture and bespoke project fit-outs for international retail chains, distributors, and contract projects worldwide.",
+      vi: "DHT là nhà sản xuất và xuất khẩu nội thất Việt Nam với mạng lưới tập đoàn 11 cơ sở và 543.380 m² trên toàn quốc. Chúng tôi chuyên sâu về nội thất ngoài trời cao cấp từ gỗ có chứng nhận, nhôm định hình và vật liệu phối hợp, cùng với nội thất trong nhà thương mại và dự án may đo cho các chuỗi bán lẻ quốc tế, nhà phân phối và dự án hợp đồng toàn cầu.",
     },
     backgroundImages: ["/img/about/image.png"],
   },
   marquee: {
     us: [
-      "11 Production Facilities",
-      "543,380 m² Manufacturing Footprint",
-      "~2,400 Group Personnel",
-      "4 Production Clusters"
+      "OEM Development",
+      "Wood & Mixed Materials",
+      "Quality Control",
+      "Export Coordination"
     ],
     uk: [
-      "11 Production Facilities",
-      "543,380 m² Manufacturing Footprint",
-      "~2,400 Group Personnel",
-      "4 Production Clusters"
+      "OEM Development",
+      "Wood & Mixed Materials",
+      "Quality Control",
+      "Export Coordination"
     ],
     vi: [
-      "11 Cơ Sở Sản Xuất Toàn Quốc",
-      "543.380 m² Mặt Bằng Sản Xuất",
-      "~2.400 Nhân Sự Toàn Tập Đoàn",
-      "4 Cụm Sản Xuất Trọng Điểm"
+      "Phát Triển OEM",
+      "Gỗ & Vật Liệu Phối Hợp",
+      "Kiểm Soát Chất Lượng",
+      "Điều Phối Xuất Khẩu"
     ],
   },
   welcome: {
@@ -67,9 +67,9 @@ export const aboutDefaults = {
     label: { us: "Our Story", uk: "Our Story", vi: "Câu Chuyện Của Chúng Tôi" },
     heading: { us: "From OEM to Global Brand", uk: "From OEM to Global Brand", vi: "Từ OEM Đến Thương Hiệu Toàn Cầu" },
     content: {
-      us: "<p>DHT started as an OEM manufacturer. As the market shifted, we decided to take control of our own export journey.</p><p>It was a challenging process: restructuring production, investing in technology, training our team, and learning to serve global customers.</p><p>Thanks to perseverance and over 30 years of experience, DHT now exports to more than 20 countries – from the US and Australia to across Europe. <em>\"We don't just sell wood – we deliver a story of Vietnamese resilience.\"</em></p>",
-      uk: "<p>DHT started as an OEM manufacturer. As the market shifted, we decided to take control of our own export journey.</p><p>It was a challenging process: restructuring production, investing in technology, training our team, and learning to serve global customers.</p><p>Thanks to perseverance and over 30 years of experience, DHT now exports to more than 20 countries – from the US and Australia to across Europe. <em>\"We don't just sell wood – we deliver a story of Vietnamese resilience.\"</em></p>",
-      vi: "<p>DHT khởi nguyên từ một nhà máy sản xuất gia công. Đứng trước sự thay đổi của thị trường, chúng tôi quyết định làm chủ hành trình xuất khẩu của chính mình.</p><p>Đó là một quá trình vô cùng thử thách: từ việc cơ cấu lại hệ thống sản xuất, đầu tư vào máy móc công nghệ, đào tạo đội ngũ nhân lực, đến việc học hỏi cách làm việc với các đối tác lớn trên toàn thế giới.</p><p>Nhờ vào nỗ lực không ngừng nghỉ cùng bề dày kinh nghiệm làm mộc, nội thất ngoài trời DHT hiện đã có mặt tại hơn 20 quốc gia. <em>\"Chúng tôi không bán một món đồ gỗ vô tri, chúng tôi muốn kể câu chuyện về năng lực và sự kiên trì của người Việt\".</em></p>",
+      us: "<p>DHT originated within a family furniture manufacturing tradition in Vietnam. Over decades of industrial craftsmanship, our network expanded across 11 specialised facilities and 543,380 m².</p><p>Today, DHT operates as the central commercial, international coordination, and export gateway, bridging world-class Vietnamese production capabilities with leading international retailers, commercial specifiers, and project contractors worldwide.</p>",
+      uk: "<p>DHT originated within a family furniture manufacturing tradition in Vietnam. Over decades of industrial craftsmanship, our network expanded across 11 specialised facilities and 543,380 m².</p><p>Today, DHT operates as the central commercial, international coordination, and export gateway, bridging world-class Vietnamese production capabilities with leading international retailers, commercial specifiers, and project contractors worldwide.</p>",
+      vi: "<p>DHT bắt nguồn từ truyền thống sản xuất nội thất gia đình tại Việt Nam. Qua nhiều thập kỷ phát triển, mạng lưới của chúng tôi mở rộng quy mô với 11 cơ sở chuyên môn hóa và 543.380 m² mặt bằng sản xuất.</p><p>Ngày nay, DHT đóng vai trò là đầu mối điều phối thương mại và xuất khẩu quốc tế, kết nối năng lực sản xuất chuẩn mực của Việt Nam với các chuỗi bán lẻ, nhà thiết kế và nhà thầu dự án lớn trên toàn cầu.</p>",
     },
     images: ["/img/readyToWork/1.png", "/img/readyToWork/2.png", "/img/readyToWork/3.png"],
   },
@@ -79,28 +79,28 @@ export const aboutDefaults = {
     items: [
       {
         icon: "Shield",
-        title: { us: "Quality", uk: "Quality", vi: "Chất Lượng" },
-        desc: { us: "Strict control from raw material to finished product.", uk: "Strict control from raw material to finished product.", vi: "Kiểm soát nghiêm ngặt từ nguồn nguyên liệu đến thành phẩm cuối cùng." },
-      },
-      {
-        icon: "Eye",
-        title: { us: "Transparency", uk: "Transparency", vi: "Minh Bạch" },
-        desc: { us: "Clear pricing policy, transparent progress reporting.", uk: "Clear pricing policy, transparent progress reporting.", vi: "Chính sách giá rõ ràng, liên tục cập nhật tiến trình sản xuất." },
-      },
-      {
-        icon: "Zap",
-        title: { us: "Creativity", uk: "Creativity", vi: "Sáng Tạo" },
-        desc: { us: "Constantly developing new models.", uk: "Constantly developing new models.", vi: "Không ngừng nghiên cứu và phát triển nhiều mẫu mã mới." },
+        title: { us: "Uncompromising Quality", uk: "Uncompromising Quality", vi: "Kiểm Soát Chất Lượng Tuyệt Đối" },
+        desc: { us: "Multi-gate quality control from timber seasoning through final pre-shipment inspection.", uk: "Multi-gate quality control from timber seasoning through final pre-shipment inspection.", vi: "Quy trình kiểm soát chất lượng đa tầng từ xử lý nguyên liệu gỗ đến kiểm định thành phẩm trước khi xuất xưởng." },
       },
       {
         icon: "Leaf",
-        title: { us: "Sustainability", uk: "Sustainability", vi: "Bền Vững" },
-        desc: { us: "Using FSC-certified wood.", uk: "Using FSC-certified wood.", vi: "Cam kết sử dụng gỗ đạt chứng nhận tiêu chuẩn FSC." },
+        title: { us: "Certified Sustainability", uk: "Certified Sustainability", vi: "Bền Vững Có Chứng Nhận" },
+        desc: { us: "Responsible sourcing with FSC Chain of Custody certification and environmental management systems.", uk: "Responsible sourcing with FSC Chain of Custody certification and environmental management systems.", vi: "Nguồn nguyên liệu minh bạch đạt chuẩn FSC CoC cùng hệ thống quản lý môi trường đạt chuẩn quốc tế." },
+      },
+      {
+        icon: "Eye",
+        title: { us: "Transparent Execution", uk: "Transparent Execution", vi: "Thực Thi Minh Bạch" },
+        desc: { us: "Open communication, honest timelines, and real-time production tracking for buyer peace of mind.", uk: "Open communication, honest timelines, and real-time production tracking for buyer peace of mind.", vi: "Giao tiếp cởi mở, tiến độ chuẩn xác và báo cáo cập nhật sản xuất trực tiếp giúp khách hàng an tâm tuyệt đối." },
+      },
+      {
+        icon: "Zap",
+        title: { us: "Adaptive Engineering", uk: "Adaptive Engineering", vi: "Kỹ Thuật May Đo Linh Hoạt" },
+        desc: { us: "Bespoke OEM/ODM engineering adapting to client technical drawings, packaging, and commercial targets.", uk: "Bespoke OEM/ODM engineering adapting to client technical drawings, packaging, and commercial targets.", vi: "Năng lực R&D và thiết kế OEM/ODM linh hoạt đáp ứng chính xác bản vẽ, quy cách đóng gói và bài toán chi phí." },
       },
       {
         icon: "Heart",
-        title: { us: "Dedication", uk: "Dedication", vi: "Tận Tâm" },
-        desc: { us: "Long-term partnership and support for customers.", uk: "Long-term partnership and support for customers.", vi: "Đối tác tin cậy, hỗ trợ và đồng hành lâu dài cùng khách hàng." },
+        title: { us: "Partnership Commitment", uk: "Partnership Commitment", vi: "Cam Kết Đồng Hành Dài Hạn" },
+        desc: { us: "Long-term collaboration built on commercial integrity, repeat reliability, and shared success.", uk: "Long-term collaboration built on commercial integrity, repeat reliability, and shared success.", vi: "Quan hệ hợp tác bền chặt xây dựng trên sự chính trực thương mại, uy tín lặp lại và cùng nhau phát triển." },
       },
     ],
   },

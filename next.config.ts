@@ -21,6 +21,21 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/catalogue/amalfi",
+        destination: "/catalogue/amalfi-lounge-collection",
+        permanent: true,
+      },
+      {
+        source: "/collections/amalfi",
+        destination: "/catalogue/amalfi-lounge-collection",
+        permanent: true,
+      },
+      {
+        source: "/collections/:slug",
+        destination: "/catalogue/:slug",
+        permanent: true,
+      },
+      {
         source: "/catalogue/bondi-lougne-collection",
         destination: "/catalogue/bondi-lounge-collection",
         permanent: true,

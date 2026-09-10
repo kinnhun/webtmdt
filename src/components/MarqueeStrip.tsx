@@ -8,13 +8,36 @@ interface MarqueeStripProps {
   items?: string[];
 }
 
+const DEFAULT_MARQUEE_EN = [
+  "OEM Development",
+  "Wood & Mixed Materials",
+  "Quality Control",
+  "Export Coordination",
+];
+
+const DEFAULT_MARQUEE_VI = [
+  "Phát Triển OEM",
+  "Gỗ & Vật Liệu Phối Hợp",
+  "Kiểm Soát Chất Lượng",
+  "Điều Phối Xuất Khẩu",
+];
+
 export default function MarqueeStrip({ items: customItems }: MarqueeStripProps) {
-  const { t } = useTranslation();
-  const items = customItems ?? (t("marquee.items", { returnObjects: true }) as string[]);
+  const { t, i18n } = useTranslation();
+  
+  let items = customItems;
+  if (!items || !Array.isArray(items) || items.length === 0) {
+    const translated = t("marquee.items", { returnObjects: true });
+    if (Array.isArray(translated) && translated.length > 0) {
+      items = translated as string[];
+    } else {
+      items = i18n.language?.startsWith("vi") ? DEFAULT_MARQUEE_VI : DEFAULT_MARQUEE_EN;
+    }
+  }
 
   const content = items.flatMap((item, i) => [
     <span key={`item-${i}`} className="inline-block whitespace-nowrap font-body font-medium text-sm tracking-widest uppercase">{item}</span>,
-    <span key={`dot-${i}`} className="inline-block" aria-hidden>{separatorDot}</span>,
+    <span key={`dot-${i}`} className="inline-block" aria-hidden="true">{separatorDot}</span>,
   ]);
 
   // Duplicate content 8 times to ensure it's wide enough for 4K+ screens
@@ -34,7 +57,7 @@ export default function MarqueeStrip({ items: customItems }: MarqueeStripProps) 
     >
       <div className="flex w-max animate-marquee hover:[animation-play-state:paused]">
         <span className="flex items-center shrink-0" style={{ color: "rgba(247, 245, 240, 0.88)" }}>{repeatedContent}</span>
-        <span className="flex items-center shrink-0" style={{ color: "rgba(247, 245, 240, 0.88)" }} aria-hidden>{repeatedContent}</span>
+        <span className="flex items-center shrink-0" style={{ color: "rgba(247, 245, 240, 0.88)" }} aria-hidden="true">{repeatedContent}</span>
       </div>
     </div>
   );

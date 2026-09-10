@@ -72,13 +72,20 @@ export default function ContactPage() {
   const [categories, setCategories] = useState<{key: string, label: string}[]>([]);
 
   useEffect(() => {
-    const { product, code } = router.query;
+    const { product, code, inquiryType } = router.query;
     if (product) {
       setForm((prev) => ({
         ...prev,
         subject: t("contact.form.inquirySubject", { product, code: code ? ` (${code})` : "" }),
         message: t("contact.form.inquiryMessage", { product, code: code ? ` (Code: ${code})` : "" }),
         interestedProduct: `${product}${code ? ` - ${code}` : ""}`,
+      }));
+    } else if (inquiryType) {
+      const typeStr = Array.isArray(inquiryType) ? inquiryType[0] : inquiryType;
+      setForm((prev) => ({
+        ...prev,
+        subject: `OEM / B2B Inquiry: ${typeStr}`,
+        message: `Hello DHT Furniture team, we would like to discuss our OEM development requirements...`,
       }));
     }
   }, [router.query, t]);

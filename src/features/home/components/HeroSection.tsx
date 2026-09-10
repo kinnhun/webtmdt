@@ -91,10 +91,10 @@ export default function HeroSection() {
           </a>
 
           <Link
-            href="/contact"
+            href="/contact?inquiryType=OEM+Development"
             className="inline-flex items-center gap-2 px-6 py-3.5 rounded font-body font-semibold text-sm text-white/80 hover:text-white hover:underline transition-all duration-300"
           >
-            {t("home.hero.getQuote")}
+            {t("home.hero.discussOem", "Discuss Your OEM Project")}
           </Link>
         </motion.div>
       </div>

@@ -25,7 +25,7 @@ export default function MaterialsSection() {
             <motion.p initial={{ opacity: 0, y: 16, filter: "blur(4px)" }} animate={inView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}} transition={{ duration: 0.65, delay: 0.25, ease: [0.16, 1, 0.3, 1] }} className="font-body text-sm sm:text-base text-white/55 leading-relaxed">{t("home.materials.description")}</motion.p>
           </div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
             {materialArticles.map((mat, i) => (
               <motion.div key={mat.key} {...cardReveal(i)}>
                 <Link href={`/materials/${mat.slug}`} className="group relative block overflow-hidden rounded-xl aspect-[3/4] cursor-pointer bg-white/[0.04] border border-white/10 shadow-2xl shadow-black/20 text-left">

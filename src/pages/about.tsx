@@ -176,64 +176,78 @@ export default function AboutPage() {
   }, [heroImages.length]);
 
   /* ── Values ── */
-  const values = dbData?.values?.items?.map((v: any) => ({
+  const rawValues = (dbData?.values?.items && dbData.values.items.length > 0)
+    ? dbData.values.items
+    : (aboutDefaults.values?.items || []);
+  const values = rawValues.map((v: any) => ({
     icon: ICON_MAP[v.icon] || Award,
     title: txt(v.title, langKey)?.trim() || '',
     desc: txt(v.desc, langKey)?.trim() || '',
-  })) || [];
+  }));
 
   /* ── Timeline ── */
-  const timeline = dbData?.timeline?.items?.map((item: any) => ({
+  const rawTimeline = (dbData?.timeline?.items && dbData.timeline.items.length > 0)
+    ? dbData.timeline.items
+    : (aboutDefaults.timeline?.items || []);
+  const timeline = rawTimeline.map((item: any) => ({
     year: item.year?.trim() || '',
     title: txt(item.title, langKey)?.trim() || '',
     desc: txt(item.desc, langKey)?.trim() || '',
-  })) || [];
+  }));
 
   /* ── Welcome values ── */
-  const welcomeValues = dbData?.welcome?.values?.map((v: any) => ({
+  const rawWelcomeValues = (dbData?.welcome?.values && dbData.welcome.values.length > 0)
+    ? dbData.welcome.values
+    : (aboutDefaults.welcome?.values || []);
+  const welcomeValues = rawWelcomeValues.map((v: any) => ({
     title: txt(v.title, langKey)?.trim() || '',
     desc: txt(v.desc, langKey)?.trim() || '',
-  })) || [];
+  }));
 
   /* ── Marquee ── */
   const marqueeItems = hasDB && dbData.marquee?.[langKey === 'uk' ? 'uk' : langKey === 'vi' ? 'vi' : 'us']?.length
     ? dbData.marquee[langKey === 'uk' ? 'uk' : langKey === 'vi' ? 'vi' : 'us']
-    : (hasDB && dbData.marquee?.us?.length ? dbData.marquee.us : undefined);
+    : (hasDB && dbData.marquee?.us?.length ? dbData.marquee.us : (aboutDefaults.marquee?.[langKey === 'vi' ? 'vi' : 'us'] || undefined));
 
   /* ── Stats ── */
-  const statItems = dbData?.stats?.items?.map((s: any) => ({
+  const rawStats = (dbData?.stats?.items && dbData.stats.items.length > 0)
+    ? dbData.stats.items
+    : (aboutDefaults.stats?.items || []);
+  const statItems = rawStats.map((s: any) => ({
     value: s.value?.trim() || '',
     suffix: s.suffix || '',
     label: txt(s.label, langKey)?.trim() || '',
-  })) || [];
+  }));
 
   /* ── HR Items ── */
-  const hrItems = dbData?.stats?.hr?.items?.map((item: any) => txt(item, langKey)?.trim() || '') || [];
+  const rawHrItems = (dbData?.stats?.hr?.items && dbData.stats.hr.items.length > 0)
+    ? dbData.stats.hr.items
+    : (aboutDefaults.stats?.hr?.items || []);
+  const hrItems = rawHrItems.map((item: any) => txt(item, langKey)?.trim() || '');
 
   /* ── Machinery Items ── */
-  const machineryItems = dbData?.stats?.machinery?.items?.map((m: any) => ({
+  const rawMachinery = (dbData?.stats?.machinery?.items && dbData.stats.machinery.items.length > 0)
+    ? dbData.stats.machinery.items
+    : (aboutDefaults.stats?.machinery?.items || []);
+  const machineryItems = rawMachinery.map((m: any) => ({
     count: m.count?.trim() || '',
     label: txt(m.label, langKey)?.trim() || '',
-  })) || [];
+  }));
 
   /* ── Team ── */
-  const allMembers: any[] = [];
-  if (hasDB && dbData?.team) {
-    if (Array.isArray(dbData.team.members)) {
-      dbData.team.members.forEach((m: any, idx: number) => {
-        allMembers.push({
-          name: m.name?.trim() || '',
-          key: m.key || `m${idx}`,
-          isLeader: !!m.isLeader,
-          role: txt(m.role, langKey)?.trim() || '',
-          quote: txt(m.quote, langKey)?.trim() || '',
-          email: m.email,
-          phone: m.phone,
-          image: m.image || '',
-        });
-      });
-    }
-  }
+  const rawMembers = (dbData?.team?.members && dbData.team.members.length > 0)
+    ? dbData.team.members
+    : (aboutDefaults.team?.members || []);
+  const allMembers: any[] = rawMembers.map((m: any, idx: number) => ({
+    name: m.name?.trim() || '',
+    key: m.key || `m${idx}`,
+    isLeader: !!m.isLeader,
+    role: txt(m.role, langKey)?.trim() || '',
+    quote: txt(m.quote, langKey)?.trim() || '',
+    email: m.email,
+    phone: m.phone,
+    image: m.image || '',
+  }));
 
 
 
@@ -580,7 +594,7 @@ export default function AboutPage() {
 
         {/* ── 6. Stats & Capabilities (Dark Premium) ── */}
         <section className="py-32 bg-[hsl(var(--navy-deep))] text-white relative">
-          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=50')] opacity-5 bg-cover bg-center mix-blend-overlay" />
+          <div className="absolute inset-0 bg-[url('/img/WhyDHT.png')] opacity-5 bg-cover bg-center mix-blend-overlay" />
           <div className="container mx-auto px-6 relative z-10">
             <div className="text-center mb-24 lg:mb-32">
               <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="font-display font-black text-white mb-6 break-words hyphens-auto" style={{ fontSize: "clamp(1.75rem, 8vw, 4.5rem)", wordBreak: "break-word" }}>{d(['stats', 'heading'], "about.stats.heading")}</motion.h2>

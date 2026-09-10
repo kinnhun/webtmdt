@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, TreePine, Layers, ShieldCheck, Truck } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 
@@ -8,7 +8,8 @@ const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
 const vp = { once: true, amount: 0.05 as const };
 
 export default function CompanyIntro() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isVi = i18n.language?.startsWith("vi");
   const [currentImage, setCurrentImage] = useState(0);
 
   const images = [
@@ -103,15 +104,82 @@ export default function CompanyIntro() {
             </div>
             <div className="grid grid-cols-2 gap-2 sm:gap-3">
               {[
-                { n: "11", label: t("home.intro.location"), sub: "10 Furn. + 1 Panel", filled: true },
-                { n: "543K", label: t("home.intro.statsUnits"), sub: "283K m² finished", filled: false },
-                { n: "~2,400", label: t("home.intro.statsCraftspeople"), sub: "Skilled group staff", filled: true },
-                { n: "100%", label: "FSC Wood Certified", sub: "Acacia, Teak, Euc.", filled: false },
-              ].map(({ n, label, sub, filled }, i) => (
-                <motion.div key={label} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={vp} transition={{ duration: 0.55, delay: 0.2 + i * 0.09, ease }} className="rounded-sm px-4 sm:px-5 py-4 sm:py-5" style={{ backgroundColor: filled ? "#173C2C" : "white", border: filled ? "none" : "1px solid hsl(var(--border))", minHeight: 88 }}>
-                  <p className="font-display font-bold leading-none mb-1 lining-nums tabular-nums" style={{ fontSize: "clamp(1.5rem, 2.8vw, 2.2rem)", color: filled ? "#B97846" : "#173C2C" }}>{n}</p>
-                  <p className="font-body text-xs tracking-wider uppercase font-semibold truncate" style={{ color: filled ? "white" : "hsl(var(--navy-deep))" }}>{label}</p>
-                  <p className="font-body text-[10px] mt-0.5" style={{ color: filled ? "rgba(255,255,255,0.6)" : "hsl(var(--muted-foreground))" }}>{sub}</p>
+                {
+                  title: isVi ? "Chế Tác Gỗ Tự Nhiên" : "Wood Production",
+                  detail: isVi ? "Tràm, Giá Tỵ, Bạch Đàn chuẩn FSC" : "Acacia, Teak & Eucalyptus (FSC)",
+                  badge: isVi ? "100% FSC" : "100% FSC",
+                  icon: TreePine,
+                  filled: true,
+                },
+                {
+                  title: isVi ? "Kim Loại & Vật Liệu Phối" : "Metal & Mixed Materials",
+                  detail: isVi ? "Khung nhôm định hình, dây đan outdoor" : "Architectural aluminium, rope & sling",
+                  badge: isVi ? "Bền Thời Tiết" : "Weatherproof",
+                  icon: Layers,
+                  filled: false,
+                },
+                {
+                  title: isVi ? "Kiểm Soát Chất Lượng" : "Quality Control (QC)",
+                  detail: isVi ? "Quy trình 6 cổng kiểm tra, OTIF ~95%" : "6-gate inspection process, OTIF ~95%",
+                  badge: isVi ? "6 Cổng QC" : "6-Gate QC",
+                  icon: ShieldCheck,
+                  filled: false,
+                },
+                {
+                  title: isVi ? "Đóng Container & Logistics" : "Loading & Logistics",
+                  detail: isVi ? "Đóng hàng trực tiếp, xuất Quy Nhơn/Cát Lái" : "Direct container stuffing via Quy Nhon/Cat Lai",
+                  badge: isVi ? "Xuất Khẩu" : "Direct Export",
+                  icon: Truck,
+                  filled: true,
+                },
+              ].map(({ title, detail, badge, icon: Icon, filled }, i) => (
+                <motion.div
+                  key={title}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={vp}
+                  transition={{ duration: 0.55, delay: 0.2 + i * 0.09, ease }}
+                  className="rounded-sm p-3.5 sm:p-4 flex flex-col justify-between"
+                  style={{
+                    backgroundColor: filled ? "#173C2C" : "white",
+                    border: filled ? "none" : "1px solid hsl(var(--border))",
+                    minHeight: 100,
+                  }}
+                >
+                  <div className="flex items-center justify-between gap-1.5 mb-1.5">
+                    <span
+                      className="w-6 h-6 rounded flex items-center justify-center shrink-0"
+                      style={{
+                        backgroundColor: filled ? "rgba(185,120,70,0.25)" : "rgba(23,60,44,0.08)",
+                        color: filled ? "#B97846" : "#173C2C",
+                      }}
+                    >
+                      <Icon size={14} />
+                    </span>
+                    <span
+                      className="font-body text-[9px] sm:text-[10px] tracking-wider uppercase font-semibold px-2 py-0.5 rounded-full whitespace-nowrap"
+                      style={{
+                        backgroundColor: filled ? "rgba(255,255,255,0.12)" : "rgba(185,120,70,0.12)",
+                        color: filled ? "#E8C5A5" : "#B97846",
+                      }}
+                    >
+                      {badge}
+                    </span>
+                  </div>
+                  <div>
+                    <h3
+                      className="font-display font-bold text-xs sm:text-sm leading-tight mb-0.5"
+                      style={{ color: filled ? "white" : "#0E241B" }}
+                    >
+                      {title}
+                    </h3>
+                    <p
+                      className="font-body text-[11px] leading-snug line-clamp-2"
+                      style={{ color: filled ? "rgba(247,245,240,0.72)" : "hsl(var(--muted-foreground))" }}
+                    >
+                      {detail}
+                    </p>
+                  </div>
                 </motion.div>
               ))}
             </div>

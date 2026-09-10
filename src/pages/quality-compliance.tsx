@@ -80,8 +80,8 @@ export default function QualityCompliancePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {qcSteps.map((step) => (
               <div key={step.num} className="bg-white p-6 rounded-xl shadow-sm border border-black/5 relative hover:border-[#B97846]/30 transition-all">
-                <span className="text-3xl font-extrabold text-[#B97846]/25 absolute top-4 right-4">{step.num}</span>
-                <h3 className="text-base font-bold text-[#173C2C] mb-2 pr-8">{step.title}</h3>
+                <span className="text-xl font-extrabold text-[#B97846]/40 absolute top-4 right-4">{`Gate ${step.num}`}</span>
+                <h3 className="text-base font-bold text-[#173C2C] mb-2 pr-12">{step.title}</h3>
                 <p className="text-sm text-gray-600 leading-relaxed">{step.desc}</p>
               </div>
             ))}
@@ -112,9 +112,10 @@ export default function QualityCompliancePage() {
                 <FileText size={20} className="text-[#B97846]" /> United States & Canada
               </h3>
               <ul className="text-sm text-gray-600 space-y-2 mt-3 list-disc pl-5 leading-relaxed">
-                <li><strong>Tip-over Restraint Standards:</strong> ASTM safety compliance for tall storage, dressers, and shelving units.</li>
+                <li><strong>U.S. Lacey Act Due Diligence:</strong> Affirmative timber species and harvest concession tracing ensuring legal wood sourcing.</li>
+                <li><strong>ASTM Safety Standards:</strong> Tip-over restraint compliance and structural cycle loading for residential and contract furniture.</li>
                 <li><strong>ISTA Packaging Standards:</strong> ISTA 1A / 3A drop, vibration, and compression testing for mail-order and retail flat-packs.</li>
-                <li><strong>TSCA Title VI:</strong> Formaldehyde emissions compliance for all composite and engineered-wood panels.</li>
+                <li><strong>TSCA Title VI & CARB 2:</strong> Formaldehyde emissions compliance for all composite and engineered-wood panels.</li>
               </ul>
             </div>
 

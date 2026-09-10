@@ -20,9 +20,10 @@ jobs:
         run: |
           sshpass -e ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -p 22 "${SERVER_USER}@${SERVER_HOST}" << 'DEPLOY_SCRIPT'
             cd /var/www/webtmdt
-            git reset --hard
-            git pull origin main
+            git fetch origin main
+            git reset --hard origin/main
             npm install
             npm run build
-            pm2 reload webtmdt || pm2 start ecosystem.config.js
+            pm2 restart webtmdt || pm2 start ecosystem.config.js
+            pm2 save
           DEPLOY_SCRIPT

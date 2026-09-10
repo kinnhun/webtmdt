@@ -51,13 +51,7 @@ export default function AdminLogin() {
           
           <div className="relative z-10 text-center text-white max-w-lg">
              <div className="mb-8 p-6 bg-white/10 backdrop-blur-md rounded-2xl inline-flex flex-col items-center justify-center border border-white/20 shadow-xl">
-               <Image src="/img/logo-no-text.png" alt="DHT Logo" width={60} height={60} className="mb-3" />
-               <div className="text-4xl font-display font-bold tracking-tighter" style={{
-                 background: "linear-gradient(180deg, #f5d76e 0%, #e8a838 50%, #d4862a 100%)",
-                 WebkitBackgroundClip: "text",
-                 WebkitTextFillColor: "transparent",
-                 backgroundClip: "text",
-               }}>DHT</div>
+               <Image src="/img/logo.png" alt="DHT Logo" width={140} height={65} className="object-contain" priority />
              </div>
              <h1 className="text-4xl font-display font-medium mb-4">Enterprise Management</h1>
              <p className="text-lg text-white/80 font-body font-light leading-relaxed">
@@ -70,14 +64,8 @@ export default function AdminLogin() {
         <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white/60 backdrop-blur-sm shadow-2xl relative z-10">
           <div className="w-full max-w-md">
             <div className="text-center mb-10">
-              <div className="lg:hidden mb-6 inline-flex items-center gap-2 bg-navy-deep text-white p-3 px-5 rounded-xl shadow-lg border border-white/10">
-                <Image src="/img/logo-no-text.png" alt="DHT Logo" width={28} height={28} />
-                <span className="font-display text-2xl font-bold tracking-tighter" style={{
-                  background: "linear-gradient(180deg, #f5d76e 0%, #e8a838 50%, #d4862a 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}>DHT</span>
+              <div className="lg:hidden mb-6 inline-flex items-center justify-center bg-navy-deep text-white p-3 px-6 rounded-xl shadow-lg border border-white/10">
+                <Image src="/img/logo.png" alt="DHT Logo" width={110} height={45} className="object-contain" priority />
               </div>
               <Title level={2} className="font-display m-0 text-navy-deep" style={{ margin: 0 }}>Welcome Back</Title>
               <Text type="secondary" className="font-body text-base">Please enter your admin credentials</Text>

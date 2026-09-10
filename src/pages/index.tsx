@@ -31,7 +31,7 @@ export default function HomePage() {
         type="LocalBusiness"
         data={{
           name: "DHT Furniture Vietnam",
-          image: "https://dhtcompany.com/img/logo-no-text.png",
+          image: "https://dhtcompany.com/img/logo.png",
           telephone: "+84 932 058 545",
           email: "sales@dhtcompany.com",
           address: {

@@ -26,7 +26,7 @@ export interface SEOProps {
 
 const SITE_NAME = "DHT Furniture Vietnam";
 const SITE_DOMAIN = "https://dhtcompany.com";
-const DEFAULT_IMAGE = `${SITE_DOMAIN}/img/logo-no-text.png`;
+const DEFAULT_IMAGE = `${SITE_DOMAIN}/img/logo.png`;
 
 export default function SEO({
   title,

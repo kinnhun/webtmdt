@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 const separatorDot = (
-  <span className="inline-block w-1.5 h-1.5 rounded-full mx-5 align-middle" style={{ backgroundColor: "hsl(var(--orange))" }} />
+  <span className="inline-block w-1.5 h-1.5 rounded-full mx-5 align-middle" style={{ backgroundColor: "#B97846" }} />
 );
 
 interface MarqueeStripProps {
@@ -25,10 +25,16 @@ export default function MarqueeStrip({ items: customItems }: MarqueeStripProps) 
   ));
 
   return (
-    <div className="relative overflow-hidden py-4 border-y" style={{ backgroundColor: "hsl(var(--navy))", borderColor: "hsl(var(--navy-light)/0.4)" }}>
+    <div
+      className="relative overflow-hidden py-4 border-y"
+      style={{
+        backgroundColor: "#0E241B",
+        borderColor: "rgba(185, 120, 70, 0.25)",
+      }}
+    >
       <div className="flex w-max animate-marquee hover:[animation-play-state:paused]">
-        <span className="flex items-center shrink-0" style={{ color: "hsl(var(--warm-cream)/0.7)" }}>{repeatedContent}</span>
-        <span className="flex items-center shrink-0" style={{ color: "hsl(var(--warm-cream)/0.7)" }} aria-hidden>{repeatedContent}</span>
+        <span className="flex items-center shrink-0" style={{ color: "rgba(247, 245, 240, 0.88)" }}>{repeatedContent}</span>
+        <span className="flex items-center shrink-0" style={{ color: "rgba(247, 245, 240, 0.88)" }} aria-hidden>{repeatedContent}</span>
       </div>
     </div>
   );

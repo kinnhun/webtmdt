@@ -102,6 +102,13 @@ module.exports = {
       }
     } catch (err) {
       console.warn('[next-sitemap] Notice: Could not connect to DB for dynamic products during sitemap generation:', err.message);
+    } finally {
+      try {
+        const mongoose = require('mongoose');
+        if (mongoose.connection.readyState !== 0) {
+          await mongoose.disconnect();
+        }
+      } catch (_) {}
     }
 
     return result;

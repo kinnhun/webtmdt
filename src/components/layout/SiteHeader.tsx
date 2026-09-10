@@ -74,40 +74,15 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
             style={{ minHeight: scrolled ? "64px" : "80px" }}
           >
             {/* LOGO */}
-            <Link href="/" className="flex items-center gap-2.5 flex-shrink-0 group">
+            <Link href="/" className="flex items-center flex-shrink-0 group py-1">
               <Image
-                src="/img/logo-no-text.png"
-                alt="DHT Logo"
-                width={40}
-                height={40}
-                className="transition-all group-hover:scale-105 rounded-sm"
-                style={{ width: "auto", height: "auto" }}
+                src="/img/logo.png"
+                alt="DHT Furniture Vietnam"
+                width={120}
+                height={50}
+                className="h-10 sm:h-12 w-auto object-contain transition-all duration-200 group-hover:scale-105"
                 priority
               />
-              <div>
-                <span
-                  className="font-display font-bold text-lg tracking-wide leading-none block"
-                  style={{
-                    background: "linear-gradient(180deg, #f5d76e 0%, #e8a838 50%, #d4862a 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
-                >
-                  DHT
-                </span>
-                <span
-                  className="font-body text-[8.5px] md:text-[9.5px] tracking-[0.1em] uppercase leading-[1.2] mt-1 block max-w-[160px] md:max-w-[200px] text-wrap"
-                  style={{
-                    background: "linear-gradient(180deg, #e8a838 0%, #d4862a 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}
-                >
-                  {t("nav.furnitureVietnam", "Furniture Vietnam")}
-                </span>
-              </div>
             </Link>
 
             {/* DESKTOP NAV */}

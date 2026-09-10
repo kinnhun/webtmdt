@@ -4,27 +4,27 @@
   --font-display: "Lora", serif;
   --font-body: "DM Sans", sans-serif;
 
-  --color-navy: hsl(215, 35%, 25%);
-  --color-navy-deep: hsl(215, 40%, 15%);
-  --color-navy-dark: hsl(215, 42%, 10%);
-  --color-navy-light: hsl(215, 25%, 45%);
-  --color-orange: hsl(38, 82%, 54%);
-  --color-warm-cream: hsl(40, 30%, 96%);
-  --color-warm-beige: hsl(36, 20%, 91%);
+  --color-navy: #173C2C;
+  --color-navy-deep: #0E241B;
+  --color-navy-dark: #081711;
+  --color-navy-light: #2A5A44;
+  --color-orange: #B97846;
+  --color-warm-cream: #F7F5F0;
+  --color-warm-beige: #EDE8DE;
 
-  --color-background: hsl(0, 0%, 100%);
-  --color-foreground: hsl(215, 40%, 15%);
-  --color-muted: hsl(210, 20%, 96%);
-  --color-muted-foreground: hsl(215, 15%, 50%);
-  --color-border: hsl(220, 13%, 90%);
-  --color-accent: hsl(38, 82%, 54%);
-  --color-primary: hsl(215, 35%, 25%);
-  --color-primary-foreground: hsl(0, 0%, 100%);
-  --color-secondary: hsl(210, 20%, 96%);
-  --color-secondary-foreground: hsl(215, 40%, 15%);
-  --color-destructive: hsl(0, 72%, 51%);
-  --color-destructive-foreground: hsl(0, 0%, 100%);
-  --color-ring: hsl(215, 35%, 25%);
+  --color-background: #FFFFFF;
+  --color-foreground: #1F2723;
+  --color-muted: #F3EFE7;
+  --color-muted-foreground: #5C6E65;
+  --color-border: #E5E0D6;
+  --color-accent: #B97846;
+  --color-primary: #173C2C;
+  --color-primary-foreground: #FFFFFF;
+  --color-secondary: #F7F5F0;
+  --color-secondary-foreground: #1F2723;
+  --color-destructive: #9B2C2C;
+  --color-destructive-foreground: #FFFFFF;
+  --color-ring: #B97846;
 
   --animate-marquee: marquee 240s linear infinite;
   --animate-accordion-down: accordion-down 0.2s ease-out;
@@ -61,28 +61,36 @@
   }
 }
 
-/* CSS Variables for inline styles compatibility */
+/* CSS Variables for inline styles compatibility - DHT 2026 Master Palette */
 :root {
-  --navy: 215 35% 25%;
-  --navy-deep: 215 40% 15%;
-  --navy-dark: 215 42% 10%;
-  --navy-light: 215 25% 45%;
-  --orange: 38 82% 54%;
+  --navy: 153 42% 16%;
+  --navy-deep: 153 44% 10%;
+  --navy-dark: 153 48% 7%;
+  --navy-light: 153 25% 30%;
+  --orange: 26 47% 50%;
   --warm-cream: 40 30% 96%;
   --warm-beige: 36 20% 91%;
   --background: 0 0% 100%;
-  --foreground: 215 40% 15%;
-  --muted: 210 20% 96%;
-  --muted-foreground: 215 15% 50%;
-  --border: 220 13% 90%;
-  --accent: 38 82% 54%;
-  --primary: 215 35% 25%;
+  --foreground: 150 7% 13%;
+  --muted: 40 20% 95%;
+  --muted-foreground: 153 10% 40%;
+  --border: 36 15% 88%;
+  --accent: 26 47% 50%;
+  --primary: 153 42% 16%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 210 20% 96%;
-  --secondary-foreground: 215 40% 15%;
+  --secondary: 40 30% 96%;
+  --secondary-foreground: 150 7% 13%;
   --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 100%;
-  --ring: 215 35% 25%;
+  --ring: 26 47% 50%;
+
+  /* Direct Master Tokens */
+  --dht-forest-green: #173C2C;
+  --dht-forest-deep:  #0E241B;
+  --dht-teak-wood:    #B97846;
+  --dht-sand:         #F3EFE7;
+  --dht-charcoal:     #1F2723;
+  --dht-pure-white:   #FFFFFF;
 }
 
 html {

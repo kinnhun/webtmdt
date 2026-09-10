@@ -1,5 +1,6 @@
 import paramiko
 import sys
+sys.stdout.reconfigure(encoding='utf-8')
 
 def run_ssh_command(host, username, password, command):
     client = paramiko.SSHClient()

@@ -86,10 +86,10 @@ function MaterialPage({ article }: { article: MaterialArticle }) {
           },
           publisher: {
             "@type": "Organization",
-            name: "DHT Company",
+            name: "DHT Furniture Vietnam",
             logo: {
               "@type": "ImageObject",
-              url: "https://dhtcompany.com/img/logo-no-text.png"
+              url: "https://dhtcompany.com/img/logo.png"
             }
           },
           mainEntityOfPage: {

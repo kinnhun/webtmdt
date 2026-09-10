@@ -30,7 +30,7 @@ export default function ProductDetailWrapper({ initialProduct, initialRelated }:
   const langId = langEnum[i18n?.language] || "us";
   const pName = currentProduct.name?.[langId] || currentProduct.name?.us || "Luxury Furniture";
   const pDesc = currentProduct.description?.[langId] || currentProduct.description?.us || "High quality handcrafted luxury furniture by DHT Company.";
-  const pImage = currentProduct.images?.[0] || currentProduct.image || "/img/logo-no-text.png";
+  const pImage = currentProduct.images?.[0] || currentProduct.image || "/img/logo.png";
   const pSlug = currentProduct.slug || currentProduct.id || currentProduct._id;
   const pCollection = currentProduct.collection || "Outdoor";
   const collectionSlug = pCollection.toLowerCase() === "indoor" ? "indoor" : "outdoor";

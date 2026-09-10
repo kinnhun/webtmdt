@@ -85,12 +85,12 @@ export default function FactoryVideoSection() {
                 <div className="w-12 h-12 rounded-full border-2 border-white bg-[#CBD5E0] overflow-hidden">
                    <img src="/img/WhoWeAre2.png" alt="Wood" className="w-full h-full object-cover" />
                 </div>
-                <div className="w-12 h-12 rounded-full border-2 border-white bg-[#EDF2F7] flex items-center justify-center text-xs font-bold text-[#4A5568]">
-                  +50k
+                <div className="w-12 h-12 rounded-full border-2 border-white bg-[#EDF2F7] flex items-center justify-center text-xs font-bold text-[#B97846]">
+                  11
                 </div>
               </div>
               <div className="font-body text-xs uppercase tracking-widest font-medium" style={{ color: "hsl(var(--muted-foreground))" }}>
-                {t("home.video.productionLabel", "Sản phẩm / Tháng")}
+                {t("home.video.productionLabel", "11 Facilities • 543,380 m²")}
               </div>
             </div>
           </motion.div>
@@ -113,11 +113,11 @@ export default function FactoryVideoSection() {
                 <path id="curve" d="M 50,50 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" fill="transparent" />
                 <text className="font-body text-[8.5px] sm:text-[9.5px] uppercase tracking-[0.25em] font-bold" style={{ fill: "hsl(var(--navy-deep))" }}>
                   <textPath href="#curve" startOffset="0%">
-                    • DHT OUTDOOR FURNITURE • DHT OUTDOOR FURNITURE
+                    • DHT FURNITURE VIETNAM • 11 FACILITIES •
                   </textPath>
                 </text>
               </svg>
-              <Leaf className="w-5 h-5 sm:w-6 sm:h-6 text-[#D97706]" />
+              <Leaf className="w-5 h-5 sm:w-6 sm:h-6 text-[#B97846]" />
             </motion.div>
 
             {/* Elegant Video Frame */}

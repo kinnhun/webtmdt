@@ -99,15 +99,29 @@ export default function ContactPage() {
       .catch(() => {});
   }, []);
 
+  const [error, setError] = useState<string | null>(null);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
+    setError(null);
     try {
-      await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) });
+      const res = await fetch("/api/contact", { 
+        method: "POST", 
+        headers: { "Content-Type": "application/json" }, 
+        body: JSON.stringify(form) 
+      });
+      if (!res.ok) {
+        throw new Error("Failed to submit inquiry");
+      }
       setSent(true);
       setForm({ interestedProduct: "" });
-    } catch { /* ignore */ }
-    setSending(false);
+    } catch (err) {
+      console.error("Submission failed:", err);
+      setError("We could not send your message due to a connection issue. Your input has been saved above. You can also contact us directly at sales@dhtcompany.com");
+    } finally {
+      setSending(false);
+    }
   };
 
   const locations = hasDB
@@ -121,36 +135,28 @@ export default function ContactPage() {
       }))
     : [
         {
-          title: t("contact.locations.hqTitle"),
-          subtitle: t("contact.locations.hqSubtitle"),
-          address: "19 National Highway, Nguyen Hue Ward, Phuoc Loc, Tuy Phuoc District, Binh Dinh Province, Vietnam",
-          phone: "+84 902 907 399",
-          href: "tel:+84902907399",
-          hours: t("contact.locations.timingsFactory")
-        },
-        {
-          title: t("contact.locations.showroomTitle"),
-          subtitle: t("contact.locations.showroomSubtitle"),
-          address: "Vinh Thanh 2 Hamlet, Tuy Phuoc Commune, Gia Lai Province, Vietnam",
-          phone: "+84 907 386 898",
-          href: "tel:+84907386898",
-          hours: t("contact.locations.timingsFactory")
-        },
-        {
-          title: t("contact.locations.officeTitle"),
-          subtitle: t("contact.locations.officeSubtitle"),
-          address: "72 Le Thanh Ton Street, Sai Gon Ward, Ho Chi Minh City, Vietnam",
-          phone: "+84 907 386 898",
-          href: "tel:+84907386898",
-          hours: t("contact.locations.timings247")
-        },
-        {
-          title: t("contact.locations.distributorTitle"),
-          subtitle: t("contact.locations.distributorSubtitle"),
-          address: "226 Go Dua Street, Tam Binh Ward, Thu Duc City, Ho Chi Minh City, Vietnam",
+          title: "DHT Head Office & Commercial Dept.",
+          subtitle: "Commercial & Export Inquiries",
+          address: "72 Le Thanh Ton Street, Ben Nghe Ward, District 1, Ho Chi Minh City, Vietnam",
           phone: "+84 932 058 545",
           href: "tel:+84932058545",
-          hours: t("contact.locations.timingsFactory")
+          hours: "08:00 - 17:00 (UTC+7), Monday to Friday. Visits by appointment."
+        },
+        {
+          title: "DHT Showroom & Gallery",
+          subtitle: "Outdoor & Indoor Collections",
+          address: "206 Phan Dinh Phung Street, Pleiku City, Gia Lai Province, Vietnam",
+          phone: "+84 907 386 898",
+          href: "tel:+84907386898",
+          hours: "08:00 - 17:00 (UTC+7). Visits by appointment."
+        },
+        {
+          title: "DHT Manufacturing Network (11 Facilities)",
+          subtitle: "4 Clusters Across Vietnam",
+          address: "Quy Nhon, HCMC & Southern Corridor, Hung Yen, Phu Tho/Vinh Phuc",
+          phone: "+84 902 907 399",
+          href: "tel:+84902907399",
+          hours: "Factory visits arranged by appointment."
         }
       ];
 
@@ -174,22 +180,44 @@ export default function ContactPage() {
     <>
       <SEO title={d(['seo', 'title'], "contact.seo.title")} description={d(['seo', 'description'], "contact.seo.description")} />
       <Schema 
+        id="schema-breadcrumbs-contact"
+        type="BreadcrumbList"
+        data={{
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Home",
+              item: "https://dhtcompany.com"
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: "Contact Us",
+              item: "https://dhtcompany.com/contact"
+            }
+          ]
+        }}
+      />
+      <Schema 
+        id="schema-localbusiness-contact"
         type="LocalBusiness"
         data={{
-          name: "DHT Company (nemark)",
+          name: "DHT Furniture Vietnam Joint Stock Company",
           image: "https://dhtcompany.com/img/logo-no-text.png",
-          telephone: "+84 902 907 399",
+          telephone: "+84 932 058 545",
+          email: "sales@dhtcompany.com",
           address: {
             "@type": "PostalAddress",
-            streetAddress: "19 National Highway, Nguyen Hue Ward, Phuoc Loc",
-            addressLocality: "Tuy Phuoc District",
-            addressRegion: "Binh Dinh Province",
+            streetAddress: "72 Le Thanh Ton Street, Ben Nghe Ward, District 1",
+            addressLocality: "Ho Chi Minh City",
+            addressRegion: "Ho Chi Minh City",
             addressCountry: "VN"
           },
           geo: {
             "@type": "GeoCoordinates",
-            latitude: 13.834010,
-            longitude: 109.136270
+            latitude: 10.7778,
+            longitude: 106.7018
           },
           url: "https://dhtcompany.com/contact",
           priceRange: "$$$"
@@ -199,6 +227,16 @@ export default function ContactPage() {
         <div className="py-12 md:py-20 text-center" style={{ backgroundColor: "hsl(var(--navy-deep))" }}>
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="font-display font-bold text-white mb-4 rt-reset break-words flex flex-col empty:hidden" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }} dangerouslySetInnerHTML={{ __html: d(['hero', 'title'], "contact.hero.title") }} />
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="font-body text-white/60 text-base max-w-xl mx-auto px-4 rt-reset break-words empty:hidden" dangerouslySetInnerHTML={{ __html: d(['hero', 'subtitle'], "contact.hero.subtitle") }} />
+          
+          {/* Direct Sales Email & Hotline Pill */}
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="mt-6 flex flex-wrap justify-center items-center gap-3 text-xs">
+            <a href="mailto:sales@dhtcompany.com" className="inline-flex items-center gap-2 bg-[#B97846] text-white px-4 py-2 rounded-full font-semibold hover:bg-white hover:text-black transition-all shadow-sm">
+              <Mail size={14} /> Official Sales: sales@dhtcompany.com
+            </a>
+            <span className="text-white/60 bg-white/10 px-3.5 py-1.5 rounded-full">
+              Response within 24 business hours
+            </span>
+          </motion.div>
         </div>
         
         <div className="container mx-auto px-4 sm:px-6 py-12 md:py-20">
@@ -337,6 +375,12 @@ export default function ContactPage() {
                       );
                     })}
                   </div>
+                  {error && (
+                    <div className="mb-4 p-4 rounded bg-red-50 border border-red-200 text-red-700 text-xs leading-relaxed">
+                      <p className="font-semibold mb-1">Notice:</p>
+                      <p>{error}</p>
+                    </div>
+                  )}
                   <div className="mt-2">
                     <button type="submit" disabled={sending} className="w-full inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90 disabled:opacity-60" style={{ backgroundColor: "hsl(var(--orange))" }}>
                       {!sending && <Send size={16} />}

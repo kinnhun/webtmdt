@@ -19,19 +19,22 @@ export const aboutDefaults = {
   },
   marquee: {
     us: [
-      "18+ Years Experience",
-      "50,000 Units / Month",
-      "35+ Export Countries"
+      "11 Production Facilities",
+      "543,380 m² Manufacturing Footprint",
+      "~2,400 Group Personnel",
+      "4 Production Clusters"
     ],
     uk: [
-      "18+ Years Experience",
-      "50,000 Units / Month",
-      "35+ Export Countries"
+      "11 Production Facilities",
+      "543,380 m² Manufacturing Footprint",
+      "~2,400 Group Personnel",
+      "4 Production Clusters"
     ],
     vi: [
-      "Hơn 18 Năm Kinh Nghiệm",
-      "50.000 Sản phẩm / Tháng",
-      "Xuất khẩu Hơn 35 Quốc gia"
+      "11 Cơ Sở Sản Xuất Toàn Quốc",
+      "543.380 m² Mặt Bằng Sản Xuất",
+      "~2.400 Nhân Sự Toàn Tập Đoàn",
+      "4 Cụm Sản Xuất Trọng Điểm"
     ],
   },
   welcome: {
@@ -103,38 +106,49 @@ export const aboutDefaults = {
   },
   timeline: {
     label: { us: "Journey", uk: "Journey", vi: "Hành Trình" },
-    heading: { us: "Establishment & Development", uk: "Establishment & Development", vi: "Quá Trình Hình Thành & Phát Triển" },
+    heading: { us: "Corporate Development Milestones", uk: "Corporate Development Milestones", vi: "Các Mốc Phát Triển Doanh Nghiệp" },
     items: [
       {
         year: "2016",
-        title: { us: "Founded DHT", uk: "Founded DHT", vi: "Thành Lập DHT" },
-        desc: { us: "Focusing on outdoor furniture export.", uk: "Focusing on outdoor furniture export.", vi: "Tập trung định hướng mảng nội thất xuất khẩu ngoài trời." },
+        title: { us: "Foundation of DHT Furniture", uk: "Foundation of DHT Furniture", vi: "Thành Lập DHT Furniture" },
+        desc: { 
+          us: "Established commercial and manufacturing operations focusing on scalable outdoor furniture export to international markets.", 
+          uk: "Established commercial and manufacturing operations focusing on scalable outdoor furniture export to international markets.", 
+          vi: "Thành lập doanh nghiệp, tập trung sản xuất và xuất khẩu các dòng nội thất ngoài trời quy mô lớn sang thị trường quốc tế." 
+        },
       },
       {
-        year: "2018–2020",
-        title: { us: "Factory Expansion", uk: "Factory Expansion", vi: "Mở Rộng Sản Xuất" },
-        desc: { us: "Expanded factories, invested in CNC, UV coating lines, and wood kilns.", uk: "Expanded factories, invested in CNC, UV coating lines, and wood kilns.", vi: "Mở rộng hệ thống nhà máy, đầu tư dây chuyền máy CNC đa trục, sơn UV và lò sấy gỗ." },
+        year: "2022",
+        title: { us: "Manufacturing Network Integration", uk: "Manufacturing Network Integration", vi: "Tích Hợp Mạng Lưới Sản Xuất 11 Cơ Sở" },
+        desc: { 
+          us: "Consolidated commercial operations across our family-owned group's 11 specialised facilities and 543,380 m² manufacturing footprint.", 
+          uk: "Consolidated commercial operations across our family-owned group's 11 specialised facilities and 543,380 m² manufacturing footprint.", 
+          vi: "Quy chuẩn hóa hoạt động thương mại trên toàn bộ 11 cơ sở chuyên môn hóa của tập đoàn với tổng mặt bằng 543.380 m²." 
+        },
       },
       {
-        year: "2021–2024",
-        title: { us: "Global Reach", uk: "Global Reach", vi: "Vươn Tầm Thế Giới" },
-        desc: { us: "Achieved FSC and BSCI certifications, expanded into the US, EU, and Australian markets.", uk: "Achieved FSC and BSCI certifications, expanded into the US, EU, and Australian markets.", vi: "Đạt nhiều chứng chỉ quan trọng FSC và BSCI, mở rộng sang những thị trường khắt khe Bắc Mỹ, Châu Âu, Úc." },
-      },
-      {
-        year: "2025",
-        title: { us: "Strategic Partnerships", uk: "Strategic Partnerships", vi: "Đối Tác Chiến Lược" },
-        desc: { us: "Aiming to become a strategic partner of international retail chains.", uk: "Aiming to become a strategic partner of international retail chains.", vi: "Khẳng định mục tiêu trở thành đối tác chiến lược cấp cao cho các chuỗi bán lẻ quốc tế." },
+        year: "2024",
+        title: { us: "Global Compliance & Scale", uk: "Global Compliance & Scale", vi: "Nâng Tầm Chuẩn Mực Quốc Tế & Quy Mô Toàn Cầu" },
+        desc: { 
+          us: "Achieved full FSC CoC, ISO 9001/14001 and social audit coverage (BSCI/SMETA), scaling direct supply to major retail programs in the US, EU, and Australia.", 
+          uk: "Achieved full FSC CoC, ISO 9001/14001 and social audit coverage (BSCI/SMETA), scaling direct supply to major retail programs in the US, EU, and Australia.", 
+          vi: "Đạt chuẩn FSC CoC, ISO 9001/14001 cùng các đánh giá trách nhiệm xã hội BSCI/SMETA, cung ứng trực tiếp cho các chuỗi bán lẻ tại Mỹ, Châu Âu và Úc." 
+        },
       },
     ],
   },
   team: {
-    heading: { us: "Executive Board", uk: "Executive Board", vi: "Ban Giám Đốc" },
+    heading: { us: "Leadership & Central Commercial Team", uk: "Leadership & Central Commercial Team", vi: "Ban Lãnh Đạo & Đội Ngũ Điều Phối Trung Tâm" },
     members: [
       {
         key: "john",
         name: "John Vo",
-        role: { us: "Founder & Sales Director", uk: "Founder & Sales Director", vi: "Sáng Lập Viên & GĐ Kinh Doanh" },
-        quote: { us: "DHT has been, is, and will continue striving to deliver greater value to our customers, building lasting trust and carrying the pride of Vietnamese craftsmanship from Quy Nhon to the world.", uk: "DHT has been, is, and will continue striving to deliver greater value to our customers, building lasting trust and carrying the pride of Vietnamese craftsmanship from Quy Nhon to the world.", vi: "Niềm tin và sự an tâm từ khách hàng là động lực lớn lao nhất mang sự tự hào đồ gỗ Quy Nhơn Việt Nam đi xa hơn." },
+        role: { us: "CEO & Sales Director", uk: "CEO & Sales Director", vi: "Tổng Giám Đốc & Giám Đốc Kinh Doanh" },
+        quote: { 
+          us: "At DHT, we believe enduring commercial partnerships are built on three non-negotiables: absolute quality consistency, certified material integrity, and transparent execution at every stage.", 
+          uk: "At DHT, we believe enduring commercial partnerships are built on three non-negotiables: absolute quality consistency, certified material integrity, and transparent execution at every stage.", 
+          vi: "Tại DHT, chúng tôi tin rằng quan hệ đối tác bền vững được xây dựng trên 3 nền tảng bất biến: chất lượng ổn định, vật liệu đạt chuẩn minh bạch, và sự tận tâm đồng hành trong từng giai đoạn." 
+        },
         email: "sales@dhtcompany.com",
         phone: "+84 932 058 545",
         image: "/img/profile/johnvo.png",
@@ -142,7 +156,7 @@ export const aboutDefaults = {
       {
         key: "dylan",
         name: "Dylan",
-        role: { us: "General Director", uk: "General Director", vi: "Tổng Giám Đốc Điều Hành" },
+        role: { us: "Operations Director", uk: "Operations Director", vi: "Giám Đốc Vận Hành & Sản Xuất" },
         quote: { us: "Every project we deliver carries the promise of precision, durability, and the Vietnamese craftsmanship that defines DHT.", uk: "Every project we deliver carries the promise of precision, durability, and the Vietnamese craftsmanship that defines DHT.", vi: "Lời hứa về độ hoàn thiện, tính ổn định làm nên tên tuổi cho DHT trong suốt hành trình qua" },
         email: "dylan@dhtcompany.com",
         phone: "+84 xxx xxx xxx",
@@ -151,8 +165,8 @@ export const aboutDefaults = {
       {
         key: "david",
         name: "David",
-        role: { us: "Product Development Director", uk: "Product Development Director", vi: "GĐ Phát Triển Sản Phẩm" },
-        quote: { us: "Innovation means blending timeless teak with modern design to create furniture that stands strong under any sky.", uk: "Innovation means blending timeless teak with modern design to create furniture that stands strong under any sky.", vi: "Sự kết hợp giữa chất liệu gỗ vững chãi cùng quy chuẩn hiện đại làm nên đẳng cấp sản phẩm ở mọi điểu kiện thời tiết." },
+        role: { us: "Product Development Director", uk: "Product Development Director", vi: "GĐ Phát Triển Sản Phẩm (PD)" },
+        quote: { us: "Innovation means blending certified timber with architectural aluminum to create furniture engineered for international markets.", uk: "Innovation means blending certified timber with architectural aluminum to create furniture engineered for international markets.", vi: "Sự kết hợp giữa chất liệu gỗ đạt chuẩn cùng quy chuẩn hiện đại làm nên đẳng cấp sản phẩm ở mọi điểu kiện thời tiết." },
         email: "david@dhtcompany.com",
         phone: "+84 xxx xxx xxx",
         image: "/img/profile/david.png",
@@ -160,7 +174,7 @@ export const aboutDefaults = {
       {
         key: "alicia",
         name: "Alicia",
-        role: { us: "CFO", uk: "CFO", vi: "Giám Đốc Tài Chính CFO" },
+        role: { us: "Chief Financial Officer (CFO)", uk: "Chief Financial Officer (CFO)", vi: "Giám Đốc Tài Chính (CFO)" },
         quote: { us: "Strong finances fuel strong partnerships. At DHT, we ensure every order is backed by trust, transparency, and sustainable growth.", uk: "Strong finances fuel strong partnerships. At DHT, we ensure every order is backed by trust, transparency, and sustainable growth.", vi: "Hậu phương tài chính giúp vững vàng mọi thoả thuận mua bán xuất khẩu. Tạo nên tính minh bạch và uy tín mạnh mẽ." },
         email: "alicia@dhtcompany.com",
         phone: "+84 xxx xxx xxx",
@@ -170,19 +184,23 @@ export const aboutDefaults = {
   },
   stats: {
     heading: { us: "Production Figures & Capacity", uk: "Production Figures & Capacity", vi: "Năng Lực & Dữ Liệu Sản Xuất" },
-    subtitle: { us: "Equipped with state-of-the-art machinery and an expansive 80,000m² facility, we ensure scalability, precision, and reliable fulfillment for global markets.", uk: "Equipped with state-of-the-art machinery and an expansive 80,000m² facility, we ensure scalability, precision, and reliable fulfillment for global markets.", vi: "Sở hữu hệ thống nhà xưởng 80.000m2 cùng máy móc hiện đại bậc nhất, chúng tôi tự tin đáp ứng chuẩn xác quy mô mọi đơn hàng xuất khẩu lớn." },
+    subtitle: { 
+      us: "Operating as part of a family-owned furniture group with 11 production facilities and a 543,380 m² combined footprint across Vietnam.", 
+      uk: "Operating as part of a family-owned furniture group with 11 production facilities and a 543,380 m² combined footprint across Vietnam.", 
+      vi: "Hoạt động trong mạng lưới tập đoàn nội thất gia đình gồm 11 cơ sở sản xuất với tổng diện tích 543.380 m² trên toàn quốc." 
+    },
     items: [
-      { value: "80,000", suffix: "m²", label: { us: "Factory Area", uk: "Factory Area", vi: "Diện Tích Xưởng" } },
-      { value: "350,000", suffix: "+", label: { us: "Products / Year", uk: "Products / Year", vi: "Sản phẩm mỗi năm" } },
-      { value: "60", suffix: "", label: { us: "Containers / Month", uk: "Containers / Month", vi: "Container mỗi tháng" } },
-      { value: "250", suffix: "+", label: { us: "Production Workers", uk: "Production Workers", vi: "Công Nhân Xưởng" } },
+      { value: "11", suffix: "", label: { us: "Production Facilities", uk: "Production Facilities", vi: "Cơ Sở Sản Xuất" } },
+      { value: "543,380", suffix: "m²", label: { us: "Combined Footprint", uk: "Combined Footprint", vi: "Tổng Mặt Bằng" } },
+      { value: "2,400", suffix: "~", label: { us: "Group Personnel", uk: "Group Personnel", vi: "Nhân Sự Tập Đoàn" } },
+      { value: "4", suffix: "", label: { us: "Manufacturing Clusters", uk: "Manufacturing Clusters", vi: "Cụm Sản Xuất" } },
     ],
     hr: {
-      heading: { us: "Human Resources & R&D", uk: "Human Resources & R&D", vi: "Nguồn Lực & R&D" },
+      heading: { us: "Human Resources & Specialised Capabilities", uk: "Human Resources & Specialised Capabilities", vi: "Nguồn Nhân Lực & Chuyên Môn Hóa" },
       items: [
-        { us: "250 production workers dedicated to consistent quality.", uk: "250 production workers dedicated to consistent quality.", vi: "Quy tụ hơn 250 công nhân tay nghề cao." },
-        { us: "30 technical & management staff overseeing operations.", uk: "30 technical & management staff overseeing operations.", vi: "Đội ngũ chuyên viên kỹ thuật dày dạn kinh nghiệm." },
-        { us: "40–50 new models being developed yearly by our R&D team.", uk: "40–50 new models being developed yearly by our R&D team.", vi: "Hơn 50 mẫu mã R&D tung ra thị trường hàng năm." },
+        { us: "Approximately 2,400 skilled manufacturing personnel across the group.", uk: "Approximately 2,400 skilled manufacturing personnel across the group.", vi: "Khoảng 2.400 nhân sự sản xuất tay nghề cao trên toàn tập đoàn." },
+        { us: "Approximately 20 professionals at DHT central team managing buyer programmes.", uk: "Approximately 20 professionals at DHT central team managing buyer programmes.", vi: "Khoảng 20 chuyên gia tại văn phòng trung tâm DHT điều phối chương trình." },
+        { us: "Reference capacity at an outdoor facility: 60-70 40-ft containers per month.", uk: "Reference capacity at an outdoor facility: 60-70 40-ft containers per month.", vi: "Công suất tham chiếu tại một xưởng outdoor: 60-70 container/tháng." },
       ],
     },
     machinery: {
@@ -202,28 +220,22 @@ export const aboutDefaults = {
     heading: { us: "Our Locations", uk: "Our Locations", vi: "Vị Trí Của Chúng Tôi" },
     items: [
       {
-        key: "factory",
-        name: { us: "DHT Furniture Vietnam Factory", uk: "DHT Furniture Vietnam Factory", vi: "Nhà máy Nội Thất Vùng DHT" },
-        address: { us: "19 National Highway, Nguyen Hue Ward, Phuoc Loc, Tuy Phuoc District, Binh Dinh Province, Vietnam", uk: "19 National Highway, Nguyen Hue Ward, Phuoc Loc, Tuy Phuoc District, Binh Dinh Province, Vietnam", vi: "Quốc lộ 19, Phường Nguyễn Huệ, Thị trấn Phước Lộc, Huyện Tuy Phước, Tỉnh Bình Định" },
-        hotline: "+84 902 907 399",
-      },
-      {
         key: "office",
-        name: { us: "Commercial & Customer Service Office", uk: "Commercial & Customer Service Office", vi: "Trụ Sở Thương Mại & CSKH" },
-        address: { us: "72 Le Thanh Ton Street, District 1, Ho Chi Minh City, Vietnam", uk: "72 Le Thanh Ton Street, District 1, Ho Chi Minh City, Vietnam", vi: "Số 72 Đường Lê Thánh Tôn, Quận 1, Thành phố Hồ Chí Minh" },
-        hotline: "+84 907 386 898",
+        name: { us: "DHT Central Commercial Coordination Hub", uk: "DHT Central Commercial Coordination Hub", vi: "Văn Phòng Điều Phối Thương Mại DHT" },
+        address: { us: "72 Le Thanh Ton Street, Ben Nghe Ward, District 1, Ho Chi Minh City, Vietnam", uk: "72 Le Thanh Ton Street, Ben Nghe Ward, District 1, Ho Chi Minh City, Vietnam", vi: "72 Lê Thánh Tôn, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh" },
+        hotline: "+84 932 058 545",
       },
       {
         key: "showroom",
-        name: { us: "DHT Private Garden Showroom", uk: "DHT Private Garden Showroom", vi: "Khu Trưng Bày DHT Private Garden" },
-        address: { us: "Vinh Thanh 2 Hamlet, Tuy Phuoc Commune, Binh Dinh Province, Vietnam", uk: "Vinh Thanh 2 Hamlet, Tuy Phuoc Commune, Binh Dinh Province, Vietnam", vi: "Thôn Vĩnh Thạnh 2, Xã Phước Lộc, Huyện Tuy Phước, Tỉnh Bình Định" },
+        name: { us: "DHT Showroom & Gallery", uk: "DHT Showroom & Gallery", vi: "Showroom & Phòng Trưng Bày DHT" },
+        address: { us: "206 Phan Dinh Phung Street, Pleiku City, Gia Lai Province, Vietnam", uk: "206 Phan Dinh Phung Street, Pleiku City, Gia Lai Province, Vietnam", vi: "206 Phan Đình Phùng, TP. Pleiku, Tỉnh Gia Lai, Việt Nam" },
         hotline: "+84 907 386 898",
       },
       {
-        key: "jdd",
-        name: { us: "JDD Global Furnishing Co. Ltd", uk: "JDD Global Furnishing Co. Ltd", vi: "Chi nhánh JDD Global Furnishing" },
-        address: { us: "226 Go Dua Street, Tam Binh Ward, Thu Duc City, Ho Chi Minh City, Vietnam", uk: "226 Go Dua Street, Tam Binh Ward, Thu Duc City, Ho Chi Minh City, Vietnam", vi: "226 Đường Gò Dưa, Phường Tam Bình, TP. Thủ Đức, Hồ Chí Minh" },
-        hotline: "+84 932 058 545",
+        key: "manufacturing",
+        name: { us: "DHT Manufacturing Network (11 Facilities)", uk: "DHT Manufacturing Network (11 Facilities)", vi: "Mạng Lưới Sản Xuất DHT (11 Cơ Sở Toàn Quốc)" },
+        address: { us: "4 Clusters: Quy Nhon, HCMC & Southern Corridor, Hung Yen, Phu Tho/Vinh Phuc", uk: "4 Clusters: Quy Nhon, HCMC & Southern Corridor, Hung Yen, Phu Tho/Vinh Phuc", vi: "4 Cụm: Quy Nhơn, TP.HCM & Nam Bộ, Hưng Yên, Phú Thọ/Vĩnh Phúc" },
+        hotline: "+84 902 907 399",
       },
     ],
   },

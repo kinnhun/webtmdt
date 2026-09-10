@@ -270,6 +270,7 @@ function DetailTabs({ product }: { product: Product }) {
 export default function ProductDetailContainer({ product, relatedProducts }: Props) {
   const { t, i18n } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [dimUnit, setDimUnit] = useState<'cm' | 'in'>('cm');
 
   const langEnum: Record<string, 'vi' | 'uk' | 'us'> = { "vi-VN": "vi", "en-GB": "uk", "en-US": "us" };
   const langId = langEnum[i18n?.language] || "us";
@@ -319,6 +320,16 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
     if (typeof navigator !== "undefined") navigator.clipboard.writeText(window.location.href);
   }, []);
 
+  const isAmalfi = (product.slug || "").toLowerCase().includes("amalfi") || (product.name?.us || "").toLowerCase().includes("amalfi");
+  const cleanDimensions = (product.dimensions || "").replace(/^[~\s]+/, "").trim();
+
+  const AMALFI_SPEC_ITEMS = [
+    { item: "Swivel Lounge Chair", itemVi: "Ghế xoay ngoài trời", inch: "29.13 × 32.28 × 25.59 in", cm: "74 × 82 × 65 cm" },
+    { item: "2-Seater Sofa", itemVi: "Sofa đôi ngoài trời", inch: "55.12 × 32.28 × 25.59 in", cm: "140 × 82 × 65 cm" },
+    { item: "Side Table", itemVi: "Bàn góc phụ", inch: "16.93 × 16.93 × 14.57 in", cm: "43 × 43 × 37 cm" },
+    { item: "Coffee Table", itemVi: "Bàn trà chữ nhật", inch: "39.37 × 23.62 × 15.75 in", cm: "100 × 60 × 40 cm" },
+  ];
+
   return (
     <div className="pt-[80px]" style={{ backgroundColor: "#fff", minHeight: "100vh" }}>
       {/* Breadcrumb */}
@@ -345,14 +356,17 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
           {/* Right — Info */}
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>
             {(pCategory || product.code) && (
-              <div className="flex items-center gap-2 mb-3">
+              <div className="flex flex-wrap items-center gap-2 mb-3">
                 {pCategory && pCategory.trim() !== "" && (
-                  <span className="px-2.5 py-1 rounded-sm font-body text-[10px] font-semibold tracking-wider uppercase text-white" style={{ backgroundColor: "hsl(var(--orange))" }}>
+                  <span className="px-2.5 py-1 rounded-sm font-body text-[10px] font-semibold tracking-wider uppercase text-white shadow-sm" style={{ backgroundColor: "#B97846" }}>
                     {pCategory}
                   </span>
                 )}
+                <span className="px-2.5 py-1 rounded-sm font-body text-[10px] font-semibold tracking-wider uppercase text-white shadow-sm bg-[#173C2C]">
+                  100% FSC Wood
+                </span>
                 {product.code && product.code.trim() !== "" && (
-                  <span className="font-body text-xs" style={{ color: "hsl(var(--navy)/0.4)" }}>{product.code}</span>
+                  <span className="font-body text-xs font-mono font-medium" style={{ color: "hsl(var(--navy)/0.5)" }}>{product.code}</span>
                 )}
               </div>
             )}
@@ -369,12 +383,12 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
 
             {/* Quick specs */}
             <div className="grid grid-cols-2 gap-3 mb-6">
-              {product.dimensions && product.dimensions.trim() !== "" && (
+              {cleanDimensions !== "" && (
                 <div className="flex items-center gap-2.5 p-3 rounded-lg" style={{ backgroundColor: "hsl(var(--navy)/0.03)" }}>
                   <Ruler size={16} style={{ color: "hsl(var(--orange))" }} />
                   <div>
                     <p className="font-body text-[10px] uppercase tracking-wider font-medium" style={{ color: "hsl(var(--navy)/0.4)" }}>{t("productDetail.dimensions")}</p>
-                    <p className="font-body text-xs font-semibold" style={{ color: "hsl(var(--navy-deep))" }}>{product.dimensions}</p>
+                    <p className="font-body text-xs font-semibold" style={{ color: "hsl(var(--navy-deep))" }}>{cleanDimensions}</p>
                   </div>
                 </div>
               )}
@@ -416,6 +430,60 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
                   </div>
                 </div>
               )}
+            </div>
+
+            {/* Amalfi Collection Multi-Item Dimension Breakdown */}
+            {isAmalfi && (
+              <div className="mb-6 p-4 rounded-lg border border-gray-200 bg-gray-50/70 shadow-xs">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <Ruler size={16} className="text-[#B97846]" />
+                    <h3 className="font-display font-bold text-sm text-[#173C2C]">Collection Dimensions Breakdown</h3>
+                  </div>
+                  <div className="flex items-center gap-1 bg-white border border-gray-200 rounded-md p-0.5 text-xs">
+                    <button
+                      type="button"
+                      onClick={() => setDimUnit('cm')}
+                      className={`px-2 py-0.5 rounded font-medium transition-all ${dimUnit === 'cm' ? 'bg-[#173C2C] text-white shadow-xs' : 'text-gray-600 hover:text-black'}`}
+                    >
+                      cm
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setDimUnit('in')}
+                      className={`px-2 py-0.5 rounded font-medium transition-all ${dimUnit === 'in' ? 'bg-[#173C2C] text-white shadow-xs' : 'text-gray-600 hover:text-black'}`}
+                    >
+                      inches
+                    </button>
+                  </div>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-xs font-body">
+                    <thead>
+                      <tr className="border-b border-gray-200 text-gray-500 uppercase tracking-wider">
+                        <th className="py-2 text-left font-semibold">Item</th>
+                        <th className="py-2 text-right font-semibold">Dimensions (W × D × H)</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-100">
+                      {AMALFI_SPEC_ITEMS.map((item, idx) => (
+                        <tr key={idx} className="hover:bg-white/60">
+                          <td className="py-2 font-medium text-gray-900">{langId === 'vi' ? item.itemVi : item.item}</td>
+                          <td className="py-2 text-right font-mono font-semibold text-[#173C2C]">{dimUnit === 'cm' ? item.cm : item.inch}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+
+            {/* FSC Timber Integrity Statement */}
+            <div className="flex items-center gap-3 p-3.5 rounded-lg border border-[#173C2C]/20 bg-[#173C2C]/5 mb-6">
+              <Shield size={18} className="text-[#173C2C] shrink-0" />
+              <p className="font-body text-xs text-[#173C2C] font-medium leading-relaxed">
+                <strong>Certified Material Integrity:</strong> All wood used in DHT furniture is FSC-certified. Sourced responsibly to comply with EUDR, REACH and Lacey Act standards.
+              </p>
             </div>
 
             {/* Visual Attributes */}

@@ -29,14 +29,14 @@ export default function CategoryShowcase() {
     {
       key: "aluminium",
       image: "/img/category/aluminum1.png",
-      href: "/catalogue/outdoor?category=Tables",
+      href: "/catalogue/outdoor?material=Aluminium",
     }
   ];
 
   const indoorCategory = {
     key: "indoor",
     image: "/img/category/chairs.png",
-    href: "/catalogue/indoor?category=Chairs",
+    href: "/catalogue/indoor",
   };
 
   return (
@@ -87,8 +87,8 @@ export default function CategoryShowcase() {
             <div className="absolute inset-0" style={{ background: "linear-gradient(to top, hsl(var(--navy-deep)/0.9) 0%, hsl(var(--navy-deep)/0.2) 60%, transparent 100%)" }} />
             <div className="absolute inset-x-0 bottom-0 p-5 md:p-8 flex flex-row items-end justify-between gap-4">
               <div>
-                <h3 className="font-display font-bold text-white text-xl md:text-3xl leading-tight mb-1">{t(`home.categories.${indoorCategory.key}.name`)}</h3>
-                <p className="font-body text-xs md:text-sm text-white/60 uppercase tracking-widest">{t(`home.categories.${indoorCategory.key}.count`)}</p>
+                <h3 className="font-display font-bold text-white text-xl md:text-3xl leading-tight mb-1">{t(`home.categories.${indoorCategory.key}.name`, "Indoor & Project Furniture")}</h3>
+                <p className="font-body text-xs md:text-sm text-white/60 uppercase tracking-widest">{t(`home.categories.${indoorCategory.key}.count`, "Tailored Programmes")}</p>
               </div>
               <div className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300" style={{ backgroundColor: "hsl(var(--orange))" }}>
                 <ArrowUpRight size={18} className="text-white" />

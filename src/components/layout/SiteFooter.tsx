@@ -46,45 +46,39 @@ export default function SiteFooter() {
       }))
     : [
         {
-          title: "DHT Furniture Vietnam Factory",
-          subtitle: "",
-          address: "19 National Highway, Nguyen Hue Ward, Phuoc Loc, Tuy Phuoc District, Binh Dinh Province, Vietnam",
-          phone: "+84 902 907 399",
-          href: "tel:+84902907399",
-          hours: "(From 8:00 AM - 17:00 PM Vietnam local time)"
-        },
-        {
-          title: "DHT Private Garden Showroom",
-          subtitle: "",
-          address: "Vinh Thanh 2 Hamlet, Tuy Phuoc Commune, Gia Lai Province, Vietnam",
-          phone: "+84 907 386 898",
-          href: "tel:+84907386898",
-          hours: "(From 8:00 AM - 17:00 PM Vietnam local time)"
-        },
-        {
-          title: "DHT Furniture Vietnam Office",
-          subtitle: "Commercial & CS Dept.",
-          address: "72 Le Thanh Ton Street, Sai Gon Ward, Ho Chi Minh City, Vietnam",
-          phone: "+84 907 386 898",
-          href: "tel:+84907386898",
-          hours: "(24/7)"
-        },
-        {
-          title: "JDD Global Furnishing Co. Ltd",
-          subtitle: "",
-          address: "226 Go Dua Street, Tam Binh Ward, Thu Duc City, Ho Chi Minh City, Vietnam",
+          title: "DHT Head Office & Commercial Dept.",
+          subtitle: "Commercial & Business Inquiries",
+          address: "72 Le Thanh Ton Street, Ben Nghe Ward, District 1, Ho Chi Minh City, Vietnam",
           phone: "+84 932 058 545",
           href: "tel:+84932058545",
-          hours: "(From 8:00 AM - 17:00 PM Vietnam local time)"
+          hours: "08:00 - 17:00 (UTC+7), Mon - Fri. Visits by appointment."
+        },
+        {
+          title: "DHT Showroom & Gallery",
+          subtitle: "Outdoor & Indoor Collections",
+          address: "206 Phan Dinh Phung Street, Pleiku City, Gia Lai Province, Vietnam",
+          phone: "+84 907 386 898",
+          href: "tel:+84907386898",
+          hours: "08:00 - 17:00 (UTC+7). Visits by appointment."
+        },
+        {
+          title: "DHT Manufacturing Network (11 Facilities)",
+          subtitle: "4 Clusters Across Vietnam",
+          address: "Quy Nhon, HCMC & Southern Corridor, Hung Yen, Phu Tho/Vinh Phuc",
+          phone: "+84 902 907 399",
+          href: "tel:+84902907399",
+          hours: "Factory visits arranged by appointment."
         }
       ];
 
   const quickLinks = [
-    { label: t("nav.home"), href: "/" },
-    { label: t("nav.about"), href: "/about" },
-    { label: t("footer.links.outdoorCollection"), href: "/catalogue/outdoor" },
-    { label: t("footer.links.indoorCollection"), href: "/catalogue/indoor" },
-    { label: t("nav.contact"), href: "/contact" },
+    { label: t("nav.home", "Home"), href: "/" },
+    { label: t("nav.about", "About DHT"), href: "/about" },
+    { label: t("nav.manufacturing", "Manufacturing"), href: "/manufacturing" },
+    { label: t("nav.qualityCompliance", "Quality & Compliance"), href: "/quality-compliance" },
+    { label: t("footer.links.outdoorCollection", "Outdoor Collections"), href: "/catalogue/outdoor" },
+    { label: t("footer.links.indoorCollection", "Indoor & Projects"), href: "/catalogue/indoor" },
+    { label: t("nav.contact", "Contact"), href: "/contact" },
   ];
 
   const collectionGroups = [
@@ -129,7 +123,7 @@ export default function SiteFooter() {
               />
             </div>
             <p className="font-body text-sm leading-relaxed text-white/60 mb-5 lg:text-center">
-              {t("footer.description")}
+              {t("footer.description", "DHT Furniture Vietnam is a Vietnamese furniture manufacturer and exporter, operating as part of a family-owned furniture group with 11 production facilities across Vietnam. We develop outdoor, indoor and project furniture for international buyers.")}
             </p>
             <div className="flex gap-3 lg:justify-center">
               {[
@@ -226,11 +220,11 @@ export default function SiteFooter() {
               ))}
             </div>
 
-            {/* <div className="mt-8 pt-6 border-t border-white/5">
-              <a href="mailto:info@dhtcompany.com" className="inline-flex items-center gap-2 font-body text-sm font-semibold text-[hsl(var(--orange))] hover:text-white transition-colors">
-                <Mail size={16} /> info@dhtcompany.com
+            <div className="mt-8 pt-6 border-t border-white/10">
+              <a href="mailto:sales@dhtcompany.com" className="inline-flex items-center gap-2 font-body text-sm font-semibold text-[#B97846] hover:text-white transition-colors">
+                <Mail size={16} /> sales@dhtcompany.com
               </a>
-            </div> */}
+            </div>
           </motion.div>
         </motion.div>
 
@@ -241,8 +235,12 @@ export default function SiteFooter() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="pt-6 flex flex-col md:flex-row items-center justify-between gap-3"
         >
-          <p className="font-body text-xs text-white/40">{t("footer.copyright")}</p>
-          <p className="font-body text-xs text-white/30">{t("footer.tagline")}</p>
+          <p className="font-body text-xs text-white/40">
+            {t("footer.copyright", "© 2026 DHT Furniture Vietnam Joint Stock Company. All rights reserved.")}
+          </p>
+          <p className="font-body text-xs text-white/30">
+            {t("footer.tagline", "Outdoor • Indoor • Project Furniture")}
+          </p>
         </motion.div>
       </div>
     </footer>

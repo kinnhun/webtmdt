@@ -1,4 +1,5 @@
-import Head from "next/head";
+import SEO from "@/components/SEO";
+import Schema from "@/components/Schema";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
@@ -7,7 +8,7 @@ import { getMaterialArticle, materialArticles, type MaterialArticle } from "@/da
 
 const icons = [ShieldCheck, Factory, Truck, PackageCheck, Globe2, Sparkles];
 
-function SectionCard({ section, index, layout }: { section: MaterialArticle["sections"][number]; index: number; layout: MaterialArticle["layout"] }) {
+function SectionCard({ section, index, layout }: { key?: string | number; section: MaterialArticle["sections"][number]; index: number; layout: MaterialArticle["layout"] }) {
   const Icon = icons[index % icons.length];
   const imageFirst = layout === "comfort" || (layout === "technical" && index === 1);
 
@@ -64,10 +65,65 @@ function MaterialPage({ article }: { article: MaterialArticle }) {
 
   return (
     <>
-      <Head>
-        <title>{article.headline} | DHT Furniture Materials</title>
-        <meta name="description" content={article.intro} />
-      </Head>
+      <SEO 
+        title={`${article.headline} — DHT Furniture Materials Guide`}
+        description={article.intro}
+        image={article.image || article.hoverImage}
+        type="article"
+        section="Materials & Manufacturing Craft"
+        tags={[article.badge, "Furniture Materials", "DHT Company", "Manufacturing"]}
+      />
+      <Schema 
+        id="schema-article-material"
+        type="Article"
+        data={{
+          headline: article.headline,
+          description: article.intro,
+          image: [article.image, article.hoverImage].filter(Boolean),
+          author: {
+            "@type": "Organization",
+            name: "DHT Company"
+          },
+          publisher: {
+            "@type": "Organization",
+            name: "DHT Company",
+            logo: {
+              "@type": "ImageObject",
+              url: "https://dhtcompany.com/img/logo-no-text.png"
+            }
+          },
+          mainEntityOfPage: {
+            "@type": "WebPage",
+            "@id": `https://dhtcompany.com/materials/${article.slug}`
+          }
+        }}
+      />
+      <Schema 
+        id="schema-breadcrumbs-material"
+        type="BreadcrumbList"
+        data={{
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Home",
+              item: "https://dhtcompany.com"
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: "Materials",
+              item: "https://dhtcompany.com/#materials"
+            },
+            {
+              "@type": "ListItem",
+              position: 3,
+              name: article.headline,
+              item: `https://dhtcompany.com/materials/${article.slug}`
+            }
+          ]
+        }}
+      />
 
       <main className="min-h-screen bg-[#f7f4ee] pt-[80px]">
         <section className={`relative overflow-hidden ${isPremium ? "bg-stone-950" : isTechnical ? "bg-slate-950" : isComfort ? "bg-[#1f3345]" : "bg-[hsl(var(--navy))]"}`}>

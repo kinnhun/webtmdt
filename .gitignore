@@ -60,3 +60,9 @@ env/
 *.log
 
 .env
+
+# generated image cache
+public/cache/
+
+# scratch analysis files
+pdf_full_text.txt

@@ -1,9 +1,20 @@
+export type SchemaType = 
+  | "Organization" 
+  | "LocalBusiness" 
+  | "Product" 
+  | "BreadcrumbList" 
+  | "Article" 
+  | "BlogPosting" 
+  | "WebSite" 
+  | string;
+
 interface SchemaProps {
-  type: "Organization" | "LocalBusiness" | "Product";
+  type: SchemaType;
   data: Record<string, any>;
+  id?: string;
 }
 
-export default function Schema({ type, data }: SchemaProps) {
+export default function Schema({ type, data, id }: SchemaProps) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": type,
@@ -12,6 +23,7 @@ export default function Schema({ type, data }: SchemaProps) {
 
   return (
     <script
+      id={id || `schema-${type.toLowerCase()}`}
       type="application/ld+json"
       dangerouslySetInnerHTML={{
         __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
@@ -19,3 +31,4 @@ export default function Schema({ type, data }: SchemaProps) {
     />
   );
 }
+

@@ -17,6 +17,7 @@ import GlobalLoading from "@/components/ui/GlobalLoading";
 import SiteHeader from "@/components/layout/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
 import SearchOverlay from "@/components/SearchOverlay";
+import Head from "next/head";
 import SEO from "@/components/SEO";
 
 /* Hook tự động show loading khi chuyển trang */
@@ -73,7 +74,14 @@ function AppShell({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <SEO />
+      {isAdminRoute ? (
+        <Head>
+          <title key="title">DHT Admin Dashboard</title>
+          <meta key="robots" name="robots" content="noindex, nofollow" />
+        </Head>
+      ) : (
+        <SEO />
+      )}
       {!isAdminRoute && <SiteHeader onSearchOpen={() => setSearchOpen(true)} />}
       <main>
         <Component {...pageProps} />

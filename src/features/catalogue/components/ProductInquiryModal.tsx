@@ -19,6 +19,7 @@ export default function ProductInquiryModal({ isOpen, onClose, product }: Props)
   const [form, setForm] = useState<Record<string, string>>({});
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [dbData, setDbData] = useState<any>(null);
 
   useEffect(() => {
@@ -59,6 +60,7 @@ export default function ProductInquiryModal({ isOpen, onClose, product }: Props)
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
+    setError(null);
     try {
       const payload = {
         ...form,
@@ -66,14 +68,19 @@ export default function ProductInquiryModal({ isOpen, onClose, product }: Props)
         interestedProduct: product.id,
       };
 
-      await fetch("/api/contact", { 
+      const res = await fetch("/api/contact", { 
         method: "POST", 
         headers: { "Content-Type": "application/json" }, 
         body: JSON.stringify(payload) 
       });
+      if (!res.ok) throw new Error("Server request failed");
       setSent(true);
     } catch {
-      // ignore
+      setError(
+        langId === "vi"
+          ? "Không thể gửi yêu cầu do gián đoạn kết nối. Toàn bộ thông tin của bạn đã được giữ nguyên. Vui lòng thử lại hoặc gửi trực tiếp về sales@dhtcompany.com."
+          : "Unable to submit your inquiry due to network interruption. Your information has been preserved. Please try again or email us directly at sales@dhtcompany.com."
+      );
     }
     setSending(false);
   };
@@ -148,6 +155,11 @@ export default function ProductInquiryModal({ isOpen, onClose, product }: Props)
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
+                  {error && (
+                    <div className="p-3.5 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs leading-relaxed font-body">
+                      {error}
+                    </div>
+                  )}
                   <div className="flex flex-wrap -mx-2.5">
                     {fields.map((f: any, idx: number) => {
                       const labelText = typeof f.label === 'object' ? (f.label[langId] || f.label.us || f.key || "") : f.label;

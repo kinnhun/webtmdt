@@ -62,7 +62,7 @@ export default function CompanyIntro() {
               <Link href="/contact" className="inline-flex items-center justify-center px-6 py-3 font-body font-semibold text-sm text-white rounded-sm hover:bg-white/10 transition-all text-center w-full sm:w-auto" style={{ backgroundColor: "hsl(var(--navy))" }}>
                 {t("home.intro.buttons.quote")}
               </Link>
-              <Link href="/about" className="group hidden sm:inline-flex items-center gap-2.5 font-body font-semibold text-sm ml-2" style={{ color: "hsl(var(--navy))" }}>
+              <Link href="/manufacturing" className="group hidden sm:inline-flex items-center gap-2.5 font-body font-semibold text-sm ml-2" style={{ color: "hsl(var(--navy))" }}>
                 <span className="border-b border-current pb-0.5 transition-opacity duration-300 group-hover:opacity-60">{t("home.intro.buttons.factory")}</span>
                 <span className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:rotate-45" style={{ backgroundColor: "hsl(var(--orange))" }}>
                   <ArrowUpRight size={12} className="text-white" />
@@ -103,14 +103,15 @@ export default function CompanyIntro() {
             </div>
             <div className="grid grid-cols-2 gap-2 sm:gap-3">
               {[
-                { n: "18+", label: t("home.intro.statsYears"), filled: true },
-                { n: "50K", label: t("home.intro.statsUnits"), filled: false },
-                { n: "35+", label: t("home.intro.statsCraftspeople"), filled: true },
-                { n: "OEM", label: t("home.intro.statsExport"), filled: false },
-              ].map(({ n, label, filled }, i) => (
-                <motion.div key={label} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={vp} transition={{ duration: 0.55, delay: 0.2 + i * 0.09, ease }} className="rounded-sm px-4 sm:px-5 py-4 sm:py-5" style={{ backgroundColor: filled ? "hsl(var(--navy))" : "white", border: filled ? "none" : "1px solid hsl(var(--border))", minHeight: 76 }}>
-                  <p className="font-display font-bold leading-none mb-1.5 lining-nums tabular-nums" style={{ fontSize: "clamp(1.6rem, 3vw, 2.4rem)", color: filled ? "white" : "hsl(var(--navy))" }}>{n}</p>
-                  <p className="font-body text-xs tracking-[0.12em] uppercase font-medium" style={{ color: filled ? "rgba(255,255,255,0.45)" : "hsl(var(--muted-foreground))" }}>{label}</p>
+                { n: "11", label: t("home.intro.location"), sub: "10 Furn. + 1 Panel", filled: true },
+                { n: "543K", label: t("home.intro.statsUnits"), sub: "283K m² finished", filled: false },
+                { n: "~2,400", label: t("home.intro.statsCraftspeople"), sub: "Skilled group staff", filled: true },
+                { n: "100%", label: "FSC Wood Certified", sub: "Acacia, Teak, Euc.", filled: false },
+              ].map(({ n, label, sub, filled }, i) => (
+                <motion.div key={label} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={vp} transition={{ duration: 0.55, delay: 0.2 + i * 0.09, ease }} className="rounded-sm px-4 sm:px-5 py-4 sm:py-5" style={{ backgroundColor: filled ? "#173C2C" : "white", border: filled ? "none" : "1px solid hsl(var(--border))", minHeight: 88 }}>
+                  <p className="font-display font-bold leading-none mb-1 lining-nums tabular-nums" style={{ fontSize: "clamp(1.5rem, 2.8vw, 2.2rem)", color: filled ? "#B97846" : "#173C2C" }}>{n}</p>
+                  <p className="font-body text-xs tracking-wider uppercase font-semibold truncate" style={{ color: filled ? "white" : "hsl(var(--navy-deep))" }}>{label}</p>
+                  <p className="font-body text-[10px] mt-0.5" style={{ color: filled ? "rgba(255,255,255,0.6)" : "hsl(var(--muted-foreground))" }}>{sub}</p>
                 </motion.div>
               ))}
             </div>

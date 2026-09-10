@@ -45,8 +45,15 @@ export default function WhyChooseUs() {
             ))}
           </ul>
           <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={vp} transition={{ duration: 0.5, delay: 0.7, ease }} className="flex flex-wrap gap-3">
-            <Link href="/catalogue" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90 uppercase" style={{ backgroundColor: "hsl(var(--orange))" }}>{t("home.whyUs.btn1")}</Link>
-            <Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white/70 border border-white/20 hover:bg-white/10 transition-all">{t("home.whyUs.btn2")}</Link>
+            <Link href="/catalogue/outdoor" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90 uppercase shadow-md" style={{ backgroundColor: "#B97846" }}>
+              {t("home.whyUs.btn1")} <ArrowRight size={15} />
+            </Link>
+            <a href="/DHT_Company_Profile_2026.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white border border-white/30 hover:bg-white/10 transition-all backdrop-blur-sm">
+              {t("home.whyUs.viewCatalogue")}
+            </a>
+            <Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white/80 border border-white/20 hover:bg-white/10 transition-all">
+              {t("home.whyUs.btn2")}
+            </Link>
           </motion.div>
         </div>
       </div>

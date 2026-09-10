@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import SEO from "@/components/SEO";
+import Schema from "@/components/Schema";
 import Link from "next/link";
 import {
   Award, Users, Shield, Globe, Leaf, ArrowDown, ChevronRight, Star, Heart, Zap, Target, CheckCircle,
@@ -16,6 +17,7 @@ import {
 import { useTranslation } from "react-i18next";
 import MarqueeStrip from "@/components/MarqueeStrip";
 import { useQuery } from "@tanstack/react-query";
+import { aboutDefaults } from "@/features/admin/constants/aboutDefaults";
 
 /* ── Icon map for dynamic icon resolution ── */
 const ICON_MAP: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
@@ -122,19 +124,24 @@ export default function AboutPage() {
 
   const hasDB = !!dbData;
 
-  /* ── Helper: get text from DB or fallback to i18n ── */
+  /* ── Helper: get text from DB, or aboutDefaults, or fallback to i18n ── */
   const d = (dbPath: string[], i18nKey: string): string => {
-    if (hasDB && dbData) {
-      let val: any = dbData;
+    let source = hasDB && dbData ? dbData : aboutDefaults;
+    let val: any = source;
+    for (const key of dbPath) {
+      val = val?.[key];
+    }
+    if (!val && source !== aboutDefaults) {
+      val = aboutDefaults as any;
       for (const key of dbPath) {
         val = val?.[key];
       }
-      if (val && typeof val === 'object' && ('us' in val || 'uk' in val || 'vi' in val)) {
-        const textValue = txt(val, langKey);
-        if (textValue.trim() !== '') return textValue;
-      } else if (typeof val === 'string' && val.trim() !== '') {
-        return val;
-      }
+    }
+    if (val && typeof val === 'object' && ('us' in val || 'uk' in val || 'vi' in val)) {
+      const textValue = txt(val, langKey);
+      if (textValue.trim() !== '') return textValue;
+    } else if (typeof val === 'string' && val.trim() !== '') {
+      return val;
     }
     return t(i18nKey);
   };
@@ -234,16 +241,40 @@ export default function AboutPage() {
   const teamMembers = allMembers.filter((m: any) => m !== teamLeader);
 
   /* ── Locations ── */
-  const locationItems = dbData?.locations?.items?.map((loc: any) => ({
+  const rawLocations = (dbData?.locations?.items && dbData.locations.items.length > 0)
+    ? dbData.locations.items
+    : (aboutDefaults.locations?.items || []);
+
+  const locationItems = rawLocations.map((loc: any) => ({
     key: loc.key || '',
-    name: txt(loc.name, langKey) || '',
-    address: txt(loc.address, langKey) || '',
+    name: txt(loc.name, langKey) || (typeof loc.name === 'string' ? loc.name : ''),
+    address: txt(loc.address, langKey) || (typeof loc.address === 'string' ? loc.address : ''),
     hotline: loc.hotline || '',
-  })) || [];
+  }));
 
   return (
     <>
       <SEO title={d(['hero', 'title'], "about.seo.title")} description={d(['hero', 'description'], "about.seo.description")} />
+      <Schema 
+        id="schema-breadcrumbs-about"
+        type="BreadcrumbList"
+        data={{
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Home",
+              item: "https://dhtcompany.com"
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: "About Us",
+              item: "https://dhtcompany.com/about"
+            }
+          ]
+        }}
+      />
 
       <div className="bg-white">
         {/* ── 1. Hero Parallax ── */}
@@ -571,6 +602,30 @@ export default function AboutPage() {
               ))}
             </div>
 
+            {/* Manufacturing Footprint & Headcount Breakdown */}
+            <div className="mb-20 p-6 rounded-lg bg-white/[0.03] border border-white/10 max-w-4xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center divide-y md:divide-y-0 md:divide-x divide-white/10">
+                <div className="px-4 py-2">
+                  <p className="font-display text-xl font-bold text-[#B97846]">283,380 m²</p>
+                  <p className="font-body text-xs text-white/70 uppercase tracking-wider mt-1">Dedicated Finished Furniture</p>
+                  <p className="font-body text-[11px] text-white/40 mt-0.5">10 Facilities (Indoor & Outdoor)</p>
+                </div>
+                <div className="px-4 py-2">
+                  <p className="font-display text-xl font-bold text-[#B97846]">260,000 m²</p>
+                  <p className="font-body text-xs text-white/70 uppercase tracking-wider mt-1">Panel & Primary Processing</p>
+                  <p className="font-body text-[11px] text-white/40 mt-0.5">Engineered Wood Hub (Phu Tho)</p>
+                </div>
+                <div className="px-4 py-2">
+                  <p className="font-display text-xl font-bold text-[#B97846]">~20 vs ~2,400</p>
+                  <p className="font-body text-xs text-white/70 uppercase tracking-wider mt-1">Central Team vs Group Staff</p>
+                  <p className="font-body text-[11px] text-white/40 mt-0.5">Commercial & QC Coordination</p>
+                </div>
+              </div>
+              <p className="font-body text-xs text-center text-[#B97846]/90 mt-4 pt-4 border-t border-white/10 tracking-wide">
+                * All wood used in DHT furniture is FSC-certified (Acacia hybrid, Eucalyptus grandis, Brazilian Teak).
+              </p>
+            </div>
+
             {/* Info Cards */}
             <div className={`grid gap-8 lg:gap-12 ${machineryItems.length > 0 ? "lg:grid-cols-2" : "grid-cols-1 max-w-4xl mx-auto w-full"}`}>
               {/* Human Resources & R&D */}
@@ -717,7 +772,7 @@ export default function AboutPage() {
               <div className="w-24 h-1 bg-[hsl(var(--orange))] mx-auto" />
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {locationItems.map((loc: any, i: number) => {
                 const nameStr = typeof loc.name === 'string' ? loc.name : '';
                 const addressStr = typeof loc.address === 'string' ? loc.address : '';

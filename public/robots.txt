@@ -1,6 +1,7 @@
 # *
 User-agent: *
 Allow: /
+Allow: /api/sitemap.xml
 Disallow: /admin
 Disallow: /api/
 Disallow: /workspace
@@ -10,3 +11,4 @@ Host: https://dhtcompany.com
 
 # Sitemaps
 Sitemap: https://dhtcompany.com/sitemap.xml
+Sitemap: https://dhtcompany.com/api/sitemap.xml

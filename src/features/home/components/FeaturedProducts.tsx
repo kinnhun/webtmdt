@@ -8,7 +8,7 @@ import QuickViewModal from "@/components/QuickViewModal";
 import { useFeaturedProducts } from "@/domains/product/product.hooks";
 import type { Product } from "@/domains/product/product.types";
 
-const FILTER_KEYS = ["All", "Outdoor Sofa", "Dining Set", "Sunlounger", "Outdoor Table", "Aluminum Furniture"] as const;
+const FILTER_KEYS = ["All", "Outdoor Sofa", "Dining Set", "Sunlounger", "Outdoor Table", "Chairs"] as const;
 
 const FILTER_I18N: Record<string, string> = {
   "All": "home.featured.filterAll",
@@ -16,7 +16,7 @@ const FILTER_I18N: Record<string, string> = {
   "Dining Set": "home.featured.filterDiningSets",
   "Sunlounger": "home.featured.filterLoungeDaybeds",
   "Outdoor Table": "home.featured.filterTables",
-  "Aluminum Furniture": "home.featured.filterChairs",
+  "Chairs": "home.featured.filterChairs",
 };
 
 const FILTER_MAPPING: Record<string, string> = {
@@ -25,7 +25,7 @@ const FILTER_MAPPING: Record<string, string> = {
   "Dining Set": "Dining Sets",
   "Sunlounger": "Lounge & Daybeds",
   "Outdoor Table": "Tables",
-  "Aluminum Furniture": "Chairs",
+  "Chairs": "Chairs",
 };
 
 function EditorialProductCard({ product, index, onQuickView }: { product: Product; index: number; onQuickView: (p: Product) => void }) {

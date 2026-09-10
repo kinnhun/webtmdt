@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import Head from "next/head";
+import SEO from "@/components/SEO";
 import Link from "next/link";
 import { Home } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -9,9 +9,10 @@ export default function NotFoundPage() {
 
   return (
     <>
-      <Head>
-        <title>{t("notFound.seo.title")}</title>
-      </Head>
+      <SEO 
+        title={t("notFound.seo.title", "404 Page Not Found — DHT Company")}
+        noindex={true}
+      />
       <div className="flex flex-col items-center justify-center text-center px-6" style={{ minHeight: "100vh", backgroundColor: "hsl(var(--warm-cream))" }}>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
           <h1 className="font-display font-bold leading-none mb-4" style={{ fontSize: "clamp(5rem, 15vw, 12rem)", color: "hsl(var(--orange)/0.15)" }}>404</h1>

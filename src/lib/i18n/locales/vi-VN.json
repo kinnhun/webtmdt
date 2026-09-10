@@ -1,23 +1,30 @@
 {
   "nav": {
     "home": "Trang chủ",
-    "about": "Giới thiệu",
-    "catalogue": "Bộ sưu tập",
+    "about": "Về DHT",
+    "manufacturing": "Năng lực sản xuất",
+    "collections": "Bộ sưu tập",
+    "outdoorCollection": "Bộ sưu tập ngoài trời",
+    "indoorCollection": "Nội thất trong nhà & Dự án",
+    "qualityCompliance": "Chất lượng & Tuân thủ",
     "contact": "Liên hệ",
-    "getQuote": "Nhận báo giá",
+    "getQuote": "Yêu cầu báo giá",
+    "requestQuote": "Yêu cầu báo giá",
+    "companyProfile": "Hồ sơ năng lực",
     "whatsapp": "WhatsApp",
-    "outdoorFurniture": "Đồ nội thất ngoài trời",
-    "search": "Tìm kiếm",
-    "indoorCollection": "Bộ sưu tập trong nhà"
+    "furnitureVietnam": "Nội Thất Việt Nam",
+    "search": "Tìm kiếm"
   },
   "footer": {
-    "description": "Nhà cung cấp đồ nội thất ngoài trời tại Việt Nam, OEM / ODM Acacia, Eucalyptus, Teak & Aluminum cho người mua toàn cầu",
+    "description": "DHT Furniture Vietnam là nhà sản xuất và xuất khẩu nội thất Việt Nam, hoạt động trong mạng lưới tập đoàn gia đình gồm 11 cơ sở sản xuất trên toàn quốc. Chúng tôi phát triển các dòng sản phẩm nội thất ngoài trời, trong nhà và dự án cho các đối tác quốc tế.",
     "quickLinks": "Liên kết nhanh",
     "collections": "Bộ sưu tập",
     "contact": "Liên hệ",
     "links": {
       "outdoorCollection": "Bộ sưu tập ngoài trời",
-      "indoorCollection": "Bộ sưu tập trong nhà"
+      "indoorCollection": "Nội thất trong nhà & Dự án",
+      "manufacturing": "Năng lực sản xuất",
+      "qualityCompliance": "Chất lượng & Tuân thủ"
     },
     "collectionsItems": {
       "outdoorSofas": "Sofa ngoài trời",
@@ -29,122 +36,123 @@
       "diningRoomFurniture": "Nội thất phòng ăn",
       "bathroomFurniture": "Nội thất phòng tắm"
     },
-    "copyright": "© 2025 DHT Outdoor Furniture Production. Bảo lưu mọi quyền.",
-    "tagline": "Nhà sản xuất & cung cấp đồ nội thất"
+    "copyright": "© 2026 Công ty Cổ phần DHT Furniture Vietnam. Bảo lưu mọi quyền.",
+    "tagline": "Nội thất Ngoài trời • Trong nhà • Dự án"
   },
   "home": {
     "seo": {
-      "title": "DHT Outdoor Furniture — Nhà sản xuất & Cung cấp Nội thất Cao cấp",
-      "description": "DHT Outdoor Furniture Production — nhà sản xuất nội thất ngoài trời & trong nhà cao cấp. Gỗ teak, gỗ tự nhiên, đặt hàng theo yêu cầu. Chứng nhận ISO. Xuất khẩu 25+ quốc gia."
+      "title": "DHT Furniture Vietnam — Nhà sản xuất Nội thất Ngoài trời • Trong nhà • Dự án",
+      "description": "DHT Furniture Vietnam trực thuộc tập đoàn gia đình với 11 cơ sở sản xuất và tổng diện tích 543.380 m² trên toàn quốc. Cung ứng nội thất ngoài trời, trong nhà và dự án cho đối tác quốc tế."
     },
     "hero": {
-      "badge": "Keo | Bạch đàn | Teak | Nhôm | Hỗ trợ đóng container ghép",
-      "title1": "Nhà cung cấp nội thất ngoài trời uy tín từ Việt Nam",
-      "title2": "Sản xuất cho nhà bán lẻ. Quy mô linh hoạt",
-      "exploreProducts": "Khám phá sản phẩm",
-      "getQuote": "Nhận báo giá",
+      "badge": "Tràm • Bạch đàn • Teak • Nhôm | 100% Gỗ Đạt Chuẩn FSC | Đáp Ứng Đơn Hàng Lớn",
+      "title1": "Nội thất Ngoài trời • Trong nhà • Dự án",
+      "title2": "Đối tác Sản xuất cho các Nhà bán lẻ & Dự án Quốc tế",
+      "exploreProducts": "Khám phá Bộ sưu tập",
+      "getQuote": "Yêu cầu Báo giá",
       "stats": {
-        "yearsExperience": "Năm kinh nghiệm",
-        "unitsMonth": "Sản phẩm / Tháng",
-        "products": "Mẫu thiết kế sẵn",
-        "exportCountries": "Quốc gia xuất khẩu"
+        "facilities": "Cơ sở Sản xuất",
+        "footprint": "Tổng Mặt bằng Sản xuất",
+        "personnel": "Nhân sự Toàn Tập đoàn",
+        "clusters": "Cụm Sản xuất Trọng điểm"
       }
     },
     "intro": {
       "label": "Về chúng tôi",
-      "heading1": "Nhà sản xuất nội thất",
-      "heading2": "ngoài trời Việt Nam cho",
-      "heading3": "Nhà bán lẻ & Dự án",
-      "paragraph1": "Chúng tôi hỗ trợ nhà bán lẻ, nhà phân phối và người mua dự án tìm nguồn nội thất ngoài trời uy tín Sản xuất tại Việt Nam, Cơ sở sản xuất Bình Định — với chất lượng ổn định, sản xuất linh hoạt và giao hàng đúng hạn. Từ phát triển mẫu đến xếp container, mọi bước đều được kiểm soát theo tiêu chuẩn quốc tế.",
-      "paragraph2": "✔ Chất lượng đồng nhất với kiểm soát QC toàn diện\n✔ Tùy chỉnh OEM / ODM cho nhãn hàng riêng\n✔ Công suất ổn định lên đến 50.000 sản phẩm/tháng\n✔ Giao hàng đúng hạn với quy trình sẵn sàng xuất khẩu\n✔ Giàu kinh nghiệm thị trường Mỹ, EU & toàn cầu",
-      "ourStory": "Câu chuyện của chúng tôi",
-      "isoCertified": "Chứng nhận 9001:2015",
-      "location": "Bình Định, Việt Nam",
-      "statsYears": "18+ Năm kinh nghiệm xuất khẩu",
-      "statsUnits": "Công suất 50.000 sản phẩm / Tháng",
-      "statsCraftspeople": "35+ Quốc gia xuất khẩu",
-      "statsExport": "OEM / ODM sẵn sàng",
-      "subline": "Keo • Bạch đàn • Teak • Nhôm | OEM / ODM | Hỗ trợ đóng container ghép",
+      "heading1": "Một Đội Ngũ DHT.",
+      "heading2": "Sản Xuất Chuyên Môn Hóa",
+      "heading3": "Trên Toàn Quốc",
+      "paragraph1": "DHT Furniture Vietnam là đầu mối điều phối thương mại, kỹ thuật và kiểm soát chất lượng thuộc tập đoàn nội thất gia đình sở hữu 11 cơ sở sản xuất chuyên môn hóa trên toàn quốc. Chúng tôi cung ứng các bộ sưu tập ngoài trời, nội thất trong nhà may đo và nội thất dự án thương mại với chất lượng xuất khẩu đồng nhất.",
+      "paragraph2": "✔ Mạng lưới 11 cơ sở sản xuất chuyên môn hóa trên toàn quốc\n✔ 100% gỗ sử dụng đạt chứng chỉ nguồn gốc bền vững FSC\n✔ Quy trình kiểm soát chất lượng 6 bước từ gỗ xẻ tới đóng container\n✔ Năng lực kỹ thuật, tối ưu hóa CBM và ghép container linh hoạt\n✔ Một đầu mối chịu trách nhiệm trực tiếp qua Đội ngũ Trung tâm DHT",
+      "ourStory": "Hành trình phát triển",
+      "isoCertified": "Chứng nhận ISO 9001 & FSC CoC",
+      "location": "11 Cơ sở Trên Toàn Quốc",
+      "statsYears": "2016 Thành lập • 2024 Vươn tầm",
+      "statsUnits": "543.380 m² Tổng mặt bằng",
+      "statsCraftspeople": "~2.400 Nhân sự tập đoàn",
+      "statsExport": "Điều phối trung tâm trực tiếp",
+      "subline": "Tràm • Bạch đàn • Teak • Nhôm | 100% Gỗ FSC | Đóng Container Ghép Linh Hoạt",
       "buttons": {
-        "catalog": "TẢI CATALOG ĐẦY ĐỦ",
+        "catalog": "XEM BỘ SƯU TẬP",
         "quote": "YÊU CẦU BÁO GIÁ",
-        "factory": "Xem nhà máy →"
+        "factory": "Hệ thống Cơ sở Sản xuất →"
       }
     },
     "video": {
       "label": "Chế tác",
       "title1": "Nghệ thuật",
       "title2": "Chế tác.",
-      "description": "Mỗi sản phẩm nội thất DHT đều bắt nguồn từ đôi bàn tay khéo léo và quy trình sản xuất chuẩn mực. Xem video để bước vào không gian sáng tạo nơi vật liệu tự nhiên hòa quyện cùng thiết kế đương đại.",
+      "description": "Mỗi sản phẩm nội thất DHT đều bắt nguồn từ đôi bàn tay khéo léo, nguồn gỗ sấy lò chuẩn mực và quy trình sản xuất nghiêm ngặt tại 11 cơ sở chuyên môn hóa của chúng tôi.",
       "productionLabel": "Sản phẩm / Tháng"
     },
     "categories": {
       "label": "Bộ sưu tập",
-      "heading1": "Nội thất ngoài trời cho",
-      "heading2": "Nhà bán lẻ & Dự án",
-      "viewAll": "Xem tất cả",
+      "heading1": "Nội thất Ngoài trời & Dự án cho",
+      "heading2": "Nhà bán lẻ & Nghỉ dưỡng",
+      "viewAll": "Xem Tất cả Bộ sưu tập",
       "outdoorSofa": {
-        "name": "Bộ sưu tập Sofa ngoài trời",
-        "tagline": "Thoải mái cho mọi sân thượng",
-        "count": "36 sản phẩm"
+        "name": "Bộ sưu tập Sofa Ngoài trời",
+        "tagline": "Khung nhôm vững chãi & nệm mút êm ái",
+        "count": "Thiết kế Tiêu chuẩn"
       },
       "outdoorDining": {
         "name": "Bộ bàn ăn ngoài trời",
-        "tagline": "Dùng bữa ngoài trời đẳng cấp",
-        "count": "28 sản phẩm"
+        "tagline": "Gỗ FSC tự nhiên & vật liệu hỗn hợp",
+        "count": "Quy cách Đa dạng"
       },
       "aluminium": {
         "name": "Nội thất nhôm",
-        "tagline": "Nhẹ & chống chịu thời tiết",
-        "count": "42 sản phẩm"
+        "tagline": "Khung nhôm kiến trúc sơn tĩnh điện",
+        "count": "Chống chịu Thời tiết"
       },
       "indoor": {
-        "name": "Nội thất trong nhà (Chỉ đặt hàng riêng)",
-        "tagline": "Sản phẩm nội thất trong nhà cao cấp",
+        "name": "Nội thất Trong nhà & Dự án",
+        "tagline": "Phòng ăn, Phòng khách, Bọc nệm & Dự án Khách sạn",
+        "count": "Chương trình May đo",
         "sub": {
           "livingRoom": "Phòng khách",
           "diningRoom": "Phòng ăn",
-          "bathroom": "Phòng tắm"
+          "bathroom": "Dự án Khách sạn"
         }
       },
-      "subline": "Keo • Teak • Nhôm | OEM / ODM | Hỗ trợ đóng container ghép",
+      "subline": "Gỗ Tràm FSC • Gỗ Bạch đàn FSC • Gỗ Teak FSC • Nhôm Sơn Tĩnh Điện | Tối Ưu Cho Đơn Hàng Lớn",
       "sunlounger": {
         "name": "Ghế tắm nắng & Giường ngoài trời",
-        "tagline": "",
-        "count": "(Đặt hàng riêng)"
+        "tagline": "Thư giãn cạnh hồ bơi & ban công nghỉ dưỡng",
+        "count": "Dự án & Bán lẻ"
       }
     },
     "featured": {
-      "label": "Sản phẩm bán chạy",
-      "heading": "Nội thất ngoài trời bán chạy nhất",
-      "description": "Sản xuất tại Việt Nam cho nhà bán lẻ, nhà phân phối và người mua dự án",
-      "fullCatalogue": "Tải Catalog đầy đủ",
-      "seeAllProducts": "Xem tất cả sản phẩm",
+      "label": "Bộ sưu tập Tuyển chọn",
+      "heading": "Các Bộ Sưu Tập Tuyển Chọn Cho Chương Trình Quốc Tế",
+      "description": "Được thiết kế kỹ thuật và gia công trên hệ thống 11 cơ sở chuyên môn hóa cho các chuỗi bán lẻ và dự án khách sạn toàn cầu.",
+      "fullCatalogue": "Khám phá Bộ sưu tập Ngoài trời",
+      "seeAllProducts": "Xem Tất cả Sản phẩm",
       "noProducts": "Chưa có sản phẩm nổi bật trong danh mục này.",
-      "new": "Mới",
+      "new": "Tuyển chọn",
       "inquire": "Yêu cầu báo giá",
       "filterAll": "Tất cả",
       "filterOutdoorSofas": "Sofa ngoài trời",
       "filterDiningSets": "Bộ bàn ăn",
       "filterLoungeDaybeds": "Ghế tắm nắng",
       "filterTables": "Bàn ngoài trời",
-      "filterChairs": "Nội thất nhôm",
-      "subline": "Sản xuất tại Việt Nam cho nhà bán lẻ, nhà phân phối và người mua dự án"
+      "filterChairs": "Dòng sản phẩm nhôm",
+      "subline": "Sản xuất tại Việt Nam trên hệ thống 11 cơ sở cho nhà bán lẻ, nhà phân phối và dự án"
     },
     "whyUs": {
       "label": "Tại sao chọn DHT",
-      "heading": "Tại sao người mua chọn DHT cho nội thất ngoài trời",
-      "description": "Chúng tôi hỗ trợ nhà bán lẻ, nhà phân phối và người mua dự án với sản xuất ổn định, chất lượng đồng nhất và giao hàng đúng hạn.",
+      "heading": "Tại Sao Khách Hàng Quốc Tế Hợp Tác Với DHT Furniture",
+      "description": "Là đầu mối điều phối duy nhất cho 11 cơ sở sản xuất chuyên môn hóa trên toàn quốc, chúng tôi mang lại sự ổn định, chất lượng đồng nhất và sự tin cậy tuyệt đối.",
       "points": [
-        "Chất lượng đồng nhất – kiểm soát QC nghiêm ngặt ở mọi giai đoạn",
-        "Công suất sản xuất ổn định cho đơn hàng lớn",
-        "OEM / ODM linh hoạt cho nhãn hàng riêng",
-        "Đóng container ghép để tối ưu chi phí",
-        "Giao hàng đúng hạn với quy trình sẵn sàng xuất khẩu"
+        "Mạng lưới 11 cơ sở sản xuất chuyên môn hóa phân bổ tại 4 cụm kinh tế trọng điểm",
+        "100% gỗ đạt chứng chỉ FSC (Gỗ tràm lai, Bạch đàn Uruguay, Teak Brazil)",
+        "Quy trình kiểm soát chất lượng 6 bước từ độ ẩm gỗ xẻ tới chèn lót container",
+        "Giải pháp kỹ thuật đóng gói & tối ưu hóa CBM giúp giảm tối đa chi phí logistics",
+        "Một đầu mối duy nhất chịu trách nhiệm toàn diện về bán hàng, kỹ thuật và xuất khẩu"
       ],
-      "requestQuote": "Liên hệ chúng tôi",
-      "viewCatalogue": "Tải Catalog",
-      "btn1": "TẢI CATALOG ĐẦY ĐỦ",
+      "requestQuote": "Liên hệ Đội ngũ Trung tâm",
+      "viewCatalogue": "Xem Hồ sơ Năng lực",
+      "btn1": "KHÁM PHÁ BỘ SƯU TẬP",
       "btn2": "Yêu cầu báo giá →"
     },
     "materials": {
@@ -364,19 +372,19 @@
         "hotline": "Hotline: +84 902 907 399"
       },
       "office": {
-        "name": "Văn phòng Thương mại & Chăm sóc khách hàng",
-        "address": "72 Lê Thánh Tôn, Quận 1, Thành phố Hồ Chí Minh, Việt Nam",
-        "hotline": "Hotline: +84 907 386 898 (24/7)"
+        "name": "Trụ sở DHT & Phòng Thương mại Xuất khẩu",
+        "address": "72 Lê Thánh Tôn, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh, Việt Nam",
+        "hotline": "Hotline: +84 932 058 545"
       },
       "showroom": {
-        "name": "Showroom Vườn riêng DHT",
-        "address": "Thôn Vĩnh Thạnh 2, Xã Tuy Phước, Tỉnh Bình Định, Việt Nam",
+        "name": "Showroom Trưng Bày DHT Private Garden",
+        "address": "Thôn Vĩnh Thạnh 2, Xã Tuy Phước, Tỉnh Gia Lai, Việt Nam",
         "hotline": "Hotline: +84 907 386 898"
       },
-      "jdd": {
-        "name": "Công ty TNHH JDD Global Furnishing",
-        "address": "226 Đường Gò Dưa, Phường Tam Bình, Thành phố Thủ Đức, TP. Hồ Chí Minh, Việt Nam",
-        "hotline": "Hotline: +84 932 058 545"
+      "manufacturing": {
+        "name": "Mạng Lưới Sản Xuất DHT (11 Cơ Sở)",
+        "address": "4 Cụm Sản Xuất: Quy Nhơn, TP.HCM & Nam Bộ, Hưng Yên, Phú Thọ/Vĩnh Phúc",
+        "hotline": "Vận hành: +84 902 907 399"
       }
     },
     "welcome": {
@@ -483,21 +491,21 @@
       "sendAnother": "Gửi yêu cầu khác"
     },
     "locations": {
-      "title": "Mạng lưới toàn cầu của chúng tôi",
-      "hqTitle": "Nhà máy DHT Furniture Việt Nam",
-      "hqSubtitle": "Sản xuất & Chế tạo",
-      "showroomTitle": "Showroom Vườn riêng DHT",
-      "showroomSubtitle": "Trưng bày độc quyền",
-      "officeTitle": "Văn phòng DHT Furniture Việt Nam",
-      "officeSubtitle": "Phòng Thương mại & CSKH",
-      "distributorTitle": "Công ty TNHH JDD Global Furnishing",
-      "distributorSubtitle": "Phân phối toàn cầu",
-      "timingsFactory": "Từ 8:00 sáng - 17:00 chiều (Giờ VN)",
-      "timings247": "24/7"
+      "title": "Địa Điểm Văn Phòng, Showroom & Mạng Lưới Sản Xuất",
+      "hqTitle": "Mạng Lưới Sản Xuất DHT",
+      "hqSubtitle": "11 Cơ sở sản xuất toàn quốc",
+      "showroomTitle": "Showroom Trưng Bày DHT",
+      "showroomSubtitle": "Bộ sưu tập Nội Ngoại thất",
+      "officeTitle": "Trụ Sở & Phòng Thương Mại DHT",
+      "officeSubtitle": "Kinh doanh & Hợp tác Xuất khẩu",
+      "distributorTitle": "Mạng Lưới Sản Xuất Tập Đoàn",
+      "distributorSubtitle": "4 Cụm Sản Xuất Trọng Điểm",
+      "timingsFactory": "08:00 - 17:00 (Giờ VN), Thứ 2 - Thứ 6",
+      "timings247": "08:00 - 17:00 (Giờ VN). Tiếp khách theo lịch hẹn"
     },
     "formSection": {
-      "title": "Gửi yêu cầu",
-      "subtitle": "Điền vào mẫu dưới đây và đội ngũ của chúng tôi sẽ phản hồi trong vòng 24 giờ."
+      "title": "Gửi Yêu Cầu Dự Án",
+      "subtitle": "Chia sẻ yêu cầu và thông số sản phẩm, đội ngũ chuyên môn DHT sẽ phản hồi trong vòng 1 ngày làm việc."
     }
   },
   "notFound": {

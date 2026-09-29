@@ -13,7 +13,8 @@
     "companyProfile": "Hồ sơ năng lực",
     "whatsapp": "WhatsApp",
     "furnitureVietnam": "Nội Thất Việt Nam",
-    "search": "Tìm kiếm"
+    "search": "Tìm kiếm",
+    "catalogue": "Bộ sưu tập"
   },
   "footer": {
     "description": "DHT Furniture Vietnam là nhà sản xuất và xuất khẩu nội thất Việt Nam, hoạt động trong mạng lưới tập đoàn gia đình gồm 11 cơ sở sản xuất trên toàn quốc. Chúng tôi phát triển các dòng sản phẩm nội thất ngoài trời, trong nhà và dự án cho các đối tác quốc tế.",
@@ -74,7 +75,7 @@
       "statsUnits": "543.380 m² Tổng mặt bằng",
       "statsCraftspeople": "~2.400 Nhân sự tập đoàn",
       "statsExport": "Điều phối trung tâm trực tiếp",
-      "subline": "Tràm • Bạch đàn • Teak • Nhôm | 100% Gỗ FSC | Đóng Container Ghép Linh Hoạt",
+      "subline": "Tràm • Bạch đàn • Teak • Nhôm | Gỗ Chứng Nhận FSC | Đóng Container Ghép Linh Hoạt",
       "buttons": {
         "catalog": "XEM BỘ SƯU TẬP",
         "quote": "YÊU CẦU BÁO GIÁ",
@@ -86,7 +87,9 @@
       "title1": "Nghệ thuật",
       "title2": "Chế tác.",
       "description": "Mỗi sản phẩm nội thất DHT đều bắt nguồn từ đôi bàn tay khéo léo, nguồn gỗ sấy lò chuẩn mực và quy trình sản xuất nghiêm ngặt tại 11 cơ sở chuyên môn hóa của chúng tôi.",
-      "productionLabel": "Sản phẩm / Tháng"
+      "productionLabel": "11 Cơ sở Sản xuất trong Tập đoàn Gia đình",
+      "facilityHeading": "11 Cơ sở Sản xuất trong Tập đoàn Gia đình",
+      "facilitySub": "10 cơ sở gia công nội thất + 1 nhà máy ván công nghiệp & sơ chế."
     },
     "categories": {
       "label": "Bộ sưu tập",
@@ -123,10 +126,15 @@
         "name": "Ghế Tắm Nắng & Daybed",
         "tagline": "Thư giãn cạnh hồ bơi & ban công nghỉ dưỡng",
         "count": "Dự án & Bán lẻ"
+      },
+      "tables": {
+        "name": "Bộ Sưu Tập Bàn Ngoài Trời",
+        "tagline": "Bàn ăn, bàn phụ & bàn trà ngoài trời",
+        "count": "Kết Cấu Vững Chắc"
       }
     },
     "featured": {
-      "label": "Bộ sưu tập Tuyển chọn",
+      "label": "Bộ sưu tập Ngoài trời Tuyển chọn",
       "heading": "Các Bộ Sưu Tập Tuyển Chọn Cho Chương Trình Quốc Tế",
       "description": "Được thiết kế kỹ thuật và gia công trên hệ thống 11 cơ sở chuyên môn hóa cho các chuỗi bán lẻ và dự án khách sạn toàn cầu.",
       "fullCatalogue": "Khám phá Bộ sưu tập Ngoài trời",
@@ -135,11 +143,9 @@
       "new": "Tuyển chọn",
       "inquire": "Yêu cầu báo giá",
       "filterAll": "Tất cả",
-      "filterOutdoorSofas": "Sofa ngoài trời",
-      "filterDiningSets": "Bộ bàn ăn",
-      "filterLoungeDaybeds": "Ghế tắm nắng",
-      "filterTables": "Bàn ngoài trời",
-      "filterChairs": "Dòng sản phẩm nhôm",
+      "filterLoungeSofa": "Sofa & Lounge Ngoài Trời",
+      "filterDining": "Bàn Ăn Ngoài Trời",
+      "filterSunloungers": "Ghế Tắm Nắng & Daybed",
       "subline": "Sản xuất tại Việt Nam trên hệ thống 11 cơ sở cho nhà bán lẻ, nhà phân phối và dự án"
     },
     "whyUs": {
@@ -164,16 +170,16 @@
       "heading2": "Ngoại Thất, Nội Thất & Dự Án",
       "description": "Các kết hợp vật liệu được phát triển dựa trên thiết kế, công năng và thị trường mục tiêu. Tiêu chuẩn kỹ thuật, hoàn thiện bề mặt và kiểm nghiệm được thống nhất cho từng chương trình.",
       "solidOak": {
-        "name": "Gỗ keo",
-        "desc": "Hiệu quả chi phí & phù hợp cho chương trình bán lẻ"
+        "name": "Gỗ Tràm (Acacia)",
+        "desc": "Gỗ keo lai FSC trồng tại Việt Nam, hiệu quả chi phí cho đơn hàng lớn"
       },
       "walnutWood": {
         "name": "Gỗ óc chó",
         "desc": "Sắc nâu sô-cô-la, vân mịn, phong cách giữa thế kỷ"
       },
       "premiumTeak": {
-        "name": "Gỗ teak",
-        "desc": "Độ bền cao cho môi trường ngoài trời"
+        "name": "Gỗ Teak",
+        "desc": "Tectona grandis từ Brazil, độ bền tự nhiên cao cho ngoại thất"
       },
       "linenVelvet": {
         "name": "Vải ngoài trời",
@@ -185,7 +191,7 @@
       },
       "eucalyptusWood": {
         "name": "Gỗ Bạch Đàn",
-        "desc": "Gỗ Bạch đàn FSC từ Uruguay, chịu lực cao & bền chắc"
+        "desc": "Eucalyptus grandis từ Uruguay, chịu lực cao & nguồn cung ổn định"
       }
     },
     "rooms": {
@@ -283,7 +289,7 @@
       },
       "sustainability": {
         "title": "Sản Xuất Trách Nhiệm",
-        "desc": "100% gỗ có chứng chỉ FSC và quy trình sản xuất được ghi nhận tài liệu đầy đủ."
+        "desc": "Toàn bộ gỗ dùng trong nội thất DHT đều có chứng chỉ FSC và quy trình sản xuất được ghi nhận tài liệu đầy đủ."
       },
       "dedication": {
         "title": "Quan Hệ Hợp Tác",
@@ -296,42 +302,43 @@
       "items": [
         {
           "year": "2016",
-          "title": "Công ty CP Đầu tư & Thương mại DHT",
-          "desc": "Khởi đầu trong lĩnh vực đầu tư và thương mại quốc tế, thiết lập mạng lưới quan hệ đối tác vững chắc."
+          "title": "Công ty Cổ phần Đầu tư và Thương mại DHT",
+          "desc": "Nền tảng đầu tư và thương mại quốc tế."
         },
         {
           "year": "2022",
           "title": "Công ty Cổ phần DHT Furniture",
-          "desc": "Mở rộng và chuyên sâu vào lĩnh vực sản xuất nội thất và xuất khẩu quốc tế."
+          "desc": "Phát triển hoạt động kinh doanh và xuất khẩu nội thất."
         },
         {
           "year": "2024",
           "title": "Công ty Cổ phần DHT Furniture Vietnam",
-          "desc": "Hoàn thiện hệ sinh thái sản xuất và điều phối đơn hàng nội thất quy mô lớn trên mạng lưới 11 nhà máy toàn quốc."
+          "desc": "Mở rộng phát triển kinh doanh nội thất quốc tế và các chương trình điều phối sản xuất."
         }
       ]
     },
     "team": {
       "label": "Lãnh đạo",
-      "heading": "Ban điều hành",
+      "heading": "Ban Lãnh Đạo & Đội Ngũ Điều Phối Trung Tâm",
+      "contactTeam": "Liên hệ đội ngũ chúng tôi",
       "john": {
-        "role": "Nhà sáng lập & Giám đốc kinh doanh",
-        "quote": "DHT đã, đang và sẽ tiếp tục nỗ lực mang đến giá trị lớn hơn cho khách hàng, xây dựng niềm tin bền vững và mang niềm tự hào của nghề thủ công Việt Nam từ Quy Nhơn đến thế giới."
+        "role": "Tổng Giám Đốc & Giám Đốc Kinh Doanh",
+        "quote": "Tại DHT, chúng tôi tin rằng quan hệ đối tác bền vững được xây dựng trên 3 nền tảng bất biến: chất lượng ổn định, vật liệu đạt chuẩn minh bạch, và sự tận tâm đồng hành trong từng giai đoạn."
       },
       "tyler": {
         "role": "Đồng sáng lập & Tổng giám đốc điều hành",
         "quote": "Tại DHT, chúng tôi không chỉ sản xuất nội thất ngoài trời — chúng tôi kiến tạo không gian nơi mọi người kết nối, chia sẻ câu chuyện và tạo nên những kỷ niệm đáng nhớ."
       },
       "dylan": {
-        "role": "Tổng giám đốc",
+        "role": "Vận Hành & Điều Phối Sản Xuất",
         "quote": "Mỗi dự án chúng tôi giao đều mang lời hứa về sự chính xác, độ bền và tay nghề thủ công Việt Nam – đặc trưng của DHT."
       },
       "david": {
-        "role": "Giám đốc phát triển sản phẩm",
-        "quote": "Đổi mới là kết hợp gỗ teak vượt thời gian với thiết kế hiện đại để tạo ra nội thất bền vững dưới mọi bầu trời."
+        "role": "Phát Triển Sản Phẩm & Kỹ Thuật",
+        "quote": "Đổi mới là kết hợp gỗ đạt chuẩn cùng quy chuẩn hiện đại làm nên đẳng cấp sản phẩm ở mọi điều kiện thời tiết."
       },
       "alicia": {
-        "role": "Giám đốc tài chính",
+        "role": "Tài Chính & Điều Phối Thương Mại",
         "quote": "Tài chính vững mạnh nuôi dưỡng quan hệ đối tác bền vững. Tại DHT, chúng tôi đảm bảo mọi đơn hàng đều được hậu thuẫn bởi sự tin tưởng, minh bạch và tăng trưởng bền vững."
       }
     },
@@ -366,18 +373,18 @@
     "locations": {
       "heading": "Vị Trí Của Chúng Tôi",
       "office": {
-        "name": "Văn Phòng Điều Phối Thương Mại DHT",
+        "name": "Văn phòng Điều phối Thương mại DHT",
         "address": "72 Lê Thánh Tôn, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh, Việt Nam",
         "hotline": "Hotline: +84 932 058 545"
       },
       "showroom": {
-        "name": "Showroom & Phòng Trưng Bày DHT",
+        "name": "Showroom Trưng Bày DHT",
         "address": "206 Phan Đình Phùng, TP. Pleiku, Tỉnh Gia Lai, Việt Nam",
         "hotline": "Hotline: +84 907 386 898"
       },
       "manufacturing": {
-        "name": "Mạng Lưới Sản Xuất DHT (11 Cơ Sở)",
-        "address": "4 Cụm Sản Xuất: Quy Nhơn, TP.HCM & Nam Bộ, Hưng Yên, Phú Thọ/Vĩnh Phúc",
+        "name": "Mạng lưới Nhà máy Sản xuất DHT",
+        "address": "4 Cụm sản xuất: Quy Nhơn, TP.HCM & Nam Bộ, Hưng Yên, Phú Thọ/Vĩnh Phúc",
         "hotline": "Vận hành: +84 902 907 399"
       }
     },
@@ -400,21 +407,31 @@
       ]
     },
     "marquee": [
-      "18+ Năm kinh nghiệm",
-      "50.000 Sản phẩm / Tháng",
-      "35+ Quốc gia xuất khẩu"
+      "11 Cơ sở Sản xuất",
+      "543.380 m² Tổng diện tích mặt bằng sản xuất",
+      "Khoảng 2.400 Nhân sự tập đoàn",
+      "4 Cụm sản xuất trọng điểm"
     ]
   },
   "catalogue": {
     "seo": {
-      "title": "Bộ sưu tập — DHT Outdoor Furniture",
-      "description": "Khám phá bộ sưu tập đầy đủ nội thất ngoài trời cao cấp của chúng tôi."
+      "title": "Bộ Sưu Tập Nội Thất Ngoài Trời | DHT Furniture Vietnam",
+      "description": "Khám phá nội thất ngoài trời chế tác từ gỗ có chứng nhận FSC, nhôm, thép, dây thừng, mây nhựa và các kết hợp vật liệu hỗn hợp."
+    },
+    "outdoor": {
+      "seo": {
+        "title": "Bộ Sưu Tập Nội Thất Ngoài Trời | DHT Furniture Vietnam",
+        "description": "Khám phá nội thất ngoài trời chế tác từ gỗ có chứng nhận FSC, nhôm, thép, dây thừng, mây nhựa và các kết hợp vật liệu hỗn hợp. DHT đáp ứng các chương trình bàn ăn, sofa lounge, ban công, ghế tắm nắng và nội thất module."
+      }
     },
     "searchPlaceholder": "Tìm theo tên, mã hoặc danh mục...",
     "collection": "Bộ sưu tập",
     "outdoorCollection": "Bộ sưu tập ngoài trời",
     "indoorCollection": "Bộ sưu tập trong nhà",
     "filters": "Bộ lọc",
+    "fscBadge": "Gỗ Chứng Nhận FSC",
+    "fscPolicyTitle": "Gỗ Chứng Nhận FSC",
+    "fscPolicyDesc": "Toàn bộ gỗ sử dụng trong sản phẩm nội thất DHT đều có chứng nhận FSC. Hồ sơ chứng minh được lưu trữ tương ứng với từng công bố FSC áp dụng.",
     "clearAll": "Xóa tất cả",
     "category": "Danh mục",
     "material": "Vật liệu",
@@ -443,11 +460,115 @@
       "coastal": "Ven biển",
       "luxury": "Sang trọng"
     },
+    "categoryOptions": {
+      "loungeDaybeds": "Sofa & Giường Tắm Nắng",
+      "diningSets": "Bộ Bàn Ăn Ngoài Trời",
+      "tables": "Bàn Ngoài Trời",
+      "livingRoom": "Nội Thất Phòng Khách",
+      "diningRoom": "Nội Thất Phòng Ăn",
+      "bathroom": "Nội Thất Phòng Tắm"
+    },
+    "materialOptions": {
+      "acacia": "Gỗ Tràm (Acacia)",
+      "aluminium": "Nhôm Sơn Tĩnh Điện",
+      "teak": "Gỗ Teak"
+    },
     "noResults": "Không có sản phẩm phù hợp với bộ lọc",
     "clearAllFilters": "Xóa tất cả bộ lọc",
-    "productsFound": "Hiển thị {{count}} sản phẩm",
+    "productsFound": "Hiển thị {{count}} sản phẩm & bộ sưu tập",
     "quickView": "Xem nhanh",
-    "inquire": "Yêu cầu báo giá"
+    "inquire": "Yêu cầu báo giá",
+    "indoor": {
+      "seo": {
+        "title": "Sản Xuất Nội Thất Trong Nhà & Dự Án | DHT Furniture Vietnam",
+        "description": "Khám phá năng lực sản xuất nội thất gỗ tự nhiên, bọc nệm và vật liệu kết hợp của DHT Furniture Vietnam cho các chương trình nhà ở, khách sạn và dự án thương mại."
+      },
+      "breadcrumbs": {
+        "home": "Trang chủ",
+        "indoor": "Nội thất Trong nhà & Dự án"
+      },
+      "hero": {
+        "badge": "Sản Xuất May Đo & OEM Hợp Đồng",
+        "title": "Nội Thất Trong Nhà & Dự Án",
+        "description": "DHT cung ứng năng lực sản xuất nội thất gỗ tự nhiên, gỗ công nghiệp, đồ bọc nệm và vật liệu hỗn hợp cho các chương trình nhà ở, khách sạn nghỉ dưỡng và dự án thương mại thông qua các cơ sở chuyên môn hóa trong tập đoàn gia đình."
+      },
+      "capabilities": {
+        "dining": {
+          "title": "Phòng Ăn & Bàn Ghế Tiện Ích",
+          "desc": "Bàn ăn gỗ sồi, tần bì, cao su và tràm, ghế ăn bọc nệm, tủ sideboard và bàn console tiện ích được thiết kế kỹ thuật cho các chương trình nhà ở và dự án hợp đồng thương mại.",
+          "specNote": "Gỗ sấy lò (độ ẩm 8–12%) • Hoàn thiện thương mại theo yêu cầu",
+          "tags": [
+            "Gỗ Tự Nhiên",
+            "Mặt Veneer Kỹ Thuật",
+            "Ghế Ăn Dự Án",
+            "Hoàn Thiện Tùy Biến"
+          ]
+        },
+        "living": {
+          "title": "Phòng Khách & Hệ Thống Lưu Trữ",
+          "desc": "Tủ sideboard, kệ tivi, hệ giá sách, tủ ngăn kéo và tủ kệ may đo kết hợp ván công nghiệp phủ veneer, khung kết cấu gỗ tự nhiên và phụ kiện cơ khí chính xác. Gỗ công nghiệp và keo dán được xác nhận tuân thủ TSCA Title VI / CARB Phase 2 theo hồ sơ thị trường chỉ định.",
+          "specNote": "Ván đạt chuẩn TSCA Title VI / CARB Phase 2 xác nhận theo yêu cầu dự án",
+          "tags": [
+            "Tủ Kệ May Đo",
+            "Gia Công Mộng Chuẩn Xác",
+            "TSCA Title VI (Theo Yêu Cầu)",
+            "Veneer Bền Bỉ"
+          ]
+        },
+        "upholstered": {
+          "title": "Nội Thất Bọc Nệm",
+          "desc": "Sofa góc, sofa băng, ghế bành và đôn bọc nệm êm ái với vải bọc tiêu chuẩn dự án. Có thể tùy chỉnh đáp ứng các tiêu chuẩn chống cháy quốc tế (gồm CA TB117 / BS 5852) theo cấu hình dự án và hồ sơ kiểm định của thị trường xuất khẩu.",
+          "specNote": "Kiểm nghiệm chống cháy CA TB117 / BS 5852 xác nhận theo quy cách đơn hàng",
+          "tags": [
+            "Mút Đàn Hồi Cao (HR)",
+            "Vải Bọc Dự Án",
+            "Khung Gỗ Cứng",
+            "Kiểm Định Chống Cháy Theo Yêu Cầu"
+          ]
+        },
+        "hospitality": {
+          "title": "Dự Án Khách Sạn & Thương Mại",
+          "desc": "Gói đồ gỗ casegoods toàn diện, hạng mục mộc kiến trúc (joinery) và nội thất rời may đo dành riêng cho khách sạn, căn hộ dịch vụ, khu nghỉ dưỡng và nhà hàng thi công trực tiếp theo bản vẽ CAD kiến trúc.",
+          "specNote": "Sản xuất theo bản vẽ shop drawing & xác minh phòng mẫu thực tế (mock-up room)",
+          "tags": [
+            "Mộc Kiến Trúc",
+            "Quy Cách Tần Suất Cao",
+            "Tối Ưu Hóa Kỹ Thuật CAD",
+            "Tháo Lắp (KD) / Lắp Ráp Nguyên Khối"
+          ]
+        }
+      },
+      "development": {
+        "badge": "May Đo Theo Quy Cách Dự Án • Điều Khoản Thương Mại",
+        "title": "Phát Triển May Đo, Làm Mẫu & Tối Ưu Hóa Kỹ Thuật",
+        "mandate": "Việc hiệu chỉnh sản phẩm, lựa chọn vật liệu, tối ưu hóa giá trị kỹ thuật và phát triển bao bì được rà soát theo bản tóm tắt dự án và mục đích sử dụng dự kiến. Tiến độ làm mẫu, thời gian sản xuất và các kiểm nghiệm áp dụng được xác nhận cho quy cách kỹ thuật đã thống nhất.",
+        "terms": {
+          "sampleTitle": "Làm mẫu thử nghiệm:",
+          "sampleValue": "Thường 7–14 ngày",
+          "sampleCondition": "(sau khi chốt bản vẽ kỹ thuật & duyệt mẫu vật liệu)",
+          "orderTitle": "Sản xuất đơn hàng mới:",
+          "orderValue": "Thường 60–90 ngày",
+          "orderCondition": "(tùy thuộc vào phạm vi kiểm nghiệm & quy mô chương trình)",
+          "repeatTitle": "Đơn hàng sản xuất lặp lại:",
+          "repeatValue": "Thường 45–60 ngày",
+          "repeatCondition": "(cho các bộ sưu tập đã vào phom ổn định)",
+          "fscTitle": "Nguồn gốc gỗ FSC:",
+          "fscValue": "All wood used in DHT furniture is FSC-certified",
+          "containerTitle": "Đóng hàng container:",
+          "containerValue": "Linh hoạt đóng kết hợp nhiều mặt hàng trong cùng container",
+          "packagingTitle": "Quy cách đóng gói:",
+          "packagingValue": "Đóng gói phẳng (KD) hoặc lắp ráp hoàn chỉnh với thùng carton vượt qua thử nghiệm thả rơi (drop-test)"
+        },
+        "conditionsNote": "* Điều kiện & Điểm bắt đầu tính thời gian: Tiến độ sản xuất chính thức bắt đầu sau khi nhận tiền đặt cọc thương mại, phê duyệt toàn diện bản vẽ shop drawing và chốt mẫu vật liệu/màu hoàn thiện. Kế hoạch kiểm nghiệm và chứng nhận phòng thí nghiệm (như CA TB117, BS 5852, TSCA Title VI, hoặc chuẩn đóng gói ISTA) được xác nhận theo quy cách từng đơn hàng và hồ sơ thị trường nhập khẩu.",
+        "ctaDiscuss": "Trao Đổi Nhu Cầu Dự Án Hoặc Nội Thất Trong Nhà",
+        "ctaFacilities": "Xem Mạng Lưới Nhà Máy"
+      },
+      "bottomCta": {
+        "title": "Bạn Đang Tìm Kiếm Bộ Sưu Tập Ngoài Trời?",
+        "description": "Khám phá danh mục đa dạng các sản phẩm bàn ăn ngoài trời, sofa lounge, ghế tắm nắng và nội thất module chế tác từ gỗ FSC, nhôm sơn tĩnh điện và dây thừng kháng thời tiết.",
+        "button": "Khám Phá Bộ Sưu Tập Ngoài Trời"
+      }
+    }
   },
   "contact": {
     "seo": {
@@ -477,7 +598,11 @@
       "sending": "Đang gửi...",
       "sendInquiry": "Gửi yêu cầu",
       "inquirySubject": "Yêu cầu báo giá: {{product}}{{code}}",
-      "inquiryMessage": "Xin chào, tôi muốn yêu cầu báo giá về {{product}}{{code}}.\n\nVui lòng cung cấp thông tin giá và tình trạng sẵn có.\n\nCảm ơn."
+      "inquiryMessage": "Xin chào, tôi muốn yêu cầu báo giá về {{product}}{{code}}.\n\nVui lòng cung cấp thông tin giá và tình trạng sẵn có.\n\nCảm ơn.",
+      "proposalSubject": "Yêu cầu Đề xuất Sản phẩm — Chương trình OEM / B2B",
+      "proposalMessage": "Kính gửi đội ngũ DHT Furniture,\n\nChúng tôi muốn yêu cầu đề xuất sản phẩm cho chương trình nội thất sắp tới. Thông tin thị trường mục tiêu, khối lượng dự kiến và quy cách ban đầu như sau:\n- Thị trường mục tiêu:\n- Khối lượng ước tính:\n- Yêu cầu kỹ thuật:\n\nXin vui lòng liên hệ tư vấn phương án phù hợp.",
+      "visitSubject": "Đăng ký Tham quan Nhà máy — Khảo sát Trực tiếp",
+      "visitMessage": "Kính gửi đội ngũ DHT Furniture,\n\nChúng tôi muốn đăng ký lịch hẹn tham quan và khảo sát thực tế cơ sở sản xuất của tập đoàn để trao đổi về kế hoạch hợp tác."
     },
     "success": {
       "title": "Cảm ơn bạn!",
@@ -486,14 +611,14 @@
     },
     "locations": {
       "title": "Địa Điểm Văn Phòng, Showroom & Mạng Lưới Sản Xuất",
-      "hqTitle": "Mạng Lưới Sản Xuất DHT",
+      "hqTitle": "Mạng lưới Nhà máy Sản xuất DHT",
       "hqSubtitle": "11 Cơ sở sản xuất toàn quốc",
       "showroomTitle": "Showroom Trưng Bày DHT",
       "showroomSubtitle": "Bộ sưu tập Nội Ngoại thất",
-      "officeTitle": "Trụ Sở & Phòng Thương Mại DHT",
-      "officeSubtitle": "Kinh doanh & Hợp tác Xuất khẩu",
-      "distributorTitle": "Mạng Lưới Sản Xuất Tập Đoàn",
-      "distributorSubtitle": "4 Cụm Sản Xuất Trọng Điểm",
+      "officeTitle": "Văn phòng Điều phối Thương mại DHT",
+      "officeSubtitle": "Phòng Thương mại & Hợp tác Quốc tế",
+      "distributorTitle": "Mạng lưới Nhà máy Sản xuất DHT",
+      "distributorSubtitle": "4 Cụm sản xuất toàn quốc",
       "timingsFactory": "08:00 - 17:00 (Giờ VN), Thứ 2 - Thứ 6",
       "timings247": "08:00 - 17:00 (Giờ VN). Tiếp khách theo lịch hẹn"
     },
@@ -501,6 +626,11 @@
       "title": "Gửi Yêu Cầu Dự Án",
       "subtitle": "Chia sẻ yêu cầu và thông số sản phẩm, đội ngũ chuyên môn DHT sẽ phản hồi trong vòng 1 ngày làm việc."
     }
+  },
+  "manufacturing": {
+    "equipment": "Trang Thiết Bị Sản Xuất",
+    "keyMachinery": "Hệ Thống Máy Móc & Dây Chuyền Trọng Điểm",
+    "machineryDesc": "Hệ thống máy móc công nghiệp độ chính xác cao được bố trí trên 11 cơ sở sản xuất nhằm đảm bảo độ ổn định và dung sai khắt khe cho hàng xuất khẩu."
   },
   "notFound": {
     "seo": {
@@ -1090,5 +1220,279 @@
     "revDeleteBtn": "Xóa",
     "btnOk": "Đồng ý",
     "btnCancel": "Hủy"
+  },
+  "quality": {
+    "seo": {
+      "title": "Kiểm Soát Chất Lượng & Tuân Thủ Quốc Tế | DHT Furniture Vietnam",
+      "description": "Khám phá hệ thống kiểm soát chất lượng 6 cổng chuyên sâu, chuỗi cung ứng gỗ chứng nhận FSC và hồ sơ tuân thủ xuất khẩu sang EU, Anh, Mỹ và Úc của DHT."
+    },
+    "hero": {
+      "badge": "Hệ Thống Tiêu Chuẩn Quốc Tế",
+      "title": "Kiểm Soát Chất Lượng & Tuân Thủ Quốc Tế",
+      "description": "Từ khâu kiểm định nguyên liệu thô đến nghiệm thu đóng hàng container xuất khẩu, DHT vận hành quy trình quản lý chất lượng chặt chẽ và lưu trữ hồ sơ đánh giá (audit) theo từng cơ sở, đáp ứng các tiêu chuẩn khắt khe của những nhà bán lẻ hàng đầu thế giới."
+    },
+    "workflow": {
+      "title": "Quy Trình Kiểm Soát Chất Lượng 6 Cổng",
+      "subtitle": "Các cổng kiểm soát chất lượng chuyên sâu được thiết lập tại từng công đoạn chế tác",
+      "gate": "Cổng",
+      "steps": {
+        "01": {
+          "title": "Kiểm soát Nguyên liệu & Phụ liệu Đầu vào",
+          "desc": "Đo độ ẩm mục tiêu (thường 8–12% cho gỗ sấy, hiệu chuẩn theo khí hậu thị trường đích và đặc tả kỹ thuật), độ dày phôi nhôm định hình, định lượng sợi vải dệt và độ đàn hồi mút đệm được thẩm định theo tiêu chuẩn đã duyệt trước khi xuất kho sản xuất."
+        },
+        "02": {
+          "title": "Kiểm soát Gia công Chế tác & Lắp ráp",
+          "desc": "Nghiệm thu dung sai mộng ghép gỗ, độ ngấu mối hàn robot và thủ công, cùng độ vững chắc kết cấu trên từng chuyền sản xuất."
+        },
+        "03": {
+          "title": "Kiểm tra Bề mặt & Tiền đóng gói",
+          "desc": "Đánh giá độ bám dính lớp sơn tĩnh điện, lớp phủ bảo vệ gỗ, quy chuẩn phụ kiện inox và lắp ráp hoàn thiện mẫu thử trước khi đóng thùng."
+        },
+        "04": {
+          "title": "Kiểm định Xuất xưởng theo Chuẩn AQL Thỏa thuận",
+          "desc": "Lấy mẫu thống kê độc lập theo ngưỡng AQL đã thống nhất với khách hàng (như Lỗi nghiêm trọng: 0, Lỗi nặng: 1.5–2.5, Lỗi nhẹ: 4.0 khi có quy định trong hợp đồng chương trình) trước khi cấp lệnh đóng kiện xuất xưởng."
+        },
+        "05": {
+          "title": "Quy cách Bao bì, Nhãn mác & Đóng Container",
+          "desc": "Quy trình thử nghiệm thả rơi/rung lắc ISTA (thực hiện khi có yêu cầu theo đơn hàng thương mại điện tử/bán lẻ), quét mã vạch barcode, kiểm tra độ bục thùng carton và kỹ thuật chèn lót túi khí dunnage khi đóng container."
+        },
+        "06": {
+          "title": "Hồ sơ Khắc phục & Truy xuất Nguồn gốc",
+          "desc": "Lập biên bản xử lý khắc phục, lưu trữ hồ sơ kiểm định theo từng lô hàng và liên tục cải tiến quy trình công nghệ cho từng chương trình sản xuất."
+        }
+      }
+    },
+    "markets": {
+      "title": "Kiểm Định & Hồ Sơ Tuân Thủ Theo Thị Trường",
+      "subtitle": "Quy trình thẩm định và tuân thủ các quy định quốc tế về an toàn, môi trường và độ bền",
+      "intro": "Hồ sơ truy xuất nguồn gốc gỗ, tài liệu chứng minh vật liệu, thử nghiệm an toàn sản phẩm và yêu cầu quy cách bao bì được thẩm tra và áp dụng dựa trên thị trường đích, kết cấu sản phẩm và tiêu chuẩn kỹ thuật của bên mua (buyer specification). Các thử nghiệm độc lập qua bên thứ ba (Third-party testing) được phối hợp thực hiện theo từng yêu cầu chương trình cụ thể.",
+      "eu": {
+        "title": "Liên Minh Châu Âu & Vương Quốc Anh",
+        "items": [
+          {
+            "title": "Tiêu chuẩn Cơ lý EN 581 (Áp dụng theo đặc tả):",
+            "desc": "Thử nghiệm an toàn cơ học, độ bền chu kỳ tải và độ ổn định được thẩm tra và phối hợp kiểm định qua các trung tâm chứng nhận độc lập cho dòng sản phẩm ngoài trời dân dụng hoặc hợp đồng dự án khi có yêu cầu."
+          },
+          {
+            "title": "Quy định Hóa chất REACH (EU/UK):",
+            "desc": "Nguyên phụ liệu, lớp sơn tĩnh điện và vải bọc được rà soát đối chiếu danh mục chất cấm/hạn chế SVHC; hồ sơ kiểm nghiệm phòng lab độc lập được thiết lập theo yêu cầu từng đơn đặt hàng."
+          },
+          {
+            "title": "Thẩm định EUDR & Chứng thư Kiểm dịch Thực vật:",
+            "desc": "Chuỗi cung ứng gỗ truy xuất từ lâm phần hợp pháp với tọa độ địa lý và chứng thư xử lý kiểm dịch/hun trùng chính thức được chuẩn bị nhằm hỗ trợ nhà nhập khẩu đáp ứng quy định hải quan."
+          }
+        ]
+      },
+      "us": {
+        "title": "Hoa Kỳ & Canada",
+        "items": [
+          {
+            "title": "Thẩm tra Đạo luật U.S. Lacey Act:",
+            "desc": "Xác minh minh bạch loài gỗ và lâm phần khai thác hợp pháp xuyên suốt chuỗi cung ứng, cung cấp hồ sơ đầy đủ phục vụ khai báo hải quan nhập khẩu Hoa Kỳ."
+          },
+          {
+            "title": "Tiêu chuẩn An toàn ASTM (Áp dụng theo phân loại):",
+            "desc": "Các yêu cầu chịu tải tĩnh/chu kỳ và độ ổn định kết cấu (bao gồm cơ chế chống đổ ngã cho đồ tủ/kệ) được thẩm tra và kiểm nghiệm tương ứng với mục đích sử dụng dân dụng hay dự án thương mại."
+          },
+          {
+            "title": "Thử nghiệm Đóng gói Vận chuyển ISTA:",
+            "desc": "Thử nghiệm thả rơi, rung chấn và chịu nén ISTA 1A, 3A hoặc ISTA 6 được phối hợp chứng nhận qua bên thứ ba khi có chỉ định cho kênh bán lẻ hoặc thương mại điện tử đóng hộp phẳng (flat-pack)."
+          },
+          {
+            "title": "Phát thải Formaldehyde TSCA Title VI & CARB 2:",
+            "desc": "Hồ sơ chứng nhận nhà máy và kiểm định phát thải formaldehyde được thu thập và thẩm định cho toàn bộ cốt ván nhân tạo, MDF và ván dán sử dụng trong sản phẩm nội thất."
+          }
+        ]
+      },
+      "au": {
+        "title": "Úc & New Zealand",
+        "items": [
+          {
+            "title": "Kiểm dịch Sinh học BMSB (Theo mùa cao điểm & Danh mục rủi ro):",
+            "desc": "Thực hiện xử lý nhiệt hoặc khử trùng bắt buộc tại cảng xuất khẩu trong khung thời gian mùa cao điểm BMSB theo hướng dẫn của Bộ Nông nghiệp Úc (DAFF) và New Zealand (MPI) đối với các nhóm hàng hóa thuộc diện quản lý (không áp dụng đại trà cho mọi lô hàng quanh năm)."
+          },
+          {
+            "title": "Độ bền Tia UV & Khí hậu Nhiệt đới (Theo đặc tả):",
+            "desc": "Đánh giá lão hóa gia tốc đối với dây dù kháng UV, mây nhựa PE và vải ngoài trời được phối hợp kiểm tra theo chỉ số định mức phù hợp với khí hậu khu vực khi khách hàng yêu cầu."
+          }
+        ]
+      },
+      "shipping": {
+        "title": "Quy Chuẩn Đóng Hàng Container & Thủ Tục Cảng Xuất",
+        "items": [
+          {
+            "title": "Kiểm soát Ẩm & Chèn lót Container Đường biển:",
+            "desc": "Tính toán định lượng chất hút ẩm công nghiệp, màng chống ẩm và quy chuẩn niêm phong container dựa trên thời gian hải trình, tuyến đường biển và biên độ chênh lệch nhiệt ẩm."
+          },
+          {
+            "title": "Chứng thư Kiểm dịch Thực vật & Thủ tục Thông quan:",
+            "desc": "Chứng thư kiểm dịch thực vật, biên bản xông hơi khử trùng và dấu mộc xử lý nhiệt ISPM 15 cho pallet/gỗ chèn lót được phát hành và lưu trữ đầy đủ phục vụ thông quan tại cảng đến."
+          }
+        ]
+      },
+      "governance": {
+        "badge": "Đơn vị phụ trách: Bộ phận Quản lý Chất lượng (Quality Department)",
+        "title": "Quy Định Thẩm Định & Điều Kiện Áp Dụng Tuân Thủ Kỹ Thuật",
+        "text": "Xác nhận Quản trị & Điều kiện áp dụng: DHT vận hành với vai trò đối tác sản xuất OEM/ODM và hợp đồng dự án. Các quy chuẩn kiểm nghiệm (như EN 581, ASTM, ISTA, REACH, TSCA Title VI) và các biện pháp kiểm dịch nhập khẩu bắt buộc (như xử lý BMSB theo mùa hoặc hun trùng thực vật) được Bộ phận Quản lý Chất lượng DHT (Quality Team) thẩm định và phối hợp thực hiện cùng các phòng thử nghiệm độc lập được công nhận quốc tế (như SGS, TÜV, Intertek) căn cứ theo luật định của quốc gia nhập khẩu, cơ cấu vật tư sản phẩm và đặc tả kỹ thuật đã được khách hàng phê duyệt. Nội dung công bố minh bạch năng lực quy trình và sự sẵn sàng đáp ứng, không cấu thành việc tự tuyên bố chứng nhận mặc định cho mọi sản phẩm trong danh mục."
+      }
+    },
+    "metrics": {
+      "sectionTitle": "Chỉ Số Chất Lượng Vận Hành & Bảo Hành Thương Mại",
+      "sectionSubtitle": "Các chỉ số đo lường vận hành chuẩn hóa và điều khoản bảo hành thương mại theo chương trình sản xuất chỉ định và hợp đồng phê duyệt",
+      "labels": {
+        "metricDefinition": "Định nghĩa chỉ số",
+        "scope": "Phạm vi cơ sở / Chương trình",
+        "measurementPeriod": "Kỳ đo lường",
+        "approvedDuration": "Thời hạn phê duyệt",
+        "coveredScope": "Phạm vi bảo hành",
+        "operatingConditions": "Điều kiện sử dụng",
+        "exclusions": "Ngoại lệ & Miễn trừ",
+        "programmeTerms": "Điều khoản chương trình theo hợp đồng",
+        "governanceNotice": "Thông số Vận hành"
+      },
+      "kpis": [
+        {
+          "id": "otif",
+          "value": "~95%",
+          "title": "On-Time In-Full (OTIF)",
+          "definition": "Tỷ lệ đơn hàng được giao đúng tiến độ và đầy đủ số lượng theo đơn đặt hàng (PO) đã xác nhận, không phát sinh đơn giao trễ hay chia nhỏ lô hàng thiếu hụt.",
+          "scope": "Áp dụng cho các chương trình bán lẻ xuất khẩu trọng điểm tại các cơ sở sản xuất nội thất chính (Cơ sở 01–05).",
+          "period": "Kỳ đánh giá vận hành thường niên (Kỳ tham chiếu 2025–2026)."
+        },
+        {
+          "id": "ftpr",
+          "value": "~92%",
+          "title": "First-Time Pass Rate (FTPR)",
+          "definition": "Tỷ lệ các lô thành phẩm đạt chuẩn nghiệm thu QA nội bộ ngay tại cổng kiểm tra tiền đóng gói, không phải qua sửa chữa (rework) trước khi vào khâu kiểm định AQL của khách hàng.",
+          "scope": "Dây chuyền sản xuất nội thất thành phẩm tại các cơ sở xuất khẩu được chỉ định (Cơ sở 01–05).",
+          "period": "Kỳ đánh giá luân chuyển 12 tháng sản xuất liên tục."
+        },
+        {
+          "id": "qa-team",
+          "value": "12 Staff",
+          "title": "Đội ngũ QA/QC Chuyên trách Cơ sở",
+          "definition": "Chuyên viên và kỹ sư kiểm định toàn thời gian quản lý phân loại gỗ đầu vào, dung sai mộng ghép cơ khí, độ bám dính bề mặt sơn và nghiệm thu trước xuất xưởng.",
+          "scope": "Chuyên trách thường trực tại các cơ sở xuất khẩu nội thất khu vực Miền Nam & Miền Trung (Cơ sở 01–05) — không bao gồm toàn bộ 11 cơ sở sơ chế/ván panel của tập đoàn.",
+          "period": "Biên chế vận hành thường trực (Năm triển khai 2026)."
+        }
+      ],
+      "warranty": {
+        "badge": "Chính Sách Thương Mại",
+        "title": "Chính Sách Bảo Hành Thương Mại & Điều Khoản Áp Dụng",
+        "subtitle": "Thời hạn và phạm vi bảo hành phê duyệt theo các điều khoản chương trình đã ban hành và thỏa thuận hợp đồng thương mại",
+        "durationValue": "Thời Hạn Tham Chiếu 2–5 Năm",
+        "durationNote": "Thời hạn cụ thể và phạm vi bảo hành phụ thuộc vào dòng sản phẩm, vật liệu kết cấu và thỏa thuận thương mại trong hợp đồng.",
+        "coverage": {
+          "label": "Phạm vi bảo hành",
+          "text": "Độ ổn định và tính toàn vẹn của kết cấu khung, độ chắc chắn của các mối ghép mộng/khớp nối cơ khí, cùng các khiếm khuyết do tay nghề hoặc lỗi gia công phát sinh trong quá trình sử dụng đúng công năng."
+        },
+        "conditions": {
+          "label": "Điều kiện sử dụng",
+          "text": "Sản phẩm được lắp đặt, vận hành và chăm sóc đúng theo hướng dẫn kỹ thuật của DHT trong không gian nội thất, hiên có mái che hoặc khu vực ngoài trời chuyên dụng đã phê duyệt."
+        },
+        "exclusions": {
+          "label": "Ngoại lệ & Miễn trừ",
+          "text": "Không áp dụng đối với hao mòn tự nhiên do thời tiết, các vết rạn nứt chân chim hoặc hiện tượng co ngót tự nhiên của thớ gỗ, lớp oxy hóa tự nhiên, hư hỏng do lạm dụng hóa chất tẩy rửa mạnh, lưu kho không đúng quy cách hoặc tự ý sửa đổi kết cấu."
+        },
+        "programmeTerms": {
+          "label": "Điều khoản chương trình theo hợp đồng",
+          "text": "Thời hạn bảo hành chính xác, hạn mức dung sai khuyết tật cho phép, danh mục linh kiện dự phòng và phương thức đổi trả/hoàn tiền được quy định ràng buộc trong Hợp đồng mua bán (Purchase Agreement) và hồ sơ kỹ thuật của từng chương trình đối tác."
+        }
+      },
+      "note": "Xác nhận Quản trị & Nghiệm thu: Các chỉ số chất lượng vận hành (~95% OTIF, ~92% FTPR, 12 Nhân sự QA/QC) và thời hạn bảo hành tham chiếu (2–5 năm) là số liệu thực tế được thẩm định bởi Bộ phận Quản lý Chất lượng và COO phê duyệt cho các cơ sở được chỉ định. Thông tin công bố trên website mang tính minh bạch năng lực cho đối tác mua hàng và không thay thế, sửa đổi hay tự động mở rộng các nghĩa vụ bảo hành ngoài hợp đồng thương mại đã ký kết."
+    },
+    "sustainability": {
+      "badge": "Sản Xuất Có Trách Nhiệm",
+      "title": "Phát Triển Bền Vững & Hiệu Quả Tài Nguyên",
+      "subtitle": "Quy trình thu mua gỗ minh bạch, tối ưu tỷ lệ thu hồi phôi và thực hành xử lý chất thải được xác nhận",
+      "statement": {
+        "label": "Quy Chuẩn Thẩm Định & Ranh Giới Chương Trình",
+        "text": "DHT điều phối quy trình thu mua gỗ có hồ sơ nguồn gốc, tối ưu hiệu quả sử dụng vật liệu và thực hành xử lý chất thải với cơ sở sản xuất được chỉ định. Hồ sơ theo từng chương trình cụ thể được thẩm định trong quá trình lập kế hoạch sản xuất và thẩm định năng lực nhà cung cấp với khách hàng."
+      },
+      "pillars": {
+        "traceability": {
+          "tag": "Chuỗi Hành Trình Sản Phẩm",
+          "title": "Nguồn Gỗ Hợp Pháp & Truy Xuất Nguồn Gốc",
+          "metric": "100% Gỗ Có Chứng Nhận FSC",
+          "desc": "Toàn bộ gỗ tự nhiên dùng trong sản xuất nội thất DHT đều có chứng nhận FSC. Từng lô gỗ tròn và phôi xẻ được đối chiếu qua hóa đơn nguồn gốc, phiếu kiểm dịch thực vật và hồ sơ vận chuyển lâm sản, loại trừ hoàn toàn gỗ bất hợp pháp hoặc xâm hại rừng tự nhiên.",
+          "evidence": "Chứng chỉ FSC CoC cơ sở & Bảng kê lâm sản hợp pháp"
+        },
+        "cuttingYield": {
+          "tag": "Tối Ưu Phôi & Sinh Khối",
+          "title": "Hiệu Suất Thu Hồi & Năng Lượng Tuần Hoàn",
+          "metric": "Thu Hồi 75%–82% & Tái Tận Dụng 100% Phụ Phẩm",
+          "desc": "Sử dụng sơ đồ cắt tối ưu trên máy tính giúp tỷ lệ thu hồi phôi đạt 75%–82% tùy chủng loại và quy cách chi tiết. Toàn bộ đầu mẩu gỗ sạch được phân loại ghép thanh finger-joint hoặc làm lõi ghép tấm; dăm bào và mùn cưa sạch được thu gom qua hệ thống cyclone để làm nhiên liệu sinh khối cho lò sấy gỗ.",
+          "evidence": "Báo cáo định mức vật tư ERP & Nhật ký vận hành lò hơi"
+        },
+        "finishingWaste": {
+          "tag": "Thu Hồi Bột Sơn & Xử Lý Thải",
+          "title": "Hoàn Thiện Tối Ưu & Quản Lý Chất Thải",
+          "metric": "Cyclone Thu Hồi & 100% Chuyển Giao Hợp Chuẩn",
+          "desc": "Buồng phun sơn tĩnh điện sử dụng hệ thống lọc cyclone thu hồi bột sơn dư thừa để giảm thiểu hao hụt. Bao bì thùng carton xuất khẩu dùng giấy sóng tái chế đạt chuẩn nén bục. Hóa chất và bùn thải công nghiệp được thu gom riêng biệt và bàn giao cho đơn vị xử lý môi trường có giấy phép theo quy định.",
+          "evidence": "Phiếu xuất kho bột sơn & Biên bản chuyển giao chất thải"
+        }
+      },
+      "matrix": {
+        "badge": "Minh Bạch Nguồn & Căn Cứ Thẩm Định",
+        "title": "Bảng Đối Chiếu Thực Hành & Nguồn Minh Chứng Dữ Liệu",
+        "subtitle": "Chi tiết 6 hoạt động phát triển bền vững theo hồ sơ năng lực, phạm vi cơ sở và căn cứ thẩm định thực tế",
+        "columns": {
+          "activity": "Hoạt Động / Lĩnh Vực",
+          "practice": "Thực Hành & Thông Số Đo Lường",
+          "scope": "Phạm Vi Cơ Sở & Chương Trình",
+          "source": "Hồ Sơ Minh Chứng / Căn Cứ Thẩm Định"
+        },
+        "items": [
+          {
+            "id": "traceability",
+            "activity": "Truy Xuất Nguồn Gốc Gỗ (Traceability)",
+            "practice": "100% gỗ sử dụng có chứng chỉ FSC; lưu trữ hồ sơ chuỗi hành trình từ đơn vị khai thác rừng trồng có phép đến xưởng sơ chế và sấy gỗ.",
+            "scope": "Toàn bộ các đơn hàng nội thất gỗ tại cơ sở sản xuất được chỉ định (Cụm Bình Dương, Quy Nhơn, Đồng Nai).",
+            "source": "Chứng chỉ FSC CoC cơ sở, Hóa đơn GTGT, Phiếu nguồn gốc lâm sản và mã lô truy xuất gỗ sấy."
+          },
+          {
+            "id": "yield",
+            "activity": "Hiệu Suất Cắt Xẻ & Thu Hồi Phôi (Yield)",
+            "practice": "Lập sơ đồ cắt tối ưu trên phần mềm chuyên dụng; tỷ lệ thu hồi phôi gỗ đạt tham chiếu 75%–82% tùy phẩm cấp gỗ và kết cấu sản phẩm.",
+            "scope": "Xưởng sơ chế, rong xẻ phôi và ghép mộng gỗ tự nhiên (Tràm, Bạch Đàn, Teak).",
+            "source": "Bảng định mức vật tư kỹ thuật (BOM), Phiếu theo dõi tỷ lệ thu hồi phôi ca sản xuất và báo cáo ERP."
+          },
+          {
+            "id": "offcuts",
+            "activity": "Tận Dụng Đầu Mẩu Gỗ Vụn (Offcuts)",
+            "practice": "Đầu mẩu gỗ thịt sạch được tuyển chọn, bào bốn mặt và đưa vào dây chuyền ghép dọc (finger-joint) hoặc ép ván khối cho các chi tiết phụ trợ.",
+            "scope": "Dây chuyền gia công gỗ ghép thanh tại cơ sở sản xuất phụ trợ và nhà máy gỗ tấm.",
+            "source": "Quy trình phân loại phôi bán thành phẩm nội bộ và lệnh sản xuất ghép thanh finger-joint."
+          },
+          {
+            "id": "sawdust",
+            "activity": "Mùn Cưa & Năng Lượng Sinh Khối (Sawdust)",
+            "practice": "100% mùn cưa và dăm bào gỗ sạch được hút tập trung qua hệ thống ống túi vải cyclone, dùng làm chất đốt cho lò hơi cung cấp nhiệt sấy gỗ.",
+            "scope": "Hệ thống hút bụi trung tâm và cụm lò hơi sấy gỗ tại cơ sở chế biến gỗ quy mô lớn.",
+            "source": "Nhật ký vận hành cấp nhiên liệu lò hơi sấy gỗ và giấy phép vận hành thiết bị áp lực."
+          },
+          {
+            "id": "recycling",
+            "activity": "Thu Hồi Bột Sơn & Bao Bì Tái Chế (Recycling)",
+            "practice": "Hệ thống thu hồi bột sơn cyclone tái sử dụng bột sơn tĩnh điện không nhiễm tạp chất; bao bì đóng gói dùng thùng carton 5–7 lớp tái chế.",
+            "scope": "Xưởng sơn tĩnh điện kim loại và dây chuyền đóng gói xuất khẩu theo đơn hàng chỉ định.",
+            "source": "Thông số kỹ thuật buồng phun cyclone, chứng chỉ vật liệu bao bì carton (chỉ số ECT/Burst test)."
+          },
+          {
+            "id": "waste",
+            "activity": "Xử Lý Chất Thải & Hóa Chất (Waste Handling)",
+            "practice": "Chất thải nguy hại (bùn sơn, giẻ lau dính dầu, bao bì hóa chất) được thu gom trong kho chứa chuyên dụng và bàn giao định kỳ cho đơn vị được cấp phép.",
+            "scope": "Khu vực lưu trữ chất thải nguy hại của từng nhà máy gia công theo cam kết môi trường.",
+            "source": "Sổ đăng ký chủ nguồn thải, Hợp đồng và Biên bản bàn giao chất thải nguy hại theo quy định Bộ TN&MT."
+          }
+        ]
+      }
+    },
+    "audits": {
+      "title": "Hồ Sơ Audit Cơ Sở & Chuỗi Hành Trình Sản Phẩm",
+      "desc": "Các chứng chỉ bao gồm FSC CoC, ISO 9001, ISO 14001, BSCI và SMETA đều gắn liền với từng pháp nhân cơ sở sản xuất cụ thể. Báo cáo đánh giá và phạm vi hiệu lực của cơ sở được chỉ định sẽ được cung cấp trực tiếp cho đối tác trong quá trình thẩm định chương trình mua hàng.",
+      "requestDossier": "Yêu Cầu Bộ Hồ Sơ Tuân Thủ",
+      "viewFacilities": "Xem 11 Cơ Sở Sản Xuất"
+    }
   }
 }

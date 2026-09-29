@@ -78,18 +78,20 @@ export default function ReadyToWorkTogether() {
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
           <Link
-            href="/catalogue/outdoor"
-            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-md font-body font-semibold text-sm text-white transition-all hover:opacity-90 w-full sm:w-auto"
+            href="/contact?type=proposal"
+            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-md font-body font-semibold text-sm text-white transition-all hover:opacity-90 w-full sm:w-auto shadow-sm"
             style={{ backgroundColor: "hsl(var(--orange))" }}
           >
             {t("home.cta.btn1")}
           </Link>
-          <Link
-            href="/contact"
+          <a
+            href="/DHT_Company_Profile_2026.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-md font-body font-semibold text-sm text-white/80 border border-white/10 bg-white/5 hover:bg-white/10 transition-all w-full sm:w-auto"
           >
             {t("home.cta.btn2")}
-          </Link>
+          </a>
         </motion.div>
       </div>
     </section>

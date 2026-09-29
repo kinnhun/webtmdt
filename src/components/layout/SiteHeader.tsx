@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Menu, X, Phone, ChevronDown, FileText } from "lucide-react";
+import { Search, Menu, X, Phone, ChevronDown } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
@@ -19,17 +19,7 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
   const [collectionsDropdown, setCollectionsDropdown] = useState(false);
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const router = useRouter();
-
-  const { data: dbData } = useQuery({
-    queryKey: ['headerContactContent'],
-    queryFn: async () => {
-      const res = await fetch('/api/contact-content');
-      if (!res.ok) return null;
-      const json = await res.json();
-      return json.data;
-    },
-    staleTime: 5 * 60 * 1000,
-  });
+  const tr = (key: string, defaultVal?: string) => t(key, { defaultValue: defaultVal, lng: router.locale });
 
   const handleDropdownEnter = () => {
     if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
@@ -101,7 +91,7 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
                 className="relative font-body text-sm font-medium tracking-wide group"
                 style={{ color: router.pathname === "/" ? "hsl(var(--orange))" : "rgba(255,255,255,0.85)" }}
               >
-                {t("nav.home", "Home")}
+                {tr("nav.home", "Home")}
                 <span
                   className="absolute -bottom-1 left-0 h-px transition-all duration-300"
                   style={{
@@ -117,7 +107,7 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
                 className="relative font-body text-sm font-medium tracking-wide group"
                 style={{ color: router.pathname === "/about" ? "hsl(var(--orange))" : "rgba(255,255,255,0.85)" }}
               >
-                {t("nav.about", "About DHT")}
+                {tr("nav.about", "About DHT")}
                 <span
                   className="absolute -bottom-1 left-0 h-px transition-all duration-300"
                   style={{
@@ -133,7 +123,7 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
                 className="relative font-body text-sm font-medium tracking-wide group"
                 style={{ color: router.pathname === "/manufacturing" ? "hsl(var(--orange))" : "rgba(255,255,255,0.85)" }}
               >
-                {t("nav.manufacturing", "Manufacturing")}
+                {tr("nav.manufacturing", "Manufacturing")}
                 <span
                   className="absolute -bottom-1 left-0 h-px transition-all duration-300"
                   style={{
@@ -154,7 +144,7 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
                   className="flex items-center gap-1 font-body text-sm font-medium tracking-wide transition-colors py-2"
                   style={{ color: isCollectionsActive ? "hsl(var(--orange))" : "rgba(255,255,255,0.85)" }}
                 >
-                  {t("nav.collections", "Collections")}
+                  {tr("nav.collections", "Collections")}
                   <ChevronDown size={14} className={`transition-transform duration-200 ${collectionsDropdown ? "rotate-180" : ""}`} />
                 </button>
 
@@ -172,13 +162,13 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
                         href="/catalogue/outdoor"
                         className="block px-4 py-2.5 text-xs font-medium text-white/80 hover:text-white hover:bg-white/10 transition-colors"
                       >
-                        {t("nav.outdoorCollection", "Outdoor Collections")}
+                        {tr("nav.outdoorCollection", "Outdoor Collections")}
                       </Link>
                       <Link
                         href="/catalogue/indoor"
                         className="block px-4 py-2.5 text-xs font-medium text-white/80 hover:text-white hover:bg-white/10 transition-colors border-t border-white/5"
                       >
-                        {t("nav.indoorCollection", "Indoor & Projects")}
+                        {tr("nav.indoorCollection", "Indoor & Projects")}
                       </Link>
                     </motion.div>
                   )}
@@ -191,7 +181,7 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
                 className="relative font-body text-sm font-medium tracking-wide group"
                 style={{ color: router.pathname === "/quality-compliance" ? "hsl(var(--orange))" : "rgba(255,255,255,0.85)" }}
               >
-                {t("nav.qualityCompliance", "Quality & Compliance")}
+                {tr("nav.qualityCompliance", "Quality & Compliance")}
                 <span
                   className="absolute -bottom-1 left-0 h-px transition-all duration-300"
                   style={{
@@ -207,7 +197,7 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
                 className="relative font-body text-sm font-medium tracking-wide group"
                 style={{ color: router.pathname === "/contact" ? "hsl(var(--orange))" : "rgba(255,255,255,0.85)" }}
               >
-                {t("nav.contact", "Contact")}
+                {tr("nav.contact", "Contact")}
                 <span
                   className="absolute -bottom-1 left-0 h-px transition-all duration-300"
                   style={{
@@ -223,29 +213,21 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
               <button
                 onClick={onSearchOpen}
                 className="w-8 h-8 flex items-center justify-center rounded-sm text-white/60 hover:text-white hover:bg-white/10 transition-all"
-                aria-label={t("nav.search", "Search")}
+                aria-label={tr("nav.search", "Search")}
               >
                 <Search size={17} />
               </button>
 
               <LanguageSwitcher />
 
-              <a
-                href="/DHT_Company_Profile_2026.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hidden xl:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm border border-white/20 font-body font-medium text-white/80 text-xs hover:text-white hover:border-white/50 transition-all"
-              >
-                <FileText size={13} />
-                {t("nav.companyProfile", "Company Profile")}
-              </a>
+
 
               <Link
                 href="/contact"
                 className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 rounded-sm font-body font-semibold text-white text-sm transition-all hover:opacity-90 shadow-sm"
                 style={{ backgroundColor: "hsl(var(--orange))" }}
               >
-                {t("nav.requestQuote", "Request a Quote")}
+                {tr("nav.requestQuote", "Request a Quote")}
               </Link>
 
               <button
@@ -276,36 +258,36 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
                 href="/"
                 className="font-body text-base font-medium text-white/75 hover:text-white py-2 border-b border-white/10 transition-colors"
               >
-                {t("nav.home", "Home")}
+                {tr("nav.home", "Home")}
               </Link>
               <Link
                 href="/about"
                 className="font-body text-base font-medium text-white/75 hover:text-white py-2 border-b border-white/10 transition-colors"
               >
-                {t("nav.about", "About DHT")}
+                {tr("nav.about", "About DHT")}
               </Link>
               <Link
                 href="/manufacturing"
                 className="font-body text-base font-medium text-white/75 hover:text-white py-2 border-b border-white/10 transition-colors"
               >
-                {t("nav.manufacturing", "Manufacturing")}
+                {tr("nav.manufacturing", "Manufacturing")}
               </Link>
               <div className="py-2 border-b border-white/10">
                 <span className="text-xs uppercase tracking-wider text-[#B97846] font-semibold block mb-2">
-                  {t("nav.collections", "Collections")}
+                  {tr("nav.collections", "Collections")}
                 </span>
                 <div className="flex flex-col gap-2 pl-3">
                   <Link
                     href="/catalogue/outdoor"
                     className="font-body text-sm font-medium text-white/70 hover:text-white py-1 transition-colors"
                   >
-                    • {t("nav.outdoorCollection", "Outdoor Collections")}
+                    • {tr("nav.outdoorCollection", "Outdoor Collections")}
                   </Link>
                   <Link
                     href="/catalogue/indoor"
                     className="font-body text-sm font-medium text-white/70 hover:text-white py-1 transition-colors"
                   >
-                    • {t("nav.indoorCollection", "Indoor & Projects")}
+                    • {tr("nav.indoorCollection", "Indoor & Projects")}
                   </Link>
                 </div>
               </div>
@@ -313,32 +295,24 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
                 href="/quality-compliance"
                 className="font-body text-base font-medium text-white/75 hover:text-white py-2 border-b border-white/10 transition-colors"
               >
-                {t("nav.qualityCompliance", "Quality & Compliance")}
+                {tr("nav.qualityCompliance", "Quality & Compliance")}
               </Link>
               <Link
                 href="/contact"
                 className="font-body text-base font-medium text-white/75 hover:text-white py-2 border-b border-white/10 transition-colors"
               >
-                {t("nav.contact", "Contact")}
+                {tr("nav.contact", "Contact")}
               </Link>
 
               <div className="pt-4 flex flex-col gap-3">
-                <a
-                  href="/DHT_Company_Profile_2026.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-center py-3 rounded-sm border border-white/20 font-body font-medium text-white text-sm hover:bg-white/10 transition-all flex items-center justify-center gap-2"
-                >
-                  <FileText size={15} />
-                  {t("nav.companyProfile", "Company Profile (PDF)")}
-                </a>
+
 
                 <Link
                   href="/contact"
                   className="text-center py-3.5 rounded-sm font-body font-semibold text-white text-base shadow-sm"
                   style={{ backgroundColor: "hsl(var(--orange))" }}
                 >
-                  {t("nav.requestQuote", "Request a Quote")}
+                  {tr("nav.requestQuote", "Request a Quote")}
                 </Link>
               </div>
             </nav>

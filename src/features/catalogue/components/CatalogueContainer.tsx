@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 import ProductCard from "@/components/ProductCard";
@@ -10,6 +11,9 @@ import { SidebarFilter } from "./SidebarFilter";
 import { getOptionTranslation } from "../utils/translations";
 
 export default function CatalogueContainer({ forcedCollection }: { forcedCollection?: Collection }) {
+  const router = useRouter();
+  const isVi = router.locale === "vi-VN";
+
   const {
     collection,
     search,
@@ -34,6 +38,8 @@ export default function CatalogueContainer({ forcedCollection }: { forcedCollect
     t
   } = useCatalogue(forcedCollection);
 
+  const isOutdoor = forcedCollection === "Outdoor" || collection === "Outdoor";
+
   return (
     <>
       <Head>
@@ -42,6 +48,31 @@ export default function CatalogueContainer({ forcedCollection }: { forcedCollect
       </Head>
 
       <div className="pt-[64px]" style={{ backgroundColor: "hsl(var(--warm-cream))", minHeight: "100vh" }}>
+        {/* H1 & Introduction Block — Positioned before carousel per Audit Issue 18 */}
+        <div className="bg-white border-b border-border py-8 sm:py-10">
+          <div className="container mx-auto px-6">
+            <div className="max-w-4xl">
+              <span className="font-body text-xs font-bold tracking-[0.25em] uppercase text-orange-600 block mb-2">
+                {isVi ? "Bộ Sưu Tập Xuất Khẩu B2B" : "B2B Export Catalogue"}
+              </span>
+              <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight mb-4">
+                {isVi
+                  ? (isOutdoor ? "Bộ Sưu Tập Nội Thất Ngoài Trời" : "Danh Mục Sản Phẩm")
+                  : (isOutdoor ? "Outdoor Furniture Collections" : "Furniture Collections")}
+              </h1>
+              <p className="font-body text-sm sm:text-base text-muted-foreground leading-relaxed">
+                {isVi
+                  ? (isOutdoor
+                    ? "Khám phá nội thất ngoài trời chế tác từ gỗ có chứng nhận FSC, nhôm, thép, dây thừng, mây nhựa và các kết hợp vật liệu hỗn hợp. DHT đáp ứng các chương trình bàn ăn, sofa lounge, ban công, ghế tắm nắng và nội thất module."
+                    : "Khám phá các bộ sưu tập nội thất xuất khẩu cao cấp của DHT Furniture Vietnam.")
+                  : (isOutdoor
+                    ? "Explore outdoor furniture in FSC-certified wood, aluminium, steel, rope, wicker and mixed-material combinations. DHT supports dining, lounge, balcony, sunlounger and modular programmes."
+                    : "Explore DHT Furniture Vietnam's contract and retail furniture collections.")}
+              </p>
+            </div>
+          </div>
+        </div>
+
         <div className="hidden lg:block">
           <HeroSlider products={collectionProducts} onQuickView={setQuickViewProduct} />
         </div>
@@ -94,7 +125,13 @@ export default function CatalogueContainer({ forcedCollection }: { forcedCollect
             <div className="flex-1 min-w-0">
               <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
                 <span className="font-body text-sm font-medium text-foreground">
-                  {t("catalogue.productsFound", { count: filtered.length })}
+                  {isVi
+                    ? (isOutdoor
+                      ? `Hiển thị ${filtered.length} sản phẩm & bộ sưu tập ngoại thất`
+                      : `Hiển thị ${filtered.length} sản phẩm & bộ sưu tập`)
+                    : (isOutdoor
+                      ? `Showing ${filtered.length} outdoor items & collections`
+                      : `Showing ${filtered.length} items & collections`)}
                 </span>
               </div>
 

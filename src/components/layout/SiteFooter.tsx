@@ -3,13 +3,18 @@ import Link from "next/link";
 import Image from "next/image";
 import { Facebook, Linkedin, Mail, Phone, MapPin } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { fadeUp, stagger } from "@/lib/animations";import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/router";
+import { fadeUp, stagger } from "@/lib/animations";
+import { useQuery } from "@tanstack/react-query";
+import { MASTER_LOCATIONS, getLocalizedLocations } from "@/constants/locations";
 
 export default function SiteFooter() {
   const { t, i18n } = useTranslation();
+  const router = useRouter();
+  const tr = (k: string, d?: string) => t(k, { defaultValue: d, lng: router.locale });
 
   const langKey = (() => {
-    const lang = i18n.language;
+    const lang = router.locale || i18n.language;
     if (lang === 'vi-VN' || lang === 'vi') return 'vi';
     if (lang === 'en-GB') return 'uk';
     return 'us';
@@ -36,68 +41,49 @@ export default function SiteFooter() {
   const hasDB = !!dbData;
 
   const contactLocations = (hasDB && dbData.locations?.items?.length) 
-    ? dbData.locations.items.map((loc: any) => ({
-        title: txt(loc.title, langKey),
-        subtitle: txt(loc.subtitle, langKey),
-        address: txt(loc.address, langKey),
-        phone: loc.phone || "",
-        href: loc.href || `tel:${(loc.phone || "").replace(/\s/g, "")}`,
-        hours: txt(loc.hours, langKey)
-      }))
-    : [
-        {
-          title: "DHT Head Office & Commercial Dept.",
-          subtitle: "Commercial & Business Inquiries",
-          address: "72 Le Thanh Ton Street, Ben Nghe Ward, District 1, Ho Chi Minh City, Vietnam",
-          phone: "+84 932 058 545",
-          href: "tel:+84932058545",
-          hours: "08:00 - 17:00 (UTC+7), Mon - Fri. Visits by appointment."
-        },
-        {
-          title: "DHT Showroom & Gallery",
-          subtitle: "Outdoor & Indoor Collections",
-          address: "206 Phan Dinh Phung Street, Pleiku City, Gia Lai Province, Vietnam",
-          phone: "+84 907 386 898",
-          href: "tel:+84907386898",
-          hours: "08:00 - 17:00 (UTC+7). Visits by appointment."
-        },
-        {
-          title: "DHT Manufacturing Network (11 Facilities)",
-          subtitle: "4 Clusters Across Vietnam",
-          address: "Quy Nhon, HCMC & Southern Corridor, Hung Yen, Phu Tho/Vinh Phuc",
-          phone: "+84 902 907 399",
-          href: "tel:+84902907399",
-          hours: "Factory visits arranged by appointment."
+    ? dbData.locations.items.map((loc: any) => {
+        let title = txt(loc.title, langKey);
+        if (title.includes("Head Office & Commercial") || title.includes("Trụ Sở & Phòng Thương Mại")) {
+          title = MASTER_LOCATIONS[0].title[langKey as 'us' | 'uk' | 'vi'] || MASTER_LOCATIONS[0].title.us;
         }
-      ];
+        return {
+          title,
+          subtitle: txt(loc.subtitle, langKey),
+          address: txt(loc.address, langKey),
+          phone: loc.phone || "",
+          href: loc.href || `tel:${(loc.phone || "").replace(/\s/g, "")}`,
+          hours: txt(loc.hours, langKey)
+        };
+      })
+    : getLocalizedLocations(langKey as 'us' | 'uk' | 'vi');
 
   const quickLinks = [
-    { label: t("nav.home", "Home"), href: "/" },
-    { label: t("nav.about", "About DHT"), href: "/about" },
-    { label: t("nav.manufacturing", "Manufacturing"), href: "/manufacturing" },
-    { label: t("nav.qualityCompliance", "Quality & Compliance"), href: "/quality-compliance" },
-    { label: t("footer.links.outdoorCollection", "Outdoor Collections"), href: "/catalogue/outdoor" },
-    { label: t("footer.links.indoorCollection", "Indoor & Projects"), href: "/catalogue/indoor" },
-    { label: t("nav.contact", "Contact"), href: "/contact" },
+    { label: tr("nav.home", "Home"), href: "/" },
+    { label: tr("nav.about", "About DHT"), href: "/about" },
+    { label: tr("nav.manufacturing", "Manufacturing"), href: "/manufacturing" },
+    { label: tr("nav.qualityCompliance", "Quality & Compliance"), href: "/quality-compliance" },
+    { label: tr("footer.links.outdoorCollection", "Outdoor Collections"), href: "/catalogue/outdoor" },
+    { label: tr("footer.links.indoorCollection", "Indoor & Projects"), href: "/catalogue/indoor" },
+    { label: tr("nav.contact", "Contact"), href: "/contact" },
   ];
 
   const collectionGroups = [
     {
-      title: t("footer.links.outdoorCollection"),
+      title: tr("footer.links.outdoorCollection"),
       items: [
-        { label: t("footer.collectionsItems.outdoorSofas"), href: "/catalogue/outdoor?category=Outdoor+Sofas" },
-        { label: t("footer.collectionsItems.diningSets"), href: "/catalogue/outdoor?category=Dining+Sets" },
-        { label: t("footer.collectionsItems.loungeDaybeds"), href: "/catalogue/outdoor?category=Lounge+%26+Daybeds" },
-        { label: t("footer.collectionsItems.tables"), href: "/catalogue/outdoor?category=Tables" },
-        { label: t("footer.collectionsItems.chairs"), href: "/catalogue/outdoor?category=Chairs" },
+        { label: tr("footer.collectionsItems.outdoorSofas"), href: "/catalogue/outdoor?category=Outdoor+Sofas" },
+        { label: tr("footer.collectionsItems.diningSets"), href: "/catalogue/outdoor?category=Dining+Sets" },
+        { label: tr("footer.collectionsItems.loungeDaybeds"), href: "/catalogue/outdoor?category=Lounge+%26+Daybeds" },
+        { label: tr("footer.collectionsItems.tables"), href: "/catalogue/outdoor?category=Tables" },
+        { label: tr("footer.collectionsItems.chairs"), href: "/catalogue/outdoor?category=Chairs" },
       ],
     },
     {
-      title: t("footer.links.indoorCollection"),
+      title: tr("footer.links.indoorCollection"),
       items: [
-        { label: t("footer.collectionsItems.livingRoomFurniture"), href: "/catalogue/indoor?category=Living+Room+Furniture" },
-        { label: t("footer.collectionsItems.diningRoomFurniture"), href: "/catalogue/indoor?category=Dining+Room+Furniture" },
-        { label: t("footer.collectionsItems.bathroomFurniture"), href: "/catalogue/indoor?category=Bathroom+Furniture" },
+        { label: tr("footer.collectionsItems.livingRoomFurniture"), href: "/catalogue/indoor?category=Living+Room+Furniture" },
+        { label: tr("footer.collectionsItems.diningRoomFurniture"), href: "/catalogue/indoor?category=Dining+Room+Furniture" },
+        { label: tr("footer.collectionsItems.bathroomFurniture"), href: "/catalogue/indoor?category=Bathroom+Furniture" },
       ],
     },
   ];
@@ -123,7 +109,7 @@ export default function SiteFooter() {
               />
             </div>
             <p className="font-body text-sm leading-relaxed text-white/60 mb-5 lg:text-center">
-              {t("footer.description", "DHT Furniture Vietnam is a Vietnamese furniture manufacturer and exporter, operating as part of a family-owned furniture group with 11 production facilities across Vietnam. We develop outdoor, indoor and project furniture for international buyers.")}
+              {tr("footer.description", "DHT Furniture Vietnam is a Vietnamese furniture manufacturer and exporter, operating as part of a family-owned furniture group with 11 production facilities across Vietnam. We develop outdoor, indoor and project furniture for international buyers.")}
             </p>
             <div className="flex gap-3 lg:justify-center">
               {[
@@ -147,7 +133,7 @@ export default function SiteFooter() {
           </motion.div>
 
           <motion.div variants={fadeUp} className="md:col-span-1 lg:col-span-2">
-            <h4 className="font-display text-white font-semibold text-base mb-5">{t("footer.quickLinks")}</h4>
+            <h4 className="font-display text-white font-semibold text-base mb-5">{tr("footer.quickLinks")}</h4>
             <ul className="space-y-3">
               {quickLinks.map(({ label, href }) => (
                 <li key={href}>
@@ -161,7 +147,7 @@ export default function SiteFooter() {
           </motion.div>
 
           <motion.div variants={fadeUp} className="md:col-span-1 lg:col-span-2">
-            <h4 className="font-display text-white font-semibold text-base mb-5">{t("footer.collections")}</h4>
+            <h4 className="font-display text-white font-semibold text-base mb-5">{tr("footer.collections")}</h4>
             <div className="space-y-5">
               {collectionGroups.map((group) => (
                 <div key={group.title}>
@@ -184,7 +170,7 @@ export default function SiteFooter() {
           </motion.div>
 
           <motion.div variants={fadeUp} className="md:col-span-2 lg:col-span-5">
-            <h4 className="font-display text-white font-semibold text-base mb-6">{t("footer.contact")}</h4>
+            <h4 className="font-display text-white font-semibold text-base mb-6">{tr("footer.contact")}</h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-8">
 
               {contactLocations.map((loc: any, i: number) => (
@@ -236,10 +222,10 @@ export default function SiteFooter() {
           className="pt-6 flex flex-col md:flex-row items-center justify-between gap-3"
         >
           <p className="font-body text-xs text-white/40">
-            {t("footer.copyright", "© 2026 DHT Furniture Vietnam Joint Stock Company. All rights reserved.")}
+            {tr("footer.copyright", "© 2026 DHT Furniture Vietnam Joint Stock Company. All rights reserved.")}
           </p>
           <p className="font-body text-xs text-white/30">
-            {t("footer.tagline", "Outdoor • Indoor • Project Furniture")}
+            {tr("footer.tagline", "Outdoor • Indoor • Project Furniture")}
           </p>
         </motion.div>
       </div>

@@ -41,8 +41,25 @@ export function useCatalogue(forcedCollection?: Collection) {
     ['category', 'material', 'moq', 'color', 'style'].forEach((key) => {
       const val = q[key];
       if (val) {
-        if (typeof val === 'string') initFilters[key as keyof FilterState] = val.split(',');
-        else if (Array.isArray(val)) initFilters[key as keyof FilterState] = val;
+        let items: string[] = [];
+        if (typeof val === 'string') items = val.split(',');
+        else if (Array.isArray(val)) items = val;
+        if (key === 'category') {
+          items = items.map((c) => {
+            const clean = c.replace(/\+/g, ' ').trim().toLowerCase();
+            if (clean === 'outdoor sofas' || clean === 'outdoor sofa' || clean === 'lounge daybeds' || clean === 'lounge & daybeds') {
+              return 'Lounge & Daybeds';
+            }
+            if (clean === 'dining sets' || clean === 'dining set') {
+              return 'Dining Sets';
+            }
+            if (clean === 'tables' || clean === 'table') {
+              return 'Tables';
+            }
+            return c;
+          });
+        }
+        initFilters[key as keyof FilterState] = items;
       }
     });
 
@@ -157,9 +174,28 @@ export function useCatalogue(forcedCollection?: Collection) {
       return normalizedSelected.some((value) => normalizedValues.has(value));
     };
 
+    const checkMaterialMatch = (p: Product, selectedMaterials: string[]) => {
+      if (!selectedMaterials.length) return true;
+      if (checkOverlapExt(p.material, selectedMaterials)) return true;
+
+      const pText = [
+        p.name?.us, p.name?.uk, p.name?.vi,
+        p.description?.us, p.description?.uk, p.description?.vi,
+        typeof p.longDescription === 'string' ? p.longDescription : (p.longDescription?.us || ''),
+        Array.isArray(p.specifications) ? JSON.stringify(p.specifications) : ''
+      ].filter(Boolean).join(' ').toLowerCase();
+
+      return selectedMaterials.some(m => {
+        const mLower = m.trim().toLowerCase();
+        if (mLower === 'aluminium' || mLower === 'aluminum') {
+          return pText.includes('aluminium') || pText.includes('aluminum');
+        }
+        return pText.includes(mLower);
+      });
+    };
+
     if (!checkOverlapExt(p.category, filters.category)) return false;
-    if (!checkOverlapExt(p.material, filters.material)) return false;
-    if (filters.moq.length && (!p.moq || !filters.moq.includes(p.moq))) return false;
+    if (!checkMaterialMatch(p, filters.material)) return false;
     if (!checkOverlapExt(p.color, filters.color)) return false;
     if (!checkOverlapExt(p.style, filters.style)) return false;
 
@@ -190,8 +226,7 @@ export function useCatalogue(forcedCollection?: Collection) {
 
   const filterGroups: { key: keyof FilterState; label: string; options: string[] }[] = [
     { key: "category", label: t("catalogue.category"), options: collection === "Outdoor" ? OUTDOOR_CATEGORIES : INDOOR_CATEGORIES },
-    { key: "material", label: t("catalogue.material"), options: getDynamicOptions('material') },
-    { key: "moq", label: t("catalogue.moq"), options: MOQ_OPTIONS },
+    { key: "material", label: t("catalogue.material"), options: MATERIALS },
     { key: "color", label: t("catalogue.color"), options: getDynamicOptions('color') },
     { key: "style", label: t("catalogue.style"), options: getDynamicOptions('style') },
   ];

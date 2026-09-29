@@ -5,37 +5,118 @@ import { ArrowRight, Eye, Sparkles } from "lucide-react";
 import { useInView } from "@/hooks/useInView";
 import { useTranslation } from "react-i18next";
 import QuickViewModal from "@/components/QuickViewModal";
-import { useFeaturedProducts } from "@/domains/product/product.hooks";
-import type { Product } from "@/domains/product/product.types";
+import { useProducts } from "@/domains/product/product.hooks";
+import type { Product, FilterState } from "@/domains/product/product.types";
 
-const FILTER_KEYS = ["All", "Outdoor Sofa", "Dining Set", "Sunlounger", "Outdoor Table", "Chairs"] as const;
+const FILTER_KEYS = [
+  "All",
+  "Lounge & Sofa Collections",
+  "Dining",
+  "Sunloungers & Daybeds",
+] as const;
 
-const FILTER_I18N: Record<string, string> = {
+type FilterKey = typeof FILTER_KEYS[number];
+
+const FILTER_I18N: Record<FilterKey, string> = {
   "All": "home.featured.filterAll",
-  "Outdoor Sofa": "home.featured.filterOutdoorSofas",
-  "Dining Set": "home.featured.filterDiningSets",
-  "Sunlounger": "home.featured.filterLoungeDaybeds",
-  "Outdoor Table": "home.featured.filterTables",
-  "Chairs": "home.featured.filterChairs",
+  "Lounge & Sofa Collections": "home.featured.filterLoungeSofa",
+  "Dining": "home.featured.filterDining",
+  "Sunloungers & Daybeds": "home.featured.filterSunloungers",
 };
 
-const FILTER_MAPPING: Record<string, string> = {
-  "All": "All",
-  "Outdoor Sofa": "Outdoor Sofas",
-  "Dining Set": "Dining Sets",
-  "Sunlounger": "Lounge & Daybeds",
-  "Outdoor Table": "Tables",
-  "Chairs": "Chairs",
-};
+function matchesFilter(product: Product, filter: FilterKey): boolean {
+  if (filter === "All") return true;
+
+  const cat = (product.category?.us || "").trim();
+  const name = (product.name?.us || "").toLowerCase();
+  const code = (product.code || "").toUpperCase();
+
+  if (filter === "Lounge & Sofa Collections") {
+    if (name.includes("sunlounger") || cat.toLowerCase() === "sunloungers & daybeds") {
+      return false;
+    }
+    return (
+      cat === "Lounge & Daybeds" ||
+      cat === "Outdoor Sofas" ||
+      name.includes("lounge") ||
+      name.includes("sofa") ||
+      code.startsWith("ALC-") ||
+      code.startsWith("BLC-") ||
+      code.startsWith("SLC-") ||
+      code.startsWith("TLC-") ||
+      code.startsWith("WLC-") ||
+      code.startsWith("CLC-")
+    );
+  }
+
+  if (filter === "Dining") {
+    return (
+      cat === "Dining Sets" ||
+      cat === "Tables" ||
+      cat === "Chairs" ||
+      name.includes("dining") ||
+      name.includes("table") ||
+      name.includes("chair") ||
+      code.startsWith("MDC-") ||
+      code.startsWith("WDC-") ||
+      code.includes("-TAB-")
+    );
+  }
+
+  if (filter === "Sunloungers & Daybeds") {
+    return (
+      cat === "Sunloungers & Daybeds" ||
+      cat === "Sunlounger" ||
+      name.includes("sunlounger") ||
+      name.includes("daybed")
+    );
+  }
+
+  return false;
+}
+
+function getTargetUrl(filter: FilterKey): string {
+  if (filter === "All") {
+    return "/catalogue/outdoor";
+  }
+  if (filter === "Lounge & Sofa Collections") {
+    return `/catalogue/outdoor?category=${encodeURIComponent("Lounge & Daybeds")}`;
+  }
+  if (filter === "Dining") {
+    return `/catalogue/outdoor?category=${encodeURIComponent("Dining Sets")}`;
+  }
+  if (filter === "Sunloungers & Daybeds") {
+    return `/catalogue/outdoor?category=${encodeURIComponent("Lounge & Daybeds")}`;
+  }
+  return "/catalogue/outdoor";
+}
+
+function FeaturedSkeletonGrid() {
+  return (
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-6 sm:gap-x-5 sm:gap-y-10 md:gap-x-7">
+      {Array.from({ length: 8 }).map((_, i) => (
+        <div key={i} className="animate-pulse space-y-3">
+          <div className="rounded-sm aspect-[4/3] bg-black/5" />
+          <div className="h-3 w-16 bg-black/5 rounded" />
+          <div className="h-4 w-3/4 bg-black/5 rounded" />
+          <div className="h-3 w-1/2 bg-black/5 rounded" />
+        </div>
+      ))}
+    </div>
+  );
+}
 
 function EditorialProductCard({ product, index, onQuickView }: { product: Product; index: number; onQuickView: (p: Product) => void }) {
   const { t, i18n } = useTranslation();
   const langEnum: Record<string, 'vi' | 'uk' | 'us'> = { "vi-VN": "vi", "en-GB": "uk", "en-US": "us" };
   const langId = langEnum[i18n?.language] || "us";
   const pName = product.name?.[langId] || product.name?.us || "";
-  const pMaterial = product.material?.[langId] || product.material?.us || "";
-  const pStyle = product.style?.[langId] || product.style?.us || "";
+  const pMaterial = (product.material?.[langId] || product.material?.us || "").trim();
+  const pStyle = (product.style?.[langId] || product.style?.us || "").trim();
   const productDetailHref = `/catalogue/${product.slug}`;
+
+  // Filter out empty material and style so no orphaned " · " appears
+  const metaAttributes = [pMaterial, pStyle].filter(Boolean);
 
   return (
     <motion.div layout initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 16, scale: 0.97 }} transition={{ duration: 0.55, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }} className="group cursor-pointer">
@@ -66,9 +147,15 @@ function EditorialProductCard({ product, index, onQuickView }: { product: Produc
           </h3>
         </Link>
         <div className="flex items-center justify-between pt-0.5">
-          <span className="font-body text-xs text-muted-foreground">
-            {pMaterial} · {pStyle}
-          </span>
+          {metaAttributes.length > 0 ? (
+            <span className="font-body text-xs text-muted-foreground">
+              {metaAttributes.join(" · ")}
+            </span>
+          ) : (
+            <span className="font-body text-xs text-muted-foreground">
+              {product.collection || "Outdoor"}
+            </span>
+          )}
           <Link href={productDetailHref} className="font-body text-xs font-semibold flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:opacity-75" style={{ color: "hsl(var(--orange))" }}>
             {t("home.featured.inquire")} <ArrowRight size={11} />
           </Link>
@@ -82,17 +169,18 @@ export default function FeaturedProducts() {
   const { ref, inView } = useInView();
   const { t } = useTranslation();
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
-  const [activeFilter, setActiveFilter] = useState("All");
+  const [activeFilter, setActiveFilter] = useState<FilterKey>("All");
 
-  const { data: featuredProductsData = [] } = useFeaturedProducts();
-  const validFeaturedProducts = featuredProductsData.filter((product) => typeof product.slug === "string" && product.slug.trim() !== "");
+  const emptyFilters: FilterState = { category: [], material: [], moq: [], color: [], style: [] };
+  const { data: rawProducts = [], isLoading } = useProducts(emptyFilters, "");
 
-  const filtered = activeFilter === "All"
-    ? validFeaturedProducts
-    : validFeaturedProducts.filter(p => p.category?.us === FILTER_MAPPING[activeFilter]);
-  const targetUrl = activeFilter === "All"
-    ? `/catalogue/outdoor`
-    : `/catalogue/outdoor?category=${encodeURIComponent(FILTER_MAPPING[activeFilter])}`;
+  const validFeaturedProducts = rawProducts.filter(
+    (product) => typeof product.slug === "string" && product.slug.trim() !== ""
+  );
+
+  const filtered = validFeaturedProducts.filter((p) => matchesFilter(p, activeFilter));
+  const displayed = activeFilter === "All" ? filtered.slice(0, 8) : filtered;
+  const targetUrl = getTargetUrl(activeFilter);
 
   return (
     <section className="py-16 sm:py-28" style={{ backgroundColor: "hsl(var(--warm-cream))" }}>
@@ -114,8 +202,8 @@ export default function FeaturedProducts() {
           <motion.div initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.35 }} className="flex flex-wrap gap-2.5 mb-8 sm:mb-10">
             {FILTER_KEYS.map((f) => {
               const isActive = activeFilter === f;
-              const count = f === "All" ? validFeaturedProducts.length : validFeaturedProducts.filter(p => p.category?.us === FILTER_MAPPING[f]).length;
-              if (count === 0) return null;
+              const count = f === "All" ? Math.min(validFeaturedProducts.length, 8) : validFeaturedProducts.filter(p => matchesFilter(p, f)).length;
+              if (count === 0 && !isLoading) return null;
               return (
                 <button key={f} onClick={() => setActiveFilter(f)} className="relative inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full font-body text-sm font-medium transition-all duration-300 overflow-hidden whitespace-nowrap shrink-0" style={isActive ? { backgroundColor: "hsl(var(--navy-deep))", color: "#fff", boxShadow: "0 4px 14px hsl(var(--navy-deep)/0.25)" } : { backgroundColor: "hsl(var(--warm-beige))", color: "hsl(var(--navy-deep))", border: "1px solid hsl(var(--warm-beige))" }}>
                   {t(FILTER_I18N[f])}
@@ -124,12 +212,22 @@ export default function FeaturedProducts() {
               );
             })}
           </motion.div>
-          <motion.div layout className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-6 sm:gap-x-5 sm:gap-y-10 md:gap-x-7">
-            <AnimatePresence mode="popLayout">
-              {filtered.map((product, i) => (<EditorialProductCard key={product.id || product.code || i} product={product} index={i} onQuickView={setQuickViewProduct} />))}
-            </AnimatePresence>
-          </motion.div>
-          {filtered.length === 0 && (<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-20"><p className="font-body text-muted-foreground">{t("home.featured.noProducts")}</p></motion.div>)}
+          {isLoading ? (
+            <FeaturedSkeletonGrid />
+          ) : (
+            <>
+              <motion.div layout className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-6 sm:gap-x-5 sm:gap-y-10 md:gap-x-7">
+                <AnimatePresence mode="popLayout">
+                  {displayed.map((product, i) => (<EditorialProductCard key={product.id || product.code || i} product={product} index={i} onQuickView={setQuickViewProduct} />))}
+                </AnimatePresence>
+              </motion.div>
+              {displayed.length === 0 && (
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-20">
+                  <p className="font-body text-muted-foreground">{t("home.featured.noProducts")}</p>
+                </motion.div>
+              )}
+            </>
+          )}
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }} className="flex justify-center mt-16">
             <Link href={targetUrl} className="group relative inline-flex items-center gap-3 px-10 py-4 rounded-sm font-body font-semibold text-sm overflow-hidden transition-all duration-300 border-2" style={{ borderColor: "hsl(var(--orange))", color: "hsl(var(--orange))" }}>
               <span className="absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-350 ease-out" style={{ backgroundColor: "hsl(var(--orange))" }} />
@@ -142,4 +240,3 @@ export default function FeaturedProducts() {
     </section>
   );
 }
-

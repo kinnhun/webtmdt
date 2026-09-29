@@ -6,6 +6,7 @@ import Schema from "@/components/Schema";
 import { Mail, Phone, MapPin, Send, Clock, Globe } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
+import { MASTER_LOCATIONS, getLocalizedLocations } from "@/constants/locations";
 
 function useLang() {
   const { i18n } = useTranslation();
@@ -72,7 +73,9 @@ export default function ContactPage() {
   const [categories, setCategories] = useState<{key: string, label: string}[]>([]);
 
   useEffect(() => {
-    const { product, code, inquiryType } = router.query;
+    const { product, code, inquiryType, type } = router.query;
+    const reqType = (inquiryType || type) as string | undefined;
+
     if (product) {
       setForm((prev) => ({
         ...prev,
@@ -80,13 +83,34 @@ export default function ContactPage() {
         message: t("contact.form.inquiryMessage", { product, code: code ? ` (Code: ${code})` : "" }),
         interestedProduct: `${product}${code ? ` - ${code}` : ""}`,
       }));
-    } else if (inquiryType) {
-      const typeStr = Array.isArray(inquiryType) ? inquiryType[0] : inquiryType;
-      setForm((prev) => ({
-        ...prev,
-        subject: `OEM / B2B Inquiry: ${typeStr}`,
-        message: `Hello DHT Furniture team, we would like to discuss our OEM development requirements...`,
-      }));
+    } else if (reqType) {
+      const typeStr = Array.isArray(reqType) ? reqType[0] : reqType;
+      const lower = typeStr.toLowerCase();
+      if (lower === 'proposal' || lower.includes('proposal')) {
+        setForm((prev) => ({
+          ...prev,
+          subject: t("contact.form.proposalSubject", "Product Proposal Request — OEM / B2B Programme"),
+          message: t(
+            "contact.form.proposalMessage",
+            "Hello DHT Furniture team,\n\nWe would like to request a product proposal for our upcoming furniture programme. Our target market, estimated order volume, and initial specifications are as follows:\n- Target Market:\n- Estimated Volume:\n- Programme Requirements:\n\nPlease contact us with suitable options and next development steps."
+          ),
+        }));
+      } else if (lower === 'visit' || lower.includes('visit')) {
+        setForm((prev) => ({
+          ...prev,
+          subject: t("contact.form.visitSubject", "Factory Visit Request — On-Site Inspection"),
+          message: t(
+            "contact.form.visitMessage",
+            "Hello DHT Furniture team,\n\nWe would like to arrange an appointment for an on-site factory inspection visit to review production facilities and manufacturing capabilities."
+          ),
+        }));
+      } else {
+        setForm((prev) => ({
+          ...prev,
+          subject: `OEM / B2B Inquiry: ${typeStr}`,
+          message: `Hello DHT Furniture team, we would like to discuss our OEM development requirements...`,
+        }));
+      }
     }
   }, [router.query, t]);
 
@@ -131,41 +155,22 @@ export default function ContactPage() {
     }
   };
 
-  const locations = hasDB
-    ? (dbData.locations?.items || []).map((loc: any) => ({
-        title: txt(loc.title, langKey),
-        subtitle: txt(loc.subtitle, langKey),
-        address: txt(loc.address, langKey),
-        phone: loc.phone || "",
-        href: loc.href || `tel:${(loc.phone || "").replace(/\s/g, "")}`,
-        hours: txt(loc.hours, langKey)
-      }))
-    : [
-        {
-          title: "DHT Head Office & Commercial Dept.",
-          subtitle: "Commercial & Export Inquiries",
-          address: "72 Le Thanh Ton Street, Ben Nghe Ward, District 1, Ho Chi Minh City, Vietnam",
-          phone: "+84 932 058 545",
-          href: "tel:+84932058545",
-          hours: "08:00 - 17:00 (UTC+7), Monday to Friday. Visits by appointment."
-        },
-        {
-          title: "DHT Showroom & Gallery",
-          subtitle: "Outdoor & Indoor Collections",
-          address: "206 Phan Dinh Phung Street, Pleiku City, Gia Lai Province, Vietnam",
-          phone: "+84 907 386 898",
-          href: "tel:+84907386898",
-          hours: "08:00 - 17:00 (UTC+7). Visits by appointment."
-        },
-        {
-          title: "DHT Manufacturing Network (11 Facilities)",
-          subtitle: "4 Clusters Across Vietnam",
-          address: "Quy Nhon, HCMC & Southern Corridor, Hung Yen, Phu Tho/Vinh Phuc",
-          phone: "+84 902 907 399",
-          href: "tel:+84902907399",
-          hours: "Factory visits arranged by appointment."
+  const locations = (hasDB && dbData.locations?.items?.length)
+    ? dbData.locations.items.map((loc: any) => {
+        let title = txt(loc.title, langKey);
+        if (title.includes("Head Office & Commercial") || title.includes("Trụ Sở & Phòng Thương Mại")) {
+          title = MASTER_LOCATIONS[0].title[langKey as 'us' | 'uk' | 'vi'] || MASTER_LOCATIONS[0].title.us;
         }
-      ];
+        return {
+          title,
+          subtitle: txt(loc.subtitle, langKey),
+          address: txt(loc.address, langKey),
+          phone: loc.phone || "",
+          href: loc.href || `tel:${(loc.phone || "").replace(/\s/g, "")}`,
+          hours: txt(loc.hours, langKey)
+        };
+      })
+    : getLocalizedLocations(langKey as 'us' | 'uk' | 'vi');
 
   const validLocations = locations.filter((loc: any) => {
     const titleStr = typeof loc.title === 'string' ? loc.title : '';

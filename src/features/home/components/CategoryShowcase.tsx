@@ -14,7 +14,7 @@ export default function CategoryShowcase() {
     {
       key: "outdoorSofa",
       image: "/img/category/outdoorsofas1.png",
-      href: "/catalogue/outdoor?category=Outdoor+Sofas",
+      href: "/catalogue/outdoor?category=Lounge+%26+Daybeds",
     },
     {
       key: "outdoorDining",
@@ -22,9 +22,9 @@ export default function CategoryShowcase() {
       href: "/catalogue/outdoor?category=Dining+Sets",
     },
     {
-      key: "sunlounger",
+      key: "tables",
       image: "/img/category/sunlounger.png",
-      href: "/catalogue/outdoor?category=Lounge+Daybeds",
+      href: "/catalogue/outdoor?category=Tables",
     },
     {
       key: "aluminium",

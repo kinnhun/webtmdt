@@ -13,11 +13,52 @@ export default function ProductDetailPage({ initialProduct, initialRelated }: Pr
   return <ProductDetailWrapper initialProduct={initialProduct} initialRelated={initialRelated} />;
 }
 
+const SLUG_ALIASES: Record<string, string> = {
+  // Spelling fixes (Audit Issues 19 & 20)
+  "bondi-lougne": "bondi-lounge-collection",
+  "bondi-lougne-collection": "bondi-lounge-collection",
+  "bondi-lounge": "bondi-lounge-collection",
+  "bondi": "bondi-lounge-collection",
+  "mobley-dinning": "mobley-dining-collection",
+  "mobley-dinning-collection": "mobley-dining-collection",
+  "mobley-dining": "mobley-dining-collection",
+  "mobley": "mobley-dining-collection",
+  "wesley-dinning": "wesley-dining-collection",
+  "wesley-dinning-collection": "wesley-dining-collection",
+  "wesley-dining": "wesley-dining-collection",
+  "wesley": "wesley-dining-collection",
+  "retangle-table": "rectangular-table",
+  "rectangle-table": "rectangular-table",
+  "retangle": "rectangular-table",
+  // Master name variants & alias fallbacks
+  "brooks-lounge": "brooksc-lounge-collection",
+  "brooks-lounge-collection": "brooksc-lounge-collection",
+  "brooksc-lounge": "brooksc-lounge-collection",
+  "brooks": "brooksc-lounge-collection",
+  "brooksc": "brooksc-lounge-collection",
+  "balmora-lounge": "balemora-lounge-collection",
+  "balmora-lounge-collection": "balemora-lounge-collection",
+  "balmora": "balemora-lounge-collection",
+  "siena-table": "seina-table",
+  "siena": "seina-table",
+};
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { slug } = context.params || {};
 
   if (!slug || typeof slug !== "string") {
     return { notFound: true };
+  }
+
+  const normalizedSlug = slug.toLowerCase();
+  if (SLUG_ALIASES[normalizedSlug]) {
+    const targetSlug = SLUG_ALIASES[normalizedSlug];
+    return {
+      redirect: {
+        destination: `/catalogue/${targetSlug}`,
+        permanent: true,
+      },
+    };
   }
 
   try {

@@ -119,40 +119,40 @@ async function syncMasterData() {
     {
       year: "2016",
       title: { 
-        us: "DHT Investment and Commercial JSC", 
-        uk: "DHT Investment and Commercial JSC",
-        vi: "Công ty CP Đầu tư & Thương mại DHT" 
+        us: "DHT Investment and Commercial Joint Stock Company", 
+        uk: "DHT Investment and Commercial Joint Stock Company", 
+        vi: "Công ty Cổ phần Đầu tư và Thương mại DHT" 
       },
       description: {
-        us: "Foundation in investment and international trade, establishing core commercial networks and market expertise.",
-        uk: "Foundation in investment and international trade, establishing core commercial networks and market expertise.",
-        vi: "Khởi đầu trong lĩnh vực đầu tư và thương mại quốc tế, thiết lập mạng lưới quan hệ đối tác vững chắc."
+        us: "Foundation in investment and international trade.",
+        uk: "Foundation in investment and international trade.",
+        vi: "Nền tảng đầu tư và thương mại quốc tế."
       }
     },
     {
       year: "2022",
       title: { 
-        us: "DHT Furniture JSC", 
-        uk: "DHT Furniture JSC",
+        us: "DHT Furniture Joint Stock Company", 
+        uk: "DHT Furniture Joint Stock Company", 
         vi: "Công ty Cổ phần DHT Furniture" 
       },
       description: {
-        us: "Development of the specialized furniture manufacturing business and international export operations.",
-        uk: "Development of the specialized furniture manufacturing business and international export operations.",
-        vi: "Mở rộng và chuyên sâu vào lĩnh vực sản xuất nội thất và xuất khẩu quốc tế."
+        us: "Development of the furniture business and export activities.",
+        uk: "Development of the furniture business and export activities.",
+        vi: "Phát triển hoạt động kinh doanh và xuất khẩu nội thất."
       }
     },
     {
       year: "2024",
       title: { 
-        us: "DHT Furniture Vietnam JSC", 
-        uk: "DHT Furniture Vietnam JSC",
+        us: "DHT Furniture Vietnam Joint Stock Company", 
+        uk: "DHT Furniture Vietnam Joint Stock Company", 
         vi: "Công ty Cổ phần DHT Furniture Vietnam" 
       },
       description: {
-        us: "Consolidation of the international furniture business and coordinated manufacturing programmes across an 11-facility family-owned group.",
-        uk: "Consolidation of the international furniture business and coordinated manufacturing programmes across an 11-facility family-owned group.",
-        vi: "Hoàn thiện hệ sinh thái sản xuất và điều phối đơn hàng nội thất quy mô lớn trên mạng lưới 11 nhà máy toàn quốc."
+        us: "Further development of the international furniture business and coordinated manufacturing programmes.",
+        uk: "Further development of the international furniture business and coordinated manufacturing programmes.",
+        vi: "Mở rộng phát triển kinh doanh nội thất quốc tế và các chương trình điều phối sản xuất."
       }
     }
   ];
@@ -161,40 +161,40 @@ async function syncMasterData() {
     {
       year: "2016",
       title: { 
-        us: "Foundation of DHT Furniture", 
-        uk: "Foundation of DHT Furniture", 
-        vi: "Thành Lập DHT Furniture" 
+        us: "DHT Investment and Commercial Joint Stock Company", 
+        uk: "DHT Investment and Commercial Joint Stock Company", 
+        vi: "Công ty Cổ phần Đầu tư và Thương mại DHT" 
       },
       desc: { 
-        us: "Established commercial and manufacturing operations focusing on scalable outdoor furniture export to international markets.", 
-        uk: "Established commercial and manufacturing operations focusing on scalable outdoor furniture export to international markets.", 
-        vi: "Thành lập doanh nghiệp, tập trung sản xuất và xuất khẩu các dòng nội thất ngoài trời quy mô lớn sang thị trường quốc tế." 
+        us: "Foundation in investment and international trade.", 
+        uk: "Foundation in investment and international trade.", 
+        vi: "Nền tảng đầu tư và thương mại quốc tế." 
       },
     },
     {
       year: "2022",
       title: { 
-        us: "Manufacturing Network Integration", 
-        uk: "Manufacturing Network Integration", 
-        vi: "Tích Hợp Mạng Lưới Sản Xuất 11 Cơ Sở" 
+        us: "DHT Furniture Joint Stock Company", 
+        uk: "DHT Furniture Joint Stock Company", 
+        vi: "Công ty Cổ phần DHT Furniture" 
       },
       desc: { 
-        us: "Consolidated commercial operations across our family-owned group's 11 specialised facilities and 543,380 m² manufacturing footprint.", 
-        uk: "Consolidated commercial operations across our family-owned group's 11 specialised facilities and 543,380 m² manufacturing footprint.", 
-        vi: "Quy chuẩn hóa hoạt động thương mại trên toàn bộ 11 cơ sở chuyên môn hóa của tập đoàn với tổng mặt bằng 543.380 m²." 
+        us: "Development of the furniture business and export activities.", 
+        uk: "Development of the furniture business and export activities.", 
+        vi: "Phát triển hoạt động kinh doanh và xuất khẩu nội thất." 
       },
     },
     {
       year: "2024",
       title: { 
-        us: "Global Compliance & Scale", 
-        uk: "Global Compliance & Scale", 
-        vi: "Nâng Tầm Chuẩn Mực Quốc Tế & Quy Mô Toàn Cầu" 
+        us: "DHT Furniture Vietnam Joint Stock Company", 
+        uk: "DHT Furniture Vietnam Joint Stock Company", 
+        vi: "Công ty Cổ phần DHT Furniture Vietnam" 
       },
       desc: { 
-        us: "Achieved full FSC CoC, ISO 9001/14001 and social audit coverage (BSCI/SMETA), scaling direct supply to major retail programs in the US, EU, and Australia.", 
-        uk: "Achieved full FSC CoC, ISO 9001/14001 and social audit coverage (BSCI/SMETA), scaling direct supply to major retail programs in the US, EU, and Australia.", 
-        vi: "Đạt chuẩn FSC CoC, ISO 9001/14001 cùng các đánh giá trách nhiệm xã hội BSCI/SMETA, cung ứng trực tiếp cho các chuỗi bán lẻ tại Mỹ, Châu Âu và Úc." 
+        us: "Further development of the international furniture business and coordinated manufacturing programmes.", 
+        uk: "Further development of the international furniture business and coordinated manufacturing programmes.", 
+        vi: "Mở rộng phát triển kinh doanh nội thất quốc tế và các chương trình điều phối sản xuất." 
       },
     },
   ];
@@ -216,36 +216,63 @@ async function syncMasterData() {
           vi: "Tại DHT, chúng tôi tin rằng quan hệ đối tác bền vững được xây dựng trên 3 nền tảng bất biến: chất lượng ổn định, vật liệu đạt chuẩn minh bạch, và sự tận tâm đồng hành trong từng giai đoạn." 
         },
         email: "sales@dhtcompany.com",
-        phone: "+84 932 058 545",
+        phone: "",
         image: "/img/profile/johnvo.png",
       },
       {
         key: "dylan",
         name: "Dylan",
-        role: { us: "Operations Director", uk: "Operations Director", vi: "Giám Đốc Vận Hành & Sản Xuất" },
-        quote: { us: "Every project we deliver carries the promise of precision, durability, and the Vietnamese craftsmanship that defines DHT.", uk: "Every project we deliver carries the promise of precision, durability, and the Vietnamese craftsmanship that defines DHT.", vi: "Lời hứa về độ hoàn thiện, tính ổn định làm nên tên tuổi cho DHT trong suốt hành trình qua" },
-        email: "dylan@dhtcompany.com",
-        phone: "+84 xxx xxx xxx",
+        role: { us: "Operations & Production Coordination", uk: "Operations & Production Coordination", vi: "Vận Hành & Điều Phối Sản Xuất" },
+        quote: { us: "Every project we deliver carries the promise of precision, durability, and the Vietnamese craftsmanship that defines DHT.", uk: "Every project we deliver carries the promise of precision, durability, and the Vietnamese craftsmanship that defines DHT.", vi: "Lời hứa về độ hoàn thiện, tính ổn định làm nên tên tuổi cho DHT trong suốt hành trình qua." },
+        email: "sales@dhtcompany.com",
+        phone: "",
         image: "/img/profile/dylan.png",
       },
       {
         key: "david",
         name: "David",
-        role: { us: "Product Development Director", uk: "Product Development Director", vi: "GĐ Phát Triển Sản Phẩm (PD)" },
+        role: { us: "Product Development & Engineering", uk: "Product Development & Engineering", vi: "Phát Triển Sản Phẩm & Kỹ Thuật" },
         quote: { us: "Innovation means blending certified timber with architectural aluminum to create furniture engineered for international markets.", uk: "Innovation means blending certified timber with architectural aluminum to create furniture engineered for international markets.", vi: "Sự kết hợp giữa chất liệu gỗ đạt chuẩn cùng quy chuẩn hiện đại làm nên đẳng cấp sản phẩm ở mọi điểu kiện thời tiết." },
-        email: "david@dhtcompany.com",
-        phone: "+84 xxx xxx xxx",
+        email: "sales@dhtcompany.com",
+        phone: "",
         image: "/img/profile/david.png",
       },
       {
         key: "alicia",
         name: "Alicia",
-        role: { us: "Chief Financial Officer (CFO)", uk: "Chief Financial Officer (CFO)", vi: "Giám Đốc Tài Chính (CFO)" },
+        role: { us: "Finance & Commercial Operations", uk: "Finance & Commercial Operations", vi: "Tài Chính & Điều Phối Thương Mại" },
         quote: { us: "Strong finances fuel strong partnerships. At DHT, we ensure every order is backed by trust, transparency, and sustainable growth.", uk: "Strong finances fuel strong partnerships. At DHT, we ensure every order is backed by trust, transparency, and sustainable growth.", vi: "Hậu phương tài chính giúp vững vàng mọi thoả thuận mua bán xuất khẩu. Tạo nên tính minh bạch và uy tín mạnh mẽ." },
-        email: "alicia@dhtcompany.com",
-        phone: "+84 xxx xxx xxx",
+        email: "sales@dhtcompany.com",
+        phone: "",
         image: "/img/profile/alicia.png",
       },
+    ]
+  };
+
+  const cleanWelcome = {
+    title: {
+      us: "Why Global Buyers Choose DHT?",
+      uk: "Why Global Buyers Choose DHT?",
+      vi: "Tại Sao Khách Hàng Chọn DHT?"
+    },
+    description: {
+      us: "<p>DHT supports retailers, distributors, and project buyers with reliable outdoor furniture production from Vietnam. We focus on stable quality, flexible production, and long-term partnerships.</p>",
+      uk: "<p>DHT supports retailers, distributors, and project buyers with reliable outdoor furniture production from Vietnam. We focus on stable quality, flexible production, and long-term partnerships.</p>",
+      vi: "<p>DHT hỗ trợ các nhà bán lẻ, nhà phân phối và nhà thầu với nguồn cung nội thất đáng tin cậy. Tập trung vào chất lượng ổn định, linh hoạt sản xuất và quan hệ đối tác dài hạn.</p>"
+    },
+    values: [
+      {
+        title: { us: "Production You Can Trust", uk: "Production You Can Trust", vi: "Sản Xuất Đáng Tin Cậy" },
+        desc: { us: "Strict QC, stable quality across orders", uk: "Strict QC, stable quality across orders", vi: "Kiểm soát chất lượng nghiêm ngặt cho mọi đơn hàng" }
+      },
+      {
+        title: { us: "Built for B2B Buyers", uk: "Built for B2B Buyers", vi: "Tối Ưu Cho Khách Hàng B2B" },
+        desc: { us: "OEM / ODM, mixed container, scalable production", uk: "OEM / ODM, mixed container, scalable production", vi: "Hỗ trợ OEM/ODM, ghép container, năng lực sản xuất lớn" }
+      },
+      {
+        title: { us: "Export Ready", uk: "Export Ready", vi: "Sẵn Sàng Xuất Khẩu" },
+        desc: { us: "On-time delivery, global shipping experience", uk: "On-time delivery, global shipping experience", vi: "Giao hàng đúng hẹn, kinh nghiệm xuất khẩu dày dặn" }
+      }
     ]
   };
 
@@ -253,11 +280,33 @@ async function syncMasterData() {
     {},
     {
       $set: {
+        "welcome": cleanWelcome,
+        "story.milestones": cleanMilestones,
         "timeline.items": cleanTimeline,
         "timeline.heading": {
           us: "Corporate Development Milestones",
           uk: "Corporate Development Milestones",
           vi: "Các Mốc Phát Triển Doanh Nghiệp"
+        },
+        "marquee": {
+          us: [
+            "11 Production Facilities",
+            "543,380 m² Combined Manufacturing Footprint",
+            "Approximately 2,400 Group Personnel",
+            "4 Manufacturing Clusters",
+          ],
+          uk: [
+            "11 Production Facilities",
+            "543,380 m² Combined Manufacturing Footprint",
+            "Approximately 2,400 Group Personnel",
+            "4 Manufacturing Clusters",
+          ],
+          vi: [
+            "11 Cơ sở Sản xuất",
+            "543.380 m² Tổng diện tích mặt bằng sản xuất",
+            "Khoảng 2.400 Nhân sự tập đoàn",
+            "4 Cụm sản xuất trọng điểm",
+          ],
         },
         "team": cleanTeam,
         "stats": {
@@ -287,20 +336,20 @@ async function syncMasterData() {
           items: [
             {
               key: "office",
-              name: { us: "DHT Central Commercial Coordination Hub", uk: "DHT Central Commercial Coordination Hub", vi: "Văn Phòng Điều Phối Thương Mại DHT" },
-              address: { us: "72 Le Thanh Ton Street, Ben Nghe Ward, District 1, Ho Chi Minh City, Vietnam", uk: "72 Le Thanh Ton Street, Ben Nghe Ward, District 1, Ho Chi Minh City, Vietnam", vi: "72 Lê Thánh Tôn, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh" },
+              name: { us: "DHT Central Commercial Coordination Hub", uk: "DHT Central Commercial Coordination Hub", vi: "Văn phòng Điều phối Thương mại DHT" },
+              address: { us: "72 Le Thanh Ton Street, Ben Nghe Ward, District 1, Ho Chi Minh City, Vietnam", uk: "72 Le Thanh Ton Street, Ben Nghe Ward, District 1, Ho Chi Minh City, Vietnam", vi: "72 Lê Thánh Tôn, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh, Việt Nam" },
               hotline: "+84 932 058 545"
             },
             {
               key: "showroom",
-              name: { us: "DHT Showroom & Gallery", uk: "DHT Showroom & Gallery", vi: "Showroom & Phòng Trưng Bày DHT" },
+              name: { us: "DHT Showroom & Gallery", uk: "DHT Showroom & Gallery", vi: "Showroom Trưng Bày DHT" },
               address: { us: "206 Phan Dinh Phung Street, Pleiku City, Gia Lai Province, Vietnam", uk: "206 Phan Dinh Phung Street, Pleiku City, Gia Lai Province, Vietnam", vi: "206 Phan Đình Phùng, TP. Pleiku, Tỉnh Gia Lai, Việt Nam" },
               hotline: "+84 907 386 898"
             },
             {
               key: "manufacturing",
-              name: { us: "DHT Manufacturing Network (11 Facilities)", uk: "DHT Manufacturing Network (11 Facilities)", vi: "Mạng Lưới Sản Xuất DHT (11 Cơ Sở Toàn Quốc)" },
-              address: { us: "4 Clusters: Quy Nhon, HCMC & Southern Corridor, Hung Yen, Phu Tho/Vinh Phuc", uk: "4 Clusters: Quy Nhon, HCMC & Southern Corridor, Hung Yen, Phu Tho/Vinh Phuc", vi: "4 Cụm: Quy Nhơn, TP.HCM & Nam Bộ, Hưng Yên, Phú Thọ/Vĩnh Phúc" },
+              name: { us: "DHT Manufacturing Network", uk: "DHT Manufacturing Network", vi: "Mạng lưới Nhà máy Sản xuất DHT" },
+              address: { us: "4 Manufacturing Clusters: Quy Nhon, HCMC & Southern Corridor, Hung Yen, Phu Tho/Vinh Phuc", uk: "4 Manufacturing Clusters: Quy Nhon, HCMC & Southern Corridor, Hung Yen, Phu Tho/Vinh Phuc", vi: "4 Cụm sản xuất: Quy Nhơn, TP.HCM & Nam Bộ, Hưng Yên, Phú Thọ/Vĩnh Phúc" },
               hotline: "+84 902 907 399"
             }
           ]
@@ -338,6 +387,71 @@ async function syncMasterData() {
     } catch (e) {
       // ignore
     }
+  }
+
+  // 4. LÀM SẠCH KKK, BUYERSKK, TEST REVISIONS TRONG MONGODB
+  console.log("4. Đang làm sạch các bản ghi nháp thử nghiệm...");
+  try {
+    const deletedRevs = await db.collection("aboutrevisions").deleteMany({
+      $or: [
+        { note: /kkk|buyerskk|test|sửa/i },
+        { "data.welcome.description.uk": /kkk/i },
+        { "data.welcome.description.vi": /kkk/i },
+        { "data.welcome.values.title.uk": /buyerskk|kk/i }
+      ]
+    });
+    console.log(`✓ Đã dọn sạch ${deletedRevs.deletedCount} bản nháp thử nghiệm trong aboutrevisions!`);
+  } catch (err) {
+    console.error("Lỗi dọn aboutrevisions:", err);
+  }
+
+  // 5. CHUẨN HÓA TÊN VÀ SLUG SẢN PHẨM MASTER (Audit Issue 19 & 20)
+  console.log("5. Đang chuẩn hóa tên và slug sản phẩm theo Catalogue Master...");
+  try {
+    const prodCol = db.collection("products");
+    await prodCol.updateOne(
+      { $or: [{ productId: 'BLC-COL-0413-5801' }, { code: 'BLC-COL-0609' }, { slug: 'bondi-lougne-collection' }] },
+      { $set: { 'name.us': 'BONDI LOUNGE COLLECTION', 'name.uk': 'BONDI LOUNGE COLLECTION', 'name.vi': 'BỘ SƯU TẬP BONDI LOUNGE', slug: 'bondi-lounge-collection' } }
+    );
+    await prodCol.updateOne(
+      { $or: [{ productId: 'MC-COL-0414' }, { code: 'MDC-COL-0607' }, { slug: 'mobley-dinning-collection' }] },
+      { $set: { 'name.us': 'MOBLEY DINING COLLECTION', 'name.uk': 'MOBLEY DINING COLLECTION', 'name.vi': 'BỘ SƯU TẬP BÀN ĂN MOBLEY', slug: 'mobley-dining-collection' } }
+    );
+    await prodCol.updateOne(
+      { $or: [{ productId: 'WDC-COL-0413' }, { code: 'WDC-COL-0607' }, { slug: 'wesley-dinning-collection' }] },
+      { $set: { 'name.us': 'WESLEY DINING COLLECTION', 'name.uk': 'WESLEY DINING COLLECTION', 'name.vi': 'BỘ SƯU TẬP BÀN ĂN WESLEY', slug: 'wesley-dining-collection' } }
+    );
+    await prodCol.updateOne(
+      { $or: [{ productId: 'RT-TAB-0414' }, { code: 'RT-TAB-0607' }, { slug: 'retangle-table' }] },
+      { $set: { 'name.us': 'RECTANGULAR TABLE', 'name.uk': 'RECTANGULAR TABLE', 'name.vi': 'BÀN CHỮ NHẬT NGOÀI TRỜI', slug: 'rectangular-table' } }
+    );
+    await prodCol.updateOne(
+      { $or: [{ productId: 'ST-TAB-0414' }, { code: 'ST-TAB-0607' }] },
+      { $set: { 'name.vi': 'BÀN NGOÀI TRỜI SEINA' } }
+    );
+    await prodCol.updateOne(
+      { $or: [{ productId: 'HT-TAB-0414' }, { code: 'HT-TAB-0607' }] },
+      { $set: { 'name.vi': 'BÀN NGOÀI TRỜI HAYMONT' } }
+    );
+    await prodCol.updateOne(
+      { $or: [{ productId: 'ALC-COL-0413' }, { code: 'ALC-COL-0607' }] },
+      { $set: { 'name.vi': 'BỘ SƯU TẬP ASHTON LOUNGE' } }
+    );
+    await prodCol.updateOne(
+      { $or: [{ productId: 'TLC-COL-0416' }, { code: 'TLC-COL-0607' }] },
+      { $set: { 'name.vi': 'BỘ SƯU TẬP TIMOR LOSIL' } }
+    );
+    await prodCol.updateOne(
+      { $or: [{ productId: 'SD0-TAU-0413' }, { code: 'SLC-COL-0608' }] },
+      { $set: { 'name.us': 'SANTOS LOUNGE COLLECTION', 'name.uk': 'SANTOS LOUNGE COLLECTION' } }
+    );
+    await prodCol.updateOne(
+      { $or: [{ productId: 'SLC-COL-0413' }, { code: 'SLC-DHT-06012' }] },
+      { $set: { 'name.us': 'SANTOS LOUNGE COLLECTION DHT17-141', 'name.uk': 'SANTOS LOUNGE COLLECTION DHT17-141' } }
+    );
+    console.log("✓ Đã chuẩn hóa tên và slug sản phẩm theo Catalogue Master!");
+  } catch (err) {
+    console.error("Lỗi chuẩn hóa sản phẩm:", err);
   }
 
   console.log("\n>>> ĐỒNG BỘ TOÀN DIỆN MASTER DATA & LÀM SẠCH JDD THÀNH CÔNG! <<<");

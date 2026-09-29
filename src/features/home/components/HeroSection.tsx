@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, FileText } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -80,15 +80,7 @@ export default function HeroSection() {
             {t("home.hero.exploreProducts")} <ArrowRight size={16} />
           </Link>
 
-          <a
-            href="/DHT_Company_Profile_2026.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded font-body font-semibold text-sm text-white border border-white/30 backdrop-blur-md hover:bg-white/10 transition-all duration-300"
-          >
-            <FileText size={16} className="text-[#B97846]" />
-            View Company Profile (PDF)
-          </a>
+
 
           <Link
             href="/contact?inquiryType=OEM+Development"

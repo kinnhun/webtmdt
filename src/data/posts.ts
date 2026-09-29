@@ -329,7 +329,7 @@ export const postsData: BlogPost[] = [
 
       <div class="side-by-side">
         <div>
-          <p><strong>100% of the teak we use</strong> comes from FSC-certified plantations. This means the forests are managed responsibly, with replanting programs that ensure long-term sustainability.</p>
+          <p><strong>All wood used in DHT furniture is FSC-certified</strong>. Supporting documentation is maintained for the applicable FSC claim, with replanting programs that ensure long-term sustainability.</p>
           <p>We maintain <em>full chain-of-custody documentation</em> from forest to factory.</p>
         </div>
         <img src="https://images.unsplash.com/photo-1520587337572-92e75e9b6c0b?w=600&auto=format&fit=crop" alt="Teak timber" />

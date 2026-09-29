@@ -8,6 +8,22 @@ import viVN from './locales/vi-VN.json';
 export const STORAGE_KEY = 'i18nextLng';
 export const SUPPORTED_LANGS = ['en-US', 'en-GB', 'vi-VN'] as const;
 
+export const getInitialLanguage = (): string => {
+  if (typeof window !== 'undefined') {
+    const nextData = (window as unknown as { __NEXT_DATA__?: { locale?: string } }).__NEXT_DATA__;
+    if (nextData?.locale && (SUPPORTED_LANGS as readonly string[]).includes(nextData.locale)) {
+      return nextData.locale;
+    }
+    const path = window.location.pathname;
+    for (const lang of SUPPORTED_LANGS) {
+      if (path === `/${lang}` || path.startsWith(`/${lang}/`)) {
+        return lang;
+      }
+    }
+  }
+  return 'en-US';
+};
+
 i18n
   .use(initReactI18next)
   .init({
@@ -16,9 +32,7 @@ i18n
       'en-GB': { translation: enGB },
       'vi-VN': { translation: viVN },
     },
-    // ALWAYS init with en-US to match SSR/static HTML.
-    // The saved language is applied AFTER hydration in _app.tsx useEffect.
-    lng: 'en-US',
+    lng: getInitialLanguage(),
     fallbackLng: 'en-US',
     debug: false,
     interpolation: {

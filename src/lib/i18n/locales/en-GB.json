@@ -13,7 +13,8 @@
     "companyProfile": "Company Profile",
     "whatsapp": "WhatsApp",
     "furnitureVietnam": "Furniture Vietnam",
-    "search": "Search"
+    "search": "Search",
+    "catalogue": "Catalogue"
   },
   "footer": {
     "description": "DHT Furniture Vietnam is a Vietnamese furniture manufacturer and exporter, operating as part of a family-owned furniture group with 11 production facilities across Vietnam. We develop outdoor, indoor and project furniture for international buyers.",
@@ -86,7 +87,9 @@
       "title1": "The Art of",
       "title2": "Creation.",
       "description": "Every DHT furniture piece originates from skilled hands, kiln-dried timber and standard manufacturing processes across our 11 specialized facilities.",
-      "productionLabel": "Products / Month"
+      "productionLabel": "11 Production Facilities Across Our Family-Owned Group",
+      "facilityHeading": "11 Production Facilities Across Our Family-Owned Group",
+      "facilitySub": "10 furniture facilities + 1 engineered-wood panel and primary-processing facility."
     },
     "categories": {
       "label": "Collections",
@@ -123,10 +126,15 @@
         "name": "Sunloungers & Daybeds",
         "tagline": "Poolside & terrace relaxation",
         "count": "Contract & Retail"
+      },
+      "tables": {
+        "name": "Outdoor Tables & Surfaces",
+        "tagline": "Dining tables, side tables & solid tops",
+        "count": "Engineered Stability"
       }
     },
     "featured": {
-      "label": "Selected Collections",
+      "label": "Selected Outdoor Collections",
       "heading": "Featured Collections for Global Programmes",
       "description": "Engineered and manufactured across our specialized facilities for international retail programs and hospitality projects.",
       "fullCatalogue": "Explore Outdoor Collections",
@@ -135,11 +143,9 @@
       "new": "Selected",
       "inquire": "Inquire",
       "filterAll": "All",
-      "filterOutdoorSofas": "Outdoor Sofa",
-      "filterDiningSets": "Dining Set",
-      "filterLoungeDaybeds": "Sunlounger",
-      "filterTables": "Outdoor Table",
-      "filterChairs": "Aluminum Lines",
+      "filterLoungeSofa": "Lounge & Sofa Collections",
+      "filterDining": "Dining",
+      "filterSunloungers": "Sunloungers & Daybeds",
       "subline": "Manufactured in Vietnam across 11 facilities for retailers, distributors, and project buyers"
     },
     "whyUs": {
@@ -296,42 +302,43 @@
       "items": [
         {
           "year": "2016",
-          "title": "DHT Investment and Commercial JSC",
-          "desc": "Foundation in investment and international trade, establishing core commercial networks and market expertise."
+          "title": "DHT Investment and Commercial Joint Stock Company",
+          "desc": "Foundation in investment and international trade."
         },
         {
           "year": "2022",
-          "title": "DHT Furniture JSC",
-          "desc": "Development of the specialized furniture manufacturing business and international export operations."
+          "title": "DHT Furniture Joint Stock Company",
+          "desc": "Development of the furniture business and export activities."
         },
         {
           "year": "2024",
-          "title": "DHT Furniture Vietnam JSC",
-          "desc": "Consolidation of the international furniture business and coordinated manufacturing programmes across an 11-facility family-owned group."
+          "title": "DHT Furniture Vietnam Joint Stock Company",
+          "desc": "Further development of the international furniture business and coordinated manufacturing programmes."
         }
       ]
     },
     "team": {
       "label": "Leadership",
-      "heading": "Executive Board",
+      "heading": "Leadership & Central Commercial Team",
+      "contactTeam": "Contact our team",
       "john": {
-        "role": "Founder & Sales Director",
-        "quote": "DHT has been, is, and will continue striving to deliver greater value to our customers, building lasting trust and carrying the pride of Vietnamese craftsmanship from Quy Nhon to the world."
+        "role": "CEO & Sales Director",
+        "quote": "At DHT, we believe enduring commercial partnerships are built on three non-negotiables: absolute quality consistency, certified material integrity, and transparent execution at every stage."
       },
       "tyler": {
         "role": "Co-Founder & CEO",
         "quote": "At DHT, we don't just build outdoor furniture — we craft spaces where people connect, share stories, and create lasting memories."
       },
       "dylan": {
-        "role": "General Director",
+        "role": "Operations & Production Coordination",
         "quote": "Every project we deliver carries the promise of precision, durability, and the Vietnamese craftsmanship that defines DHT."
       },
       "david": {
-        "role": "Product Development Director",
-        "quote": "Innovation means blending timeless teak with modern design to create furniture that stands strong under any sky."
+        "role": "Product Development & Engineering",
+        "quote": "Innovation means blending certified timber with architectural aluminum to create furniture engineered for international markets."
       },
       "alicia": {
-        "role": "CFO",
+        "role": "Finance & Commercial Operations",
         "quote": "Strong finances fuel strong partnerships. At DHT, we ensure every order is backed by trust, transparency, and sustainable growth."
       }
     },
@@ -376,7 +383,7 @@
         "hotline": "Hotline: +84 907 386 898"
       },
       "manufacturing": {
-        "name": "DHT Manufacturing Network (11 Facilities)",
+        "name": "DHT Manufacturing Network",
         "address": "4 Manufacturing Clusters: Quy Nhon, HCMC & Southern Corridor, Hung Yen, Phu Tho/Vinh Phuc",
         "hotline": "Operations: +84 902 907 399"
       }
@@ -400,21 +407,31 @@
       ]
     },
     "marquee": [
-      "18+ Years Experience",
-      "50,000 Units / Month",
-      "35+ Export Countries"
+      "11 Production Facilities",
+      "543,380 m² Combined Manufacturing Footprint",
+      "Approximately 2,400 Group Personnel",
+      "4 Manufacturing Clusters"
     ]
   },
   "catalogue": {
     "seo": {
-      "title": "Catalogue — DHT Outdoor Furniture",
+      "title": "Outdoor Furniture Collections | DHT Furniture Vietnam",
       "description": "Browse our full collection of premium outdoor furniture."
+    },
+    "outdoor": {
+      "seo": {
+        "title": "Outdoor Furniture Collections | DHT Furniture Vietnam",
+        "description": "Explore outdoor furniture in FSC-certified wood, aluminium, steel, rope, wicker and mixed-material combinations. DHT supports dining, lounge, balcony, sunlounger and modular programmes."
+      }
     },
     "searchPlaceholder": "Search by name, code, or category...",
     "collection": "Collection",
     "outdoorCollection": "Outdoor Collection",
     "indoorCollection": "Indoor Collection",
     "filters": "Filters",
+    "fscBadge": "FSC-Certified Wood",
+    "fscPolicyTitle": "FSC-Certified Wood",
+    "fscPolicyDesc": "All wood used in DHT furniture is FSC-certified. Supporting documentation is maintained for the applicable FSC claim.",
     "clearAll": "Clear all",
     "category": "Category",
     "material": "Material",
@@ -443,11 +460,115 @@
       "coastal": "Coastal",
       "luxury": "Luxury"
     },
+    "categoryOptions": {
+      "loungeDaybeds": "Lounge & Daybeds",
+      "diningSets": "Dining Sets",
+      "tables": "Tables",
+      "livingRoom": "Living Room Furniture",
+      "diningRoom": "Dining Room Furniture",
+      "bathroom": "Bathroom Furniture"
+    },
+    "materialOptions": {
+      "acacia": "Acacia Wood",
+      "aluminium": "Powder-Coated Aluminium",
+      "teak": "Teak Wood"
+    },
     "noResults": "No products match your filters",
     "clearAllFilters": "Clear all filters",
-    "productsFound": "Showing {{count}} products",
+    "productsFound": "Showing {{count}} items & collections",
     "quickView": "Quick View",
-    "inquire": "Inquire"
+    "inquire": "Inquire",
+    "indoor": {
+      "seo": {
+        "title": "Indoor & Project Furniture Manufacturing | DHT Furniture Vietnam",
+        "description": "Discover DHT Furniture Vietnam's capabilities in manufacturing solid wood, upholstered, and mixed-material furniture for residential, hospitality, and commercial programmes."
+      },
+      "breadcrumbs": {
+        "home": "Home",
+        "indoor": "Indoor & Projects"
+      },
+      "hero": {
+        "badge": "Contract & OEM Manufacturing",
+        "title": "Indoor & Project Furniture",
+        "description": "DHT supports solid-wood, engineered-wood, upholstered, and mixed-material furniture for residential, hospitality, and commercial programmes through specialised facilities within our family-owned group."
+      },
+      "capabilities": {
+        "dining": {
+          "title": "Dining & Occasional",
+          "desc": "Solid oak, ash, rubberwood, and acacia dining tables, upholstered chairs, sideboards, and occasional consoles engineered for residential and commercial contract programmes.",
+          "specNote": "Kiln-dried timber (8–12% MC) • Custom commercial finishes",
+          "tags": [
+            "Solid Timber",
+            "Veneered Tops",
+            "Contract Dining Chairs",
+            "Custom Finishes"
+          ]
+        },
+        "living": {
+          "title": "Living & Storage",
+          "desc": "Sideboards, media consoles, shelving systems, dressers, and custom cabinetry combining veneered engineered panels, solid wood structural frames, and precision hardware. Composite wood and adhesives confirmed to TSCA Title VI / CARB Phase 2 compliance according to destination dossier.",
+          "specNote": "TSCA Title VI / CARB Phase 2 compliant panels confirmed upon project requirements",
+          "tags": [
+            "Custom Cabinetry",
+            "Precision Joinery",
+            "TSCA Title VI (Specified)",
+            "Durable Veneers"
+          ]
+        },
+        "upholstered": {
+          "title": "Upholstered Furniture",
+          "desc": "Sectionals, sofas, armchairs, and cushioned ottomans upholstered in contract-grade fabrics. Configurable to meet international flammability requirements (including CA TB117 / BS 5852) upon project specification and destination market testing compliance.",
+          "specNote": "CA TB117 / BS 5852 flammability testing confirmed per order specification",
+          "tags": [
+            "High-Resilience Foam",
+            "Contract Upholstery",
+            "Hardwood Frames",
+            "Flammability Tested on Request"
+          ]
+        },
+        "hospitality": {
+          "title": "Hospitality & Commercial Projects",
+          "desc": "Comprehensive casegoods, architectural joinery packages, and bespoke loose furniture tailored for hotels, serviced apartments, resorts, and restaurants built directly from architectural CAD drawings.",
+          "specNote": "Built to architectural submittals & shop drawings with mock-up room verification",
+          "tags": [
+            "Architectural Joinery",
+            "High-Traffic Specs",
+            "CAD Value Engineering",
+            "Knock-Down / Fully Assembled"
+          ]
+        }
+      },
+      "development": {
+        "badge": "Tailored To Your Specifications • Commercial Terms",
+        "title": "Custom Development, Sampling & Value Engineering",
+        "mandate": "Product adaptation, material selection, value engineering and packaging development are reviewed according to the project brief and intended use. Sampling, production timing and applicable testing are confirmed for the agreed specification.",
+        "terms": {
+          "sampleTitle": "Sample Prototyping:",
+          "sampleValue": "Typical 7–14 days",
+          "sampleCondition": "(post-drawing & material confirmation)",
+          "orderTitle": "New Order Production:",
+          "orderValue": "Typical 60–90 days",
+          "orderCondition": "(depending on testing & programme scope)",
+          "repeatTitle": "Repeat Order Runs:",
+          "repeatValue": "Typical 45–60 days",
+          "repeatCondition": "(for established collection programmes)",
+          "fscTitle": "FSC Sourcing:",
+          "fscValue": "All wood used in DHT furniture is FSC-certified",
+          "containerTitle": "Container Loading:",
+          "containerValue": "Flexible mixed-container loading across collection items",
+          "packagingTitle": "Packaging Options:",
+          "packagingValue": "Flat-pack (KD) or fully assembled with drop-tested carton engineering"
+        },
+        "conditionsNote": "* Conditions & Starting Point: Production lead times commence upon receipt of confirmed commercial deposit, approved shop drawings, and finalized material swatches. Testing schedules and specific laboratory verifications (e.g., CA TB117, BS 5852, TSCA Title VI, or ISTA packaging standards) are formally confirmed per project specification and destination market dossier.",
+        "ctaDiscuss": "Discuss Your Indoor or Project Requirements",
+        "ctaFacilities": "View Facilities Network"
+      },
+      "bottomCta": {
+        "title": "Looking for Outdoor Collections?",
+        "description": "Explore our extensive range of outdoor dining, lounge, sunlounger, and modular furniture crafted in FSC timber, powder-coated aluminium, and all-weather ropes.",
+        "button": "Explore Outdoor Collections"
+      }
+    }
   },
   "contact": {
     "seo": {
@@ -462,12 +583,12 @@
       "title": "Our Office, Showroom & Manufacturing Locations",
       "hqTitle": "DHT Manufacturing Network",
       "hqSubtitle": "11 Facilities Across Vietnam",
-      "showroomTitle": "DHT Private Garden Showroom",
-      "showroomSubtitle": "Outdoor & Indoor Displays",
-      "officeTitle": "DHT Head Office & Commercial Dept.",
-      "officeSubtitle": "Commercial & Export Inquiries",
-      "distributorTitle": "DHT Production Network",
-      "distributorSubtitle": "4 Clusters in Vietnam",
+      "showroomTitle": "DHT Showroom & Gallery",
+      "showroomSubtitle": "Outdoor & Indoor Collections",
+      "officeTitle": "DHT Central Commercial Coordination Hub",
+      "officeSubtitle": "Commercial & Business Inquiries",
+      "distributorTitle": "DHT Manufacturing Network",
+      "distributorSubtitle": "4 Clusters Across Vietnam",
       "timingsFactory": "08:00 - 17:00 (UTC+7), Mon - Fri",
       "timings247": "08:00 - 17:00 (UTC+7), Visits by appointment"
     },
@@ -490,7 +611,11 @@
       "sending": "Sending...",
       "sendInquiry": "Send Inquiry",
       "inquirySubject": "Inquiry: {{product}}{{code}}",
-      "inquiryMessage": "Hi, I would like to inquire about {{product}}{{code}}.\n\nPlease provide pricing and availability information.\n\nThank you."
+      "inquiryMessage": "Hi, I would like to inquire about {{product}}{{code}}.\n\nPlease provide pricing and availability information.\n\nThank you.",
+      "proposalSubject": "Product Proposal Request — OEM / B2B Programme",
+      "proposalMessage": "Hello DHT Furniture team,\n\nWe would like to request a product proposal for our upcoming furniture programme. Our target market, estimated order volume, and initial specifications are as follows:\n- Target Market:\n- Estimated Volume:\n- Programme Requirements:\n\nPlease contact us with suitable options and next development steps.",
+      "visitSubject": "Factory Visit Request — On-Site Inspection",
+      "visitMessage": "Hello DHT Furniture team,\n\nWe would like to arrange an appointment for an on-site factory inspection visit to review production facilities and manufacturing capabilities."
     },
     "success": {
       "title": "Thank You!",
@@ -501,6 +626,11 @@
       "title": "Send an Inquiry",
       "subtitle": "Tell us about your product requirements and our team will review your enquiry within one business day."
     }
+  },
+  "manufacturing": {
+    "equipment": "Manufacturing Equipment",
+    "keyMachinery": "Key Machinery & Processing Systems",
+    "machineryDesc": "High-precision industrial machinery deployed across our 11 production facilities to ensure export-grade stability and tight tolerances."
   },
   "notFound": {
     "seo": {
@@ -1090,5 +1220,279 @@
     "revDeleteBtn": "Delete",
     "btnOk": "OK",
     "btnCancel": "Cancel"
+  },
+  "quality": {
+    "seo": {
+      "title": "Quality Control & International Compliance | DHT Furniture Vietnam",
+      "description": "Discover DHT's comprehensive 6-step quality control system, FSC-certified timber supply chain, and international compliance for EU, UK, US, and Australian markets."
+    },
+    "hero": {
+      "badge": "Rigorous Standards",
+      "title": "Quality Control & International Compliance",
+      "description": "From raw material testing to container-loading sign-off, DHT operates systematic quality controls and site-specific audit documentation to meet the commercial standards of leading global retailers."
+    },
+    "workflow": {
+      "title": "Our 6-Step Quality Control Workflow",
+      "subtitle": "Systematic quality gates embedded across every stage of manufacturing",
+      "gate": "Gate",
+      "steps": {
+        "01": {
+          "title": "Incoming Material & Component Checks",
+          "desc": "Moisture target verification (typically 8–12% for kiln-dried timber, calibrated to destination climate and technical spec), aluminium wall thickness, fabric density, and foam resilience validated against approved programme criteria before release into production."
+        },
+        "02": {
+          "title": "In-Line Production Inspections",
+          "desc": "Verification of joinery tolerances, mortise and tenon joints, robotic and manual weld penetration, and structural rigidity across active assembly lines."
+        },
+        "03": {
+          "title": "Pre-Packing & Surface Finishing Checks",
+          "desc": "Inspection of powder-coating adhesion, wood protective finishes, stainless steel hardware and trial set assembly before boxing."
+        },
+        "04": {
+          "title": "Final Random Inspection to Agreed AQL",
+          "desc": "Statistically rigorous lot sampling conducted to client-agreed AQL thresholds (such as Major 1.5–2.5, Minor 4.0, Critical 0 where specified in contract programme) prior to export container release."
+        },
+        "05": {
+          "title": "Packaging, Labelling & Container Loading",
+          "desc": "ISTA drop and vibration testing protocols (conducted where specified for mail-order / retail programmes), barcode verification, carton burst strength, and container dunnage placement."
+        },
+        "06": {
+          "title": "Corrective Action & Traceability Follow-up",
+          "desc": "Complete batch documentation and continuous manufacturing process improvements for every production programme."
+        }
+      }
+    },
+    "markets": {
+      "title": "Testing & Compliance for Your Market",
+      "subtitle": "Procedural alignment with international safety, environmental, and durability regulations",
+      "intro": "Timber traceability, material documentation, product safety testing and packaging requirements are reviewed according to the destination market, product construction and buyer specification. Relevant third-party testing is arranged where required.",
+      "eu": {
+        "title": "European Union & United Kingdom",
+        "items": [
+          {
+            "title": "EN 581 Performance Standards (Where specified):",
+            "desc": "Mechanical safety, structural cycle durability, and stability testing reviewed and coordinated through accredited test bodies for domestic or contract outdoor collections upon programme requirements."
+          },
+          {
+            "title": "REACH Regulation & Chemical Restrictions:",
+            "desc": "Raw materials, powder coatings, and upholstery fabrics reviewed against SVHC and restricted substance thresholds; accredited lab testing dossiers compiled per purchase order specification."
+          },
+          {
+            "title": "EUDR Due Diligence & Phytosanitary Documentation:",
+            "desc": "Timber supply chains traced from legally certified concessions with plot-level geolocation data and official treatment certificates reviewed to support importer compliance."
+          }
+        ]
+      },
+      "us": {
+        "title": "United States & Canada",
+        "items": [
+          {
+            "title": "U.S. Lacey Act Due Diligence:",
+            "desc": "Timber genus, species, and harvest origin documented throughout procurement to facilitate legal wood declaration and importer customs filings."
+          },
+          {
+            "title": "ASTM & Safety Guidelines (Where applicable):",
+            "desc": "Structural static/cycle loading and stability requirements (including tip-over restraints for casegoods) evaluated and tested according to intended contract or residential use."
+          },
+          {
+            "title": "ISTA Transit Packaging Validation:",
+            "desc": "ISTA 1A, 3A, or 6-Series drop, vibration, and clamp testing arranged with accredited third parties when required for e-commerce, courier, or retail flat-pack distribution."
+          },
+          {
+            "title": "TSCA Title VI & CARB Phase 2 Emission Limits:",
+            "desc": "Formaldehyde emission verification and mill certification dossiers gathered for all engineered wood, composite panels, and resin systems utilized in indoor casegoods."
+          }
+        ]
+      },
+      "au": {
+        "title": "Australia & New Zealand",
+        "items": [
+          {
+            "title": "BMSB Biosecurity Compliance (Seasonal / Targeted):",
+            "desc": "Targeted offshore heat treatment or certified fumigation administered during designated BMSB high-risk seasonal windows in accordance with Australian DAFF / NZ MPI biosecurity directives for eligible high-risk target commodities (not mandatory for every shipment year-round)."
+          },
+          {
+            "title": "UV & Weathering Durability Testing (Per specification):",
+            "desc": "Accelerated exposure assessments for high-index UV synthetic ropes, PE wicker, and solution-dyed fabrics coordinated against regional climate benchmarks upon buyer request."
+          }
+        ]
+      },
+      "shipping": {
+        "title": "Shipping, Container Loading & Port Logistics",
+        "items": [
+          {
+            "title": "Container Desiccant & Moisture Management:",
+            "desc": "Moisture-barrier lining, industrial desiccants, and container sealing protocols calculated based on transit duration, ocean routing, and seasonal humidity differentials."
+          },
+          {
+            "title": "Export Phytosanitary & Quarantine Clearance:",
+            "desc": "Official phytosanitary treatment certificates, fumigation certificates, and heat treatment markings (ISPM 15 for solid wood packaging) issued and archived for seamless customs release."
+          }
+        ]
+      },
+      "governance": {
+        "badge": "Owner: Quality Department",
+        "title": "Technical Compliance Governance & Scope Ratification",
+        "text": "DHT operates as an OEM/ODM and contract manufacturing partner. Compliance testing (such as EN 581, ASTM, ISTA, REACH, and TSCA Title VI) and mandatory import treatments (including seasonal BMSB or phytosanitary fumigation) are reviewed and executed by the DHT Quality Team in collaboration with certified third-party testing laboratories (e.g., SGS, TÜV, Intertek) based on destination country regulations, material bills-of-materials, and ratified buyer specifications. Website disclosures document operational capabilities and procedural readiness, not blanket self-certification for every catalogue item."
+      }
+    },
+    "metrics": {
+      "sectionTitle": "Quality Performance Metrics & Warranty",
+      "sectionSubtitle": "Operational benchmarks and commercial warranty parameters aligned with nominated production programmes and ratified contracts",
+      "labels": {
+        "metricDefinition": "Metric Definition",
+        "scope": "Site / Programme Scope",
+        "measurementPeriod": "Measurement Period",
+        "approvedDuration": "Approved Duration",
+        "coveredScope": "Covered Scope",
+        "operatingConditions": "Operating Conditions",
+        "exclusions": "Exclusions & Exceptions",
+        "programmeTerms": "Programme Terms",
+        "governanceNotice": "Governance & Ratification Notice"
+      },
+      "kpis": [
+        {
+          "id": "otif",
+          "value": "~95%",
+          "title": "On-Time In-Full (OTIF)",
+          "definition": "Percentage of confirmed purchase order volume dispatched on schedule and complete in full without split shipments or quantity shortages.",
+          "scope": "Nominated export retail programmes at primary furniture manufacturing facilities (Facilities 01–05).",
+          "period": "Annual operational review cycle (2025–2026 Reference Period)."
+        },
+        {
+          "id": "ftpr",
+          "value": "~92%",
+          "title": "First-Time Pass Rate (FTPR)",
+          "definition": "Percentage of production lots passing internal QA inspection at pre-packing gate without requiring rework prior to final AQL client audit.",
+          "scope": "Finished furniture production lines at nominated export facilities (Facilities 01–05).",
+          "period": "Rolling 12-month production baseline."
+        },
+        {
+          "id": "qa-team",
+          "value": "12 Staff",
+          "title": "Dedicated QA/QC Team",
+          "definition": "Full-time inspection personnel managing incoming timber grading, in-line assembly tolerances, surface coating adhesion, and pre-shipment gates.",
+          "scope": "Dedicated to Southern & Central furniture export facilities (Facilities 01–05); does not encompass all 11 group processing sites.",
+          "period": "Active operational roster (2026 Deployment)."
+        }
+      ],
+      "warranty": {
+        "badge": "Commercial Policy",
+        "title": "Commercial Warranty & Programme Protection",
+        "subtitle": "Approved duration and coverage, subject to published programme terms and individual commercial contract covenants",
+        "durationValue": "2–5 Years Reference Tier",
+        "durationNote": "Duration tier and coverage criteria are determined by product category, material construction, and commercial agreement.",
+        "coverage": {
+          "label": "Covered Scope",
+          "text": "Structural frame integrity, joint rigidity, mortise-and-tenon stability, and manufacturing workmanship defects occurring under intended use."
+        },
+        "conditions": {
+          "label": "Operating Conditions",
+          "text": "Furniture installed, operated, and maintained in accordance with DHT technical guidelines within designated indoor, sheltered patio, or specified commercial environments."
+        },
+        "exclusions": {
+          "label": "Exclusions & Exceptions",
+          "text": "Normal weathering, natural timber hairline checks/movement, organic surface patina, harsh chemical cleaning abuse, improper winter storage, accidental impact, or unauthorized structural modifications."
+        },
+        "programmeTerms": {
+          "label": "Programme Terms & Contract Specifics",
+          "text": "Exact warranty durations, defect tolerance thresholds, spare parts provision, and credit/replacement remedies are defined in the individual Purchase Agreement and approved technical specifications for each buyer programme."
+        }
+      },
+      "note": "Governance & Quality Sign-Off: Operational metrics (~95% OTIF, ~92% FTPR, 12 QA/QC Staff) and reference warranty terms (2–5 years) represent verified operational baselines ratified by DHT Quality Management and COO approval for nominated facilities. Website disclosures do not supersede, alter, or unilaterally expand contractual warranty terms in ratified commercial agreements."
+    },
+    "sustainability": {
+      "badge": "Responsible Manufacturing",
+      "title": "Sustainability & Resource Efficiency",
+      "subtitle": "Documented timber sourcing, material-use efficiency, and verified waste-handling practices across nominated facilities",
+      "statement": {
+        "label": "Programme Boundary & Due Diligence Standard",
+        "text": "DHT coordinates documented timber sourcing, material-use efficiency and waste-handling practices with the nominated production facility. Programme-specific records are reviewed as part of production planning and buyer qualification."
+      },
+      "pillars": {
+        "traceability": {
+          "tag": "Chain of Custody",
+          "title": "Legal Timber Origin & Material Traceability",
+          "metric": "FSC-Certified Wood (All Furniture Timber)",
+          "desc": "All natural timber used in DHT furniture is FSC-certified. Supporting documentation is maintained for the applicable FSC claim. Every lumber batch is verified against legal harvesting concession permits, transport waybills, and kiln-drying batch logs, ensuring full chain of custody and zero undocumented timber input.",
+          "evidence": "Site-specific FSC CoC scope & Certified Timber Manifests"
+        },
+        "cuttingYield": {
+          "tag": "Material Yield & Biomass Energy",
+          "title": "Cutting Yield Optimization & Circular Biomass",
+          "metric": "75%–82% Typical Recovery & 100% Solid Residue Repurposing",
+          "desc": "Computer-aided nesting and gang-rip optimization achieve typical cutting yields of 75%–82% based on lumber grade and component specs. Solid hardwood offcuts are reclaimed for finger-joint furniture components, while clean sawdust and shavings fuel on-site biomass steam boilers for timber drying kilns.",
+          "evidence": "ERP Material Requisitions & Boiler Fuel Logbooks"
+        },
+        "finishingWaste": {
+          "tag": "Finishing Reclamation & Waste Stewardship",
+          "title": "Powder Reclamation & Compliant Waste Handling",
+          "metric": "Cyclone Powder Recovery & 100% Manifested Transfer",
+          "desc": "Powder coating lines utilize cyclone reclamation booths to capture overspray powder and minimize chemical waste. Export packaging uses recyclable corrugated cartons meeting specified burst tests. Finishing effluents and hazardous wastes are transferred exclusively via licensed industrial waste management contractors.",
+          "evidence": "Coating Powder Logs & Licensed Waste Disposal Manifests"
+        }
+      },
+      "matrix": {
+        "badge": "Verification & Evidence Matrix",
+        "title": "Sustainability Claims & Source Verification Matrix",
+        "subtitle": "Comprehensive breakdown of the 6 sustainability activities, operational baselines, facility scopes, and verification source dossiers",
+        "columns": {
+          "activity": "Activity / Pillar",
+          "practice": "Operational Practice & Measured Metric",
+          "scope": "Facility & Programme Scope",
+          "source": "Verification Source / Due Diligence Dossier"
+        },
+        "items": [
+          {
+            "id": "traceability",
+            "activity": "Timber Sourcing & Traceability",
+            "practice": "100% of timber inputs are FSC-certified; complete chain of custody maintained from certified plantation concession through primary breakdown and kiln-drying.",
+            "scope": "All wood furniture production lines at nominated facilities (Binh Duong, Quy Nhon, Dong Nai clusters).",
+            "source": "Facility FSC CoC Certificate, VAT Purchase Invoices, Forest Department Transport Manifests, and Kiln Batch Logs."
+          },
+          {
+            "id": "yield",
+            "activity": "Cutting Yield Optimization",
+            "practice": "Computer-aided nesting and precision gang-ripping yielding 75%–82% recovery baseline depending on lumber grade, moisture profile, and component geometry.",
+            "scope": "Primary breakdown and rough mill workshops handling solid timber (Acacia, Eucalyptus, Teak).",
+            "source": "Technical Bill of Materials (BOM), Shift Yield Performance Logs, and ERP Material Utilization Summaries."
+          },
+          {
+            "id": "offcuts",
+            "activity": "Solid Wood Offcuts Repurposing",
+            "practice": "Clean hardwood offcuts sorted by dimension, planed 4-sides, and fed into finger-jointing lines or edge-glued blocks for concealed structural components.",
+            "scope": "Secondary conversion lines at designated timber processing and auxiliary component facilities.",
+            "source": "Semi-finished lumber sorting SOP and Finger-joint Work Orders."
+          },
+          {
+            "id": "sawdust",
+            "activity": "Sawdust & Biomass Energy",
+            "practice": "100% of clean sawdust and wood shavings captured via central dust extraction cyclones and utilized on-site as carbon-neutral biomass fuel for kiln boilers.",
+            "scope": "Central dust collection systems and boiler facilities at designated primary wood processing sites.",
+            "source": "Boiler Fuel Feed Logbooks, Kiln Steam Generation Records, and Industrial Boiler Safety Permits."
+          },
+          {
+            "id": "recycling",
+            "activity": "Powder Coating & Packaging Recycling",
+            "practice": "Cyclone recovery booths recycle clean powder overspray; export shipping cartons utilize 5-ply / 7-ply recyclable corrugated board compliant with buyer ECT standards.",
+            "scope": "Metal finishing workshops and export packing lines for contracted programme orders.",
+            "source": "Powder Coating Technical Datasheets, Packaging Material Inspection Reports, and Box Compression Certificates."
+          },
+          {
+            "id": "waste",
+            "activity": "Industrial Waste & Hazardous Handling",
+            "practice": "Hazardous process wastes (paint sludge, oily shop rags, spent solvent drums) stored in dedicated bunded hazardous stores and transferred by licensed contractors.",
+            "scope": "Designated hazardous waste storage facilities across active manufacturing sites.",
+            "source": "Hazardous Waste Source Registration, Environmental Monitoring Reports, and Licensed Waste Transfer Manifests."
+          }
+        ]
+      }
+    },
+    "audits": {
+      "title": "Site-Specific Audits & Chain of Custody",
+      "desc": "Certifications including FSC CoC, ISO 9001, ISO 14001, BSCI, and SMETA are site-specific. Documented audit reports and valid scopes for the nominated production facility are provided directly to qualified buyers during programme onboarding.",
+      "requestDossier": "Request Compliance Dossier",
+      "viewFacilities": "View 11 Production Facilities"
+    }
   }
 }

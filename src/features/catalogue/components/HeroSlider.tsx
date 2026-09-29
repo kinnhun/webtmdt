@@ -36,6 +36,10 @@ export function HeroSlider({ products, onQuickView }: { products: Product[]; onQ
   const pColor = p.color?.[langId] || p.color?.us || "";
   const pStyle = p.style?.[langId] || p.style?.us || "";
 
+  const tagParts = [pCat, p.code].filter((s) => Boolean(s && s.trim()));
+  const metaRow1 = [pMat, pColor].filter((s) => Boolean(s && s.trim()));
+  const metaRow2 = [pStyle].filter((s) => Boolean(s && s.trim()));
+
   return (
     <div className="relative w-full overflow-hidden" style={{ height: "480px", backgroundColor: "hsl(var(--navy-deep))" }}>
       <AnimatePresence mode="wait">
@@ -52,10 +56,18 @@ export function HeroSlider({ products, onQuickView }: { products: Product[]; onQ
         <div className="container mx-auto px-10">
           <AnimatePresence mode="wait">
             <motion.div key={p.id || p.code || safeCurrent} initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 30 }} transition={{ duration: 0.5 }} className="max-w-md">
-              <span className="font-body text-xs tracking-[0.2em] uppercase font-medium mb-3 block" style={{ color: "hsl(var(--orange))" }}>{pCat} — {p.code}</span>
-              <h2 className="font-display font-bold text-white text-4xl leading-tight mb-3">{pName}</h2>
-              <p className="font-body text-white/50 text-sm mb-1">{pMat} · {pColor}</p>
-              <p className="font-body text-white/40 text-sm mb-6">{pStyle} {p.moq && `· MOQ: ${p.moq}`}</p>
+              {tagParts.length > 0 && (
+                <span className="font-body text-xs tracking-[0.2em] uppercase font-medium mb-3 block" style={{ color: "hsl(var(--orange))" }}>
+                  {tagParts.join(" — ")}
+                </span>
+              )}
+              <h2 className="font-display font-bold text-white text-3xl sm:text-4xl leading-tight mb-3">{pName}</h2>
+              {metaRow1.length > 0 && (
+                <p className="font-body text-white/60 text-sm mb-1">{metaRow1.join(" · ")}</p>
+              )}
+              {metaRow2.length > 0 && (
+                <p className="font-body text-white/40 text-sm mb-6">{metaRow2.join(" · ")}</p>
+              )}
               <div className="flex gap-3">
                 <button onClick={() => onQuickView(p)} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-sm font-body font-semibold text-sm text-white hover:opacity-90 transition-all" style={{ backgroundColor: "hsl(var(--orange))" }}>
                   <Eye size={15} /> {t("catalogue.quickView")}

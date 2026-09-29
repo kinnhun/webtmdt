@@ -274,6 +274,7 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
 
   const langEnum: Record<string, 'vi' | 'uk' | 'us'> = { "vi-VN": "vi", "en-GB": "uk", "en-US": "us" };
   const langId = langEnum[i18n?.language] || "us";
+  const isVi = langId === 'vi';
 
   const pName = product.name?.[langId] || product.name?.us || "";
   const pDesc = product.description?.[langId] || product.description?.us || "";
@@ -321,14 +322,102 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
   }, []);
 
   const isAmalfi = (product.slug || "").toLowerCase().includes("amalfi") || (product.name?.us || "").toLowerCase().includes("amalfi");
+  const isBenson = (product.slug || "").toLowerCase().includes("benson") || (product.name?.us || "").toLowerCase().includes("benson");
+  const isBalemora = (product.slug || "").toLowerCase().includes("balemora") || (product.name?.us || "").toLowerCase().includes("balemora") || (product.slug || "").toLowerCase().includes("balmora");
   const cleanDimensions = (product.dimensions || "").replace(/^[~\s]+/, "").trim();
 
-  const AMALFI_SPEC_ITEMS = [
-    { item: "Swivel Lounge Chair", itemVi: "Ghế xoay ngoài trời", inch: "29.13 × 32.28 × 25.59 in", cm: "74 × 82 × 65 cm" },
-    { item: "2-Seater Sofa", itemVi: "Sofa đôi ngoài trời", inch: "55.12 × 32.28 × 25.59 in", cm: "140 × 82 × 65 cm" },
-    { item: "Side Table", itemVi: "Bàn góc phụ", inch: "16.93 × 16.93 × 14.57 in", cm: "43 × 43 × 37 cm" },
-    { item: "Coffee Table", itemVi: "Bàn trà chữ nhật", inch: "39.37 × 23.62 × 15.75 in", cm: "100 × 60 × 40 cm" },
-  ];
+  // Helper to parse dimension string into cm and in
+  const parseDimensions = (val: string) => {
+    if (!val || typeof val !== "string") return null;
+    const clean = val.replace(/mm|h|inch|in/gi, "").trim();
+    const parts = clean.split(/[x×\t\s]+/).filter(Boolean).map(Number).filter(n => !isNaN(n));
+    if (parts.length >= 3) {
+      if (parts[0] > 200) {
+        // Source in mm
+        const cm = parts.slice(0, 3).map(n => Math.round(n / 10)).join(" × ") + " cm";
+        const inch = parts.slice(0, 3).map(n => (n / 25.4).toFixed(1)).join(" × ") + " in";
+        return { cm, inch };
+      } else {
+        // Source in inches
+        const cm = parts.slice(0, 3).map(n => Math.round(n * 2.54)).join(" × ") + " cm";
+        const inch = parts.slice(0, 3).map(n => n.toString()).join(" × ") + " in";
+        return { cm, inch };
+      }
+    } else if (parts.length === 2) {
+      if (parts[0] > 200) {
+        const cm = parts.map(n => Math.round(n / 10)).join(" × ") + " cm";
+        const inch = parts.map(n => (n / 25.4).toFixed(1)).join(" × ") + " in";
+        return { cm, inch };
+      } else {
+        const cm = parts.map(n => Math.round(n * 2.54)).join(" × ") + " cm";
+        const inch = parts.map(n => n.toString()).join(" × ") + " in";
+        return { cm, inch };
+      }
+    }
+    return null;
+  };
+
+  const parsedSingleDim = cleanDimensions !== "" && cleanDimensions !== "~" ? parseDimensions(cleanDimensions) : null;
+
+  const formatItemName = (nameStr: string) => {
+    if (!nameStr) return "";
+    return nameStr
+      .toLowerCase()
+      .split(" ")
+      .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+  };
+
+  const getItemNameVi = (nameUs: string): string => {
+    const s = nameUs || "";
+    if (/Amalfi.*?Swirl.*?Chair/i.test(s) || /Swirl Chair/i.test(s)) return 'Ghế Swirl Lounge ngoài trời kèm đệm';
+    if (/Amalfi.*?Side Table/i.test(s)) return 'Bàn góc phụ ngoài trời Amalfi';
+    if (/Balemora.*?Triple/i.test(s)) return 'Sofa 3 chỗ Balemora ngoài trời có đệm';
+    if (/Balemora.*?Single/i.test(s)) return 'Ghế đơn lounge Balemora có đệm';
+    if (/Balemora.*?Coffee Table/i.test(s)) return 'Bàn trà Balemora ngoài trời';
+    if (/Single Lounge/i.test(s) || /Single Seat/i.test(s)) return 'Ghế đơn lounge có đệm';
+    if (/Double Lounge/i.test(s) || /Double Seat/i.test(s) || /2-Seater/i.test(s)) return 'Sofa đôi ngoài trời có đệm';
+    if (/Triple Lounge/i.test(s) || /Triple Seat/i.test(s) || /3-Seater/i.test(s)) return 'Sofa 3 chỗ ngoài trời có đệm';
+    if (/Ottoman/i.test(s)) return 'Đôn ottoman ngoài trời có đệm';
+    if (/Coffee Table.*?Top/i.test(s)) return 'Mặt bàn trà ngoài trời';
+    if (/Coffee Table.*?Frame/i.test(s)) return 'Khung bàn trà ngoài trời';
+    if (/Coffee Table/i.test(s)) return 'Bàn trà ngoài trời';
+    if (/Side Table.*?Top/i.test(s)) return 'Mặt bàn phụ ngoài trời';
+    if (/Side Table.*?Frame/i.test(s)) return 'Khung bàn phụ ngoài trời';
+    if (/Side Table/i.test(s)) return 'Bàn góc phụ ngoài trời';
+    if (/End Table/i.test(s)) return 'Bàn góc ngoài trời';
+    if (/Dining Chair/i.test(s)) return 'Ghế ăn ngoài trời';
+    if (/Dining Table|Dinning Table/i.test(s)) return 'Bàn ăn ngoài trời';
+    return formatItemName(s);
+  };
+
+  const collectionItems: Array<{
+    name: string;
+    nameVi?: string;
+    code: string;
+    cm: string;
+    inch: string;
+  }> = [];
+
+  if (product.attributes && product.attributes.length > 0) {
+    product.attributes.forEach((attr: any, idx: number) => {
+      const rawTitle = attr[`title${langId.toUpperCase()}`] || attr.titleUS || attr.title || "";
+      const rawVal = attr[`value${langId.toUpperCase()}`] || attr.valueUS || attr.value || "";
+      if (!rawTitle || rawTitle.toLowerCase().includes("testing") || !rawVal) return;
+
+      const parsed = parseDimensions(rawVal);
+      const cmVal = parsed ? parsed.cm : (rawVal ? `${rawVal} cm` : "—");
+      const inVal = parsed ? parsed.inch : (rawVal ? `${rawVal} in` : "—");
+
+      collectionItems.push({
+        name: formatItemName(attr.titleUS || rawTitle),
+        nameVi: attr.titleVI ? formatItemName(attr.titleVI) : getItemNameVi(attr.titleUS || rawTitle),
+        code: `${product.code}-${String(idx + 1).padStart(2, "0")}`,
+        cm: cmVal,
+        inch: inVal,
+      });
+    });
+  }
 
   return (
     <div className="pt-[80px]" style={{ backgroundColor: "#fff", minHeight: "100vh" }}>
@@ -338,7 +427,7 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
           <div className="flex items-center gap-2 font-body text-xs" style={{ color: "hsl(var(--navy)/0.45)" }}>
             <Link href="/" className="hover:underline">{t("nav.home")}</Link>
             <span>/</span>
-            <Link href={product?.collection === "Indoor" ? "/catalogue/indoor" : "/catalogue/outdoor"} className="hover:underline">{t("nav.catalogue")}</Link>
+            <Link href={product?.collection === "Indoor" ? "/catalogue/indoor" : "/catalogue/outdoor"} className="hover:underline">{t("nav.collections", "Collections")}</Link>
             <span>/</span>
             <span style={{ color: "hsl(var(--navy-deep))" }}>{pName}</span>
           </div>
@@ -363,7 +452,7 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
                   </span>
                 )}
                 <span className="px-2.5 py-1 rounded-sm font-body text-[10px] font-semibold tracking-wider uppercase text-white shadow-sm bg-[#173C2C]">
-                  100% FSC Wood
+                  {isVi ? "Gỗ Chứng Nhận FSC" : "FSC-Certified Wood"}
                 </span>
                 {product.code && product.code.trim() !== "" && (
                   <span className="font-body text-xs font-mono font-medium" style={{ color: "hsl(var(--navy)/0.5)" }}>{product.code}</span>
@@ -383,12 +472,14 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
 
             {/* Quick specs */}
             <div className="grid grid-cols-2 gap-3 mb-6">
-              {cleanDimensions !== "" && (
+              {collectionItems.length === 0 && cleanDimensions !== "" && cleanDimensions !== "~" && (
                 <div className="flex items-center gap-2.5 p-3 rounded-lg" style={{ backgroundColor: "hsl(var(--navy)/0.03)" }}>
                   <Ruler size={16} style={{ color: "hsl(var(--orange))" }} />
                   <div>
                     <p className="font-body text-[10px] uppercase tracking-wider font-medium" style={{ color: "hsl(var(--navy)/0.4)" }}>{t("productDetail.dimensions")}</p>
-                    <p className="font-body text-xs font-semibold" style={{ color: "hsl(var(--navy-deep))" }}>{cleanDimensions}</p>
+                    <p className="font-body text-xs font-semibold" style={{ color: "hsl(var(--navy-deep))" }}>
+                      {parsedSingleDim ? (dimUnit === 'cm' ? parsedSingleDim.cm : parsedSingleDim.inch) : cleanDimensions}
+                    </p>
                   </div>
                 </div>
               )}
@@ -432,84 +523,138 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
               )}
             </div>
 
-            {/* Amalfi Collection Multi-Item Dimension Breakdown */}
-            {isAmalfi && (
+            {/* FSC Timber Integrity Statement */}
+            <div className="flex items-start gap-3 p-3.5 rounded-lg border border-[#173C2C]/20 bg-[#173C2C]/5 mb-6">
+              <Shield size={18} className="text-[#173C2C] shrink-0 mt-0.5" />
+              <div>
+                <span className="font-body text-xs font-bold text-[#173C2C] block uppercase tracking-wider mb-0.5">
+                  {isVi ? "Gỗ Chứng Nhận FSC" : "FSC-Certified Wood"}
+                </span>
+                <p className="font-body text-xs text-[#173C2C]/90 font-medium leading-relaxed">
+                  {isVi
+                    ? "Toàn bộ gỗ sử dụng trong sản phẩm nội thất DHT đều có chứng nhận FSC. Hồ sơ chứng minh được lưu trữ tương ứng với từng công bố FSC áp dụng."
+                    : "All wood used in DHT furniture is FSC-certified. Supporting documentation is maintained for the applicable FSC claim."}
+                </p>
+              </div>
+            </div>
+
+            {/* Collection Items & Dimensions Table */}
+            {collectionItems.length > 0 && (
               <div className="mb-6 p-4 rounded-lg border border-gray-200 bg-gray-50/70 shadow-xs">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
                     <Ruler size={16} className="text-[#B97846]" />
-                    <h3 className="font-display font-bold text-sm text-[#173C2C]">Collection Dimensions Breakdown</h3>
+                    <h3 className="font-display font-bold text-sm text-[#173C2C]">
+                      {isVi ? "Danh mục sản phẩm & Kích thước" : "Collection Items & Dimensions"}
+                    </h3>
                   </div>
                   <div className="flex items-center gap-1 bg-white border border-gray-200 rounded-md p-0.5 text-xs">
                     <button
                       type="button"
                       onClick={() => setDimUnit('cm')}
-                      className={`px-2 py-0.5 rounded font-medium transition-all ${dimUnit === 'cm' ? 'bg-[#173C2C] text-white shadow-xs' : 'text-gray-600 hover:text-black'}`}
+                      className={`px-2.5 py-0.5 rounded font-medium transition-all ${
+                        dimUnit === 'cm'
+                          ? 'bg-[#173C2C] text-white shadow-xs'
+                          : 'text-gray-600 hover:text-black'
+                      }`}
                     >
                       cm
                     </button>
                     <button
                       type="button"
                       onClick={() => setDimUnit('in')}
-                      className={`px-2 py-0.5 rounded font-medium transition-all ${dimUnit === 'in' ? 'bg-[#173C2C] text-white shadow-xs' : 'text-gray-600 hover:text-black'}`}
+                      className={`px-2.5 py-0.5 rounded font-medium transition-all ${
+                        dimUnit === 'in'
+                          ? 'bg-[#173C2C] text-white shadow-xs'
+                          : 'text-gray-600 hover:text-black'
+                      }`}
                     >
                       inches
                     </button>
                   </div>
                 </div>
+
                 <div className="overflow-x-auto">
-                  <table className="w-full text-xs font-body">
+                  <table className="w-full text-xs font-body border-collapse">
                     <thead>
-                      <tr className="border-b border-gray-200 text-gray-500 uppercase tracking-wider">
-                        <th className="py-2 text-left font-semibold">Item</th>
-                        <th className="py-2 text-right font-semibold">Dimensions (W × D × H)</th>
+                      <tr className="border-b border-gray-200 text-gray-500 uppercase tracking-wider text-[11px]">
+                        <th className="py-2 text-left font-semibold">{isVi ? "Sản phẩm" : "Item"}</th>
+                        <th className="py-2 text-left font-semibold px-2">{isVi ? "Mã sản phẩm" : "Item code"}</th>
+                        <th className="py-2 text-right font-semibold">
+                          {isVi 
+                            ? `Kích thước (${dimUnit === 'cm' ? 'D × R × C, cm' : 'D × R × C, in'})` 
+                            : `Dimensions (W × D × H, ${dimUnit === 'cm' ? 'cm' : 'in'})`}
+                        </th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100">
-                      {AMALFI_SPEC_ITEMS.map((item, idx) => (
-                        <tr key={idx} className="hover:bg-white/60">
-                          <td className="py-2 font-medium text-gray-900">{langId === 'vi' ? item.itemVi : item.item}</td>
-                          <td className="py-2 text-right font-mono font-semibold text-[#173C2C]">{dimUnit === 'cm' ? item.cm : item.inch}</td>
+                      {collectionItems.map((item, idx) => (
+                        <tr key={idx} className="hover:bg-white/60 transition-colors">
+                          <td className="py-2.5 pr-2 font-medium text-gray-900 leading-snug">
+                            {isVi && item.nameVi ? item.nameVi : item.name}
+                          </td>
+                          <td className="py-2.5 px-2 font-mono text-[11px] text-gray-500 whitespace-nowrap">
+                            {item.code}
+                          </td>
+                          <td className="py-2.5 pl-2 text-right font-mono font-semibold text-[#173C2C] whitespace-nowrap">
+                            {dimUnit === 'cm' ? item.cm : item.inch}
+                          </td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
-              </div>
-            )}
 
-            {/* FSC Timber Integrity Statement */}
-            <div className="flex items-center gap-3 p-3.5 rounded-lg border border-[#173C2C]/20 bg-[#173C2C]/5 mb-6">
-              <Shield size={18} className="text-[#173C2C] shrink-0" />
-              <p className="font-body text-xs text-[#173C2C] font-medium leading-relaxed">
-                <strong>Certified Material Integrity:</strong> All wood used in DHT furniture is FSC-certified. Sourced responsibly to comply with EUDR, REACH and Lacey Act standards.
-              </p>
-            </div>
+                {/* Confirmed packing & loading note per Guide P02-P03 */}
+                <div className="mt-3 pt-2.5 border-t border-gray-200/80 text-[11px] text-gray-600">
+                  <p className="italic text-gray-500 leading-relaxed">
+                    {isVi
+                      ? "Thông tin đóng gói và tải container được xác nhận theo cấu hình báo giá."
+                      : "Packing & loading information confirmed for the quoted configuration."}
+                  </p>
+                </div>
 
-            {/* Visual Attributes */}
-            {product.attributes && product.attributes.length > 0 && (
-              <div className="grid grid-cols-2 gap-3 mb-6">
-                {product.attributes.map((attr, i) => {
-                  const dynAttr = attr as any;
-                  const tLabel = dynAttr[`title${langId.toUpperCase()}`] || dynAttr.titleUS;
-                  const tVal = dynAttr[`value${langId.toUpperCase()}`] || dynAttr.valueUS;
-                  if (!tLabel && !tVal) return null;
-                  return (
-                    <div key={i} className="flex items-start gap-2.5 p-3 rounded-lg" style={{ backgroundColor: "hsl(var(--navy)/0.03)" }}>
-                      <div className="mt-0.5 shrink-0">
-                        {renderAntIcon(attr.icon, 16)}
-                      </div>
-                      <div className="w-full flex-1 overflow-hidden">
-                        <p className="font-body text-[10px] uppercase tracking-wider font-medium mb-1" style={{ color: "hsl(var(--navy)/0.4)" }} title={tLabel as string}>
-                          {tLabel as string}
-                        </p>
-                        <p className="font-body text-xs font-semibold leading-snug" style={{ color: "hsl(var(--navy-deep))" }}>
-                          {tVal as string}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
+                {/* Amalfi Specific Quotation Policy per Guide P01, tr. 21 */}
+                {isAmalfi && (
+                  <div className="mt-3 p-3 rounded-md bg-[#173C2C]/5 border border-[#173C2C]/15 text-xs">
+                    <p className="font-semibold text-[#173C2C] mb-1">
+                      {isVi ? "Bộ sưu tập Amalfi Lounge" : "Amalfi Lounge Collection"}
+                    </p>
+                    <p className="text-[#173C2C]/85 leading-relaxed">
+                      {isVi
+                        ? "Vật liệu, hoàn thiện bề mặt, tùy chọn vải nệm và cấu hình thành phần bộ sản phẩm được xác nhận cụ thể theo từng báo giá. Toàn bộ gỗ sử dụng trong sản phẩm DHT đều có chứng chỉ FSC."
+                        : "Materials, finishes, fabric options and set composition are confirmed for each quotation. All wood used in DHT furniture is FSC-certified."}
+                    </p>
+                  </div>
+                )}
+
+                {/* Benson Specific Quotation Policy per Guide P02, tr. 22 */}
+                {isBenson && (
+                  <div className="mt-3 p-3 rounded-md bg-[#173C2C]/5 border border-[#173C2C]/15 text-xs">
+                    <p className="font-semibold text-[#173C2C] mb-1">
+                      {isVi ? "Bộ sưu tập Benson Lounge" : "Benson Lounge Collection"}
+                    </p>
+                    <p className="text-[#173C2C]/85 leading-relaxed">
+                      {isVi
+                        ? "Bộ sưu tập Benson Lounge cung cấp giải pháp ghế ngồi ngoài trời đồng bộ và bàn phụ cho các chương trình dân cư và nghỉ dưỡng cao cấp. Cấu hình thành phần bộ, vật liệu, hoàn thiện bề mặt và thông số đệm được xác nhận cụ thể theo từng báo giá. Toàn bộ gỗ sử dụng trong sản phẩm DHT đều có chứng nhận FSC."
+                        : "The Benson Lounge Collection offers coordinated outdoor seating and occasional tables for residential and hospitality programmes. Set composition, materials, finishes and cushion specifications are confirmed for each quotation. All wood used in DHT furniture is FSC-certified."}
+                    </p>
+                  </div>
+                )}
+
+                {/* Balemora Specific Quotation Policy per Guide P02 / Mã 24 */}
+                {isBalemora && (
+                  <div className="mt-3 p-3 rounded-md bg-[#173C2C]/5 border border-[#173C2C]/15 text-xs">
+                    <p className="font-semibold text-[#173C2C] mb-1">
+                      {isVi ? "Bộ sưu tập Balemora Lounge" : "Balemora Lounge Collection"}
+                    </p>
+                    <p className="text-[#173C2C]/85 leading-relaxed">
+                      {isVi
+                        ? "Vật liệu, hoàn thiện bề mặt, tùy chọn vải nệm và cấu hình thành phần bộ sản phẩm được xác nhận cụ thể theo từng báo giá. Toàn bộ gỗ sử dụng trong sản phẩm DHT đều có chứng chỉ FSC."
+                        : "Materials, finishes, fabric options and set composition are confirmed for each quotation. All wood used in DHT furniture is FSC-certified."}
+                    </p>
+                  </div>
+                )}
               </div>
             )}
 

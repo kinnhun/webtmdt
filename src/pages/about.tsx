@@ -1,4 +1,5 @@
 import { useRef, useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
 import SEO from "@/components/SEO";
 import Schema from "@/components/Schema";
@@ -18,6 +19,7 @@ import { useTranslation } from "react-i18next";
 import MarqueeStrip from "@/components/MarqueeStrip";
 import { useQuery } from "@tanstack/react-query";
 import { aboutDefaults } from "@/features/admin/constants/aboutDefaults";
+import { MASTER_LOCATIONS } from "@/constants/locations";
 
 /* ── Icon map for dynamic icon resolution ── */
 const ICON_MAP: Record<string, React.ComponentType<{ size?: number; className?: string }>> = {
@@ -40,8 +42,9 @@ const DEFAULT_STORY_IMAGES = [
 
 /* ── Helper: resolve i18n text from DB data ── */
 function useLang() {
+  const router = useRouter();
   const { i18n } = useTranslation();
-  const lang = i18n.language;
+  const lang = router.locale || i18n.language;
   // Map i18next locale to DB key
   if (lang === 'vi-VN' || lang === 'vi') return 'vi';
   if (lang === 'en-GB') return 'uk';
@@ -50,9 +53,22 @@ function useLang() {
 
 function txt(obj: { us?: string; uk?: string; vi?: string } | undefined, langKey: string): string {
   if (!obj) return '';
-  const val = (obj as Record<string, string>)[langKey];
-  if (val) return val;
-  return obj.us || '';
+  const val = (obj as Record<string, string>)[langKey] || obj.us || '';
+  return val
+    .replace(/partnerships\.KKK/gi, 'partnerships.')
+    .replace(/đối tác lâu dài\.KKK/gi, 'đối tác lâu dài.')
+    .replace(/Built for B2B Buyerskk/gi, 'Built for B2B Buyers')
+    .replace(/người mua B2Bkk/gi, 'người mua B2B')
+    .replace(/Export Readykk/gi, 'Export Ready')
+    .replace(/xuất khẩu toàn cầukk/gi, 'xuất khẩu toàn cầu')
+    .replace(/kinh nghiệm vận chuyển toàn cầukk/gi, 'kinh nghiệm vận chuyển toàn cầu')
+    .replace(/toàn cầukkk/gi, 'toàn cầu')
+    .replace(/worldwidekkk/gi, 'worldwide')
+    .replace(/DHT\?KKK/gi, 'DHT?')
+    .replace(/FSC\.kkk/gi, 'FSC.')
+    .replace(/FSC certified wood\.kkk/gi, 'FSC-certified wood.')
+    .replace(/sửa kkk/gi, '')
+    .replace(/&nbsp;/g, ' ');
 }
 
 export default function AboutPage() {
@@ -186,7 +202,25 @@ export default function AboutPage() {
   }));
 
   /* ── Timeline ── */
-  const rawTimeline = (dbData?.timeline?.items && dbData.timeline.items.length > 0)
+  const isDeprecatedTimeline = (items: any): boolean => {
+    if (!Array.isArray(items) || items.length === 0) return true;
+    return items.some((item) => {
+      const titleStr = typeof item.title === 'string' ? item.title : JSON.stringify(item.title || {});
+      const descStr = typeof item.desc === 'string' ? item.desc : JSON.stringify(item.desc || {});
+      const s = (titleStr + " " + descStr).toLowerCase();
+      return (
+        s.includes("foundation of dht furniture") ||
+        s.includes("manufacturing network integration") ||
+        s.includes("global compliance & scale") ||
+        s.includes("global compliance and scale") ||
+        s.includes("full fsc") ||
+        s.includes("bsci/smeta") ||
+        s.includes("coverage")
+      );
+    });
+  };
+
+  const rawTimeline = (dbData?.timeline?.items && dbData.timeline.items.length > 0 && !isDeprecatedTimeline(dbData.timeline.items))
     ? dbData.timeline.items
     : (aboutDefaults.timeline?.items || []);
   const timeline = rawTimeline.map((item: any) => ({
@@ -205,9 +239,31 @@ export default function AboutPage() {
   }));
 
   /* ── Marquee ── */
-  const marqueeItems = hasDB && dbData.marquee?.[langKey === 'uk' ? 'uk' : langKey === 'vi' ? 'vi' : 'us']?.length
-    ? dbData.marquee[langKey === 'uk' ? 'uk' : langKey === 'vi' ? 'vi' : 'us']
-    : (hasDB && dbData.marquee?.us?.length ? dbData.marquee.us : (aboutDefaults.marquee?.[langKey === 'vi' ? 'vi' : 'us'] || undefined));
+  const isDeprecatedMarquee = (items: any): boolean => {
+    if (!Array.isArray(items) || items.length === 0) return true;
+    return items.some((item) => {
+      if (typeof item !== "string") return false;
+      const s = item.toLowerCase();
+      return (
+        s.includes("18+") ||
+        s.includes("50,000") ||
+        s.includes("50.000") ||
+        s.includes("35+") ||
+        s.includes("400+") ||
+        s.includes("250") ||
+        s.includes("30 kỹ") ||
+        s.includes("40-50")
+      );
+    });
+  };
+
+  const dbMarqueeArr = hasDB && dbData.marquee?.[langKey === 'uk' ? 'uk' : langKey === 'vi' ? 'vi' : 'us'];
+  const fallbackMarquee = aboutDefaults.marquee?.[langKey === 'uk' ? 'uk' : langKey === 'vi' ? 'vi' : 'us']
+    || (t("about.marquee", { returnObjects: true }) as string[]);
+
+  const marqueeItems = (dbMarqueeArr && Array.isArray(dbMarqueeArr) && !isDeprecatedMarquee(dbMarqueeArr))
+    ? dbMarqueeArr
+    : fallbackMarquee;
 
   /* ── Stats ── */
   const rawStats = (dbData?.stats?.items && dbData.stats.items.length > 0)
@@ -238,16 +294,24 @@ export default function AboutPage() {
   const rawMembers = (dbData?.team?.members && dbData.team.members.length > 0)
     ? dbData.team.members
     : (aboutDefaults.team?.members || []);
-  const allMembers: any[] = rawMembers.map((m: any, idx: number) => ({
-    name: m.name?.trim() || '',
-    key: m.key || `m${idx}`,
-    isLeader: !!m.isLeader,
-    role: txt(m.role, langKey)?.trim() || '',
-    quote: txt(m.quote, langKey)?.trim() || '',
-    email: m.email,
-    phone: m.phone,
-    image: m.image || '',
-  }));
+  const allMembers: any[] = rawMembers.map((m: any, idx: number) => {
+    const isLeader = !!m.isLeader || idx === 0 || m.key === 'john';
+    let rawPhone = typeof m.phone === 'string' ? m.phone.trim() : '';
+    if (rawPhone.includes('xxx') || rawPhone.includes('932 058 545')) {
+      rawPhone = '';
+    }
+    const cleanEmail = m.email && !m.email.includes('xxx') ? m.email.trim() : 'sales@dhtcompany.com';
+    return {
+      name: m.name?.trim() || '',
+      key: m.key || `m${idx}`,
+      isLeader,
+      role: txt(m.role, langKey)?.trim() || '',
+      quote: txt(m.quote, langKey)?.trim() || '',
+      email: cleanEmail,
+      phone: rawPhone,
+      image: m.image || '',
+    };
+  });
 
 
 
@@ -257,14 +321,25 @@ export default function AboutPage() {
   /* ── Locations ── */
   const rawLocations = (dbData?.locations?.items && dbData.locations.items.length > 0)
     ? dbData.locations.items
-    : (aboutDefaults.locations?.items || []);
+    : MASTER_LOCATIONS.map((loc) => ({
+        key: loc.key,
+        name: loc.title,
+        address: loc.address,
+        hotline: loc.phone,
+      }));
 
-  const locationItems = rawLocations.map((loc: any) => ({
-    key: loc.key || '',
-    name: txt(loc.name, langKey) || (typeof loc.name === 'string' ? loc.name : ''),
-    address: txt(loc.address, langKey) || (typeof loc.address === 'string' ? loc.address : ''),
-    hotline: loc.hotline || '',
-  }));
+  const locationItems = rawLocations.map((loc: any) => {
+    let name = txt(loc.name, langKey) || (typeof loc.name === 'string' ? loc.name : '');
+    if (name.includes("Head Office & Commercial") || name.includes("Trụ Sở & Phòng Thương Mại")) {
+      name = MASTER_LOCATIONS[0].title[langKey as 'us' | 'uk' | 'vi'] || MASTER_LOCATIONS[0].title.us;
+    }
+    return {
+      key: loc.key || '',
+      name,
+      address: txt(loc.address, langKey) || (typeof loc.address === 'string' ? loc.address : ''),
+      hotline: loc.hotline || loc.phone || '',
+    };
+  });
 
   return (
     <>
@@ -730,7 +805,7 @@ export default function AboutPage() {
                       <span className="text-[hsl(var(--orange))] text-xl">✉</span> {teamLeader.email}
                     </a>
                   )}
-                  {teamLeader.phone && teamLeader.phone.trim() !== '' && (
+                  {teamLeader.phone && teamLeader.phone.trim() !== '' && !teamLeader.phone.includes('xxx') && (
                     <a href={`tel:${teamLeader.phone.replace(/\s/g, "")}`} className="flex items-center gap-3 hover:text-[hsl(var(--orange))] transition-colors">
                       <span className="text-[hsl(var(--orange))] text-xl">✆</span> {teamLeader.phone}
                     </a>
@@ -764,16 +839,34 @@ export default function AboutPage() {
                     {!m.quote || m.quote.trim() === '' ? <div className="grow" /> : null}
 
                     <div className="space-y-4 font-body text-base sm:text-sm text-muted-foreground font-medium border-t border-border/50 pt-6 mt-auto">
-                      <a href={`mailto:${m.email}`} className="flex items-center justify-center gap-3 hover:text-black transition-colors">
-                        <span className="text-[hsl(var(--orange))]">✉</span> <span className="truncate">{m.email}</span>
-                      </a>
-                      <a href={`tel:${m.phone.replace(/\s/g, "")}`} className="flex items-center justify-center gap-3 hover:text-black transition-colors">
-                        <span className="text-[hsl(var(--orange))]">✆</span> {m.phone}
-                      </a>
+                      {m.email && m.email.trim() !== '' && (
+                        <a href={`mailto:${m.email}`} className="flex items-center justify-center gap-3 hover:text-black transition-colors">
+                          <span className="text-[hsl(var(--orange))]">✉</span> <span className="truncate">{m.email}</span>
+                        </a>
+                      )}
+                      {m.phone && m.phone.trim() !== '' && !m.phone.includes('xxx') && (
+                        <a href={`tel:${m.phone.replace(/\s/g, "")}`} className="flex items-center justify-center gap-3 hover:text-black transition-colors">
+                          <span className="text-[hsl(var(--orange))]">✆</span> {m.phone}
+                        </a>
+                      )}
                     </div>
                   </div>
                 </motion.div>
               ))}
+            </div>
+
+            {/* Contact Our Team Banner */}
+            <div className="mt-16 text-center">
+              <div className="inline-flex flex-wrap items-center justify-center gap-3 sm:gap-6 px-6 sm:px-8 py-4 bg-[#FAFAFA] border border-border/70 rounded-full font-body text-sm sm:text-base text-foreground shadow-sm">
+                <span className="font-semibold text-muted-foreground">{langKey === 'vi' ? 'Liên hệ đội ngũ chúng tôi:' : 'Contact our team:'}</span>
+                <a href="mailto:sales@dhtcompany.com" className="font-bold text-[hsl(var(--orange))] hover:underline flex items-center gap-1.5">
+                  <span>✉</span> sales@dhtcompany.com
+                </a>
+                <span className="text-border">|</span>
+                <a href="tel:+84932058545" className="font-bold text-foreground hover:text-[hsl(var(--orange))] transition-colors flex items-center gap-1.5">
+                  <span>✆</span> +84 932 058 545
+                </a>
+              </div>
             </div>
           </div>
         </section>

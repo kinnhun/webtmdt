@@ -1,0 +1,1155 @@
+DHT  |  WEBSITE AUDIT
+KẾT QUẢ BÀN GIAO
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+1 / 36
+Website đã sửa, nhưng chưa đạt nghiệm thu
+DHT FURNITURE VIETNAM
+BÁO CÁO KIỂM TRA WEBSITE
+VÀ YÊU CẦU SỬA LẠI
+dhtcompany.com | Bàn giao cho designer & developer | 24/09/2026
+26 hạng mục xử lý
+Trang / vị trí → nội dung đang thấy → cách sửa → nội dung đề xuất → bằng chứng và tiêu chí nghiệm
+thu.
+Các lỗi phải sửa trước
+• Company Profile mở nhầm PDF hướng dẫn nội bộ.
+• Home/About còn nhãn số liệu sai, dữ liệu cũ và nội dung thay đổi sau khi tải.
+• Link sản phẩm dẫn tới 404; TIMOR có dữ liệu testing công khai.
+• Lịch sử, nhân sự, địa chỉ và các cam kết cần đúng profile/nguồn được duyệt.
+Bốn yêu cầu bắt buộc giữ nguyên
+• Mọi gỗ dùng trong sản phẩm phải FSC.
+• Loại bỏ hoàn toàn JDD khỏi website.
+• Mọi thông tin vị trí phải giống nguyên văn profile phát hành.
+• Đưa đủ nội dung hướng khách hàng của profile lên website; gắn PDF không thay thế nội dung web.
+Căn cứ: DHT_Website_Designer_Guide(1).pdf, 33 trang, phiên bản 06/09/2026; dữ liệu và ảnh chụp website lưu trong phiên
+kiểm tra ngày 24/09/2026. Đây là báo cáo giao sửa, không phải xác nhận website đã được sửa lại.
+DHT  |  WEBSITE AUDIT
+PHẠM VI & CÁCH SỬ DỤNG
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+2 / 36
+Cách đọc và giới hạn cần hiểu đúng
+Kết luận
+Website đã bổ sung đáng kể nội dung về group và năng lực, nhưng chưa thể đánh dấu hoàn thành theo
+bản giao việc. Vấn đề chính là tính nhất quán dữ liệu và phạm vi phát biểu, không chỉ bố cục hoặc màu
+sắc.
+Nhãn
+Ý nghĩa / hành động
+P0
+Sửa trước khi nghiệm thu và dùng website làm tài liệu gửi buyer.
+P1
+Hoàn thiện nội dung, dữ liệu sản phẩm và bằng chứng năng lực trong cùng đợt sửa.
+Lỗi xác nhận
+Có nội dung/ảnh hoặc đích liên kết được ghi lại. Designer sửa theo tiêu chí.
+Cần kiểm chứng
+Chưa có đủ nguồn kết luận giá trị đúng/sai. DHT cung cấp dữ liệu; designer không tự điền.
+Khác biệt khi tải
+Nội dung đọc ban đầu khác trạng thái sau tải/locale. Phải sửa nguồn đang ghi đè, không
+nghiệm thu từ một ảnh duy nhất.
+Nguồn đối chiếu và giới hạn
+• Đã đọc đủ file hướng dẫn 33 trang do người dùng đính kèm. File này tự ghi rõ chưa đối chiếu trọn PDF
+profile phát hành 26/08; báo cáo không biến guide thành bản profile cuối.
+• Chưa có nguyên văn profile phát hành cuối để chốt địa chỉ, chức danh, KPI/bảo hành và độ bao phủ
+100%. Các mục này có chỉ dẫn chốt dữ liệu cụ thể, không tạo giá trị thay thế phỏng đoán.
+• Ảnh trong tài liệu là ảnh website thực tế, có cắt vùng để dễ đọc; không dựng lại bằng AI. Một số khối có
+hiệu ứng tải; phần chữ hiện tại được chép bên dưới để đọc rõ.
+• Catalogue hiển thị 20 card; bộ dữ liệu lưu có 19 trang đích độc lập. Ba lỗi 404 có bằng chứng trực tiếp;
+BROOKS cần tái xác nhận riêng như mã 20.
+• Chưa kiểm thử gửi inquiry, CRM/email nhận lead, tài khoản quản trị, toàn bộ breakpoint mobile hoặc
+dữ liệu SEO không hiển thị. Các mục này được đưa vào checklist bàn giao, không ghi là đã đạt.
+DHT  |  WEBSITE AUDIT
+MỤC LỤC GIAO VIỆC
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+3 / 36
+Danh mục 26 hạng mục cần xử lý
+Mỗi mã có một trang chi tiết kèm bằng chứng. Số trang dưới đây dẫn tới phần giao sửa.
+Mã
+Mức
+Hạng mục
+Trang
+01
+P0
+Company Profile đang mở nhầm tài liệu
+4
+02
+P0
+Home: 11 bị gắn nhãn sản lượng / tháng
+5
+03
+P0
+Home: nút cuối trang đi sai đích
+6
+04
+P1
+Home: phân loại Featured Collections sai
+7
+05
+P0
+About: vẫn còn ba chỉ số cũ
+8
+06
+P0
+Chữ thử nghiệm và nhãn biên tập công khai
+9
+07
+P0
+About: timeline chưa đúng tên doanh nghiệp
+10
+08
+P0
+About: nhân sự và điện thoại chưa hoàn chỉnh
+11
+09
+P0
+Địa chỉ: chưa đủ căn cứ nghiệm thu
+12
+10
+P1
+Manufacturing: giữ số đúng, bổ sung bằng chứng
+13
+11
+P1
+Indoor: có nội dung nhưng thiếu ảnh và điều kiện
+14
+12
+P0
+Quality: KPI và bảo hành bị mở rộng phạm vi
+15
+13
+P1
+Quality: claim tuân thủ cần điều kiện áp dụng
+16
+14
+P1
+Sustainability: số liệu và lời hứa thiếu nguồn
+17
+15
+P1
+FSC: thống nhất chính sách và cách ghi claim
+18
+16
+P1
+Materials: sửa Acacia / Teak / Eucalyptus
+19
+17
+P1
+Materials: Aluminium và Fabric thêm thông số chưa duyệt
+20
+18
+P1
+Outdoor: thiếu giới thiệu và MOQ không có đơn vị
+21
+19
+P1
+Tên sản phẩm: còn nhiều lỗi và biến thể
+22
+20
+P0
+URL sửa chính tả đang dẫn tới trang 404
+23
+21
+P1
+Template sản phẩm: kích thước thiếu đơn vị
+24
+22
+P0
+Amalfi: hai bảng dữ liệu chưa thống nhất
+25
+23
+P1
+Benson: lounge bị mô tả thành dining set
+26
+24
+P1
+Balemora và Seina: tên trong trang bị lẫn
+27
+25
+P0
+Timor: dữ liệu testing đang hiển thị cho buyer
+28
+26
+P0
+Contact và bản dịch: nội dung mới bị ghi đè
+29
+DHT  |  WEBSITE AUDIT
+CHI TIẾT SỬA WEBSITE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+4 / 36
+01 | Company Profile đang mở nhầm tài liệu
+P0 | Lỗi xác nhận
+Vị trí: Header và các nút Company Profile trên Home / Manufacturing
+https://dhtcompany.com/DHT_Company_Profile_2026.pdf
+Ảnh website tại vị trí liên quan | 24/09/2026 | Mã 01
+HIỆN ĐANG LÀ GÌ
+Tên đường dẫn là DHT_Company_Profile_2026.pdf, nhưng trình xem PDF hiển thị “HƯỚNG DẪN CHỈNH
+SỬA WEBSITE”, 33 trang. Đây là tài liệu giao designer, không phải hồ sơ giới thiệu DHT.
+PHẢI SỬA THẾ NÀO
+• Thay file tại đường dẫn này bằng đúng company profile phát hành đã duyệt. Giữ đường dẫn ổn định
+nếu sales đã gửi cho khách.
+• Kiểm tra tất cả nút Profile, cả bản English và tiếng Việt; không thay bằng product catalogue. Xóa bản
+hướng dẫn nội bộ khỏi đường dẫn công khai dành cho buyer.
+Tên nút: DHT Company Profile 2026 (PDF). Nội dung PDF: đúng bản giới thiệu công ty đã được
+DHT duyệt.
+Nghiệm thu: Mở bằng cửa sổ khách: đúng bìa, số trang, phiên bản, thông tin liên hệ; không còn tài liệu
+hướng dẫn designer.
+Căn cứ: Guide 06/09: G03, D01-D04, tr.10 và 30.
+DHT  |  WEBSITE AUDIT
+CHI TIẾT SỬA WEBSITE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+5 / 36
+02 | Home: 11 bị gắn nhãn sản lượng / tháng
+P0 | Lỗi xác nhận
+Vị trí: Craftsmanship / The Art of Creation
+https://dhtcompany.com/en-GB
+Ảnh website tại vị trí liên quan | 24/09/2026 | Mã 02
+HIỆN ĐANG LÀ GÌ
+Khối Craftsmanship hiển thị “11 PRODUCTS / MONTH”. Số 11 trong master là số cơ sở sản xuất, không
+phải sản lượng.
+PHẢI SỬA THẾ NÀO
+• Đổi nhãn ngay tại khối này; không sửa riêng bốn KPI đầu trang rồi bỏ sót khối giữa trang.
+• Đồng bộ nhãn khi đổi ngôn ngữ. Nếu không cần lặp KPI, bỏ bộ đếm này và giữ nội dung về sản xuất.
+11 Production Facilities Across Our Family-Owned Group
+10 furniture facilities + 1 engineered-wood panel and primary-processing facility.
+Nghiệm thu: Không còn “11 products/month” ở nội dung, bản dịch, nhãn truy cập hoặc ảnh có chữ.
+Căn cứ: Guide H02-H04, tr.12-13. Ảnh là trạng thái đã tải nội dung.
+DHT  |  WEBSITE AUDIT
+CHI TIẾT SỬA WEBSITE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+6 / 36
+03 | Home: nút cuối trang đi sai đích
+P0 | Lỗi xác nhận
+Vị trí: CTA “Let’s Develop Your Next Furniture Range”
+https://dhtcompany.com/en-GB
+Ảnh website tại vị trí liên quan | 24/09/2026 | Mã 03
+HIỆN ĐANG LÀ GÌ
+Nút “Request a Product Proposal” dẫn tới /en-GB/catalogue/outdoor; “View Company Profile” dẫn tới
+/en-GB/contact. Đích bấm không khớp lời hứa trên nút.
+PHẢI SỬA THẾ NÀO
+• Request a Product Proposal phải mở form nhận yêu cầu, giữ loại inquiry phù hợp.
+• View Company Profile phải mở PDF phát hành đã sửa tại mã 01; áp dụng cả URL không có tiền tố ngôn
+ngữ.
+• Home card Sunloungers đang dùng category=Lounge+Daybeds, trong khi footer dùng
+Lounge+%26+Daybeds: thống nhất bằng ID category chung và kiểm tra kết quả lọc.
+Request a Product Proposal → Contact / form yêu cầu sản phẩm.
+View Company Profile → đúng PDF company profile.
+Nghiệm thu: Bấm thử từng CTA trên desktop/điện thoại; tên nút và nội dung mở ra khớp nhau. Đây là
+lỗi đích liên kết, không chỉ lỗi câu chữ.
+Căn cứ: Guide H05, H09 và G03, tr.10, 13-14. Đích liên kết lấy từ DOM đã lưu.
+DHT  |  WEBSITE AUDIT
+CHI TIẾT SỬA WEBSITE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+7 / 36
+04 | Home: phân loại Featured Collections sai
+P1 | Lỗi xác nhận; có khác biệt lúc tải
+Vị trí: Selected Collections / Featured Collections
+https://dhtcompany.com/en-GB
+Ảnh website tại vị trí liên quan | 24/09/2026 | Mã 04
+HIỆN ĐANG LÀ GÌ
+Sau khi tải, bộ lọc hiện “All 8 / Sunlounger 8” nhưng tám card gồm Amalfi, Benson, Ashton, Bali,
+Balemora và Santos lounge. Trong lượt đọc ban đầu, section còn trả “No featured products in this
+category yet.”
+PHẢI SỬA THẾ NÀO
+• Sửa mapping category của collection; không gắn toàn bộ lounge set vào Sunlounger. Không coi thông
+báo rỗng ban đầu là bằng chứng database không có sản phẩm.
+• Chỉ hiển thị section sau khi có dữ liệu, hoặc dùng trạng thái đang tải rõ ràng. Giữ một nguồn dữ liệu
+cho Home, catalogue và Quick View.
+• Ẩn dấu “·” khi trường vật liệu/thuộc tính kế bên trống.
+Selected Outdoor Collections
+Nhóm lọc theo dữ liệu đã duyệt: All / Lounge & Sofa Collections / Dining / Sunloungers & Daybeds.
+Nghiệm thu: Tên nhóm khớp từng collection; không chớp “không có sản phẩm” khi danh mục thực sự
+đang tải.
+Căn cứ: Guide H06 và D05-D06, tr.13, 30.
+DHT  |  WEBSITE AUDIT
+CHI TIẾT SỬA WEBSITE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+8 / 36
+05 | About: vẫn còn ba chỉ số cũ
+P0 | Lỗi xác nhận ở trạng thái trình duyệt
+Vị trí: Dải chữ chạy ngay dưới hero; cả bản tiếng Việt
+https://dhtcompany.com/about
+Ảnh website tại vị trí liên quan | 24/09/2026 | Mã 05
+HIỆN ĐANG LÀ GÌ
+Dải chạy hiển thị “18+ YEARS EXPERIENCE”, “50,000 UNITS / MONTH”, “35+ EXPORT COUNTRIES”;
+tiếng Việt cũng có số tương ứng. Dữ liệu đọc ban đầu có thể khác nội dung sau khi tải.
+PHẢI SỬA THẾ NÀO
+• Gỡ các số cũ ở nguồn nội dung đang ghi đè sau khi trang tải. Không chỉ sửa HTML ban đầu.
+• Dùng đúng số và phạm vi theo master; không đưa trở lại 400+ mẫu, 250 công nhân, 30 kỹ thuật,
+40-50 mẫu/năm khi chưa có nguồn phê duyệt mới.
+• Giảm bản sao của dải chạy trong nội dung cho trình đọc màn hình.
+11 Production Facilities • 543,380 m² Combined Manufacturing Footprint • Approximately
+2,400 Group Personnel • 4 Manufacturing Clusters
+Nghiệm thu: Mở URL trực tiếp, chờ tải, chuyển trang rồi quay lại và đổi ngôn ngữ: không trở về ba số
+cũ.
+Căn cứ: Quyết định CEO và Guide tr.2, 8-9, H03, A04.
+DHT  |  WEBSITE AUDIT
+CHI TIẾT SỬA WEBSITE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+9 / 36
+06 | Chữ thử nghiệm và nhãn biên tập công
+khai
+P0 | Lỗi xác nhận; một dấu vết đã đổi theo lượt tải
+Vị trí: Key Machinery & Processing Systems; kiểm tra thêm About
+https://dhtcompany.com/manufacturing
+Ảnh website tại vị trí liên quan | 24/09/2026 | Mã 06
+HIỆN ĐANG LÀ GÌ
+Manufacturing còn nhãn “SLIDE 11 SPECIFICATION”. Lượt About đầu ghi nhận “partnerships.KKK” và
+“BUILT FOR B2B BUYERSKK”; lượt sau không còn các ký tự này, nên không coi là lỗi còn xuất hiện ổn
+định.
+PHẢI SỬA THẾ NÀO
+• Đổi “SLIDE 11 SPECIFICATION” thành nhãn hướng khách hàng hoặc bỏ hẳn.
+• Tìm và xóa KKK, BUYERSKK, TODO, placeholder, nav.catalogue và nội dung thử nghiệm trong dữ liệu
+đang công bố. Kiểm tra nguồn dịch/CMS và cache sau sửa.
+• Không công khai số slide, chỉ dẫn chép profile hoặc ghi chú nội bộ trong trang bán hàng.
+Manufacturing Equipment
+Key Machinery & Processing Systems
+Nghiệm thu: Không còn nhãn biên tập khi tải mới hoặc sau khi đổi ngôn ngữ; mục đã sửa được kiểm tra
+chống tái xuất hiện.
+Căn cứ: Guide tr.4, G04 và D06. About: dấu vết theo phiên; Manufacturing: ảnh trực tiếp.
+DHT  |  WEBSITE AUDIT
+CHI TIẾT SỬA WEBSITE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+10 / 36
+07 | About: timeline chưa đúng tên doanh
+nghiệp
+P0 | Lệch nội dung hướng dẫn đã duyệt
+Vị trí: Corporate Development Milestones / 2016 - 2022 - 2024
+https://dhtcompany.com/about
+Ảnh website tại vị trí liên quan | 24/09/2026 | Mã 07
+HIỆN ĐANG LÀ GÌ
+Hiện là “Foundation of DHT Furniture”, “Manufacturing Network Integration”, “Global Compliance &
+Scale”; năm 2024 còn ghi đạt full FSC/ISO/BSCI/SMETA coverage.
+PHẢI SỬA THẾ NÀO
+• Thay cả tiêu đề và mô tả ba mốc theo bảng A03. Không tự diễn giải mốc pháp nhân thành mốc tích
+hợp 11 nhà máy hoặc chứng nhận bao phủ toàn group.
+• Đối chiếu tên chính tả trong profile phát hành; không ghi renamed nếu không phải cùng pháp nhân đổi
+tên.
+2016 - DHT Investment and Commercial Joint Stock Company
+Foundation in investment and international trade.
+2022 - DHT Furniture Joint Stock Company
+Development of the furniture business and export activities.
+2024 - DHT Furniture Vietnam Joint Stock Company
+Further development of the international furniture business and coordinated manufacturing
+programmes.
+Nghiệm thu: Đúng ba mốc và tên; không còn claim “full ... coverage” gắn chung cho group.
+Căn cứ: Guide A03, tr.15; phạm vi chứng chỉ Q02, tr.29.
+DHT  |  WEBSITE AUDIT
+CHI TIẾT SỬA WEBSITE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+11 / 36
+08 | About: nhân sự và điện thoại chưa hoàn
+chỉnh
+P0 | Placeholder xác nhận; chức danh chờ đối chiếu profile
+Vị trí: Leadership & Central Commercial Team
+https://dhtcompany.com/about
+Ảnh website tại vị trí liên quan | 24/09/2026 | Mã 08
+HIỆN ĐANG LÀ GÌ
+Trang liệt kê John Vo - CEO & Sales Director; Dylan - Operations Director; David - Product Development
+Director; Alicia - CFO. Ba card dưới còn “+84 xxx xxx xxx”, có cả liên kết tel:+84xxxxxxxxx.
+PHẢI SỬA THẾ NÀO
+• Bỏ ngay dòng điện thoại giả và đích tel giả. Chỉ điền số đã được DHT duyệt; nếu không công bố số
+riêng, dùng liên hệ chung sales@dhtcompany.com.
+• Đối chiếu từng tên, ảnh, chức danh và email với sơ đồ tổ chức trong profile phát hành. Không mặc định
+David là PD Director hay Alicia là CFO chỉ vì đang có card.
+• Giữ đủ đội ngũ và sơ đồ nếu profile có; không xóa các nhân sự hợp lệ để né việc đối chiếu.
+Contact our team: sales@dhtcompany.com | +84 932 058 545
+Tên và chức danh từng card: chép đúng profile/org chart đã duyệt; không đưa câu chỉ dẫn này lên
+web.
+Nghiệm thu: Không còn xxx; tên/ảnh/chức danh có đối chiếu nguồn; mailto và tel mở đúng đầu mối.
+Căn cứ: Guide A05, tr.16 và G09, tr.10. Không xác nhận chức danh chưa có profile cuối.
+DHT  |  WEBSITE AUDIT
+CHI TIẾT SỬA WEBSITE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+12 / 36
+09 | Địa chỉ: chưa đủ căn cứ nghiệm thu
+P0 | Chờ nguyên văn profile phát hành
+Vị trí: Office / Showroom / Manufacturing; đồng thời About và footer
+https://dhtcompany.com/en-GB/contact
+Ảnh website tại vị trí liên quan | 24/09/2026 | Mã 09
+HIỆN ĐANG LÀ GÌ
+Văn phòng: “72 Le Thanh Ton Street, Ben Nghe Ward, District 1, Ho Chi Minh City, Vietnam”. Showroom:
+“206 Phan Dinh Phung Street, Pleiku City, Gia Lai Province, Vietnam”. Tên văn phòng đổi giữa Head
+Office & Commercial Dept. và Central Commercial Coordination Hub.
+PHẢI SỬA THẾ NÀO
+• DHT cung cấp đúng trang liên hệ của PDF phát hành; designer chép nguyên văn tên địa điểm,
+tầng/phòng, đường, phường/xã, tỉnh/thành và quốc gia.
+• Dùng một nguồn dữ liệu cho Contact, About, footer, bản đồ, metadata và mọi ngôn ngữ. Không lấy chữ
+ký email hoặc suy đoán địa giới thay profile.
+• Không tự thay thành Sai Gon Ward, thêm tầng/phòng, hoặc lấy địa chỉ showroom cũ khi chưa đối
+chiếu.
+Nội dung phải thay: đúng nguyên văn các khối Office / Showroom / Manufacturing Locations trong
+profile cuối. Chưa có nguồn này nên báo cáo không tạo một địa chỉ mới để designer copy.
+Nghiệm thu: Mỗi địa điểm phải có ảnh trang profile đối chiếu cạnh ảnh website; map đúng chức năng
+địa điểm. Chưa đủ nguồn thì để trạng thái Chờ DHT, không đánh dấu Đã sửa.
+Căn cứ: Quyết định CEO; Guide C02-C05, tr.23-24. Đây là mục chưa xác minh, không kết luận địa chỉ hiện tại chắc chắn sai.
+DHT  |  WEBSITE AUDIT
+CHI TIẾT SỬA WEBSITE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+13 / 36
+10 | Manufacturing: giữ số đúng, bổ sung
+bằng chứng
+P1 | Số diện tích khớp guide; nội dung bổ sung cần duyệt
+Vị trí: Bốn cụm / bảng 11 cơ sở / Machinery / Export Gateways
+https://dhtcompany.com/manufacturing
+Ảnh website tại vị trí liên quan | 24/09/2026 | Mã 10
+HIỆN ĐANG LÀ GÌ
+Đã có 11 cơ sở và tổng 543,380 m². Chưa thấy bản đồ phân bố và bộ ảnh thực tế theo bốn nhóm năng
+lực như guide. Machinery bổ sung Homag, robotic/automated systems và “ISTA 3A / 6A compliant carton
+lines” chưa được chứng minh trong guide.
+PHẢI SỬA THẾ NÀO
+• Giữ bảng diện tích đang đúng: 30,000 + 143,080 + 98,300 + 272,000 = 543,380 m²; tách 283,380 m²
+furniture và 260,000 m² panel.
+• Bổ sung bản đồ bốn cụm, ảnh đúng cơ sở/hoạt động và caption theo profile. Không gán tên cụm thành
+địa chỉ pháp lý.
+• Rà lại nhãn hiệu máy, công nghệ, chứng nhận đóng gói và mô tả cảng bằng tài liệu thật. Không tự diễn
+giải mọi chuyến qua Cat Lai là direct mother-vessel call.
+Export routing is planned according to the production location, order mix and buyer requirements.
+Relevant gateways include Quy Nhon, Cat Lai, Cai Mep-Thi Vai and Hai Phong.
+Nghiệm thu: Bảng số được giữ nguyên nếu profile cuối khớp; từng ảnh/nhãn máy/vị trí có nguồn; bản
+đồ đủ bốn cụm.
+Căn cứ: Guide M01-M03, tr.17-18; yêu cầu ảnh và bản đồ tr.6.
+DHT  |  WEBSITE AUDIT
+CHI TIẾT SỬA WEBSITE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+14 / 36
+11 | Indoor: có nội dung nhưng thiếu ảnh và
+điều kiện
+P1 | Cần bổ sung / kiểm chứng thông số
+Vị trí: Bốn nhóm năng lực + Custom Development, Sampling & Value Engineering
+https://dhtcompany.com/catalogue/indoor
+Ảnh website tại vị trí liên quan | 24/09/2026 | Mã 11
+HIỆN ĐANG LÀ GÌ
+Trang đã chuyển thành Indoor & Project Furniture. Chưa có ảnh minh họa thực tế cho các nhóm. Có
+“Typical sample lead time: 7-14 days”, “New production orders: 60-90 days” và claim CA TB117 / BS
+5852 / TSCA Title VI như thuộc tính sẵn có.
+PHẢI SỬA THẾ NÀO
+• Bổ sung ảnh thật cho từng nhóm năng lực như profile. Giữ câu “All wood used in DHT furniture is
+FSC-certified”.
+• Lead time phải dùng bản thương mại/profile được duyệt hiện hành, ghi điểm bắt đầu và điều kiện;
+không tự coi 7-14 ngày là mặc định toàn công ty.
+• Chuyển claim kiểm nghiệm thành yêu cầu được xác nhận theo cấu hình và thị trường; chỉ giữ tuyên bố
+đạt chuẩn khi có hồ sơ tương ứng.
+Product adaptation, material selection, value engineering and packaging development are reviewed
+according to the project brief and intended use. Sampling, production timing and applicable testing
+are confirmed for the agreed specification.
+Nghiệm thu: Có ảnh đúng năng lực; mọi số ngày và claim có nguồn. Không thay thế toàn bộ thông số
+đã duyệt bằng câu chung nếu profile cuối có dữ liệu chi tiết.
+Căn cứ: Guide Indoor tr.26; quy tắc không bỏ số đã duyệt tr.4-6.
+DHT  |  WEBSITE AUDIT
+CHI TIẾT SỬA WEBSITE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+15 / 36
+12 | Quality: KPI và bảo hành bị mở rộng
+phạm vi
+P0 | Phạm vi chưa đủ căn cứ
+Vị trí: Quality Performance Metrics & Warranty
+https://dhtcompany.com/quality-compliance
+Ảnh website tại vị trí liên quan | 24/09/2026 | Mã 12
+HIỆN ĐANG LÀ GÌ
+Hiện ~95% OTIF; ~92% First-Time Pass Rate; 12 Staff “embedded across Central, Southern and
+Northern clusters”; “2-year finish & fabric warranty, 5-year structural frame guarantee”. Guide chỉ coi
+~95/~92/12/2-5 là thông số tham chiếu cần đúng site/kỳ đo/điều kiện.
+PHẢI SỬA THẾ NÀO
+• Giữ giá trị nếu profile cuối phê duyệt, nhưng thêm đúng phạm vi cơ sở/chương trình, kỳ đo và định
+nghĩa. Không biến 12 QA/QC của một phạm vi thành toàn bộ ba miền.
+• Bảo hành phải ghi rõ đối tượng bảo hành, điều kiện sử dụng, ngoại lệ và chương trình áp dụng theo
+chính sách. Không tự phân 2 năm finish/fabric và 5 năm frame khi chưa có tài liệu.
+• Chú thích chung ở cuối chưa thay thế được nhãn phạm vi từng KPI.
+Mỗi KPI: Value | Metric definition | Site/programme scope | Measurement period.
+Warranty: approved duration and coverage, subject to the published programme terms.
+Nghiệm thu: Quality/COO xác nhận bảng bằng nguồn gốc; website không tạo cam kết bảo hành rộng
+hơn profile.
+Căn cứ: Guide Q04, tr.29 và nguyên tắc đủ phạm vi tr.4-6.
+DHT  |  WEBSITE AUDIT
+CHI TIẾT SỬA WEBSITE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+16 / 36
+13 | Quality: claim tuân thủ cần điều kiện áp
+dụng
+P1 | Nội dung hiện rộng hơn guide
+Vị trí: Testing & Compliance for Your Market + 6-Step QC
+https://dhtcompany.com/quality-compliance
+Ảnh website tại vị trí liên quan | 24/09/2026 | Mã 13
+HIỆN ĐANG LÀ GÌ
+Các mục EUDR & Phytosanitary, ASTM, BMSB, TSCA/CARB được viết như luôn đáp ứng; QC ghi các dải
+AQL, độ ẩm và ISTA cố định. Hướng dẫn yêu cầu đánh giá theo sản phẩm, site, thị trường và buyer
+specification.
+PHẢI SỬA THẾ NÀO
+• Giữ đủ nhóm thị trường trong profile nhưng diễn đạt đúng “reviewed / where applicable / according to
+specification”. Không coi một hồ sơ FSC hay hun trùng là bằng chứng cho mọi yêu cầu khác.
+• Quality duyệt từng tiêu chuẩn, hồ sơ thử nghiệm và phạm vi trước khi tuyên bố compliance. Không
+công bố yêu cầu BMSB như bắt buộc cho mọi lô hàng mọi thời điểm.
+• AQL, moisture target và thử nghiệm phải gắn programme/spec được duyệt. Báo cáo này kiểm tra câu
+chữ, không kết luận pháp lý về từng lô hàng.
+Timber traceability, material documentation, product safety testing and packaging requirements are
+reviewed according to the destination market, product construction and buyer specification. Relevant
+third-party testing is arranged where required.
+Nghiệm thu: Từng claim có owner Quality, nguồn và điều kiện; không sử dụng danh sách tiêu chuẩn
+như danh sách chứng chỉ DHT sở hữu.
+Căn cứ: Guide Q01-Q03, tr.29; không thay danh sách đầy đủ bằng riêng đoạn mở đầu.
+DHT  |  WEBSITE AUDIT
+CHI TIẾT SỬA WEBSITE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+17 / 36
+14 | Sustainability: số liệu và lời hứa thiếu
+nguồn
+P1 | Cần chứng minh từ profile/hồ sơ
+Vị trí: Sustainability & Resource Efficiency
+https://dhtcompany.com/quality-compliance
+Ảnh website tại vị trí liên quan | 24/09/2026 | Mã 14
+HIỆN ĐANG LÀ GÌ
+Hiện có “100% Timber Traceability”, “zero deforestation”, cutting recovery “up to 82%”, “100%”
+offcuts/sawdust được tái sử dụng; all export cartons và eco-directives chưa chỉ rõ phạm vi.
+PHẢI SỬA THẾ NÀO
+• Đối chiếu từng số và diễn giải với profile cuối. Nếu có, giữ đúng site/kỳ đo/cách tính; nếu không có
+nguồn, không tự thêm số để làm nội dung thuyết phục hơn.
+• Thay tuyên bố tuyệt đối bằng mô tả thực hành được DHT xác nhận. Vẫn phải giữ đủ các hoạt động
+traceability, yield, offcuts, sawdust, recycling và waste handling trong profile.
+• Bổ sung ảnh hoặc bằng chứng đúng hoạt động; không dùng một ảnh minh họa thay cho dữ liệu đo.
+DHT coordinates documented timber sourcing, material-use efficiency and waste-handling practices
+with the nominated production facility. Programme-specific records are reviewed as part of
+production planning and buyer qualification.
+Nghiệm thu: Có bảng nguồn cho từng số/claim. Câu trên chỉ là khung tạm để duyệt, không được dùng
+để xóa dữ liệu thật đã có trong profile.
+Căn cứ: Guide phần Sustainability tr.5-6; Q02-Q03 tr.29.
+DHT  |  WEBSITE AUDIT
+CHI TIẾT SỬA WEBSITE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+18 / 36
+15 | FSC: thống nhất chính sách và cách ghi
+claim
+P1 | Chính sách đúng; cách diễn đạt cần chuẩn hóa
+Vị trí: Badge sản phẩm; Home / Materials / About / Quality
+https://dhtcompany.com/en-GB/catalogue/amalfi-lounge-collection
+Ảnh website tại vị trí liên quan | 24/09/2026 | Mã 15
+HIỆN ĐANG LÀ GÌ
+Website đã có câu “All wood used in DHT furniture is FSC-certified.” Tuy nhiên badge “100% FSC
+WOOD” và TIMOR “FSC 100% / 100%” dễ bị hiểu là claim FSC 100% áp dụng mặc định cho mọi SKU.
+PHẢI SỬA THẾ NÀO
+• Giữ nguyên yêu cầu của CEO: mọi gỗ dùng trong sản phẩm phải FSC; không viết FSC available upon
+request.
+• Badge chung nên ghi FSC-Certified Wood. Claim giao dịch cụ thể FSC 100% / FSC Mix phải theo hồ sơ
+đúng vật liệu, không lấy một badge chung thay chứng từ.
+• Bỏ suy diễn “FSC-certified, ensuring full compliance with EUDR/Lacey...” trong bài Acacia và các chỗ
+tương tự; phần tuân thủ theo mã 13.
+FSC-Certified Wood
+All wood used in DHT furniture is FSC-certified. Supporting documentation is maintained for the
+applicable FSC claim.
+Nghiệm thu: Mọi trang thống nhất chính sách; không tự nâng claim; không có cấu hình gỗ non-FSC
+được chào như tùy chọn.
+Căn cứ: Quyết định CEO; Guide tr.2, T01-T05, P01 và Q02.
+DHT  |  WEBSITE AUDIT
+CHI TIẾT SỬA WEBSITE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+19 / 36
+16 | Materials: sửa Acacia / Teak / Eucalyptus
+P1 | Cần thu hẹp lời hứa theo guide
+Vị trí: Các chapter kỹ thuật và Commercial Execution; áp dụng bài Teak/Eucalyptus
+https://dhtcompany.com/materials/acacia-wood-outdoor-furniture
+Ảnh website tại vị trí liên quan | 24/09/2026 | Mã 16
+HIỆN ĐANG LÀ GÌ
+Acacia viết FSC “ensuring full compliance”, độ ẩm 8-12% “to prevent seasonal cracking” và “guarantees
+reliable lead times”. Teak viết drying “preventing internal stresses”. Eucalyptus hứa price predictability
+và compliance EN/ASTM theo nghĩa bao trùm.
+PHẢI SỬA THẾ NÀO
+• Giữ đúng loài và nguồn gỗ trong profile: Acacia hybrid - Vietnam; Eucalyptus grandis - Uruguay;
+Tectona grandis - Mato Grosso, Brazil, sau đối chiếu bản phát hành.
+• Dùng copy T01/T02/T05; không cam kết loại bỏ tuyệt đối nứt, biến dạng hoặc bảo đảm giá/lead time
+cho mọi chương trình.
+• Thông số độ ẩm, keo D4, kết cấu và thử nghiệm chỉ công bố khi đúng spec đã duyệt. Thêm care/use
+theo finish thực tế.
+Material selection, drying, construction and finishing are developed around the product specification
+and intended outdoor use. All wood used in DHT furniture is FSC-certified. Packaging, relevant testing
+and production timing are agreed for each buyer programme.
+Nghiệm thu: Sửa cả ba bài, không chỉ Home; không còn khẳng định FSC tự đảm bảo mọi compliance
+hay gỗ không thể nứt.
+Căn cứ: Guide T01, T02, T05, tr.27-28. URL các bài còn lại được liệt kê tại phụ lục phạm vi.
+DHT  |  WEBSITE AUDIT
+CHI TIẾT SỬA WEBSITE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+20 / 36
+17 | Materials: Aluminium và Fabric thêm
+thông số chưa duyệt
+P1 | Cần nguồn kỹ thuật và điều kiện
+Vị trí: Engineered Surface Protection / Mixed Materials / Sampling; bài Fabric
+https://dhtcompany.com/materials/powder-coated-aluminum-modern-scalable
+Ảnh website tại vị trí liên quan | 24/09/2026 | Mã 17
+HIỆN ĐANG LÀ GÌ
+Aluminium có AkzoNobel/Tiger, robotic TIG/MIG, giảm CBM “up to 40%”, sample 7-14 ngày. Fabric có UV
+Grade 7/8, fluorocarbon-free, chlorine/mould resistance và quick-dry như cấu hình mặc định.
+PHẢI SỬA THẾ NÀO
+• Đối chiếu BOM/spec/chứng từ từng programme. Bỏ nhãn hiệu, phần trăm tiết kiệm, cấp UV hoặc công
+nghệ khi chưa được xác nhận cho nội dung công bố.
+• Quick-dry, branded fabric và specialised foam phải là lựa chọn được báo giá theo cấu hình, không gán
+cho toàn bộ sản phẩm.
+• Lead time dùng quy tắc hiện hành DHT và điểm bắt đầu xác nhận drawings/specs; không lấy số ngày
+tự bổ sung trong bài viết.
+Frame construction, welding, surface preparation, coating and hardware are specified for the
+intended application. Fabric, filling and cushion construction are selected according to the product
+design and target market. Branded fabrics and specialised cushion systems are quoted separately
+where available.
+Nghiệm thu: Có nguồn cho từng thông số; copy không hứa quá phạm vi. Giữ các lựa chọn thực sự được
+DHT hỗ trợ.
+Căn cứ: Guide T03-T04, tr.27-28; ảnh bài aluminium. Fabric: /materials/outdoor-fabric-performance-comfort.
+DHT  |  WEBSITE AUDIT
+CHI TIẾT SỬA WEBSITE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+21 / 36
+18 | Outdoor: thiếu giới thiệu và MOQ không
+có đơn vị
+P1 | Lỗi xác nhận
+Vị trí: Đầu danh mục / carousel / filter MOQ
+https://dhtcompany.com/en-GB/catalogue/outdoor
+Ảnh website tại vị trí liên quan | 24/09/2026 | Mã 18
+HIỆN ĐANG LÀ GÌ
+Trang mở bằng carousel sản phẩm, chưa có H1 giới thiệu rõ Outdoor Furniture Collections. MOQ hiển thị
+Under 10, 10-50, 50-100, 100+ nhưng không nêu pcs/set/container; carousel có các dấu chấm đứng
+riêng.
+PHẢI SỬA THẾ NÀO
+• Bổ sung H1 và đoạn giới thiệu ở đầu danh mục. Bỏ dấu phân cách khi trường dữ liệu trống.
+• Nếu chưa có MOQ được duyệt theo item/set, ẩn bộ lọc MOQ. Nếu có, ghi đơn vị, phạm vi theo
+SKU/order và quy tắc mix.
+• Chuẩn hóa category/material bằng cùng dữ liệu với Home. Số đếm phải nói rõ collection hay item,
+không hard-code số lượng.
+Outdoor Furniture Collections
+Explore outdoor furniture in FSC-certified wood, aluminium, steel, rope, wicker and mixed-material
+combinations. DHT supports dining, lounge, balcony, sunlounger and modular programmes.
+Nghiệm thu: H1 hiện trước carousel; không còn MOQ không đơn vị và dấu chấm rời; bộ lọc trả đúng sản
+phẩm.
+Căn cứ: Guide O01-O10, tr.19-20.
+DHT  |  WEBSITE AUDIT
+CHI TIẾT SỬA WEBSITE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+22 / 36
+19 | Tên sản phẩm: còn nhiều lỗi và biến thể
+P1 | Lỗi chính tả xác nhận; một số tên cần catalog
+Vị trí: Card danh mục, H1 chi tiết, Quick View, related products
+https://dhtcompany.com/en-GB/catalogue/outdoor?page=2
+Ảnh website tại vị trí liên quan | 24/09/2026 | Mã 19
+HIỆN ĐANG LÀ GÌ
+Các tên BONDI LOUGNE, MOBLEY DINNING, WESLEY DINNING và RETANGLE vẫn xuất hiện. Có BROOKSC,
+TIMOR LOSIL, WESTLEY và SEINA/Siena chưa thống nhất với cách đặt tên khác.
+PHẢI SỬA THẾ NÀO
+• Sửa chắc chắn: LOUGNE → LOUNGE; DINNING → DINING. Với RETANGLE, dùng RECTANGULAR TABLE
+nếu catalog xác nhận đây là tên mô tả.
+• BROOKSC/BROOKS, TIMOR LOSIL, WESTLEY/WESLEY, SEINA/SIENA và BALEMORA/BALMORA phải do PD
+chốt tên master; không tự đoán.
+• Đổi đồng thời card/H1/title/breadcrumb/alt/related/quote. Khi đổi slug, bảo đảm URL đích có dữ liệu
+trước rồi mới redirect URL cũ.
+BONDI LOUNGE COLLECTION
+MOBLEY DINING COLLECTION
+WESLEY DINING COLLECTION
+Các tên còn lại: theo catalogue/product master đã duyệt.
+Nghiệm thu: Một collection chỉ một tên chuẩn trên mọi bề mặt; link sales đã gửi vẫn mở được.
+Căn cứ: Guide O11, tr.20; đối chiếu danh mục hai trang và product DOM.
+DHT  |  WEBSITE AUDIT
+CHI TIẾT SỬA WEBSITE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+23 / 36
+20 | URL sửa chính tả đang dẫn tới trang 404
+P0 | Ba đích có ảnh; BROOKS cần tái xác nhận độc lập
+Vị trí: BONDI / MOBLEY / RECTANGULAR; rà soát thêm BROOKS
+https://dhtcompany.com/en-GB/catalogue/bondi-lounge-collection
+Ảnh website tại vị trí liên quan | 24/09/2026 | Mã 20
+HIỆN ĐANG LÀ GÌ
+Ba URL cũ chuyển sang slug mới nhưng trang đích báo “404 - Page Not Found”: bondi-lougne →
+bondi-lounge; mobley-dinning → mobley-dining; retangle-table → rectangular-table. BROOKS từng được
+ghi nhận lỗi ở lượt kiểm tra trước, nhưng bộ bằng chứng hiện chưa có ảnh độc lập cho đích này.
+PHẢI SỬA THẾ NÀO
+• Khôi phục record sản phẩm tại slug đích hoặc sửa routing theo record thực tế; không chỉ thêm redirect
+tới một slug chưa tồn tại.
+• Sửa href trên card, Quick View, related products và sitemap. Sau khi đích hoạt động, duy trì 301 từ
+slug sai.
+• Bấm BROOKSC từ danh mục để xác nhận đích cuối và lưu ảnh; không đánh dấu đã sửa chỉ từ bảng
+redirect.
+Tiêu chí: mỗi card mở đúng collection, có tên/mã/ảnh và nút Request Quote; URL cũ đến được cùng
+collection, không vào trang Page Not Found.
+Nghiệm thu: Kiểm tra cả đường dẫn gốc và /en-GB; 3 lỗi có ảnh phải đóng. BROOKS chỉ đóng sau khi có
+bằng chứng kiểm tra riêng.
+Căn cứ: Guide O11 và D08, tr.20, 30. Phụ lục URL ghi chi tiết 3 chuỗi đã xác nhận.
+DHT  |  WEBSITE AUDIT
+CHI TIẾT SỬA WEBSITE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+24 / 36
+21 | Template sản phẩm: kích thước thiếu
+đơn vị
+P1 | Lỗi xác nhận trên nhiều trang đã mở
+Vị trí: Item list / Dimensions / breadcrumb / Request Quote
+https://dhtcompany.com/en-GB/catalogue/benson-lounge-collection
+Ảnh website tại vị trí liên quan | 24/09/2026 | Mã 21
+HIỆN ĐANG LÀ GÌ
+Item list vẫn có “35.83 x 33.54 x 30.51” và nhiều dãy số tương tự không ghi cm/inch, không giải thích
+W-D-H. Breadcrumb hiển thị khóa “nav.catalogue”. Nhiều item chưa có mã riêng, packing/loading và cấu
+hình rõ.
+PHẢI SỬA THẾ NÀO
+• Chuẩn hóa bảng Item name | Item code | W × D × H (cm) | tùy chọn inches. Chỉ chuyển đổi từ bản
+vẽ/catalog được PD duyệt; không suy đơn vị từ độ lớn con số.
+• Sửa nav.catalogue thành Collections (tiếng Việt: Bộ sưu tập). Ẩn trường chưa có dữ liệu hoặc ghi xác
+nhận khi báo giá theo guide.
+• Quick View, chi tiết và form quote dùng cùng nguồn. Form phải mang theo collection/code/URL;
+backend nhận lead phải được nghiệm thu riêng.
+Collection Items & Dimensions
+Item / Item code / Dimensions (W × D × H, cm) / Packing & loading information confirmed for the
+quoted configuration.
+Nghiệm thu: Không còn dãy kích thước không đơn vị; tên/mã từng món thống nhất; không tự tạo
+packing hay loading.
+Căn cứ: Guide P02-P03, tr.22; D06, D10, tr.30.
+DHT  |  WEBSITE AUDIT
+CHI TIẾT SỬA WEBSITE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+25 / 36
+22 | Amalfi: hai bảng dữ liệu chưa thống nhất
+P0 | Mâu thuẫn nội bộ xác nhận; số mới cần PD duyệt
+Vị trí: Collection Dimensions Breakdown và item list bên dưới
+https://dhtcompany.com/en-GB/catalogue/amalfi-lounge-collection
+Ảnh website tại vị trí liên quan | 24/09/2026 | Mã 22
+HIỆN ĐANG LÀ GÌ
+Bảng mới có 4 món: Swivel Lounge Chair 74×82×65 cm; 2-Seater Sofa 140×82×65; Side Table
+43×43×37; Coffee Table 100×60×40. Bên dưới chỉ có “AMALFI SWIRL CHAIR WITH CUSHION” và side
+table, với số không đơn vị.
+PHẢI SỬA THẾ NÀO
+• PD đối chiếu bản vẽ để xác nhận đủ món, đúng thứ tự chiều và tính năng xoay. Không kết luận
+sofa/coffee table sai tuyệt đối, nhưng chưa có nguồn trong guide để chấp nhận các số vừa thêm.
+• Dùng một bảng duy nhất; nếu có inches, tính từ cùng số master. Sửa SWIRL → SWIVEL chỉ khi xác nhận
+ghế có chức năng xoay.
+• Gallery, item table và form quote phải cùng cấu hình; ghi rõ có/không gồm cushion và table top theo
+spec.
+Amalfi Lounge Collection
+Materials, finishes, fabric options and set composition are confirmed for each quotation. All wood
+used in DHT furniture is FSC-certified.
+Nghiệm thu: PD ký xác nhận từng item/dimension; không còn hai bảng khác tên, khác số món hoặc
+khác đơn vị.
+Căn cứ: Guide P01, tr.21. Không tự đưa 4 kích thước hiện tại thành dữ liệu chuẩn.
+DHT  |  WEBSITE AUDIT
+CHI TIẾT SỬA WEBSITE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+26 / 36
+23 | Benson: lounge bị mô tả thành dining set
+P1 | Mâu thuẫn nội bộ xác nhận
+Vị trí: Subtitle và đoạn mô tả dài dưới Request Quote
+https://dhtcompany.com/en-GB/catalogue/benson-lounge-collection
+Ảnh website tại vị trí liên quan | 24/09/2026 | Mã 23
+HIỆN ĐANG LÀ GÌ
+H1 là BENSON LOUNGE COLLECTION, item gồm single/triple lounge, ottoman, coffee table, side table.
+Subtitle lại là “The Benson Dining Set”; đoạn cuối nói dining set và “up to 8 seats”.
+PHẢI SỬA THẾ NÀO
+• Viết lại mô tả đúng lounge collection và thành phần đã PD xác nhận.
+• Bỏ số chỗ ngồi chưa có cấu hình và lời hứa weatherproof cho mọi loại vải. Vật liệu/finish dùng spec
+thật.
+• Giữ tên/mã đúng ở gallery và các related cards; không sửa riêng H1.
+The Benson Lounge Collection offers coordinated outdoor seating and occasional tables for
+residential and hospitality programmes. Set composition, materials, finishes and cushion
+specifications are confirmed for each quotation. All wood used in DHT furniture is FSC-certified.
+Nghiệm thu: Không còn Dining Set/dining/up to 8 seats nếu không thuộc cấu hình; lời mô tả khớp item
+list.
+Căn cứ: Guide P02, tr.22; yêu cầu kiểm tra toàn bộ SKU tr.32.
+DHT  |  WEBSITE AUDIT
+CHI TIẾT SỬA WEBSITE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+27 / 36
+24 | Balemora và Seina: tên trong trang bị
+lẫn
+P1 | Mâu thuẫn nội bộ xác nhận
+Vị trí: Balemora: H1, item list, paragraph; Seina: H1/subtitle
+https://dhtcompany.com/en-GB/catalogue/balemora-lounge-collection
+Ảnh website tại vị trí liên quan | 24/09/2026 | Mã 24
+HIỆN ĐANG LÀ GÌ
+Balemora có H1 BALEMORA nhưng mô tả gọi Balmora; ba món lại mang tên SAVANNAH. Trang SEINA
+TABLE mở đầu “the Siena Table”. Không đủ căn cứ xem các tên là cùng một collection.
+PHẢI SỬA THẾ NÀO
+• PD chốt tên collection và mapping item từ product master. Nếu item thuộc Savannah, sửa dữ liệu hoặc
+giải thích cross-collection đúng chủ đích; không tự đổi tên các món cho khớp.
+• Đồng bộ chính tả ở tên file ảnh/alt/H1/card/meta/quote. Giữ item code đã được đối chiếu.
+• Lập một bảng master tên/mã để tránh copy mô tả collection này sang collection khác.
+Chỉ dẫn dữ liệu: chọn một tên collection được PD duyệt; gắn đúng danh sách item, mã và ảnh. Với
+SEINA/SIENA, dùng duy nhất tên trong catalog chính thức.
+Nghiệm thu: Không còn BALEMORA/Balmora/SAVANNAH lẫn trong cùng trang nếu không có mapping
+được duyệt; SEINA/SIENA nhất quán.
+Căn cứ: Guide O11, P02; ảnh Balemora. Seina: /en-GB/catalogue/seina-table.
+DHT  |  WEBSITE AUDIT
+CHI TIẾT SỬA WEBSITE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+28 / 36
+25 | Timor: dữ liệu testing đang hiển thị cho
+buyer
+P0 | Lỗi xác nhận
+Vị trí: Item list và Specifications
+https://dhtcompany.com/en-GB/catalogue/timor-losil-collection
+Ảnh website tại vị trí liên quan | 24/09/2026 | Mã 25
+HIỆN ĐANG LÀ GÌ
+Trang hiển thị “THIS PRODUCT IS ONLY FOR TESTING”, giá trị “100”, Specifications “FSC 100% / 100%”;
+dimensions 58.66 × 33.07 × 27.76 không đơn vị. Mô tả vật liệu ghi “Acacia or Teak”.
+PHẢI SỬA THẾ NÀO
+• Gỡ record/field thử nghiệm khỏi bản công khai; không chỉ ẩn bằng CSS. Giữ sản phẩm chỉ khi có dữ liệu
+thật được PD phê duyệt.
+• Thay bằng tên item, code, kích thước có đơn vị, vật liệu và cấu hình thực tế. Nếu có lựa chọn
+Acacia/Teak, ghi từng option đều FSC và điều kiện báo giá.
+• Xóa bảng Specifications vô nghĩa; áp dụng cách ghi FSC tại mã 15. Kiểm tra tên TIMOR LOSIL theo
+catalog.
+Không có nội dung thay thế tự suy đoán. PD cung cấp record sản phẩm đúng; mọi trường testing
+phải bị loại khỏi catalogue, Quick View, tìm kiếm và related products.
+Nghiệm thu: Tìm kiếm toàn site không còn “ONLY FOR TESTING”; trang hiển thị dữ liệu thật, không còn
+100/100% không nhãn.
+Căn cứ: Guide P02, D11, checklist tr.32. Đây là hạng mục P0.
+DHT  |  WEBSITE AUDIT
+CHI TIẾT SỬA WEBSITE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+29 / 36
+26 | Contact và bản dịch: nội dung mới bị ghi
+đè
+P0 | Khác biệt nội dung theo trạng thái xác nhận
+Vị trí: Hero / đoạn trên form / trường form / toàn site đa ngôn ngữ
+https://dhtcompany.com/en-GB/contact
+Ảnh website tại vị trí liên quan | 24/09/2026 | Mã 26
+HIỆN ĐANG LÀ GÌ
+Lượt đầu Contact là “Contact DHT Furniture Vietnam”; bản sau tải trở về “Get in Touch with Us” và “We
+specialize ... teak and acacia wood”. Bản English lẫn “Tham quan theo lịch hẹn trước.” Form cũng khác
+trường bắt buộc. Home tiếng Việt còn nhiều nhãn English.
+PHẢI SỬA THẾ NÀO
+• Developer tìm nguồn đang ghi đè khi tải/đổi ngôn ngữ (dữ liệu CMS, locale hoặc thành phần phía trình
+duyệt); nguyên nhân kỹ thuật cụ thể chưa được kết luận.
+• Dùng một nội dung Contact chuẩn, có Outdoor / Indoor / Project. Giữ Name, Business Email, Company,
+Inquiry Type, Message theo guide; Phone/WhatsApp tùy chọn.
+• Đồng bộ English/tiếng Việt, sửa Acacia thành Gỗ keo theo tên loài chuẩn được DHT dùng; không để
+nhãn ngôn ngữ lẫn nhau.
+• Kiểm tra form thực sự lưu/gửi lead bằng một inquiry test được DHT cho phép. Báo cáo này chưa gửi
+form và chưa nghiệm thu backend.
+Contact DHT Furniture Vietnam
+Tell us about your product requirements, target market and estimated order volume. Our team will
+help you identify the next steps for product selection, sampling or an OEM programme.
+Response: Our team aims to respond within one business day. (Chỉ dùng khi DHT vận hành đáp
+ứng.)
+Nghiệm thu: Nội dung không đổi về bản cũ sau tải; đổi locale giữ cùng ý/số/địa chỉ; form nhận đúng mã
+sản phẩm, dữ liệu và owner.
+Căn cứ: Guide C01/C08 tr.23-25; G04/D05-D06 tr.10, 30.
+DHT  |  WEBSITE AUDIT
+ĐỐI CHIẾU PROFILE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+30 / 36
+Bao phủ profile: 25 phần phải có trên web
+(1/2)
+Bảng này dùng cấu trúc master trong file hướng dẫn, không phải tuyên bố đã đọc đủ profile phát hành cuối. Chỉ hoàn tất khi
+từng mục đã đối chiếu trực tiếp PDF chuẩn.
+Mụ
+c
+Nội dung profile
+Vị trí website
+Trạng thái / cần làm
+01
+Cover / định vị
+Home + header
+Đã có Outdoor / Indoor / Project; rà bản dịch.
+02
+At a Glance
+Home + About
+Có số mới, còn số cũ / sai nhãn: 02, 05.
+03
+Corporate Evolution
+About / timeline
+Cần sửa đúng tên và mô tả: 07.
+04
+Who DHT Is
+Home + About
+Có định vị group; đồng bộ nội dung sau tải.
+05
+Operating Model
+About hoặc section
+OEM
+Chưa thấy đủ 6 bước Buyer brief → Shipment; bổ sung
+theo profile.
+06
+Manufacturing Group
+Manufacturing
+Có 10 furniture + 1 panel; giữ phạm vi.
+07
+Vietnam Map
+Manufacturing / map
+Chưa thấy bản đồ đủ bốn cụm: 10.
+08
+Facilities 01-05
+Manufacturing / table
+Có diện tích; ảnh và vị trí cần đối chiếu.
+09
+Facilities 06-11
+Manufacturing / table
+Có diện tích; không nhầm panel là furniture.
+10
+People
+About / Human
+Resources
+Có ~20 và ~2,400; giữ approximately.
+11
+Leadership /
+Organisation
+About
+Card có xxx; thiếu đối chiếu sơ đồ đầy đủ: 08.
+12
+Product Portfolio
+Collections overview
+Có Outdoor / Indoor; chuẩn tên/nhóm: 18-25.
+13
+Outdoor Capability
+Outdoor +
+Manufacturing
+Thiếu đoạn giới thiệu và bộ thông số chuẩn: 18, 21.
+DHT  |  WEBSITE AUDIT
+ĐỐI CHIẾU PROFILE
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+31 / 36
+Bao phủ profile: 25 phần phải có trên web
+(2/2)
+Mụ
+c
+Nội dung profile
+Vị trí website
+Trạng thái / cần làm
+14
+Indoor / Projects
+Indoor landing
+Đã có nội dung; thiếu ảnh và điều kiện: 11.
+15
+Material Capabilities
+Materials
+Có 5 bài; bổ sung steel, rope/wicker, foam,
+finishes/hardware theo profile.
+16
+Product Development
+OEM / About / Indoor
+Cần đủ quy trình và lead time/điều kiện đúng bản cuối.
+17
+Commercial Scale /
+Parameters
+About +
+Manufacturing
+Chưa thấy bảng doanh thu theo năm, utilisation,
+MOQ/mix đầy đủ; bổ sung nếu có trong profile cuối.
+18
+Quality Management
+Quality & Compliance
+Có 6 gates; KPI và warranty cần đúng phạm vi: 12-13.
+19
+Responsible Timber
+Materials + Quality
+Có FSC; sửa claim theo 15-16.
+20
+Sustainability
+Quality /
+Sustainability
+Có section; số 82%/100% và hình cần nguồn: 14.
+21
+Certifications / Social
+Audit
+Quality
+Có site-specific statement; About timeline còn claim bao
+phủ: 07.
+22
+EU & UK
+Quality / Markets
+Có nhóm; chưa chốt đủ điều kiện theo profile: 13.
+23
+US / International
+Quality / Markets
+Có nhóm; kiểm tra phạm vi Canada/Australia/shipping:
+13.
+24
+Markets & Export
+Logistics
+Manufacturing /
+Gateways
+Có cảng; chưa thấy đủ thị trường/chương trình đã duyệt.
+25
+Closing & Next Step
+Contact + CTA
+Có CTA nhưng sai đích / dữ liệu địa điểm chưa chốt: 01,
+03, 09, 26.
+Điều kiện đủ 100%: mỗi đoạn, con số, bảng, ảnh có ý nghĩa, sơ đồ và chú thích trong profile phải có
+URL + section tương ứng. Không tự bỏ doanh thu, KPI, bảo hành hoặc thông số đã được duyệt. JDD là
+ngoại lệ đã được CEO yêu cầu loại bỏ.
+DHT  |  WEBSITE AUDIT
+PHỤ LỤC SẢN PHẨM
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+32 / 36
+Danh sách 20 card sản phẩm đã rà soát
+“Mở được” chỉ nói trạng thái trang chi tiết, không có nghĩa dữ liệu sản phẩm đã chính xác hoặc đã được PD nghiệm thu.
+Collection hiển thị
+Trạng thái
+Việc còn lại
+Amalfi
+Mở được
+Hai bảng item/dimension; SWIRL/SWIVEL; mã 22
+Ashton
+Mở được
+Template units / FSC / breadcrumb: 15, 21
+Balemora
+Mở được
+BALEMORA/Balmora/SAVANNAH: 24
+Bali
+Mở được
+Template units / FSC / breadcrumb: 15, 21
+Benson
+Mở được
+Lounge bị gọi Dining: 23
+Bondi
+Trang 404
+Slug lougne → lounge: 20
+BROOKSC
+Chờ tái kiểm
+tra
+Thiếu ảnh trang đích riêng; tên cần PD xác nhận
+Casper
+Mở được
+Template units / FSC / breadcrumb: 15, 21
+Haymont
+Mở được
+Template: 15, 21; kiểm tra product specs
+Mobley
+Trang 404
+Slug dinning → dining: 20
+Retangle
+Trang 404
+Slug retangle → rectangular: 20
+Santos
+Mở được
+Tách đúng cấu hình, code và dimensions: 21
+Santos DHT17-141
+Mở được
+Item dimensions thiếu đơn vị: 21
+Santos DHT17-F096
+Mở được
+Cấu hình và template: 21
+Seina
+Mở được
+SEINA/Siena: 24
+Stark
+Mở được
+Template units / FSC / breadcrumb: 15, 21
+Sun Round Table
+Mở được
+Chưa thấy bảng dimensions trong dữ liệu lưu
+Timor Losil
+Mở được
+Testing công khai: 25
+Wesley Dining
+Mở được
+DINNING → DINING: 19
+Westley Lounge
+Mở được
+Tên WESTLEY/WESLEY cần PD; template: 19, 21
+DHT  |  WEBSITE AUDIT
+PHỤ LỤC LIÊN KẾT
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+33 / 36
+Chuỗi URL lỗi và bằng chứng bổ sung
+Danh sách dưới dùng tiền tố /en-GB/catalogue/. Chữ “404” mô tả trang Page Not Found được hiển thị; báo cáo không xác nhận
+mã HTTP từ máy chủ.
+URL cũ / card
+Đích sau chuyển hướng
+Kết quả
+bondi-lougne-collection
+bondi-lounge-collection
+Page Not Found
+mobley-dinning-collection
+mobley-dining-collection
+Page Not Found
+retangle-table
+rectangular-table
+Page Not Found
+brooksc-lounge-collection
+Cần ghi nhận lại URL cuối
+Chờ ảnh xác nhận riêng
+MOBLEY: ảnh trang Page Not Found đã lưu trong phiên kiểm tra.
+RECTANGULAR TABLE: ảnh trang Page Not Found đã lưu trong phiên kiểm tra.
+Designer bàn giao ảnh collection đích đã hoạt động và bảng URL cũ → URL mới. Không đóng mục chỉ bằng ảnh cấu hình
+redirect.
+DHT  |  WEBSITE AUDIT
+GIỮ LẠI PHẦN ĐÃ ĐÚNG
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+34 / 36
+Những phần đã sửa đúng cần giữ lại
+Bảng manufacturing đã có đầy đủ 11 dòng cơ sở và tổng diện tích theo guide.
+• Định vị manufacturer & exporter và phạm vi Outdoor • Indoor • Project đã có trên Home.
+• Cơ cấu 10 furniture facilities + 1 panel/primary-processing facility đã thể hiện.
+• Tổng 543,380 m² và phần tách 283,380 / 260,000 m² khớp guide; bảng từng cơ sở cũng khớp số diện
+tích trong guide.
+• Khoảng 20 nhân sự trung tâm và khoảng 2,400 nhân sự group đã có nhãn phân biệt.
+• Indoor đã có landing page nội dung thay cho 0 sản phẩm; Eucalyptus đã có bài riêng.
+• Câu chính sách gỗ luôn FSC và đoạn chứng chỉ theo site đã có; cần giữ và đồng bộ cách diễn đạt.
+• Không thấy khối liên hệ JDD trong các trang hiển thị đã kiểm tra. Chưa coi đây là xác nhận đã quét
+sạch mọi metadata/tài liệu: PDF bị tải nhầm vẫn chứa hướng dẫn nội bộ nhắc JDD.
+Giữ các phần đúng giúp đợt sửa tập trung vào dữ liệu chưa đạt. Nếu profile phát hành cuối có khác biệt, DHT giải quyết nguồn
+trước rồi mới đổi website.
+DHT  |  WEBSITE AUDIT
+NGHIỆM THU
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+35 / 36
+Checklist nghiệm thu và bàn giao
+Nhóm kiểm tra
+Bằng chứng designer cần trả
+Profile / JDD
+PDF public đúng bản duyệt; quét mọi ngôn ngữ, footer, metadata, ảnh có chữ, tài liệu tải;
+không còn JDD.
+Thông tin doanh
+nghiệp
+Ảnh website cạnh trang profile: tên, timeline, đội ngũ, địa chỉ, 11 cơ sở và phạm vi số liệu.
+Tải nội dung / ngôn
+ngữ
+Video ngắn mở URL mới → chờ tải → điều hướng → đổi locale. Không trở về nội dung cũ.
+Sản phẩm
+Danh sách 20 card, link đích, tên/code/item/unit/dimension/material/configuration; PD
+duyệt.
+FSC / Quality
+Mọi gỗ FSC; claim hồ sơ đúng; KPI/warranty/testing có site, kỳ đo, điều kiện và owner duyệt.
+Inquiry
+Test được DHT cho phép: lead đến đúng email/CRM, giữ code/URL/source/owner; lỗi không
+làm mất dữ liệu nhập.
+Desktop / Mobile
+Menu, gallery, bảng thông số, nút gọi/email, form không bị che/cắt ở breakpoint chính.
+SEO / Ảnh
+Title/description/canonical/hreflang và ảnh đúng trang; không còn key dịch, tên mẫu sai
+hoặc file test.
+Bao phủ profile
+Bảng 25 phần có URL + section + ảnh; mọi mục Chờ dữ liệu được xử lý trước nghiệm thu
+100%.
+Quy tắc đóng mã
+Mỗi mã 01-26 cần: trạng thái, người sửa, dữ liệu DHT phê duyệt nếu có, URL cuối và ảnh sau sửa. Không
+đánh dấu “Done” chỉ vì thay nội dung trong CMS; phải kiểm tra trang công khai sau tải.
+Quyết định đề xuất: chưa nghiệm thu hoàn tất website. Sửa P0 trước, đồng thời DHT cung cấp
+nguồn chuẩn cho các mục chờ xác nhận; sau đó kiểm tra P1 và độ bao phủ profile.
+DHT  |  WEBSITE AUDIT
+HÀNH ĐỘNG ƯU TIÊN
+24/09/2026  •  Bàn giao sửa website  •  dhtcompany.com
+36 / 36
+CEO Action List và phân công thực hiện
+Ưu
+tiên
+Hành động
+Owner đề xuất
+1
+Gửi designer đúng PDF profile phát hành và bản contact/org chart được duyệt.
+Chốt một nguồn dữ liệu duy nhất.
+John + Marketing
+2
+Sửa link Profile, 404, testing, xxx, nhãn 11 products/month và dữ liệu ghi đè sau
+tải.
+Developer + Designer
+3
+PD duyệt 20 card: tên/mã, cấu hình, dimensions, vật liệu, đơn vị và các option.
+PD + Sales Ops
+4
+Quality/COO duyệt KPI, warranty, claim FSC/testing, machinery, lead time và
+sustainability.
+Quality + COO
+5
+Nghiệm thu theo 26 mã + 25 phần profile; nhận bằng chứng inquiry và
+desktop/mobile trước đóng dự án.
+John + Marketing +
+Developer
+Điều kiện làm thay đổi nội dung yêu cầu
+Nếu profile phát hành mới hoặc quy tắc thương mại do DHT phê duyệt có giá trị khác guide 06/09, cập
+nhật nguồn chuẩn rồi đồng bộ website. Không để designer tự quyết về địa chỉ, chức danh, công suất,
+MOQ, lead time, warranty hay tiêu chuẩn.
+Phân công trên là đề xuất giao việc, chưa phải thông báo đã gửi tới từng người. Chưa có thay đổi trực tiếp vào website đang
+hoạt động.
+Phạm vi URL chính được kiểm tra
+Home; /about; /manufacturing; /quality-compliance; /contact; /catalogue/outdoor (hai trang); /catalogue/indoor; 19 trang đích
+sản phẩm được lưu độc lập; các biến thể English/tiếng Việt tại một số trang.
+Materials: /materials/acacia-wood-outdoor-furniture; /materials/teak-wood-premium-outdoor-durability;
+/materials/eucalyptus-wood-sustainable-strength; /materials/powder-coated-aluminum-modern-scalable;
+/materials/outdoor-fabric-performance-comfort.

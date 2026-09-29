@@ -11,8 +11,8 @@ export default function OutdoorCataloguePage() {
   return (
     <>
       <SEO 
-        title={t("catalogue.outdoor.seo.title", "Outdoor Furniture Collection — Weatherproof Luxury | DHT Company")}
-        description={t("catalogue.outdoor.seo.description", "Discover DHT Company's commercial outdoor furniture collection: weather-resistant teak, synthetic rattan, powder-coated aluminum loungers, and patio sets for luxury resorts and villas.")}
+        title={t("catalogue.outdoor.seo.title", "Outdoor Furniture Collections | DHT Furniture Vietnam")}
+        description={t("catalogue.outdoor.seo.description", "Explore outdoor furniture in FSC-certified wood, aluminium, steel, rope, wicker and mixed-material combinations. DHT supports dining, lounge, balcony, sunlounger and modular programmes.")}
         image="/img/categories/outdoor.jpg"
       />
       <Schema 

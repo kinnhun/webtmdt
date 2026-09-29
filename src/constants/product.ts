@@ -11,11 +11,9 @@ export const emptyFilters: FilterState = {
 
 // ── Outdoor categories ──────────────────────────────────────────
 export const OUTDOOR_CATEGORIES = [
-  'Outdoor Sofas',
-  'Dining Sets',
   'Lounge & Daybeds',
+  'Dining Sets',
   'Tables',
-  'Chairs',
 ];
 
 // ── Indoor categories ───────────────────────────────────────────
@@ -26,7 +24,7 @@ export const INDOOR_CATEGORIES = [
 ];
 
 // ── Shared filters ──────────────────────────────────────────────
-export const MATERIALS = ['Teak', 'Acacia', 'Aluminium'];
+export const MATERIALS = ['Acacia', 'Aluminium', 'Teak'];
 
 export const MOQ_OPTIONS = ['Under 10', '10–50', '50–100', '100+'];
 

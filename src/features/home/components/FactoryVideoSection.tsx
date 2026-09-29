@@ -77,20 +77,22 @@ export default function FactoryVideoSection() {
               {content?.factoryVideoDescription?.[langKey] || t("home.video.description", "Mỗi sản phẩm nội thất DHT đều bắt nguồn từ đôi bàn tay khéo léo và quy trình sản xuất chuẩn mực. Xem video để bước vào không gian sáng tạo nơi vật liệu tự nhiên hòa quyện cùng thiết kế đương đại.")}
             </p>
             
-            <div className="mt-10 flex items-center gap-6">
-              <div className="flex -space-x-3">
-                <div className="w-12 h-12 rounded-full border-2 border-white bg-[#E2E8F0] overflow-hidden">
+            <div className="mt-8 p-4 sm:p-5 rounded-xl bg-white/80 border border-[#E2E8F0] shadow-sm flex items-start gap-4">
+              <div className="flex -space-x-2 flex-shrink-0 pt-0.5">
+                <div className="w-10 h-10 rounded-full border-2 border-white bg-[#E2E8F0] overflow-hidden shadow-xs">
                   <img src="/img/WhoWeAre1.png" alt="Crafting" className="w-full h-full object-cover" />
                 </div>
-                <div className="w-12 h-12 rounded-full border-2 border-white bg-[#CBD5E0] overflow-hidden">
-                   <img src="/img/WhoWeAre2.png" alt="Wood" className="w-full h-full object-cover" />
-                </div>
-                <div className="w-12 h-12 rounded-full border-2 border-white bg-[#EDF2F7] flex items-center justify-center text-xs font-bold text-[#B97846]">
-                  11
+                <div className="w-10 h-10 rounded-full border-2 border-white bg-[#CBD5E0] overflow-hidden shadow-xs">
+                  <img src="/img/WhoWeAre2.png" alt="Wood" className="w-full h-full object-cover" />
                 </div>
               </div>
-              <div className="font-body text-xs uppercase tracking-widest font-medium" style={{ color: "hsl(var(--muted-foreground))" }}>
-                {t("home.video.productionLabel", "11 Facilities • 543,380 m²")}
+              <div className="flex-1">
+                <div className="font-display font-semibold text-sm sm:text-base text-[#173C2C] leading-snug">
+                  {t("home.video.facilityHeading", "11 Production Facilities Across Our Family-Owned Group")}
+                </div>
+                <p className="font-body text-xs sm:text-sm text-[#4A5568] mt-1 leading-relaxed">
+                  {t("home.video.facilitySub", "10 furniture facilities + 1 engineered-wood panel and primary-processing facility.")}
+                </p>
               </div>
             </div>
           </motion.div>

@@ -107,7 +107,7 @@ export default function CompanyIntro() {
                 {
                   title: isVi ? "Chế Tác Gỗ Tự Nhiên" : "Wood Production",
                   detail: isVi ? "Tràm, Giá Tỵ, Bạch Đàn chuẩn FSC" : "Acacia, Teak & Eucalyptus (FSC)",
-                  badge: isVi ? "100% FSC" : "100% FSC",
+                  badge: isVi ? "Gỗ Chứng Nhận FSC" : "FSC-Certified Wood",
                   icon: TreePine,
                   filled: true,
                 },

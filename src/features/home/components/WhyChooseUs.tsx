@@ -48,10 +48,7 @@ export default function WhyChooseUs() {
             <Link href="/catalogue/outdoor" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90 uppercase shadow-md" style={{ backgroundColor: "#B97846" }}>
               {t("home.whyUs.btn1")} <ArrowRight size={15} />
             </Link>
-            <a href="/DHT_Company_Profile_2026.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white border border-white/30 hover:bg-white/10 transition-all backdrop-blur-sm">
-              {t("home.whyUs.viewCatalogue")}
-            </a>
-            <Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white/80 border border-white/20 hover:bg-white/10 transition-all">
+            <Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white border border-white/30 hover:bg-white/10 transition-all backdrop-blur-sm">
               {t("home.whyUs.btn2")}
             </Link>
           </motion.div>

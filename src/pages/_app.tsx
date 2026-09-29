@@ -47,28 +47,22 @@ function AppShell({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const isAdminRoute = router.pathname.startsWith('/admin');
 
-  // Synchronize react-i18next with Next.js i18n router
+  // On SSR only, synchronize i18n language before rendering HTML
+  if (typeof window === "undefined" && router.locale && i18n.language !== router.locale) {
+    void i18n.changeLanguage(router.locale);
+  }
+
+  // On client, synchronize i18n inside useEffect to prevent updating other components during render
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (!router.locale) return;
 
-    const savedLanguage = window.localStorage.getItem(STORAGE_KEY);
-    const normalizedSavedLanguage = SUPPORTED_LANGS.includes(savedLanguage as typeof SUPPORTED_LANGS[number])
-      ? savedLanguage
-      : null;
-    const targetLanguage = normalizedSavedLanguage ?? router.locale ?? i18n.language;
-
-    if (targetLanguage && i18n.language !== targetLanguage) {
-      void i18n.changeLanguage(targetLanguage);
+    if ((SUPPORTED_LANGS as readonly string[]).includes(router.locale)) {
+      window.localStorage.setItem(STORAGE_KEY, router.locale);
+      if (i18n.language !== router.locale) {
+        void i18n.changeLanguage(router.locale);
+      }
     }
-
-    if (targetLanguage && router.locale !== targetLanguage) {
-      void router.replace(
-        { pathname: router.pathname, query: router.query },
-        router.asPath,
-        { locale: targetLanguage, shallow: true }
-      );
-    }
-  }, [router, router.locale]);
+  }, [router.locale]);
 
   useRouteLoading();
 

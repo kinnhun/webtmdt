@@ -62,10 +62,20 @@ export default function ProductInquiryModal({ isOpen, onClose, product }: Props)
     setSending(true);
     setError(null);
     try {
+      const productUrl = typeof window !== "undefined" 
+        ? window.location.href 
+        : (product.slug ? `https://dhtcompany.com/catalogue/${product.slug}` : "");
+
       const payload = {
         ...form,
         subject: `Inquiry about ${pName} (${product.code})`,
-        interestedProduct: product.id,
+        interestedProduct: product.id || product.code,
+        collection: product.collection || "Outdoor",
+        productCode: product.code,
+        productName: pName,
+        productUrl,
+        sourceUrl: productUrl,
+        category: "product-inquiry",
       };
 
       const res = await fetch("/api/contact", { 

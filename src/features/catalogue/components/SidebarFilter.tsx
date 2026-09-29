@@ -15,7 +15,7 @@ export function SidebarFilter({ collection, handleCollectionChange, filters, tog
   filterGroups: { key: keyof FilterState; label: string; options: string[] }[];
 }) {
   const { t } = useTranslation();
-  const [expanded, setExpanded] = useState<Record<string, boolean>>({ category: true, material: true, moq: true, color: false, style: false });
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({ category: true, material: true, color: false, style: false });
 
   return (
     <aside className="w-full space-y-1">

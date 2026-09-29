@@ -36,7 +36,7 @@ export default function HomePage() {
           email: "sales@dhtcompany.com",
           address: {
             "@type": "PostalAddress",
-            streetAddress: "72 Le Thanh Ton, Ben Nghe Ward, District 1",
+            streetAddress: "72 Le Thanh Ton Street, Ben Nghe Ward, District 1",
             addressLocality: "Ho Chi Minh City",
             addressRegion: "Ho Chi Minh City",
             addressCountry: "VN",

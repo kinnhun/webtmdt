@@ -66,20 +66,22 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
                     <p className="font-body text-xs text-muted-foreground mb-1 tracking-wider uppercase">{product.code}</p>
                     <h2 className="font-display text-2xl text-foreground font-semibold">{pName}</h2>
                   </div>
-                  <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-                    {[
-                      { label: t("product.category"), value: pCat },
-                      { label: t("product.material"), value: pMat },
-                      { label: t("product.color"), value: pColor },
-                      { label: t("product.size"), value: pSize },
-                      { label: t("product.style"), value: pStyle },
-                    ].map(({ label, value }) => (
-                      <div key={label} className="text-sm">
-                        <span className="font-body text-muted-foreground">{label}: </span>
-                        <span className="font-body font-medium text-foreground">{value}</span>
-                      </div>
-                    ))}
-                  </div>
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+                      {[
+                        { label: t("product.category"), value: pCat },
+                        { label: t("product.material"), value: pMat },
+                        { label: t("product.color"), value: pColor },
+                        { label: t("product.size"), value: pSize },
+                        { label: t("product.style"), value: pStyle },
+                      ]
+                        .filter(({ value }) => Boolean(value && String(value).trim() !== "" && String(value) !== "~"))
+                        .map(({ label, value }) => (
+                          <div key={label} className="text-sm">
+                            <span className="font-body text-muted-foreground">{label}: </span>
+                            <span className="font-body font-medium text-foreground">{value}</span>
+                          </div>
+                        ))}
+                    </div>
                   <p className="font-body text-sm text-muted-foreground leading-relaxed">{pDesc}</p>
                   <ul className="space-y-1.5">
                     {pFeatures.map((f, i) => (

@@ -9,17 +9,17 @@ interface MarqueeStripProps {
 }
 
 const DEFAULT_MARQUEE_EN = [
-  "OEM Development",
-  "Wood & Mixed Materials",
-  "Quality Control",
-  "Export Coordination",
+  "11 Production Facilities",
+  "543,380 m² Combined Manufacturing Footprint",
+  "Approximately 2,400 Group Personnel",
+  "4 Manufacturing Clusters",
 ];
 
 const DEFAULT_MARQUEE_VI = [
-  "Phát Triển OEM",
-  "Gỗ & Vật Liệu Phối Hợp",
-  "Kiểm Soát Chất Lượng",
-  "Điều Phối Xuất Khẩu",
+  "11 Cơ sở Sản xuất",
+  "543.380 m² Tổng diện tích mặt bằng sản xuất",
+  "Khoảng 2.400 Nhân sự tập đoàn",
+  "4 Cụm sản xuất trọng điểm",
 ];
 
 export default function MarqueeStrip({ items: customItems }: MarqueeStripProps) {
@@ -48,17 +48,27 @@ export default function MarqueeStrip({ items: customItems }: MarqueeStripProps) 
   ));
 
   return (
-    <div
+    <section
+      aria-label={i18n.language?.startsWith("vi") ? "Điểm nổi bật về quy mô và năng lực sản xuất" : "Key Manufacturing Highlights"}
       className="relative overflow-hidden py-4 border-y"
       style={{
         backgroundColor: "#0E241B",
         borderColor: "rgba(185, 120, 70, 0.25)",
       }}
     >
-      <div className="flex w-max animate-marquee hover:[animation-play-state:paused]">
+      {/* Screen reader only announcement: read once clearly to avoid 8x repetition */}
+      <p className="sr-only">
+        {items.join(" • ")}
+      </p>
+
+      {/* Visual marquee: hidden from screen readers */}
+      <div
+        className="flex w-max animate-marquee hover:[animation-play-state:paused]"
+        aria-hidden="true"
+      >
         <span className="flex items-center shrink-0" style={{ color: "rgba(247, 245, 240, 0.88)" }}>{repeatedContent}</span>
-        <span className="flex items-center shrink-0" style={{ color: "rgba(247, 245, 240, 0.88)" }} aria-hidden="true">{repeatedContent}</span>
+        <span className="flex items-center shrink-0" style={{ color: "rgba(247, 245, 240, 0.88)" }}>{repeatedContent}</span>
       </div>
-    </div>
+    </section>
   );
 }

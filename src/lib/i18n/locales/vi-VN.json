@@ -46,13 +46,13 @@
       "description": "DHT Furniture Vietnam trực thuộc tập đoàn gia đình với 11 cơ sở sản xuất và tổng diện tích 543.380 m² trên toàn quốc. Cung ứng nội thất ngoài trời, trong nhà và dự án cho đối tác quốc tế."
     },
     "hero": {
-      "badge": "Tràm • Bạch Đàn • Teak • Nhôm | Gỗ Chứng Nhận FSC | Quy Mô Xuất Khẩu",
+      "badge": "Gỗ Keo • Bạch Đàn • Gỗ Tếch • Nhôm | Gỗ Chứng Nhận FSC | Quy Mô Xuất Khẩu",
       "title1": "Nhà Sản Xuất & Xuất Khẩu Nội Thất Việt Nam",
       "title2": "Ngoại Thất • Nội Thất • Dự Án",
       "description": "DHT là nhà sản xuất và xuất khẩu nội thất Việt Nam, hoạt động trong mạng lưới tập đoàn gia đình gồm 11 cơ sở sản xuất trên toàn quốc. Từ phát triển sản phẩm, làm mẫu đến kiểm soát chất lượng và điều phối xuất khẩu, đội ngũ của chúng tôi luôn đồng hành cùng các chương trình nội thất phù hợp với thị trường của bạn.",
-      "exploreProducts": "Khám Phá BST Ngoại Thất",
+      "exploreProducts": "Khám phá Sản phẩm",
       "viewProfile": "Xem Hồ Sơ Năng Lực (PDF)",
-      "discussOem": "Trao Đổi Dự Án OEM",
+      "discussOem": "Trao đổi Dự án OEM",
       "getQuote": "Yêu Cầu Báo Giá",
       "stats": {
         "facilities": "Cơ Sở Sản Xuất",
@@ -75,7 +75,7 @@
       "statsUnits": "543.380 m² Tổng mặt bằng",
       "statsCraftspeople": "~2.400 Nhân sự tập đoàn",
       "statsExport": "Điều phối trung tâm trực tiếp",
-      "subline": "Tràm • Bạch đàn • Teak • Nhôm | Gỗ Chứng Nhận FSC | Đóng Container Ghép Linh Hoạt",
+      "subline": "Gỗ Keo • Bạch Đàn • Gỗ Tếch • Nhôm | Gỗ Chứng Nhận FSC | Đóng Container Ghép Linh Hoạt",
       "buttons": {
         "catalog": "XEM BỘ SƯU TẬP",
         "quote": "YÊU CẦU BÁO GIÁ",
@@ -121,7 +121,7 @@
           "bathroom": "Dự án Khách sạn"
         }
       },
-      "subline": "Gỗ Tràm FSC • Gỗ Bạch đàn FSC • Gỗ Teak FSC • Nhôm Sơn Tĩnh Điện | Tối Ưu Cho Đơn Hàng Lớn",
+      "subline": "Gỗ Keo FSC • Gỗ Bạch Đàn FSC • Gỗ Tếch FSC • Nhôm Sơn Tĩnh Điện | Tối Ưu Cho Đơn Hàng Lớn",
       "sunlounger": {
         "name": "Ghế Tắm Nắng & Daybed",
         "tagline": "Thư giãn cạnh hồ bơi & ban công nghỉ dưỡng",
@@ -170,7 +170,7 @@
       "heading2": "Ngoại Thất, Nội Thất & Dự Án",
       "description": "Các kết hợp vật liệu được phát triển dựa trên thiết kế, công năng và thị trường mục tiêu. Tiêu chuẩn kỹ thuật, hoàn thiện bề mặt và kiểm nghiệm được thống nhất cho từng chương trình.",
       "solidOak": {
-        "name": "Gỗ Tràm (Acacia)",
+        "name": "Gỗ Keo (Acacia)",
         "desc": "Gỗ keo lai FSC trồng tại Việt Nam, hiệu quả chi phí cho đơn hàng lớn"
       },
       "walnutWood": {
@@ -178,7 +178,7 @@
         "desc": "Sắc nâu sô-cô-la, vân mịn, phong cách giữa thế kỷ"
       },
       "premiumTeak": {
-        "name": "Gỗ Teak",
+        "name": "Gỗ Tếch (Teak)",
         "desc": "Tectona grandis từ Brazil, độ bền tự nhiên cao cho ngoại thất"
       },
       "linenVelvet": {
@@ -341,6 +341,70 @@
         "role": "Tài Chính & Điều Phối Thương Mại",
         "quote": "Tài chính vững mạnh nuôi dưỡng quan hệ đối tác bền vững. Tại DHT, chúng tôi đảm bảo mọi đơn hàng đều được hậu thuẫn bởi sự tin tưởng, minh bạch và tăng trưởng bền vững."
       }
+    },
+    "operatingModel": {
+      "badge": "Mô Hình Vận Hành B2B",
+      "heading": "Quy Trình Phối Hợp 6 Bước",
+      "subtitle": "Cách đội ngũ điều phối trung tâm DHT quản trị đơn hàng từ yêu cầu người mua đến vận chuyển quốc tế qua 11 cơ sở sản xuất.",
+      "steps": [
+        {
+          "step": "01",
+          "title": "Tiếp Nhận Yêu Cầu (Buyer Brief)",
+          "desc": "Rà soát chi tiết yêu cầu kỹ thuật, bản vẽ sơ bộ, tiêu chuẩn thị trường mục tiêu, khối lượng đơn hàng và vật liệu mong muốn (gỗ chứng nhận FSC, nhôm định hình)."
+        },
+        {
+          "step": "02",
+          "title": "Phát Triển Kỹ Thuật (Technical Dev)",
+          "desc": "Triển khai bản vẽ CAD sản xuất, kết cấu mộng ngàm knock-down, tối ưu hóa vật tư và lập bảng định mức nguyên vật liệu (BOM) chi tiết."
+        },
+        {
+          "step": "03",
+          "title": "Phê Duyệt Mẫu (Sample Approval)",
+          "desc": "Gia công mẫu thử nghiệm thực tế tại xưởng mẫu chuyên biệt (thời gian làm mẫu thông thường 7–14 ngày sau khi duyệt bản vẽ và mẫu vật liệu). Đánh giá công năng, độ ổn định kết cấu, đối chiếu màu sơn và thử nghiệm đóng gói trước khi chốt sản xuất."
+        },
+        {
+          "step": "04",
+          "title": "Lập Kế Hoạch Sản Xuất (Production Planning)",
+          "desc": "Phân bổ đơn hàng tới nhà máy phù hợp nhất trong 10 xưởng thành phẩm theo thế mạnh vật liệu. Tiến độ sản xuất bắt đầu tính từ khi nhận đặt cọc thương mại và duyệt bản vẽ kỹ thuật (thông thường 60–90 ngày cho đơn hàng mới, 45–60 ngày cho đơn hàng lặp lại). Sấy gỗ đạt độ ẩm chuẩn 8–12% và gia công chi tiết đồng bộ."
+        },
+        {
+          "step": "05",
+          "title": "Kiểm Soát Chất Lượng (Quality Verification)",
+          "desc": "Quy trình kiểm soát chất lượng 6 cửa xuyên suốt từ độ ẩm phôi gỗ đầu vào, dung sai gia công chi tiết, ráp thử khung mộng, độ bám dính bề mặt đến nghiệm thu thành phẩm."
+        },
+        {
+          "step": "06",
+          "title": "Đóng Gói & Xuất Hàng (Packing & Shipment)",
+          "desc": "Đóng gói tiêu chuẩn xuất khẩu chịu va đập, giám sát đóng container tại xưởng và hoàn tất thủ tục xuất khẩu qua các cảng Quy Nhơn, Cát Lái, Cái Mép hoặc Hải Phòng."
+        }
+      ]
+    },
+    "departments": {
+      "badge": "Điều Phối Trung Tâm",
+      "heading": "5 Phòng Ban Phối Hợp Chuyên Môn",
+      "subtitle": "Đội ngũ trung tâm khoảng 20 nhân sự trực tiếp làm việc với khách hàng quốc tế để điều phối kỹ thuật, vận hành và quản lý chất lượng xuyên suốt mạng lưới 11 cơ sở.",
+      "items": [
+        {
+          "title": "Phát triển Kinh doanh & Khách hàng",
+          "desc": "Quản trị quan hệ đối tác, báo giá kỹ thuật, ký kết thương mại và lập kế hoạch chương trình cung ứng."
+        },
+        {
+          "title": "Phát triển Sản phẩm & Kỹ thuật",
+          "desc": "Bản vẽ kỹ thuật CAD, cải tiến giá trị (value engineering), thử nghiệm kết cấu, tiêu chuẩn hóa vật tư và kiểm định mẫu."
+        },
+        {
+          "title": "Điều phối Sản xuất",
+          "desc": "Phân bổ đơn hàng vào 10 nhà máy chuyên môn hóa, theo dõi tiến độ sấy gỗ, cân bằng công suất và kiểm soát tiến độ giao hàng."
+        },
+        {
+          "title": "Quản lý Chất lượng & Tuân thủ (6-Gate QC)",
+          "desc": "Kiểm tra chất lượng đa tầng in-line, đo độ ẩm gỗ (8–12% MC), giám sát tuân thủ tiêu chuẩn và thử nghiệm thả rơi bao bì carton."
+        },
+        {
+          "title": "Xuất khẩu & Logistics",
+          "desc": "Giám sát đóng container, điều phối luồng hàng qua 4 cụm cảng (Quy Nhơn, Cát Lái, Cái Mép, Hải Phòng), thủ tục hải quan và chứng từ vận tải quốc tế."
+        }
+      ]
     },
     "cta": {
       "heading": "Sẵn sàng hợp tác cùng nhau?",
@@ -576,8 +640,8 @@
       "description": "Liên hệ để nhận báo giá, đặt hàng tùy chỉnh và yêu cầu cho dự án."
     },
     "hero": {
-      "title": "Liên hệ với chúng tôi",
-      "subtitle": "Liên hệ đội ngũ của chúng tôi để nhận báo giá, đặt hàng và tư vấn"
+      "title": "Liên hệ DHT Furniture Vietnam",
+      "subtitle": "Chia sẻ với chúng tôi về yêu cầu sản phẩm, thị trường mục tiêu và số lượng đơn hàng dự kiến. Đội ngũ DHT sẽ hỗ trợ các bước tiếp theo về lựa chọn mẫu, phát triển sản phẩm mẫu hoặc chương trình sản xuất OEM."
     },
     "info": {
       "phone": "Điện thoại",
@@ -624,7 +688,7 @@
     },
     "formSection": {
       "title": "Gửi Yêu Cầu Dự Án",
-      "subtitle": "Chia sẻ yêu cầu và thông số sản phẩm, đội ngũ chuyên môn DHT sẽ phản hồi trong vòng 1 ngày làm việc."
+      "subtitle": "Chia sẻ yêu cầu kỹ thuật, thị trường mục tiêu và sản lượng ước tính. Đội ngũ DHT phản hồi trong vòng 1 ngày làm việc."
     }
   },
   "manufacturing": {

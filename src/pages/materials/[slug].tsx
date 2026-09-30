@@ -148,7 +148,7 @@ function MaterialPage({ article }: { article: MaterialArticle }) {
               "@type": "ListItem",
               position: 2,
               name: isVi ? "Vật liệu" : "Materials",
-              item: "https://dhtcompany.com/#materials"
+              item: "https://dhtcompany.com/materials"
             },
             {
               "@type": "ListItem",
@@ -167,7 +167,7 @@ function MaterialPage({ article }: { article: MaterialArticle }) {
           </div>
           <div className="absolute inset-0 bg-gradient-to-r from-black/72 via-black/36 to-black/5" />
           <div className="container relative mx-auto px-4 py-10 sm:px-6 sm:py-16 lg:py-24">
-            <Link href="/#materials" className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white/80 backdrop-blur transition-colors hover:bg-white/20 hover:text-white">
+            <Link href="/materials" className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-semibold text-white/80 backdrop-blur transition-colors hover:bg-white/20 hover:text-white">
               <ArrowLeft size={16} /> {isVi ? "Quay lại danh mục vật liệu" : "Back to Materials"}
             </Link>
             <div className="grid items-end gap-10 lg:grid-cols-[1.05fr_0.95fr]">

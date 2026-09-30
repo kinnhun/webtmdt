@@ -116,6 +116,66 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: "/catalogue/seina",
+        destination: "/catalogue/seina-table",
+        permanent: true,
+      },
+      {
+        source: "/catalogue/haymont-dining-collection",
+        destination: "/catalogue/haymont-table",
+        permanent: true,
+      },
+      {
+        source: "/catalogue/haymont-dining",
+        destination: "/catalogue/haymont-table",
+        permanent: true,
+      },
+      {
+        source: "/catalogue/stark-dining-collection",
+        destination: "/catalogue/stark-lounge-collection",
+        permanent: true,
+      },
+      {
+        source: "/catalogue/stark-dining",
+        destination: "/catalogue/stark-lounge-collection",
+        permanent: true,
+      },
+      {
+        source: "/catalogue/santos-dining-collection",
+        destination: "/catalogue/santos-lounge-collection",
+        permanent: true,
+      },
+      {
+        source: "/catalogue/santos-dht17-141",
+        destination: "/catalogue/santos-lounge-collection-dht17-141",
+        permanent: true,
+      },
+      {
+        source: "/catalogue/santos-dht17-f096",
+        destination: "/catalogue/santos-lounge-collection-dht17-f096",
+        permanent: true,
+      },
+      {
+        source: "/catalogue/wesley-lounge-collection",
+        destination: "/catalogue/westley-lounge-collection",
+        permanent: true,
+      },
+      {
+        source: "/catalogue/wesley-lounge",
+        destination: "/catalogue/westley-lounge-collection",
+        permanent: true,
+      },
+      {
+        source: "/catalogue/sun-round",
+        destination: "/catalogue/sun-round-table",
+        permanent: true,
+      },
+      {
+        source: "/catalogue/retangle",
+        destination: "/catalogue/rectangular-table",
+        permanent: true,
+      },
+      {
         source: "/profile",
         destination: "/DHT_Company_Profile_2026.pdf",
         permanent: false,

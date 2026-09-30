@@ -342,6 +342,70 @@
         "quote": "Strong finances fuel strong partnerships. At DHT, we ensure every order is backed by trust, transparency, and sustainable growth."
       }
     },
+    "operatingModel": {
+      "badge": "B2B Operating Model",
+      "heading": "6-Stage Programme Execution",
+      "subtitle": "How our centralised DHT commercial team coordinates buyer requirements across 11 specialised manufacturing facilities in Vietnam.",
+      "steps": [
+        {
+          "step": "01",
+          "title": "Buyer Brief & Specification",
+          "desc": "Detailed review of buyer requirements, product specifications, target markets, order volumes, and material preferences (FSC-certified timber, architectural aluminium)."
+        },
+        {
+          "step": "02",
+          "title": "Technical Development",
+          "desc": "CAD shop drawings, structural joint engineering, value engineering, and detailed Bill of Materials (BOM) prepared by DHT technical engineers."
+        },
+        {
+          "step": "03",
+          "title": "Sample Approval",
+          "desc": "Physical prototype crafting at our dedicated sampling facility. Typical sample lead time is 7–14 days post-drawing and material approval. Functional testing, stability assessment, finish matching, and carton drop-test verification."
+        },
+        {
+          "step": "04",
+          "title": "Production Planning",
+          "desc": "Facility allocation across our 10 furniture plants based on material specialization. Production lead times commence upon receipt of confirmed commercial deposit and approved shop drawings (typical 60–90 days for new production runs, 45–60 days for repeat orders). Timber kiln drying to 8–12% MC and synchronized component batching."
+        },
+        {
+          "step": "05",
+          "title": "Quality Verification",
+          "desc": "Standardised 6-gate in-line QC covering timber moisture, machining tolerances, dry-fitting assembly, finish coating adhesion, and pre-pack audit."
+        },
+        {
+          "step": "06",
+          "title": "Packing & Shipment",
+          "desc": "Export drop-test verified packaging, coordinated container stuffing, and maritime dispatch via Quy Nhon, Cat Lai, Cai Mep, or Hai Phong ports."
+        }
+      ]
+    },
+    "departments": {
+      "badge": "Central Coordination",
+      "heading": "5 Functional Coordination Departments",
+      "subtitle": "The centralised DHT team of approximately 20 professionals directly interfaces with international buyers to coordinate technical, operational, and commercial execution across all group facilities.",
+      "items": [
+        {
+          "title": "Sales & Commercial Development",
+          "desc": "Direct buyer account management, quotation dossiers, commercial agreements, and programme scheduling."
+        },
+        {
+          "title": "Product Development & Engineering",
+          "desc": "CAD technical drawings, value engineering, joinery optimization, material qualification, and prototype verification."
+        },
+        {
+          "title": "Production Coordination",
+          "desc": "Strategic factory allocation among 10 furniture plants, timber kiln scheduling, capacity balancing, and lead time tracking."
+        },
+        {
+          "title": "Quality & Compliance (6-Gate QC)",
+          "desc": "In-line multi-gate quality inspections, timber moisture auditing (8–12% MC), factory compliance, and carton drop testing."
+        },
+        {
+          "title": "Export & Logistics",
+          "desc": "Container stuffing supervision, multi-port routing (Quy Nhon, Cat Lai, Cai Mep, Hai Phong), customs clearance, and export documentation."
+        }
+      ]
+    },
     "cta": {
       "heading": "Ready to Work Together?",
       "button": "Contact Us"
@@ -624,7 +688,7 @@
     },
     "formSection": {
       "title": "Send an Inquiry",
-      "subtitle": "Tell us about your product requirements and our team will review your enquiry within one business day."
+      "subtitle": "Tell us about your product requirements, target market and estimated order volume. Our team aims to respond within one business day."
     }
   },
   "manufacturing": {

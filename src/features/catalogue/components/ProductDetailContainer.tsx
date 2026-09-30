@@ -180,9 +180,11 @@ function DetailTabs({ product }: { product: Product }) {
   const specifications = Array.isArray(product.specifications)
     ? product.specifications.filter((spec) => {
         const localizedSpec = spec as ProductSpecification & { [key: string]: string | undefined };
-        const key = localizedSpec[`name${langId.toUpperCase()}`] || localizedSpec.nameUS;
-        const val = localizedSpec[`value${langId.toUpperCase()}`] || localizedSpec.valueUS;
-        return Boolean(key?.trim() || val?.trim());
+        const key = localizedSpec[`name${langId.toUpperCase()}`] || localizedSpec.nameUS || "";
+        const val = localizedSpec[`value${langId.toUpperCase()}`] || localizedSpec.valueUS || "";
+        if (/testing/i.test(key) || /testing/i.test(val)) return false;
+        if (/fsc/i.test(key) && (/100%/i.test(val) || val === "100" || !val.trim())) return false;
+        return Boolean(key.trim() || val.trim());
       })
     : [];
 
@@ -324,6 +326,8 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
   const isAmalfi = (product.slug || "").toLowerCase().includes("amalfi") || (product.name?.us || "").toLowerCase().includes("amalfi");
   const isBenson = (product.slug || "").toLowerCase().includes("benson") || (product.name?.us || "").toLowerCase().includes("benson");
   const isBalemora = (product.slug || "").toLowerCase().includes("balemora") || (product.name?.us || "").toLowerCase().includes("balemora") || (product.slug || "").toLowerCase().includes("balmora");
+  const isTimor = (product.slug || "").toLowerCase().includes("timor") || (product.name?.us || "").toLowerCase().includes("timor");
+  const isWestley = (product.slug || "").toLowerCase().includes("westley") || (product.name?.us || "").toLowerCase().includes("westley");
   const cleanDimensions = (product.dimensions || "").replace(/^[~\s]+/, "").trim();
 
   // Helper to parse dimension string into cm and in
@@ -370,11 +374,12 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
 
   const getItemNameVi = (nameUs: string): string => {
     const s = nameUs || "";
-    if (/Amalfi.*?Swirl.*?Chair/i.test(s) || /Swirl Chair/i.test(s)) return 'Ghế Swirl Lounge ngoài trời kèm đệm';
+    if (/Amalfi.*?(?:Swirl|Swivel).*?Chair/i.test(s) || /(?:Swirl|Swivel) Chair/i.test(s)) return 'Ghế xoay ngoài trời kèm đệm';
     if (/Amalfi.*?Side Table/i.test(s)) return 'Bàn góc phụ ngoài trời Amalfi';
     if (/Balemora.*?Triple/i.test(s)) return 'Sofa 3 chỗ Balemora ngoài trời có đệm';
     if (/Balemora.*?Single/i.test(s)) return 'Ghế đơn lounge Balemora có đệm';
     if (/Balemora.*?Coffee Table/i.test(s)) return 'Bàn trà Balemora ngoài trời';
+    if (/Timor.*?Daybed/i.test(s) || /Daybed/i.test(s)) return 'Giường nằm ngoài trời Timor Losil có đệm';
     if (/Single Lounge/i.test(s) || /Single Seat/i.test(s)) return 'Ghế đơn lounge có đệm';
     if (/Double Lounge/i.test(s) || /Double Seat/i.test(s) || /2-Seater/i.test(s)) return 'Sofa đôi ngoài trời có đệm';
     if (/Triple Lounge/i.test(s) || /Triple Seat/i.test(s) || /3-Seater/i.test(s)) return 'Sofa 3 chỗ ngoài trời có đệm';
@@ -539,7 +544,7 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
             </div>
 
             {/* Collection Items & Dimensions Table */}
-            {collectionItems.length > 0 && (
+            {collectionItems.length > 0 ? (
               <div className="mb-6 p-4 rounded-lg border border-gray-200 bg-gray-50/70 shadow-xs">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
@@ -655,6 +660,116 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
                     </p>
                   </div>
                 )}
+
+                {/* Timor Specific Quotation Policy per Guide P02, D11 / Mã 25 */}
+                {isTimor && (
+                  <div className="mt-3 p-3 rounded-md bg-[#173C2C]/5 border border-[#173C2C]/15 text-xs">
+                    <p className="font-semibold text-[#173C2C] mb-1">
+                      {isVi ? "Bộ sưu tập Timor Losil" : "Timor Losil Collection"}
+                    </p>
+                    <p className="text-[#173C2C]/85 leading-relaxed">
+                      {isVi
+                        ? "Tùy chọn loài gỗ (Gỗ Keo FSC hoặc Gỗ Tếch FSC), hoàn thiện bề mặt, thông số vải đệm và cấu hình thành phần được xác nhận cụ thể theo từng báo giá. Toàn bộ gỗ sử dụng trong sản phẩm DHT đều có chứng chỉ FSC."
+                        : "Wood species options (FSC Acacia or FSC Teak), surface finishes, fabric specifications and set composition are confirmed for each quotation. All wood used in DHT furniture is FSC-certified."}
+                    </p>
+                  </div>
+                )}
+
+                {/* Westley Specific Quotation Policy per Guide P02 / Mã 19, 21 */}
+                {isWestley && (
+                  <div className="mt-3 p-3 rounded-md bg-[#173C2C]/5 border border-[#173C2C]/15 text-xs">
+                    <p className="font-semibold text-[#173C2C] mb-1">
+                      {isVi ? "Bộ sưu tập Westley Lounge" : "Westley Lounge Collection"}
+                    </p>
+                    <p className="text-[#173C2C]/85 leading-relaxed">
+                      {isVi
+                        ? "Cấu hình thành phần bộ, tùy chọn loài gỗ (Keo FSC), hoàn thiện bề mặt và thông số đệm Olefin được xác nhận cụ thể theo từng báo giá. Toàn bộ gỗ sử dụng trong sản phẩm DHT đều có chứng chỉ FSC."
+                        : "Set composition, timber options (FSC Acacia), surface finishes and Olefin cushion specifications are confirmed for each quotation. All wood used in DHT furniture is FSC-certified."}
+                    </p>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="mb-6 p-4 rounded-lg border border-gray-200 bg-gray-50/70 shadow-xs">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <Ruler size={16} className="text-[#B97846]" />
+                    <h3 className="font-display font-bold text-sm text-[#173C2C]">
+                      {isVi ? "Thông số & Kích thước sản phẩm" : "Item Specifications & Dimensions"}
+                    </h3>
+                  </div>
+                  {parsedSingleDim && (
+                    <div className="flex items-center gap-1 bg-white border border-gray-200 rounded-md p-0.5 text-xs">
+                      <button
+                        type="button"
+                        onClick={() => setDimUnit('cm')}
+                        className={`px-2.5 py-0.5 rounded font-medium transition-all ${
+                          dimUnit === 'cm'
+                            ? 'bg-[#173C2C] text-white shadow-xs'
+                            : 'text-gray-600 hover:text-black'
+                        }`}
+                      >
+                        cm
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setDimUnit('in')}
+                        className={`px-2.5 py-0.5 rounded font-medium transition-all ${
+                          dimUnit === 'in'
+                            ? 'bg-[#173C2C] text-white shadow-xs'
+                            : 'text-gray-600 hover:text-black'
+                        }`}
+                      >
+                        inches
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                {parsedSingleDim ? (
+                  <div className="overflow-x-auto mb-3">
+                    <table className="w-full text-xs font-body border-collapse">
+                      <thead>
+                        <tr className="border-b border-gray-200 text-gray-500 uppercase tracking-wider text-[11px]">
+                          <th className="py-2 text-left font-semibold">{isVi ? "Sản phẩm" : "Item"}</th>
+                          <th className="py-2 text-left font-semibold px-2">{isVi ? "Mã sản phẩm" : "Item code"}</th>
+                          <th className="py-2 text-right font-semibold">
+                            {isVi 
+                              ? `Kích thước (${dimUnit === 'cm' ? 'D × R × C, cm' : 'D × R × C, in'})` 
+                              : `Dimensions (W × D × H, ${dimUnit === 'cm' ? 'cm' : 'in'})`}
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className="hover:bg-white/60 transition-colors">
+                          <td className="py-2.5 pr-2 font-medium text-gray-900 leading-snug">{pName}</td>
+                          <td className="py-2.5 px-2 font-mono text-[11px] text-gray-500 whitespace-nowrap">{product.code || "—"}</td>
+                          <td className="py-2.5 pl-2 text-right font-mono font-semibold text-[#173C2C] whitespace-nowrap">
+                            {dimUnit === 'cm' ? parsedSingleDim.cm : parsedSingleDim.inch}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <div className="p-3 bg-white rounded border border-gray-200/80 mb-3 text-xs leading-relaxed text-gray-700">
+                    <p className="font-semibold text-gray-900 mb-1">{pName} {product.code ? `(${product.code})` : ""}</p>
+                    <p className="text-gray-600">
+                      {isVi
+                        ? "Thông số kích thước chi tiết, bản vẽ kỹ thuật và quy cách đóng gói được xác nhận theo cấu hình báo giá và yêu cầu chương trình đặt hàng."
+                        : "Detailed item dimensions, technical drawings, and packing/loading specifications are confirmed for the quoted configuration upon buyer programme requirements."}
+                    </p>
+                  </div>
+                )}
+
+                {/* Confirmed packing & loading note per Guide P02-P03 */}
+                <div className="pt-2 border-t border-gray-200/80 text-[11px] text-gray-600">
+                  <p className="italic text-gray-500 leading-relaxed">
+                    {isVi
+                      ? "Thông tin đóng gói và tải container được xác nhận theo cấu hình báo giá."
+                      : "Packing & loading information confirmed for the quoted configuration."}
+                  </p>
+                </div>
               </div>
             )}
 

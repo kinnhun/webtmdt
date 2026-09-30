@@ -7,7 +7,8 @@ import { useTranslation } from "react-i18next";
 
 export default function HeroSection() {
   const ref = useRef<HTMLElement>(null);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isVi = i18n.language?.startsWith("vi");
 
   return (
     <section ref={ref} className="relative w-full overflow-hidden flex flex-col justify-between" style={{ minHeight: "100svh", backgroundColor: "#0E241B" }}>
@@ -80,13 +81,11 @@ export default function HeroSection() {
             {t("home.hero.exploreProducts")} <ArrowRight size={16} />
           </Link>
 
-
-
           <Link
             href="/contact?inquiryType=OEM+Development"
             className="inline-flex items-center gap-2 px-6 py-3.5 rounded font-body font-semibold text-sm text-white/80 hover:text-white hover:underline transition-all duration-300"
           >
-            {t("home.hero.discussOem", "Discuss Your OEM Project")}
+            {t("home.hero.discussOem", isVi ? "Trao đổi Dự án OEM" : "Discuss Your OEM Project")}
           </Link>
         </motion.div>
       </div>
@@ -102,10 +101,10 @@ export default function HeroSection() {
         <div className="container mx-auto px-4 sm:px-6 py-4">
           <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10">
             {[
-              { n: "11", label: t("home.hero.stats.facilities"), sub: "10 Furniture + 1 Panel" },
-              { n: "543,380 m²", label: t("home.hero.stats.footprint"), sub: "283,380 m² Finished" },
-              { n: "~2,400", label: t("home.hero.stats.personnel"), sub: "Group Manufacturing" },
-              { n: "4", label: t("home.hero.stats.clusters"), sub: "Key Hubs in Vietnam" },
+              { n: "11", label: t("home.hero.stats.facilities"), sub: isVi ? "10 Xưởng thành phẩm + 1 Xưởng ván" : "10 Furniture + 1 Panel" },
+              { n: "543,380 m²", label: t("home.hero.stats.footprint"), sub: isVi ? "283.380 m² Xưởng thành phẩm" : "283,380 m² Finished" },
+              { n: "~2,400", label: t("home.hero.stats.personnel"), sub: isVi ? "Quy mô sản xuất tập đoàn" : "Group Manufacturing" },
+              { n: "4", label: t("home.hero.stats.clusters"), sub: isVi ? "Cụm trọng điểm tại Việt Nam" : "Key Hubs in Vietnam" },
             ].map(({ n, label, sub }) => (
               <div key={label} className="px-3 sm:px-6 py-2 sm:py-3 text-center">
                 <p className="font-display lining-nums tabular-nums font-bold text-white text-xl sm:text-2xl leading-none mb-1">
@@ -122,7 +121,9 @@ export default function HeroSection() {
           </div>
           <div className="text-center mt-2 pt-2 border-t border-white/5">
             <p className="font-body text-[10px] text-white/40 tracking-wider">
-              * 543,380 m² combined footprint includes 283,380 m² dedicated finished furniture facilities and 260,000 m² panel/primary processing facility.
+              {isVi
+                ? "* Tổng diện tích 543.380 m² bao gồm 283.380 m² cơ sở sản xuất đồ gỗ thành phẩm và 260.000 m² cơ sở sơ chế/ván nhân tạo trực thuộc tập đoàn."
+                : "* 543,380 m² combined footprint includes 283,380 m² dedicated finished furniture facilities and 260,000 m² panel/primary processing facility."}
             </p>
           </div>
         </div>

@@ -13,7 +13,8 @@ import {
   Gem, Key, Map as MapIcon, Layers, LayoutGrid, LayoutTemplate, PenTool,
   Camera, Video, Monitor, Smartphone, Tablet, Watch, Speaker, Headphones, Mic,
   Wifi, Bluetooth, Share, Download, Cloud, Server, Database, Save, Edit,
-  Trash, Settings, Wrench, Menu, Home, User, Smile, Eye, Music, Play
+  Trash, Settings, Wrench, Menu, Home, User, Smile, Eye, Music, Play,
+  Ship, FileText, CheckSquare, ShieldCheck, ArrowRight
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import MarqueeStrip from "@/components/MarqueeStrip";
@@ -340,6 +341,110 @@ export default function AboutPage() {
       hotline: loc.hotline || loc.phone || '',
     };
   });
+
+  /* ── 6-Stage Operating Model (Item 05) ── */
+  const rawOperatingSteps = (t("about.operatingModel.steps", { returnObjects: true }) as any[]) || [];
+  const defaultSteps = [
+    {
+      step: "01",
+      title: langKey === 'vi' ? "Tiếp Nhận Yêu Cầu (Buyer Brief)" : "Buyer Brief & Specification",
+      desc: langKey === 'vi' 
+        ? "Rà soát chi tiết yêu cầu kỹ thuật, bản vẽ sơ bộ, tiêu chuẩn thị trường mục tiêu, khối lượng đơn hàng và vật liệu mong muốn (gỗ chứng nhận FSC, nhôm định hình)." 
+        : "Detailed review of buyer requirements, product specifications, target markets, order volumes, and material preferences (FSC-certified timber, architectural aluminium).",
+      icon: <FileText size={20} />,
+    },
+    {
+      step: "02",
+      title: langKey === 'vi' ? "Phát Triển Kỹ Thuật (Technical Dev)" : "Technical Development",
+      desc: langKey === 'vi' 
+        ? "Triển khai bản vẽ CAD sản xuất, kết cấu mộng ngàm knock-down, tối ưu hóa vật tư và lập bảng định mức nguyên vật liệu (BOM) chi tiết." 
+        : "CAD shop drawings, structural joint engineering, value engineering, and detailed Bill of Materials (BOM) prepared by DHT technical engineers.",
+      icon: <Compass size={20} />,
+    },
+    {
+      step: "03",
+      title: langKey === 'vi' ? "Phê Duyệt Mẫu (Sample Approval)" : "Sample Approval",
+      desc: langKey === 'vi' 
+        ? "Gia công mẫu thử nghiệm thực tế tại xưởng mẫu chuyên biệt (thời gian làm mẫu thông thường 7–14 ngày sau khi duyệt bản vẽ và mẫu vật liệu). Đánh giá công năng, độ ổn định kết cấu, đối chiếu màu sơn và thử nghiệm đóng gói trước khi chốt sản xuất." 
+        : "Physical prototype crafting at our dedicated sampling facility. Typical sample lead time is 7–14 days post-drawing and material approval. Functional testing, stability assessment, finish matching, and carton drop-test verification.",
+      icon: <CheckSquare size={20} />,
+    },
+    {
+      step: "04",
+      title: langKey === 'vi' ? "Lập Kế Hoạch Sản Xuất (Production Planning)" : "Production Planning",
+      desc: langKey === 'vi' 
+        ? "Phân bổ đơn hàng tới nhà máy phù hợp nhất trong 10 xưởng thành phẩm theo thế mạnh vật liệu. Tiến độ sản xuất bắt đầu tính từ khi nhận đặt cọc thương mại và duyệt bản vẽ kỹ thuật (thông thường 60–90 ngày cho đơn hàng mới, 45–60 ngày cho đơn hàng lặp lại). Sấy gỗ đạt độ ẩm chuẩn 8–12% và gia công chi tiết đồng bộ." 
+        : "Facility allocation across our 10 furniture plants based on material specialization. Production lead times commence upon receipt of confirmed commercial deposit and approved shop drawings (typical 60–90 days for new production runs, 45–60 days for repeat orders). Timber kiln drying to 8–12% MC and synchronized component batching.",
+      icon: <Factory size={20} />,
+    },
+    {
+      step: "05",
+      title: langKey === 'vi' ? "Kiểm Soát Chất Lượng (Quality Verification)" : "Quality Verification",
+      desc: langKey === 'vi' 
+        ? "Quy trình kiểm soát chất lượng 6 cửa xuyên suốt từ độ ẩm phôi gỗ đầu vào, dung sai gia công chi tiết, ráp thử khung mộng, độ bám dính bề mặt đến nghiệm thu thành phẩm." 
+        : "Standardised 6-gate in-line QC covering timber moisture, machining tolerances, dry-fitting assembly, finish coating adhesion, and pre-pack audit.",
+      icon: <ShieldCheck size={20} />,
+    },
+    {
+      step: "06",
+      title: langKey === 'vi' ? "Đóng Gói & Xuất Hàng (Packing & Shipment)" : "Packing & Shipment",
+      desc: langKey === 'vi' 
+        ? "Đóng gói tiêu chuẩn xuất khẩu chịu va đập, giám sát đóng container tại xưởng và hoàn tất thủ tục xuất khẩu qua các cảng Quy Nhơn, Cát Lái, Cái Mép hoặc Hải Phòng." 
+        : "Export drop-test verified packaging, coordinated container stuffing, and maritime dispatch via Quy Nhon, Cat Lai, Cai Mep, or Hai Phong ports.",
+      icon: <Ship size={20} />,
+    },
+  ];
+
+  const operatingSteps = Array.isArray(rawOperatingSteps) && rawOperatingSteps.length === 6
+    ? rawOperatingSteps.map((s: any, idx: number) => ({
+        step: s.step || `0${idx + 1}`,
+        title: s.title || defaultSteps[idx].title,
+        desc: s.desc || defaultSteps[idx].desc,
+        icon: defaultSteps[idx].icon,
+      }))
+    : defaultSteps;
+
+  /* ── 5 Functional Coordination Departments (Item 11) ── */
+  const rawDepartments = (t("about.departments.items", { returnObjects: true }) as any[]) || [];
+  const defaultDepartments = [
+    {
+      title: langKey === 'vi' ? "Phát triển Kinh doanh & Khách hàng" : "Sales & Commercial Development",
+      desc: langKey === 'vi' 
+        ? "Quản trị quan hệ đối tác, báo giá kỹ thuật, ký kết thương mại và lập kế hoạch chương trình cung ứng." 
+        : "Direct buyer account management, quotation dossiers, commercial agreements, and programme scheduling.",
+    },
+    {
+      title: langKey === 'vi' ? "Phát triển Sản phẩm & Kỹ thuật" : "Product Development & Engineering",
+      desc: langKey === 'vi' 
+        ? "Bản vẽ kỹ thuật CAD, cải tiến giá trị (value engineering), thử nghiệm kết cấu, tiêu chuẩn hóa vật tư và kiểm định mẫu." 
+        : "CAD technical drawings, value engineering, joinery optimization, material qualification, and prototype verification.",
+    },
+    {
+      title: langKey === 'vi' ? "Điều phối Sản xuất" : "Production Coordination",
+      desc: langKey === 'vi' 
+        ? "Phân bổ đơn hàng vào 10 nhà máy chuyên môn hóa, theo dõi tiến độ sấy gỗ, cân bằng công suất và kiểm soát tiến độ giao hàng." 
+        : "Strategic factory allocation among 10 furniture plants, timber kiln scheduling, capacity balancing, and lead time tracking.",
+    },
+    {
+      title: langKey === 'vi' ? "Quản lý Chất lượng & Tuân thủ (6-Gate QC)" : "Quality & Compliance (6-Gate QC)",
+      desc: langKey === 'vi' 
+        ? "Kiểm tra chất lượng đa tầng in-line, đo độ ẩm gỗ (8–12% MC), giám sát tuân thủ tiêu chuẩn và thử nghiệm thả rơi bao bì carton." 
+        : "In-line multi-gate quality inspections, timber moisture auditing (8–12% MC), factory compliance, and carton drop testing.",
+    },
+    {
+      title: langKey === 'vi' ? "Xuất khẩu & Logistics" : "Export & Logistics",
+      desc: langKey === 'vi' 
+        ? "Giám sát đóng container, điều phối luồng hàng qua 4 cụm cảng (Quy Nhơn, Cát Lái, Cái Mép, Hải Phòng), thủ tục hải quan và chứng từ vận tải quốc tế." 
+        : "Container stuffing supervision, multi-port routing (Quy Nhon, Cat Lai, Cai Mep, Hai Phong), customs clearance, and export documentation.",
+    },
+  ];
+
+  const departmentItems = Array.isArray(rawDepartments) && rawDepartments.length === 5
+    ? rawDepartments.map((d: any, idx: number) => ({
+        title: d.title || defaultDepartments[idx].title,
+        desc: d.desc || defaultDepartments[idx].desc,
+      }))
+    : defaultDepartments;
 
   return (
     <>
@@ -710,9 +815,20 @@ export default function AboutPage() {
                   <p className="font-body text-[11px] text-white/40 mt-0.5">Commercial & QC Coordination</p>
                 </div>
               </div>
-              <p className="font-body text-xs text-center text-[#B97846]/90 mt-4 pt-4 border-t border-white/10 tracking-wide">
-                * All wood used in DHT furniture is FSC-certified (Acacia hybrid, Eucalyptus grandis, Brazilian Teak).
-              </p>
+              <div className="mt-4 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+                <p className="font-body text-xs text-[#B97846]/90 tracking-wide">
+                  {langKey === 'vi'
+                    ? "* Toàn bộ gỗ dùng trong sản phẩm DHT đều đạt chứng nhận FSC (Acacia hybrid, Eucalyptus grandis, Brazilian Teak)."
+                    : "* All wood used in DHT furniture is FSC-certified (Acacia hybrid, Eucalyptus grandis, Brazilian Teak)."}
+                </p>
+                <Link
+                  href="/manufacturing"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-white/90 hover:text-[hsl(var(--orange))] transition-colors shrink-0 bg-white/10 hover:bg-white/20 px-3.5 py-1.5 rounded-full"
+                >
+                  <span>{langKey === 'vi' ? 'Xem 4 Cụm & Bản Đồ' : 'Explore 4 Clusters & Map'}</span>
+                  <ChevronRight size={14} />
+                </Link>
+              </div>
             </div>
 
             {/* Info Cards */}
@@ -753,6 +869,70 @@ export default function AboutPage() {
                   </ul>
                 </motion.div>
               )}
+            </div>
+          </div>
+        </section>
+
+        {/* ── 6.5. Operating Model (6-Stage B2B Execution Workflow) ── */}
+        <section className="py-28 relative overflow-hidden bg-[#FBF9F5] border-y border-border/40">
+          <div className="container mx-auto px-6 relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-16 lg:mb-20 max-w-3xl mx-auto"
+            >
+              <div className="flex items-center gap-4 justify-center mb-6">
+                <span className="h-px w-8 bg-[hsl(var(--orange))]" />
+                <span className="font-body text-xs tracking-widest uppercase font-bold text-[hsl(var(--orange))]">
+                  {t("about.operatingModel.badge", langKey === 'vi' ? "Mô Hình Vận Hành B2B" : "B2B Operating Model")}
+                </span>
+                <span className="h-px w-8 bg-[hsl(var(--orange))]" />
+              </div>
+              <h2 className="font-display font-black text-foreground mb-4 text-3xl sm:text-4xl lg:text-5xl leading-tight">
+                {t("about.operatingModel.heading", langKey === 'vi' ? "Quy Trình Phối Hợp 6 Bước" : "6-Stage Programme Execution")}
+              </h2>
+              <p className="font-body text-muted-foreground text-base sm:text-lg leading-relaxed">
+                {t("about.operatingModel.subtitle", langKey === 'vi'
+                  ? "Cách đội ngũ điều phối trung tâm DHT quản trị đơn hàng từ yêu cầu người mua đến vận chuyển quốc tế qua 11 cơ sở sản xuất."
+                  : "How our centralised DHT commercial team coordinates buyer requirements across 11 specialised manufacturing facilities in Vietnam.")}
+              </p>
+            </motion.div>
+
+            {/* 6 Step Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto">
+              {operatingSteps.map((s, idx) => (
+                <motion.div
+                  key={s.step}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.6, delay: idx * 0.08 }}
+                  className="group relative bg-white p-7 sm:p-8 rounded-xl border border-black/5 shadow-xs hover:border-[hsl(var(--orange))/0.4] hover:shadow-xl transition-all duration-400 flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-5">
+                      <span className="font-display font-black text-2xl text-[hsl(var(--orange))] bg-[hsl(var(--orange))/0.1] px-3 py-1 rounded-md">
+                        {s.step}
+                      </span>
+                      <div className="w-10 h-10 rounded-full bg-[#F3EFE7] flex items-center justify-center text-[#173C2C] group-hover:bg-[hsl(var(--orange))] group-hover:text-white transition-colors duration-300">
+                        {s.icon}
+                      </div>
+                    </div>
+                    <h3 className="font-display font-bold text-lg sm:text-xl text-foreground mb-3 leading-snug group-hover:text-[hsl(var(--orange))] transition-colors">
+                      {s.title}
+                    </h3>
+                    <p className="font-body text-sm text-muted-foreground leading-relaxed">
+                      {s.desc}
+                    </p>
+                  </div>
+                  <div className="mt-6 pt-4 border-t border-black/5 text-[11px] font-bold text-[hsl(var(--orange))] tracking-wider uppercase flex items-center justify-between">
+                    <span>{langKey === 'vi' ? `Giai đoạn ${idx + 1}/6` : `Stage ${idx + 1} of 6`}</span>
+                    {idx < 5 && <ArrowRight size={14} className="text-black/30 group-hover:translate-x-1 group-hover:text-[hsl(var(--orange))] transition-all" />}
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </div>
         </section>
@@ -853,6 +1033,44 @@ export default function AboutPage() {
                   </div>
                 </motion.div>
               ))}
+            </div>
+
+            {/* 5 Functional Coordination Departments Matrix (Item 11) */}
+            <div className="mt-20 pt-16 border-t border-border/60">
+              <div className="text-center max-w-3xl mx-auto mb-12">
+                <span className="font-body text-xs tracking-widest uppercase font-bold text-[hsl(var(--orange))] block mb-2">
+                  {t("about.departments.badge", langKey === 'vi' ? "Điều Phối Trung Tâm" : "Central Coordination")}
+                </span>
+                <h3 className="font-display font-bold text-2xl sm:text-3xl text-foreground mb-3">
+                  {t("about.departments.heading", langKey === 'vi' ? "5 Phòng Ban Phối Hợp Chuyên Môn" : "5 Functional Coordination Departments")}
+                </h3>
+                <p className="font-body text-sm sm:text-base text-muted-foreground leading-relaxed">
+                  {t("about.departments.subtitle", langKey === 'vi'
+                    ? "Đội ngũ trung tâm khoảng 20 nhân sự trực tiếp làm việc với khách hàng quốc tế để điều phối kỹ thuật, vận hành và quản lý chất lượng xuyên suốt mạng lưới 11 cơ sở."
+                    : "The centralised DHT team of approximately 20 professionals directly interfaces with international buyers to coordinate technical, operational, and commercial execution across all group facilities.")}
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                {departmentItems.map((dep, idx) => (
+                  <div
+                    key={idx}
+                    className="p-5 rounded-lg bg-[#FAFAFA] border border-border/70 hover:border-[hsl(var(--orange))/0.4] hover:shadow-md transition-all flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="w-8 h-8 rounded-full bg-[hsl(var(--orange))/0.15] text-[hsl(var(--orange))] flex items-center justify-center font-bold text-xs mb-3 font-display">
+                        0{idx + 1}
+                      </div>
+                      <h4 className="font-display font-bold text-sm text-foreground mb-2 leading-snug">
+                        {dep.title}
+                      </h4>
+                      <p className="font-body text-xs text-muted-foreground leading-relaxed">
+                        {dep.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* Contact Our Team Banner */}

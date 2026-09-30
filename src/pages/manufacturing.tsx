@@ -87,7 +87,8 @@ const clusters: ClusterInfo[] = [
 ];
 
 export default function ManufacturingPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isVi = i18n.language?.startsWith("vi");
   const [activeCluster, setActiveCluster] = useState<string>("quynhon");
 
   return (
@@ -411,6 +412,116 @@ export default function ManufacturingPage() {
           </div>
         </section>
 
+        {/* OUTDOOR MANUFACTURING CAPABILITY & TECHNICAL SPECIFICATIONS (Item 13) */}
+        <section className="container mx-auto px-6 py-8 max-w-6xl">
+          <div className="bg-white p-6 md:p-10 rounded-2xl border border-black/5 shadow-sm">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-8 pb-6 border-b border-gray-100">
+              <div>
+                <span className="text-xs font-bold uppercase tracking-wider text-[#B97846]">
+                  {isVi ? "Năng Lực Chuyên Biệt Ngoại Thất" : "Outdoor Manufacturing Capability"}
+                </span>
+                <h2 className="text-2xl md:text-3xl font-bold text-[#173C2C] mt-1">
+                  {isVi ? "Quy Chuẩn Kỹ Thuật Nội Thất Ngoài Trời" : "Outdoor Furniture Specifications & Engineering Standards"}
+                </h2>
+                <p className="text-sm text-gray-600 mt-1 max-w-3xl leading-relaxed">
+                  {isVi 
+                    ? "DHT phát triển và gia công các chương trình bàn ăn ngoài trời, sofa lounge, ghế tắm nắng và nội thất module phối hợp vật liệu, đáp ứng tiêu chuẩn kiểm định EN 581 và ASTM cho thị trường xuất khẩu."
+                    : "DHT engineers outdoor dining collections, deep seating lounges, sunloungers, daybeds, and modular systems combining certified timber, architectural aluminium, and high-performance woven materials tested to EN 581 and ASTM standards."}
+                </p>
+              </div>
+              <Link
+                href="/catalogue/outdoor"
+                className="inline-flex items-center gap-2 text-xs font-bold text-white bg-[#173C2C] hover:bg-[#173C2C]/90 px-4 py-2.5 rounded-lg transition-colors shrink-0"
+              >
+                <span>{isVi ? "Xem Bộ Sưu Tập Outdoor" : "View Outdoor Catalogue"}</span>
+                <ArrowRight size={14} />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              <div className="p-5 rounded-xl bg-[#F8F6F0] border border-black/5 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[11px] font-bold text-[#B97846] uppercase tracking-wide">FSC Timber</span>
+                    <span className="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-semibold">100% Certified</span>
+                  </div>
+                  <h4 className="text-sm font-bold text-[#173C2C]">
+                    {isVi ? "Gỗ Tự Nhiên Đạt Chuẩn FSC" : "FSC-Certified Hardwoods"}
+                  </h4>
+                  <ul className="text-xs text-gray-600 mt-3 space-y-1.5 leading-relaxed">
+                    <li>• <strong>Acacia hybrid:</strong> {isVi ? "Gỗ keo lai Việt Nam" : "Vietnam plantation source"}</li>
+                    <li>• <strong>Eucalyptus grandis:</strong> {isVi ? "Bạch đàn Uruguay" : "Uruguay plantation source"}</li>
+                    <li>• <strong>Tectona grandis:</strong> {isVi ? "Gỗ tếch Mato Grosso, Brazil" : "Mato Grosso, Brazil source"}</li>
+                  </ul>
+                </div>
+                <div className="mt-4 pt-3 border-t border-gray-200/60 text-[11px] text-gray-500 font-medium">
+                  {isVi ? "Độ ẩm sấy chuẩn: 8–12% MC" : "Target Moisture: 8–12% MC"}
+                </div>
+              </div>
+
+              <div className="p-5 rounded-xl bg-[#F8F6F0] border border-black/5 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[11px] font-bold text-[#B97846] uppercase tracking-wide">Aluminium & Steel</span>
+                    <span className="text-[10px] bg-sky-100 text-sky-800 px-2 py-0.5 rounded font-semibold">Powder Coated</span>
+                  </div>
+                  <h4 className="text-sm font-bold text-[#173C2C]">
+                    {isVi ? "Khung Kim Loại & Xử Lý Bề Mặt" : "Architectural Metal Frames"}
+                  </h4>
+                  <p className="text-xs text-gray-600 mt-3 leading-relaxed">
+                    {isVi
+                      ? "Ống nhôm định hình 1.5–2.0mm và thép kết cấu, tẩy rửa hoá chất đa tầng trước khi sơn bột tĩnh điện ngoài trời, nung buồng sấy tự động chống ăn mòn muối biển."
+                      : "Architectural tubular aluminium (1.5–2.0mm) & structural steel. Multi-stage chemical degreasing and electrostatic exterior powder coating for salt-spray durability."}
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-gray-200/60 text-[11px] text-gray-500 font-medium">
+                  {isVi ? "Hàn TIG/MIG & nẹp ngàm chính xác" : "Precision TIG/MIG Welding"}
+                </div>
+              </div>
+
+              <div className="p-5 rounded-xl bg-[#F8F6F0] border border-black/5 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[11px] font-bold text-[#B97846] uppercase tracking-wide">Rope & Wicker</span>
+                    <span className="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">UV Resistant</span>
+                  </div>
+                  <h4 className="text-sm font-bold text-[#173C2C]">
+                    {isVi ? "Đan Thủ Công & Đệm Ngoài Trời" : "All-Weather Woven & Foam"}
+                  </h4>
+                  <p className="text-xs text-gray-600 mt-3 leading-relaxed">
+                    {isVi
+                      ? "Mây nhựa HDPE và dây đan polypropylene/polyester kháng tia UV. Đệm mút thoát nước nhanh hoặc mút đàn hồi cao bọc vải chuyên dụng trượt nước."
+                      : "UV-stabilised HDPE synthetic wicker and solution-dyed outdoor ropes. Quick-drying reticulated or high-resilience foam cores in water-repellent fabrics."}
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-gray-200/60 text-[11px] text-gray-500 font-medium">
+                  {isVi ? "Thử nghiệm chống cháy theo đơn hàng" : "Flammability Tested on Request"}
+                </div>
+              </div>
+
+              <div className="p-5 rounded-xl bg-[#F8F6F0] border border-black/5 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[11px] font-bold text-[#B97846] uppercase tracking-wide">Compliance & Scale</span>
+                    <span className="text-[10px] bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-semibold">EN 581 / ASTM</span>
+                  </div>
+                  <h4 className="text-sm font-bold text-[#173C2C]">
+                    {isVi ? "Kiểm Định & Đóng Gói Xuất Khẩu" : "Testing & Export Packaging"}
+                  </h4>
+                  <p className="text-xs text-gray-600 mt-3 leading-relaxed">
+                    {isVi
+                      ? "Thử nghiệm độ bền cơ học EN 581-1/2/3 và ASTM. Thùng carton 5 lớp xuất khẩu thử nghiệm thả rơi ISTA, túi hút ẩm và nẹp góc gia cố."
+                      : "Mechanical safety & cycle testing to EN 581 and ASTM upon programme specification. ISTA drop-test export cartons with corner protection and desiccants."}
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-gray-200/60 text-[11px] text-gray-500 font-medium">
+                  {isVi ? "Công suất: 60–70 cont 40ft/tháng/xưởng" : "Capacity: 60–70 conts/mo/plant"}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* KEY MACHINERY & PROCESSING SYSTEMS (CLEANED OF UNPROVEN CLAIMS) */}
         <section className="container mx-auto px-6 py-8 max-w-6xl">
           <div className="bg-white p-6 md:p-10 rounded-2xl border border-black/5 shadow-sm">
@@ -534,64 +645,196 @@ export default function ManufacturingPage() {
           </div>
         </section>
 
-        {/* LOGISTICS & STRATEGIC EXPORT GATEWAYS */}
+        {/* COMMERCIAL SCALE & OPERATING PARAMETERS (Item 17) */}
+        <section className="container mx-auto px-6 py-8 max-w-6xl">
+          <div className="bg-white p-6 md:p-10 rounded-2xl border border-black/5 shadow-sm">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-3 mb-8 pb-6 border-b border-gray-100">
+              <div>
+                <span className="text-xs font-bold uppercase tracking-wider text-[#B97846]">
+                  {isVi ? "Quy Mô & Thông Số Thương Mại" : "Commercial Parameters & Scale"}
+                </span>
+                <h2 className="text-2xl md:text-3xl font-bold text-[#173C2C] mt-1">
+                  {isVi ? "Năng Lực Cung Ứng & Điều Kiện Đơn Hàng" : "Production Scale, Capacity & Order Parameters"}
+                </h2>
+                <p className="text-sm text-gray-600 mt-1 max-w-3xl leading-relaxed">
+                  {isVi 
+                    ? "Tổng quan về công suất container hàng tháng, tỷ lệ vận hành nhà xưởng, chính sách MOQ và khả năng đóng ghép container linh hoạt phục vụ các nhà bán lẻ và phân phối quốc tế."
+                    : "Key commercial operating parameters covering container volumes, plant capacity utilization, minimum order quantities (MOQ), and mixed-container loading flexibility for global retailers and distributors."}
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {/* Card 1: Container Capacity */}
+              <div className="p-5 rounded-xl bg-[#F8F6F0] border border-black/5 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[11px] font-bold text-[#B97846] uppercase tracking-wide">Monthly Output</span>
+                    <span className="text-[10px] bg-[#173C2C]/10 text-[#173C2C] px-2 py-0.5 rounded font-semibold">40ft HC</span>
+                  </div>
+                  <h4 className="text-base font-bold text-[#173C2C]">
+                    {isVi ? "60–70 Cont / Tháng / Xưởng" : "60–70 Conts / Mo / Plant"}
+                  </h4>
+                  <p className="text-xs text-gray-600 mt-2.5 leading-relaxed">
+                    {isVi
+                      ? "Công suất tham chiếu tại một cơ sở sản xuất ngoại thất đạt 60–70 container 40ft/tháng. Tổng năng lực nhóm có thể nhân rộng linh hoạt trên 10 cơ sở thành phẩm."
+                      : "Reference capacity at a typical outdoor facility is 60–70 40-ft High Cube containers per month. Cumulative multi-plant capacity is scalable across our 10 furniture facilities."}
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-gray-200/60 text-[11px] text-gray-500 font-medium">
+                  {isVi ? "Tổng mặt bằng: 543,380 m²" : "Group Footprint: 543,380 m²"}
+                </div>
+              </div>
+
+              {/* Card 2: Plant Utilisation */}
+              <div className="p-5 rounded-xl bg-[#F8F6F0] border border-black/5 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[11px] font-bold text-[#B97846] uppercase tracking-wide">Plant Utilisation</span>
+                    <span className="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-semibold">Seasonal Buffer</span>
+                  </div>
+                  <h4 className="text-base font-bold text-[#173C2C]">
+                    {isVi ? "75%–85% Tỷ Lệ Vận Hành" : "75%–85% Target Utilisation"}
+                  </h4>
+                  <p className="text-xs text-gray-600 mt-2.5 leading-relaxed">
+                    {isVi
+                      ? "Tỷ lệ khai thác nhà xưởng duy trì ở mức 75%–85% trong giai đoạn cao điểm mùa vụ, chủ động giữ quỹ dự phòng công suất cho các đơn đặt hàng lặp lại (repeat orders)."
+                      : "Operating utilisation is calibrated seasonally at 75%–85% during peak export cycles, deliberately reserving buffer capacity for urgent re-orders and programme expansions."}
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-gray-200/60 text-[11px] text-gray-500 font-medium">
+                  {isVi ? "Lực lượng: ~2,400 nhân sự nhóm" : "Workforce: ~2,400 Personnel"}
+                </div>
+              </div>
+
+              {/* Card 3: MOQ & Mixed Container */}
+              <div className="p-5 rounded-xl bg-[#F8F6F0] border border-black/5 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[11px] font-bold text-[#B97846] uppercase tracking-wide">Order Minimums</span>
+                    <span className="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">Flexible Loading</span>
+                  </div>
+                  <h4 className="text-base font-bold text-[#173C2C]">
+                    {isVi ? "1 Cont 40ft (Ghép SKU)" : "1 × 40ft HC (Mixed SKUs)"}
+                  </h4>
+                  <p className="text-xs text-gray-600 mt-2.5 leading-relaxed">
+                    {isVi
+                      ? "MOQ tiêu chuẩn tính theo 1 container 40ft High Cube cho mỗi đơn hàng sản xuất. Hỗ trợ ghép linh hoạt nhiều SKU trong cùng bộ sưu tập hoặc cùng nhóm vật liệu để tối ưu thể tích CBM."
+                      : "Standard production MOQ is 1 × 40ft High Cube container per run. Supports flexible mixed-SKU loading across the same collection or material suite to maximize CBM ocean freight efficiency."}
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-gray-200/60 text-[11px] text-gray-500 font-medium">
+                  {isVi ? "Mẫu thử: 7–14 ngày sau duyệt bản vẽ" : "Prototypes: 7–14 Days Post-Drawings"}
+                </div>
+              </div>
+
+              {/* Card 4: Delivery Terms */}
+              <div className="p-5 rounded-xl bg-[#F8F6F0] border border-black/5 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[11px] font-bold text-[#B97846] uppercase tracking-wide">Commercial Terms</span>
+                    <span className="text-[10px] bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-semibold">Incoterms</span>
+                  </div>
+                  <h4 className="text-base font-bold text-[#173C2C]">
+                    {isVi ? "FOB Việt Nam / CIF Cảng Đến" : "FOB Vietnam / CIF Terms"}
+                  </h4>
+                  <p className="text-xs text-gray-600 mt-2.5 leading-relaxed">
+                    {isVi
+                      ? "Giá FOB giao tại các cảng Quy Nhơn, Cát Lái, Cái Mép hoặc Hải Phòng. Tiến độ sản xuất: 60–90 ngày cho đơn hàng mới, 45–60 ngày cho đơn hàng lặp lại sau khi chốt cọc và bản vẽ."
+                      : "Standard terms quoted FOB at designated gateways (Quy Nhon, Cat Lai, Cai Mep, Hai Phong) or CIF upon request. Production lead times: 60–90 days initial, 45–60 days repeat."}
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-gray-200/60 text-[11px] text-gray-500 font-medium">
+                  {isVi ? "Điều phối: 1 đầu mối trung tâm" : "Single Commercial Coordination Hub"}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* LOGISTICS, EXPORT GATEWAYS & TARGET MARKETS (Item 24) */}
         <section className="container mx-auto px-6 py-8 max-w-6xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Gateways Box */}
             <div className="bg-white p-6 md:p-8 rounded-2xl border border-black/5 shadow-sm flex flex-col justify-between">
               <div>
                 <h3 className="text-lg font-bold text-[#173C2C] mb-3 flex items-center gap-2">
-                  <Ship size={20} className="text-[#B97846]" /> Strategic Export Gateways
+                  <Ship size={20} className="text-[#B97846]" /> 
+                  {isVi ? "Cửa Ngõ Xuất Khẩu Chiến Lược" : "Strategic Export Gateways"}
                 </h3>
-                {/* VERBATIM AUDIT STATEMENT */}
+                {/* VERBATIM AUDIT STATEMENT (Guide M03 / Mã 10) */}
                 <p className="text-sm text-gray-700 mb-5 leading-relaxed font-medium bg-[#F8F6F0] p-4 rounded-xl border border-black/5">
-                  Export routing is planned according to the production location, order mix and buyer requirements. Relevant gateways include Quy Nhon, Cat Lai, Cai Mep-Thi Vai and Hai Phong.
+                  &ldquo;Export routing is planned according to the production location, order mix and buyer requirements. Relevant gateways include Quy Nhon, Cat Lai, Cai Mep-Thi Vai and Hai Phong.&rdquo;
                 </p>
                 <div className="space-y-3">
                   <div className="p-3 bg-[#F8F6F0]/60 rounded-lg border border-black/5">
-                    <p className="text-xs font-bold text-[#173C2C] uppercase tracking-wide">Quy Nhon Port</p>
-                    <p className="text-xs text-gray-600 mt-0.5">Servicing Central Vietnam outdoor wood and mixed-material programmes.</p>
+                    <p className="text-xs font-bold text-[#173C2C] uppercase tracking-wide">Quy Nhon Port (Central Vietnam)</p>
+                    <p className="text-xs text-gray-600 mt-0.5">Servicing Central Vietnam outdoor timber and mixed-material collections with direct terminal access.</p>
                   </div>
                   <div className="p-3 bg-[#F8F6F0]/60 rounded-lg border border-black/5">
                     <p className="text-xs font-bold text-[#173C2C] uppercase tracking-wide">Cat Lai Port (Ho Chi Minh City)</p>
-                    <p className="text-xs text-gray-600 mt-0.5">Major commercial container hub servicing Southern Vietnam indoor and project facilities.</p>
+                    <p className="text-xs text-gray-600 mt-0.5">Premier commercial container hub servicing Southern Vietnam indoor, upholstered, and casegoods plants.</p>
                   </div>
                   <div className="p-3 bg-[#F8F6F0]/60 rounded-lg border border-black/5">
                     <p className="text-xs font-bold text-[#173C2C] uppercase tracking-wide">Cai Mep - Thi Vai Deep-Water Terminal</p>
-                    <p className="text-xs text-gray-600 mt-0.5">Deep-water international container terminal accommodating mother-vessel routes to US and European destinations.</p>
+                    <p className="text-xs text-gray-600 mt-0.5">Deep-water international terminal accommodating direct mother-vessel routes to US East/West Coast and European hubs without transshipment.</p>
                   </div>
                   <div className="p-3 bg-[#F8F6F0]/60 rounded-lg border border-black/5">
-                    <p className="text-xs font-bold text-[#173C2C] uppercase tracking-wide">Hai Phong Port</p>
-                    <p className="text-xs text-gray-600 mt-0.5">Northern maritime hub servicing Hung Yen and Phu Tho/Vinh Phuc production facilities.</p>
+                    <p className="text-xs font-bold text-[#173C2C] uppercase tracking-wide">Hai Phong Port (Northern Vietnam)</p>
+                    <p className="text-xs text-gray-600 mt-0.5">Northern maritime gateway servicing Hung Yen furniture facilities and Phu Tho panel/processing plants.</p>
                   </div>
                 </div>
               </div>
             </div>
 
+            {/* Target Markets & Dedicated Coordination Box */}
             <div className="bg-white p-6 md:p-8 rounded-2xl border border-black/5 shadow-sm flex flex-col justify-between">
               <div>
                 <h3 className="text-lg font-bold text-[#173C2C] mb-3 flex items-center gap-2">
-                  <CheckCircle2 size={20} className="text-[#B97846]" /> One DHT Management Team
+                  <CheckCircle2 size={20} className="text-[#B97846]" /> 
+                  {isVi ? "Thị Trường Xuất Khẩu & Đội Ngũ Điều Phối" : "Approved Export Markets & Coordination"}
                 </h3>
                 <p className="text-sm text-gray-600 mb-4 leading-relaxed">
-                  While production takes place across specialised facilities, our centralised DHT team of approximately 20 professionals coordinates all buyer communications, technical development, quality verification, and shipping documentation.
+                  {isVi
+                    ? "Sản phẩm của DHT được xuất khẩu rộng rãi tới các thị trường bán lẻ và dự án quốc tế, được điều phối bởi đội ngũ trung tâm khoảng 20 nhân sự quản lý kỹ thuật, chất lượng và chứng từ vận tải."
+                    : "DHT furniture programmes are shipped worldwide to commercial retail chains, importers, and hospitality projects, coordinated by our centralised team of approximately 20 professionals."}
                 </p>
-                <div className="space-y-3 mb-4">
-                  <div className="flex items-start gap-2.5 text-xs text-gray-600">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#B97846] mt-1.5 shrink-0" />
-                    <span>Single commercial point of contact for multi-facility orders and container consolidation.</span>
+
+                {/* 4 Approved Export Programme Destinations */}
+                <div className="space-y-3 mb-5">
+                  <div className="p-3 rounded-lg bg-[#F8F6F0]/80 border border-black/5 flex items-start gap-2.5">
+                    <span className="w-2 h-2 rounded-full bg-[#B97846] mt-1.5 shrink-0" />
+                    <div>
+                      <strong className="text-xs text-[#173C2C] block">North America (United States & Canada)</strong>
+                      <span className="text-[11px] text-gray-600 leading-snug">Full compliance dossiers for U.S. Lacey Act, TSCA Title VI / CARB Phase 2, and ASTM safety standards. Direct mother-vessel shipping via Cai Mep.</span>
+                    </div>
                   </div>
-                  <div className="flex items-start gap-2.5 text-xs text-gray-600">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#B97846] mt-1.5 shrink-0" />
-                    <span>Standardised group-wide quality control inspections at raw material, in-line, and pre-shipment stages.</span>
+                  <div className="p-3 rounded-lg bg-[#F8F6F0]/80 border border-black/5 flex items-start gap-2.5">
+                    <span className="w-2 h-2 rounded-full bg-[#B97846] mt-1.5 shrink-0" />
+                    <div>
+                      <strong className="text-xs text-[#173C2C] block">Europe & United Kingdom (EU / UK)</strong>
+                      <span className="text-[11px] text-gray-600 leading-snug">Traceability supporting EUDR due diligence, EN 581 structural testing, REACH SVHC checks, and BS 5852 flammability standards.</span>
+                    </div>
                   </div>
-                  <div className="flex items-start gap-2.5 text-xs text-gray-600">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#B97846] mt-1.5 shrink-0" />
-                    <span>Unified technical drawings, Bill of Materials (BOM), and packaging standards across all facilities.</span>
+                  <div className="p-3 rounded-lg bg-[#F8F6F0]/80 border border-black/5 flex items-start gap-2.5">
+                    <span className="w-2 h-2 rounded-full bg-[#B97846] mt-1.5 shrink-0" />
+                    <div>
+                      <strong className="text-xs text-[#173C2C] block">Australia & New Zealand (Oceania)</strong>
+                      <span className="text-[11px] text-gray-600 leading-snug">Department of Agriculture (DAFF) biosecurity protocols with targeted seasonal BMSB offshore heat treatment and high-index UV weathering testing.</span>
+                    </div>
+                  </div>
+                  <div className="p-3 rounded-lg bg-[#F8F6F0]/80 border border-black/5 flex items-start gap-2.5">
+                    <span className="w-2 h-2 rounded-full bg-[#B97846] mt-1.5 shrink-0" />
+                    <div>
+                      <strong className="text-xs text-[#173C2C] block">Asia-Pacific & Regional Trade</strong>
+                      <span className="text-[11px] text-gray-600 leading-snug">Regional contract casegoods and turnkey hotel joinery shipped via direct regional feeder networks.</span>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="text-xs text-gray-500 bg-[#F8F6F0] p-4 rounded-xl border border-black/5">
-                <span className="font-bold text-[#173C2C]">Capacity Reference:</span> Reference capacity at an outdoor facility is 60–70 40-ft containers per month, subject to product mix and seasonal scheduling.
+
+              <div className="text-xs text-gray-600 bg-[#F8F6F0] p-4 rounded-xl border border-black/5 leading-relaxed">
+                <span className="font-bold text-[#173C2C]">One DHT Coordination:</span> Single point of commercial contact, unified Bill of Materials (BOM), standardised in-line QC gates, and consolidated container shipping across all 11 production facilities.
               </div>
             </div>
           </div>

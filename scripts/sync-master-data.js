@@ -63,7 +63,7 @@ async function syncMasterData() {
       href: "tel:+84907386898",
       hours: {
         us: "08:00 - 17:00 (UTC+7). Visits by appointment.",
-        uk: "08:00 - 17:00 (UTC+7). Tham quan theo lịch hẹn trước.",
+        uk: "08:00 - 17:00 (UTC+7). Visits by appointment.",
         vi: "08:00 - 17:00 (UTC+7). Tham quan theo lịch hẹn trước."
       }
     },

@@ -56,18 +56,32 @@ export default function ContactPage() {
     return t(i18nKey);
   };
 
-  const legacy = dbData?.formSection?.labels || {};
-  const fields = hasDB ? (dbData?.formSection?.fields || []) : [
-    { id: 'f1', key: 'name', type: 'text', required: true, width: 'half', label: legacy.name || { us: '<p>Name</p>', uk: '<p>Name</p>', vi: '<p>Họ tên</p>' } },
-    { id: 'f2', key: 'email', type: 'email', required: true, width: 'half', label: legacy.email || { us: '<p>Email</p>', uk: '<p>Email</p>', vi: '<p>Email</p>' } },
-    { id: 'f3', key: 'phone', type: 'tel', required: false, width: 'half', label: legacy.phone || { us: '<p>Phone</p>', uk: '<p>Phone</p>', vi: '<p>Số điện thoại</p>' } },
-    { id: 'f4', key: 'company', type: 'text', required: false, width: 'half', label: legacy.company || { us: '<p>Company</p>', uk: '<p>Company</p>', vi: '<p>Công ty</p>' } },
-    { id: 'f5', key: 'category', type: 'category', required: true, width: 'full', label: legacy.category || { us: '<p>Inquiry Category</p>', uk: '<p>Inquiry Category</p>', vi: '<p>Danh mục quan tâm</p>' } },
-    { id: 'f6', key: 'subject', type: 'text', required: true, width: 'full', label: legacy.subject || { us: '<p>Subject</p>', uk: '<p>Subject</p>', vi: '<p>Tiêu đề</p>' } },
-    { id: 'f7', key: 'message', type: 'textarea', required: true, width: 'full', label: legacy.message || { us: '<p>Message</p>', uk: '<p>Message</p>', vi: '<p>Nội dung</p>' } },
+  const defaultFields = [
+    { id: 'f_name', key: 'name', type: 'text', required: true, width: 'half', label: { us: '<p>Full Name</p>', uk: '<p>Full Name</p>', vi: '<p>Họ và tên</p>' } },
+    { id: 'f_email', key: 'email', type: 'email', required: true, width: 'half', label: { us: '<p>Business Email</p>', uk: '<p>Business Email</p>', vi: '<p>Email doanh nghiệp</p>' } },
+    { id: 'f_company', key: 'company', type: 'text', required: true, width: 'half', label: { us: '<p>Company</p>', uk: '<p>Company</p>', vi: '<p>Tên công ty / Doanh nghiệp</p>' } },
+    { id: 'f_phone', key: 'phone', type: 'tel', required: false, width: 'half', label: { us: '<p>Phone / WhatsApp</p>', uk: '<p>Phone / WhatsApp</p>', vi: '<p>Điện thoại / WhatsApp (Tùy chọn)</p>' } },
+    { 
+      id: 'f_category', 
+      key: 'category', 
+      type: 'select', 
+      required: true, 
+      width: 'full', 
+      label: { us: '<p>Inquiry Type</p>', uk: '<p>Inquiry Type</p>', vi: '<p>Loại yêu cầu / Danh mục</p>' },
+      options: [
+        { key: "outdoor", label: { us: "Outdoor Furniture Programme", uk: "Outdoor Furniture Programme", vi: "Chương trình Ngoại thất Outdoor" } },
+        { key: "indoor", label: { us: "Indoor Furniture Programme", uk: "Indoor Furniture Programme", vi: "Chương trình Nội thất Indoor" } },
+        { key: "project", label: { us: "Custom Project & Contract / Hospitality", uk: "Custom Project & Contract / Hospitality", vi: "Dự án Khách sạn & Công trình (Project & Hospitality)" } },
+        { key: "oem", label: { us: "OEM / ODM Manufacturing & Sampling", uk: "OEM / ODM Manufacturing & Sampling", vi: "Sản xuất Gia công OEM/ODM & Mẫu thử" } },
+        { key: "other", label: { us: "Other Commercial Inquiry", uk: "Other Commercial Inquiry", vi: "Yêu cầu thương mại khác" } }
+      ]
+    },
+    { id: 'f_subject', key: 'subject', type: 'text', required: true, width: 'full', label: { us: '<p>Subject</p>', uk: '<p>Subject</p>', vi: '<p>Tiêu đề yêu cầu</p>' } },
+    { id: 'f_message', key: 'message', type: 'textarea', required: true, width: 'full', label: { us: '<p>Message</p>', uk: '<p>Message</p>', vi: '<p>Nội dung yêu cầu chi tiết</p>' } },
   ];
+  const fields = (hasDB && dbData?.formSection?.fields?.length > 0) ? dbData.formSection.fields : defaultFields;
 
-  const [form, setForm] = useState<Record<string, string>>({ interestedProduct: "" });
+  const [form, setForm] = useState<Record<string, string>>({ category: "outdoor", interestedProduct: "" });
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [categories, setCategories] = useState<{key: string, label: string}[]>([]);
@@ -245,8 +259,8 @@ export default function ContactPage() {
             <a href="mailto:sales@dhtcompany.com" className="inline-flex items-center gap-2 bg-[#B97846] text-white px-4 py-2 rounded-full font-semibold hover:bg-white hover:text-black transition-all shadow-sm">
               <Mail size={14} /> Official Sales: sales@dhtcompany.com
             </a>
-            <span className="text-white/60 bg-white/10 px-3.5 py-1.5 rounded-full">
-              Response within 24 business hours
+            <span className="text-white/80 bg-white/10 px-3.5 py-1.5 rounded-full font-medium">
+              {langKey === 'vi' ? "Phản hồi: Đội ngũ DHT phản hồi trong vòng 1 ngày làm việc" : "Response: Our team aims to respond within one business day."}
             </span>
           </motion.div>
         </div>

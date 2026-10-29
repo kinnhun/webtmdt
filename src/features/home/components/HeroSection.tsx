@@ -16,24 +16,39 @@ export default function HeroSection() {
       className="relative w-full overflow-hidden flex flex-col justify-between"
       style={{ minHeight: "100svh", backgroundColor: "#0E241B" }}
     >
-      {/* Background Factory Imagery & Forest Green Overlays */}
+      {/* Background Factory Video & Forest Green Overlays */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Fallback image while video is loading */}
         <Image
           src="/img/WhyDHT.png"
           alt="DHT Furniture Manufacturing Network"
           fill
           priority
-          quality={90}
+          quality={85}
           className="object-cover object-center scale-105"
         />
+
+        {/* Background YouTube Video Embed */}
+        <div className="absolute inset-0 overflow-hidden">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/roXn8vbbRkI?autoplay=1&mute=1&loop=1&playlist=roXn8vbbRkI&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&iv_load_policy=3&disablekb=1"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] min-w-full h-[56.25vw] min-h-full scale-110 pointer-events-none border-0"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            title="DHT Furniture Manufacturing Video"
+            tabIndex={-1}
+            aria-hidden="true"
+          />
+        </div>
+
+        {/* Forest Green Gradient Overlay balanced for legibility and video clarity */}
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "linear-gradient(180deg, rgba(14, 36, 27, 0.72) 0%, rgba(23, 60, 44, 0.82) 45%, rgba(14, 36, 27, 0.96) 100%)",
+              "linear-gradient(180deg, rgba(14, 36, 27, 0.6) 0%, rgba(23, 60, 44, 0.42) 45%, rgba(14, 36, 27, 0.88) 100%)",
           }}
         />
-        <div className="absolute inset-0 bg-radial-at-c from-transparent via-[#0E241B]/40 to-[#0E241B]/90" />
+        <div className="absolute inset-0 bg-radial-at-c from-transparent via-[#0E241B]/20 to-[#0E241B]/75 pointer-events-none" />
       </div>
 
       {/* Main Hero Content */}

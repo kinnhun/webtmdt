@@ -8,49 +8,151 @@ const ease = [0.16, 1, 0.3, 1] as const;
 const vp = { once: true, amount: 0.1 };
 
 export default function WhyChooseUs() {
-  const { t } = useTranslation();
-  const points = t("home.whyUs.points", { returnObjects: true }) as string[];
+  const { t, i18n } = useTranslation();
+  const isVi = i18n.language?.startsWith("vi");
+
+  const defaultPoints = isVi
+    ? [
+        "Phát triển sản phẩm theo yêu cầu",
+        "Phối hợp sản xuất",
+        "Kiểm soát chất lượng trong sản xuất",
+        "Phối hợp đóng gói và xuất khẩu",
+      ]
+    : [
+        "Product development to your brief",
+        "Production coordination",
+        "Quality control during production",
+        "Packing and export coordination",
+      ];
+
+  const translatedPoints = t("home.whyUs.points", { returnObjects: true });
+  const points =
+    Array.isArray(translatedPoints) && translatedPoints.length > 0
+      ? (translatedPoints as string[])
+      : defaultPoints;
 
   return (
-    <section className="relative overflow-hidden">
-      <div className="absolute inset-0">
-        <Image src="/img/WhyDHT.png" alt="Factory" fill className="object-cover" quality={100} priority />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(90deg, hsl(var(--navy-deep)/0.74) 0%, hsl(var(--navy-deep)/0.58) 18%, hsl(var(--navy-deep)/0.34) 38%, hsl(var(--navy-deep)/0.14) 58%, hsl(var(--navy-deep)/0.04) 78%, transparent 100%)",
-            backdropFilter: "blur(2.5px)",
-            WebkitBackdropFilter: "blur(2.5px)",
-            maskImage: "linear-gradient(90deg, black 0%, rgba(0,0,0,0.95) 24%, rgba(0,0,0,0.7) 48%, rgba(0,0,0,0.28) 72%, transparent 100%)",
-            WebkitMaskImage: "linear-gradient(90deg, black 0%, rgba(0,0,0,0.95) 24%, rgba(0,0,0,0.7) 48%, rgba(0,0,0,0.28) 72%, transparent 100%)",
-          }}
-        />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_left_center,hsl(var(--navy-deep)/0.22)_0%,transparent_52%)]" />
-      </div>
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-28">
-        <div className="max-w-xl">
-          <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={vp} transition={{ duration: 0.6, ease }} className="flex items-center gap-3 mb-6">
-            <span className="h-px w-8" style={{ backgroundColor: "hsl(var(--orange))" }} />
-            <span className="font-body text-xs tracking-[0.25em] uppercase font-medium" style={{ color: "hsl(var(--orange))" }}>{t("home.whyUs.label")}</span>
-          </motion.div>
-          <motion.h2 initial={{ opacity: 0, y: 24, filter: "blur(4px)" }} whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }} viewport={vp} transition={{ duration: 0.7, delay: 0.1, ease }} className="font-display font-bold text-white leading-tight mb-7" style={{ fontSize: "clamp(2rem, 4vw, 3.5rem)" }}>{t("home.whyUs.heading")}</motion.h2>
-          <motion.p initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={vp} transition={{ duration: 0.6, delay: 0.2, ease }} className="font-body text-sm sm:text-base text-white/60 leading-relaxed mb-8 sm:mb-10">{t("home.whyUs.description")}</motion.p>
-          <ul className="space-y-3 sm:space-y-4 mb-10 sm:mb-12">
-            {points.map((item, i) => (
-              <motion.li key={i} initial={{ opacity: 0, x: -20, filter: "blur(4px)" }} whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }} viewport={vp} transition={{ duration: 0.55, delay: 0.3 + i * 0.09, ease }} className="flex items-start gap-3">
-                <CheckCircle2 size={17} className="mt-0.5 shrink-0" style={{ color: "hsl(var(--orange))" }} />
-                <span className="font-body text-sm text-white/70">{item}</span>
-              </motion.li>
-            ))}
-          </ul>
-          <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={vp} transition={{ duration: 0.5, delay: 0.7, ease }} className="flex flex-wrap gap-3">
-            <Link href="/catalogue/outdoor" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90 uppercase shadow-md" style={{ backgroundColor: "#B97846" }}>
-              {t("home.whyUs.btn1")} <ArrowRight size={15} />
-            </Link>
-            <Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white border border-white/30 hover:bg-white/10 transition-all backdrop-blur-sm">
-              {t("home.whyUs.btn2")}
-            </Link>
+    <section
+      className="py-16 sm:py-24 border-t border-black/6"
+      style={{ backgroundColor: "#F8F6F0" }}
+    >
+      <div className="container mx-auto px-4 sm:px-6 md:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+          {/* Left Column (40% on desktop): Dark Green Text on Light Background */}
+          <div className="lg:col-span-5">
+            <motion.div
+              initial={{ opacity: 0, x: -16 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={vp}
+              transition={{ duration: 0.5, ease }}
+              className="flex items-center gap-3 mb-5"
+            >
+              <span className="h-px w-8" style={{ backgroundColor: "hsl(var(--orange))" }} />
+              <span
+                className="font-body text-xs tracking-[0.25em] uppercase font-medium"
+                style={{ color: "hsl(var(--orange))" }}
+              >
+                {t("home.whyUs.label", isVi ? "Tại sao chọn DHT" : "Why Choose DHT")}
+              </span>
+            </motion.div>
+
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={vp}
+              transition={{ duration: 0.65, delay: 0.08, ease }}
+              className="font-display font-bold leading-tight mb-5"
+              style={{
+                fontSize: "clamp(1.9rem, 3.4vw, 3rem)",
+                color: "#173C2C",
+              }}
+            >
+              {t(
+                "home.whyUs.heading",
+                isVi ? "Một đầu mối. Phối hợp xuyên suốt." : "One Contact. Coordinated Delivery."
+              )}
+            </motion.h2>
+
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={vp}
+              transition={{ duration: 0.6, delay: 0.16, ease }}
+              className="font-body text-sm sm:text-base leading-relaxed mb-7"
+              style={{ color: "hsl(var(--muted-foreground))" }}
+            >
+              {t(
+                "home.whyUs.description",
+                isVi
+                  ? "Làm việc với một đội ngũ DHT từ yêu cầu ban đầu đến khi xuất hàng, với năng lực sản xuất phù hợp được phối hợp cho từng đơn hàng."
+                  : "Work with one DHT team from the initial brief to shipment, with the appropriate manufacturing capability coordinated for your order."
+              )}
+            </motion.p>
+
+            <ul className="space-y-3.5 mb-8">
+              {points.map((item, i) => (
+                <motion.li
+                  key={i}
+                  initial={{ opacity: 0, x: -16 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={vp}
+                  transition={{ duration: 0.5, delay: 0.22 + i * 0.07, ease }}
+                  className="flex items-start gap-3"
+                >
+                  <CheckCircle2
+                    size={18}
+                    className="mt-0.5 shrink-0"
+                    style={{ color: "hsl(var(--orange))" }}
+                  />
+                  <span className="font-body text-sm sm:text-base font-medium text-[#173C2C]">
+                    {item}
+                  </span>
+                </motion.li>
+              ))}
+            </ul>
+
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={vp}
+              transition={{ duration: 0.5, delay: 0.5, ease }}
+              className="flex flex-wrap gap-3"
+            >
+              <Link
+                href="/catalogue/outdoor"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90 shadow-sm"
+                style={{ backgroundColor: "#B97846" }}
+              >
+                {t("home.whyUs.btn1", isVi ? "Xem Bộ sưu tập" : "Explore Collections")}{" "}
+                <ArrowRight size={15} />
+              </Link>
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90"
+                style={{ backgroundColor: "#173C2C" }}
+              >
+                {t("home.whyUs.btn2", isVi ? "Liên hệ DHT" : "Contact DHT")}
+              </Link>
+            </motion.div>
+          </div>
+
+          {/* Right Column (60% on desktop): Sharp Unblurred Product Setting Image */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={vp}
+            transition={{ duration: 0.7, delay: 0.15, ease }}
+            className="lg:col-span-7"
+          >
+            <div className="relative aspect-[16/10] w-full overflow-hidden rounded-sm shadow-xl border border-black/8 bg-[#173C2C]">
+              <Image
+                src="/img/WhyDHT.png"
+                alt="DHT Furniture Collection"
+                fill
+                className="object-cover object-center"
+                quality={95}
+              />
+            </div>
           </motion.div>
         </div>
       </div>

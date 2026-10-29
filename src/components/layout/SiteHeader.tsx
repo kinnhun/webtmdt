@@ -64,23 +64,23 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
             style={{ minHeight: scrolled ? "64px" : "80px" }}
           >
             {/* LOGO */}
-            <Link href="/" className="flex items-center gap-2.5 sm:gap-3.5 flex-shrink-0 group py-1">
+            <Link href="/" className="flex items-center gap-3 flex-shrink-0 group py-1">
               <Image
                 src="/img/logo.png"
-                alt="DHT Logo"
+                alt="DHT Furniture"
                 width={48}
                 height={48}
                 className="h-9 sm:h-11 w-auto object-contain transition-all duration-200 group-hover:scale-105"
                 priority
               />
-              <Image
-                src="/img/text.png"
-                alt="DHT Furniture"
-                width={150}
-                height={42}
-                className="h-6 sm:h-7.5 w-auto object-contain transition-all duration-200"
-                priority
-              />
+              <div className="flex flex-col justify-center leading-none">
+                <span className="font-display font-bold text-lg sm:text-xl tracking-[0.14em] text-[#D4A853] uppercase">
+                  DHT
+                </span>
+                <span className="font-body font-semibold text-[10px] sm:text-[11px] tracking-[0.26em] text-white/90 uppercase mt-0.5">
+                  FURNITURE
+                </span>
+              </div>
             </Link>
 
             {/* DESKTOP NAV */}
@@ -155,20 +155,32 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 8 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute top-full left-0 w-56 py-2 mt-1 rounded shadow-xl border border-white/10 z-50 backdrop-blur-md"
+                      className="absolute top-full left-0 w-64 py-2 mt-1 rounded shadow-xl border border-white/10 z-50 backdrop-blur-md"
                       style={{ backgroundColor: "hsl(var(--navy-deep)/0.98)" }}
                     >
                       <Link
                         href="/catalogue/outdoor"
                         className="block px-4 py-2.5 text-xs font-medium text-white/80 hover:text-white hover:bg-white/10 transition-colors"
                       >
-                        {tr("nav.outdoorCollection", "Outdoor Collections")}
+                        {tr("nav.outdoorCollection", "Outdoor — DHT")}
                       </Link>
                       <Link
                         href="/catalogue/indoor"
                         className="block px-4 py-2.5 text-xs font-medium text-white/80 hover:text-white hover:bg-white/10 transition-colors border-t border-white/5"
                       >
-                        {tr("nav.indoorCollection", "Indoor & Projects")}
+                        {tr("nav.indoorCollection", "Indoor — JAGER")}
+                      </Link>
+                      <Link
+                        href="/catalogue/indoor?category=Projects"
+                        className="block px-4 py-2.5 text-xs font-medium text-white/80 hover:text-white hover:bg-white/10 transition-colors border-t border-white/5"
+                      >
+                        {tr("nav.projectCollection", "Projects — THE ONE")}
+                      </Link>
+                      <Link
+                        href="/materials/wood-panels-and-processing-mekong"
+                        className="block px-4 py-2.5 text-xs font-medium text-white/80 hover:text-white hover:bg-white/10 transition-colors border-t border-white/5"
+                      >
+                        {tr("nav.materialsCollection", "Wood & Materials — MEKONG")}
                       </Link>
                     </motion.div>
                   )}
@@ -281,13 +293,25 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
                     href="/catalogue/outdoor"
                     className="font-body text-sm font-medium text-white/70 hover:text-white py-1 transition-colors"
                   >
-                    • {tr("nav.outdoorCollection", "Outdoor Collections")}
+                    • {tr("nav.outdoorCollection", "Outdoor — DHT")}
                   </Link>
                   <Link
                     href="/catalogue/indoor"
                     className="font-body text-sm font-medium text-white/70 hover:text-white py-1 transition-colors"
                   >
-                    • {tr("nav.indoorCollection", "Indoor & Projects")}
+                    • {tr("nav.indoorCollection", "Indoor — JAGER")}
+                  </Link>
+                  <Link
+                    href="/catalogue/indoor?category=Projects"
+                    className="font-body text-sm font-medium text-white/70 hover:text-white py-1 transition-colors"
+                  >
+                    • {tr("nav.projectCollection", "Projects — THE ONE")}
+                  </Link>
+                  <Link
+                    href="/materials/wood-panels-and-processing-mekong"
+                    className="font-body text-sm font-medium text-white/70 hover:text-white py-1 transition-colors"
+                  >
+                    • {tr("nav.materialsCollection", "Wood & Materials — MEKONG")}
                   </Link>
                 </div>
               </div>

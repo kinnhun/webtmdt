@@ -1,63 +1,31 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
 import { useTranslation } from "react-i18next";
-import { useState, useEffect } from "react";
-
-const backgroundImages = [
-  "/img/readyToWork/1.png",
-  "/img/readyToWork/2.png",
-  "/img/readyToWork/3.png",
-];
 
 export default function ReadyToWorkTogether() {
-  const { t } = useTranslation();
-  const [currentImageIdx, setCurrentImageIdx] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentImageIdx((prev) => (prev + 1) % backgroundImages.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
+  const { t, i18n } = useTranslation();
+  const isVi = i18n.language?.startsWith("vi");
 
   return (
-    <section className="relative overflow-hidden py-24 sm:py-32 flex items-center justify-center min-h-[60vh]">
-      {/* Background Image with Overlay */}
-      <div className="absolute inset-0 z-0 bg-[#111827]">
-        <AnimatePresence mode="popLayout">
-          <motion.div
-            key={currentImageIdx}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
-            className="absolute inset-0"
-          >
-            <Image
-              src={backgroundImages[currentImageIdx]}
-              alt="Background Slider"
-              fill
-              className="object-cover"
-              priority={currentImageIdx === 0}
-              quality={90}
-            />
-          </motion.div>
-        </AnimatePresence>
-        {/* Dark overlay to make text pop, similar to screenshot */}
-        <div className="absolute inset-0 z-10" style={{ backgroundColor: "rgba(17, 24, 39, 0.85)" }} />
-      </div>
-
+    <section
+      className="relative overflow-hidden py-20 sm:py-28 flex items-center justify-center border-t border-white/10"
+      style={{ backgroundColor: "#173C2C" }}
+    >
       <div className="container mx-auto px-6 relative z-10 text-center max-w-3xl">
         <motion.h2
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="font-display font-medium text-white mb-6 leading-tight"
-          style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)" }}
+          transition={{ duration: 0.65 }}
+          className="font-display font-bold text-white mb-5 leading-tight"
+          style={{ fontSize: "clamp(2.1rem, 4.2vw, 3.6rem)" }}
         >
-          {t("home.cta.heading")}
+          {t(
+            "home.cta.heading",
+            isVi
+              ? "Trao đổi với DHT về nhu cầu nội thất của bạn."
+              : "Let’s Discuss Your Furniture Requirements."
+          )}
         </motion.h2>
 
         <motion.p
@@ -65,9 +33,14 @@ export default function ReadyToWorkTogether() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="font-body text-base sm:text-lg text-white/70 leading-relaxed max-w-2xl mx-auto mb-10"
+          className="font-body text-base sm:text-lg text-white/80 leading-relaxed max-w-2xl mx-auto mb-10"
         >
-          {t("home.cta.description")}
+          {t(
+            "home.cta.description",
+            isVi
+              ? "Hãy cho chúng tôi biết nhu cầu của bạn: bộ sưu tập ngoài trời, nội thất trong nhà hoặc giải pháp cho dự án. Chia sẻ thị trường mục tiêu, số lượng dự kiến và tiến độ. DHT sẽ phối hợp các bước tiếp theo với đội ngũ phù hợp."
+              : "Tell us what you need - outdoor collections, indoor furniture or project solutions. Share your target market, estimated quantity and timeline. DHT will coordinate the next steps with the relevant team."
+          )}
         </motion.p>
 
         <motion.div
@@ -79,18 +52,18 @@ export default function ReadyToWorkTogether() {
         >
           <Link
             href="/contact?type=proposal"
-            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-md font-body font-semibold text-sm text-white transition-all hover:opacity-90 w-full sm:w-auto shadow-sm"
+            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90 w-full sm:w-auto shadow-md"
             style={{ backgroundColor: "hsl(var(--orange))" }}
           >
-            {t("home.cta.btn1")}
+            {t("home.cta.btn1", isVi ? "Yêu cầu Báo giá" : "Request a Quotation")}
           </Link>
           <a
             href="/DHT_Company_Profile_2026.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-md font-body font-semibold text-sm text-white/80 border border-white/10 bg-white/5 hover:bg-white/10 transition-all w-full sm:w-auto"
+            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-sm font-body font-semibold text-sm text-white/90 border border-white/25 bg-white/5 hover:bg-white/10 transition-all w-full sm:w-auto"
           >
-            {t("home.cta.btn2")}
+            {t("home.cta.btn2", isVi ? "Tải Hồ sơ Năng lực (PDF)" : "Download Company Profile (PDF)")}
           </a>
         </motion.div>
       </div>

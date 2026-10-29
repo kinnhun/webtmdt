@@ -69,11 +69,11 @@ export default function ContactPage() {
       width: 'full', 
       label: { us: '<p>Inquiry Type</p>', uk: '<p>Inquiry Type</p>', vi: '<p>Loại yêu cầu / Danh mục</p>' },
       options: [
-        { key: "outdoor", label: { us: "Outdoor Furniture Programme", uk: "Outdoor Furniture Programme", vi: "Chương trình Ngoại thất Outdoor" } },
-        { key: "indoor", label: { us: "Indoor Furniture Programme", uk: "Indoor Furniture Programme", vi: "Chương trình Nội thất Indoor" } },
-        { key: "project", label: { us: "Custom Project & Contract / Hospitality", uk: "Custom Project & Contract / Hospitality", vi: "Dự án Khách sạn & Công trình (Project & Hospitality)" } },
-        { key: "oem", label: { us: "OEM / ODM Manufacturing & Sampling", uk: "OEM / ODM Manufacturing & Sampling", vi: "Sản xuất Gia công OEM/ODM & Mẫu thử" } },
-        { key: "other", label: { us: "Other Commercial Inquiry", uk: "Other Commercial Inquiry", vi: "Yêu cầu thương mại khác" } }
+        { key: "outdoor", label: { us: "Outdoor — DHT (Outdoor Furniture)", uk: "Outdoor — DHT (Outdoor Furniture)", vi: "Outdoor — DHT (Nội thất ngoài trời)" } },
+        { key: "indoor", label: { us: "Indoor — JAGER (Indoor Furniture)", uk: "Indoor — JAGER (Indoor Furniture)", vi: "Indoor — JAGER (Nội thất trong nhà)" } },
+        { key: "project", label: { us: "Project — THE ONE (Project & Contract Furniture)", uk: "Project — THE ONE (Project & Contract Furniture)", vi: "Project — THE ONE (Nội thất dự án)" } },
+        { key: "materials", label: { us: "Materials — MEKONG (Wood Panels & Processing)", uk: "Materials — MEKONG (Wood Panels & Processing)", vi: "Materials — MEKONG (Ván gỗ & chế biến gỗ)" } },
+        { key: "multi", label: { us: "Multi-Category / Commercial Programme", uk: "Multi-Category / Commercial Programme", vi: "Đa danh mục / Chương trình thương mại" } }
       ]
     },
     { id: 'f_subject', key: 'subject', type: 'text', required: true, width: 'full', label: { us: '<p>Subject</p>', uk: '<p>Subject</p>', vi: '<p>Tiêu đề yêu cầu</p>' } },

@@ -17,10 +17,13 @@
     "catalogue": "Bộ sưu tập"
   },
   "footer": {
-    "description": "DHT Furniture Vietnam là nhà sản xuất và xuất khẩu nội thất Việt Nam, hoạt động trong mạng lưới tập đoàn gia đình gồm 11 cơ sở sản xuất trên toàn quốc. Chúng tôi phát triển các dòng sản phẩm nội thất ngoài trời, trong nhà và dự án cho các đối tác quốc tế.",
+    "description": "Nội thất ngoài trời, trong nhà và dự án, được phối hợp triển khai thông qua một đầu mối thương mại DHT.",
     "quickLinks": "Liên kết nhanh",
     "collections": "Bộ sưu tập",
-    "contact": "Liên hệ",
+    "contact": "Liên hệ DHT",
+    "commercialOffice": "Văn phòng thương mại DHT",
+    "officeAddress": "72 Lê Thánh Tôn, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh, Việt Nam",
+    "visitNote": "Vui lòng đặt lịch trước khi tham quan nhà máy.",
     "links": {
       "outdoorCollection": "Bộ sưu tập ngoài trời",
       "indoorCollection": "Nội thất trong nhà & Dự án",
@@ -38,106 +41,98 @@
       "bathroomFurniture": "Nội thất phòng tắm"
     },
     "copyright": "© 2026 Công ty Cổ phần DHT Furniture Vietnam. Bảo lưu mọi quyền.",
-    "tagline": "Nội thất Ngoài trời • Trong nhà • Dự án"
+    "tagline": "Nội thất ngoài trời • Nội thất trong nhà • Nội thất dự án • Ván gỗ & Chế biến gỗ"
   },
   "home": {
     "seo": {
-      "title": "DHT Furniture Vietnam — Nhà sản xuất Nội thất Ngoài trời • Trong nhà • Dự án",
-      "description": "DHT Furniture Vietnam trực thuộc tập đoàn gia đình với 11 cơ sở sản xuất và tổng diện tích 543.380 m² trên toàn quốc. Cung ứng nội thất ngoài trời, trong nhà và dự án cho đối tác quốc tế."
+      "title": "DHT Furniture — Nội thất Ngoài trời, Trong nhà & Dự án",
+      "description": "DHT Furniture kết nối khách hàng quốc tế với năng lực chuyên môn của DHT, JAGER, THE ONE và MEKONG trong mạng lưới 11 cơ sở sản xuất với tổng diện tích 543.380 m² tại Việt Nam."
     },
     "hero": {
-      "badge": "Gỗ Keo • Bạch Đàn • Gỗ Tếch • Nhôm | Gỗ Chứng Nhận FSC | Quy Mô Xuất Khẩu",
-      "title1": "Nhà Sản Xuất & Xuất Khẩu Nội Thất Việt Nam",
-      "title2": "Ngoại Thất • Nội Thất • Dự Án",
-      "description": "DHT là nhà sản xuất và xuất khẩu nội thất Việt Nam, hoạt động trong mạng lưới tập đoàn gia đình gồm 11 cơ sở sản xuất trên toàn quốc. Từ phát triển sản phẩm, làm mẫu đến kiểm soát chất lượng và điều phối xuất khẩu, đội ngũ của chúng tôi luôn đồng hành cùng các chương trình nội thất phù hợp với thị trường của bạn.",
-      "exploreProducts": "Khám phá Sản phẩm",
+      "badge": "DHT • JAGER • THE ONE • MEKONG | Một Đầu Mối Thương Mại",
+      "title1": "Một Đầu Mối Thương Mại. Mạng Lưới Sản Xuất Chuyên Môn Hóa Tại Việt Nam.",
+      "title2": "Nội thất ngoài trời · Nội thất trong nhà · Nội thất dự án · Ván gỗ & Chế biến gỗ",
+      "description": "DHT Furniture kết nối khách hàng quốc tế với năng lực chuyên môn của DHT, JAGER, THE ONE và MEKONG trong mạng lưới sản xuất tại Việt Nam.",
+      "requestQuote": "Yêu cầu Báo giá",
+      "exploreProducts": "Khám phá Bộ sưu tập",
       "viewProfile": "Xem Hồ Sơ Năng Lực (PDF)",
-      "discussOem": "Trao đổi Dự án OEM",
+      "discussOem": "Trao đổi Dự án",
       "getQuote": "Yêu Cầu Báo Giá",
       "stats": {
         "facilities": "Cơ Sở Sản Xuất",
         "footprint": "Tổng Mặt Bằng",
-        "personnel": "Nhân Sự Tập Đoàn",
+        "personnel": "Nhân Sự Mạng Lưới",
         "clusters": "Cụm Sản Xuất"
       }
     },
     "intro": {
       "label": "Về chúng tôi",
-      "heading1": "Một Đội Ngũ DHT.",
-      "heading2": "Sản Xuất Chuyên Môn Hóa",
-      "heading3": "Trên Toàn Quốc",
-      "paragraph1": "Mạng lưới tập đoàn gia đình của chúng tôi kết hợp năng lực sản xuất nội thất ngoài trời, trong nhà và dự án tại các cơ sở chuyên môn hóa trên toàn quốc. DHT trực tiếp quản lý trao đổi với khách hàng, phát triển sản phẩm, điều phối sản xuất, theo dõi chất lượng và sắp xếp xuất khẩu xuyên suốt mỗi chương trình.",
-      "paragraph2": "Cơ sở sản xuất được lựa chọn chính xác theo yêu cầu sản phẩm, vật liệu và tiêu chuẩn của người mua.",
+      "heading": "Một đầu mối cho nội thất ngoài trời, trong nhà và dự án.",
+      "heading1": "Một đầu mối cho",
+      "heading2": "nội thất ngoài trời,",
+      "heading3": "trong nhà và dự án.",
+      "paragraph1": "DHT Furniture kết nối khách hàng quốc tế với năng lực chuyên môn của DHT, JAGER, THE ONE và MEKONG trong mạng lưới sản xuất tại Việt Nam.",
+      "paragraph2": "Từ nội thất ngoài trời, nội thất trong nhà đến yêu cầu dự án và chế biến gỗ, đội ngũ DHT phối hợp phát triển sản phẩm, sản xuất, kiểm soát chất lượng và xuất khẩu thông qua một đầu mối thương mại.",
       "ourStory": "Hành trình phát triển",
       "isoCertified": "Chứng nhận ISO 9001 & FSC CoC",
       "location": "11 Cơ sở Trên Toàn Quốc",
       "statsYears": "2016 Thành lập • 2024 Vươn tầm",
       "statsUnits": "543.380 m² Tổng mặt bằng",
-      "statsCraftspeople": "~2.400 Nhân sự tập đoàn",
+      "statsCraftspeople": "~2.400 Nhân sự mạng lưới",
       "statsExport": "Điều phối trung tâm trực tiếp",
-      "subline": "Gỗ Keo • Bạch Đàn • Gỗ Tếch • Nhôm | Gỗ Chứng Nhận FSC | Đóng Container Ghép Linh Hoạt",
-      "buttons": {
-        "catalog": "XEM BỘ SƯU TẬP",
-        "quote": "YÊU CẦU BÁO GIÁ",
-        "factory": "Hệ thống Cơ sở Sản xuất →"
-      }
-    },
-    "video": {
-      "label": "Chế tác",
-      "title1": "Nghệ thuật",
-      "title2": "Chế tác.",
-      "description": "Mỗi sản phẩm nội thất DHT đều bắt nguồn từ đôi bàn tay khéo léo, nguồn gỗ sấy lò chuẩn mực và quy trình sản xuất nghiêm ngặt tại 11 cơ sở chuyên môn hóa của chúng tôi.",
-      "productionLabel": "11 Cơ sở Sản xuất trong Tập đoàn Gia đình",
-      "facilityHeading": "11 Cơ sở Sản xuất trong Tập đoàn Gia đình",
-      "facilitySub": "10 cơ sở gia công nội thất + 1 nhà máy ván công nghiệp & sơ chế."
-    },
-    "categories": {
-      "label": "Bộ sưu tập",
-      "heading1": "Nội thất Ngoài trời & Dự án cho",
-      "heading2": "Nhà bán lẻ & Nghỉ dưỡng",
-      "viewAll": "Xem Tất cả Bộ sưu tập",
-      "outdoorSofa": {
-        "name": "Bộ Sưu Tập Sofa & Lounge Ngoài Trời",
-        "tagline": "Khung nhôm vững chãi & nệm mút êm ái",
-        "count": "Thiết kế Tiêu chuẩn"
-      },
-      "outdoorDining": {
-        "name": "Bộ Sưu Tập Bàn Ăn Ngoài Trời",
-        "tagline": "Gỗ FSC tự nhiên & vật liệu hỗn hợp",
-        "count": "Quy cách Đa dạng"
-      },
-      "aluminium": {
-        "name": "Nội Thất Nhôm & Vật Liệu Hỗn Hợp",
-        "tagline": "Khung nhôm kiến trúc sơn tĩnh điện",
-        "count": "Chống chịu Thời tiết"
-      },
-      "indoor": {
-        "name": "Nội Thất Trong Nhà & Dự Án",
-        "tagline": "Phòng ăn, Phòng khách, Bọc nệm & Dự án Khách sạn",
-        "count": "Chương trình May đo",
-        "sub": {
-          "livingRoom": "Phòng khách",
-          "diningRoom": "Phòng ăn",
-          "bathroom": "Dự án Khách sạn"
+      "subline": "Nội thất ngoài trời · Nội thất trong nhà · Nội thất dự án · Ván gỗ & Chế biến gỗ",
+      "cards": {
+        "development": {
+          "title": "Phát triển sản phẩm",
+          "detail": "Bản vẽ kỹ thuật, làm mẫu và lựa chọn vật liệu theo yêu cầu."
+        },
+        "coordination": {
+          "title": "Phối hợp sản xuất",
+          "detail": "Điều phối tới cơ sở sản xuất chuyên môn phù hợp tại Việt Nam."
+        },
+        "qc": {
+          "title": "Kiểm soát chất lượng",
+          "detail": "Kiểm tra xuyên suốt từ vật liệu đầu vào đến trước khi xuất hàng."
+        },
+        "logistics": {
+          "title": "Xuất khẩu & logistics",
+          "detail": "Phối hợp đóng gói, đóng container và chứng từ xuất khẩu."
         }
       },
-      "subline": "Gỗ Keo FSC • Gỗ Bạch Đàn FSC • Gỗ Tếch FSC • Nhôm Sơn Tĩnh Điện | Tối Ưu Cho Đơn Hàng Lớn",
-      "sunlounger": {
-        "name": "Ghế Tắm Nắng & Daybed",
-        "tagline": "Thư giãn cạnh hồ bơi & ban công nghỉ dưỡng",
-        "count": "Dự án & Bán lẻ"
+      "buttons": {
+        "catalog": "Xem Bộ sưu tập",
+        "quote": "Yêu cầu Báo giá",
+        "factory": "Năng lực Sản xuất"
+      }
+    },
+    "categories": {
+      "label": "Năng lực Chuyên môn",
+      "heading": "Khám phá năng lực nội thất và vật liệu.",
+      "heading1": "Khám phá năng lực",
+      "heading2": "nội thất và vật liệu.",
+      "viewAll": "Xem Danh mục",
+      "dht": {
+        "name": "Nội thất ngoài trời",
+        "desc": "Các dòng ghế, bộ bàn ăn và bộ lounge ngoài trời."
       },
-      "tables": {
-        "name": "Bộ Sưu Tập Bàn Ngoài Trời",
-        "tagline": "Bàn ăn, bàn phụ & bàn trà ngoài trời",
-        "count": "Kết Cấu Vững Chắc"
+      "jager": {
+        "name": "Nội thất trong nhà",
+        "desc": "Nội thất trong nhà cho không gian nhà ở và thương mại."
+      },
+      "theOne": {
+        "name": "Nội thất dự án",
+        "desc": "Nội thất trong nhà và ngoài trời theo yêu cầu dự án."
+      },
+      "mekong": {
+        "name": "Ván gỗ & chế biến gỗ",
+        "desc": "Năng lực ván gỗ và chế biến gỗ."
       }
     },
     "featured": {
-      "label": "Bộ sưu tập Ngoài trời Tuyển chọn",
-      "heading": "Các Bộ Sưu Tập Tuyển Chọn Cho Chương Trình Quốc Tế",
-      "description": "Được thiết kế kỹ thuật và gia công trên hệ thống 11 cơ sở chuyên môn hóa cho các chuỗi bán lẻ và dự án khách sạn toàn cầu.",
-      "fullCatalogue": "Khám phá Bộ sưu tập Ngoài trời",
+      "label": "Bộ sưu tập Chọn lọc",
+      "heading": "Bộ sưu tập nội thất chọn lọc.",
+      "description": "Khám phá các bộ nội thất chọn lọc. Liên hệ DHT để nhận thông tin về cấu hình, vật liệu và báo giá.",
+      "fullCatalogue": "Xem Toàn bộ Danh mục",
       "seeAllProducts": "Xem Tất cả Sản phẩm",
       "noProducts": "Chưa có sản phẩm nổi bật trong danh mục này.",
       "new": "Tuyển chọn",
@@ -146,52 +141,52 @@
       "filterLoungeSofa": "Sofa & Lounge Ngoài Trời",
       "filterDining": "Bàn Ăn Ngoài Trời",
       "filterSunloungers": "Ghế Tắm Nắng & Daybed",
-      "subline": "Sản xuất tại Việt Nam trên hệ thống 11 cơ sở cho nhà bán lẻ, nhà phân phối và dự án"
+      "subline": "Phối hợp thông qua một đầu mối thương mại DHT trên mạng lưới sản xuất tại Việt Nam"
     },
     "whyUs": {
       "label": "Tại sao chọn DHT",
-      "heading": "Thiết Kế Quanh Chương Trình Của Bạn",
-      "description": "Là đầu mối điều phối tập trung cho mạng lưới 11 cơ sở sản xuất chuyên môn hóa của tập đoàn tại Việt Nam, chúng tôi đảm bảo sự ổn định, tính chuẩn mực chất lượng và thực thi nhanh chóng.",
+      "heading": "Một đầu mối. Phối hợp xuyên suốt.",
+      "description": "Làm việc với một đội ngũ DHT từ yêu cầu ban đầu đến khi xuất hàng, với năng lực sản xuất phù hợp được phối hợp cho từng đơn hàng.",
       "points": [
-        "Sản xuất chuyên môn hóa trên mạng lưới tập đoàn gia đình gồm 11 cơ sở.",
-        "Phát triển OEM và tùy chỉnh vật liệu phù hợp thị trường mục tiêu.",
-        "Kiểm soát chất lượng nghiêm ngặt từ vật liệu đầu vào đến đóng container.",
-        "Quy cách đóng gói và kế hoạch xếp hàng tối ưu theo mô hình phân phối.",
-        "Một đội ngũ DHT thống nhất điều phối mọi trao đổi và yêu cầu xuất khẩu."
+        "Phát triển sản phẩm theo yêu cầu",
+        "Phối hợp sản xuất",
+        "Kiểm soát chất lượng trong sản xuất",
+        "Phối hợp đóng gói và xuất khẩu"
       ],
-      "requestQuote": "Liên hệ Đội ngũ Trung tâm",
+      "requestQuote": "Liên hệ DHT",
       "viewCatalogue": "Xem Hồ sơ Năng lực",
-      "btn1": "KHÁM PHÁ BỘ SƯU TẬP",
-      "btn2": "Yêu cầu báo giá →"
+      "btn1": "Xem Bộ sưu tập",
+      "btn2": "Liên hệ DHT"
     },
     "materials": {
-      "label": "Vật liệu",
-      "heading1": "Vật Liệu Chế Tác Cho",
-      "heading2": "Ngoại Thất, Nội Thất & Dự Án",
-      "description": "Các kết hợp vật liệu được phát triển dựa trên thiết kế, công năng và thị trường mục tiêu. Tiêu chuẩn kỹ thuật, hoàn thiện bề mặt và kiểm nghiệm được thống nhất cho từng chương trình.",
+      "label": "Vật liệu & Chế biến",
+      "heading": "Vật liệu cho các dòng sản phẩm.",
+      "heading1": "Vật liệu cho",
+      "heading2": "các dòng sản phẩm.",
+      "description": "Vật liệu và phương án hoàn thiện được lựa chọn theo từng sản phẩm và mục đích sử dụng. Thông số áp dụng được xác nhận trong báo giá.",
       "solidOak": {
-        "name": "Gỗ Keo (Acacia)",
-        "desc": "Gỗ keo lai FSC trồng tại Việt Nam, hiệu quả chi phí cho đơn hàng lớn"
-      },
-      "walnutWood": {
-        "name": "Gỗ óc chó",
-        "desc": "Sắc nâu sô-cô-la, vân mịn, phong cách giữa thế kỷ"
+        "name": "Gỗ Acacia được chứng nhận FSC",
+        "desc": "Gỗ Acacia dùng cho các thiết kế nội thất được lựa chọn."
       },
       "premiumTeak": {
-        "name": "Gỗ Tếch (Teak)",
-        "desc": "Tectona grandis từ Brazil, độ bền tự nhiên cao cho ngoại thất"
+        "name": "Gỗ Teak được chứng nhận FSC",
+        "desc": "Lựa chọn gỗ Teak cho các bộ sưu tập phù hợp."
       },
-      "linenVelvet": {
-        "name": "Vải ngoài trời",
-        "desc": "Vải sợi Olefin cao cấp. Các tùy chọn vải tùy thuộc vào đặc tả kỹ thuật và khả năng cung ứng."
+      "eucalyptusWood": {
+        "name": "Gỗ Eucalyptus được chứng nhận FSC",
+        "desc": "Gỗ Eucalyptus dùng cho các thiết kế nội thất được lựa chọn."
       },
       "aluminium": {
         "name": "Nhôm sơn tĩnh điện",
-        "desc": "Chống gỉ & nhẹ"
+        "desc": "Phương án hoàn thiện khung được xác định theo từng bộ sưu tập."
       },
-      "eucalyptusWood": {
-        "name": "Gỗ Bạch Đàn",
-        "desc": "Eucalyptus grandis từ Uruguay, chịu lực cao & nguồn cung ổn định"
+      "linenVelvet": {
+        "name": "Vải & vật liệu bọc",
+        "desc": "Lựa chọn cho trong nhà và ngoài trời theo mục đích sử dụng."
+      },
+      "woodPanels": {
+        "name": "Ván gỗ & chế biến gỗ — MEKONG",
+        "desc": "Năng lực ván gỗ và chế biến gỗ."
       }
     },
     "rooms": {
@@ -249,10 +244,10 @@
       ]
     },
     "cta": {
-      "heading": "Cùng Phát Triển Dòng Sản Phẩm Mới",
-      "description": "Chia sẻ yêu cầu sản phẩm, thị trường mục tiêu và sản lượng ước tính. Đội ngũ của chúng tôi sẽ tư vấn vật liệu, phương án sản phẩm và các bước triển khai tiếp theo.",
-      "btn1": "Yêu Cầu Đề Xuất Báo Giá",
-      "btn2": "Xem Hồ Sơ Năng Lực",
+      "heading": "Trao đổi với DHT về nhu cầu nội thất của bạn.",
+      "description": "Hãy cho chúng tôi biết nhu cầu của bạn: bộ sưu tập ngoài trời, nội thất trong nhà hoặc giải pháp cho dự án. Chia sẻ thị trường mục tiêu, số lượng dự kiến và tiến độ. DHT sẽ phối hợp các bước tiếp theo với đội ngũ phù hợp.",
+      "btn1": "Yêu cầu Báo giá",
+      "btn2": "Tải Hồ sơ Năng lực (PDF)",
       "sendInquiry": "Gửi Yêu Cầu",
       "browseCatalogue": "Xem Danh Mục"
     }

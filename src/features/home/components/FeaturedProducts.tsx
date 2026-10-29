@@ -1,103 +1,41 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Eye, Sparkles } from "lucide-react";
+import { ArrowRight, Eye } from "lucide-react";
 import { useInView } from "@/hooks/useInView";
 import { useTranslation } from "react-i18next";
 import QuickViewModal from "@/components/QuickViewModal";
 import { useProducts } from "@/domains/product/product.hooks";
 import type { Product, FilterState } from "@/domains/product/product.types";
 
-const FILTER_KEYS = [
-  "All",
-  "Lounge & Sofa Collections",
-  "Dining",
-  "Sunloungers & Daybeds",
-] as const;
+const EXCLUDED_WATERMARK_TABLES = [
+  "SUN ROUND TABLE",
+  "SEINA TABLE",
+  "RECTANGULAR TABLE",
+  "HAYMONT TABLE",
+];
 
-type FilterKey = typeof FILTER_KEYS[number];
+function isCleanFurnitureSet(product: Product): boolean {
+  const nameUs = (product.name?.us || "").trim().toUpperCase();
+  const code = (product.code || "").trim().toUpperCase();
+  const catUs = (product.category?.us || "").trim().toUpperCase();
 
-const FILTER_I18N: Record<FilterKey, string> = {
-  "All": "home.featured.filterAll",
-  "Lounge & Sofa Collections": "home.featured.filterLoungeSofa",
-  "Dining": "home.featured.filterDining",
-  "Sunloungers & Daybeds": "home.featured.filterSunloungers",
-};
-
-function matchesFilter(product: Product, filter: FilterKey): boolean {
-  if (filter === "All") return true;
-
-  const cat = (product.category?.us || "").trim();
-  const name = (product.name?.us || "").toLowerCase();
-  const code = (product.code || "").toUpperCase();
-
-  if (filter === "Lounge & Sofa Collections") {
-    if (name.includes("sunlounger") || cat.toLowerCase() === "sunloungers & daybeds") {
-      return false;
-    }
-    return (
-      cat === "Lounge & Daybeds" ||
-      cat === "Outdoor Sofas" ||
-      name.includes("lounge") ||
-      name.includes("sofa") ||
-      code.startsWith("ALC-") ||
-      code.startsWith("BLC-") ||
-      code.startsWith("SLC-") ||
-      code.startsWith("TLC-") ||
-      code.startsWith("WLC-") ||
-      code.startsWith("CLC-")
-    );
+  if (EXCLUDED_WATERMARK_TABLES.some((excluded) => nameUs.includes(excluded))) {
+    return false;
   }
-
-  if (filter === "Dining") {
-    return (
-      cat === "Dining Sets" ||
-      cat === "Tables" ||
-      cat === "Chairs" ||
-      name.includes("dining") ||
-      name.includes("table") ||
-      name.includes("chair") ||
-      code.startsWith("MDC-") ||
-      code.startsWith("WDC-") ||
-      code.includes("-TAB-")
-    );
+  if (code.includes("-TAB-") || catUs === "TABLES" || nameUs.endsWith(" TABLE")) {
+    return false;
   }
-
-  if (filter === "Sunloungers & Daybeds") {
-    return (
-      cat === "Sunloungers & Daybeds" ||
-      cat === "Sunlounger" ||
-      name.includes("sunlounger") ||
-      name.includes("daybed")
-    );
-  }
-
-  return false;
-}
-
-function getTargetUrl(filter: FilterKey): string {
-  if (filter === "All") {
-    return "/catalogue/outdoor";
-  }
-  if (filter === "Lounge & Sofa Collections") {
-    return `/catalogue/outdoor?category=${encodeURIComponent("Lounge & Daybeds")}`;
-  }
-  if (filter === "Dining") {
-    return `/catalogue/outdoor?category=${encodeURIComponent("Dining Sets")}`;
-  }
-  if (filter === "Sunloungers & Daybeds") {
-    return `/catalogue/outdoor?category=${encodeURIComponent("Lounge & Daybeds")}`;
-  }
-  return "/catalogue/outdoor";
+  return true;
 }
 
 function FeaturedSkeletonGrid() {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-6 sm:gap-x-5 sm:gap-y-10 md:gap-x-7">
-      {Array.from({ length: 8 }).map((_, i) => (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+      {Array.from({ length: 6 }).map((_, i) => (
         <div key={i} className="animate-pulse space-y-3">
           <div className="rounded-sm aspect-[4/3] bg-black/5" />
-          <div className="h-3 w-16 bg-black/5 rounded" />
+          <div className="h-3 w-20 bg-black/5 rounded" />
           <div className="h-4 w-3/4 bg-black/5 rounded" />
           <div className="h-3 w-1/2 bg-black/5 rounded" />
         </div>
@@ -106,58 +44,109 @@ function FeaturedSkeletonGrid() {
   );
 }
 
-function EditorialProductCard({ product, index, onQuickView }: { product: Product; index: number; onQuickView: (p: Product) => void }) {
+function EditorialProductCard({
+  product,
+  index,
+  onQuickView,
+}: {
+  product: Product;
+  index: number;
+  onQuickView: (p: Product) => void;
+}) {
   const { t, i18n } = useTranslation();
-  const langEnum: Record<string, 'vi' | 'uk' | 'us'> = { "vi-VN": "vi", "en-GB": "uk", "en-US": "us" };
+  const langEnum: Record<string, "vi" | "uk" | "us"> = {
+    "vi-VN": "vi",
+    "en-GB": "uk",
+    "en-US": "us",
+  };
   const langId = langEnum[i18n?.language] || "us";
   const pName = product.name?.[langId] || product.name?.us || "";
-  const pMaterial = (product.material?.[langId] || product.material?.us || "").trim();
-  const pStyle = (product.style?.[langId] || product.style?.us || "").trim();
+  const collectionLabel =
+    typeof product.collection === "string" ? product.collection : "";
+  const pCategory =
+    product.category?.[langId] ||
+    product.category?.us ||
+    collectionLabel ||
+    "Outdoor Furniture";
   const productDetailHref = `/catalogue/${product.slug}`;
 
-  // Filter out empty material and style so no orphaned " · " appears
-  const metaAttributes = [pMaterial, pStyle].filter(Boolean);
-
   return (
-    <motion.div layout initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 16, scale: 0.97 }} transition={{ duration: 0.55, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }} className="group cursor-pointer">
-      <div className="relative overflow-hidden rounded-sm aspect-[4/3] mb-4 shadow-md group-hover:shadow-xl transition-shadow duration-500" style={{ backgroundColor: "hsl(var(--warm-beige))" }}>
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{ duration: 0.5, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
+      className="group flex flex-col bg-white rounded-sm border border-black/8 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden"
+    >
+      <div
+        className="relative overflow-hidden aspect-[4/3] w-full"
+        style={{ backgroundColor: "hsl(var(--warm-beige))" }}
+      >
         <Link href={productDetailHref} className="absolute inset-0 z-0 bg-transparent" />
-        <img src={product.image} alt={pName} className="w-full h-full object-contain p-3 group-hover:scale-[1.07] transition-transform duration-700 ease-out pointer-events-none" loading="lazy" />
-        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 pointer-events-none" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2.5 opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
-          <button onClick={(e) => { e.preventDefault(); e.stopPropagation(); onQuickView(product); }} className="pointer-events-auto flex items-center justify-center min-w-[140px] gap-2 px-5 py-2.5 rounded-sm font-body font-semibold text-sm text-white shadow-lg translate-y-3 group-hover:translate-y-0 transition-all duration-350 hover:brightness-110 cursor-pointer" style={{ backgroundColor: "hsl(var(--orange))" }}>
-            <Eye size={15} /> {t("product.quickView")}
+        <img
+          src={product.image}
+          alt={pName}
+          className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-700 ease-out pointer-events-none"
+          loading="lazy"
+        />
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2.5 opacity-0 group-hover:opacity-100 bg-black/20 transition-all duration-300 pointer-events-none">
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onQuickView(product);
+            }}
+            className="pointer-events-auto flex items-center justify-center min-w-[145px] gap-2 px-5 py-2.5 rounded-sm font-body font-semibold text-xs text-white shadow-lg translate-y-2 group-hover:translate-y-0 transition-all duration-300 hover:brightness-110 cursor-pointer"
+            style={{ backgroundColor: "hsl(var(--orange))" }}
+          >
+            <Eye size={14} /> {t("product.quickView", "Quick View")}
           </button>
-          <Link href={productDetailHref} className="pointer-events-auto flex items-center justify-center min-w-[140px] gap-2 px-5 py-2.5 rounded-sm font-body font-semibold text-sm text-white shadow-lg translate-y-3 group-hover:translate-y-0 transition-all duration-350 delay-75 cursor-pointer" style={{ backgroundColor: "hsl(var(--navy-deep)/0.85)", backdropFilter: "blur(4px)" }}>
-            <ArrowRight size={15} /> {t("product.viewDetails")}
+          <Link
+            href={productDetailHref}
+            className="pointer-events-auto flex items-center justify-center min-w-[145px] gap-2 px-5 py-2.5 rounded-sm font-body font-semibold text-xs text-white shadow-lg translate-y-2 group-hover:translate-y-0 transition-all duration-300 delay-75 cursor-pointer"
+            style={{
+              backgroundColor: "hsl(var(--navy-deep)/0.9)",
+              backdropFilter: "blur(4px)",
+            }}
+          >
+            <ArrowRight size={14} /> {t("product.viewDetails", "View Details")}
           </Link>
         </div>
-        <span className="absolute top-3 left-3 font-body text-xs font-medium px-2.5 py-1 rounded-sm text-white backdrop-blur-sm pointer-events-none truncate max-w-[calc(100%-24px)]" style={{ backgroundColor: "hsl(var(--navy-deep)/0.8)" }} title={product.category?.[langId] || product.category?.us || ""}>{product.category?.[langId] || product.category?.us || ""}</span>
-        {index === 0 && (
-          <span className="absolute top-3 right-3 flex items-center gap-1 font-body text-xs font-semibold px-2.5 py-1 rounded-sm text-white pointer-events-none" style={{ backgroundColor: "hsl(var(--orange))" }}>
-            <Sparkles size={10} /> {t("home.featured.new")}
-          </span>
-        )}
+        <span
+          className="absolute top-3 left-3 font-body text-[11px] font-medium px-2.5 py-1 rounded-sm text-white backdrop-blur-sm pointer-events-none truncate max-w-[calc(100%-24px)]"
+          style={{ backgroundColor: "hsl(var(--navy-deep)/0.85)" }}
+          title={pCategory}
+        >
+          {pCategory}
+        </span>
       </div>
-      <div className="space-y-1">
-        <p className="font-body text-xs tracking-wider" style={{ color: "hsl(var(--orange))" }}>{product.code}</p>
-        <Link href={productDetailHref} className="block">
-          <h3 className="font-display font-semibold text-base leading-snug transition-colors duration-200 hover:opacity-75" style={{ color: "hsl(var(--navy-deep))" }}>
-            {pName}
-          </h3>
-        </Link>
-        <div className="flex items-center justify-between pt-0.5">
-          {metaAttributes.length > 0 ? (
-            <span className="font-body text-xs text-muted-foreground">
-              {metaAttributes.join(" · ")}
-            </span>
-          ) : (
-            <span className="font-body text-xs text-muted-foreground">
-              {product.collection || "Outdoor"}
-            </span>
-          )}
-          <Link href={productDetailHref} className="font-body text-xs font-semibold flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:opacity-75" style={{ color: "hsl(var(--orange))" }}>
-            {t("home.featured.inquire")} <ArrowRight size={11} />
+
+      <div className="p-5 flex-1 flex flex-col justify-between">
+        <div>
+          <p
+            className="font-body text-xs font-semibold tracking-wider uppercase mb-1"
+            style={{ color: "hsl(var(--orange))" }}
+          >
+            {product.code}
+          </p>
+          <Link href={productDetailHref} className="block">
+            <h3
+              className="font-display font-bold text-lg leading-snug transition-colors duration-200 hover:opacity-75"
+              style={{ color: "hsl(var(--navy-deep))" }}
+            >
+              {pName}
+            </h3>
+          </Link>
+        </div>
+
+        <div className="flex items-center justify-between pt-3 mt-3 border-t border-black/6">
+          <span className="font-body text-xs text-muted-foreground">{pCategory}</span>
+          <Link
+            href={productDetailHref}
+            className="font-body text-xs font-semibold flex items-center gap-1 transition-opacity duration-200 hover:opacity-75"
+            style={{ color: "hsl(var(--orange))" }}
+          >
+            {t("home.featured.inquire", "Inquire")} <ArrowRight size={12} />
           </Link>
         </div>
       </div>
@@ -167,71 +156,142 @@ function EditorialProductCard({ product, index, onQuickView }: { product: Produc
 
 export default function FeaturedProducts() {
   const { ref, inView } = useInView();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isVi = i18n.language?.startsWith("vi");
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
-  const [activeFilter, setActiveFilter] = useState<FilterKey>("All");
 
-  const emptyFilters: FilterState = { category: [], material: [], moq: [], color: [], style: [] };
+  const emptyFilters: FilterState = {
+    category: [],
+    material: [],
+    moq: [],
+    color: [],
+    style: [],
+  };
   const { data: rawProducts = [], isLoading } = useProducts(emptyFilters, "");
 
   const validFeaturedProducts = rawProducts.filter(
-    (product) => typeof product.slug === "string" && product.slug.trim() !== ""
+    (product) =>
+      typeof product.slug === "string" &&
+      product.slug.trim() !== "" &&
+      isCleanFurnitureSet(product)
   );
 
-  const filtered = validFeaturedProducts.filter((p) => matchesFilter(p, activeFilter));
-  const displayed = activeFilter === "All" ? filtered.slice(0, 8) : filtered;
-  const targetUrl = getTargetUrl(activeFilter);
+  // 3 columns x 2 rows = 6 sets on desktop
+  const displayed = validFeaturedProducts.slice(0, 6);
 
   return (
-    <section className="py-16 sm:py-28" style={{ backgroundColor: "hsl(var(--warm-cream))" }}>
+    <section className="py-16 sm:py-24" style={{ backgroundColor: "hsl(var(--warm-cream))" }}>
       <div ref={ref}>
         <div className="container mx-auto px-4 sm:px-6 md:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-8 sm:mb-10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-10 sm:mb-12">
             <div>
-              <motion.div initial={{ opacity: 0, x: -16 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.5 }} className="flex items-center gap-3 mb-4">
+              <motion.div
+                initial={{ opacity: 0, x: -16 }}
+                animate={inView ? { opacity: 1, x: 0 } : {}}
+                transition={{ duration: 0.5 }}
+                className="flex items-center gap-3 mb-4"
+              >
                 <span className="h-px w-8" style={{ backgroundColor: "hsl(var(--orange))" }} />
-                <span className="font-body text-xs tracking-[0.25em] uppercase font-medium" style={{ color: "hsl(var(--orange))" }}>{t("home.featured.label")}</span>
+                <span
+                  className="font-body text-xs tracking-[0.25em] uppercase font-medium"
+                  style={{ color: "hsl(var(--orange))" }}
+                >
+                  {t("home.featured.label", isVi ? "Bộ sưu tập Chọn lọc" : "Featured Collections")}
+                </span>
               </motion.div>
-              <motion.h2 initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay: 0.1 }} className="font-display font-bold leading-tight" style={{ fontSize: "clamp(1.8rem, 4vw, 3.5rem)", color: "hsl(var(--navy-deep))" }}>{t("home.featured.heading")}</motion.h2>
-              <motion.p initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.2 }} className="font-body text-xs sm:text-sm text-muted-foreground mt-2 sm:mt-3 max-w-md leading-relaxed">{t("home.featured.description")}</motion.p>
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.7, delay: 0.1 }}
+                className="font-display font-bold leading-tight"
+                style={{
+                  fontSize: "clamp(1.9rem, 3.8vw, 3.25rem)",
+                  color: "hsl(var(--navy-deep))",
+                }}
+              >
+                {t(
+                  "home.featured.heading",
+                  isVi ? "Bộ sưu tập nội thất chọn lọc." : "Selected Furniture Collections."
+                )}
+              </motion.h2>
+              <motion.p
+                initial={{ opacity: 0, y: 12 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="font-body text-sm sm:text-base text-muted-foreground mt-3 max-w-2xl leading-relaxed"
+              >
+                {t(
+                  "home.featured.description",
+                  isVi
+                    ? "Khám phá các bộ nội thất chọn lọc. Liên hệ DHT để nhận thông tin về cấu hình, vật liệu và báo giá."
+                    : "Explore selected furniture sets. Contact DHT for available configurations, materials and quotation details."
+                )}
+              </motion.p>
             </div>
-            <motion.div initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.3 }} className="shrink-0">
-              <Link href={targetUrl} className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90 hover:gap-3" style={{ backgroundColor: "hsl(var(--navy))" }}>{t("home.featured.fullCatalogue")} <ArrowRight size={15} /></Link>
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="shrink-0"
+            >
+              <Link
+                href="/catalogue/outdoor"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90"
+                style={{ backgroundColor: "hsl(var(--navy))" }}
+              >
+                {t("home.featured.fullCatalogue", isVi ? "Xem Toàn bộ Danh mục" : "Full Catalogue")}{" "}
+                <ArrowRight size={15} />
+              </Link>
             </motion.div>
           </div>
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5, delay: 0.35 }} className="flex flex-wrap gap-2.5 mb-8 sm:mb-10">
-            {FILTER_KEYS.map((f) => {
-              const isActive = activeFilter === f;
-              const count = f === "All" ? Math.min(validFeaturedProducts.length, 8) : validFeaturedProducts.filter(p => matchesFilter(p, f)).length;
-              if (count === 0 && !isLoading) return null;
-              return (
-                <button key={f} onClick={() => setActiveFilter(f)} className="relative inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full font-body text-sm font-medium transition-all duration-300 overflow-hidden whitespace-nowrap shrink-0" style={isActive ? { backgroundColor: "hsl(var(--navy-deep))", color: "#fff", boxShadow: "0 4px 14px hsl(var(--navy-deep)/0.25)" } : { backgroundColor: "hsl(var(--warm-beige))", color: "hsl(var(--navy-deep))", border: "1px solid hsl(var(--warm-beige))" }}>
-                  {t(FILTER_I18N[f])}
-                  <span className="inline-flex items-center justify-center min-w-5 h-5 px-1 rounded-full text-[10px] font-bold" style={isActive ? { backgroundColor: "hsl(var(--orange))", color: "#fff" } : { backgroundColor: "hsl(var(--navy-deep)/0.12)", color: "hsl(var(--navy-deep)/0.8)" }}>{count}</span>
-                </button>
-              );
-            })}
-          </motion.div>
+
           {isLoading ? (
             <FeaturedSkeletonGrid />
           ) : (
             <>
-              <motion.div layout className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-6 sm:gap-x-5 sm:gap-y-10 md:gap-x-7">
-                <AnimatePresence mode="popLayout">
-                  {displayed.map((product, i) => (<EditorialProductCard key={product.id || product.code || i} product={product} index={i} onQuickView={setQuickViewProduct} />))}
-                </AnimatePresence>
-              </motion.div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                {displayed.map((product, i) => (
+                  <EditorialProductCard
+                    key={product.id || product.code || i}
+                    product={product}
+                    index={i}
+                    onQuickView={setQuickViewProduct}
+                  />
+                ))}
+              </div>
               {displayed.length === 0 && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-20">
-                  <p className="font-body text-muted-foreground">{t("home.featured.noProducts")}</p>
-                </motion.div>
+                <div className="text-center py-16">
+                  <p className="font-body text-muted-foreground">
+                    {t("home.featured.noProducts", "No products found.")}
+                  </p>
+                </div>
               )}
             </>
           )}
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }} className="flex justify-center mt-16">
-            <Link href={targetUrl} className="group relative inline-flex items-center gap-3 px-10 py-4 rounded-sm font-body font-semibold text-sm overflow-hidden transition-all duration-300 border-2" style={{ borderColor: "hsl(var(--orange))", color: "hsl(var(--orange))" }}>
-              <span className="absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-350 ease-out" style={{ backgroundColor: "hsl(var(--orange))" }} />
-              <span className="relative z-10 group-hover:text-white transition-colors duration-200 flex items-center gap-3">{t("home.featured.seeAllProducts")} <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-200" /></span>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="flex justify-center mt-14"
+          >
+            <Link
+              href="/catalogue/outdoor"
+              className="group relative inline-flex items-center gap-3 px-10 py-4 rounded-sm font-body font-semibold text-sm overflow-hidden transition-all duration-300 border-2"
+              style={{ borderColor: "hsl(var(--orange))", color: "hsl(var(--orange))" }}
+            >
+              <span
+                className="absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-350 ease-out"
+                style={{ backgroundColor: "hsl(var(--orange))" }}
+              />
+              <span className="relative z-10 group-hover:text-white transition-colors duration-200 flex items-center gap-3">
+                {t("home.featured.seeAllProducts", isVi ? "Xem Tất cả Sản phẩm" : "Explore All Collections")}{" "}
+                <ArrowRight
+                  size={16}
+                  className="group-hover:translate-x-1 transition-transform duration-200"
+                />
+              </span>
             </Link>
           </motion.div>
         </div>

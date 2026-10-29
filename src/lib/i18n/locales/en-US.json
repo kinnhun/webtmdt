@@ -17,10 +17,13 @@
     "catalogue": "Catalogue"
   },
   "footer": {
-    "description": "DHT Furniture Vietnam is a Vietnamese furniture manufacturer and exporter, operating as part of a family-owned furniture group with 11 production facilities across Vietnam. We develop outdoor, indoor and project furniture for international buyers.",
+    "description": "Outdoor, indoor and project furniture, coordinated through one DHT commercial team.",
     "quickLinks": "Quick Links",
     "collections": "Collections",
-    "contact": "Contact",
+    "contact": "Contact DHT",
+    "commercialOffice": "DHT Commercial Office",
+    "officeAddress": "72 Le Thanh Ton Street, Ben Nghe Ward, District 1, Ho Chi Minh City, Vietnam",
+    "visitNote": "Factory visits by appointment.",
     "links": {
       "outdoorCollection": "Outdoor Collections",
       "indoorCollection": "Indoor & Projects",
@@ -38,107 +41,99 @@
       "bathroomFurniture": "Bathroom Furniture"
     },
     "copyright": "© 2026 DHT Furniture Vietnam Joint Stock Company. All rights reserved.",
-    "tagline": "Outdoor • Indoor • Project Furniture"
+    "tagline": "Outdoor • Indoor • Project Furniture • Wood & Panels"
   },
   "home": {
     "seo": {
-      "title": "DHT Furniture Vietnam — Outdoor • Indoor • Project Furniture Manufacturer",
-      "description": "DHT Furniture Vietnam operates as part of a family-owned furniture group with 11 production facilities and 543,380 m² combined footprint across Vietnam. Scalable outdoor, indoor and project furniture for international buyers."
+      "title": "DHT Furniture — Outdoor, Indoor & Project Furniture Manufacturer",
+      "description": "DHT Furniture connects international buyers with the specialised capabilities of DHT, JAGER, THE ONE and MEKONG across 11 production facilities and 543,380 m² footprint in Vietnam."
     },
     "hero": {
-      "badge": "Acacia • Eucalyptus • Teak • Aluminum | FSC-Certified Timber | Scalable Programs",
-      "title1": "Vietnamese Furniture Manufacturer & Exporter",
-      "title2": "Outdoor • Indoor • Project Furniture",
-      "description": "DHT is a Vietnamese furniture manufacturer and exporter, operating as part of a family-owned furniture group with 11 production facilities across Vietnam. From product development and sampling to quality control and export coordination, our team supports furniture programmes tailored to your market.",
-      "exploreProducts": "Explore Outdoor Collections",
+      "badge": "DHT • JAGER • THE ONE • MEKONG | One Commercial Contact",
+      "title1": "One Commercial Platform. Specialised Manufacturing Across Vietnam.",
+      "title2": "Outdoor · Indoor · Project Furniture · Wood & Panels",
+      "description": "DHT Furniture connects international buyers with the specialised capabilities of DHT, JAGER, THE ONE and MEKONG across our manufacturing network in Vietnam.",
+      "requestQuote": "Request a Quotation",
+      "exploreProducts": "Explore Collections",
       "viewProfile": "View Company Profile (PDF)",
-      "discussOem": "Discuss Your OEM Project",
+      "discussOem": "Discuss Your Project",
       "getQuote": "Request a Quote",
       "stats": {
         "facilities": "Production Facilities",
         "footprint": "Manufacturing Footprint",
-        "personnel": "Group Personnel",
+        "personnel": "Network Personnel",
         "clusters": "Regional Clusters"
       }
     },
     "intro": {
       "label": "Who We Are",
-      "heading1": "One DHT Team.",
-      "heading2": "Specialised Manufacturing",
-      "heading3": "Across Vietnam",
-      "paragraph1": "Our family-owned group combines outdoor, indoor and project furniture capabilities across specialised production facilities in Vietnam. DHT manages buyer communication, product development, production coordination, quality follow-up and export arrangements throughout each programme.",
-      "paragraph2": "The production facility is selected to match the product, material and buyer requirements.",
+      "heading": "One Partner for Outdoor, Indoor & Project Furniture.",
+      "heading1": "One Partner for Outdoor,",
+      "heading2": "Indoor & Project",
+      "heading3": "Furniture.",
+      "paragraph1": "DHT Furniture connects international buyers with the specialised capabilities of DHT, JAGER, THE ONE and MEKONG across our manufacturing network in Vietnam.",
+      "paragraph2": "From outdoor collections and indoor furniture to project requirements and wood processing, our team coordinates product development, production, quality control and export through one commercial contact.",
       "ourStory": "Our Story",
       "isoCertified": "ISO 9001 & FSC CoC",
       "location": "11 Facilities Across Vietnam",
       "statsYears": "2016 Founded • 2024 Global Scale",
-      "statsUnits": "543,380 m² Group Footprint",
-      "statsCraftspeople": "~2,400 Group Personnel",
+      "statsUnits": "543,380 m² Combined Footprint",
+      "statsCraftspeople": "~2,400 Network Personnel",
       "statsExport": "Direct Central Coordination",
-      "subline": "Acacia • Eucalyptus • Teak • Aluminum | FSC Certified | Mixed Container Loading",
-      "buttons": {
-        "catalog": "VIEW COLLECTIONS",
-        "quote": "REQUEST A QUOTE",
-        "factory": "Production Facilities →"
-      }
-    },
-    "video": {
-      "label": "Craftsmanship",
-      "title1": "The Art of",
-      "title2": "Creation.",
-      "description": "Every DHT furniture piece originates from skilled hands, kiln-dried timber and standard manufacturing processes across our 11 specialized facilities.",
-      "productionLabel": "11 Production Facilities Across Our Family-Owned Group",
-      "facilityHeading": "11 Production Facilities Across Our Family-Owned Group",
-      "facilitySub": "10 furniture facilities + 1 engineered-wood panel and primary-processing facility."
-    },
-    "categories": {
-      "label": "Collections",
-      "heading1": "Outdoor & Project Furniture for",
-      "heading2": "Retailers & Hospitality",
-      "viewAll": "View All Collections",
-      "outdoorSofa": {
-        "name": "Outdoor Lounge & Sofa Collections",
-        "tagline": "Deep comfort & weather-resilient frames",
-        "count": "Curated Sets"
-      },
-      "outdoorDining": {
-        "name": "Outdoor Dining Collections",
-        "tagline": "Solid FSC wood & mixed-material dining",
-        "count": "Modular Programs"
-      },
-      "aluminium": {
-        "name": "Aluminium & Mixed-Material Furniture",
-        "tagline": "Powder-coated architectural frames",
-        "count": "Weatherproof Lines"
-      },
-      "indoor": {
-        "name": "Indoor & Project Furniture",
-        "tagline": "Dining, Living, Upholstered & Turnkey Hospitality",
-        "count": "Tailored Programmes",
-        "sub": {
-          "livingRoom": "Living Room",
-          "diningRoom": "Dining Room",
-          "bathroom": "Hospitality Projects"
+      "subline": "Outdoor · Indoor · Project Furniture · Wood & Panels",
+      "cards": {
+        "development": {
+          "title": "Product Development",
+          "detail": "Technical drawings, sampling and material selection aligned to your brief."
+        },
+        "coordination": {
+          "title": "Production Coordination",
+          "detail": "Allocated to the appropriate specialised facility across Vietnam."
+        },
+        "qc": {
+          "title": "Quality Control",
+          "detail": "In-line inspections from incoming materials to pre-shipment."
+        },
+        "logistics": {
+          "title": "Export & Logistics",
+          "detail": "Packaging, container loading and export documentation coordination."
         }
       },
-      "subline": "FSC Acacia • FSC Eucalyptus • FSC Teak • Powder-Coated Aluminum | Scalable B2B Programmes",
-      "sunlounger": {
-        "name": "Sunloungers & Daybeds",
-        "tagline": "Poolside & terrace relaxation",
-        "count": "Contract & Retail"
+      "buttons": {
+        "catalog": "Explore Collections",
+        "quote": "Request a Quote",
+        "factory": "Manufacturing Network"
+      }
+    },
+    "categories": {
+      "label": "Core Capabilities",
+      "heading": "Explore Our Furniture & Material Capabilities.",
+      "heading1": "Explore Our Furniture &",
+      "heading2": "Material Capabilities.",
+      "viewAll": "View Collections",
+      "dht": {
+        "name": "Outdoor Furniture",
+        "desc": "Outdoor seating, dining and lounge collections."
       },
-      "tables": {
-        "name": "Outdoor Tables & Surfaces",
-        "tagline": "Dining tables, side tables & solid tops",
-        "count": "Engineered Stability"
+      "jager": {
+        "name": "Indoor Furniture",
+        "desc": "Indoor furniture for residential and commercial spaces."
+      },
+      "theOne": {
+        "name": "Project Furniture",
+        "desc": "Indoor and outdoor furniture for project requirements."
+      },
+      "mekong": {
+        "name": "Wood & Panels",
+        "desc": "Wood panels and timber processing capabilities."
       }
     },
     "featured": {
-      "label": "Selected Outdoor Collections",
-      "heading": "Featured Collections for Global Programmes",
-      "description": "Engineered and manufactured across our specialized facilities for international retail programs and hospitality projects.",
-      "fullCatalogue": "Explore Outdoor Collections",
-      "seeAllProducts": "View All Products",
+      "label": "Featured Collections",
+      "heading": "Selected Furniture Collections.",
+      "description": "Explore selected furniture sets. Contact DHT for available configurations, materials and quotation details.",
+      "fullCatalogue": "Full Catalogue",
+      "seeAllProducts": "Explore All Collections",
       "noProducts": "No featured products in this category yet.",
       "new": "Selected",
       "inquire": "Inquire",
@@ -146,52 +141,52 @@
       "filterLoungeSofa": "Lounge & Sofa Collections",
       "filterDining": "Dining",
       "filterSunloungers": "Sunloungers & Daybeds",
-      "subline": "Manufactured in Vietnam across 11 facilities for retailers, distributors, and project buyers"
+      "subline": "Coordinated through one DHT commercial team across our manufacturing network in Vietnam"
     },
     "whyUs": {
-      "label": "Why DHT",
-      "heading": "Built Around Your Furniture Programme",
-      "description": "Operating as the single coordination point for 11 specialized manufacturing facilities across Vietnam, we deliver stability, quality integrity, and responsive execution.",
+      "label": "Why Choose DHT",
+      "heading": "One Contact. Coordinated Delivery.",
+      "description": "Work with one DHT team from the initial brief to shipment, with the appropriate manufacturing capability coordinated for your order.",
       "points": [
-        "Specialised production across our family-owned group.",
-        "OEM development and material adaptation for your market.",
-        "Quality checks from incoming materials to container loading.",
-        "Packaging and loading plans aligned with your distribution model.",
-        "One DHT team coordinating communication and export requirements."
+        "Product development to your brief",
+        "Production coordination",
+        "Quality control during production",
+        "Packing and export coordination"
       ],
-      "requestQuote": "Contact Central Team",
+      "requestQuote": "Contact DHT",
       "viewCatalogue": "View Company Profile",
-      "btn1": "EXPLORE COLLECTIONS",
-      "btn2": "Request Quote →"
+      "btn1": "Explore Collections",
+      "btn2": "Contact DHT"
     },
     "materials": {
-      "label": "Materials",
-      "heading1": "Materials for Outdoor,",
-      "heading2": "Indoor & Project Furniture",
-      "description": "Material combinations are developed around the product design, intended use and target market. Specifications, finishes and relevant testing are agreed for each programme.",
+      "label": "Materials & Processing",
+      "heading": "Materials Across Our Furniture Range.",
+      "heading1": "Materials Across",
+      "heading2": "Our Furniture Range.",
+      "description": "Materials and finishes are selected for each product and its intended use. Available specifications are confirmed in the quotation.",
       "solidOak": {
-        "name": "Acacia Wood",
-        "desc": "Cost-effective & suitable for retail programs"
-      },
-      "walnutWood": {
-        "name": "Walnut Wood",
-        "desc": "Deep chocolate hues, fine texture, mid-century warmth"
+        "name": "FSC-Certified Acacia",
+        "desc": "Acacia wood for selected furniture designs."
       },
       "premiumTeak": {
-        "name": "Teak Wood",
-        "desc": "High durability for outdoor environments"
-      },
-      "linenVelvet": {
-        "name": "Outdoor Fabric",
-        "desc": "Solution-dyed Olefin & performance textiles. Fabric options subject to specification and availability."
-      },
-      "aluminium": {
-        "name": "Powder-Coated Aluminum",
-        "desc": "Rust-resistant & lightweight"
+        "name": "FSC-Certified Teak",
+        "desc": "Teak options for selected collections."
       },
       "eucalyptusWood": {
-        "name": "Eucalyptus Wood",
-        "desc": "FSC Eucalyptus grandis from Uruguay, dense & durable"
+        "name": "FSC-Certified Eucalyptus",
+        "desc": "Eucalyptus wood for selected furniture designs."
+      },
+      "aluminium": {
+        "name": "Powder-Coated Aluminium",
+        "desc": "Frame finishes specified for each collection."
+      },
+      "linenVelvet": {
+        "name": "Fabrics & Upholstery",
+        "desc": "Indoor and outdoor options specified by application."
+      },
+      "woodPanels": {
+        "name": "Wood Panels & Processing — MEKONG",
+        "desc": "Wood panels and timber processing capabilities."
       }
     },
     "rooms": {
@@ -249,10 +244,10 @@
       ]
     },
     "cta": {
-      "heading": "Let’s Develop Your Next Furniture Range",
-      "description": "Share your product brief, target market and estimated order volume. Our team will review suitable materials, product options and the next development steps.",
-      "btn1": "Request a Product Proposal",
-      "btn2": "View Company Profile",
+      "heading": "Let’s Discuss Your Furniture Requirements.",
+      "description": "Tell us what you need - outdoor collections, indoor furniture or project solutions. Share your target market, estimated quantity and timeline. DHT will coordinate the next steps with the relevant team.",
+      "btn1": "Request a Quotation",
+      "btn2": "Download Company Profile (PDF)",
       "sendInquiry": "Send Inquiry",
       "browseCatalogue": "Browse Catalogue"
     }

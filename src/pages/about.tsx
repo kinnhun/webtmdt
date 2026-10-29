@@ -91,6 +91,7 @@ export default function AboutPage() {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
+  /* Timeline scroll hooks (tạm comment cùng phần timeline)
   const timelineRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress: tlProgress } = useScroll({ target: timelineRef, offset: ["start center", "end center"] });
 
@@ -138,6 +139,8 @@ export default function AboutPage() {
       }
     });
   });
+
+  */
 
   const hasDB = !!dbData;
 
@@ -493,7 +496,7 @@ export default function AboutPage() {
             <motion.span initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: 0.2 }} className="font-body text-[hsl(var(--orange))] tracking-widest md:tracking-[0.4em] uppercase text-xs sm:text-sm mb-6 sm:mb-8 block font-bold">
               {d(['hero', 'subtitle'], "about.hero.subtitle")}
             </motion.span>
-            <motion.h1 initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2, delay: 0.4 }} className="font-display font-black text-white italic tracking-tighter uppercase mb-6 leading-[1.1] max-w-5xl mx-auto break-words" style={{ fontSize: "clamp(1.75rem, 5vw + 1rem, 4.5rem)" }}>
+            <motion.h1 initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2, delay: 0.4 }} className="font-display font-bold text-white mb-6 leading-[1.15] max-w-5xl mx-auto break-words" style={{ fontSize: "clamp(1.75rem, 5vw + 1rem, 4.5rem)" }}>
               {d(['hero', 'title'], "about.hero.title")}
             </motion.h1>
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.2, delay: 0.8 }} className="font-body text-white/80 text-base sm:text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto font-light leading-relaxed">
@@ -509,39 +512,42 @@ export default function AboutPage() {
         <MarqueeStrip items={marqueeItems || (t("about.marquee", { returnObjects: true }) as string[])} />
 
         {/* ── 2. Welcome Message (DHT) ── */}
-        <section className="relative py-32 overflow-hidden" style={{ backgroundColor: "hsl(var(--navy-deep))" }}>
+        <section className="relative py-24 sm:py-32 overflow-hidden" style={{ backgroundColor: "hsl(var(--navy-deep))" }}>
           <div className="absolute inset-0">
             <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&auto=format&fit=crop&q=85" alt="Background" className="w-full h-full object-cover opacity-10" />
             <div className="absolute inset-0 bg-black/40" />
           </div>
           <div className="container mx-auto px-6 relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
               {/* Left Column */}
-              <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8 }} className="min-w-0 w-full">
-                <h2 className="font-display font-black uppercase italic tracking-tighter text-white mb-8 leading-[0.85] whitespace-pre-line" style={{ fontSize: "clamp(3rem, 7vw, 5.5rem)", color: "hsl(var(--orange))" }}>
+              <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8 }} className="lg:col-span-6 min-w-0 w-full">
+                <div className="flex items-center gap-3 mb-5">
+                  <span className="h-px w-8 bg-[hsl(var(--orange))]" />
+                  <span className="font-body text-xs tracking-[0.25em] uppercase font-bold text-[hsl(var(--orange))]">
+                    {langKey === 'vi' ? "Tại sao chọn DHT" : "Why Choose DHT"}
+                  </span>
+                </div>
+                <h2 className="font-display font-bold text-white mb-6 leading-tight whitespace-pre-line" style={{ fontSize: "clamp(2rem, 3.8vw, 3.25rem)" }}>
                   {d(['welcome', 'title'], "about.welcome.title")}
                 </h2>
-                <div className="w-16 h-16 mb-10 rounded-full flex items-center justify-center bg-[hsl(var(--orange))] shadow-2xl shadow-[hsl(var(--orange))]/30">
-                  <span className="text-4xl text-[hsl(var(--navy-deep))] transform -translate-y-1">❞</span>
-                </div>
                 <div
-                  className="font-body text-white text-xl sm:text-2xl leading-relaxed max-w-md lg:max-w-xl font-light about-rich-text"
+                  className="font-body text-white/80 text-base sm:text-lg leading-relaxed max-w-xl font-normal about-rich-text"
                   dangerouslySetInnerHTML={{ __html: String(d(['welcome', 'description'], "about.welcome.description")).replace(/&nbsp;/g, ' ') }}
                 />
               </motion.div>
 
               {/* Right Column */}
-              <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8, delay: 0.3 }} className="space-y-12 lg:space-y-16 min-w-0 w-full">
+              <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8, delay: 0.2 }} className="lg:col-span-6 space-y-7 sm:space-y-8 min-w-0 w-full">
                 {welcomeValues.map((val: any, i: number) => (
-                  <div key={i} className="flex items-start gap-5 sm:gap-8 group">
-                    <div className="w-16 sm:w-24 shrink-0 text-left font-display font-black leading-none group-hover:scale-110 transition-transform duration-500 origin-bottom-left" style={{ fontSize: "clamp(3.5rem, 8vw, 5.5rem)", color: "hsl(var(--orange))", marginTop: "-0.1em" }}>
+                  <div key={i} className="flex items-start gap-5 sm:gap-6 group">
+                    <div className="w-12 sm:w-16 shrink-0 text-left font-display font-bold leading-none text-[hsl(var(--orange))]" style={{ fontSize: "clamp(2.25rem, 4vw, 3.25rem)", marginTop: "-0.05em" }}>
                       {String(i + 1).padStart(2, '0')}
                     </div>
-                    <div className="pt-2 sm:pt-4 min-w-0 flex-1">
-                      <h3 className="font-display font-bold text-white text-xl sm:text-3xl tracking-widest mb-2 uppercase">
+                    <div className="pt-1 min-w-0 flex-1">
+                      <h3 className="font-display font-bold text-white text-lg sm:text-xl mb-1.5 leading-snug group-hover:text-[hsl(var(--orange))] transition-colors">
                         {val.title}
                       </h3>
-                      <p className="font-body text-white/60 text-base sm:text-lg leading-relaxed font-light">
+                      <p className="font-body text-white/70 text-sm sm:text-base leading-relaxed">
                         {val.desc}
                       </p>
                     </div>
@@ -562,7 +568,7 @@ export default function AboutPage() {
                     <span className="h-px w-16 bg-[hsl(var(--orange))]" />
                     <span className="font-body text-xs tracking-widest uppercase font-bold text-[hsl(var(--orange))]">{d(['story', 'label'], "about.story.label")}</span>
                   </div>
-                  <h2 className="font-display font-black text-foreground leading-[1.1] tracking-tight mb-8" style={{ fontSize: "clamp(3rem, 6vw, 5rem)" }}>
+                  <h2 className="font-display font-bold text-foreground leading-tight tracking-tight mb-6" style={{ fontSize: "clamp(3rem, 6vw, 5rem)" }}>
                     {d(['story', 'heading'], "about.story.heading")}
                   </h2>
                   <div className="w-24 h-2 bg-[hsl(var(--orange))] mb-10" />
@@ -605,7 +611,7 @@ export default function AboutPage() {
                 <span className="font-body text-xs tracking-widest uppercase font-bold text-[hsl(var(--orange))]">{d(['values', 'label'], "about.values.label")}</span>
                 <span className="h-px w-8 bg-[hsl(var(--orange))]" />
               </div>
-              <h2 className="font-display font-black text-foreground" style={{ fontSize: "clamp(3rem, 6vw, 4.5rem)" }}>{d(['values', 'heading'], "about.values.heading")}</h2>
+              <h2 className="font-display font-bold text-foreground" style={{ fontSize: "clamp(3rem, 6vw, 4.5rem)" }}>{d(['values', 'heading'], "about.values.heading")}</h2>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10">
@@ -625,9 +631,9 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* ── 5. Timeline (Interactive Storytelling) ── */}
+        {/* ── 5. Timeline (Interactive Storytelling) [ĐÃ COMMENT THEO YÊU CẦU] ──
         <section className="py-32 relative overflow-hidden bg-white">
-          {/* Subtle Background Motion — moving gradient orbs for depth */}
+          // Subtle Background Motion — moving gradient orbs for depth 
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
             <motion.div
               animate={{ x: ["-10%", "10%"], y: ["-10%", "10%"] }}
@@ -660,11 +666,11 @@ export default function AboutPage() {
             </motion.div>
 
             <div ref={tlWrapRef} className="relative max-w-5xl mx-auto pb-16">
-              {/* ─── Center Line: drawn by scroll via scaleY + direct DOM ref (zero re-renders) ─── */}
+              // ─── Center Line: drawn by scroll via scaleY + direct DOM ref (zero re-renders) ─── 
               <div className="absolute left-6 md:left-1/2 top-0 bottom-0 md:-translate-x-1/2 pointer-events-none z-0" style={{ width: 2 }}>
-                {/* Background track — always visible */}
+                // Background track — always visible 
                 <div className="absolute inset-0" style={{ width: 2, backgroundColor: "rgba(245,166,35,0.15)" }} />
-                {/* Animated fill line — scaleY via ref, no React state */}
+                // Animated fill line — scaleY via ref, no React state 
                 <div
                   ref={tlLineRef}
                   className="absolute inset-0 origin-top will-change-transform"
@@ -674,7 +680,7 @@ export default function AboutPage() {
                     background: "linear-gradient(to bottom, hsl(var(--orange)), rgba(245,166,35,0.6) 60%, rgba(245,166,35,0.2))",
                   }}
                 >
-                  {/* Glowing teardrop tip */}
+                  // Glowing teardrop tip 
                   <div
                     ref={tlTipRef}
                     className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 animate-pulse"
@@ -705,7 +711,7 @@ export default function AboutPage() {
                     ref={(el) => { tlItemsRef.current[i] = el; }}
                     className="tl-item relative flex flex-col md:flex-row items-center mb-20 lg:mb-32 last:mb-0 cursor-default"
                   >
-                    {/* ─── Popping Dot with Icon ─── */}
+                    // ─── Popping Dot with Icon ─── 
                     <motion.div
                       initial={{ scale: 0.6, opacity: 0 }}
                       whileInView={{ scale: 1, opacity: 1 }}
@@ -717,11 +723,11 @@ export default function AboutPage() {
                       }}
                     >
                       <TimelineIcon size={18} className="tl-dot-icon text-[hsl(var(--orange))] transition-colors duration-300" />
-                      {/* Hover ring pulse */}
+                      // Hover ring pulse 
                       <div className="tl-ring absolute inset-0 rounded-full border-2 border-[hsl(var(--orange))] opacity-0 scale-100 transition-all duration-500 pointer-events-none" />
                     </motion.div>
 
-                    {/* ─── Content Card with slide animation ─── */}
+                    // ─── Content Card with slide animation ─── 
                     <div className={`w-full md:w-1/2 pl-20 md:pl-0 ${isEven ? 'md:pr-20 lg:md:pr-28 md:text-right' : 'md:pl-20 lg:md:pl-28 md:ml-auto'}`}>
                       <motion.div
                         initial={{ opacity: 0, x: isEven ? -50 : 50, y: 10 }}
@@ -730,7 +736,7 @@ export default function AboutPage() {
                         transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
                         className="tl-card relative bg-white/60 backdrop-blur-sm p-7 md:p-8 rounded-xl transition-all duration-400 border border-transparent"
                       >
-                        {/* Year — HERO treatment with gradient + glow */}
+                        // Year — HERO treatment with gradient + glow 
                         <span
                           suppressHydrationWarning
                           translate="no"
@@ -756,7 +762,7 @@ export default function AboutPage() {
               })}
             </div>
 
-            {/* ─── Closing Statement ─── */}
+            // ─── Closing Statement ─── 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -771,13 +777,14 @@ export default function AboutPage() {
             </motion.div>
           </div>
         </section>
+        */}
 
         {/* ── 6. Stats & Capabilities (Dark Premium) ── */}
         <section className="py-32 bg-[hsl(var(--navy-deep))] text-white relative">
           <div className="absolute inset-0 bg-[url('/img/WhyDHT.png')] opacity-5 bg-cover bg-center mix-blend-overlay" />
           <div className="container mx-auto px-6 relative z-10">
             <div className="text-center mb-24 lg:mb-32">
-              <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="font-display font-black text-white mb-6 break-words hyphens-auto" style={{ fontSize: "clamp(1.75rem, 8vw, 4.5rem)", wordBreak: "break-word" }}>{d(['stats', 'heading'], "about.stats.heading")}</motion.h2>
+              <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="font-display font-bold text-white mb-6 leading-tight break-words" style={{ fontSize: "clamp(1.75rem, 8vw, 4.5rem)", wordBreak: "break-word" }}>{d(['stats', 'heading'], "about.stats.heading")}</motion.h2>
               <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.2 }} className="font-body text-white/50 text-xl max-w-2xl mx-auto font-light leading-relaxed">{d(['stats', 'subtitle'], "about.stats.subtitle")}</motion.p>
             </div>
 
@@ -835,7 +842,7 @@ export default function AboutPage() {
             <div className={`grid gap-8 lg:gap-12 ${machineryItems.length > 0 ? "lg:grid-cols-2" : "grid-cols-1 max-w-4xl mx-auto w-full"}`}>
               {/* Human Resources & R&D */}
               <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className={`p-10 lg:p-16 bg-white/2 backdrop-blur-md border border-white/5 rounded-sm hover:bg-white/4 hover:border-white/10 transition-colors duration-500 ${machineryItems.length === 0 ? "text-center flex flex-col items-center" : ""}`}>
-                <h3 className={`font-display font-black text-3xl lg:text-4xl mb-12 text-white flex items-center gap-4 ${machineryItems.length === 0 ? "justify-center" : ""}`}>
+                <h3 className={`font-display font-bold text-2xl lg:text-3xl mb-8 text-white flex items-center gap-4 ${machineryItems.length === 0 ? "justify-center" : ""}`}>
                   {machineryItems.length > 0 && <span className="w-12 h-1 bg-[hsl(var(--orange))]" />}
                   {d(['stats', 'hr', 'heading'], "about.hr.heading")}
                   {/* {machineryItems.length === 0 && <span className="w-12 h-1 bg-[hsl(var(--orange))]" />} */}
@@ -855,7 +862,7 @@ export default function AboutPage() {
               {/* Machinery */}
               {machineryItems.length > 0 && (
                 <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.2 }} className="p-10 lg:p-16 bg-white/2 backdrop-blur-md border border-white/5 rounded-sm hover:bg-white/4 hover:border-white/10 transition-colors duration-500">
-                  <h3 className="font-display font-black text-3xl lg:text-4xl mb-12 text-white flex items-center gap-4">
+                  <h3 className="font-display font-bold text-2xl lg:text-3xl mb-8 text-white flex items-center gap-4">
                     <span className="w-12 h-1 bg-[hsl(var(--orange))]" />
                     {d(['stats', 'machinery', 'heading'], "about.machinery.heading")}
                   </h3>
@@ -890,7 +897,7 @@ export default function AboutPage() {
                 </span>
                 <span className="h-px w-8 bg-[hsl(var(--orange))]" />
               </div>
-              <h2 className="font-display font-black text-foreground mb-4 text-3xl sm:text-4xl lg:text-5xl leading-tight">
+              <h2 className="font-display font-bold text-foreground mb-4 text-2xl sm:text-3xl lg:text-4xl leading-tight">
                 {t("about.operatingModel.heading", langKey === 'vi' ? "Quy Trình Phối Hợp 6 Bước" : "6-Stage Programme Execution")}
               </h2>
               <p className="font-body text-muted-foreground text-base sm:text-lg leading-relaxed">
@@ -946,7 +953,7 @@ export default function AboutPage() {
           <div className="container mx-auto px-6 relative z-10">
             {/* Heading */}
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="text-center mb-24">
-              <h2 className="font-display font-black uppercase text-foreground mb-6" style={{ fontSize: "clamp(3rem, 6vw, 4.5rem)" }}>
+              <h2 className="font-display font-bold text-foreground mb-6 leading-tight" style={{ fontSize: "clamp(3rem, 6vw, 4.5rem)" }}>
                 {d(['team', 'heading'], "about.team.heading")}
               </h2>
               <div className="w-24 h-1 bg-[hsl(var(--orange))] mx-auto" />
@@ -964,7 +971,7 @@ export default function AboutPage() {
                 )}
               </div>
               <div className="p-8 pb-10 md:p-0 md:pt-2 grow text-center md:text-left flex flex-col justify-center h-full w-full">
-                {teamLeader.name && <h3 className="font-display font-black text-4xl sm:text-5xl uppercase tracking-wider mb-4 text-foreground">{teamLeader.name}</h3>}
+                {teamLeader.name && <h3 className="font-display font-bold text-2xl sm:text-3xl mb-2 text-foreground">{teamLeader.name}</h3>}
                 {teamLeader.role && (
                   <div className="mb-10">
                     <span className="inline-block px-5 py-2.5 text-xs font-body font-bold uppercase tracking-widest bg-[hsl(var(--orange))] text-white rounded-sm">
@@ -1008,7 +1015,7 @@ export default function AboutPage() {
                     )}
                   </div>
                   <div className="p-8 flex flex-col grow text-center">
-                    {m.name && <h3 className="font-display font-black text-4xl sm:text-2xl uppercase tracking-wider mb-2 text-foreground group-hover:text-[hsl(var(--orange))] transition-colors duration-500">{m.name}</h3>}
+                    {m.name && <h3 className="font-display font-bold text-xl sm:text-2xl mb-1.5 text-foreground group-hover:text-[hsl(var(--orange))] transition-colors duration-300">{m.name}</h3>}
                     {m.role && <span className="text-xs sm:text-[10px] font-body font-bold uppercase tracking-widest mb-6 text-[hsl(var(--orange))]">{m.role}</span>}
 
                     {m.quote && m.quote.trim() !== '' && (
@@ -1093,7 +1100,7 @@ export default function AboutPage() {
         <section className="py-32 bg-[#FAFAFA]">
           <div className="container mx-auto px-6">
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="text-center mb-24">
-              <h2 className="font-display font-black text-foreground mb-6" style={{ fontSize: "clamp(3rem, 6vw, 4.5rem)" }}>{d(['locations', 'heading'], "about.locations.heading")}</h2>
+              <h2 className="font-display font-bold text-foreground mb-6 leading-tight" style={{ fontSize: "clamp(3rem, 6vw, 4.5rem)" }}>{d(['locations', 'heading'], "about.locations.heading")}</h2>
               <div className="w-24 h-1 bg-[hsl(var(--orange))] mx-auto" />
             </motion.div>
 
@@ -1116,7 +1123,7 @@ export default function AboutPage() {
                       <Globe size={24} className="text-foreground group-hover:text-white transition-colors duration-500" />
                     </div>
                     {hasName && (
-                      <h3 className="font-display font-black text-2xl mb-4 text-foreground uppercase tracking-wide wrap-break-word">{loc.name}</h3>
+                      <h3 className="font-display font-bold text-xl mb-3 text-foreground wrap-break-word">{loc.name}</h3>
                     )}
                     {hasAddress ? (
                       <p className="font-body text-muted-foreground mb-8 leading-loose font-light grow wrap-break-word">
@@ -1143,11 +1150,11 @@ export default function AboutPage() {
         <section className="py-40 text-center relative overflow-hidden bg-[hsl(var(--navy-deep))]">
           <div className="absolute inset-0 bg-black/50" />
           <div className="container mx-auto px-6 relative z-10 flex flex-col items-center">
-            <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="font-display font-black text-white mb-12 uppercase tracking-tight" style={{ fontSize: "clamp(3rem, 6vw, 5rem)" }}>
+            <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="font-display font-bold text-white mb-8 leading-tight" style={{ fontSize: "clamp(3rem, 6vw, 5rem)" }}>
               {d(['cta', 'heading'], "about.cta.heading")}
             </motion.h2>
             <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.2 }}>
-              <Link href="/contact" className="inline-flex items-center gap-4 px-12 py-6 font-display font-black text-lg text-black bg-[hsl(var(--orange))] hover:bg-white hover:text-black transition-all duration-500 shadow-xl hover:shadow-white/20 uppercase tracking-widest group">
+              <Link href="/contact" className="inline-flex items-center gap-4 px-12 py-6 font-body font-bold text-base text-white bg-[hsl(var(--orange))] hover:bg-white hover:text-black transition-all duration-300 shadow-xl rounded-sm group">
                 {d(['cta', 'button'], "about.cta.button")}
                 <ChevronRight size={24} className="group-hover:translate-x-2 transition-transform duration-500" />
               </Link>

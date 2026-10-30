@@ -1,13 +1,28 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 export default function HeroSection() {
   const ref = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const { t, i18n } = useTranslation();
   const isVi = i18n.language?.startsWith("vi");
+
+  // Guarantee HTML5 video autoplay across all browsers without user interaction
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+      videoRef.current.defaultMuted = true;
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Fallback if browser requires touch/interaction
+        });
+      }
+    }
+  }, []);
 
   return (
     <section
@@ -19,6 +34,7 @@ export default function HeroSection() {
       <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
         {/* Background Native HTML5 Video — 100% Pure Video: No Buttons, No Iframe, No YouTube Overlay */}
         <video
+          ref={videoRef}
           autoPlay
           loop
           muted

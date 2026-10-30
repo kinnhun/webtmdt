@@ -1,54 +1,13 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 
 export default function HeroSection() {
   const ref = useRef<HTMLElement>(null);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
   const { t, i18n } = useTranslation();
   const isVi = i18n.language?.startsWith("vi");
-
-  // Keep YouTube video playing and muted continuously without pausing
-  useEffect(() => {
-    const handleMessage = (event: MessageEvent) => {
-      try {
-        const data = typeof event.data === "string" ? JSON.parse(event.data) : event.data;
-        // YouTube PlayerState: 0 = ENDED, 2 = PAUSED
-        if (data && (data.event === "onStateChange" || data.info === 2 || data.info === 0)) {
-          if (data.info === 2 || data.info === 0) {
-            iframeRef.current?.contentWindow?.postMessage(
-              JSON.stringify({ event: "command", func: "playVideo", args: [] }),
-              "*"
-            );
-          }
-        }
-      } catch {
-        // Ignore non-json messages
-      }
-    };
-
-    window.addEventListener("message", handleMessage);
-
-    // Initial keep-alive interval: enforces play & mute so it never shows pause overlay
-    const interval = setInterval(() => {
-      iframeRef.current?.contentWindow?.postMessage(
-        JSON.stringify({ event: "command", func: "mute", args: [] }),
-        "*"
-      );
-      iframeRef.current?.contentWindow?.postMessage(
-        JSON.stringify({ event: "command", func: "playVideo", args: [] }),
-        "*"
-      );
-    }, 2500);
-
-    return () => {
-      window.removeEventListener("message", handleMessage);
-      clearInterval(interval);
-    };
-  }, []);
 
   return (
     <section
@@ -57,54 +16,35 @@ export default function HeroSection() {
       style={{ minHeight: "100svh", backgroundColor: "#0E241B" }}
     >
       {/* Background Factory Video & Forest Green Overlays */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Fallback image while video is loading */}
-        <Image
-          src="/img/WhyDHT.png"
-          alt="DHT Furniture Manufacturing Network"
-          fill
-          priority
-          quality={85}
-          className="object-cover object-center scale-105 pointer-events-none"
-        />
-
-        {/* Background YouTube Video Embed - scaled to crop any edge UI */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
-          <iframe
-            ref={iframeRef}
-            src="https://www.youtube-nocookie.com/embed/roXn8vbbRkI?autoplay=1&mute=1&loop=1&playlist=roXn8vbbRkI&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&iv_load_policy=3&disablekb=1&fs=0"
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] min-w-full h-[56.25vw] min-h-full scale-[1.25] pointer-events-none border-0 select-none"
-            allow="autoplay; encrypted-media; picture-in-picture"
-            title="DHT Furniture Manufacturing Video"
-            tabIndex={-1}
-            aria-hidden="true"
-          />
-        </div>
+      <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
+        {/* Background Native HTML5 Video — 100% Pure Video: No Buttons, No Iframe, No YouTube Overlay */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          poster="/img/WhyDHT.png"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full min-w-full min-h-full object-cover scale-105 pointer-events-none border-0 select-none"
+        >
+          <source src="/video/hero-banner.mp4" type="video/mp4" />
+        </video>
 
         {/* Forest Green Gradient Overlay balanced for legibility and video clarity */}
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 pointer-events-none"
           style={{
             background:
               "linear-gradient(180deg, rgba(14, 36, 27, 0.6) 0%, rgba(23, 60, 44, 0.42) 45%, rgba(14, 36, 27, 0.88) 100%)",
-            touchAction: "pan-y",
           }}
         />
         <div
-          className="absolute inset-0 bg-radial-at-c from-transparent via-[#0E241B]/20 to-[#0E241B]/75"
-          style={{ touchAction: "pan-y" }}
-        />
-
-        {/* Transparent Click & Touch Shield: Absorbs all clicks & touches on empty space so the YouTube player never receives interaction or displays pause/play buttons */}
-        <div
-          className="absolute inset-0 z-[5] select-none cursor-default"
-          style={{ touchAction: "pan-y" }}
-          aria-hidden="true"
+          className="absolute inset-0 bg-radial-at-c from-transparent via-[#0E241B]/20 to-[#0E241B]/75 pointer-events-none"
         />
       </div>
 
       {/* Main Hero Content */}
-      <div className="relative z-20 flex-1 flex flex-col items-center justify-center text-center px-5 sm:px-6 pt-28 pb-20">
+      <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-5 sm:px-6 pt-28 pb-20">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -166,7 +106,7 @@ export default function HeroSection() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.6, duration: 0.8 }}
-        className="relative z-20 border-t border-white/10"
+        className="relative z-10 border-t border-white/10"
         style={{ background: "rgba(14, 36, 27, 0.88)", backdropFilter: "blur(12px)" }}
       >
         <div className="container mx-auto px-4 sm:px-6 py-4">

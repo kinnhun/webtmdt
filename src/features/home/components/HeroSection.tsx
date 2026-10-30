@@ -32,16 +32,19 @@ export default function HeroSection() {
     >
       {/* Background Factory Video & Forest Green Overlays */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
-        {/* Background Native HTML5 Video — 100% Pure Video: No Buttons, No Iframe, No YouTube Overlay */}
+        {/* Background Native HTML5 Video — Web-Optimized, 60fps Smooth Loop, No Controls, No YouTube UI */}
         <video
           ref={videoRef}
           autoPlay
           loop
           muted
           playsInline
+          disablePictureInPicture
+          disableRemotePlayback
           preload="auto"
           poster="/img/WhyDHT.png"
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full min-w-full min-h-full object-cover scale-105 pointer-events-none border-0 select-none"
+          style={{ willChange: "transform" }}
         >
           <source src="/video/hero-banner.mp4" type="video/mp4" />
         </video>

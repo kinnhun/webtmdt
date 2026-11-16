@@ -6,15 +6,16 @@ import FeaturedProducts from "./components/FeaturedProducts";
 import WhyChooseUs from "./components/WhyChooseUs";
 import MaterialsSection from "./components/MaterialsSection";
 import ReadyToWorkTogether from "./components/ReadyToWorkTogether";
+import type { HomePageProps } from "@/types/product";
 
-export default function HomeContainer() {
+export default function HomeContainer({ initialFeaturedProducts }: HomePageProps) {
   return (
     <>
       <HeroSection />
       <MarqueeStrip />
       <CompanyIntro />
       <CategoryShowcase />
-      <FeaturedProducts />
+      <FeaturedProducts initialProducts={initialFeaturedProducts} />
       <WhyChooseUs />
       <MaterialsSection />
       <ReadyToWorkTogether />

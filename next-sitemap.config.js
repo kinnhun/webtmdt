@@ -7,7 +7,7 @@ module.exports = {
     locales: ['en-US', 'en-GB', 'vi-VN'],
     defaultLocale: 'en-US',
   },
-  exclude: ['/admin', '/admin/*', '/api/*', '/workspace', '/workspace/*'],
+  exclude: ['/admin', '/admin/*', '/api/*', '/workspace', '/workspace/*', '/about', '/about/*', '/quality-compliance', '/quality-compliance/*'],
   robotsTxtOptions: {
     policies: [
       {
@@ -34,7 +34,7 @@ module.exports = {
     } else if (path.startsWith('/blog') || path.startsWith('/materials')) {
       priority = 0.8;
       changefreq = 'weekly';
-    } else if (path === '/about' || path === '/contact') {
+    } else if (path === '/manufacturing' || path === '/contact') {
       priority = 0.7;
       changefreq = 'monthly';
     }
@@ -66,9 +66,11 @@ module.exports = {
     // Material article slugs
     const materialSlugs = [
       'acacia-wood-outdoor-furniture',
-      'outdoor-fabric-performance-comfort',
-      'powder-coated-aluminum-modern-scalable',
       'teak-wood-premium-outdoor-durability',
+      'powder-coated-aluminum-modern-scalable',
+      'outdoor-fabric-performance-comfort',
+      'eucalyptus-wood-sustainable-strength',
+      'wood-panels-and-processing-mekong',
     ];
 
     for (const slug of materialSlugs) {

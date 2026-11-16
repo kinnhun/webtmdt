@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { OUTDOOR_CATEGORIES, INDOOR_CATEGORIES, MATERIALS, MOQ_OPTIONS, COLORS, STYLES } from "@/domains/product/product.types";
-import type { Product, FilterState, Collection } from "@/domains/product/product.types";
+import { OUTDOOR_CATEGORIES, INDOOR_CATEGORIES, MATERIALS } from "@/domains/product/product.types";
+import type { Product, FilterState, Collection, CatalogueCollectionScope } from "@/domains/product/product.types";
 import { useProducts } from "@/domains/product/product.hooks";
+import { isExcludedLegacyProduct } from "@/lib/productDisplay";
 import { useTranslation } from "react-i18next";
 
 export function useCatalogue(forcedCollection?: Collection) {
@@ -11,7 +12,7 @@ export function useCatalogue(forcedCollection?: Collection) {
   const langEnum: Record<string, 'vi' | 'uk' | 'us'> = { "vi-VN": "vi", "en-GB": "uk", "en-US": "us" };
   const langId = langEnum[i18n?.language] || "us";
   
-  const [collection, setCollection] = useState<Collection>(forcedCollection || "Outdoor");
+  const [collection, setCollection] = useState<CatalogueCollectionScope>(forcedCollection || "All");
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState<FilterState>({ category: [], material: [], moq: [], color: [], style: [] });
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
@@ -29,7 +30,7 @@ export function useCatalogue(forcedCollection?: Collection) {
     if (!router.isReady) return;
     const q = router.query;
     
-    let initCol: Collection = forcedCollection || "Outdoor";
+    let initCol: CatalogueCollectionScope = forcedCollection || "All";
     if (!forcedCollection) {
       if (q.collection === "Indoor" || q.collection === "Outdoor") {
         initCol = q.collection as Collection;
@@ -84,7 +85,7 @@ export function useCatalogue(forcedCollection?: Collection) {
     if (!initialized) return;
 
     const query: Record<string, string> = {};
-    if (!forcedCollection && collection !== "Outdoor") query.collection = collection;
+    if (!forcedCollection && collection !== "All") query.collection = collection;
     if (search) query.search = search;
     if (page > 1) query.page = page.toString();
     
@@ -109,7 +110,7 @@ export function useCatalogue(forcedCollection?: Collection) {
     }
   }, [collection, search, filters, page, initialized, router.pathname]);
 
-  const handleCollectionChange = (newCollection: Collection) => {
+  const handleCollectionChange = (newCollection: CatalogueCollectionScope) => {
     setCollection(newCollection);
     setFilters(prev => ({ ...prev, category: [] })); 
     setPage(1);
@@ -134,6 +135,8 @@ export function useCatalogue(forcedCollection?: Collection) {
   const productsToFilter = Array.isArray(rawProducts) ? rawProducts : (rawProducts as any)?.data || [];
 
   let collectionProducts = productsToFilter.filter((p: Product) => {
+    if (isExcludedLegacyProduct(p)) return false;
+    if (collection === "All") return true;
     if (!p.collection) return false;
     const colArray = Array.isArray(p.collection) ? p.collection : String(p.collection).split(',').map(s => s.trim());
     return colArray.includes(collection);
@@ -141,10 +144,31 @@ export function useCatalogue(forcedCollection?: Collection) {
 
   let filtered = collectionProducts.filter((p: Product) => {
     if (search) {
-      const q = search.toLowerCase();
-      const pName = (p.name?.[langId] || p.name?.us || "").toLowerCase();
-      const pCat = (p.category?.[langId] || p.category?.us || "").toLowerCase();
-      if (!pName.includes(q) && !p.code.toLowerCase().includes(q) && !pCat.includes(q)) return false;
+      const q = search.trim().toLowerCase();
+      const searchableText = [
+        p.name?.us,
+        p.name?.uk,
+        p.name?.vi,
+        p.code,
+        p.slug,
+        p.category?.us,
+        p.category?.uk,
+        p.category?.vi,
+        p.material?.us,
+        p.material?.uk,
+        p.material?.vi,
+        p.style?.us,
+        typeof p.collection === "string" ? p.collection : Array.isArray(p.collection) ? p.collection.join(" ") : "",
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+
+      const matchesAlu =
+        (q === "alu" || q === "aluminum" || q === "aluminium") &&
+        (searchableText.includes("alu") || searchableText.includes("nhôm"));
+
+      if (!matchesAlu && !searchableText.includes(q)) return false;
     }
     
     const checkOverlapExt = (fieldData: Product['category'] | Product['material'] | Product['color'] | Product['style'] | string | undefined, selectedFilters: string[]) => {

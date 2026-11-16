@@ -1,20 +1,22 @@
-export interface MasterLocation {
-  key: "office" | "showroom" | "manufacturing";
+export type MasterLocationKey = "office" | "manufacturing";
+
+export type MasterLocation = {
+  key: MasterLocationKey;
   title: { us: string; uk: string; vi: string };
   subtitle: { us: string; uk: string; vi: string };
   address: { us: string; uk: string; vi: string };
   phone: string;
   href: string;
   hours: { us: string; uk: string; vi: string };
-}
+};
 
 export const MASTER_LOCATIONS: MasterLocation[] = [
   {
     key: "office",
     title: {
-      us: "DHT Central Commercial Coordination Hub",
-      uk: "DHT Central Commercial Coordination Hub",
-      vi: "Văn phòng Điều phối Thương mại DHT",
+      us: "DHT Commercial Office",
+      uk: "DHT Commercial Office",
+      vi: "Văn phòng Thương mại DHT",
     },
     subtitle: {
       us: "Commercial & Business Inquiries",
@@ -35,53 +37,28 @@ export const MASTER_LOCATIONS: MasterLocation[] = [
     },
   },
   {
-    key: "showroom",
-    title: {
-      us: "DHT Showroom & Gallery",
-      uk: "DHT Showroom & Gallery",
-      vi: "Showroom Trưng Bày DHT",
-    },
-    subtitle: {
-      us: "Outdoor & Indoor Collections",
-      uk: "Outdoor & Indoor Collections",
-      vi: "Bộ sưu tập Nội Ngoại thất",
-    },
-    address: {
-      us: "206 Phan Dinh Phung Street, Pleiku City, Gia Lai Province, Vietnam",
-      uk: "206 Phan Dinh Phung Street, Pleiku City, Gia Lai Province, Vietnam",
-      vi: "206 Phan Đình Phùng, TP. Pleiku, Tỉnh Gia Lai, Việt Nam",
-    },
-    phone: "+84 907 386 898",
-    href: "tel:+84907386898",
-    hours: {
-      us: "08:00 - 17:00 (UTC+7). Visits by appointment.",
-      uk: "08:00 - 17:00 (UTC+7). Visits by appointment.",
-      vi: "08:00 - 17:00 (UTC+7). Tham quan theo lịch hẹn trước.",
-    },
-  },
-  {
     key: "manufacturing",
     title: {
       us: "DHT Manufacturing Network",
       uk: "DHT Manufacturing Network",
-      vi: "Mạng lưới Nhà máy Sản xuất DHT",
+      vi: "Mạng lưới Sản xuất DHT",
     },
     subtitle: {
-      us: "11 Facilities Across Vietnam",
-      uk: "11 Facilities Across Vietnam",
-      vi: "11 Cơ sở sản xuất toàn quốc",
+      us: "11 Specialised Facilities Across Vietnam",
+      uk: "11 Specialised Facilities Across Vietnam",
+      vi: "11 Cơ sở sản xuất chuyên môn hóa tại Việt Nam",
     },
     address: {
-      us: "4 Manufacturing Clusters: Quy Nhon, HCMC & Southern Corridor, Hung Yen, Phu Tho/Vinh Phuc",
-      uk: "4 Manufacturing Clusters: Quy Nhon, HCMC & Southern Corridor, Hung Yen, Phu Tho/Vinh Phuc",
-      vi: "4 Cụm sản xuất: Quy Nhơn, TP.HCM & Nam Bộ, Hưng Yên, Phú Thọ/Vĩnh Phúc",
+      us: "4 Manufacturing Clusters: Quy Nhon, HCMC & Southern Corridor, Hung Yen, Phu Tho / Vinh Phuc",
+      uk: "4 Manufacturing Clusters: Quy Nhon, HCMC & Southern Corridor, Hung Yen, Phu Tho / Vinh Phuc",
+      vi: "4 Cụm sản xuất: Quy Nhơn, TP.HCM & Vành đai phía Nam, Hưng Yên, Phú Thọ / Vĩnh Phúc",
     },
-    phone: "+84 902 907 399",
-    href: "tel:+84902907399",
+    phone: "+84 932 058 545",
+    href: "tel:+84932058545",
     hours: {
-      us: "Factory visits arranged by appointment following product brief review.",
-      uk: "Factory visits arranged by appointment following product brief review.",
-      vi: "Tham quan nhà xưởng sắp xếp theo lịch hẹn sau khi chốt yêu cầu kỹ thuật.",
+      us: "Factory visits arranged by appointment through our Ho Chi Minh City commercial desk.",
+      uk: "Factory visits arranged by appointment through our Ho Chi Minh City commercial desk.",
+      vi: "Tham quan nhà máy được sắp xếp theo lịch hẹn thông qua văn phòng thương mại tại TP.HCM.",
     },
   },
 ];

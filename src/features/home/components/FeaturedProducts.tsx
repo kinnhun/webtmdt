@@ -1,33 +1,20 @@
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Eye } from "lucide-react";
 import { useInView } from "@/hooks/useInView";
 import { useTranslation } from "react-i18next";
-import QuickViewModal from "@/components/QuickViewModal";
-import { useProducts } from "@/domains/product/product.hooks";
-import type { Product, FilterState } from "@/domains/product/product.types";
+import { useFeaturedProducts } from "@/domains/product/product.hooks";
+import type { Product } from "@/domains/product/product.types";
+import type { FeaturedProductsProps } from "@/types/product";
+import { formatProductDisplayTitle } from "@/lib/productDisplay";
+import { withImageVariant } from "@/lib/imageUrl";
 
-const EXCLUDED_WATERMARK_TABLES = [
-  "SUN ROUND TABLE",
-  "SEINA TABLE",
-  "RECTANGULAR TABLE",
-  "HAYMONT TABLE",
-];
-
-function isCleanFurnitureSet(product: Product): boolean {
-  const nameUs = (product.name?.us || "").trim().toUpperCase();
-  const code = (product.code || "").trim().toUpperCase();
-  const catUs = (product.category?.us || "").trim().toUpperCase();
-
-  if (EXCLUDED_WATERMARK_TABLES.some((excluded) => nameUs.includes(excluded))) {
-    return false;
-  }
-  if (code.includes("-TAB-") || catUs === "TABLES" || nameUs.endsWith(" TABLE")) {
-    return false;
-  }
-  return true;
-}
+const QuickViewModal = dynamic(() => import("@/components/QuickViewModal"), {
+  ssr: false,
+});
 
 function FeaturedSkeletonGrid() {
   return (
@@ -35,8 +22,8 @@ function FeaturedSkeletonGrid() {
       {Array.from({ length: 6 }).map((_, i) => (
         <div key={i} className="animate-pulse space-y-3">
           <div className="rounded-sm aspect-[4/3] bg-black/5" />
-          <div className="h-3 w-20 bg-black/5 rounded" />
           <div className="h-4 w-3/4 bg-black/5 rounded" />
+          <div className="h-3 w-20 bg-black/5 rounded" />
           <div className="h-3 w-1/2 bg-black/5 rounded" />
         </div>
       ))}
@@ -54,21 +41,30 @@ function EditorialProductCard({
   onQuickView: (p: Product) => void;
 }) {
   const { t, i18n } = useTranslation();
+  const isVi = i18n?.language?.startsWith("vi");
   const langEnum: Record<string, "vi" | "uk" | "us"> = {
     "vi-VN": "vi",
     "en-GB": "uk",
     "en-US": "us",
   };
   const langId = langEnum[i18n?.language] || "us";
-  const pName = product.name?.[langId] || product.name?.us || "";
-  const collectionLabel =
-    typeof product.collection === "string" ? product.collection : "";
+  const rawName = product.name?.[langId] || product.name?.us || "";
+  const pName = formatProductDisplayTitle(rawName);
+  const collectionLabel = Array.isArray(product.collection)
+    ? product.collection.join(", ")
+    : typeof product.collection === "string"
+      ? product.collection
+      : "";
   const pCategory =
     product.category?.[langId] ||
     product.category?.us ||
     collectionLabel ||
-    "Outdoor Furniture";
+    "Furniture Collection";
   const productDetailHref = `/catalogue/${product.slug}`;
+  const viewCollectionLabel = t(
+    "home.featured.viewCollection",
+    isVi ? "Xem bộ sưu tập" : "View Collection"
+  );
 
   return (
     <motion.div
@@ -83,52 +79,43 @@ function EditorialProductCard({
         style={{ backgroundColor: "hsl(var(--warm-beige))" }}
       >
         <Link href={productDetailHref} className="absolute inset-0 z-0 bg-transparent" />
-        <img
-          src={product.image}
+        <Image
+          src={withImageVariant(product.image, 720, 80)}
           alt={pName}
-          className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-700 ease-out pointer-events-none"
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           loading="lazy"
+          quality={85}
+          className="object-contain p-2.5 sm:p-3 group-hover:scale-105 transition-transform duration-700 ease-out pointer-events-none"
         />
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-2.5 opacity-0 group-hover:opacity-100 bg-black/20 transition-all duration-300 pointer-events-none">
           <button
+            type="button"
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
               onQuickView(product);
             }}
-            className="pointer-events-auto flex items-center justify-center min-w-[145px] gap-2 px-5 py-2.5 rounded-sm font-body font-semibold text-xs text-white shadow-lg translate-y-2 group-hover:translate-y-0 transition-all duration-300 hover:brightness-110 cursor-pointer"
+            className="pointer-events-auto flex items-center justify-center min-w-[155px] gap-2 px-5 py-2.5 rounded-sm font-body font-semibold text-xs text-white shadow-lg translate-y-2 group-hover:translate-y-0 transition-all duration-300 hover:brightness-110 cursor-pointer"
             style={{ backgroundColor: "hsl(var(--orange))" }}
           >
             <Eye size={14} /> {t("product.quickView", "Quick View")}
           </button>
           <Link
             href={productDetailHref}
-            className="pointer-events-auto flex items-center justify-center min-w-[145px] gap-2 px-5 py-2.5 rounded-sm font-body font-semibold text-xs text-white shadow-lg translate-y-2 group-hover:translate-y-0 transition-all duration-300 delay-75 cursor-pointer"
+            className="pointer-events-auto flex items-center justify-center min-w-[155px] gap-2 px-5 py-2.5 rounded-sm font-body font-semibold text-xs text-white shadow-lg translate-y-2 group-hover:translate-y-0 transition-all duration-300 delay-75 cursor-pointer"
             style={{
               backgroundColor: "hsl(var(--navy-deep)/0.9)",
               backdropFilter: "blur(4px)",
             }}
           >
-            <ArrowRight size={14} /> {t("product.viewDetails", "View Details")}
+            <ArrowRight size={14} /> {viewCollectionLabel}
           </Link>
         </div>
-        <span
-          className="absolute top-3 left-3 font-body text-[11px] font-medium px-2.5 py-1 rounded-sm text-white backdrop-blur-sm pointer-events-none truncate max-w-[calc(100%-24px)]"
-          style={{ backgroundColor: "hsl(var(--navy-deep)/0.85)" }}
-          title={pCategory}
-        >
-          {pCategory}
-        </span>
       </div>
 
       <div className="p-5 flex-1 flex flex-col justify-between">
         <div>
-          <p
-            className="font-body text-xs font-semibold tracking-wider uppercase mb-1"
-            style={{ color: "hsl(var(--orange))" }}
-          >
-            {product.code}
-          </p>
           <Link href={productDetailHref} className="block">
             <h3
               className="font-display font-bold text-lg leading-snug transition-colors duration-200 hover:opacity-75"
@@ -137,16 +124,18 @@ function EditorialProductCard({
               {pName}
             </h3>
           </Link>
+          <p className="font-body text-xs font-semibold tracking-wider uppercase mt-1 text-[#9A5B2A]">
+            {product.code}
+          </p>
         </div>
 
         <div className="flex items-center justify-between pt-3 mt-3 border-t border-black/6">
           <span className="font-body text-xs text-muted-foreground">{pCategory}</span>
           <Link
             href={productDetailHref}
-            className="font-body text-xs font-semibold flex items-center gap-1 transition-opacity duration-200 hover:opacity-75"
-            style={{ color: "hsl(var(--orange))" }}
+            className="font-body text-xs font-semibold flex items-center gap-1 transition-opacity duration-200 hover:opacity-75 text-[#9A5B2A]"
           >
-            {t("home.featured.inquire", "Inquire")} <ArrowRight size={12} />
+            {viewCollectionLabel} <ArrowRight size={12} />
           </Link>
         </div>
       </div>
@@ -154,30 +143,17 @@ function EditorialProductCard({
   );
 }
 
-export default function FeaturedProducts() {
+export default function FeaturedProducts({ initialProducts }: FeaturedProductsProps) {
   const { ref, inView } = useInView();
   const { t, i18n } = useTranslation();
   const isVi = i18n.language?.startsWith("vi");
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
 
-  const emptyFilters: FilterState = {
-    category: [],
-    material: [],
-    moq: [],
-    color: [],
-    style: [],
-  };
-  const { data: rawProducts = [], isLoading } = useProducts(emptyFilters, "");
+  const { data: featuredProducts = [], isLoading } = useFeaturedProducts(initialProducts);
 
-  const validFeaturedProducts = rawProducts.filter(
-    (product) =>
-      typeof product.slug === "string" &&
-      product.slug.trim() !== "" &&
-      isCleanFurnitureSet(product)
+  const displayed = featuredProducts.filter(
+    (product) => typeof product.slug === "string" && product.slug.trim() !== ""
   );
-
-  // 3 columns x 2 rows = 6 sets on desktop
-  const displayed = validFeaturedProducts.slice(0, 6);
 
   return (
     <section className="py-16 sm:py-24" style={{ backgroundColor: "hsl(var(--warm-cream))" }}>
@@ -191,11 +167,8 @@ export default function FeaturedProducts() {
                 transition={{ duration: 0.5 }}
                 className="flex items-center gap-3 mb-4"
               >
-                <span className="h-px w-8" style={{ backgroundColor: "hsl(var(--orange))" }} />
-                <span
-                  className="font-body text-xs tracking-[0.25em] uppercase font-medium"
-                  style={{ color: "hsl(var(--orange))" }}
-                >
+                <span className="h-px w-8 bg-[#9A5B2A]" />
+                <span className="font-body text-xs tracking-[0.25em] uppercase font-semibold text-[#9A5B2A]">
                   {t("home.featured.label", isVi ? "Bộ sưu tập Chọn lọc" : "Featured Collections")}
                 </span>
               </motion.div>
@@ -235,7 +208,7 @@ export default function FeaturedProducts() {
               className="shrink-0"
             >
               <Link
-                href="/catalogue/outdoor"
+                href="/catalogue"
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90"
                 style={{ backgroundColor: "hsl(var(--navy))" }}
               >
@@ -277,14 +250,10 @@ export default function FeaturedProducts() {
             className="flex justify-center mt-14"
           >
             <Link
-              href="/catalogue/outdoor"
-              className="group relative inline-flex items-center gap-3 px-10 py-4 rounded-sm font-body font-semibold text-sm overflow-hidden transition-all duration-300 border-2"
-              style={{ borderColor: "hsl(var(--orange))", color: "hsl(var(--orange))" }}
+              href="/catalogue"
+              className="group relative inline-flex items-center gap-3 px-10 py-4 rounded-sm font-body font-semibold text-sm overflow-hidden transition-all duration-300 border-2 border-[#9A5B2A] text-[#9A5B2A]"
             >
-              <span
-                className="absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-350 ease-out"
-                style={{ backgroundColor: "hsl(var(--orange))" }}
-              />
+              <span className="absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-350 ease-out bg-[#A45E2F]" />
               <span className="relative z-10 group-hover:text-white transition-colors duration-200 flex items-center gap-3">
                 {t("home.featured.seeAllProducts", isVi ? "Xem Tất cả Sản phẩm" : "Explore All Collections")}{" "}
                 <ArrowRight
@@ -296,7 +265,12 @@ export default function FeaturedProducts() {
           </motion.div>
         </div>
       </div>
-      <QuickViewModal product={quickViewProduct} onClose={() => setQuickViewProduct(null)} />
+      {quickViewProduct && (
+        <QuickViewModal
+          product={quickViewProduct}
+          onClose={() => setQuickViewProduct(null)}
+        />
+      )}
     </section>
   );
 }

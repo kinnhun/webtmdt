@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Input, Button, message, Card, Typography, Spin, Tabs, Radio, Upload } from 'antd';
 import { SaveOutlined, VideoCameraOutlined, TranslationOutlined, UploadOutlined } from '@ant-design/icons';
+import FeaturedProductsSelector from './featured-products/FeaturedProductsSelector';
 
 const { Title, Text } = Typography;
 
@@ -124,11 +125,11 @@ export default function HomeEditor() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-6xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <Title level={3} className="m-0 text-navy-deep">Home Page Settings</Title>
-          <Text className="text-gray-500">Quản lý các nội dung hiển thị trên trang chủ</Text>
+          <Text className="text-gray-500">Quản lý bộ sưu tập nổi bật và các nội dung hiển thị trên trang chủ</Text>
         </div>
         <Button
           type="primary"
@@ -137,9 +138,11 @@ export default function HomeEditor() {
           loading={saving}
           className="bg-orange-600 hover:bg-orange-500 border-none shadow-md h-10 px-6 font-medium rounded-lg"
         >
-          Lưu thay đổi
+          Lưu cài đặt video
         </Button>
       </div>
+
+      <FeaturedProductsSelector canEdit />
 
       <Card title={<div className="flex items-center gap-2"><VideoCameraOutlined className="text-orange-500" /><span>Factory Video Section</span></div>} className="shadow-sm rounded-xl border-gray-100 overflow-hidden">
         <Form form={form} layout="vertical">

@@ -2,11 +2,26 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  compress: true,
+  poweredByHeader: false,
   i18n: {
     locales: ["en-US", "en-GB", "vi-VN"],
     defaultLocale: "en-US",
   },
   images: {
+    formats: ["image/avif", "image/webp"],
+    minimumCacheTTL: 2678400,
+    qualities: [75, 80, 85, 90, 95],
+    localPatterns: [
+      { pathname: "/img/**", search: "" },
+      { pathname: "/images/**", search: "" },
+      { pathname: "/cache/**", search: "" },
+      { pathname: "/uploads/**", search: "" },
+      { pathname: "/placeholder.jpg", search: "" },
+      { pathname: "/api/images/**", search: "" },
+      { pathname: "/api/images/**", search: "?w=720&q=80" },
+      { pathname: "/api/images/**", search: "?w=160&q=75" },
+    ],
     remotePatterns: [
       {
         protocol: "https",
@@ -17,6 +32,37 @@ const nextConfig: NextConfig = {
         hostname: "**",
       },
     ],
+  },
+  async headers() {
+    return [
+      {
+        source: "/img/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=604800, stale-while-revalidate=2592000",
+          },
+        ],
+      },
+      {
+        source: "/video/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=604800, stale-while-revalidate=2592000",
+          },
+        ],
+      },
+      {
+        source: "/cache/images/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=2592000, stale-while-revalidate=2592000",
+          },
+        ],
+      },
+    ];
   },
   async redirects() {
     return [
@@ -174,6 +220,16 @@ const nextConfig: NextConfig = {
         source: "/catalogue/retangle",
         destination: "/catalogue/rectangular-table",
         permanent: true,
+      },
+      {
+        source: "/about",
+        destination: "/manufacturing",
+        permanent: false,
+      },
+      {
+        source: "/quality-compliance",
+        destination: "/manufacturing",
+        permanent: false,
       },
       {
         source: "/profile",

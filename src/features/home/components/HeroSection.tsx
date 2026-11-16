@@ -41,8 +41,8 @@ export default function HeroSection() {
           playsInline
           disablePictureInPicture
           disableRemotePlayback
-          preload="auto"
-          poster="/img/WhyDHT.png"
+          preload="metadata"
+          poster="/img/hero-poster.webp"
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full min-w-full min-h-full object-cover scale-105 pointer-events-none border-0 select-none"
           style={{ willChange: "transform" }}
         >
@@ -91,7 +91,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          className="font-body text-sm sm:text-lg text-white/80 max-w-3xl mx-auto leading-relaxed mb-8"
+          className="font-body text-sm sm:text-lg text-white/90 max-w-3xl mx-auto leading-relaxed mb-8"
         >
           {t("home.hero.title2")}
         </motion.p>
@@ -106,13 +106,13 @@ export default function HeroSection() {
           <Link
             href="/contact"
             className="inline-flex items-center gap-2 px-7 py-3.5 rounded font-body font-semibold text-sm text-white shadow-xl hover:brightness-110 transition-all duration-300"
-            style={{ backgroundColor: "#B97846" }}
+            style={{ backgroundColor: "#A45E2F" }}
           >
             {t("home.hero.requestQuote", isVi ? "Yêu cầu Báo giá" : "Request a Quotation")} <ArrowRight size={16} />
           </Link>
 
           <Link
-            href="/catalogue/outdoor"
+            href="/catalogue"
             className="inline-flex items-center gap-2 px-6 py-3.5 rounded font-body font-semibold text-sm text-white border border-white/25 bg-white/5 hover:bg-white/10 transition-all duration-300"
           >
             {t("home.hero.exploreProducts", isVi ? "Khám phá Bộ sưu tập" : "Explore Collections")}
@@ -156,17 +156,17 @@ export default function HeroSection() {
                 <p className="font-display lining-nums tabular-nums font-bold text-white text-xl sm:text-2xl leading-none mb-1 whitespace-nowrap">
                   {n}
                 </p>
-                <p className="font-body text-[11px] sm:text-xs tracking-wide uppercase text-white/80 font-medium">
+                <p className="font-body text-xs tracking-wide uppercase text-white/90 font-medium">
                   {label}
                 </p>
-                <p className="font-body text-[10px] text-[#B97846] mt-0.5 hidden sm:block">
+                <p className="font-body text-[11px] font-medium text-[#F3BA7A] mt-0.5 hidden sm:block">
                   {sub}
                 </p>
               </div>
             ))}
           </div>
-          <div className="text-center mt-2 pt-2 border-t border-white/5">
-            <p className="font-body text-[10px] text-white/40 tracking-wider">
+          <div className="text-center mt-2 pt-2 border-t border-white/10">
+            <p className="font-body text-[11px] text-white/75 tracking-wider">
               {isVi
                 ? "* Tổng diện tích 543.380 m² bao gồm 283.380 m² cơ sở sản xuất nội thất thành phẩm và 260.000 m² cơ sở ván gỗ và chế biến gỗ nguyên liệu."
                 : "* 543,380 m² combined footprint includes 283,380 m² dedicated finished furniture facilities and 260,000 m² panel/primary processing facility."}

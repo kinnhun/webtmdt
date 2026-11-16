@@ -38,8 +38,8 @@ function ImageGallery({ images, name, landscapeImage, landscapeImages }: { image
     <>
       <div className="w-full min-w-0">
         {/* Main image */}
-        <div 
-          className="relative aspect-[4/3] rounded-lg overflow-hidden mb-3 cursor-pointer group" 
+        <div
+          className="relative aspect-[4/3] rounded-lg overflow-hidden mb-3 cursor-pointer group"
           style={{ backgroundColor: "hsl(var(--navy)/0.04)" }}
           onClick={() => setIsLightboxOpen(true)}
         >
@@ -57,14 +57,14 @@ function ImageGallery({ images, name, landscapeImage, landscapeImages }: { image
           </AnimatePresence>
           {galleryImages.length > 1 && (
             <>
-              <button 
-                onClick={(e) => { e.stopPropagation(); setActive((active - 1 + galleryImages.length) % galleryImages.length); }} 
+              <button
+                onClick={(e) => { e.stopPropagation(); setActive((active - 1 + galleryImages.length) % galleryImages.length); }}
                 className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full flex items-center justify-center bg-white/80 hover:bg-white shadow transition-all z-10 opacity-0 group-hover:opacity-100"
               >
                 <ChevronLeft size={18} />
               </button>
-              <button 
-                onClick={(e) => { e.stopPropagation(); setActive((active + 1) % galleryImages.length); }} 
+              <button
+                onClick={(e) => { e.stopPropagation(); setActive((active + 1) % galleryImages.length); }}
                 className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full flex items-center justify-center bg-white/80 hover:bg-white shadow transition-all z-10 opacity-0 group-hover:opacity-100"
               >
                 <ChevronRight size={18} />
@@ -95,7 +95,7 @@ function ImageGallery({ images, name, landscapeImage, landscapeImages }: { image
             className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 backdrop-blur-md"
             onClick={() => setIsLightboxOpen(false)}
           >
-            <button 
+            <button
               className="absolute top-6 right-6 text-white/60 hover:text-white transition-colors z-[10000]"
               onClick={(e) => { e.stopPropagation(); setIsLightboxOpen(false); }}
             >
@@ -105,7 +105,7 @@ function ImageGallery({ images, name, landscapeImage, landscapeImages }: { image
               </svg>
             </button>
 
-            <motion.div 
+            <motion.div
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
@@ -113,7 +113,7 @@ function ImageGallery({ images, name, landscapeImage, landscapeImages }: { image
               className="relative w-[90vw] h-[90vh]"
               onClick={(e) => e.stopPropagation()}
             >
-              <Image 
+              <Image
                 src={(() => {
                   const src = galleryImages[active];
                   if (!src) return '';
@@ -123,25 +123,25 @@ function ImageGallery({ images, name, landscapeImage, landscapeImages }: { image
                   } catch {
                     return src;
                   }
-                })()} 
-                alt={name} 
-                fill 
-                className="object-contain" 
+                })()}
+                alt={name}
+                fill
+                className="object-contain"
                 sizes="90vw"
-                priority 
+                priority
               />
             </motion.div>
 
             {galleryImages.length > 1 && (
               <>
-                <button 
-                  onClick={(e) => { e.stopPropagation(); setActive((active - 1 + galleryImages.length) % galleryImages.length); }} 
+                <button
+                  onClick={(e) => { e.stopPropagation(); setActive((active - 1 + galleryImages.length) % galleryImages.length); }}
                   className="absolute left-4 md:left-10 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/25 text-white transition-all z-[10000]"
                 >
                   <ChevronLeft size={28} />
                 </button>
-                <button 
-                  onClick={(e) => { e.stopPropagation(); setActive((active + 1) % galleryImages.length); }} 
+                <button
+                  onClick={(e) => { e.stopPropagation(); setActive((active + 1) % galleryImages.length); }}
                   className="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/25 text-white transition-all z-[10000]"
                 >
                   <ChevronRight size={28} />
@@ -179,13 +179,13 @@ function DetailTabs({ product }: { product: Product }) {
 
   const specifications = Array.isArray(product.specifications)
     ? product.specifications.filter((spec) => {
-        const localizedSpec = spec as ProductSpecification & { [key: string]: string | undefined };
-        const key = localizedSpec[`name${langId.toUpperCase()}`] || localizedSpec.nameUS || "";
-        const val = localizedSpec[`value${langId.toUpperCase()}`] || localizedSpec.valueUS || "";
-        if (/testing/i.test(key) || /testing/i.test(val)) return false;
-        if (/fsc/i.test(key) && (/100%/i.test(val) || val === "100" || !val.trim())) return false;
-        return Boolean(key.trim() || val.trim());
-      })
+      const localizedSpec = spec as ProductSpecification & { [key: string]: string | undefined };
+      const key = localizedSpec[`name${langId.toUpperCase()}`] || localizedSpec.nameUS || "";
+      const val = localizedSpec[`value${langId.toUpperCase()}`] || localizedSpec.valueUS || "";
+      if (/testing/i.test(key) || /testing/i.test(val)) return false;
+      if (/fsc/i.test(key) && (/100%/i.test(val) || val === "100" || !val.trim())) return false;
+      return Boolean(key.trim() || val.trim());
+    })
     : [];
 
   const pCare = getList(product.careInstructions, langId);
@@ -283,6 +283,19 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
   const pMat = product.material?.[langId] || product.material?.us || "";
   const pStyle = product.style?.[langId] || product.style?.us || "";
   const pFabric = product.fabric?.[langId] || product.fabric?.us || "";
+  const woodSignalText = [
+    product.material?.us,
+    product.material?.uk,
+    product.material?.vi,
+    product.description?.us,
+    product.name?.us,
+  ]
+    .filter(Boolean)
+    .join(" ");
+  const hasWoodMaterial =
+    /\b(wood|timber|acacia|teak|eucalyptus|oak|ash|rubberwood|hardwood|fsc)\b|gỗ|tràm|sồi|bạch đàn|tếch/i.test(
+      woodSignalText
+    );
   const getList = (field: any, lang: string) => {
     if (Array.isArray(field)) return field;
     if (field && typeof field === 'object') {
@@ -429,10 +442,10 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
       {/* Breadcrumb */}
       <div style={{ backgroundColor: "hsl(var(--warm-cream))" }}>
         <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center gap-2 font-body text-xs" style={{ color: "hsl(var(--navy)/0.45)" }}>
+          <div className="flex items-center gap-2 font-body text-xs" style={{ color: "hsl(var(--navy)/0.65)" }}>
             <Link href="/" className="hover:underline">{t("nav.home")}</Link>
             <span>/</span>
-            <Link href={product?.collection === "Indoor" ? "/catalogue/indoor" : "/catalogue/outdoor"} className="hover:underline">{t("nav.collections", "Collections")}</Link>
+            <Link href="/catalogue" className="hover:underline">{t("nav.collections", "Collections")}</Link>
             <span>/</span>
             <span style={{ color: "hsl(var(--navy-deep))" }}>{pName}</span>
           </div>
@@ -449,18 +462,20 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
 
           {/* Right — Info */}
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.1 }}>
-            {(pCategory || product.code) && (
+            {(pCategory || product.code || hasWoodMaterial) && (
               <div className="flex flex-wrap items-center gap-2 mb-3">
                 {pCategory && pCategory.trim() !== "" && (
-                  <span className="px-2.5 py-1 rounded-sm font-body text-[10px] font-semibold tracking-wider uppercase text-white shadow-sm" style={{ backgroundColor: "#B97846" }}>
+                  <span className="px-2.5 py-1 rounded-sm font-body text-[10px] font-semibold tracking-wider uppercase text-white shadow-sm bg-[#A45E2F]">
                     {pCategory}
                   </span>
                 )}
-                <span className="px-2.5 py-1 rounded-sm font-body text-[10px] font-semibold tracking-wider uppercase text-white shadow-sm bg-[#173C2C]">
-                  {isVi ? "Gỗ Chứng Nhận FSC" : "FSC-Certified Wood"}
-                </span>
+                {hasWoodMaterial && (
+                  <span className="px-2.5 py-1 rounded-sm font-body text-[10px] font-semibold tracking-wider uppercase text-white shadow-sm bg-[#173C2C]">
+                    {isVi ? "Gỗ Chứng Nhận FSC" : "FSC-Certified Wood"}
+                  </span>
+                )}
                 {product.code && product.code.trim() !== "" && (
-                  <span className="font-body text-xs font-mono font-medium" style={{ color: "hsl(var(--navy)/0.5)" }}>{product.code}</span>
+                  <span className="font-body text-xs font-mono font-medium" style={{ color: "hsl(var(--navy)/0.7)" }}>{product.code}</span>
                 )}
               </div>
             )}
@@ -528,27 +543,29 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
               )}
             </div>
 
-            {/* FSC Timber Integrity Statement */}
-            <div className="flex items-start gap-3 p-3.5 rounded-lg border border-[#173C2C]/20 bg-[#173C2C]/5 mb-6">
-              <Shield size={18} className="text-[#173C2C] shrink-0 mt-0.5" />
-              <div>
-                <span className="font-body text-xs font-bold text-[#173C2C] block uppercase tracking-wider mb-0.5">
-                  {isVi ? "Gỗ Chứng Nhận FSC" : "FSC-Certified Wood"}
-                </span>
-                <p className="font-body text-xs text-[#173C2C]/90 font-medium leading-relaxed">
-                  {isVi
-                    ? "Toàn bộ gỗ sử dụng trong sản phẩm nội thất DHT đều có chứng nhận FSC. Hồ sơ chứng minh được lưu trữ tương ứng với từng công bố FSC áp dụng."
-                    : "All wood used in DHT furniture is FSC-certified. Supporting documentation is maintained for the applicable FSC claim."}
-                </p>
+            {/* FSC Timber Integrity Statement (wood materials only) */}
+            {hasWoodMaterial && (
+              <div className="flex items-start gap-3 p-3.5 rounded-lg border border-[#173C2C]/20 bg-[#173C2C]/5 mb-6">
+                <Shield size={18} className="text-[#173C2C] shrink-0 mt-0.5" />
+                <div>
+                  <span className="font-body text-xs font-bold text-[#173C2C] block uppercase tracking-wider mb-0.5">
+                    {isVi ? "Gỗ Chứng Nhận FSC" : "FSC-Certified Wood"}
+                  </span>
+                  <p className="font-body text-xs text-[#173C2C]/90 font-medium leading-relaxed">
+                    {isVi
+                      ? "Toàn bộ gỗ sử dụng trong sản phẩm nội thất DHT đều có chứng nhận FSC. Hồ sơ chứng minh được lưu trữ tương ứng với từng công bố FSC áp dụng."
+                      : "All wood used in DHT furniture is FSC-certified. Supporting documentation is maintained for the applicable FSC claim."}
+                  </p>
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Collection Items & Dimensions Table */}
             {collectionItems.length > 0 ? (
               <div className="mb-6 p-4 rounded-lg border border-gray-200 bg-gray-50/70 shadow-xs">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <Ruler size={16} className="text-[#B97846]" />
+                    <Ruler size={16} className="text-[#9A5B2A]" />
                     <h3 className="font-display font-bold text-sm text-[#173C2C]">
                       {isVi ? "Danh mục sản phẩm & Kích thước" : "Collection Items & Dimensions"}
                     </h3>
@@ -557,22 +574,20 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
                     <button
                       type="button"
                       onClick={() => setDimUnit('cm')}
-                      className={`px-2.5 py-0.5 rounded font-medium transition-all ${
-                        dimUnit === 'cm'
+                      className={`px-2.5 py-0.5 rounded font-medium transition-all ${dimUnit === 'cm'
                           ? 'bg-[#173C2C] text-white shadow-xs'
                           : 'text-gray-600 hover:text-black'
-                      }`}
+                        }`}
                     >
                       cm
                     </button>
                     <button
                       type="button"
                       onClick={() => setDimUnit('in')}
-                      className={`px-2.5 py-0.5 rounded font-medium transition-all ${
-                        dimUnit === 'in'
+                      className={`px-2.5 py-0.5 rounded font-medium transition-all ${dimUnit === 'in'
                           ? 'bg-[#173C2C] text-white shadow-xs'
                           : 'text-gray-600 hover:text-black'
-                      }`}
+                        }`}
                     >
                       inches
                     </button>
@@ -586,8 +601,8 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
                         <th className="py-2 text-left font-semibold">{isVi ? "Sản phẩm" : "Item"}</th>
                         <th className="py-2 text-left font-semibold px-2">{isVi ? "Mã sản phẩm" : "Item code"}</th>
                         <th className="py-2 text-right font-semibold">
-                          {isVi 
-                            ? `Kích thước (${dimUnit === 'cm' ? 'D × R × C, cm' : 'D × R × C, in'})` 
+                          {isVi
+                            ? `Kích thước (${dimUnit === 'cm' ? 'D × R × C, cm' : 'D × R × C, in'})`
                             : `Dimensions (W × D × H, ${dimUnit === 'cm' ? 'cm' : 'in'})`}
                         </th>
                       </tr>
@@ -627,8 +642,8 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
                     </p>
                     <p className="text-[#173C2C]/85 leading-relaxed">
                       {isVi
-                        ? "Vật liệu, hoàn thiện bề mặt, tùy chọn vải nệm và cấu hình thành phần bộ sản phẩm được xác nhận cụ thể theo từng báo giá. Toàn bộ gỗ sử dụng trong sản phẩm DHT đều có chứng chỉ FSC."
-                        : "Materials, finishes, fabric options and set composition are confirmed for each quotation. All wood used in DHT furniture is FSC-certified."}
+                        ? `Vật liệu, hoàn thiện bề mặt, tùy chọn vải nệm và cấu hình thành phần bộ sản phẩm được xác nhận cụ thể theo từng báo giá.${hasWoodMaterial ? " Toàn bộ gỗ sử dụng trong sản phẩm DHT đều có chứng chỉ FSC." : ""}`
+                        : `Materials, finishes, fabric options and set composition are confirmed for each quotation.${hasWoodMaterial ? " All wood used in DHT furniture is FSC-certified." : ""}`}
                     </p>
                   </div>
                 )}
@@ -693,7 +708,7 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
               <div className="mb-6 p-4 rounded-lg border border-gray-200 bg-gray-50/70 shadow-xs">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <Ruler size={16} className="text-[#B97846]" />
+                    <Ruler size={16} className="text-[#9A5B2A]" />
                     <h3 className="font-display font-bold text-sm text-[#173C2C]">
                       {isVi ? "Thông số & Kích thước sản phẩm" : "Item Specifications & Dimensions"}
                     </h3>
@@ -703,22 +718,20 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
                       <button
                         type="button"
                         onClick={() => setDimUnit('cm')}
-                        className={`px-2.5 py-0.5 rounded font-medium transition-all ${
-                          dimUnit === 'cm'
+                        className={`px-2.5 py-0.5 rounded font-medium transition-all ${dimUnit === 'cm'
                             ? 'bg-[#173C2C] text-white shadow-xs'
                             : 'text-gray-600 hover:text-black'
-                        }`}
+                          }`}
                       >
                         cm
                       </button>
                       <button
                         type="button"
                         onClick={() => setDimUnit('in')}
-                        className={`px-2.5 py-0.5 rounded font-medium transition-all ${
-                          dimUnit === 'in'
+                        className={`px-2.5 py-0.5 rounded font-medium transition-all ${dimUnit === 'in'
                             ? 'bg-[#173C2C] text-white shadow-xs'
                             : 'text-gray-600 hover:text-black'
-                        }`}
+                          }`}
                       >
                         inches
                       </button>
@@ -734,8 +747,8 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
                           <th className="py-2 text-left font-semibold">{isVi ? "Sản phẩm" : "Item"}</th>
                           <th className="py-2 text-left font-semibold px-2">{isVi ? "Mã sản phẩm" : "Item code"}</th>
                           <th className="py-2 text-right font-semibold">
-                            {isVi 
-                              ? `Kích thước (${dimUnit === 'cm' ? 'D × R × C, cm' : 'D × R × C, in'})` 
+                            {isVi
+                              ? `Kích thước (${dimUnit === 'cm' ? 'D × R × C, cm' : 'D × R × C, in'})`
                               : `Dimensions (W × D × H, ${dimUnit === 'cm' ? 'cm' : 'in'})`}
                           </th>
                         </tr>
@@ -793,12 +806,11 @@ export default function ProductDetailContainer({ product, relatedProducts }: Pro
               <button
                 type="button"
                 onClick={() => setIsModalOpen(true)}
-                className="flex-1 inline-flex items-center justify-center gap-2 py-3 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90 cursor-pointer"
-                style={{ backgroundColor: "hsl(var(--orange))", outline: "none", border: "none" }}
+                className="flex-1 inline-flex items-center justify-center gap-2 py-3 rounded-sm font-body font-semibold text-sm text-white bg-[#A45E2F] transition-all hover:brightness-110 cursor-pointer border-0 outline-none shadow-sm"
               >
                 {t("productDetail.inquire")} <ArrowUpRight size={15} />
               </button>
-              <button onClick={handleShare} className="px-4 py-3 rounded-sm border font-body text-sm transition-all hover:bg-gray-50" style={{ borderColor: "hsl(var(--navy)/0.12)", color: "hsl(var(--navy)/0.55)" }}>
+              <button type="button" onClick={handleShare} aria-label={isVi ? "Sao chép liên kết" : "Copy product link"} className="px-4 py-3 rounded-sm border font-body text-sm transition-all hover:bg-gray-50 cursor-pointer" style={{ borderColor: "hsl(var(--navy)/0.2)", color: "hsl(var(--navy)/0.75)" }}>
                 <Share2 size={16} />
               </button>
             </div>

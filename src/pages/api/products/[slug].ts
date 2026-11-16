@@ -1,7 +1,25 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import dbConnect from '@/lib/mongodb';
-import Product from '@/models/Product';
+import { invalidateCache } from '@/lib/cache';
+import Product, { type IProduct } from '@/models/Product';
 import mongoose from 'mongoose';
+
+type LeanProductRecord = Omit<IProduct, keyof mongoose.Document> & {
+  _id?: mongoose.Types.ObjectId;
+};
+
+type RelatedProductLean = {
+  _id?: mongoose.Types.ObjectId;
+  productId?: string;
+  name?: IProduct['name'];
+  slug?: string;
+  code?: string;
+  image?: string;
+  images?: string[];
+  category?: IProduct['category'];
+  material?: IProduct['material'];
+  collection?: string;
+};
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { slug } = req.query;
@@ -19,11 +37,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     if (req.method === 'GET') {
-      const product = await Product.findOneAndUpdate(
+      const product = (await Product.findOneAndUpdate(
         { $or: orConditions },
         { $inc: { views: 1 } },
         { new: true, lean: true }
-      );
+      )) as LeanProductRecord | null;
 
       if (!product) {
         return res.status(404).json({ error: 'Product not found' });
@@ -35,25 +53,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         $or: [] as Record<string, unknown>[],
       };
       const orConds: Record<string, unknown>[] = [];
-      if ((product as any).category?.us) orConds.push({ 'category.us': (product as any).category.us });
-      if ((product as any).material?.us) orConds.push({ 'material.us': (product as any).material.us });
+      if (product.category?.us) orConds.push({ 'category.us': product.category.us });
+      if (product.material?.us) orConds.push({ 'material.us': product.material.us });
       if (orConds.length > 0) relatedQuery.$or = orConds;
 
       const relatedProducts = orConds.length > 0
-        ? await Product.find(relatedQuery)
-            .select('name slug code image images category material collection')
+        ? ((await Product.find(relatedQuery)
+            .select('productId name slug code image images category material collection')
             .limit(4)
-            .lean()
+            .lean()) as unknown as RelatedProductLean[])
         : [];
 
       const formatted = {
         ...product,
-        id: (product as any).productId || product._id?.toString(),
+        id: product.productId || product._id?.toString(),
       };
       
       return res.status(200).json({
         ...formatted,
-        _related: relatedProducts.map((p: any) => ({
+        _related: relatedProducts.map((p) => ({
           ...p,
           id: p.productId || p._id?.toString(),
         })),
@@ -73,14 +91,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       console.log("[PUT] Update payload:", updatedData);
       
-      let updateResult: any = null;
+      let updateResult: mongoose.UpdateWriteOpResult | null = null;
       try {
         updateResult = await Product.updateOne(
           { $or: orConditions },
           { $set: updatedData },
           { runValidators: true }
         );
-        console.log("[PUT] updateOne result:", updateResult);
       } catch (err) {
         console.error("[PUT] updateOne ValidationError:", err);
         return res.status(500).json({ error: String(err) });
@@ -89,24 +106,29 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const productIdToFind = updateResult && updateResult.acknowledged && updateResult.matchedCount > 0 ? 
         (updatedData.slug || slug) : slug;
 
-      const updatedProduct = await Product.findOne({ 
-        $or: [
-          { slug: productIdToFind }, 
-          { code: productIdToFind }, 
-          { productId: productIdToFind }
-        ].concat(mongoose.isValidObjectId(productIdToFind) ? [{ _id: productIdToFind }] as any : [])
-      }).lean();
+      const lookupConditions: Record<string, unknown>[] = [
+        { slug: productIdToFind },
+        { code: productIdToFind },
+        { productId: productIdToFind },
+      ];
+      if (typeof productIdToFind === 'string' && mongoose.isValidObjectId(productIdToFind)) {
+        lookupConditions.push({ _id: productIdToFind });
+      }
 
-      console.log("[PUT] final findOne result exists?", !!updatedProduct);
+      const updatedProduct = (await Product.findOne({ 
+        $or: lookupConditions
+      }).lean()) as LeanProductRecord | null;
 
       if (!updatedProduct) {
-        console.log("[PUT] returning 404 explicitly");
         return res.status(404).json({ error: 'Product not found to update' });
       }
 
+      invalidateCache('featured-products-public');
+      invalidateCache('products-list-all');
+
       return res.status(200).json({
         ...updatedProduct,
-        id: (updatedProduct as any).productId || updatedProduct._id?.toString(),
+        id: updatedProduct.productId || updatedProduct._id?.toString(),
       });
     }
 
@@ -116,6 +138,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       if (!deleted) {
         return res.status(404).json({ error: 'Product not found to delete' });
       }
+
+      invalidateCache('featured-products-public');
+      invalidateCache('products-list-all');
 
       return res.status(200).json({ success: true });
     }

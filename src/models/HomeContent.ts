@@ -11,6 +11,7 @@ export interface IHomeContent extends Document {
   factoryVideoTitle1?: { us: string; uk: string; vi: string };
   factoryVideoTitle2?: { us: string; uk: string; vi: string };
   factoryVideoDescription?: { us: string; uk: string; vi: string };
+  featuredProductSlugs?: string[];
 }
 
 const HomeContentSchema = new Schema<IHomeContent>(
@@ -19,6 +20,7 @@ const HomeContentSchema = new Schema<IHomeContent>(
     factoryVideoTitle1: I18nTextSchema,
     factoryVideoTitle2: I18nTextSchema,
     factoryVideoDescription: I18nTextSchema,
+    featuredProductSlugs: { type: [String], default: [] },
   },
   { timestamps: true }
 );

@@ -58,8 +58,9 @@ export default function LanguageSwitcher() {
   return (
     <div ref={ref} className="relative">
       <button
+        type="button"
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm font-body text-sm text-white/70 hover:text-white hover:bg-white/10 transition-all"
+        className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-sm font-body text-sm text-white/90 hover:text-white hover:bg-white/10 transition-all"
         aria-label="Change language"
       >
         {mounted ? (
@@ -86,6 +87,7 @@ export default function LanguageSwitcher() {
             const isActive = lang.code === i18n.language;
             return (
               <button
+                type="button"
                 key={lang.code}
                 onClick={async () => {
                   if (lang.code === i18n.language) {
@@ -106,17 +108,17 @@ export default function LanguageSwitcher() {
                 }}
                 className="w-full flex items-center gap-2.5 px-4 py-2.5 font-body text-sm transition-colors text-left"
                 style={{
-                  color: isActive ? "hsl(var(--orange))" : "rgba(255,255,255,0.7)",
-                  backgroundColor: isActive ? "rgba(255,255,255,0.06)" : "transparent",
+                  color: isActive ? "#F5CA7B" : "rgba(255,255,255,0.92)",
+                  backgroundColor: isActive ? "rgba(255,255,255,0.08)" : "transparent",
                 }}
                 onMouseEnter={(e) => { if (!isActive) (e.currentTarget as HTMLButtonElement).style.backgroundColor = "rgba(255,255,255,0.08)"; }}
                 onMouseLeave={(e) => { if (!isActive) (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent"; }}
               >
                 <span className="flex items-center leading-none">{FLAGS[lang.code]}</span>
-                <span className="font-medium">{lang.short}</span>
+                <span className={isActive ? "font-semibold" : "font-medium"}>{lang.short}</span>
                 {isActive && (
                   <svg width="12" height="9" viewBox="0 0 12 9" fill="none" className="ml-auto">
-                    <path d="M1 4L4.5 7.5L11 1" stroke="hsl(var(--orange))" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M1 4L4.5 7.5L11 1" stroke="#F5CA7B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 )}
               </button>

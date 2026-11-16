@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import SEO from "@/components/SEO";
 import Schema from "@/components/Schema";
-import { Mail, Phone, MapPin, Send, Clock, Globe } from "lucide-react";
+import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 import { MASTER_LOCATIONS, getLocalizedLocations } from "@/constants/locations";
@@ -38,7 +38,7 @@ export default function ContactPage() {
   const router = useRouter();
   const { t } = useTranslation();
   const langKey = useLang();
-  
+
   const hasDB = !!dbData;
   const d = (dbPath: string[], i18nKey: string): string => {
     if (hasDB && dbData) {
@@ -61,12 +61,12 @@ export default function ContactPage() {
     { id: 'f_email', key: 'email', type: 'email', required: true, width: 'half', label: { us: '<p>Business Email</p>', uk: '<p>Business Email</p>', vi: '<p>Email doanh nghiệp</p>' } },
     { id: 'f_company', key: 'company', type: 'text', required: true, width: 'half', label: { us: '<p>Company</p>', uk: '<p>Company</p>', vi: '<p>Tên công ty / Doanh nghiệp</p>' } },
     { id: 'f_phone', key: 'phone', type: 'tel', required: false, width: 'half', label: { us: '<p>Phone / WhatsApp</p>', uk: '<p>Phone / WhatsApp</p>', vi: '<p>Điện thoại / WhatsApp (Tùy chọn)</p>' } },
-    { 
-      id: 'f_category', 
-      key: 'category', 
-      type: 'select', 
-      required: true, 
-      width: 'full', 
+    {
+      id: 'f_category',
+      key: 'category',
+      type: 'select',
+      required: true,
+      width: 'full',
       label: { us: '<p>Inquiry Type</p>', uk: '<p>Inquiry Type</p>', vi: '<p>Loại yêu cầu / Danh mục</p>' },
       options: [
         { key: "outdoor", label: { us: "Outdoor — DHT (Outdoor Furniture)", uk: "Outdoor — DHT (Outdoor Furniture)", vi: "Outdoor — DHT (Nội thất ngoài trời)" } },
@@ -84,7 +84,7 @@ export default function ContactPage() {
   const [form, setForm] = useState<Record<string, string>>({ category: "outdoor", interestedProduct: "" });
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
-  const [categories, setCategories] = useState<{key: string, label: string}[]>([]);
+  const [categories, setCategories] = useState<{ key: string, label: string }[]>([]);
 
   useEffect(() => {
     const { product, code, inquiryType, type } = router.query;
@@ -121,8 +121,11 @@ export default function ContactPage() {
       } else {
         setForm((prev) => ({
           ...prev,
-          subject: `OEM / B2B Inquiry: ${typeStr}`,
-          message: `Hello DHT Furniture team, we would like to discuss our OEM development requirements...`,
+          subject: t("contact.form.oemSubject", "OEM / B2B Manufacturing Inquiry"),
+          message: t(
+            "contact.form.oemMessage",
+            "Hello DHT Furniture team,\n\nWe would like to discuss our OEM/ODM furniture requirements, target materials, and estimated container volume."
+          ),
         }));
       }
     }
@@ -134,14 +137,14 @@ export default function ContactPage() {
       .then(res => res.json())
       .then((data: any[]) => {
         if (Array.isArray(data)) {
-          const cats = data.filter(s => s.type === 'category' && s.isActive).sort((a,b) => a.order - b.order);
+          const cats = data.filter(s => s.type === 'category' && s.isActive).sort((a, b) => a.order - b.order);
           setCategories(cats);
           if (cats.length > 0) {
             setForm(prev => ({ ...prev, category: cats[0].key }));
           }
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   const [error, setError] = useState<string | null>(null);
@@ -151,10 +154,10 @@ export default function ContactPage() {
     setSending(true);
     setError(null);
     try {
-      const res = await fetch("/api/contact", { 
-        method: "POST", 
-        headers: { "Content-Type": "application/json" }, 
-        body: JSON.stringify(form) 
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form)
       });
       if (!res.ok) {
         throw new Error("Failed to submit inquiry");
@@ -170,7 +173,8 @@ export default function ContactPage() {
   };
 
   const locations = (hasDB && dbData.locations?.items?.length)
-    ? dbData.locations.items.map((loc: any) => {
+    ? dbData.locations.items
+      .map((loc: any) => {
         let title = txt(loc.title, langKey);
         if (title.includes("Head Office & Commercial") || title.includes("Trụ Sở & Phòng Thương Mại")) {
           title = MASTER_LOCATIONS[0].title[langKey as 'us' | 'uk' | 'vi'] || MASTER_LOCATIONS[0].title.us;
@@ -179,33 +183,48 @@ export default function ContactPage() {
           title,
           subtitle: txt(loc.subtitle, langKey),
           address: txt(loc.address, langKey),
-          phone: loc.phone || "",
-          href: loc.href || `tel:${(loc.phone || "").replace(/\s/g, "")}`,
+          phone: (loc.phone || "").replace("+84 902 907 399", "+84 932 058 545"),
+          href: (loc.href || `tel:${(loc.phone || "").replace(/\s/g, "")}`).replace("84902907399", "84932058545"),
           hours: txt(loc.hours, langKey)
         };
       })
-    : getLocalizedLocations(langKey as 'us' | 'uk' | 'vi');
+      .filter((loc: { title: string; address: string; phone: string }) => {
+        const text = `${loc.title} ${loc.address} ${loc.phone}`.toLowerCase();
+        return (
+          !text.includes("pleiku") &&
+          !text.includes("showroom") &&
+          !text.includes("907 386 898") &&
+          !text.includes("manufacturing network") &&
+          !text.includes("mạng lưới")
+        );
+      })
+    : getLocalizedLocations(langKey as 'us' | 'uk' | 'vi').slice(0, 1);
 
-  const validLocations = locations.filter((loc: any) => {
+  const resolvedLocations =
+    locations.length > 0
+      ? locations.slice(0, 1)
+      : getLocalizedLocations(langKey as 'us' | 'uk' | 'vi').slice(0, 1);
+
+  const validLocations = resolvedLocations.filter((loc: any) => {
     const titleStr = typeof loc.title === 'string' ? loc.title : '';
     const subtitleStr = typeof loc.subtitle === 'string' ? loc.subtitle : '';
     const addressStr = typeof loc.address === 'string' ? loc.address : '';
     const phoneStr = typeof loc.phone === 'string' ? loc.phone : '';
     const hoursStr = typeof loc.hours === 'string' ? loc.hours : '';
-    
+
     const hasTitle = titleStr && titleStr.replace(/<[^>]*>?/gm, '').trim() !== '';
     const hasSubtitle = subtitleStr && subtitleStr.replace(/<[^>]*>?/gm, '').trim() !== '';
     const hasAddress = addressStr && addressStr.replace(/<[^>]*>?/gm, '').trim() !== '';
     const hasPhone = phoneStr && phoneStr.replace(/<[^>]*>?/gm, '').trim() !== '';
     const hasHours = hoursStr && hoursStr.replace(/<[^>]*>?/gm, '').trim() !== '';
-    
+
     return hasTitle || hasSubtitle || hasAddress || hasPhone || hasHours;
   });
 
   return (
     <>
       <SEO title={d(['seo', 'title'], "contact.seo.title")} description={d(['seo', 'description'], "contact.seo.description")} />
-      <Schema 
+      <Schema
         id="schema-breadcrumbs-contact"
         type="BreadcrumbList"
         data={{
@@ -225,7 +244,7 @@ export default function ContactPage() {
           ]
         }}
       />
-      <Schema 
+      <Schema
         id="schema-localbusiness-contact"
         type="LocalBusiness"
         data={{
@@ -252,32 +271,32 @@ export default function ContactPage() {
       <div className="pt-20 overflow-x-hidden w-full flex flex-col" style={{ minHeight: "100vh", backgroundColor: "hsl(var(--warm-cream))" }}>
         <div className="py-12 md:py-20 text-center" style={{ backgroundColor: "hsl(var(--navy-deep))" }}>
           <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="font-display font-bold text-white mb-4 rt-reset break-words flex flex-col empty:hidden" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }} dangerouslySetInnerHTML={{ __html: d(['hero', 'title'], "contact.hero.title") }} />
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="font-body text-white/60 text-base max-w-xl mx-auto px-4 rt-reset break-words empty:hidden" dangerouslySetInnerHTML={{ __html: d(['hero', 'subtitle'], "contact.hero.subtitle") }} />
-          
+          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="font-body text-white/90 text-base max-w-xl mx-auto px-4 rt-reset break-words empty:hidden" dangerouslySetInnerHTML={{ __html: d(['hero', 'subtitle'], "contact.hero.subtitle") }} />
+
           {/* Direct Sales Email & Hotline Pill */}
           <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="mt-6 flex flex-wrap justify-center items-center gap-3 text-xs">
-            <a href="mailto:sales@dhtcompany.com" className="inline-flex items-center gap-2 bg-[#B97846] text-white px-4 py-2 rounded-full font-semibold hover:bg-white hover:text-black transition-all shadow-sm">
+            <a href="mailto:sales@dhtcompany.com" className="inline-flex items-center gap-2 bg-[#A45E2F] text-white px-4 py-2 rounded-full font-semibold hover:bg-white hover:text-[#173C2C] transition-all shadow-sm">
               <Mail size={14} /> Official Sales: sales@dhtcompany.com
             </a>
-            <span className="text-white/80 bg-white/10 px-3.5 py-1.5 rounded-full font-medium">
+            <span className="text-white/95 bg-white/15 px-3.5 py-1.5 rounded-full font-medium">
               {langKey === 'vi' ? "Phản hồi: Đội ngũ DHT phản hồi trong vòng 1 ngày làm việc" : "Response: Our team aims to respond within one business day."}
             </span>
           </motion.div>
         </div>
-        
+
         <div className="container mx-auto px-4 sm:px-6 py-12 md:py-20">
           {/* LOCATIONS GRID */}
           {validLocations.length > 0 && (
             <div className="mb-16 md:mb-24">
               <h2 className="font-display text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12 rt-reset break-words" style={{ color: "hsl(var(--navy-deep))" }} dangerouslySetInnerHTML={{ __html: d(['locations', 'heading'], "contact.locations.title") }} />
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className={validLocations.length === 1 ? "max-w-xl mx-auto" : validLocations.length <= 2 ? "grid grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto gap-6" : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"}>
                 {validLocations.map((loc: any, i: number) => {
                   const titleStr = typeof loc.title === 'string' ? loc.title : '';
                   const subtitleStr = typeof loc.subtitle === 'string' ? loc.subtitle : '';
                   const addressStr = typeof loc.address === 'string' ? loc.address : '';
                   const phoneStr = typeof loc.phone === 'string' ? loc.phone : '';
                   const hoursStr = typeof loc.hours === 'string' ? loc.hours : '';
-                  
+
                   const hasTitle = titleStr && titleStr.replace(/<[^>]*>?/gm, '').trim() !== '';
                   const hasSubtitle = subtitleStr && subtitleStr.replace(/<[^>]*>?/gm, '').trim() !== '';
                   const hasAddress = addressStr && addressStr.replace(/<[^>]*>?/gm, '').trim() !== '';
@@ -285,37 +304,38 @@ export default function ContactPage() {
                   const hasHours = hoursStr && hoursStr.replace(/<[^>]*>?/gm, '').trim() !== '';
 
                   return (
-                  <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * i, duration: 0.5 }} key={i} className="bg-white p-6 rounded-sm border border-border flex flex-col h-full hover:shadow-lg transition-shadow overflow-hidden">
-                    {hasTitle && (
-                      <h3 className="font-display font-bold text-lg mb-1 leading-tight rt-reset wrap-break-word" style={{ color: "hsl(var(--navy-deep))" }} dangerouslySetInnerHTML={{ __html: loc.title }} />
-                    )}
-                    {hasSubtitle && (
-                      <div className="font-body text-[10px] tracking-wider uppercase font-semibold mb-5 rt-reset wrap-break-word" style={{ color: "hsl(var(--orange))" }} dangerouslySetInnerHTML={{ __html: loc.subtitle }} />
-                    )}
-                    
-                    <div className="space-y-4 font-body text-sm text-muted-foreground flex-1">
-                      {hasAddress && (
-                        <div className="flex items-start gap-3">
-                          <MapPin size={16} className="mt-0.5 shrink-0" style={{ color: "hsl(var(--orange))" }} />
-                          <span className="leading-relaxed rt-reset block flex-1 wrap-break-word min-w-0" dangerouslySetInnerHTML={{ __html: loc.address }} />
-                        </div>
+                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * i, duration: 0.5 }} key={i} className="bg-white p-6 rounded-sm border border-border flex flex-col h-full hover:shadow-lg transition-shadow overflow-hidden">
+                      {hasTitle && (
+                        <h3 className="font-display font-bold text-lg mb-1 leading-tight rt-reset wrap-break-word text-[#0E241B]" dangerouslySetInnerHTML={{ __html: loc.title }} />
                       )}
-                      {(hasPhone || hasHours) && (
-                        <div className="flex items-start gap-3">
-                          <Phone size={16} className="mt-0.5 shrink-0" style={{ color: "hsl(var(--orange))" }} />
-                          <div className="flex-1 min-w-0 wrap-break-word">
-                            {hasPhone && (
-                              <a href={loc.href} className="font-medium hover:text-orange transition-colors block mb-0.5 text-foreground wrap-break-word">{loc.phone}</a>
-                            )}
-                            {hasHours && (
-                              <span className="text-xs opacity-80 block rt-reset wrap-break-word" dangerouslySetInnerHTML={{ __html: loc.hours }} />
-                            )}
+                      {hasSubtitle && (
+                        <div className="font-body text-[11px] tracking-wider uppercase font-semibold mb-5 rt-reset wrap-break-word text-[#9A5B2A]" dangerouslySetInnerHTML={{ __html: loc.subtitle }} />
+                      )}
+
+                      <div className="space-y-4 font-body text-sm text-[#1F2723]/80 flex-1">
+                        {hasAddress && (
+                          <div className="flex items-start gap-3">
+                            <MapPin size={16} className="mt-0.5 shrink-0 text-[#9A5B2A]" />
+                            <span className="leading-relaxed rt-reset block flex-1 wrap-break-word min-w-0" dangerouslySetInnerHTML={{ __html: loc.address }} />
                           </div>
-                        </div>
-                      )}
-                    </div>
-                  </motion.div>
-                )})}
+                        )}
+                        {(hasPhone || hasHours) && (
+                          <div className="flex items-start gap-3">
+                            <Phone size={16} className="mt-0.5 shrink-0 text-[#9A5B2A]" />
+                            <div className="flex-1 min-w-0 wrap-break-word">
+                              {hasPhone && (
+                                <a href={loc.href} className="font-semibold hover:text-[#9A5B2A] transition-colors block mb-0.5 text-foreground wrap-break-word">{loc.phone}</a>
+                              )}
+                              {hasHours && (
+                                <span className="text-xs text-gray-600 block rt-reset wrap-break-word" dangerouslySetInnerHTML={{ __html: loc.hours }} />
+                              )}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </motion.div>
+                  )
+                })}
               </div>
             </div>
           )}
@@ -325,22 +345,22 @@ export default function ContactPage() {
             <div className="max-w-3xl mx-auto">
               <div className="text-center mb-10">
                 <h2 className="font-display text-3xl font-bold mb-4 rt-reset break-words w-full" style={{ color: "hsl(var(--navy-deep))" }} dangerouslySetInnerHTML={{ __html: d(['formSection', 'title'], "contact.formSection.title") }} />
-                <div 
-                  className="font-body text-muted-foreground contact-subtitle-rt break-words w-full" 
-                  dangerouslySetInnerHTML={{ __html: d(['formSection', 'subtitle'], "contact.formSection.subtitle") }} 
+                <div
+                  className="font-body text-muted-foreground contact-subtitle-rt break-words w-full"
+                  dangerouslySetInnerHTML={{ __html: d(['formSection', 'subtitle'], "contact.formSection.subtitle") }}
                 />
               </div>
               {sent ? (
                 <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-20 bg-white rounded-sm border border-border">
-                  <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style={{ backgroundColor: "hsl(var(--orange)/0.1)" }}>
-                    <Send size={24} style={{ color: "hsl(var(--orange))" }} />
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center bg-[#B97846]/12">
+                    <Send size={24} className="text-[#9A5B2A]" />
                   </div>
                   <h3 className="font-display font-bold text-xl text-foreground mb-2 rt-reset break-words" dangerouslySetInnerHTML={{ __html: d(['formSection', 'successTitle'], "contact.success.title") }} />
-                  <div 
-                    className="font-body text-sm text-muted-foreground mb-6 break-words" 
-                    dangerouslySetInnerHTML={{ __html: d(['formSection', 'successDesc'], "contact.success.description") }} 
+                  <div
+                    className="font-body text-sm text-[#1F2723]/80 mb-6 break-words"
+                    dangerouslySetInnerHTML={{ __html: d(['formSection', 'successDesc'], "contact.success.description") }}
                   />
-                  <button onClick={() => setSent(false)} className="font-body text-sm font-medium rt-reset" style={{ color: "hsl(var(--orange))" }} dangerouslySetInnerHTML={{ __html: d(['formSection', 'sendAnotherBtn'], "contact.success.sendAnother") }} />
+                  <button type="button" onClick={() => setSent(false)} className="font-body text-sm font-semibold text-[#9A5B2A] hover:underline rt-reset" dangerouslySetInnerHTML={{ __html: d(['formSection', 'sendAnotherBtn'], "contact.success.sendAnother") }} />
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="bg-white rounded-sm border border-border p-6 sm:p-10 shadow-sm">
@@ -348,26 +368,26 @@ export default function ContactPage() {
                     {fields.map((f: any, idx: number) => {
                       const labelText = txt(f.label, langKey) || f.key;
                       const isHalf = f.width === 'half';
-                      
+
                       return (
                         <div key={f.key || f.id || `field-${idx}`} className={`px-2.5 mb-5 ${isHalf ? 'w-full md:w-1/2' : 'w-full'}`}>
-                          <label className="font-body text-xs text-muted-foreground uppercase tracking-wider mb-1.5 block rt-reset">
+                          <label className="font-body text-xs text-[#173C2C]/85 font-semibold uppercase tracking-wider mb-1.5 block rt-reset">
                             <span dangerouslySetInnerHTML={{ __html: labelText }} /> {f.required && "*"}
                           </label>
-                          
+
                           {f.type === 'textarea' ? (
-                            <textarea 
-                              rows={5} 
-                              required={f.required} 
-                              value={form[f.key] || ""} 
-                              onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} 
-                              className="w-full px-4 py-3 border border-border rounded-sm font-body text-sm outline-none focus:ring-2 focus:ring-orange/30 transition resize-none shadow-sm" 
+                            <textarea
+                              rows={5}
+                              required={f.required}
+                              value={form[f.key] || ""}
+                              onChange={(e) => setForm({ ...form, [f.key]: e.target.value })}
+                              className="w-full px-4 py-3 border border-border rounded-sm font-body text-sm outline-none focus:ring-2 focus:ring-orange/30 transition resize-none shadow-sm"
                             />
                           ) : f.type === 'category' ? (
-                            <select 
-                              required={f.required} 
-                              value={form[f.key] || ""} 
-                              onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} 
+                            <select
+                              required={f.required}
+                              value={form[f.key] || ""}
+                              onChange={(e) => setForm({ ...form, [f.key]: e.target.value })}
                               className="w-full px-4 py-3 border border-border rounded-sm font-body text-sm outline-none focus:ring-2 focus:ring-orange/30 transition shadow-sm bg-white"
                             >
                               {categories.length > 0 ? categories.map((c, cIdx) => (
@@ -377,24 +397,24 @@ export default function ContactPage() {
                               )}
                             </select>
                           ) : f.type === 'select' ? (
-                             <select 
-                               required={f.required} 
-                               value={form[f.key] || ""} 
-                               onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} 
-                               className="w-full px-4 py-3 border border-border rounded-sm font-body text-sm outline-none focus:ring-2 focus:ring-orange/30 transition shadow-sm bg-white"
-                             >
-                               <option value="" disabled>Select an option</option>
-                               {(f.options || []).map((o: any, oIdx: number) => (
-                                 <option key={o.key || `opt-${oIdx}`} value={txt(o.label, langKey)}>{txt(o.label, langKey)}</option>
-                               ))}
-                             </select>
+                            <select
+                              required={f.required}
+                              value={form[f.key] || ""}
+                              onChange={(e) => setForm({ ...form, [f.key]: e.target.value })}
+                              className="w-full px-4 py-3 border border-border rounded-sm font-body text-sm outline-none focus:ring-2 focus:ring-orange/30 transition shadow-sm bg-white"
+                            >
+                              <option value="" disabled>Select an option</option>
+                              {(f.options || []).map((o: any, oIdx: number) => (
+                                <option key={o.key || `opt-${oIdx}`} value={txt(o.label, langKey)}>{txt(o.label, langKey)}</option>
+                              ))}
+                            </select>
                           ) : (
-                            <input 
-                              type={f.type === 'tel' ? 'tel' : f.type === 'email' ? 'email' : 'text'} 
-                              required={f.required} 
-                              value={form[f.key] || ""} 
-                              onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} 
-                              className="w-full px-4 py-3 border border-border rounded-sm font-body text-sm outline-none focus:ring-2 focus:ring-orange/30 transition shadow-sm" 
+                            <input
+                              type={f.type === 'tel' ? 'tel' : f.type === 'email' ? 'email' : 'text'}
+                              required={f.required}
+                              value={form[f.key] || ""}
+                              onChange={(e) => setForm({ ...form, [f.key]: e.target.value })}
+                              className="w-full px-4 py-3 border border-border rounded-sm font-body text-sm outline-none focus:ring-2 focus:ring-orange/30 transition shadow-sm"
                             />
                           )}
                         </div>
@@ -408,7 +428,7 @@ export default function ContactPage() {
                     </div>
                   )}
                   <div className="mt-2">
-                    <button type="submit" disabled={sending} className="w-full inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90 disabled:opacity-60" style={{ backgroundColor: "hsl(var(--orange))" }}>
+                    <button type="submit" disabled={sending} className="w-full inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-sm font-body font-semibold text-sm text-white bg-[#A45E2F] hover:brightness-110 transition-all disabled:opacity-60">
                       {!sending && <Send size={16} />}
                       <span className="rt-reset" dangerouslySetInnerHTML={{ __html: sending ? d(['formSection', 'labels', 'sendingBtn'], "contact.form.sending") : d(['formSection', 'labels', 'sendBtn'], "contact.form.sendInquiry") }} />
                     </button>

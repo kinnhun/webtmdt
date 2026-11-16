@@ -1,4 +1,5 @@
 export type Collection = 'Outdoor' | 'Indoor';
+export type CatalogueCollectionScope = Collection | 'All';
 
 /** One visual attribute card as shown on the catalogue detail page */
 export interface ProductAttribute {
@@ -71,3 +72,11 @@ export interface FilterState {
   color: string[];
   style: string[];
 }
+
+export type FeaturedProductsProps = {
+  initialProducts?: Product[];
+};
+
+export type HomePageProps = {
+  initialFeaturedProducts: Product[];
+};

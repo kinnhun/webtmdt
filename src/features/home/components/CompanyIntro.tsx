@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowUpRight, Compass, Factory, ShieldCheck, Truck } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
@@ -10,7 +11,6 @@ const vp = { once: true, amount: 0.05 as const };
 export default function CompanyIntro() {
   const { t, i18n } = useTranslation();
   const isVi = i18n.language?.startsWith("vi");
-  const [currentImage, setCurrentImage] = useState(0);
 
   const images = [
     "/img/WhoWeAre1.png",
@@ -18,9 +18,27 @@ export default function CompanyIntro() {
     "/img/WhoWeAre3.png",
   ];
 
+  const [sliderState, setSliderState] = useState<{ active: number; loaded: number[] }>({
+    active: 0,
+    loaded: [0],
+  });
+
+  const selectSlide = (nextIndex: number) => {
+    setSliderState((prev) => ({
+      active: nextIndex,
+      loaded: prev.loaded.includes(nextIndex) ? prev.loaded : [...prev.loaded, nextIndex],
+    }));
+  };
+
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentImage((prev) => (prev + 1) % images.length);
+      setSliderState((prev) => {
+        const next = (prev.active + 1) % images.length;
+        return {
+          active: next,
+          loaded: prev.loaded.includes(next) ? prev.loaded : [...prev.loaded, next],
+        };
+      });
     }, 4500);
     return () => clearInterval(timer);
   }, [images.length]);
@@ -189,9 +207,8 @@ export default function CompanyIntro() {
               className="flex flex-col sm:flex-row items-center gap-4"
             >
               <Link
-                href="/catalogue/outdoor"
-                className="inline-flex items-center justify-center px-6 py-3 font-body font-semibold text-sm text-white rounded-sm hover:opacity-90 transition-all text-center w-full sm:w-auto"
-                style={{ backgroundColor: "hsl(var(--orange))" }}
+                href="/catalogue"
+                className="inline-flex items-center justify-center px-6 py-3 font-body font-semibold text-sm text-white bg-[#A45E2F] rounded-sm hover:brightness-110 transition-all text-center w-full sm:w-auto shadow-sm"
               >
                 {t("home.intro.buttons.catalog", isVi ? "Xem Bộ sưu tập" : "Explore Collections")}
               </Link>
@@ -223,23 +240,26 @@ export default function CompanyIntro() {
           {/* Right Column: Instant-render Image + 4 Equal-Height Capability Cards */}
           <div className="flex flex-col gap-4">
             <div className="relative h-64 sm:h-80 lg:h-[340px] overflow-hidden rounded-sm group bg-[#173C2C]">
-              {images.map((src, idx) => (
-                <img
-                  key={src}
-                  src={src}
-                  alt="DHT Manufacturing Network"
-                  className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ${
-                    idx === currentImage
-                      ? "opacity-100 scale-100 z-10"
-                      : "opacity-0 scale-105 z-0 pointer-events-none"
-                  }`}
-                />
-              ))}
+              {images.map((src, idx) =>
+                sliderState.loaded.includes(idx) ? (
+                  <Image
+                    key={src}
+                    src={src}
+                    alt="DHT Manufacturing Network"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 48vw"
+                    loading={idx === 0 ? "eager" : "lazy"}
+                    quality={85}
+                    className={`object-cover transition-all duration-700 ${
+                      idx === sliderState.active
+                        ? "opacity-100 scale-100 z-10"
+                        : "opacity-0 scale-105 z-0 pointer-events-none"
+                    }`}
+                  />
+                ) : null
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-[hsl(var(--navy-deep)/0.35)] to-transparent pointer-events-none z-20" />
-              <div
-                className="absolute top-4 right-4 px-3 py-1.5 rounded-full z-20"
-                style={{ backgroundColor: "hsl(var(--orange))" }}
-              >
+              <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full z-20 bg-[#A45E2F]">
                 <span className="font-body font-semibold text-xs text-white tracking-wide">
                   {t("home.intro.location", isVi ? "Mạng lưới sản xuất tại Việt Nam" : "Vietnam Manufacturing Network")}
                 </span>
@@ -250,9 +270,10 @@ export default function CompanyIntro() {
                 {images.map((_, i) => (
                   <button
                     key={i}
-                    onClick={() => setCurrentImage(i)}
+                    type="button"
+                    onClick={() => selectSlide(i)}
                     className={`h-1.5 rounded-full transition-all duration-300 ${
-                      i === currentImage ? "w-6 bg-white" : "w-1.5 bg-white/50"
+                      i === sliderState.active ? "w-6 bg-white" : "w-1.5 bg-white/50"
                     }`}
                     aria-label={`Go to slide ${i + 1}`}
                   />
@@ -280,14 +301,14 @@ export default function CompanyIntro() {
                       className="w-8 h-8 rounded flex items-center justify-center shrink-0"
                       style={{
                         backgroundColor: filled ? "rgba(185,120,70,0.25)" : "rgba(23,60,44,0.08)",
-                        color: filled ? "#E8C5A5" : "#173C2C",
+                        color: filled ? "#F5CA7B" : "#173C2C",
                       }}
                     >
                       <Icon size={16} />
                     </span>
                     <span
                       className="font-body text-[10px] tracking-[0.18em] uppercase font-bold"
-                      style={{ color: filled ? "#E8C5A5" : "#B97846" }}
+                      style={{ color: filled ? "#F5CA7B" : "#9A5B2A" }}
                     >
                       0{i + 1}
                     </span>

@@ -137,6 +137,7 @@
       "noProducts": "Chưa có sản phẩm nổi bật trong danh mục này.",
       "new": "Tuyển chọn",
       "inquire": "Yêu cầu báo giá",
+      "viewCollection": "Xem bộ sưu tập",
       "filterAll": "Tất cả",
       "filterLoungeSofa": "Sofa & Lounge Ngoài Trời",
       "filterDining": "Bàn Ăn Ngoài Trời",
@@ -254,18 +255,18 @@
   },
   "about": {
     "seo": {
-      "title": "Giới Thiệu DHT | Tập Đoàn Sản Xuất Nội Thất Gia Đình Tại Việt Nam",
-      "description": "DHT Furniture Vietnam hoạt động trong mạng lưới tập đoàn gia đình gồm 11 cơ sở sản xuất và tổng diện tích 543.380 m² trên toàn quốc."
+      "title": "Năng Lực Sản Xuất & Điều Phối Thương Mại | DHT Furniture Vietnam",
+      "description": "DHT Furniture Vietnam điều phối các chương trình nội thất quốc tế với 11 cơ sở sản xuất chuyên môn hóa và tổng diện tích 543.380 m² trên toàn quốc."
     },
     "hero": {
-      "title": "Về DHT Furniture Vietnam",
+      "title": "DHT Furniture Vietnam",
       "subtitle": "Nhà Sản Xuất & Xuất Khẩu Nội Thất Việt Nam",
-      "description": "DHT là nhà sản xuất và xuất khẩu nội thất Việt Nam, hoạt động trong mạng lưới tập đoàn gia đình gồm 11 cơ sở sản xuất trên toàn quốc."
+      "description": "DHT là nhà sản xuất và nền tảng xuất khẩu nội thất Việt Nam, điều phối mạng lưới 11 cơ sở sản xuất chuyên môn hóa trên toàn quốc."
     },
     "story": {
       "label": "Quá Trình Phát Triển",
       "heading": "Các Mốc Phát Triển Doanh Nghiệp",
-      "content": "Hoạt động kinh doanh của DHT phát triển qua 3 mốc quan trọng vào các năm 2016, 2022 và 2024. Ngày nay, DHT Furniture Vietnam phát triển và điều phối các chương trình nội thất quốc tế trong mạng lưới tập đoàn gia đình gồm 11 cơ sở sản xuất trên toàn quốc. Trọng tâm của chúng tôi là chuyển hóa yêu cầu của người mua thành thông số sản phẩm khả thi, kế hoạch sản xuất, kiểm soát chất lượng và sắp xếp xuất khẩu."
+      "content": "Hoạt động kinh doanh của DHT phát triển qua 3 mốc quan trọng vào các năm 2016, 2022 và 2024. Ngày nay, DHT Furniture Vietnam phát triển và điều phối các chương trình nội thất quốc tế trên nền tảng mạng lưới 11 cơ sở sản xuất chuyên môn hóa tại Việt Nam. Trọng tâm của chúng tôi là chuyển hóa yêu cầu của người mua thành thông số sản phẩm khả thi, kế hoạch sản xuất, kiểm soát chất lượng và sắp xếp xuất khẩu."
     },
     "values": {
       "label": "Giá Trị Cốt Lõi",
@@ -407,17 +408,17 @@
     },
     "stats": {
       "heading": "Số Liệu & Năng Lực Sản Xuất",
-      "subtitle": "Hoạt động trong mạng lưới tập đoàn nội thất gia đình gồm 11 cơ sở sản xuất với tổng diện tích 543.380 m² trên toàn quốc.",
+      "subtitle": "Điều phối mạng lưới 11 cơ sở sản xuất chuyên môn hóa với tổng diện tích 543.380 m² trên toàn quốc.",
       "factorySize": "Tổng Diện Tích",
       "yearlyOutput": "Cơ Sở Sản Xuất",
       "monthlyContainers": "Container / Tháng",
-      "workers": "Nhân Sự Tập Đoàn"
+      "workers": "Nhân Sự Sản Xuất"
     },
     "hr": {
       "heading": "Nguồn Nhân Lực & Chuyên Môn Hóa",
-      "prodWorkers": "Khoảng 2.400 nhân sự sản xuất tay nghề cao trên toàn tập đoàn.",
+      "prodWorkers": "Khoảng 2.400 nhân sự sản xuất tay nghề cao trên toàn mạng lưới.",
       "techStaff": "Khoảng 20 chuyên gia tại văn phòng trung tâm DHT điều phối chương trình.",
-      "rndModels": "Công suất tham chiếu tại một xưởng outdoor: 60-70 container/tháng."
+      "rndModels": "Năng lực tham chiếu: 50-60 container/tháng tại mỗi nhà máy hoàn thiện (Cơ sở 01-10)."
     },
     "machinery": {
       "heading": "Máy móc chủ lực",
@@ -436,15 +437,10 @@
         "address": "72 Lê Thánh Tôn, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh, Việt Nam",
         "hotline": "Hotline: +84 932 058 545"
       },
-      "showroom": {
-        "name": "Showroom Trưng Bày DHT",
-        "address": "206 Phan Đình Phùng, TP. Pleiku, Tỉnh Gia Lai, Việt Nam",
-        "hotline": "Hotline: +84 907 386 898"
-      },
       "manufacturing": {
         "name": "Mạng lưới Nhà máy Sản xuất DHT",
         "address": "4 Cụm sản xuất: Quy Nhơn, TP.HCM & Nam Bộ, Hưng Yên, Phú Thọ/Vĩnh Phúc",
-        "hotline": "Vận hành: +84 902 907 399"
+        "hotline": "Thương mại: +84 932 058 545"
       }
     },
     "welcome": {
@@ -468,14 +464,14 @@
     "marquee": [
       "11 Cơ sở Sản xuất",
       "543.380 m² Tổng diện tích mặt bằng sản xuất",
-      "Khoảng 2.400 Nhân sự tập đoàn",
+      "Khoảng 2.400 Nhân sự Mạng lưới",
       "4 Cụm sản xuất trọng điểm"
     ]
   },
   "catalogue": {
     "seo": {
-      "title": "Bộ Sưu Tập Nội Thất Ngoài Trời | DHT Furniture Vietnam",
-      "description": "Khám phá nội thất ngoài trời chế tác từ gỗ có chứng nhận FSC, nhôm, thép, dây thừng, mây nhựa và các kết hợp vật liệu hỗn hợp."
+      "title": "Bộ Sưu Tập Nội Thất | DHT Furniture Vietnam",
+      "description": "Khám phá danh mục nội thất ngoài trời, trong nhà và dự án được sản xuất qua mạng lưới 11 cơ sở chuyên biệt tại Việt Nam."
     },
     "outdoor": {
       "seo": {
@@ -549,7 +545,7 @@
       "hero": {
         "badge": "Sản Xuất May Đo & OEM Hợp Đồng",
         "title": "Nội Thất Trong Nhà & Dự Án",
-        "description": "DHT cung ứng năng lực sản xuất nội thất gỗ tự nhiên, gỗ công nghiệp, đồ bọc nệm và vật liệu hỗn hợp cho các chương trình nhà ở, khách sạn nghỉ dưỡng và dự án thương mại thông qua các cơ sở chuyên môn hóa trong tập đoàn gia đình."
+        "description": "DHT cung ứng năng lực sản xuất nội thất gỗ tự nhiên, gỗ công nghiệp, đồ bọc nệm và vật liệu hỗn hợp cho các chương trình nhà ở, khách sạn nghỉ dưỡng và dự án thương mại thông qua mạng lưới 11 cơ sở chuyên môn hóa tại Việt Nam."
       },
       "capabilities": {
         "dining": {
@@ -612,7 +608,7 @@
           "repeatValue": "Thường 45–60 ngày",
           "repeatCondition": "(cho các bộ sưu tập đã vào phom ổn định)",
           "fscTitle": "Nguồn gốc gỗ FSC:",
-          "fscValue": "All wood used in DHT furniture is FSC-certified",
+          "fscValue": "Tất cả gỗ sử dụng trong nội thất DHT đều có chứng nhận FSC",
           "containerTitle": "Đóng hàng container:",
           "containerValue": "Linh hoạt đóng kết hợp nhiều mặt hàng trong cùng container",
           "packagingTitle": "Quy cách đóng gói:",
@@ -631,7 +627,7 @@
   },
   "contact": {
     "seo": {
-      "title": "Liên hệ — DHT Outdoor Furniture",
+      "title": "Liên hệ — DHT Furniture Vietnam",
       "description": "Liên hệ để nhận báo giá, đặt hàng tùy chỉnh và yêu cầu cho dự án."
     },
     "hero": {
@@ -661,7 +657,9 @@
       "proposalSubject": "Yêu cầu Đề xuất Sản phẩm — Chương trình OEM / B2B",
       "proposalMessage": "Kính gửi đội ngũ DHT Furniture,\n\nChúng tôi muốn yêu cầu đề xuất sản phẩm cho chương trình nội thất sắp tới. Thông tin thị trường mục tiêu, khối lượng dự kiến và quy cách ban đầu như sau:\n- Thị trường mục tiêu:\n- Khối lượng ước tính:\n- Yêu cầu kỹ thuật:\n\nXin vui lòng liên hệ tư vấn phương án phù hợp.",
       "visitSubject": "Đăng ký Tham quan Nhà máy — Khảo sát Trực tiếp",
-      "visitMessage": "Kính gửi đội ngũ DHT Furniture,\n\nChúng tôi muốn đăng ký lịch hẹn tham quan và khảo sát thực tế cơ sở sản xuất của tập đoàn để trao đổi về kế hoạch hợp tác."
+      "visitMessage": "Kính gửi đội ngũ DHT Furniture,\n\nChúng tôi muốn đăng ký lịch hẹn tham quan và khảo sát thực tế cơ sở sản xuất của DHT để trao đổi về kế hoạch hợp tác.",
+      "oemSubject": "Yêu cầu Hợp tác Sản xuất OEM / B2B",
+      "oemMessage": "Kính gửi đội ngũ DHT Furniture,\n\nChúng tôi muốn trao đổi về nhu cầu gia công OEM/ODM, vật liệu mục tiêu và sản lượng container dự kiến."
     },
     "success": {
       "title": "Cảm ơn bạn!",
@@ -669,11 +667,11 @@
       "sendAnother": "Gửi yêu cầu khác"
     },
     "locations": {
-      "title": "Địa Điểm Văn Phòng, Showroom & Mạng Lưới Sản Xuất",
+      "title": "Văn Phòng Thương Mại DHT",
       "hqTitle": "Mạng lưới Nhà máy Sản xuất DHT",
       "hqSubtitle": "11 Cơ sở sản xuất toàn quốc",
-      "showroomTitle": "Showroom Trưng Bày DHT",
-      "showroomSubtitle": "Bộ sưu tập Nội Ngoại thất",
+      "showroomTitle": "Văn phòng Điều phối Thương mại DHT",
+      "showroomSubtitle": "Trung tâm điều phối TP.HCM",
       "officeTitle": "Văn phòng Điều phối Thương mại DHT",
       "officeSubtitle": "Phòng Thương mại & Hợp tác Quốc tế",
       "distributorTitle": "Mạng lưới Nhà máy Sản xuất DHT",
@@ -743,7 +741,7 @@
   },
   "blog": {
     "seo": {
-      "title": "Blog — DHT Outdoor Furniture",
+      "title": "Blog — DHT Furniture Vietnam",
       "description": "Góc nhìn chuyên sâu, mẹo hữu ích và câu chuyện từ các chuyên gia sản xuất nội thất."
     },
     "hero": {
@@ -1431,7 +1429,7 @@
           "value": "12 Staff",
           "title": "Đội ngũ QA/QC Chuyên trách Cơ sở",
           "definition": "Chuyên viên và kỹ sư kiểm định toàn thời gian quản lý phân loại gỗ đầu vào, dung sai mộng ghép cơ khí, độ bám dính bề mặt sơn và nghiệm thu trước xuất xưởng.",
-          "scope": "Chuyên trách thường trực tại các cơ sở xuất khẩu nội thất khu vực Miền Nam & Miền Trung (Cơ sở 01–05) — không bao gồm toàn bộ 11 cơ sở sơ chế/ván panel của tập đoàn.",
+          "scope": "Chuyên trách thường trực tại các cơ sở xuất khẩu nội thất khu vực Miền Nam & Miền Trung (Cơ sở 01–05) — không bao gồm toàn bộ 11 cơ sở trên toàn hệ thống.",
           "period": "Biên chế vận hành thường trực (Năm triển khai 2026)."
         }
       ],

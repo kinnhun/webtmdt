@@ -32,7 +32,7 @@ export default function CtaBanner() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="font-body text-base sm:text-lg text-white/70 leading-relaxed mb-10"
+              className="font-body text-base sm:text-lg text-white/90 leading-relaxed mb-10"
             >
               {t("home.cta.description")}
             </motion.p>
@@ -46,14 +46,13 @@ export default function CtaBanner() {
             >
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90 w-full sm:w-auto"
-                style={{ backgroundColor: "hsl(var(--orange))" }}
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-sm font-body font-semibold text-sm text-white bg-[#A45E2F] hover:brightness-110 transition-all w-full sm:w-auto"
               >
                 {t("home.cta.sendInquiry")} <ArrowRight size={15} />
               </Link>
               <Link
                 href="/catalogue"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-sm font-body font-semibold text-sm text-white/80 border border-white/25 hover:bg-white/10 transition-all w-full sm:w-auto"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-sm font-body font-semibold text-sm text-white/95 border border-white/35 hover:bg-white/12 transition-all w-full sm:w-auto"
               >
                 {t("home.cta.browseCatalogue")}
               </Link>

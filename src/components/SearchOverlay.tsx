@@ -2,13 +2,16 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Search, X } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
 import { useTranslation } from "react-i18next";
 import { useProducts } from "@/domains/product/product.hooks";
+import type { Product } from "@/domains/product/product.types";
+import { withImageVariant } from "@/lib/imageUrl";
 
-interface SearchOverlayProps {
+type SearchOverlayProps = {
   open: boolean;
   onClose: () => void;
-}
+};
 
 export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
   const [query, setQuery] = useState("");
@@ -18,11 +21,13 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
   const langId = (langEnum[i18n?.language] || "us") as 'vi' | 'uk' | 'us';
 
   const emptyFilters = { category: [], material: [], moq: [], color: [], style: [] };
-  const { data: rawProducts = [] } = useProducts(emptyFilters, "");
-  const productsToFilter = Array.isArray(rawProducts) ? rawProducts : (rawProducts as any)?.data || [];
+  const { data: rawProducts = [] } = useProducts(emptyFilters, "", open);
+  const productsToFilter: Product[] = Array.isArray(rawProducts)
+    ? rawProducts
+    : ((rawProducts as { data?: Product[] })?.data ?? []);
 
   const results = query.length >= 2
-    ? productsToFilter.filter((p: any) => {
+    ? productsToFilter.filter((p) => {
       const q = query.toLowerCase();
       const pName = (p.name?.[langId] || p.name?.us || "").toLowerCase();
       const pCat = (p.category?.[langId] || p.category?.us || "").toLowerCase();
@@ -36,7 +41,7 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
     : [];
 
   const handleSelect = () => {
-    router.push(`/catalogue/outdoor?search=${encodeURIComponent(query)}`);
+    router.push(`/catalogue?search=${encodeURIComponent(query)}`);
     onClose();
     setQuery("");
   };
@@ -59,19 +64,19 @@ export default function SearchOverlay({ open, onClose }: SearchOverlayProps) {
                   }}
                   className="flex-1 text-lg font-body outline-none text-foreground placeholder:text-muted-foreground"
                 />
-                <button onClick={() => { onClose(); setQuery(""); }} className="text-muted-foreground hover:text-foreground transition-colors">
+                <button type="button" onClick={() => { onClose(); setQuery(""); }} aria-label="Close search" className="text-muted-foreground hover:text-foreground transition-colors">
                   <X size={20} />
                 </button>
               </div>
 
               {results.length > 0 && (
                 <div className="mt-4 border-t border-border pt-4 grid grid-cols-1 gap-2 max-h-80 overflow-y-auto">
-                  {results.map((p: any, idx: number) => {
+                  {results.map((p, idx) => {
                     const pNameItem = p.name?.[langId] || p.name?.us || "";
                     const pCatItem = p.category?.[langId] || p.category?.us || "";
                     return (
-                      <button key={p.id || p.code || idx} onClick={handleSelect} className="flex items-center gap-4 p-3 hover:bg-muted rounded-md transition-colors text-left">
-                        <img src={p.image} alt={pNameItem} className="w-12 h-10 rounded object-cover shrink-0" />
+                      <button type="button" key={p.id || p.code || idx} onClick={handleSelect} className="flex items-center gap-4 p-3 hover:bg-muted rounded-md transition-colors text-left">
+                        <Image src={withImageVariant(p.image, 160, 75)} alt={pNameItem} width={48} height={40} unoptimized className="w-12 h-10 rounded object-cover shrink-0" />
                         <div>
                           <p className="font-body font-medium text-sm text-foreground">{pNameItem}</p>
                           <p className="font-body text-xs text-muted-foreground">{p.code} · {pCatItem}</p>

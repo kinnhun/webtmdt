@@ -53,7 +53,7 @@ export default function SEO({
   const isVi = locale === "vi-VN";
 
   const defaultDescriptionEn =
-    "DHT Furniture Vietnam is a premier manufacturer and exporter of outdoor, indoor, and commercial project furniture with 11 specialized facilities across Vietnam.";
+    "DHT Furniture Vietnam is a premier manufacturer and exporter of outdoor, indoor, and commercial project furniture with 11 specialised facilities across Vietnam.";
   const defaultDescriptionVi =
     "DHT Furniture Vietnam là đơn vị sản xuất và xuất khẩu nội thất ngoài trời, trong nhà và dự án thương mại với mạng lưới 11 cơ sở sản xuất chuyên môn hóa trên toàn quốc.";
 

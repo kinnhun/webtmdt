@@ -38,7 +38,7 @@ export const materialArticles: MaterialArticle[] = [
     slug: "acacia-wood-outdoor-furniture",
     key: "solidOak",
     image: `/img/materials/AcaciaWood1.png?v=${version}`,
-    hoverImage: `/img/materials/AcaciaWood2.png?v=${version}`,
+    hoverImage: `/img/materials/TeakWood2.png?v=${version}`,
     badge: "FSC-CERTIFIED ACACIA",
     badgeVi: "GỖ TRÀM CHỨNG NHẬN FSC",
     title: "Cost-Effective Outdoor Solution",
@@ -74,7 +74,7 @@ export const materialArticles: MaterialArticle[] = [
           "Hướng dẫn bảo quản: Khuyến nghị lau sạch định kỳ và quét bổ sung dầu dưỡng gỗ ngoài trời tùy theo loại bề mặt hoàn thiện và mức độ tiếp xúc thời tiết",
           "Chuỗi cung ứng ổn định từ rừng trồng có chứng chỉ, đáp ứng các đợt giao hàng lớn theo mùa vụ",
         ],
-        image: `/img/materials/AcaciaWood2.png?v=${version}`,
+        image: `/img/materials/TeakWood2.png?v=${version}`,
       },
       {
         title: "Built for Mass Retail & Drop-Ship Optimization",
@@ -98,7 +98,7 @@ export const materialArticles: MaterialArticle[] = [
       {
         title: "Commercial Execution & Order Parameters",
         titleVi: "Thực Thi Thương Mại & Tiến Độ Sản Xuất",
-        body: "Material selection, drying, construction and finishing are developed around the product specification and intended outdoor use. All wood used in DHT furniture is FSC-certified. Packaging, relevant testing and production timing are agreed for each buyer programme (typical baseline: 60-90 days for initial production, 45-60 days for repeat orders following confirmed specifications and material availability). DHT does not issue generic blanket lead time or price guarantees without verified program scope.",
+        body: "Material selection, drying, construction and finishing are developed around the product specification and intended outdoor use. All wood used in DHT furniture is FSC-certified. Packaging, relevant testing and production timing are agreed for each buyer programme (typical baseline: 60-90 days for initial production, 45-60 days for repeat orders following confirmed specifications and material availability). DHT does not issue generic blanket lead time or price guarantees without verified programme scope.",
         bodyVi: "Lựa chọn vật liệu, sấy gỗ, kết cấu và hoàn thiện được phát triển xoay quanh đặc tả sản phẩm và điều kiện sử dụng ngoài trời dự kiến. Toàn bộ gỗ sử dụng trong sản phẩm nội thất DHT đều có chứng nhận FSC. Quy cách đóng gói, thử nghiệm liên quan và tiến độ sản xuất được thống nhất cho từng chương trình của khách hàng (mốc tham chiếu thông thường: 60-90 ngày cho đơn sản xuất mới, 45-60 ngày cho đơn lặp lại sau khi chốt bản vẽ kỹ thuật và sẵn sàng vật tư). DHT không cam kết thời gian giao hàng hay giá cố định chung cho mọi trường hợp khi chưa chốt phạm vi chương trình.",
         bullets: [
           "Color and finish matching against approved physical master control swatches",
@@ -195,7 +195,7 @@ export const materialArticles: MaterialArticle[] = [
   {
     slug: "powder-coated-aluminum-modern-scalable",
     key: "aluminium",
-    image: `/img/materials/Powder-CoatedAluminum2.png?v=${version}`,
+    image: `/img/category/aluminum1.png?v=${version}`,
     hoverImage: `/img/materials/Powder-CoatedAluminum2.png?v=${version}`,
     badge: "POWDER-COATED ALUMINIUM",
     badgeVi: "NHÔM SƠN TĨNH ĐIỆN",
@@ -232,7 +232,7 @@ export const materialArticles: MaterialArticle[] = [
           "Biên dạng thanh nhôm nhẹ giúp giảm trọng tải vận chuyển và dễ dàng xếp dỡ container",
           "Kỹ thuật hàn TIG và MIG chuẩn xác bảo đảm độ vững chắc của khung và đường hàn thẩm mỹ, đồng đều",
         ],
-        image: `/img/materials/Powder-CoatedAluminum2.png?v=${version}`,
+        image: `/img/category/aluminum1.png?v=${version}`,
       },
       {
         title: "Mixed-Material Integration",
@@ -249,7 +249,7 @@ export const materialArticles: MaterialArticle[] = [
           "Kết cấu tháo rời lắp ráp (KD) và chồng xếp tối ưu hóa thể tích đóng gói và hệ số đóng container theo đặc tả sản phẩm",
           "Khả năng kết hợp đồng bộ với dây đai Olefin ngoài trời, dây thừng dệt và các dòng vải bọc chuyên dụng",
         ],
-        image: `/img/materials/Powder-CoatedAluminum1.png?v=${version}`,
+        image: `/img/materials/Powder-CoatedAluminum2.png?v=${version}`,
       },
       {
         title: "Commercial Execution & Technical Sampling",
@@ -326,7 +326,7 @@ export const materialArticles: MaterialArticle[] = [
           "Tùy chọn mút xốp thoát nước nhanh (quick-dry) và lưới đáy thoáng khí được báo giá riêng cho các vị trí trực tiếp tiếp xúc mưa nắng",
           "Vải có thương hiệu (như Sunbrella, Agora) và chứng nhận mút chống cháy (CA TB117, BS 5852) được báo giá riêng theo hồ sơ dự án và nguồn cung",
         ],
-        image: `/img/materials/OutdoorFabric1.png?v=${version}`,
+        image: `/img/materials/OutdoorFabric2.png?v=${version}`,
       },
       {
         title: "Quality Inspection & Programme Alignment",
@@ -357,8 +357,8 @@ export const materialArticles: MaterialArticle[] = [
     titleVi: "Giải Pháp Gỗ Cứng Bền Vững",
     headline: "Eucalyptus for Scalable Furniture Programmes",
     headlineVi: "Gỗ Bạch Đàn Cho Các Chương Trình Nội Thất Quy Mô",
-    intro: "FSC-certified Eucalyptus offers high structural density, uniform grain texture, and dependable mechanical performance — serving as a proven timber for selected furniture designs.",
-    introVi: "Gỗ bạch đàn có chứng nhận FSC sở hữu mật độ thớ gỗ cao, thớ vân đồng đều và độ chịu lực tốt — là loại gỗ cứng tin cậy cho các thiết kế nội thất được lựa chọn.",
+    intro: "FSC-certified Eucalyptus offers steady structural density, uniform grain texture, and dependable mechanical performance — serving as a proven timber for selected furniture designs.",
+    introVi: "Gỗ bạch đàn có chứng nhận FSC sở hữu cấu trúc thớ gỗ ổn định, đường vân đồng đều và độ chịu lực tin cậy — là loại gỗ cứng phù hợp cho các thiết kế nội thất được lựa chọn.",
     layout: "technical",
     stats: ["FSC-Certified Wood", "Eucalyptus Hardwood", "Dense Hardwood (8–12% MC Target)"],
     statsVi: ["Gỗ Chứng Nhận FSC", "Gỗ cứng Eucalyptus", "Gỗ cứng mật độ cao (Mục tiêu 8–12% MC)"],
@@ -388,12 +388,12 @@ export const materialArticles: MaterialArticle[] = [
           "Hướng dẫn bảo quản: Lau sạch bụi bẩn và định kỳ quét lại dầu dưỡng gỗ ngoài trời tùy theo vị trí đặt sản phẩm và loại sơn phủ",
           "Chuỗi cung ứng gỗ FSC có tài liệu giải trình đầy đủ theo đặc tả của từng thị trường và chương trình",
         ],
-        image: `/img/materials/AcaciaWood2.png?v=${version}`,
+        image: `/img/materials/TeakWood2.png?v=${version}`,
       },
       {
         title: "Industrial Processing & Technical Execution",
         titleVi: "Gia Công Công Nghiệp & Tiêu Chuẩn Kỹ Thuật",
-        body: "Processed through specialized drying schedules and precision CNC machining, Eucalyptus components are manufactured to tight tolerances for efficient assembly and structural reliability.",
+        body: "Processed through specialised drying schedules and precision CNC machining, Eucalyptus components are manufactured to tight tolerances for efficient assembly and structural reliability.",
         bodyVi: "Được xử lý qua chu trình sấy chuyên biệt và gia công CNC độ chính xác cao, các chi tiết gỗ bạch đàn được chế tác với dung sai chặt chẽ, tối ưu cho việc lắp ráp và độ ổn định kết cấu.",
         bullets: [
           "Engineered tenon and dowel joints utilizing exterior-grade polyurethane D4 adhesives where specified by customer technical drawings and outdoor exposure grade",

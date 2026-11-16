@@ -62,15 +62,15 @@ export default function FactoryVideoSection() {
             className="lg:col-span-5 flex flex-col justify-center"
           >
             <div className="flex items-center gap-3 mb-6 sm:mb-8">
-              <span className="h-[1px] w-12 inline-block" style={{ backgroundColor: "hsl(var(--orange))" }} />
-              <span className="font-body text-xs tracking-[0.25em] uppercase font-medium" style={{ color: "hsl(var(--orange))" }}>
+              <span className="h-[1px] w-12 inline-block bg-[#9A5B2A]" />
+              <span className="font-body text-xs tracking-[0.25em] uppercase font-semibold text-[#9A5B2A]">
                 {t("home.video.label", "Craftsmanship")}
               </span>
             </div>
             
             <h2 className="font-display font-bold leading-[0.95] tracking-tight mb-6" style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)", color: "hsl(var(--navy-deep))" }}>
               {content?.factoryVideoTitle1?.[langKey] || t("home.video.title1", "The Art of")}<br/>
-              <span className="italic font-light" style={{ color: "hsl(var(--orange))" }}>{content?.factoryVideoTitle2?.[langKey] || t("home.video.title2", "Creation.")}</span>
+              <span className="italic font-light text-[#9A5B2A]">{content?.factoryVideoTitle2?.[langKey] || t("home.video.title2", "Creation.")}</span>
             </h2>
             
             <p className="font-body text-base sm:text-lg leading-relaxed max-w-md" style={{ color: "hsl(var(--muted-foreground))" }}>
@@ -88,7 +88,7 @@ export default function FactoryVideoSection() {
               </div>
               <div className="flex-1">
                 <div className="font-display font-semibold text-sm sm:text-base text-[#173C2C] leading-snug">
-                  {t("home.video.facilityHeading", "11 Production Facilities Across Our Family-Owned Group")}
+                  {t("home.video.facilityHeading", "11 Specialised Manufacturing Facilities Across Vietnam")}
                 </div>
                 <p className="font-body text-xs sm:text-sm text-[#4A5568] mt-1 leading-relaxed">
                   {t("home.video.facilitySub", "10 furniture facilities + 1 engineered-wood panel and primary-processing facility.")}

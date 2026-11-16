@@ -34,19 +34,19 @@ export default async function handler(_req: NextApiRequest, res: NextApiResponse
           us: [
             "11 Production Facilities",
             "543,380 m² Combined Manufacturing Footprint",
-            "Approximately 2,400 Group Personnel",
+            "Approximately 2,400 Network Personnel",
             "4 Manufacturing Clusters",
           ],
           uk: [
             "11 Production Facilities",
             "543,380 m² Combined Manufacturing Footprint",
-            "Approximately 2,400 Group Personnel",
+            "Approximately 2,400 Network Personnel",
             "4 Manufacturing Clusters",
           ],
           vi: [
             "11 Cơ sở Sản xuất",
             "543.380 m² Tổng diện tích mặt bằng sản xuất",
-            "Khoảng 2.400 Nhân sự tập đoàn",
+            "Khoảng 2.400 Nhân sự Mạng lưới",
             "4 Cụm sản xuất trọng điểm",
           ],
         };

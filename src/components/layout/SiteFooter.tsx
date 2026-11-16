@@ -41,7 +41,7 @@ export default function SiteFooter() {
               </div>
             </Link>
 
-            <p className="font-body text-[15px] sm:text-base leading-relaxed text-white/75 max-w-xl mb-6">
+            <p className="font-body text-[15px] sm:text-base leading-relaxed text-white/85 max-w-xl mb-6">
               {tr(
                 "footer.description",
                 "Outdoor, indoor and project furniture, coordinated through one DHT commercial team."
@@ -69,7 +69,7 @@ export default function SiteFooter() {
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.08, y: -2 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-9 h-9 rounded border border-white/20 flex items-center justify-center text-white/60 hover:text-white hover:border-white/50 transition-colors duration-200"
+                  className="w-9 h-9 rounded border border-white/25 flex items-center justify-center text-white/85 hover:text-white hover:border-white/60 transition-colors duration-200"
                 >
                   <Icon size={16} />
                 </motion.a>
@@ -79,16 +79,16 @@ export default function SiteFooter() {
 
           {/* Block 2: Contact DHT */}
           <motion.div variants={fadeUp} className="lg:col-span-6 xl:col-span-5">
-            <h4 className="font-display text-white font-semibold text-lg mb-2">
+            <h4 className="font-display text-white font-semibold text-xl mb-2">
               {tr("footer.contact", "Contact DHT")}
             </h4>
-            <p className="font-body text-xs uppercase tracking-[0.18em] font-semibold text-[#B97846] mb-5">
+            <p className="font-body text-xs sm:text-sm uppercase tracking-[0.18em] font-semibold text-[#F3BA7A] mb-5">
               {tr("footer.commercialOffice", "DHT Commercial Office")}
             </p>
 
-            <ul className="space-y-3.5 font-body text-sm text-white/75">
+            <ul className="space-y-3.5 font-body text-[15px] sm:text-base text-white/95">
               <li className="flex items-start gap-3">
-                <MapPin size={16} className="mt-1 shrink-0 text-[#B97846]" />
+                <MapPin size={17} className="mt-1 shrink-0 text-[#F3BA7A]" />
                 <span className="leading-relaxed">
                   {tr(
                     "footer.officeAddress",
@@ -98,27 +98,27 @@ export default function SiteFooter() {
               </li>
 
               <li className="flex items-center gap-3">
-                <Mail size={16} className="shrink-0 text-[#B97846]" />
+                <Mail size={17} className="shrink-0 text-[#F3BA7A]" />
                 <a
                   href="mailto:sales@dhtcompany.com"
-                  className="font-medium text-white/85 hover:text-[#B97846] transition-colors"
+                  className="font-medium text-white/95 hover:text-[#F3BA7A] transition-colors"
                 >
                   sales@dhtcompany.com
                 </a>
               </li>
 
               <li className="flex items-center gap-3">
-                <Phone size={16} className="shrink-0 text-[#B97846]" />
+                <Phone size={17} className="shrink-0 text-[#F3BA7A]" />
                 <a
                   href="tel:+84932058545"
-                  className="font-medium text-white/85 hover:text-[#B97846] transition-colors"
+                  className="font-medium text-white/95 hover:text-[#F3BA7A] transition-colors"
                 >
                   +84 932 058 545
                 </a>
               </li>
 
-              <li className="flex items-center gap-3 pt-1 text-white/55 text-xs">
-                <CalendarClock size={15} className="shrink-0 text-[#B97846]/80" />
+              <li className="flex items-center gap-3 pt-1 text-white/85 text-[15px]">
+                <CalendarClock size={16} className="shrink-0 text-[#F3BA7A]" />
                 <span>{tr("footer.visitNote", "Factory visits by appointment.")}</span>
               </li>
             </ul>
@@ -132,10 +132,10 @@ export default function SiteFooter() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="pt-6 flex flex-col md:flex-row items-center justify-between gap-3"
         >
-          <p className="font-body text-xs text-white/40">
+          <p className="font-body text-xs text-white/75">
             {tr("footer.copyright", "© 2026 DHT Furniture Vietnam Joint Stock Company. All rights reserved.")}
           </p>
-          <p className="font-body text-xs text-white/35">
+          <p className="font-body text-xs text-white/70">
             {tr("footer.tagline", "Outdoor • Indoor • Project Furniture • Wood & Panels")}
           </p>
         </motion.div>

@@ -1,16 +1,16 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { motion, AnimatePresence } from "framer-motion";
-import { Search, SlidersHorizontal, X } from "lucide-react";
+import { Search, X } from "lucide-react";
 import ProductCard from "@/components/ProductCard";
 import QuickViewModal from "@/components/QuickViewModal";
-import type { FilterState, Collection } from "@/domains/product/product.types";
+import type { Collection, Product } from "@/domains/product/product.types";
 import { useCatalogue } from "../hooks/useCatalogue";
-import { HeroSlider } from "./HeroSlider";
-import { SidebarFilter } from "./SidebarFilter";
-import { getOptionTranslation } from "../utils/translations";
 
-export default function CatalogueContainer({ forcedCollection }: { forcedCollection?: Collection }) {
+type CatalogueContainerProps = {
+  forcedCollection?: Collection;
+};
+
+export default function CatalogueContainer({ forcedCollection }: CatalogueContainerProps) {
   const router = useRouter();
   const isVi = router.locale === "vi-VN";
 
@@ -18,177 +18,240 @@ export default function CatalogueContainer({ forcedCollection }: { forcedCollect
     collection,
     search,
     setSearch,
-    filters,
     quickViewProduct,
     setQuickViewProduct,
-    mobileFiltersOpen,
-    setMobileFiltersOpen,
-    page,
     setPage,
-    handleCollectionChange,
-    toggleFilter,
     clearFilters,
-    activeCount,
-    collectionProducts,
     filtered,
     paginated,
     totalPages,
     safePage,
-    filterGroups,
-    t
+    t,
   } = useCatalogue(forcedCollection);
 
   const isOutdoor = forcedCollection === "Outdoor" || collection === "Outdoor";
+  const heroTitle = isVi
+    ? isOutdoor
+      ? "Bộ Sưu Tập Nội Thất Ngoài Trời"
+      : "Bộ Sưu Tập Nội Thất"
+    : isOutdoor
+      ? "Outdoor Furniture Collections"
+      : "Furniture Collections";
+  const heroDescription = isVi
+    ? isOutdoor
+      ? "Khám phá các dòng bàn ghế ăn, sofa lounge, ban công và ghế tắm nắng chế tác từ gỗ chứng nhận FSC, nhôm sơn tĩnh điện, thép và dây đan qua mạng lưới 11 cơ sở sản xuất tại Việt Nam."
+      : "Khám phá danh mục đa dạng gồm nội thất ngoài trời, nội thất trong nhà và nội thất dự án, được sản xuất qua mạng lưới 11 cơ sở chuyên biệt tại Việt Nam. Từ gỗ tự nhiên, nhôm và thép đến nội thất bọc nệm, giả mây, dây đan và ván gỗ công nghiệp, DHT cung cấp giải pháp OEM/ODM linh hoạt cho đối tác B2B toàn cầu."
+    : isOutdoor
+      ? "Explore export-ready dining, lounge, balcony and sunlounger programmes crafted in FSC-certified timber, powder-coated aluminium, woven rope and mixed materials across our 11-facility Vietnam network."
+      : "Explore our diverse range of outdoor, indoor and project furniture, supported by a network of 11 specialised manufacturing facilities across Vietnam. From solid wood, aluminium and steel to upholstery, wicker, rope and engineered wood, DHT provides flexible OEM/ODM solutions for global B2B buyers.";
 
   return (
     <>
       <Head>
-        <title>{t("catalogue.seo.title")}</title>
-        <meta name="description" content={t("catalogue.seo.description")} />
+        <title>{heroTitle} | DHT Furniture Vietnam</title>
+        <meta name="description" content={heroDescription} />
       </Head>
 
-      <div className="pt-[64px]" style={{ backgroundColor: "hsl(var(--warm-cream))", minHeight: "100vh" }}>
-        {/* H1 & Introduction Block — Positioned before carousel per Audit Issue 18 */}
-        <div className="bg-white border-b border-border py-8 sm:py-10">
-          <div className="container mx-auto px-6">
-            <div className="max-w-4xl">
-              <span className="font-body text-xs font-bold tracking-[0.25em] uppercase text-orange-600 block mb-2">
-                {isVi ? "Bộ Sưu Tập Xuất Khẩu B2B" : "B2B Export Catalogue"}
+      <div className="pt-[64px] bg-[#F4F1EA] min-h-screen">
+        {/* Video Hero Banner — B2B Furniture Manufacturing & Export */}
+        <section className="relative w-full h-[380px] sm:h-[440px] lg:h-[480px] overflow-hidden bg-[#112B20]">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            poster="/img/hero-poster.webp"
+            className="absolute inset-0 w-full h-full object-cover object-center opacity-75"
+          >
+            <source src="/video/hero-banner.mp4" type="video/mp4" />
+          </video>
+
+          <div
+            className="absolute inset-0 bg-gradient-to-r from-[#0E241B]/90 via-[#122D22]/75 to-[#0E241B]/45"
+            aria-hidden="true"
+          />
+
+          <div className="relative z-10 h-full container mx-auto px-6 flex items-center">
+            <div className="max-w-3xl">
+              <span className="inline-block font-body text-xs font-bold tracking-[0.25em] uppercase text-[#F3BA7A] mb-3">
+                {isVi
+                  ? "SẢN XUẤT & XUẤT KHẨU NỘI THẤT B2B"
+                  : "B2B FURNITURE MANUFACTURING & EXPORT"}
               </span>
-              <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground leading-tight mb-4">
-                {isVi
-                  ? (isOutdoor ? "Bộ Sưu Tập Nội Thất Ngoài Trời" : "Danh Mục Sản Phẩm")
-                  : (isOutdoor ? "Outdoor Furniture Collections" : "Furniture Collections")}
+              <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-[1.1] mb-4">
+                {heroTitle}
               </h1>
-              <p className="font-body text-sm sm:text-base text-muted-foreground leading-relaxed">
-                {isVi
-                  ? (isOutdoor
-                    ? "Khám phá nội thất ngoài trời chế tác từ gỗ có chứng nhận FSC, nhôm, thép, dây thừng, mây nhựa và các kết hợp vật liệu hỗn hợp. DHT đáp ứng các chương trình bàn ăn, sofa lounge, ban công, ghế tắm nắng và nội thất module."
-                    : "Khám phá các bộ sưu tập nội thất xuất khẩu cao cấp của DHT Furniture Vietnam.")
-                  : (isOutdoor
-                    ? "Explore outdoor furniture in FSC-certified wood, aluminium, steel, rope, wicker and mixed-material combinations. DHT supports dining, lounge, balcony, sunlounger and modular programmes."
-                    : "Explore DHT Furniture Vietnam's contract and retail furniture collections.")}
+              <p className="font-body text-sm sm:text-base text-white/95 leading-relaxed max-w-2xl">
+                {heroDescription}
               </p>
             </div>
           </div>
-        </div>
+        </section>
 
-        <div className="hidden lg:block">
-          <HeroSlider products={collectionProducts} onQuickView={setQuickViewProduct} />
-        </div>
-
-        <div className="container mx-auto px-6 py-8">
-          <div className="flex gap-3 mb-6">
+        {/* Streamlined Search Bar + Wide Product Grid (Sidebar Filters Removed) */}
+        <div className="container mx-auto px-6 py-8 sm:py-10">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 bg-white/85 backdrop-blur-md p-4 rounded-2xl border border-black/8 shadow-xs">
             <div className="relative flex-1">
-              <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
-              <input type="text" placeholder={t("catalogue.searchPlaceholder")} value={search} onChange={(e) => { setSearch(e.target.value); setPage(1); }} className="w-full pl-10 pr-4 py-3 rounded-sm bg-white border border-border font-body text-sm outline-none focus:ring-2 transition-shadow" style={{ "--tw-ring-color": "hsl(var(--orange)/0.3)" } as React.CSSProperties} />
+              <Search size={17} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#173C2C]/75" />
+              <input
+                type="text"
+                placeholder={
+                  isVi
+                    ? "Tìm theo tên bộ sưu tập, mã SKU hoặc chất liệu (vd: Teak, Aluminium, Sofa)..."
+                    : "Search by collection name, SKU, or material (e.g. Aluminium, Teak, Sofa)..."
+                }
+                value={search}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                  setPage(1);
+                }}
+                className="w-full pl-11 pr-10 py-3 rounded-xl bg-[#F8F6F0] border border-black/15 font-body text-sm text-[#1F2723] placeholder:text-[#1F2723]/65 outline-none focus:border-[#173C2C] transition-colors"
+              />
+              {search && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSearch("");
+                    setPage(1);
+                  }}
+                  aria-label={isVi ? "Xóa tìm kiếm" : "Clear search"}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full text-gray-600 hover:text-[#173C2C] hover:bg-black/5 transition-colors cursor-pointer"
+                >
+                  <X size={15} />
+                </button>
+              )}
             </div>
-            <button onClick={() => setMobileFiltersOpen(!mobileFiltersOpen)} className="lg:hidden flex items-center gap-2 px-5 py-3 rounded-sm bg-white border border-border font-body text-sm font-medium hover:bg-muted transition-colors">
-              <SlidersHorizontal size={15} /> {t("catalogue.filters")} {activeCount > 0 && <span className="w-5 h-5 rounded-full text-xs text-white flex items-center justify-center" style={{ backgroundColor: "hsl(var(--orange))" }}>{activeCount}</span>}
-            </button>
+
+            <div className="shrink-0 font-body text-sm font-medium text-[#173C2C] px-2">
+              {isVi
+                ? isOutdoor
+                  ? `Hiển thị ${filtered.length} bộ sưu tập & mẫu ngoại thất`
+                  : `Hiển thị ${filtered.length} sản phẩm`
+                : isOutdoor
+                  ? `Showing ${filtered.length} outdoor collections & items`
+                  : `Showing ${filtered.length} items & collections`}
+            </div>
           </div>
 
-          <AnimatePresence>
-            {mobileFiltersOpen && (
-              <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.3 }} className="overflow-hidden mb-6 lg:hidden">
-                <div className="p-6 bg-white rounded-sm border border-border">
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
-                    {filterGroups.map(({ key, label, options }) => (
-                      <div key={key}>
-                        <p className="font-body font-semibold text-sm mb-3 text-foreground">{label}</p>
-                        <div className="space-y-2">
-                          {options.map((opt) => {
-                            const displayOpt = getOptionTranslation(t, key, opt);
-                            return (
-                              <label key={opt} className="flex items-center gap-2 cursor-pointer group">
-                                <input type="checkbox" checked={filters[key].includes(opt)} onChange={() => toggleFilter(key, opt)} className="accent-orange w-4 h-4" />
-                                <span className="font-body text-sm text-muted-foreground group-hover:text-foreground transition-colors">{displayOpt}</span>
-                              </label>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          <div className="flex gap-8">
-            <div className="hidden lg:block w-56 shrink-0">
-              <div className="sticky top-24 bg-white rounded-sm border border-border p-5 max-h-[calc(100vh-7rem)] overflow-y-auto">
-                <SidebarFilter collection={collection} handleCollectionChange={handleCollectionChange} filters={filters} toggleFilter={toggleFilter} clearFilters={clearFilters} activeCount={activeCount} filterGroups={filterGroups} />
-              </div>
-            </div>
-
-            <div className="flex-1 min-w-0">
-              <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
-                <span className="font-body text-sm font-medium text-foreground">
-                  {isVi
-                    ? (isOutdoor
-                      ? `Hiển thị ${filtered.length} sản phẩm & bộ sưu tập ngoại thất`
-                      : `Hiển thị ${filtered.length} sản phẩm & bộ sưu tập`)
-                    : (isOutdoor
-                      ? `Showing ${filtered.length} outdoor items & collections`
-                      : `Showing ${filtered.length} items & collections`)}
-                </span>
+          {filtered.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {paginated.map((product: Product, i: number) => (
+                  <ProductCard
+                    key={product.id || product.code || i}
+                    product={product}
+                    index={i}
+                    onQuickView={setQuickViewProduct}
+                  />
+                ))}
               </div>
 
-              {activeCount > 0 && (
-                <div className="flex flex-wrap gap-2 mb-5">
-                  {Object.entries(filters).map(([key, values]) =>
-                    (values as string[]).map((val: string) => {
-                      const displayVal = getOptionTranslation(t, key, val);
+              {totalPages > 1 && (
+                <div className="mt-12 mb-8 flex items-center justify-center gap-2 font-body text-sm">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPage(1);
+                      window.scrollTo({ top: 380, behavior: "smooth" });
+                    }}
+                    disabled={safePage === 1}
+                    className="w-9 h-9 flex items-center justify-center rounded-lg border border-black/15 bg-white disabled:opacity-40 hover:bg-black/5 transition-colors disabled:cursor-not-allowed text-[#173C2C]"
+                    title="First"
+                  >
+                    «
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPage(safePage - 1);
+                      window.scrollTo({ top: 380, behavior: "smooth" });
+                    }}
+                    disabled={safePage === 1}
+                    className="w-9 h-9 flex items-center justify-center rounded-lg border border-black/15 bg-white disabled:opacity-40 hover:bg-black/5 transition-colors disabled:cursor-not-allowed text-[#173C2C]"
+                    title="Previous"
+                  >
+                    ‹
+                  </button>
+
+                  {Array.from({ length: totalPages }).map((_, idx) => {
+                    const p = idx + 1;
+                    if (p === 1 || p === totalPages || (p >= safePage - 1 && p <= safePage + 1)) {
                       return (
-                        <button key={`${key}-${val}`} onClick={() => toggleFilter(key as keyof FilterState, val)} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm bg-white border border-border font-body text-xs font-medium text-foreground hover:border-red-300 hover:text-red-500 transition-colors group">
-                          {displayVal} <X size={12} className="text-muted-foreground group-hover:text-red-500" />
+                        <button
+                          key={p}
+                          type="button"
+                          onClick={() => {
+                            setPage(p);
+                            window.scrollTo({ top: 380, behavior: "smooth" });
+                          }}
+                          className={`w-9 h-9 flex items-center justify-center rounded-lg border transition-colors ${safePage === p
+                              ? "bg-[#173C2C] text-white border-[#173C2C] shadow-xs"
+                              : "bg-white border-black/15 text-[#173C2C] hover:bg-black/5"
+                            }`}
+                        >
+                          {p}
                         </button>
                       );
-                    })
-                  )}
-                  <button onClick={clearFilters} className="inline-flex items-center gap-1 px-3 py-1.5 font-body text-xs font-medium text-muted-foreground hover:text-foreground transition-colors">{t("catalogue.clearAll")}</button>
+                    }
+                    if (p === 2 && safePage > 3) {
+                      return (
+                        <span key={`dots-start-${p}`} className="px-1 text-gray-500">
+                          ...
+                        </span>
+                      );
+                    }
+                    if (p === totalPages - 1 && safePage < totalPages - 2) {
+                      return (
+                        <span key={`dots-end-${p}`} className="px-1 text-gray-500">
+                          ...
+                        </span>
+                      );
+                    }
+                    return null;
+                  })}
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPage(safePage + 1);
+                      window.scrollTo({ top: 380, behavior: "smooth" });
+                    }}
+                    disabled={safePage === totalPages}
+                    className="w-9 h-9 flex items-center justify-center rounded-lg border border-black/15 bg-white disabled:opacity-40 hover:bg-black/5 transition-colors disabled:cursor-not-allowed text-[#173C2C]"
+                    title="Next"
+                  >
+                    ›
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPage(totalPages);
+                      window.scrollTo({ top: 380, behavior: "smooth" });
+                    }}
+                    disabled={safePage === totalPages}
+                    className="w-9 h-9 flex items-center justify-center rounded-lg border border-black/15 bg-white disabled:opacity-40 hover:bg-black/5 transition-colors disabled:cursor-not-allowed text-[#173C2C]"
+                    title="Last"
+                  >
+                    »
+                  </button>
                 </div>
               )}
-
-              {filtered.length > 0 ? (
-                <>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                    {paginated.map((p: any, i: number) => (<ProductCard key={p.id || p.code || i} product={p} index={i} onQuickView={setQuickViewProduct} />))}
-                  </div>
-
-                  {totalPages > 1 && (
-                    <div className="mt-12 mb-8 flex items-center justify-center gap-2 font-body text-sm">
-                      <button onClick={() => { setPage(1); window.scrollTo({ top: 300, behavior: 'smooth' }); }} disabled={safePage === 1} className="w-8 h-8 flex items-center justify-center rounded-sm border border-border disabled:opacity-50 hover:bg-muted transition-colors disabled:cursor-not-allowed text-muted-foreground hover:text-foreground" title="First">«</button>
-                      <button onClick={() => { setPage(safePage - 1); window.scrollTo({ top: 300, behavior: 'smooth' }); }} disabled={safePage === 1} className="w-8 h-8 flex items-center justify-center rounded-sm border border-border disabled:opacity-50 hover:bg-muted transition-colors disabled:cursor-not-allowed text-muted-foreground hover:text-foreground" title="Previous">‹</button>
-
-                      {Array.from({ length: totalPages }).map((_, idx) => {
-                        const p = idx + 1;
-                        if (p === 1 || p === totalPages || (p >= safePage - 1 && p <= safePage + 1)) {
-                          return (
-                            <button key={p} onClick={() => { setPage(p); window.scrollTo({ top: 300, behavior: 'smooth' }); }} className={`w-8 h-8 flex items-center justify-center rounded-sm border transition-colors ${safePage === p ? 'bg-orange outline-none text-white border-orange shadow-md' : 'border-border text-foreground hover:bg-muted'}`} style={safePage === p ? { backgroundColor: 'hsl(var(--orange))', borderColor: 'hsl(var(--orange))' } : {}}>
-                              {p}
-                            </button>
-                          );
-                        }
-                        if (p === 2 && safePage > 3) return <span key={`dots-start-${p}`} className="px-1 text-muted-foreground">...</span>;
-                        if (p === totalPages - 1 && safePage < totalPages - 2) return <span key={`dots-end-${p}`} className="px-1 text-muted-foreground">...</span>;
-                        return null;
-                      })}
-
-                      <button onClick={() => { setPage(safePage + 1); window.scrollTo({ top: 300, behavior: 'smooth' }); }} disabled={safePage === totalPages} className="w-8 h-8 flex items-center justify-center rounded-sm border border-border disabled:opacity-50 hover:bg-muted transition-colors disabled:cursor-not-allowed text-muted-foreground hover:text-foreground" title="Next">›</button>
-                      <button onClick={() => { setPage(totalPages); window.scrollTo({ top: 300, behavior: 'smooth' }); }} disabled={safePage === totalPages} className="w-8 h-8 flex items-center justify-center rounded-sm border border-border disabled:opacity-50 hover:bg-muted transition-colors disabled:cursor-not-allowed text-muted-foreground hover:text-foreground" title="Last">»</button>
-                    </div>
-                  )}
-                </>
-              ) : (
-                <div className="text-center py-20">
-                  <p className="font-body text-muted-foreground text-lg mb-2">{t("catalogue.noResults")}</p>
-                  <button onClick={clearFilters} className="font-body text-sm font-medium" style={{ color: "hsl(var(--orange))" }}>{t("catalogue.clearAllFilters")}</button>
-                </div>
-              )}
+            </>
+          ) : (
+            <div className="text-center py-20 bg-white rounded-2xl border border-black/8">
+              <p className="font-body text-[#1F2723]/85 text-lg mb-3">
+                {t("catalogue.noResults")}
+              </p>
+              <button
+                type="button"
+                onClick={clearFilters}
+                className="font-body text-sm font-semibold text-[#9A5B2A] hover:underline cursor-pointer"
+              >
+                {t("catalogue.clearAllFilters")}
+              </button>
             </div>
-          </div>
+          )}
         </div>
       </div>
 

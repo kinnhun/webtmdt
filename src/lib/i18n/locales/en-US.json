@@ -137,6 +137,7 @@
       "noProducts": "No featured products in this category yet.",
       "new": "Selected",
       "inquire": "Inquire",
+      "viewCollection": "View Collection",
       "filterAll": "All",
       "filterLoungeSofa": "Lounge & Sofa Collections",
       "filterDining": "Dining",
@@ -254,18 +255,18 @@
   },
   "about": {
     "seo": {
-      "title": "About DHT | Family-Owned Furniture Group in Vietnam",
-      "description": "DHT Furniture Vietnam operates as part of a family-owned furniture group with 11 production facilities and 543,380 m² combined footprint across Vietnam."
+      "title": "Manufacturing & Commercial Overview | DHT Furniture Vietnam",
+      "description": "DHT Furniture Vietnam coordinates international furniture programmes across 11 specialised production facilities and a 543,380 m² combined footprint in Vietnam."
     },
     "hero": {
-      "title": "About DHT Furniture Vietnam",
+      "title": "DHT Furniture Vietnam",
       "subtitle": "Vietnamese Furniture Manufacturing & Export",
-      "description": "DHT is a Vietnamese furniture manufacturer and exporter, operating as part of a family-owned furniture group with 11 production facilities across Vietnam."
+      "description": "DHT is a Vietnamese furniture manufacturer and export platform coordinating 11 specialised production facilities across Vietnam."
     },
     "story": {
       "label": "Our Development",
       "heading": "Our Corporate Development",
-      "content": "The DHT business developed through three corporate milestones in 2016, 2022 and 2024. Today, DHT Furniture Vietnam develops and manages international furniture programmes as part of a family-owned furniture group with 11 production facilities across Vietnam. Our focus is to translate buyer requirements into workable product specifications, production plans, quality controls and export arrangements."
+      "content": "The DHT business developed through three corporate milestones in 2016, 2022 and 2024. Today, DHT Furniture Vietnam develops and manages international furniture programmes across a coordinated network of 11 specialised production facilities in Vietnam. Our focus is to translate buyer requirements into workable product specifications, production plans, quality controls and export arrangements."
     },
     "values": {
       "label": "Our Values",
@@ -330,7 +331,7 @@
       },
       "david": {
         "role": "Product Development & Engineering",
-        "quote": "Innovation means blending certified timber with architectural aluminum to create furniture engineered for international markets."
+        "quote": "Innovation means blending certified timber with architectural aluminium to create furniture engineered for international markets."
       },
       "alicia": {
         "role": "Finance & Commercial Operations",
@@ -407,17 +408,17 @@
     },
     "stats": {
       "heading": "Production Figures & Capacity",
-      "subtitle": "Operating as part of a family-owned furniture group with 11 production facilities and a 543,380 m² combined footprint across Vietnam.",
+      "subtitle": "Coordinating 11 specialised production facilities and a 543,380 m² combined footprint across Vietnam.",
       "factorySize": "Combined Footprint",
       "yearlyOutput": "Facilities",
       "monthlyContainers": "Containers / Month",
-      "workers": "Group Personnel"
+      "workers": "Manufacturing Personnel"
     },
     "hr": {
       "heading": "Human Resources & Specialised Capabilities",
-      "prodWorkers": "Approximately 2,400 skilled manufacturing personnel across the group.",
+      "prodWorkers": "Approximately 2,400 skilled manufacturing personnel across the network.",
       "techStaff": "Approximately 20 professionals at DHT central team managing buyer programmes.",
-      "rndModels": "Reference capacity at an outdoor furniture facility: 60-70 40-ft containers per month."
+      "rndModels": "Average capacity: 50-60 containers per month per finished furniture facility (Facilities 01-10)."
     },
     "machinery": {
       "heading": "Key Machinery",
@@ -436,15 +437,10 @@
         "address": "72 Le Thanh Ton Street, Ben Nghe Ward, District 1, Ho Chi Minh City, Vietnam",
         "hotline": "Hotline: +84 932 058 545"
       },
-      "showroom": {
-        "name": "DHT Showroom & Gallery",
-        "address": "206 Phan Dinh Phung Street, Pleiku City, Gia Lai Province, Vietnam",
-        "hotline": "Hotline: +84 907 386 898"
-      },
       "manufacturing": {
         "name": "DHT Manufacturing Network",
         "address": "4 Manufacturing Clusters: Quy Nhon, HCMC & Southern Corridor, Hung Yen, Phu Tho/Vinh Phuc",
-        "hotline": "Operations: +84 902 907 399"
+        "hotline": "Commercial Desk: +84 932 058 545"
       }
     },
     "welcome": {
@@ -474,8 +470,8 @@
   },
   "catalogue": {
     "seo": {
-      "title": "Outdoor Furniture Collections | DHT Furniture Vietnam",
-      "description": "Browse our full collection of premium outdoor furniture."
+      "title": "Furniture Collections | DHT Furniture Vietnam",
+      "description": "Explore our diverse range of outdoor, indoor and project furniture, supported by a network of 11 specialised manufacturing facilities across Vietnam."
     },
     "outdoor": {
       "seo": {
@@ -549,7 +545,7 @@
       "hero": {
         "badge": "Contract & OEM Manufacturing",
         "title": "Indoor & Project Furniture",
-        "description": "DHT supports solid-wood, engineered-wood, upholstered, and mixed-material furniture for residential, hospitality, and commercial programmes through specialised facilities within our family-owned group."
+        "description": "DHT supports solid-wood, engineered-wood, upholstered, and mixed-material furniture for residential, hospitality, and commercial programmes through specialised facilities across our Vietnam network."
       },
       "capabilities": {
         "dining": {
@@ -639,15 +635,15 @@
       "subtitle": "Tell us about your product requirements, target market and estimated order volume. Our team will help you identify the next steps for product selection, sampling or an OEM programme."
     },
     "locations": {
-      "title": "Our Office, Showroom & Manufacturing Locations",
+      "title": "DHT Commercial Office",
       "hqTitle": "DHT Manufacturing Network",
-      "hqSubtitle": "11 Facilities Across Vietnam",
-      "showroomTitle": "DHT Showroom & Gallery",
-      "showroomSubtitle": "Outdoor & Indoor Collections",
+      "hqSubtitle": "11 Specialised Facilities Across Vietnam",
+      "showroomTitle": "DHT Central Commercial Office",
+      "showroomSubtitle": "Ho Chi Minh City Hub",
       "officeTitle": "DHT Central Commercial Coordination Hub",
       "officeSubtitle": "Commercial & Business Inquiries",
       "distributorTitle": "DHT Manufacturing Network",
-      "distributorSubtitle": "4 Clusters Across Vietnam",
+      "distributorSubtitle": "4 Strategic Clusters Across Vietnam",
       "timingsFactory": "08:00 - 17:00 (UTC+7), Mon - Fri",
       "timings247": "08:00 - 17:00 (UTC+7), Visits by appointment"
     },
@@ -656,7 +652,7 @@
       "email": "Email",
       "factory": "Factory",
       "hours": "Hours",
-      "hoursValue": "Mon–Fri, 08:00 – 17:00 WIB",
+      "hoursValue": "Mon–Fri, 08:00 – 17:00 (UTC+7)",
       "export": "Export",
       "exportValue": "Worldwide shipping available"
     },
@@ -674,7 +670,9 @@
       "proposalSubject": "Product Proposal Request — OEM / B2B Programme",
       "proposalMessage": "Hello DHT Furniture team,\n\nWe would like to request a product proposal for our upcoming furniture programme. Our target market, estimated order volume, and initial specifications are as follows:\n- Target Market:\n- Estimated Volume:\n- Programme Requirements:\n\nPlease contact us with suitable options and next development steps.",
       "visitSubject": "Factory Visit Request — On-Site Inspection",
-      "visitMessage": "Hello DHT Furniture team,\n\nWe would like to arrange an appointment for an on-site factory inspection visit to review production facilities and manufacturing capabilities."
+      "visitMessage": "Hello DHT Furniture team,\n\nWe would like to arrange an appointment for an on-site factory inspection visit to review production facilities and manufacturing capabilities.",
+      "oemSubject": "OEM / B2B Manufacturing Inquiry",
+      "oemMessage": "Hello DHT Furniture team,\n\nWe would like to discuss our OEM/ODM furniture requirements, target materials, and estimated container volume."
     },
     "success": {
       "title": "Thank You!",
@@ -743,7 +741,7 @@
   },
   "blog": {
     "seo": {
-      "title": "Blog — DHT Outdoor Furniture",
+      "title": "Blog — DHT Furniture Vietnam",
       "description": "Insights, tips, and stories from our furniture manufacturing experts."
     },
     "hero": {

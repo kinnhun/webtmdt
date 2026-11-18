@@ -1,348 +1,263 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/router";
-import { motion, AnimatePresence } from "framer-motion";
-import { Search, Menu, X, Phone, ChevronDown } from "lucide-react";
+import { Search, Menu, X, ChevronDown, ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useQuery } from "@tanstack/react-query";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { motion, AnimatePresence } from "framer-motion";
+import { DhtHorizontalLogo } from "@/components/ui/BrandLogos";
 
-interface SiteHeaderProps {
-  onSearchOpen?: () => void;
-}
+type LanguageItem = {
+  code: string;
+  label: string;
+  name: string;
+  flag: string;
+};
 
-export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
-  const { t } = useTranslation();
-  const [scrolled, setScrolled] = useState(false);
+type NavLinkItem = {
+  href: string;
+  label: string;
+  isActive: boolean;
+};
+
+const LANGUAGES: LanguageItem[] = [
+  { code: "en-US", label: "US", name: "English (US)", flag: "https://flagcdn.com/w40/us.png" },
+  { code: "en-GB", label: "UK", name: "English (UK)", flag: "https://flagcdn.com/w40/gb.png" },
+  { code: "vi-VN", label: "VN", name: "Tiếng Việt", flag: "https://flagcdn.com/w40/vn.png" },
+];
+
+export default function SiteHeader({ onSearchOpen }: { onSearchOpen?: () => void }) {
+  const { i18n } = useTranslation();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [collectionsDropdown, setCollectionsDropdown] = useState(false);
-  const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [langOpen, setLangOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const langRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-  const tr = (key: string, defaultVal?: string) => t(key, { defaultValue: defaultVal, lng: router.locale });
-
-  const handleDropdownEnter = () => {
-    if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
-    setCollectionsDropdown(true);
-  };
-
-  const handleDropdownLeave = () => {
-    dropdownTimeoutRef.current = setTimeout(() => {
-      setCollectionsDropdown(false);
-    }, 150);
-  };
+  const { pathname, asPath, query } = router;
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    setMounted(true);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 24);
+    };
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    setMobileOpen(false);
-    setCollectionsDropdown(false);
-  }, [router.pathname]);
+  const currentLang = !mounted
+    ? LANGUAGES[0]
+    : LANGUAGES.find((l) => l.code === (router.locale || i18n.language)) ||
+      LANGUAGES.find((l) => (router.locale || i18n.language)?.startsWith(l.code.split("-")[0])) ||
+      LANGUAGES[0];
 
-  const isHome = router.pathname === "/";
-  const shouldShowSolidBg = !isHome || scrolled;
-  const isCollectionsActive = router.pathname.startsWith("/catalogue");
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+    setLangOpen(false);
+    router.push({ pathname, query }, asPath, { locale: lng });
+  };
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (langRef.current && !langRef.current.contains(e.target as Node)) {
+        setLangOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const navLinks: NavLinkItem[] = [
+    { href: "/", label: "Home", isActive: pathname === "/" },
+    { href: "/about", label: "About DHT", isActive: pathname === "/about" },
+    { href: "/manufacturing", label: "Manufacturing", isActive: pathname === "/manufacturing" },
+    { href: "/our-brands", label: "Our Brands", isActive: pathname === "/our-brands" },
+    {
+      href: "/catalogue",
+      label: "Collections",
+      isActive: pathname.startsWith("/catalogue") || pathname.startsWith("/collections"),
+    },
+    { href: "/contact", label: "Contact", isActive: pathname === "/contact" },
+  ];
+
+  const handleRequestQuoteClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    setMobileOpen(false);
+    if (pathname === "/contact") {
+      e.preventDefault();
+      router.replace(
+        { pathname: "/contact", query: { ...query, inquiry: "quotation" } },
+        undefined,
+        { shallow: true }
+      );
+      const formEl = document.getElementById("smart-contact-form");
+      if (formEl) {
+        formEl.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  };
 
   return (
     <>
       <header
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-400"
-        style={{
-          backgroundColor: shouldShowSolidBg ? "hsl(var(--navy-deep)/0.97)" : "transparent",
-          boxShadow: shouldShowSolidBg ? "0 1px 0 hsl(var(--navy-light)/0.3)" : "none",
-          padding: scrolled ? "0" : "0",
-          backdropFilter: "none",
-        }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled
+            ? "bg-[#0C2118]/95 backdrop-blur-md shadow-lg border-b border-white/10"
+            : "bg-[#0C2118]/90 backdrop-blur-sm border-b border-white/10"
+        }`}
       >
-        <div className="container mx-auto px-6">
-          <div
-            className="flex items-center justify-between transition-all duration-300 py-1"
-            style={{ minHeight: scrolled ? "64px" : "80px" }}
-          >
-            {/* LOGO */}
-            <Link href="/" className="flex items-center gap-3 flex-shrink-0 group py-1">
-              <Image
-                src="/img/logo.png"
-                alt="DHT Furniture"
-                width={48}
-                height={48}
-                className="h-9 sm:h-11 w-auto object-contain transition-all duration-200 group-hover:scale-105"
-                priority
-              />
-              <div className="flex flex-col justify-center leading-none">
-                <span className="font-display font-bold text-lg sm:text-xl tracking-[0.14em] text-[#D4A853] uppercase">
-                  DHT
-                </span>
-                <span className="font-body font-semibold text-[10px] sm:text-[11px] tracking-[0.26em] text-white/90 uppercase mt-0.5">
-                  FURNITURE
-                </span>
-              </div>
+        <div className="container mx-auto px-4 lg:px-8 flex items-center justify-between h-16 lg:h-[72px]">
+          {/* Left: Official Horizontal Logo */}
+          <Link href="/" className="shrink-0 group">
+            <DhtHorizontalLogo iconSize={34} textClassName="text-base sm:text-lg lg:text-xl" />
+          </Link>
+
+          {/* Center: 6 Navigation Items */}
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`relative py-2 font-body text-sm font-medium tracking-wide transition-colors whitespace-nowrap ${
+                  link.isActive ? "text-[#E5B869] font-semibold" : "text-white/90 hover:text-white"
+                }`}
+              >
+                {link.label}
+                {link.label === "Collections" && (
+                  <ChevronDown size={13} className="inline-block ml-1 opacity-75" />
+                )}
+                {link.isActive && (
+                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#E5B869] rounded-full" />
+                )}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Right: Search, Language, Request a Quote CTA */}
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            <button
+              type="button"
+              onClick={() => onSearchOpen?.()}
+              aria-label="Search"
+              className="p-2 rounded-full text-white/80 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+            >
+              <Search size={18} />
+            </button>
+
+            {/* Language Selector */}
+            <div ref={langRef} className="relative">
+              <button
+                type="button"
+                onClick={() => setLangOpen(!langOpen)}
+                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md font-body text-xs font-semibold text-white/90 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+              >
+                <img
+                  src={currentLang.flag}
+                  alt={currentLang.label}
+                  className="w-4 h-3 object-cover rounded-[1px]"
+                />
+                <span>{currentLang.label}</span>
+                <ChevronDown
+                  size={12}
+                  className={`transition-transform duration-200 ${langOpen ? "rotate-180" : ""}`}
+                />
+              </button>
+
+              <AnimatePresence>
+                {langOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute right-0 top-full mt-2 w-40 rounded-lg border border-white/15 bg-[#0E241B] shadow-xl overflow-hidden z-50"
+                  >
+                    {LANGUAGES.map((lang) => (
+                      <button
+                        type="button"
+                        key={lang.code}
+                        onClick={() => changeLanguage(lang.code)}
+                        className={`w-full flex items-center gap-2.5 px-3.5 py-2.5 font-body text-xs text-left transition-colors cursor-pointer ${
+                          currentLang.code === lang.code
+                            ? "bg-[#B97846]/25 text-[#E5B869] font-semibold"
+                            : "text-white/85 hover:bg-white/10"
+                        }`}
+                      >
+                        <img
+                          src={lang.flag}
+                          alt={lang.label}
+                          className="w-4 h-3 object-cover rounded-[1px] shrink-0"
+                        />
+                        <div>
+                          <div className="leading-tight font-medium">{lang.label}</div>
+                          <div className="text-[10px] text-white/55 leading-tight">{lang.name}</div>
+                        </div>
+                      </button>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Request a Quote CTA */}
+            <Link
+              href="/contact?inquiry=quotation#smart-contact-form"
+              onClick={handleRequestQuoteClick}
+              className="hidden sm:inline-flex items-center gap-1.5 px-4 lg:px-5 py-2 rounded-full bg-gradient-to-r from-[#D89B3C] to-[#B97846] text-[#0E241B] font-body text-xs lg:text-sm font-bold tracking-wide hover:brightness-110 transition-all shadow-sm whitespace-nowrap"
+            >
+              <span>Request a Quote</span>
+              <ArrowRight size={14} />
             </Link>
 
-            {/* DESKTOP NAV */}
-            <nav className="hidden lg:flex items-center gap-7">
-              {/* 1. Home */}
-              <Link
-                href="/"
-                className="relative font-body text-sm font-medium tracking-wide group"
-                style={{ color: router.pathname === "/" ? "hsl(var(--orange))" : "rgba(255,255,255,0.85)" }}
-              >
-                {tr("nav.home", "Home")}
-                <span
-                  className="absolute -bottom-1 left-0 h-px transition-all duration-300"
-                  style={{
-                    width: router.pathname === "/" ? "100%" : "0",
-                    backgroundColor: "hsl(var(--orange))",
-                  }}
-                />
-              </Link>
-
-              {/* 2. About */}
-              <Link
-                href="/about"
-                className="relative font-body text-sm font-medium tracking-wide group"
-                style={{ color: router.pathname === "/about" ? "hsl(var(--orange))" : "rgba(255,255,255,0.85)" }}
-              >
-                {tr("nav.about", "About DHT")}
-                <span
-                  className="absolute -bottom-1 left-0 h-px transition-all duration-300"
-                  style={{
-                    width: router.pathname === "/about" ? "100%" : "0",
-                    backgroundColor: "hsl(var(--orange))",
-                  }}
-                />
-              </Link>
-
-              {/* 3. Manufacturing */}
-              <Link
-                href="/manufacturing"
-                className="relative font-body text-sm font-medium tracking-wide group"
-                style={{ color: router.pathname === "/manufacturing" ? "hsl(var(--orange))" : "rgba(255,255,255,0.85)" }}
-              >
-                {tr("nav.manufacturing", "Manufacturing")}
-                <span
-                  className="absolute -bottom-1 left-0 h-px transition-all duration-300"
-                  style={{
-                    width: router.pathname === "/manufacturing" ? "100%" : "0",
-                    backgroundColor: "hsl(var(--orange))",
-                  }}
-                />
-              </Link>
-
-              {/* 4. Collections Dropdown */}
-              <div
-                className="relative"
-                onMouseEnter={handleDropdownEnter}
-                onMouseLeave={handleDropdownLeave}
-              >
-                <button
-                  onClick={() => setCollectionsDropdown(!collectionsDropdown)}
-                  className="flex items-center gap-1 font-body text-sm font-medium tracking-wide transition-colors py-2"
-                  style={{ color: isCollectionsActive ? "hsl(var(--orange))" : "rgba(255,255,255,0.85)" }}
-                >
-                  {tr("nav.collections", "Collections")}
-                  <ChevronDown size={14} className={`transition-transform duration-200 ${collectionsDropdown ? "rotate-180" : ""}`} />
-                </button>
-
-                <AnimatePresence>
-                  {collectionsDropdown && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 8 }}
-                      transition={{ duration: 0.15 }}
-                      className="absolute top-full left-0 w-64 py-2 mt-1 rounded shadow-xl border border-white/10 z-50 backdrop-blur-md"
-                      style={{ backgroundColor: "hsl(var(--navy-deep)/0.98)" }}
-                    >
-                      <Link
-                        href="/catalogue/outdoor"
-                        className="block px-4 py-2.5 text-xs font-medium text-white/80 hover:text-white hover:bg-white/10 transition-colors"
-                      >
-                        {tr("nav.outdoorCollection", "Outdoor — DHT")}
-                      </Link>
-                      <Link
-                        href="/catalogue/indoor"
-                        className="block px-4 py-2.5 text-xs font-medium text-white/80 hover:text-white hover:bg-white/10 transition-colors border-t border-white/5"
-                      >
-                        {tr("nav.indoorCollection", "Indoor — JAGER")}
-                      </Link>
-                      <Link
-                        href="/catalogue/indoor?category=Projects"
-                        className="block px-4 py-2.5 text-xs font-medium text-white/80 hover:text-white hover:bg-white/10 transition-colors border-t border-white/5"
-                      >
-                        {tr("nav.projectCollection", "Projects — THE ONE")}
-                      </Link>
-                      <Link
-                        href="/materials/wood-panels-and-processing-mekong"
-                        className="block px-4 py-2.5 text-xs font-medium text-white/80 hover:text-white hover:bg-white/10 transition-colors border-t border-white/5"
-                      >
-                        {tr("nav.materialsCollection", "Wood & Materials — MEKONG")}
-                      </Link>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              {/* 5. Quality & Compliance */}
-              <Link
-                href="/quality-compliance"
-                className="relative font-body text-sm font-medium tracking-wide group"
-                style={{ color: router.pathname === "/quality-compliance" ? "hsl(var(--orange))" : "rgba(255,255,255,0.85)" }}
-              >
-                {tr("nav.qualityCompliance", "Quality & Compliance")}
-                <span
-                  className="absolute -bottom-1 left-0 h-px transition-all duration-300"
-                  style={{
-                    width: router.pathname === "/quality-compliance" ? "100%" : "0",
-                    backgroundColor: "hsl(var(--orange))",
-                  }}
-                />
-              </Link>
-
-              {/* 6. Contact */}
-              <Link
-                href="/contact"
-                className="relative font-body text-sm font-medium tracking-wide group"
-                style={{ color: router.pathname === "/contact" ? "hsl(var(--orange))" : "rgba(255,255,255,0.85)" }}
-              >
-                {tr("nav.contact", "Contact")}
-                <span
-                  className="absolute -bottom-1 left-0 h-px transition-all duration-300"
-                  style={{
-                    width: router.pathname === "/contact" ? "100%" : "0",
-                    backgroundColor: "hsl(var(--orange))",
-                  }}
-                />
-              </Link>
-            </nav>
-
-            {/* ACTIONS */}
-            <div className="flex items-center gap-2 md:gap-3">
-              <button
-                onClick={onSearchOpen}
-                className="w-8 h-8 flex items-center justify-center rounded-sm text-white/60 hover:text-white hover:bg-white/10 transition-all"
-                aria-label={tr("nav.search", "Search")}
-              >
-                <Search size={17} />
-              </button>
-
-              <LanguageSwitcher />
-
-
-
-              <Link
-                href="/contact"
-                className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 rounded-sm font-body font-semibold text-white text-sm transition-all hover:opacity-90 shadow-sm"
-                style={{ backgroundColor: "hsl(var(--orange))" }}
-              >
-                {tr("nav.requestQuote", "Request a Quote")}
-              </Link>
-
-              <button
-                className="lg:hidden w-8 h-8 flex items-center justify-center text-white/80 hover:text-white transition-colors"
-                onClick={() => setMobileOpen(!mobileOpen)}
-                aria-label="Toggle Menu"
-              >
-                {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-              </button>
-            </div>
+            {/* Mobile Hamburger */}
+            <button
+              type="button"
+              onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label="Menu"
+              className="lg:hidden p-2 rounded-md text-white/90 hover:text-white hover:bg-white/10 transition-colors"
+            >
+              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
           </div>
         </div>
-      </header>
 
-      {/* MOBILE DRAWER */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2 }}
-            className="fixed top-[64px] left-0 right-0 z-40 shadow-2xl border-t border-white/10 max-h-[85vh] overflow-y-auto"
-            style={{ backgroundColor: "hsl(var(--navy-deep)/0.98)" }}
-          >
-            <nav className="container mx-auto px-6 py-6 flex flex-col gap-3">
-              <Link
-                href="/"
-                className="font-body text-base font-medium text-white/75 hover:text-white py-2 border-b border-white/10 transition-colors"
-              >
-                {tr("nav.home", "Home")}
-              </Link>
-              <Link
-                href="/about"
-                className="font-body text-base font-medium text-white/75 hover:text-white py-2 border-b border-white/10 transition-colors"
-              >
-                {tr("nav.about", "About DHT")}
-              </Link>
-              <Link
-                href="/manufacturing"
-                className="font-body text-base font-medium text-white/75 hover:text-white py-2 border-b border-white/10 transition-colors"
-              >
-                {tr("nav.manufacturing", "Manufacturing")}
-              </Link>
-              <div className="py-2 border-b border-white/10">
-                <span className="text-xs uppercase tracking-wider text-[#B97846] font-semibold block mb-2">
-                  {tr("nav.collections", "Collections")}
-                </span>
-                <div className="flex flex-col gap-2 pl-3">
+        {/* Mobile Drawer */}
+        <AnimatePresence>
+          {mobileOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="lg:hidden overflow-hidden border-t border-white/10 bg-[#0C2118]"
+            >
+              <nav className="container mx-auto px-6 py-4 flex flex-col gap-1">
+                {navLinks.map((link) => (
                   <Link
-                    href="/catalogue/outdoor"
-                    className="font-body text-sm font-medium text-white/70 hover:text-white py-1 transition-colors"
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMobileOpen(false)}
+                    className={`py-2.5 px-3 rounded-lg font-body text-sm font-medium transition-colors ${
+                      link.isActive
+                        ? "bg-white/10 text-[#E5B869] font-semibold"
+                        : "text-white/85 hover:bg-white/5 hover:text-white"
+                    }`}
                   >
-                    • {tr("nav.outdoorCollection", "Outdoor — DHT")}
+                    {link.label}
                   </Link>
-                  <Link
-                    href="/catalogue/indoor"
-                    className="font-body text-sm font-medium text-white/70 hover:text-white py-1 transition-colors"
-                  >
-                    • {tr("nav.indoorCollection", "Indoor — JAGER")}
-                  </Link>
-                  <Link
-                    href="/catalogue/indoor?category=Projects"
-                    className="font-body text-sm font-medium text-white/70 hover:text-white py-1 transition-colors"
-                  >
-                    • {tr("nav.projectCollection", "Projects — THE ONE")}
-                  </Link>
-                  <Link
-                    href="/materials/wood-panels-and-processing-mekong"
-                    className="font-body text-sm font-medium text-white/70 hover:text-white py-1 transition-colors"
-                  >
-                    • {tr("nav.materialsCollection", "Wood & Materials — MEKONG")}
-                  </Link>
-                </div>
-              </div>
-              <Link
-                href="/quality-compliance"
-                className="font-body text-base font-medium text-white/75 hover:text-white py-2 border-b border-white/10 transition-colors"
-              >
-                {tr("nav.qualityCompliance", "Quality & Compliance")}
-              </Link>
-              <Link
-                href="/contact"
-                className="font-body text-base font-medium text-white/75 hover:text-white py-2 border-b border-white/10 transition-colors"
-              >
-                {tr("nav.contact", "Contact")}
-              </Link>
-
-              <div className="pt-4 flex flex-col gap-3">
-
-
+                ))}
                 <Link
-                  href="/contact"
-                  className="text-center py-3.5 rounded-sm font-body font-semibold text-white text-base shadow-sm"
-                  style={{ backgroundColor: "hsl(var(--orange))" }}
+                  href="/contact?inquiry=quotation#smart-contact-form"
+                  onClick={handleRequestQuoteClick}
+                  className="mt-2 inline-flex items-center justify-center gap-2 py-2.5 px-5 rounded-full bg-gradient-to-r from-[#D89B3C] to-[#B97846] text-[#0E241B] font-body text-sm font-bold"
                 >
-                  {tr("nav.requestQuote", "Request a Quote")}
+                  <span>Request a Quote</span>
+                  <ArrowRight size={15} />
                 </Link>
-              </div>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              </nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </header>
     </>
   );
 }

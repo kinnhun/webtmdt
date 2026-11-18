@@ -21,6 +21,16 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/collections",
+        destination: "/catalogue",
+        permanent: false,
+      },
+      {
+        source: "/quality-compliance",
+        destination: "/manufacturing",
+        permanent: false,
+      },
+      {
         source: "/catalogue/amalfi",
         destination: "/catalogue/amalfi-lounge-collection",
         permanent: true,

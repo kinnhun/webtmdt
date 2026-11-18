@@ -1,433 +1,642 @@
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import {
+  Send,
+  Paperclip,
+  Mail,
+  PhoneCall,
+  Play,
+  Pause,
+  CheckCircle2,
+  X,
+} from "lucide-react";
 import SEO from "@/components/SEO";
 import Schema from "@/components/Schema";
-import { Mail, Phone, MapPin, Send, Clock, Globe } from "lucide-react";
-import { useTranslation } from "react-i18next";
-import { useQuery } from "@tanstack/react-query";
-import { MASTER_LOCATIONS, getLocalizedLocations } from "@/constants/locations";
+import { BrandLogo } from "@/components/ui/BrandLogos";
+import type {
+  BrandId,
+  InquiryTypeValue,
+  BrandInterestValue,
+  SmartContactFormValues,
+} from "@/types/dht.types";
 
-function useLang() {
-  const { i18n } = useTranslation();
-  const lang = i18n.language;
-  if (lang === 'vi-VN' || lang === 'vi') return 'vi';
-  if (lang === 'en-GB') return 'uk';
-  return 'us';
+const INQUIRY_OPTIONS: InquiryTypeValue[] = [
+  "General Inquiry",
+  "Request a Quotation",
+  "Request Catalogue Access",
+  "Discuss a Project",
+  "Arrange Factory Visit",
+];
+
+const BRAND_INTEREST_OPTIONS: BrandInterestValue[] = [
+  "DHT – Outdoor Furniture",
+  "JAGER – Indoor Furniture",
+  "THE ONE – Project & Office Furniture",
+  "MEKONG – Wood Panels & Processing",
+  "Multiple Brands / Not Sure",
+];
+
+const MARKET_COUNTRIES: string[] = [
+  "United States",
+  "Canada",
+  "United Kingdom",
+  "Germany",
+  "France",
+  "Netherlands",
+  "Spain",
+  "Italy",
+  "Denmark",
+  "Austria",
+  "Poland",
+  "Belgium",
+  "Sweden",
+  "Australia",
+  "New Zealand",
+  "United Arab Emirates",
+  "Saudi Arabia",
+  "Qatar",
+  "Israel",
+  "Türkiye",
+  "Japan",
+  "South Korea",
+  "Singapore",
+  "India",
+  "South Africa",
+  "Multiple Markets / Global",
+  "Other Market",
+];
+
+const FOUR_BRAND_CARDS: { id: BrandId; subtitle: string }[] = [
+  { id: "DHT", subtitle: "Outdoor Furniture" },
+  { id: "JAGER", subtitle: "Indoor Furniture" },
+  { id: "THE ONE", subtitle: "Project & Office Furniture" },
+  { id: "MEKONG", subtitle: "Wood Panels & Processing" },
+];
+
+function resolveInquiryType(raw: string | undefined): InquiryTypeValue {
+  if (!raw) return "Request Catalogue Access";
+  const norm = raw.toLowerCase().trim();
+  if (norm.includes("quot") || norm === "rfq") return "Request a Quotation";
+  if (norm.includes("catalog") || norm.includes("collection")) return "Request Catalogue Access";
+  if (norm.includes("project") || norm.includes("oem")) return "Discuss a Project";
+  if (norm.includes("visit") || norm.includes("factory") || norm.includes("inspection")) {
+    return "Arrange Factory Visit";
+  }
+  if (norm.includes("general")) return "General Inquiry";
+  return "Request a Quotation";
 }
 
-function txt(obj: any, langKey: string): string {
-  if (!obj) return '';
-  const val = obj[langKey];
-  if (val) return val;
-  return obj.us || '';
+function resolveBrandInterest(raw: string | undefined): BrandInterestValue {
+  if (!raw) return "JAGER – Indoor Furniture";
+  const norm = raw.toUpperCase().trim();
+  if (norm.includes("DHT")) return "DHT – Outdoor Furniture";
+  if (norm.includes("JAGER")) return "JAGER – Indoor Furniture";
+  if (norm.includes("ONE")) return "THE ONE – Project & Office Furniture";
+  if (norm.includes("MEKONG")) return "MEKONG – Wood Panels & Processing";
+  return "Multiple Brands / Not Sure";
 }
 
 export default function ContactPage() {
-  const { data: dbData = null } = useQuery<Record<string, any> | null>({
-    queryKey: ["contact-content"],
-    queryFn: async () => {
-      const res = await fetch("/api/contact-content");
-      if (!res.ok) return null;
-      const json = await res.json();
-      return json?.data || json || null;
-    },
-    staleTime: 5 * 60 * 1000,
+  const router = useRouter();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  const [form, setForm] = useState<SmartContactFormValues>({
+    inquiryType: "Request Catalogue Access",
+    brandOfInterest: "JAGER – Indoor Furniture",
+    fullName: "",
+    businessEmail: "",
+    companyName: "",
+    phoneWhatsapp: "",
+    countryMarket: "",
+    message: "",
+    attachmentName: "",
   });
 
-  const router = useRouter();
-  const { t } = useTranslation();
-  const langKey = useLang();
-  
-  const hasDB = !!dbData;
-  const d = (dbPath: string[], i18nKey: string): string => {
-    if (hasDB && dbData) {
-      let val: any = dbData;
-      for (const key of dbPath) {
-        val = val?.[key];
-      }
-      if (val && typeof val === 'object' && ('us' in val || 'uk' in val || 'vi' in val)) {
-        const textValue = txt(val, langKey);
-        if (textValue.trim() !== '') return textValue;
-      } else if (typeof val === 'string' && val.trim() !== '') {
-        return val;
-      }
+  // Auto-select Inquiry Type, Brand of Interest, and Collection from URL query params
+  useEffect(() => {
+    if (!router.isReady) return;
+    const qInquiry =
+      (router.query.inquiry as string | undefined) ||
+      (router.query.type as string | undefined);
+    const qBrand = router.query.brand as string | undefined;
+    const qCollection = router.query.collection as string | undefined;
+
+    setForm((prev) => {
+      const nextInquiry = qInquiry ? resolveInquiryType(qInquiry) : prev.inquiryType;
+      const nextBrand = qBrand ? resolveBrandInterest(qBrand) : prev.brandOfInterest;
+      const nextMessage =
+        qCollection && !prev.message
+          ? `Inquiry regarding ${qCollection}. Please share product specifications, pricing and lead time details.`
+          : prev.message;
+      return {
+        ...prev,
+        inquiryType: nextInquiry,
+        brandOfInterest: nextBrand,
+        message: nextMessage,
+      };
+    });
+
+    if (qInquiry || qBrand || qCollection || router.asPath.includes("#smart-contact-form")) {
+      const timer = setTimeout(() => {
+        const el = document.getElementById("smart-contact-form");
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 150);
+      return () => clearTimeout(timer);
     }
-    return t(i18nKey);
+  }, [router.isReady, router.query, router.asPath]);
+
+  const toggleVideoPlay = () => {
+    const vid = videoRef.current;
+    if (!vid) return;
+    if (vid.paused) {
+      vid.play();
+      setIsPlaying(true);
+    } else {
+      vid.pause();
+      setIsPlaying(false);
+    }
   };
 
-  const defaultFields = [
-    { id: 'f_name', key: 'name', type: 'text', required: true, width: 'half', label: { us: '<p>Full Name</p>', uk: '<p>Full Name</p>', vi: '<p>Họ và tên</p>' } },
-    { id: 'f_email', key: 'email', type: 'email', required: true, width: 'half', label: { us: '<p>Business Email</p>', uk: '<p>Business Email</p>', vi: '<p>Email doanh nghiệp</p>' } },
-    { id: 'f_company', key: 'company', type: 'text', required: true, width: 'half', label: { us: '<p>Company</p>', uk: '<p>Company</p>', vi: '<p>Tên công ty / Doanh nghiệp</p>' } },
-    { id: 'f_phone', key: 'phone', type: 'tel', required: false, width: 'half', label: { us: '<p>Phone / WhatsApp</p>', uk: '<p>Phone / WhatsApp</p>', vi: '<p>Điện thoại / WhatsApp (Tùy chọn)</p>' } },
-    { 
-      id: 'f_category', 
-      key: 'category', 
-      type: 'select', 
-      required: true, 
-      width: 'full', 
-      label: { us: '<p>Inquiry Type</p>', uk: '<p>Inquiry Type</p>', vi: '<p>Loại yêu cầu / Danh mục</p>' },
-      options: [
-        { key: "outdoor", label: { us: "Outdoor — DHT (Outdoor Furniture)", uk: "Outdoor — DHT (Outdoor Furniture)", vi: "Outdoor — DHT (Nội thất ngoài trời)" } },
-        { key: "indoor", label: { us: "Indoor — JAGER (Indoor Furniture)", uk: "Indoor — JAGER (Indoor Furniture)", vi: "Indoor — JAGER (Nội thất trong nhà)" } },
-        { key: "project", label: { us: "Project — THE ONE (Project & Contract Furniture)", uk: "Project — THE ONE (Project & Contract Furniture)", vi: "Project — THE ONE (Nội thất dự án)" } },
-        { key: "materials", label: { us: "Materials — MEKONG (Wood Panels & Processing)", uk: "Materials — MEKONG (Wood Panels & Processing)", vi: "Materials — MEKONG (Ván gỗ & chế biến gỗ)" } },
-        { key: "multi", label: { us: "Multi-Category / Commercial Programme", uk: "Multi-Category / Commercial Programme", vi: "Đa danh mục / Chương trình thương mại" } }
-      ]
-    },
-    { id: 'f_subject', key: 'subject', type: 'text', required: true, width: 'full', label: { us: '<p>Subject</p>', uk: '<p>Subject</p>', vi: '<p>Tiêu đề yêu cầu</p>' } },
-    { id: 'f_message', key: 'message', type: 'textarea', required: true, width: 'full', label: { us: '<p>Message</p>', uk: '<p>Message</p>', vi: '<p>Nội dung yêu cầu chi tiết</p>' } },
-  ];
-  const fields = (hasDB && dbData?.formSection?.fields?.length > 0) ? dbData.formSection.fields : defaultFields;
-
-  const [form, setForm] = useState<Record<string, string>>({ category: "outdoor", interestedProduct: "" });
-  const [sending, setSending] = useState(false);
-  const [sent, setSent] = useState(false);
-  const [categories, setCategories] = useState<{key: string, label: string}[]>([]);
-
-  useEffect(() => {
-    const { product, code, inquiryType, type } = router.query;
-    const reqType = (inquiryType || type) as string | undefined;
-
-    if (product) {
-      setForm((prev) => ({
-        ...prev,
-        subject: t("contact.form.inquirySubject", { product, code: code ? ` (${code})` : "" }),
-        message: t("contact.form.inquiryMessage", { product, code: code ? ` (Code: ${code})` : "" }),
-        interestedProduct: `${product}${code ? ` - ${code}` : ""}`,
-      }));
-    } else if (reqType) {
-      const typeStr = Array.isArray(reqType) ? reqType[0] : reqType;
-      const lower = typeStr.toLowerCase();
-      if (lower === 'proposal' || lower.includes('proposal')) {
-        setForm((prev) => ({
-          ...prev,
-          subject: t("contact.form.proposalSubject", "Product Proposal Request — OEM / B2B Programme"),
-          message: t(
-            "contact.form.proposalMessage",
-            "Hello DHT Furniture team,\n\nWe would like to request a product proposal for our upcoming furniture programme. Our target market, estimated order volume, and initial specifications are as follows:\n- Target Market:\n- Estimated Volume:\n- Programme Requirements:\n\nPlease contact us with suitable options and next development steps."
-          ),
-        }));
-      } else if (lower === 'visit' || lower.includes('visit')) {
-        setForm((prev) => ({
-          ...prev,
-          subject: t("contact.form.visitSubject", "Factory Visit Request — On-Site Inspection"),
-          message: t(
-            "contact.form.visitMessage",
-            "Hello DHT Furniture team,\n\nWe would like to arrange an appointment for an on-site factory inspection visit to review production facilities and manufacturing capabilities."
-          ),
-        }));
-      } else {
-        setForm((prev) => ({
-          ...prev,
-          subject: `OEM / B2B Inquiry: ${typeStr}`,
-          message: `Hello DHT Furniture team, we would like to discuss our OEM development requirements...`,
-        }));
-      }
-    }
-  }, [router.query, t]);
-
-  useEffect(() => {
-    // Fetch categories dynamically
-    fetch("/api/admin/inquiries/settings")
-      .then(res => res.json())
-      .then((data: any[]) => {
-        if (Array.isArray(data)) {
-          const cats = data.filter(s => s.type === 'category' && s.isActive).sort((a,b) => a.order - b.order);
-          setCategories(cats);
-          if (cats.length > 0) {
-            setForm(prev => ({ ...prev, category: cats[0].key }));
-          }
-        }
-      })
-      .catch(() => {});
-  }, []);
-
-  const [error, setError] = useState<string | null>(null);
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setForm((prev) => ({ ...prev, attachmentName: file.name }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSending(true);
-    setError(null);
+    setErrorMsg(null);
+    if (
+      !form.fullName.trim() ||
+      !form.businessEmail.trim() ||
+      !form.companyName.trim() ||
+      !form.countryMarket.trim() ||
+      !form.message.trim()
+    ) {
+      setErrorMsg("Please complete all required fields marked with *.");
+      return;
+    }
+
+    setSubmitting(true);
     try {
-      const res = await fetch("/api/contact", { 
-        method: "POST", 
-        headers: { "Content-Type": "application/json" }, 
-        body: JSON.stringify(form) 
-      });
-      if (!res.ok) {
-        throw new Error("Failed to submit inquiry");
-      }
-      setSent(true);
-      setForm({ interestedProduct: "" });
-    } catch (err) {
-      console.error("Submission failed:", err);
-      setError("We could not send your message due to a connection issue. Your input has been saved above. You can also contact us directly at sales@dhtcompany.com");
+      await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.fullName,
+          email: form.businessEmail,
+          company: form.companyName,
+          phone: form.phoneWhatsapp,
+          country: form.countryMarket,
+          inquiryType: form.inquiryType,
+          brandOfInterest: form.brandOfInterest,
+          attachmentName: form.attachmentName,
+          message: `[${form.inquiryType} | ${form.brandOfInterest} | Market: ${
+            form.countryMarket
+          }${form.attachmentName ? ` | Attached: ${form.attachmentName}` : ""}]\n\n${
+            form.message
+          }`,
+        }),
+      }).catch(() => null);
+      setSubmitted(true);
     } finally {
-      setSending(false);
+      setSubmitting(false);
     }
   };
 
-  const locations = (hasDB && dbData.locations?.items?.length)
-    ? dbData.locations.items.map((loc: any) => {
-        let title = txt(loc.title, langKey);
-        if (title.includes("Head Office & Commercial") || title.includes("Trụ Sở & Phòng Thương Mại")) {
-          title = MASTER_LOCATIONS[0].title[langKey as 'us' | 'uk' | 'vi'] || MASTER_LOCATIONS[0].title.us;
-        }
-        return {
-          title,
-          subtitle: txt(loc.subtitle, langKey),
-          address: txt(loc.address, langKey),
-          phone: loc.phone || "",
-          href: loc.href || `tel:${(loc.phone || "").replace(/\s/g, "")}`,
-          hours: txt(loc.hours, langKey)
-        };
-      })
-    : getLocalizedLocations(langKey as 'us' | 'uk' | 'vi');
-
-  const validLocations = locations.filter((loc: any) => {
-    const titleStr = typeof loc.title === 'string' ? loc.title : '';
-    const subtitleStr = typeof loc.subtitle === 'string' ? loc.subtitle : '';
-    const addressStr = typeof loc.address === 'string' ? loc.address : '';
-    const phoneStr = typeof loc.phone === 'string' ? loc.phone : '';
-    const hoursStr = typeof loc.hours === 'string' ? loc.hours : '';
-    
-    const hasTitle = titleStr && titleStr.replace(/<[^>]*>?/gm, '').trim() !== '';
-    const hasSubtitle = subtitleStr && subtitleStr.replace(/<[^>]*>?/gm, '').trim() !== '';
-    const hasAddress = addressStr && addressStr.replace(/<[^>]*>?/gm, '').trim() !== '';
-    const hasPhone = phoneStr && phoneStr.replace(/<[^>]*>?/gm, '').trim() !== '';
-    const hasHours = hoursStr && hoursStr.replace(/<[^>]*>?/gm, '').trim() !== '';
-    
-    return hasTitle || hasSubtitle || hasAddress || hasPhone || hasHours;
-  });
-
   return (
     <>
-      <SEO title={d(['seo', 'title'], "contact.seo.title")} description={d(['seo', 'description'], "contact.seo.description")} />
-      <Schema 
+      <SEO
+        title="Contact DHT Furniture Vietnam | Request Catalogue, Quotation or OEM Programme"
+        description="Contact DHT Furniture Vietnam. Tell us about your requirements and target market. Our team will help you identify the next steps for product selection, sampling or an OEM programme."
+        canonical="https://dhtcompany.com/contact"
+        image="/img/pdf-guide/contact/hero-factory-mekong.jpg"
+      />
+      <Schema
         id="schema-breadcrumbs-contact"
         type="BreadcrumbList"
         data={{
           itemListElement: [
-            {
-              "@type": "ListItem",
-              position: 1,
-              name: "Home",
-              item: "https://dhtcompany.com"
-            },
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://dhtcompany.com" },
             {
               "@type": "ListItem",
               position: 2,
-              name: "Contact Us",
-              item: "https://dhtcompany.com/contact"
-            }
-          ]
+              name: "Contact",
+              item: "https://dhtcompany.com/contact",
+            },
+          ],
         }}
       />
-      <Schema 
-        id="schema-localbusiness-contact"
-        type="LocalBusiness"
-        data={{
-          name: "DHT Furniture Vietnam Joint Stock Company",
-          image: "https://dhtcompany.com/img/logo.png",
-          telephone: "+84 932 058 545",
-          email: "sales@dhtcompany.com",
-          address: {
-            "@type": "PostalAddress",
-            streetAddress: "72 Le Thanh Ton Street, Ben Nghe Ward, District 1",
-            addressLocality: "Ho Chi Minh City",
-            addressRegion: "Ho Chi Minh City",
-            addressCountry: "VN"
-          },
-          geo: {
-            "@type": "GeoCoordinates",
-            latitude: 10.7778,
-            longitude: 106.7018
-          },
-          url: "https://dhtcompany.com/contact",
-          priceRange: "$$$"
-        }}
-      />
-      <div className="pt-20 overflow-x-hidden w-full flex flex-col" style={{ minHeight: "100vh", backgroundColor: "hsl(var(--warm-cream))" }}>
-        <div className="py-12 md:py-20 text-center" style={{ backgroundColor: "hsl(var(--navy-deep))" }}>
-          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="font-display font-bold text-white mb-4 rt-reset break-words flex flex-col empty:hidden" style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)" }} dangerouslySetInnerHTML={{ __html: d(['hero', 'title'], "contact.hero.title") }} />
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="font-body text-white/60 text-base max-w-xl mx-auto px-4 rt-reset break-words empty:hidden" dangerouslySetInnerHTML={{ __html: d(['hero', 'subtitle'], "contact.hero.subtitle") }} />
-          
-          {/* Direct Sales Email & Hotline Pill */}
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="mt-6 flex flex-wrap justify-center items-center gap-3 text-xs">
-            <a href="mailto:sales@dhtcompany.com" className="inline-flex items-center gap-2 bg-[#B97846] text-white px-4 py-2 rounded-full font-semibold hover:bg-white hover:text-black transition-all shadow-sm">
-              <Mail size={14} /> Official Sales: sales@dhtcompany.com
-            </a>
-            <span className="text-white/80 bg-white/10 px-3.5 py-1.5 rounded-full font-medium">
-              {langKey === 'vi' ? "Phản hồi: Đội ngũ DHT phản hồi trong vòng 1 ngày làm việc" : "Response: Our team aims to respond within one business day."}
-            </span>
-          </motion.div>
-        </div>
-        
-        <div className="container mx-auto px-4 sm:px-6 py-12 md:py-20">
-          {/* LOCATIONS GRID */}
-          {validLocations.length > 0 && (
-            <div className="mb-16 md:mb-24">
-              <h2 className="font-display text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12 rt-reset break-words" style={{ color: "hsl(var(--navy-deep))" }} dangerouslySetInnerHTML={{ __html: d(['locations', 'heading'], "contact.locations.title") }} />
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {validLocations.map((loc: any, i: number) => {
-                  const titleStr = typeof loc.title === 'string' ? loc.title : '';
-                  const subtitleStr = typeof loc.subtitle === 'string' ? loc.subtitle : '';
-                  const addressStr = typeof loc.address === 'string' ? loc.address : '';
-                  const phoneStr = typeof loc.phone === 'string' ? loc.phone : '';
-                  const hoursStr = typeof loc.hours === 'string' ? loc.hours : '';
-                  
-                  const hasTitle = titleStr && titleStr.replace(/<[^>]*>?/gm, '').trim() !== '';
-                  const hasSubtitle = subtitleStr && subtitleStr.replace(/<[^>]*>?/gm, '').trim() !== '';
-                  const hasAddress = addressStr && addressStr.replace(/<[^>]*>?/gm, '').trim() !== '';
-                  const hasPhone = phoneStr && phoneStr.replace(/<[^>]*>?/gm, '').trim() !== '';
-                  const hasHours = hoursStr && hoursStr.replace(/<[^>]*>?/gm, '').trim() !== '';
 
-                  return (
-                  <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 * i, duration: 0.5 }} key={i} className="bg-white p-6 rounded-sm border border-border flex flex-col h-full hover:shadow-lg transition-shadow overflow-hidden">
-                    {hasTitle && (
-                      <h3 className="font-display font-bold text-lg mb-1 leading-tight rt-reset wrap-break-word" style={{ color: "hsl(var(--navy-deep))" }} dangerouslySetInnerHTML={{ __html: loc.title }} />
-                    )}
-                    {hasSubtitle && (
-                      <div className="font-body text-[10px] tracking-wider uppercase font-semibold mb-5 rt-reset wrap-break-word" style={{ color: "hsl(var(--orange))" }} dangerouslySetInnerHTML={{ __html: loc.subtitle }} />
-                    )}
-                    
-                    <div className="space-y-4 font-body text-sm text-muted-foreground flex-1">
-                      {hasAddress && (
-                        <div className="flex items-start gap-3">
-                          <MapPin size={16} className="mt-0.5 shrink-0" style={{ color: "hsl(var(--orange))" }} />
-                          <span className="leading-relaxed rt-reset block flex-1 wrap-break-word min-w-0" dangerouslySetInnerHTML={{ __html: loc.address }} />
-                        </div>
-                      )}
-                      {(hasPhone || hasHours) && (
-                        <div className="flex items-start gap-3">
-                          <Phone size={16} className="mt-0.5 shrink-0" style={{ color: "hsl(var(--orange))" }} />
-                          <div className="flex-1 min-w-0 wrap-break-word">
-                            {hasPhone && (
-                              <a href={loc.href} className="font-medium hover:text-orange transition-colors block mb-0.5 text-foreground wrap-break-word">{loc.phone}</a>
-                            )}
-                            {hasHours && (
-                              <span className="text-xs opacity-80 block rt-reset wrap-break-word" dangerouslySetInnerHTML={{ __html: loc.hours }} />
-                            )}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </motion.div>
-                )})}
-              </div>
-            </div>
-          )}
+      <main className="bg-[#F7F5F0] text-[#1A1A1A] pt-16 lg:pt-[72px]">
+        {/* ── SECTION 02: HERO BANNER — VIDEO MEKONG (Hình 46 Top) ── */}
+        <section className="relative min-h-[290px] lg:min-h-[330px] flex items-center bg-[#0F2C1E] text-white overflow-hidden">
+          {/* Right 58% MEKONG Factory Video */}
+          <div className="absolute inset-y-0 right-0 w-full lg:w-[62%]">
+            <video
+              ref={videoRef}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="metadata"
+              poster="/img/pdf-guide/contact/hero-factory-mekong.jpg"
+              className="w-full h-full object-cover"
+            >
+              <source src="/video/hero-banner.mp4" type="video/mp4" />
+            </video>
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(90deg, #0F2C1E 0%, rgba(15, 44, 30, 0.85) 34%, rgba(15, 44, 30, 0.15) 100%)",
+              }}
+            />
 
-          {/* FORM SECTION */}
-          {fields.length > 0 && (
-            <div className="max-w-3xl mx-auto">
-              <div className="text-center mb-10">
-                <h2 className="font-display text-3xl font-bold mb-4 rt-reset break-words w-full" style={{ color: "hsl(var(--navy-deep))" }} dangerouslySetInnerHTML={{ __html: d(['formSection', 'title'], "contact.formSection.title") }} />
-                <div 
-                  className="font-body text-muted-foreground contact-subtitle-rt break-words w-full" 
-                  dangerouslySetInnerHTML={{ __html: d(['formSection', 'subtitle'], "contact.formSection.subtitle") }} 
-                />
-              </div>
-              {sent ? (
-                <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-20 bg-white rounded-sm border border-border">
-                  <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style={{ backgroundColor: "hsl(var(--orange)/0.1)" }}>
-                    <Send size={24} style={{ color: "hsl(var(--orange))" }} />
-                  </div>
-                  <h3 className="font-display font-bold text-xl text-foreground mb-2 rt-reset break-words" dangerouslySetInnerHTML={{ __html: d(['formSection', 'successTitle'], "contact.success.title") }} />
-                  <div 
-                    className="font-body text-sm text-muted-foreground mb-6 break-words" 
-                    dangerouslySetInnerHTML={{ __html: d(['formSection', 'successDesc'], "contact.success.description") }} 
-                  />
-                  <button onClick={() => setSent(false)} className="font-body text-sm font-medium rt-reset" style={{ color: "hsl(var(--orange))" }} dangerouslySetInnerHTML={{ __html: d(['formSection', 'sendAnotherBtn'], "contact.success.sendAnother") }} />
-                </motion.div>
+            {/* Video Play/Pause Button Overlay */}
+            <button
+              type="button"
+              onClick={toggleVideoPlay}
+              aria-label={isPlaying ? "Pause factory video" : "Play factory video"}
+              className="hidden lg:flex absolute top-1/2 left-[38%] -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-black/45 hover:bg-black/65 border-2 border-white/85 text-white items-center justify-center transition-all cursor-pointer shadow-lg"
+            >
+              {isPlaying ? (
+                <Pause size={22} className="fill-white" />
               ) : (
-                <form onSubmit={handleSubmit} className="bg-white rounded-sm border border-border p-6 sm:p-10 shadow-sm">
-                  <div className="flex flex-wrap -mx-2.5">
-                    {fields.map((f: any, idx: number) => {
-                      const labelText = txt(f.label, langKey) || f.key;
-                      const isHalf = f.width === 'half';
-                      
-                      return (
-                        <div key={f.key || f.id || `field-${idx}`} className={`px-2.5 mb-5 ${isHalf ? 'w-full md:w-1/2' : 'w-full'}`}>
-                          <label className="font-body text-xs text-muted-foreground uppercase tracking-wider mb-1.5 block rt-reset">
-                            <span dangerouslySetInnerHTML={{ __html: labelText }} /> {f.required && "*"}
-                          </label>
-                          
-                          {f.type === 'textarea' ? (
-                            <textarea 
-                              rows={5} 
-                              required={f.required} 
-                              value={form[f.key] || ""} 
-                              onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} 
-                              className="w-full px-4 py-3 border border-border rounded-sm font-body text-sm outline-none focus:ring-2 focus:ring-orange/30 transition resize-none shadow-sm" 
-                            />
-                          ) : f.type === 'category' ? (
-                            <select 
-                              required={f.required} 
-                              value={form[f.key] || ""} 
-                              onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} 
-                              className="w-full px-4 py-3 border border-border rounded-sm font-body text-sm outline-none focus:ring-2 focus:ring-orange/30 transition shadow-sm bg-white"
-                            >
-                              {categories.length > 0 ? categories.map((c, cIdx) => (
-                                <option key={c.key || `cat-${cIdx}`} value={c.key}>{c.label}</option>
-                              )) : (
-                                <option value="other">Other</option>
-                              )}
-                            </select>
-                          ) : f.type === 'select' ? (
-                             <select 
-                               required={f.required} 
-                               value={form[f.key] || ""} 
-                               onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} 
-                               className="w-full px-4 py-3 border border-border rounded-sm font-body text-sm outline-none focus:ring-2 focus:ring-orange/30 transition shadow-sm bg-white"
-                             >
-                               <option value="" disabled>Select an option</option>
-                               {(f.options || []).map((o: any, oIdx: number) => (
-                                 <option key={o.key || `opt-${oIdx}`} value={txt(o.label, langKey)}>{txt(o.label, langKey)}</option>
-                               ))}
-                             </select>
-                          ) : (
-                            <input 
-                              type={f.type === 'tel' ? 'tel' : f.type === 'email' ? 'email' : 'text'} 
-                              required={f.required} 
-                              value={form[f.key] || ""} 
-                              onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} 
-                              className="w-full px-4 py-3 border border-border rounded-sm font-body text-sm outline-none focus:ring-2 focus:ring-orange/30 transition shadow-sm" 
-                            />
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-                  {error && (
-                    <div className="mb-4 p-4 rounded bg-red-50 border border-red-200 text-red-700 text-xs leading-relaxed">
-                      <p className="font-semibold mb-1">Notice:</p>
-                      <p>{error}</p>
-                    </div>
-                  )}
-                  <div className="mt-2">
-                    <button type="submit" disabled={sending} className="w-full inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90 disabled:opacity-60" style={{ backgroundColor: "hsl(var(--orange))" }}>
-                      {!sending && <Send size={16} />}
-                      <span className="rt-reset" dangerouslySetInnerHTML={{ __html: sending ? d(['formSection', 'labels', 'sendingBtn'], "contact.form.sending") : d(['formSection', 'labels', 'sendBtn'], "contact.form.sendInquiry") }} />
-                    </button>
-                  </div>
-                </form>
+                <Play size={22} className="fill-white ml-0.5" />
               )}
+            </button>
+          </div>
+
+          <div className="container mx-auto px-6 lg:px-10 py-12 lg:py-14 relative z-10">
+            <div className="max-w-xl">
+              <div className="flex items-center gap-3 mb-2.5">
+                <span className="h-[2px] w-7 bg-[#C59B27]" />
+                <span className="font-body text-xs font-bold uppercase tracking-[0.2em] text-[#C59B27]">
+                  CONTACT US
+                </span>
+              </div>
+
+              <h1
+                className="font-display font-bold text-white leading-[1.12] mb-3.5"
+                style={{ fontSize: "clamp(1.95rem, 3.6vw, 3rem)" }}
+              >
+                Contact
+                <br />
+                DHT Furniture Vietnam
+              </h1>
+
+              <p className="font-body text-sm sm:text-base text-white/85 leading-relaxed">
+                Tell us about your requirements and target market. Our team will help you identify
+                the next steps for product selection, sampling or an OEM programme.
+              </p>
             </div>
-          )}
-        </div>
-      </div>
-      <style jsx global>{`
-        .contact-subtitle-rt p { margin-bottom: 0.5rem; word-break: break-word; overflow-wrap: break-word; white-space: normal !important; }
-        .contact-subtitle-rt p:last-child { margin-bottom: 0; }
-        .contact-subtitle-rt strong { font-weight: bold; color: inherit; }
-        .contact-subtitle-rt em { font-style: italic; }
-        .rt-reset p { margin: 0 !important; display: inline !important; white-space: normal !important; }
-        .rt-reset, .contact-subtitle-rt, .wrap-break-word { word-break: break-word; overflow-wrap: break-word; }
-        .rt-reset *, .contact-subtitle-rt * { max-width: 100%; }
-      `}</style>
+          </div>
+        </section>
+
+        {/* ── SECTION 03: MAIN CONTENT — 2 COLUMNS (60% Smart Form + 40% Direct Contact & 4 Brands) ── */}
+        <section id="smart-contact-form" className="py-12 lg:py-16 scroll-mt-20">
+          <div className="container mx-auto px-6 lg:px-10">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+              {/* LEFT COLUMN (60% -> 7 cols): SMART CONTACT FORM */}
+              <div className="lg:col-span-7">
+                <div className="mb-6">
+                  <div className="flex items-center gap-3 mb-1">
+                    <span className="h-[2px] w-7 bg-[#C59B27]" />
+                    <h2 className="font-display font-bold text-2xl sm:text-3xl text-[#0F2C1E]">
+                      Send Us Your Request
+                    </h2>
+                  </div>
+                  <p className="font-body text-xs sm:text-sm text-[#4A4A4A] pl-10">
+                    Complete the form and our team will get back to you shortly with the relevant
+                    information.
+                  </p>
+                </div>
+
+                <div className="bg-white rounded-xl border border-[#EAE6DF] p-6 sm:p-8 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+                  {submitted ? (
+                    <div className="py-10 px-4 text-center space-y-4">
+                      <div className="w-14 h-14 rounded-full bg-[#173C2C]/10 text-[#173C2C] flex items-center justify-center mx-auto">
+                        <CheckCircle2 size={30} />
+                      </div>
+                      <h3 className="font-display font-bold text-2xl text-[#0F2C1E]">
+                        Request Received
+                      </h3>
+                      <p className="font-body text-sm sm:text-base text-[#4A4A4A] max-w-lg mx-auto leading-relaxed">
+                        Thank you for contacting DHT Furniture Vietnam. Your inquiry has been
+                        received. Our team will review your requirements and get back to you.
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => setSubmitted(false)}
+                        className="mt-4 inline-flex items-center justify-center px-6 py-2.5 rounded-lg bg-[#0F2C1E] text-white font-body text-xs font-bold uppercase tracking-wider hover:bg-[#173C2C] transition-colors cursor-pointer"
+                      >
+                        Send Another Inquiry
+                      </button>
+                    </div>
+                  ) : (
+                    <form onSubmit={handleSubmit} className="space-y-5">
+                      {errorMsg && (
+                        <div className="p-3.5 rounded-lg bg-red-50 border border-red-200 text-red-700 font-body text-xs font-medium">
+                          {errorMsg}
+                        </div>
+                      )}
+
+                      {/* Row 1: INQUIRY TYPE * | BRAND OF INTEREST * */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block font-body text-[11px] font-bold uppercase tracking-wider text-[#1A1A1A] mb-1.5">
+                            INQUIRY TYPE <span className="text-[#C57B35]">*</span>
+                          </label>
+                          <select
+                            required
+                            value={form.inquiryType}
+                            onChange={(e) =>
+                              setForm((prev) => ({
+                                ...prev,
+                                inquiryType: e.target.value as InquiryTypeValue,
+                              }))
+                            }
+                            className="w-full h-11 px-3.5 rounded-lg bg-[#FAFAFA] border border-[#DEDEDE] font-body text-sm font-semibold text-[#1A1A1A] focus:outline-none focus:border-[#1B3B2B] transition-colors"
+                          >
+                            {INQUIRY_OPTIONS.map((opt) => (
+                              <option key={opt} value={opt}>
+                                {opt}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+
+                        <div>
+                          <label className="block font-body text-[11px] font-bold uppercase tracking-wider text-[#1A1A1A] mb-1.5">
+                            BRAND OF INTEREST <span className="text-[#C57B35]">*</span>
+                          </label>
+                          <select
+                            required
+                            value={form.brandOfInterest}
+                            onChange={(e) =>
+                              setForm((prev) => ({
+                                ...prev,
+                                brandOfInterest: e.target.value as BrandInterestValue,
+                              }))
+                            }
+                            className="w-full h-11 px-3.5 rounded-lg bg-[#FAFAFA] border border-[#DEDEDE] font-body text-sm font-semibold text-[#1A1A1A] focus:outline-none focus:border-[#1B3B2B] transition-colors"
+                          >
+                            {BRAND_INTEREST_OPTIONS.map((opt) => (
+                              <option key={opt} value={opt}>
+                                {opt}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+
+                      {/* Row 2: FULL NAME * | BUSINESS EMAIL * */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block font-body text-[11px] font-bold uppercase tracking-wider text-[#1A1A1A] mb-1.5">
+                            FULL NAME <span className="text-[#C57B35]">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            placeholder="Your full name"
+                            value={form.fullName}
+                            onChange={(e) =>
+                              setForm((prev) => ({ ...prev, fullName: e.target.value }))
+                            }
+                            className="w-full h-11 px-3.5 rounded-lg bg-[#FAFAFA] border border-[#DEDEDE] font-body text-sm text-[#1A1A1A] placeholder:text-[#9CA3AF] focus:outline-none focus:border-[#1B3B2B] transition-colors"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block font-body text-[11px] font-bold uppercase tracking-wider text-[#1A1A1A] mb-1.5">
+                            BUSINESS EMAIL <span className="text-[#C57B35]">*</span>
+                          </label>
+                          <input
+                            type="email"
+                            required
+                            placeholder="name@company.com"
+                            value={form.businessEmail}
+                            onChange={(e) =>
+                              setForm((prev) => ({ ...prev, businessEmail: e.target.value }))
+                            }
+                            className="w-full h-11 px-3.5 rounded-lg bg-[#FAFAFA] border border-[#DEDEDE] font-body text-sm text-[#1A1A1A] placeholder:text-[#9CA3AF] focus:outline-none focus:border-[#1B3B2B] transition-colors"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Row 3: COMPANY NAME * | PHONE / WHATSAPP */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block font-body text-[11px] font-bold uppercase tracking-wider text-[#1A1A1A] mb-1.5">
+                            COMPANY NAME <span className="text-[#C57B35]">*</span>
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            placeholder="Your company name"
+                            value={form.companyName}
+                            onChange={(e) =>
+                              setForm((prev) => ({ ...prev, companyName: e.target.value }))
+                            }
+                            className="w-full h-11 px-3.5 rounded-lg bg-[#FAFAFA] border border-[#DEDEDE] font-body text-sm text-[#1A1A1A] placeholder:text-[#9CA3AF] focus:outline-none focus:border-[#1B3B2B] transition-colors"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block font-body text-[11px] font-bold uppercase tracking-wider text-[#1A1A1A] mb-1.5">
+                            PHONE / WHATSAPP
+                          </label>
+                          <input
+                            type="tel"
+                            placeholder="Your phone number"
+                            value={form.phoneWhatsapp}
+                            onChange={(e) =>
+                              setForm((prev) => ({ ...prev, phoneWhatsapp: e.target.value }))
+                            }
+                            className="w-full h-11 px-3.5 rounded-lg bg-[#FAFAFA] border border-[#DEDEDE] font-body text-sm text-[#1A1A1A] placeholder:text-[#9CA3AF] focus:outline-none focus:border-[#1B3B2B] transition-colors"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Row 4 (Full Width — No Estimated Order Volume per Page 56): COUNTRY / TARGET MARKET * */}
+                      <div>
+                        <label className="block font-body text-[11px] font-bold uppercase tracking-wider text-[#1A1A1A] mb-1.5">
+                          COUNTRY / TARGET MARKET <span className="text-[#C57B35]">*</span>
+                        </label>
+                        <select
+                          required
+                          value={form.countryMarket}
+                          onChange={(e) =>
+                            setForm((prev) => ({ ...prev, countryMarket: e.target.value }))
+                          }
+                          className="w-full h-11 px-3.5 rounded-lg bg-[#FAFAFA] border border-[#DEDEDE] font-body text-sm text-[#1A1A1A] focus:outline-none focus:border-[#1B3B2B] transition-colors"
+                        >
+                          <option value="">Select your market</option>
+                          {MARKET_COUNTRIES.map((c) => (
+                            <option key={c} value={c}>
+                              {c}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      {/* Row 5: MESSAGE * */}
+                      <div>
+                        <label className="block font-body text-[11px] font-bold uppercase tracking-wider text-[#1A1A1A] mb-1.5">
+                          MESSAGE <span className="text-[#C57B35]">*</span>
+                        </label>
+                        <textarea
+                          required
+                          rows={4}
+                          placeholder="Tell us more about your needs (e.g. product type, project details, target pricing, timeline, etc.)."
+                          value={form.message}
+                          onChange={(e) =>
+                            setForm((prev) => ({ ...prev, message: e.target.value }))
+                          }
+                          className="w-full p-3.5 rounded-lg bg-[#FAFAFA] border border-[#DEDEDE] font-body text-sm text-[#1A1A1A] placeholder:text-[#9CA3AF] focus:outline-none focus:border-[#1B3B2B] transition-colors resize-y"
+                        />
+                      </div>
+
+                      {/* Row 6: Submit Request + Attach File (Optional) */}
+                      <div className="pt-1 flex flex-wrap items-center gap-3.5">
+                        <button
+                          type="submit"
+                          disabled={submitting}
+                          className="inline-flex items-center justify-center gap-2 px-7 h-11 rounded-lg bg-[#C57B35] hover:bg-[#B26A28] text-white font-body text-sm font-bold transition-colors shadow-xs cursor-pointer disabled:opacity-60"
+                        >
+                          <Send size={15} />
+                          <span>{submitting ? "Submitting..." : "Submit Request"}</span>
+                        </button>
+
+                        <input
+                          ref={fileInputRef}
+                          type="file"
+                          accept=".pdf,.xls,.xlsx,.csv,.jpg,.jpeg,.png,.dwg,.dxf,.zip"
+                          onChange={handleFileChange}
+                          className="hidden"
+                        />
+
+                        <button
+                          type="button"
+                          onClick={() => fileInputRef.current?.click()}
+                          className="inline-flex items-center justify-center gap-2 px-5 h-11 rounded-lg bg-white hover:bg-[#F4F1EA] text-[#1B3B2B] border border-[#1B3B2B]/60 font-body text-sm font-bold transition-colors cursor-pointer"
+                        >
+                          <Paperclip size={15} />
+                          <span>
+                            {form.attachmentName ? form.attachmentName : "Attach File (Optional)"}
+                          </span>
+                        </button>
+
+                        {form.attachmentName && (
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setForm((prev) => ({ ...prev, attachmentName: "" }))
+                            }
+                            aria-label="Remove attachment"
+                            className="p-2 rounded-full text-gray-500 hover:text-red-600 hover:bg-gray-100 transition-colors cursor-pointer"
+                          >
+                            <X size={15} />
+                          </button>
+                        )}
+                      </div>
+                    </form>
+                  )}
+                </div>
+              </div>
+
+              {/* RIGHT COLUMN (40% -> 5 cols): DIRECT CONTACT + OUR FOUR BRANDS */}
+              <div className="lg:col-span-5 lg:pl-6 lg:border-l lg:border-[#E5E0D8] space-y-8">
+                {/* Block 1: Direct Contact (No physical addresses per Page 50 & 59) */}
+                <div>
+                  <div className="flex items-center gap-3 mb-5">
+                    <span className="h-[2px] w-7 bg-[#C59B27]" />
+                    <h2 className="font-display font-bold text-2xl text-[#0F2C1E]">
+                      Direct Contact
+                    </h2>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-11 h-11 rounded-full bg-[#F2E9D8] border border-[#E2D2B5] flex items-center justify-center shrink-0">
+                        <Mail size={19} className="text-[#C57B35]" />
+                      </div>
+                      <div>
+                        <p className="font-body text-xs font-bold text-[#1A1A1A]">Email</p>
+                        <a
+                          href="mailto:sales@dhtcompany.com"
+                          className="font-body text-sm sm:text-base text-[#1A1A1A] hover:text-[#C57B35] transition-colors"
+                        >
+                          sales@dhtcompany.com
+                        </a>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                      <div className="w-11 h-11 rounded-full bg-[#F2E9D8] border border-[#E2D2B5] flex items-center justify-center shrink-0">
+                        <PhoneCall size={19} className="text-[#C57B35]" />
+                      </div>
+                      <div>
+                        <p className="font-body text-xs font-bold text-[#1A1A1A]">
+                          Phone / WhatsApp
+                        </p>
+                        <a
+                          href="tel:+84932058545"
+                          className="font-body text-sm sm:text-base font-medium text-[#1A1A1A] hover:text-[#C57B35] transition-colors"
+                        >
+                          +84 932 058 545
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="h-px w-full bg-[#E5E0D8]" />
+
+                {/* Block 2: Our Four Brands (2x2 Grid of Official Logo Cards) */}
+                <div>
+                  <div className="flex items-center gap-3 mb-1.5">
+                    <span className="h-[2px] w-7 bg-[#C59B27]" />
+                    <h2 className="font-display font-bold text-2xl text-[#0F2C1E]">
+                      Our Four Brands
+                    </h2>
+                  </div>
+                  <p className="font-body text-xs sm:text-sm text-[#4A4A4A] pl-10 mb-5 leading-relaxed">
+                    A complete furniture offering from our family-owned manufacturing group.
+                  </p>
+
+                  <div className="grid grid-cols-2 gap-3.5">
+                    {FOUR_BRAND_CARDS.map((b) => (
+                      <Link
+                        key={b.id}
+                        href={`/catalogue?brand=${encodeURIComponent(b.id)}`}
+                        className="group rounded-xl bg-white border border-[#EAE6DF] hover:border-[#C57B35] p-4 flex flex-col items-center justify-center text-center shadow-2xs hover:shadow-md transition-all min-h-[104px]"
+                      >
+                        <div className="mb-2">
+                          <BrandLogo brand={b.id} variant="color" />
+                        </div>
+                        <span className="font-body text-xs font-medium text-[#4A4A4A] group-hover:text-[#0F2C1E] transition-colors">
+                          {b.subtitle}
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
     </>
   );
 }

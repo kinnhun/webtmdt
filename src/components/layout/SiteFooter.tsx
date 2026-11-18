@@ -1,144 +1,140 @@
-import { motion } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
-import { Facebook, Linkedin, Mail, Phone, MapPin, CalendarClock } from "lucide-react";
-import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
-import { fadeUp, stagger } from "@/lib/animations";
+import { Mail, Phone, MapPin, Calendar } from "lucide-react";
+import { DhtHorizontalLogo } from "@/components/ui/BrandLogos";
 
 export default function SiteFooter() {
-  const { t } = useTranslation();
   const router = useRouter();
-  const tr = (k: string, d?: string) => t(k, { defaultValue: d, lng: router.locale });
+  const isContactPage = router.pathname === "/contact";
+
+  const exploreLinks = [
+    { href: "/about", label: "About DHT" },
+    { href: "/manufacturing", label: "Manufacturing" },
+    { href: "/our-brands", label: "Our Brands" },
+    { href: "/catalogue", label: "Collections" },
+    { href: "/contact", label: "Contact" },
+  ];
 
   return (
-    <footer className="text-white/80 pt-14 pb-8" style={{ backgroundColor: "hsl(var(--navy-dark))" }}>
-      <div className="container mx-auto px-6">
-        <motion.div
-          variants={stagger(0, 0.1)}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.15 }}
-          className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 pb-12 border-b border-white/10 items-start"
-        >
-          {/* Block 1: Brand Introduction (50-55% width on desktop) */}
-          <motion.div variants={fadeUp} className="lg:col-span-6 xl:col-span-7">
-            <Link href="/" className="inline-flex items-center gap-3.5 group mb-5">
-              <Image
-                src="/img/logo.png"
-                alt="DHT Furniture"
-                width={56}
-                height={56}
-                className="h-12 w-auto object-contain rounded-sm transition-transform duration-200 group-hover:scale-105"
-              />
-              <div className="flex flex-col justify-center leading-none">
-                <span className="font-display font-bold text-xl tracking-[0.14em] text-[#D4A853] uppercase">
-                  DHT
-                </span>
-                <span className="font-body font-semibold text-xs tracking-[0.26em] text-white/90 uppercase mt-1">
-                  FURNITURE
-                </span>
-              </div>
-            </Link>
+    <footer className="relative bg-[#0B2017] text-white border-t border-[#C88A36]/25 overflow-hidden">
+      {/* Subtle luxury wave background accents */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-20"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 12% 85%, rgba(200, 138, 54, 0.16), transparent 45%), radial-gradient(circle at 88% 80%, rgba(200, 138, 54, 0.14), transparent 45%)",
+        }}
+      />
 
-            <p className="font-body text-[15px] sm:text-base leading-relaxed text-white/75 max-w-xl mb-6">
-              {tr(
-                "footer.description",
-                "Outdoor, indoor and project furniture, coordinated through one DHT commercial team."
-              )}
-            </p>
-
-            <div className="flex items-center gap-3">
-              {[
-                {
-                  Icon: Facebook,
-                  href: "https://www.facebook.com/share/18u8Hk2SxD/?mibextid=wwXIfr",
-                  label: "Facebook",
-                },
-                {
-                  Icon: Linkedin,
-                  href: "https://www.linkedin.com/company/dhtfurniturevietnam/posts/?feedView=all",
-                  label: "LinkedIn",
-                },
-              ].map(({ Icon, href, label }) => (
-                <motion.a
-                  key={label}
-                  href={href}
-                  aria-label={label}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.08, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-9 h-9 rounded border border-white/20 flex items-center justify-center text-white/60 hover:text-white hover:border-white/50 transition-colors duration-200"
-                >
-                  <Icon size={16} />
-                </motion.a>
-              ))}
+      <div className="container mx-auto px-6 lg:px-10 pt-14 pb-10 relative z-10">
+        {/* 3-Column Main Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-8 pb-12 border-b border-white/15">
+          {/* Column 1 (Left): Brand Introduction + Social Icons */}
+          <div className="md:col-span-5 md:pr-8 md:border-r md:border-white/15 flex flex-col justify-between">
+            <div>
+              <Link href="/" className="inline-block mb-3">
+                <DhtHorizontalLogo iconSize={34} textClassName="text-lg sm:text-xl" />
+              </Link>
+              <div className="w-8 h-[2px] bg-[#C88A36] mb-4" />
+              <p className="font-body text-sm text-white/80 leading-relaxed max-w-md">
+                DHT Furniture Vietnam provides direct access to our family-owned manufacturing
+                group, specialising in outdoor, indoor, office and project furniture, and wood
+                panels.
+              </p>
             </div>
-          </motion.div>
 
-          {/* Block 2: Contact DHT */}
-          <motion.div variants={fadeUp} className="lg:col-span-6 xl:col-span-5">
-            <h4 className="font-display text-white font-semibold text-lg mb-2">
-              {tr("footer.contact", "Contact DHT")}
+            {/* Official Social Links (Facebook + LinkedIn) */}
+            <div className="flex items-center gap-3 mt-6">
+              <a
+                href="https://www.facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="DHT Furniture on Facebook"
+                className="w-9 h-9 rounded-md border border-[#C88A36]/60 bg-[#C88A36]/10 text-[#E5B869] hover:bg-[#C88A36] hover:text-[#0B2017] transition-colors flex items-center justify-center font-serif font-bold text-base"
+              >
+                f
+              </a>
+              <a
+                href="https://www.linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="DHT Furniture on LinkedIn"
+                className="w-9 h-9 rounded-md border border-[#C88A36]/60 bg-[#C88A36]/10 text-[#E5B869] hover:bg-[#C88A36] hover:text-[#0B2017] transition-colors flex items-center justify-center font-body font-bold text-xs tracking-tight"
+              >
+                in
+              </a>
+            </div>
+          </div>
+
+          {/* Column 2 (Middle): EXPLORE DHT */}
+          <div className="md:col-span-3 md:px-6 md:border-r md:border-white/15">
+            <h4 className="font-body text-xs font-bold uppercase tracking-[0.18em] text-[#D89B3C] mb-5">
+              EXPLORE DHT
             </h4>
-            <p className="font-body text-xs uppercase tracking-[0.18em] font-semibold text-[#B97846] mb-5">
-              {tr("footer.commercialOffice", "DHT Commercial Office")}
-            </p>
+            <ul className="space-y-3">
+              {exploreLinks.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="font-body text-sm text-white/85 hover:text-[#E5B869] transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            <ul className="space-y-3.5 font-body text-sm text-white/75">
-              <li className="flex items-start gap-3">
-                <MapPin size={16} className="mt-1 shrink-0 text-[#B97846]" />
-                <span className="leading-relaxed">
-                  {tr(
-                    "footer.officeAddress",
-                    "72 Le Thanh Ton Street, Ben Nghe Ward, District 1, Ho Chi Minh City, Vietnam"
-                  )}
-                </span>
-              </li>
-
-              <li className="flex items-center gap-3">
-                <Mail size={16} className="shrink-0 text-[#B97846]" />
+          {/* Column 3 (Right): GET IN TOUCH */}
+          <div className="md:col-span-4 md:pl-4">
+            <h4 className="font-body text-xs font-bold uppercase tracking-[0.18em] text-[#D89B3C] mb-5">
+              GET IN TOUCH
+            </h4>
+            <ul className="space-y-3.5 font-body text-sm text-white/85">
+              <li>
                 <a
                   href="mailto:sales@dhtcompany.com"
-                  className="font-medium text-white/85 hover:text-[#B97846] transition-colors"
+                  className="inline-flex items-center gap-3 hover:text-[#E5B869] transition-colors"
                 >
-                  sales@dhtcompany.com
+                  <Mail size={16} className="text-[#D89B3C] shrink-0" />
+                  <span>sales@dhtcompany.com</span>
                 </a>
               </li>
-
-              <li className="flex items-center gap-3">
-                <Phone size={16} className="shrink-0 text-[#B97846]" />
+              <li>
                 <a
                   href="tel:+84932058545"
-                  className="font-medium text-white/85 hover:text-[#B97846] transition-colors"
+                  className="inline-flex items-center gap-3 hover:text-[#E5B869] transition-colors"
                 >
-                  +84 932 058 545
+                  <Phone size={16} className="text-[#D89B3C] shrink-0" />
+                  <span>+84 932 058 545</span>
                 </a>
               </li>
-
-              <li className="flex items-center gap-3 pt-1 text-white/55 text-xs">
-                <CalendarClock size={15} className="shrink-0 text-[#B97846]/80" />
-                <span>{tr("footer.visitNote", "Factory visits by appointment.")}</span>
+              {!isContactPage && (
+                <li className="flex items-start gap-3">
+                  <MapPin size={16} className="text-[#D89B3C] shrink-0 mt-0.5" />
+                  <span className="leading-snug">
+                    72A Le Thanh Ton Street, Saigon Ward,
+                    <br />
+                    Ho Chi Minh City, Vietnam
+                  </span>
+                </li>
+              )}
+              <li className="flex items-center gap-3 text-white/80">
+                <Calendar size={16} className="text-[#D89B3C] shrink-0" />
+                <span>Factory visits by appointment.</span>
               </li>
             </ul>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="pt-6 flex flex-col md:flex-row items-center justify-between gap-3"
-        >
-          <p className="font-body text-xs text-white/40">
-            {tr("footer.copyright", "© 2026 DHT Furniture Vietnam Joint Stock Company. All rights reserved.")}
+        {/* Footer Bottom Bar */}
+        <div className="pt-6 flex flex-col md:flex-row items-center justify-between gap-4 font-body text-xs text-white/75">
+          <p>© 2026 DHT Furniture Vietnam Joint Stock Company.</p>
+          <p className="text-center md:text-right tracking-wide">
+            Outdoor Furniture &nbsp;·&nbsp; Indoor Furniture &nbsp;·&nbsp; Project &amp; Office
+            Furniture &nbsp;·&nbsp; Wood Panel
           </p>
-          <p className="font-body text-xs text-white/35">
-            {tr("footer.tagline", "Outdoor • Indoor • Project Furniture • Wood & Panels")}
-          </p>
-        </motion.div>
+        </div>
       </div>
     </footer>
   );

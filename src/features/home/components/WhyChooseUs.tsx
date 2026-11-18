@@ -1,156 +1,134 @@
-import { motion } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
-import { CheckCircle2, ArrowRight } from "lucide-react";
-import { useTranslation } from "react-i18next";
+import { motion } from "framer-motion";
+import { ArrowRight, ArrowUpRight, Pencil, Factory, ShieldCheck, Box } from "lucide-react";
 
-const ease = [0.16, 1, 0.3, 1] as const;
-const vp = { once: true, amount: 0.1 };
+type WhyStepItem = {
+  number: string;
+  title: string;
+  icon: "pencil" | "factory" | "shield" | "box";
+};
+
+const WHY_STEPS: WhyStepItem[] = [
+  { number: "01", title: "Product\nDevelopment", icon: "pencil" },
+  { number: "02", title: "Direct\nManufacturing", icon: "factory" },
+  { number: "03", title: "Quality\nAssurance", icon: "shield" },
+  { number: "04", title: "Export\nManagement", icon: "box" },
+];
+
+function StepIcon({ name }: { name: WhyStepItem["icon"] }) {
+  if (name === "pencil") {
+    return <Pencil size={21} className="text-[#B3753E] shrink-0" strokeWidth={1.6} />;
+  }
+  if (name === "factory") {
+    return <Factory size={21} className="text-[#B3753E] shrink-0" strokeWidth={1.6} />;
+  }
+  if (name === "shield") {
+    return <ShieldCheck size={21} className="text-[#B3753E] shrink-0" strokeWidth={1.6} />;
+  }
+  return <Box size={21} className="text-[#B3753E] shrink-0" strokeWidth={1.6} />;
+}
 
 export default function WhyChooseUs() {
-  const { t, i18n } = useTranslation();
-  const isVi = i18n.language?.startsWith("vi");
-
-  const defaultPoints = isVi
-    ? [
-        "Phát triển sản phẩm theo yêu cầu",
-        "Phối hợp sản xuất",
-        "Kiểm soát chất lượng trong sản xuất",
-        "Phối hợp đóng gói và xuất khẩu",
-      ]
-    : [
-        "Product development to your brief",
-        "Production coordination",
-        "Quality control during production",
-        "Packing and export coordination",
-      ];
-
-  const translatedPoints = t("home.whyUs.points", { returnObjects: true });
-  const points =
-    Array.isArray(translatedPoints) && translatedPoints.length > 0
-      ? (translatedPoints as string[])
-      : defaultPoints;
-
   return (
-    <section
-      className="py-16 sm:py-24 border-t border-black/6"
-      style={{ backgroundColor: "#F8F6F0" }}
-    >
-      <div className="container mx-auto px-4 sm:px-6 md:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-          {/* Left Column (40% on desktop): Dark Green Text on Light Background */}
-          <div className="lg:col-span-5">
-            <motion.div
-              initial={{ opacity: 0, x: -16 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={vp}
-              transition={{ duration: 0.5, ease }}
-              className="flex items-center gap-3 mb-5"
-            >
-              <span className="h-px w-8" style={{ backgroundColor: "hsl(var(--orange))" }} />
-              <span
-                className="font-body text-xs tracking-[0.25em] uppercase font-medium"
-                style={{ color: "hsl(var(--orange))" }}
-              >
-                {t("home.whyUs.label", isVi ? "Tại sao chọn DHT" : "Why Choose DHT")}
-              </span>
-            </motion.div>
-
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={vp}
-              transition={{ duration: 0.65, delay: 0.08, ease }}
-              className="font-display font-bold leading-tight mb-5"
-              style={{
-                fontSize: "clamp(1.9rem, 3.4vw, 3rem)",
-                color: "#173C2C",
-              }}
-            >
-              {t(
-                "home.whyUs.heading",
-                isVi ? "Một đầu mối. Phối hợp xuyên suốt." : "One Contact. Coordinated Delivery."
-              )}
-            </motion.h2>
-
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={vp}
-              transition={{ duration: 0.6, delay: 0.16, ease }}
-              className="font-body text-sm sm:text-base leading-relaxed mb-7"
-              style={{ color: "hsl(var(--muted-foreground))" }}
-            >
-              {t(
-                "home.whyUs.description",
-                isVi
-                  ? "Làm việc với một đội ngũ DHT từ yêu cầu ban đầu đến khi xuất hàng, với năng lực sản xuất phù hợp được phối hợp cho từng đơn hàng."
-                  : "Work with one DHT team from the initial brief to shipment, with the appropriate manufacturing capability coordinated for your order."
-              )}
-            </motion.p>
-
-            <ul className="space-y-3.5 mb-8">
-              {points.map((item, i) => (
-                <motion.li
-                  key={i}
-                  initial={{ opacity: 0, x: -16 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={vp}
-                  transition={{ duration: 0.5, delay: 0.22 + i * 0.07, ease }}
-                  className="flex items-start gap-3"
-                >
-                  <CheckCircle2
-                    size={18}
-                    className="mt-0.5 shrink-0"
-                    style={{ color: "hsl(var(--orange))" }}
-                  />
-                  <span className="font-body text-sm sm:text-base font-medium text-[#173C2C]">
-                    {item}
-                  </span>
-                </motion.li>
-              ))}
-            </ul>
-
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={vp}
-              transition={{ duration: 0.5, delay: 0.5, ease }}
-              className="flex flex-wrap gap-3"
-            >
-              <Link
-                href="/catalogue/outdoor"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90 shadow-sm"
-                style={{ backgroundColor: "#B97846" }}
-              >
-                {t("home.whyUs.btn1", isVi ? "Xem Bộ sưu tập" : "Explore Collections")}{" "}
-                <ArrowRight size={15} />
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90"
-                style={{ backgroundColor: "#173C2C" }}
-              >
-                {t("home.whyUs.btn2", isVi ? "Liên hệ DHT" : "Contact DHT")}
-              </Link>
-            </motion.div>
-          </div>
-
-          {/* Right Column (60% on desktop): Sharp Unblurred Product Setting Image */}
+    <section className="py-16 lg:py-20 bg-[#F8F6F1] border-b border-black/5">
+      <div className="container mx-auto px-6 lg:px-10 max-w-7xl">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+          {/* Left Column (6 cols) */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.98 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={vp}
-            transition={{ duration: 0.7, delay: 0.15, ease }}
-            className="lg:col-span-7"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6 }}
+            className="lg:col-span-6"
           >
-            <div className="relative aspect-[16/10] w-full overflow-hidden rounded-sm shadow-xl border border-black/8 bg-[#173C2C]">
-              <Image
-                src="/img/WhyDHT.png"
-                alt="DHT Furniture Collection"
-                fill
-                className="object-cover object-center"
-                quality={95}
+            {/* Label */}
+            <div className="flex items-center gap-3 mb-3.5">
+              <span className="h-[1.5px] w-8 bg-[#B3753E]" />
+              <span className="font-body text-xs font-bold uppercase tracking-[0.16em] text-[#B3753E]">
+                WHY CHOOSE DHT
+              </span>
+            </div>
+
+            {/* 2-Line Serif Heading */}
+            <h2
+              className="font-display font-bold text-[#0F2C1E] leading-[1.1] tracking-tight mb-4"
+              style={{ fontSize: "clamp(2rem, 3.3vw, 2.95rem)" }}
+            >
+              Direct Manufacturing.
+              <br />
+              One Trusted Partner.
+            </h2>
+
+            {/* Description */}
+            <p className="font-body text-sm sm:text-[15px] text-[#222825] leading-[1.6] max-w-xl mb-6">
+              Work directly with our family-owned furniture manufacturing group in Vietnam, with DHT
+              managing your programme from product development to export.
+            </p>
+
+            {/* 2 CTAs */}
+            <div className="flex flex-wrap items-center gap-6 mb-8">
+              <Link
+                href="/contact?inquiry=project#smart-contact-form"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-[7px] bg-[#B3753E] hover:bg-[#9E6533] text-white font-body text-sm font-semibold transition-all shadow-xs"
+              >
+                <span>Discuss Your Project</span>
+                <ArrowUpRight size={15} strokeWidth={2.2} />
+              </Link>
+
+              <Link
+                href="/catalogue"
+                className="inline-flex items-center gap-2 font-body text-sm font-bold text-[#0F2C1E] hover:text-[#B3753E] transition-colors"
+              >
+                <span>Explore Collections</span>
+                <ArrowRight size={15} strokeWidth={2.2} />
+              </Link>
+            </div>
+
+            {/* 4 Horizontal Step Cards */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
+              {WHY_STEPS.map((step) => (
+                <div
+                  key={step.number}
+                  className="relative rounded-[12px] bg-gradient-to-br from-[#FCFBF8] via-[#F7F3EA] to-[#EFE8D8] px-4 py-4 border border-[#E8E1D1] shadow-[0_3px_0_0_#A66B38,0_6px_14px_rgba(0,0,0,0.04)] flex flex-col justify-between min-h-[112px]"
+                >
+                  <div className="flex items-center gap-2.5 mb-3">
+                    <StepIcon name={step.icon} />
+                    <span className="h-5 w-px bg-[#DDD5C5]" />
+                    <span className="font-body font-bold text-lg sm:text-xl text-[#B3753E] leading-none">
+                      {step.number}
+                    </span>
+                  </div>
+                  <p className="font-body font-bold text-[13px] sm:text-[13.5px] text-[#0F2C1E] whitespace-pre-line leading-[1.28]">
+                    {step.title}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Right Column (6 cols): 2 Rounded Photo Frames Matching HÌNH THAM KHẢO 10 */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-12 gap-4 items-stretch"
+          >
+            {/* Left Frame (~63% width -> 7.5/12 -> 7 cols): Full Dining Set */}
+            <div className="sm:col-span-7 bg-white rounded-[14px] border border-[#E6E2D9] overflow-hidden shadow-2xs flex items-center justify-center">
+              <img
+                src="/img/pdf-guide/home/why-dht-dining-full.jpg"
+                alt="DHT Wooden Dining Table and 6 Armchairs"
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* Right Frame (~37% width -> 4.5/12 -> 5 cols): Close-up Armchair Detail */}
+            <div className="sm:col-span-5 bg-white rounded-[14px] border border-[#E6E2D9] overflow-hidden shadow-2xs flex items-center justify-center">
+              <img
+                src="/img/pdf-guide/home/why-dht-dining-closeup.jpg"
+                alt="DHT Wooden Dining Armchair Detail"
+                className="w-full h-full object-cover"
               />
             </div>
           </motion.div>

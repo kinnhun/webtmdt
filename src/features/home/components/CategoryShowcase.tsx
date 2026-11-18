@@ -1,193 +1,212 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, ArrowRight } from "lucide-react";
-import { useInView } from "@/hooks/useInView";
-import { useTranslation } from "react-i18next";
+import { motion, AnimatePresence } from "framer-motion";
+import { Play, X } from "lucide-react";
+import { BrandLogo } from "@/components/ui/BrandLogos";
+import type { BrandShowcaseItem } from "@/types/dht.types";
 
-const fItem = (i: number) => ({
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.1 },
-  transition: {
-    duration: 0.6,
-    delay: 0.12 + i * 0.08,
-    ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
+const BRAND_ITEMS: BrandShowcaseItem[] = [
+  {
+    id: "DHT",
+    name: "DHT",
+    specialty: "Outdoor Furniture",
+    shortDesc: "Dining, lounge, sunloungers and mixed-material outdoor collections.",
+    modalTitle: "DHT | Outdoor Furniture",
+    modalDescription:
+      "DHT manufactures outdoor furniture for dining, lounging and hospitality spaces. Contact DHT Furniture Vietnam for OEM enquiries.",
+    factoryImage: "/img/pdf-guide/home/brand-dht-factory.jpg",
+    brandCardImage: "/img/pdf-guide/brands/card-dht.jpg",
+    videoUrl: "/video/hero-banner.mp4",
   },
-});
+  {
+    id: "JAGER",
+    name: "JAGER",
+    specialty: "Indoor Furniture",
+    shortDesc: "Residential indoor furniture and custom product development.",
+    modalTitle: "JAGER | Indoor Furniture",
+    modalDescription:
+      "JAGER manufactures indoor furniture for residential spaces. For OEM enquiries, contact DHT Furniture Vietnam.",
+    factoryImage: "/img/pdf-guide/home/brand-jager-factory.jpg",
+    brandCardImage: "/img/pdf-guide/brands/card-jager.jpg",
+    videoUrl: "/video/hero-banner.mp4",
+  },
+  {
+    id: "THE ONE",
+    name: "THE ONE",
+    specialty: "Office & Project Furniture",
+    shortDesc: "Commercial, office and hospitality furniture for diverse projects.",
+    modalTitle: "THE ONE | Office & Project Furniture",
+    modalDescription:
+      "THE ONE manufactures office furniture and furniture for indoor and outdoor projects. For OEM enquiries, contact DHT Furniture Vietnam.",
+    factoryImage: "/img/pdf-guide/home/brand-theone-factory.jpg",
+    brandCardImage: "/img/pdf-guide/brands/card-theone.jpg",
+    videoUrl: "/video/hero-banner.mp4",
+  },
+  {
+    id: "MEKONG",
+    name: "MEKONG",
+    specialty: "Wood Processing & Panels",
+    shortDesc: "Engineered wood panels and primary timber processing.",
+    modalTitle: "MEKONG | Wood Processing & Panels",
+    modalDescription:
+      "MEKONG produces wood panels and processed wood materials for furniture and interior applications. For trade and OEM enquiries, contact DHT Furniture Vietnam.",
+    factoryImage: "/img/pdf-guide/home/brand-mekong-factory.jpg",
+    brandCardImage: "/img/pdf-guide/brands/card-mekong.jpg",
+    videoUrl: "/video/hero-banner.mp4",
+  },
+];
 
 export default function CategoryShowcase() {
-  const { ref, inView } = useInView();
-  const { t, i18n } = useTranslation();
-  const isVi = i18n.language?.startsWith("vi");
-
-  const capabilityCards = [
-    {
-      key: "dht",
-      brand: "DHT",
-      title: t("home.categories.dht.name", isVi ? "Nội thất ngoài trời" : "Outdoor Furniture"),
-      desc: t(
-        "home.categories.dht.desc",
-        isVi
-          ? "Các dòng ghế, bộ bàn ăn và bộ lounge ngoài trời."
-          : "Outdoor seating, dining and lounge collections."
-      ),
-      image: "/img/category/outdoorsofas1.png",
-      href: "/catalogue/outdoor",
-    },
-    {
-      key: "jager",
-      brand: "JAGER",
-      title: t("home.categories.jager.name", isVi ? "Nội thất trong nhà" : "Indoor Furniture"),
-      desc: t(
-        "home.categories.jager.desc",
-        isVi
-          ? "Nội thất trong nhà cho không gian nhà ở và thương mại."
-          : "Indoor furniture for residential and commercial spaces."
-      ),
-      image: "/img/category/chairs.png",
-      href: "/catalogue/indoor",
-    },
-    {
-      key: "theOne",
-      brand: "THE ONE",
-      title: t("home.categories.theOne.name", isVi ? "Nội thất dự án" : "Project Furniture"),
-      desc: t(
-        "home.categories.theOne.desc",
-        isVi
-          ? "Nội thất trong nhà và ngoài trời theo yêu cầu dự án."
-          : "Indoor and outdoor furniture for project requirements."
-      ),
-      image: "/img/category/aluminum1.png",
-      href: "/catalogue/indoor",
-    },
-    {
-      key: "mekong",
-      brand: "MEKONG",
-      title: t("home.categories.mekong.name", isVi ? "Ván gỗ & chế biến gỗ" : "Wood & Panels"),
-      desc: t(
-        "home.categories.mekong.desc",
-        isVi
-          ? "Năng lực ván gỗ và chế biến gỗ."
-          : "Wood panels and timber processing capabilities."
-      ),
-      image: "/img/WhoWeAre2.png",
-      href: "/manufacturing",
-    },
-  ];
+  const [activeModalBrand, setActiveModalBrand] = useState<BrandShowcaseItem | null>(null);
 
   return (
-    <section className="py-16 sm:py-24" style={{ backgroundColor: "hsl(var(--warm-cream))" }}>
-      <div ref={ref} className="container mx-auto px-4 sm:px-6 md:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10 sm:mb-12">
-          <div>
-            <motion.div
-              initial={{ opacity: 0, x: -16 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.5 }}
-              className="flex items-center gap-3 mb-4"
-            >
-              <span className="h-px w-8" style={{ backgroundColor: "hsl(var(--orange))" }} />
-              <span
-                className="font-body text-xs tracking-[0.25em] uppercase font-medium"
-                style={{ color: "hsl(var(--orange))" }}
-              >
-                {t("home.categories.label", isVi ? "Năng lực Chuyên môn" : "Core Capabilities")}
-              </span>
-            </motion.div>
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              className="font-display font-bold leading-tight max-w-3xl"
-              style={{ fontSize: "clamp(2rem, 3.8vw, 3.25rem)", color: "hsl(var(--navy-deep))" }}
-            >
-              {t(
-                "home.categories.heading",
-                isVi
-                  ? "Khám phá năng lực nội thất và vật liệu."
-                  : "Explore Our Furniture & Material Capabilities."
-              )}
-            </motion.h2>
-          </div>
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.25 }}
-            className="shrink-0"
+    <section id="our-brands" className="py-20 lg:py-24 bg-[#FAF8F3] border-b border-black/5">
+      <div className="container mx-auto px-6 lg:px-10">
+        {/* Section Header */}
+        <div className="max-w-3xl mb-12">
+          <span className="font-body text-xs font-bold uppercase tracking-[0.2em] text-[#9E3B24] block mb-2.5">
+            OUR BRANDS
+          </span>
+          <h2
+            className="font-display font-bold text-[#0E241B] leading-tight mb-3"
+            style={{ fontSize: "clamp(1.9rem, 3.2vw, 2.85rem)" }}
           >
-            <Link
-              href="/catalogue/outdoor"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90"
-              style={{ backgroundColor: "hsl(var(--navy))" }}
-            >
-              {t("home.categories.viewAll", isVi ? "Xem Danh mục" : "View Collections")}{" "}
-              <ArrowRight size={15} />
-            </Link>
-          </motion.div>
+            Four Brands, One Manufacturing Group
+          </h2>
+          <p className="font-body text-sm sm:text-base text-[#1F2723]/85 font-medium leading-relaxed">
+            Meet the four brands in our family-owned manufacturing group and see what each makes in
+            Vietnam.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 auto-rows-fr">
-          {capabilityCards.map((card, i) => (
-            <motion.div key={card.key} {...fItem(i)} className="h-full">
-              <Link
-                href={card.href}
-                className="group flex flex-col h-full overflow-hidden rounded-sm bg-white border border-black/10 shadow-sm hover:shadow-xl transition-all duration-500"
-              >
-                <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#0E241B]">
-                  <img
-                    src={card.image}
-                    alt={`${card.brand} — ${card.title}`}
-                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
-                    loading="lazy"
-                  />
-                  <div
-                    className="absolute inset-0 pointer-events-none"
-                    style={{
-                      background:
-                        "linear-gradient(to top, rgba(14, 36, 27, 0.55) 0%, transparent 55%)",
-                    }}
-                  />
-                  <span
-                    className="absolute top-3.5 left-3.5 px-3 py-1 rounded-sm font-body text-[11px] font-bold tracking-[0.18em] uppercase text-white shadow-sm"
-                    style={{ backgroundColor: "#173C2C", border: "1px solid rgba(185,120,70,0.45)" }}
-                  >
-                    {card.brand}
-                  </span>
-                  <div
-                    className="absolute bottom-3.5 right-3.5 w-8 h-8 rounded-full flex items-center justify-center shrink-0 translate-y-1 opacity-90 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 shadow"
-                    style={{ backgroundColor: "hsl(var(--orange))" }}
-                  >
-                    <ArrowUpRight size={14} className="text-white" />
+        {/* 4 Brand Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {BRAND_ITEMS.map((item, idx) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.5, delay: idx * 0.08 }}
+              onClick={() => setActiveModalBrand(item)}
+              className="group bg-white rounded-2xl p-3.5 border border-[#E4DFD3] hover:border-[#B97846]/60 shadow-xs hover:shadow-md transition-all cursor-pointer flex flex-col justify-between"
+            >
+              {/* Factory Image + Play Button + 25% Opacity Brand Logo Overlay */}
+              <div className="relative aspect-[16/11] w-full rounded-xl overflow-hidden bg-[#132A1F]">
+                <img
+                  src={item.factoryImage}
+                  alt={`${item.name} — ${item.specialty}`}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/35 transition-colors duration-300" />
+
+                {/* Official Brand Logo at 25% opacity on Desktop Hover / Mobile Viewport */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-25 lg:opacity-0 lg:group-hover:opacity-25 transition-opacity duration-300">
+                  <div className="scale-150">
+                    <BrandLogo brand={item.id} variant="light" />
                   </div>
                 </div>
 
-                <div className="p-5 flex-1 flex flex-col justify-between">
-                  <div>
-                    <p
-                      className="font-body text-[11px] font-bold uppercase tracking-[0.2em] mb-1"
-                      style={{ color: "hsl(var(--orange))" }}
-                    >
-                      {card.brand}
-                    </p>
-                    <h3
-                      className="font-display font-bold text-xl leading-snug mb-2"
-                      style={{ color: "hsl(var(--navy-deep))" }}
-                    >
-                      {card.title}
-                    </h3>
-                    <p
-                      className="font-body text-sm leading-relaxed"
-                      style={{ color: "hsl(var(--muted-foreground))" }}
-                    >
-                      {card.desc}
-                    </p>
+                {/* Centered Play Icon */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-black/55 border border-white/80 text-white flex items-center justify-center group-hover:scale-110 group-hover:bg-[#173C2C] transition-all shadow-md">
+                    <Play size={18} className="fill-white ml-0.5" />
                   </div>
                 </div>
-              </Link>
+              </div>
+
+              {/* Card Text Content */}
+              <div className="pt-5 pb-3 px-2 text-center">
+                <h3 className="font-display font-bold text-xl sm:text-2xl text-[#0E241B] tracking-wide mb-1">
+                  {item.name}
+                </h3>
+                <p className="font-body text-sm text-[#37413D] mb-4">{item.specialty}</p>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setActiveModalBrand(item);
+                  }}
+                  className="inline-flex items-center justify-center gap-2 font-body text-xs sm:text-sm font-bold text-[#0E241B] group-hover:text-[#B97846] transition-colors cursor-pointer"
+                >
+                  <span className="text-[#173C2C] group-hover:text-[#B97846] text-xs">▶</span>
+                  <span>Watch Factory Video</span>
+                </button>
+              </div>
             </motion.div>
           ))}
         </div>
       </div>
+
+      {/* In-Page Factory Video Modal (Hình 07) */}
+      <AnimatePresence>
+        {activeModalBrand && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setActiveModalBrand(null)}
+            className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex items-center justify-center p-4 sm:p-6"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 12 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 12 }}
+              transition={{ duration: 0.25 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-4xl rounded-2xl bg-[#FAF8F3] border border-[#E2DACB] shadow-2xl p-6 sm:p-8 overflow-hidden"
+            >
+              {/* Modal Header */}
+              <div className="flex items-center justify-between gap-4 mb-5">
+                <h3 className="font-display text-2xl sm:text-3xl font-bold text-[#0E241B]">
+                  <span>{activeModalBrand.name}</span>
+                  <span className="mx-2.5 font-light text-[#0E241B]/40">|</span>
+                  <span className="font-normal">{activeModalBrand.specialty}</span>
+                </h3>
+                <button
+                  type="button"
+                  onClick={() => setActiveModalBrand(null)}
+                  aria-label="Close video modal"
+                  className="w-9 h-9 rounded-full flex items-center justify-center text-[#0E241B]/70 hover:text-[#0E241B] hover:bg-black/5 transition-colors cursor-pointer"
+                >
+                  <X size={22} />
+                </button>
+              </div>
+
+              {/* Modal Body: Left Video (60%), Right Intro + CTA (40%) */}
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                <div className="md:col-span-7 rounded-xl overflow-hidden bg-black aspect-video relative shadow-md">
+                  <video
+                    key={activeModalBrand.id}
+                    src={activeModalBrand.videoUrl}
+                    poster={activeModalBrand.factoryImage}
+                    controls
+                    autoPlay
+                    playsInline
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+
+                <div className="md:col-span-5 flex flex-col justify-between space-y-6">
+                  <p className="font-display text-base sm:text-lg text-[#1F2723] leading-relaxed">
+                    {activeModalBrand.modalDescription}
+                  </p>
+
+                  <Link
+                    href={`/contact?inquiry=project&brand=${encodeURIComponent(
+                      activeModalBrand.id
+                    )}#smart-contact-form`}
+                    onClick={() => setActiveModalBrand(null)}
+                    className="w-full py-3.5 px-6 rounded-lg bg-[#144528] hover:bg-[#0E241B] text-white font-body text-sm sm:text-base font-semibold text-center transition-colors shadow-sm"
+                  >
+                    Discuss Your Project
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

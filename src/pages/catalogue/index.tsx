@@ -1,12 +1,5 @@
-export async function getServerSideProps() {
-  return {
-    redirect: {
-      destination: '/catalogue/outdoor',
-      permanent: false,
-    },
-  };
-}
+import CatalogueContainer from "@/features/catalogue/components/CatalogueContainer";
 
 export default function CataloguePage() {
-  return null;
+  return <CatalogueContainer />;
 }

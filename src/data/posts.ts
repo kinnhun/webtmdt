@@ -70,7 +70,7 @@ export const postsData: BlogPost[] = [
       <p>The outdoor living space has evolved from a simple patio with a few chairs to a <strong>fully designed extension of the home</strong>. Here are five trends we're seeing across our projects in 2025.</p>
 
       <div class="video-embed">
-        <iframe src="https://www.youtube.com/embed/3ItE2e0zheE" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="DHT Furniture Manufacturing Showcase"></iframe>
+        <iframe src="https://www.youtube.com/embed/3ItE2e0zheE" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="DHT Outdoor Furniture Showcase"></iframe>
       </div>
 
       <h2>1. Biophilic Outdoor Rooms</h2>

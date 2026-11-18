@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import type { AppProps } from "next/app";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import i18n, { STORAGE_KEY, SUPPORTED_LANGS } from "@/lib/i18n";
 import "@fontsource/lora/400.css";
@@ -17,12 +16,9 @@ import { LoadingProvider, useGlobalLoading } from "@/contexts/LoadingContext";
 import GlobalLoading from "@/components/ui/GlobalLoading";
 import SiteHeader from "@/components/layout/SiteHeader";
 import SiteFooter from "@/components/layout/SiteFooter";
+import SearchOverlay from "@/components/SearchOverlay";
 import Head from "next/head";
 import SEO from "@/components/SEO";
-
-const SearchOverlay = dynamic(() => import("@/components/SearchOverlay"), {
-  ssr: false,
-});
 
 /* Hook tự động show loading khi chuyển trang */
 function useRouteLoading() {
@@ -85,9 +81,7 @@ function AppShell({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </main>
       {!isAdminRoute && <SiteFooter />}
-      {!isAdminRoute && searchOpen && (
-        <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
-      )}
+      {!isAdminRoute && <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />}
       <GlobalLoading />
     </>
   );

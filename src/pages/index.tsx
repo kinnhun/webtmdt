@@ -1,12 +1,9 @@
-import type { GetStaticProps } from "next";
 import SEO from "@/components/SEO";
 import Schema from "@/components/Schema";
 import { useTranslation } from "react-i18next";
 import HomeContainer from "@/features/home";
-import { getPublicFeaturedProducts } from "@/lib/featuredProducts";
-import type { HomePageProps } from "@/types/product";
 
-export default function HomePage({ initialFeaturedProducts }: HomePageProps) {
+export default function HomePage() {
   const { t } = useTranslation();
 
   return (
@@ -56,26 +53,7 @@ export default function HomePage({ initialFeaturedProducts }: HomePageProps) {
           ],
         }}
       />
-      <HomeContainer initialFeaturedProducts={initialFeaturedProducts} />
+      <HomeContainer />
     </>
   );
 }
-
-export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
-  try {
-    const featured = await getPublicFeaturedProducts();
-    const initialFeaturedProducts = JSON.parse(
-      JSON.stringify(featured)
-    ) as HomePageProps["initialFeaturedProducts"];
-    return {
-      props: { initialFeaturedProducts },
-      revalidate: 30,
-    };
-  } catch (error) {
-    console.error("Home getStaticProps featured fallback:", error);
-    return {
-      props: { initialFeaturedProducts: [] },
-      revalidate: 15,
-    };
-  }
-};

@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 import dbConnect from "@/lib/mongodb";
 import Product from "@/models/Product";
 import ProductDetailWrapper from "@/features/catalogue/components/ProductDetailWrapper";
-import { isExcludedLegacyProduct } from "@/lib/productDisplay";
 
 interface ProductDetailPageProps {
   initialProduct?: any;
@@ -85,16 +84,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     if ((product as any).material?.us) orConds.push({ "material.us": (product as any).material.us });
     if (orConds.length > 0) relatedQuery.$or = orConds;
 
-    const relatedProductsRaw = orConds.length > 0
+    const relatedProducts = orConds.length > 0
       ? await Product.find(relatedQuery)
           .select("name slug code image images category material collection")
-          .limit(12)
+          .limit(4)
           .lean()
       : [];
-
-    const relatedProducts = relatedProductsRaw
-      .filter((p: any) => !isExcludedLegacyProduct(p))
-      .slice(0, 4);
 
     const formattedProduct = JSON.parse(
       JSON.stringify({

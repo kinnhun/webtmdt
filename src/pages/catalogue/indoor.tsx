@@ -82,14 +82,14 @@ export default function IndoorCataloguePage() {
       <main className="bg-[#F3EFE7] min-h-screen text-[#1F2723] pt-28 pb-20">
         {/* HERO */}
         <section className="container mx-auto px-6 py-10 text-center max-w-4xl">
-          <span className="inline-block px-3 py-1 mb-4 text-xs font-semibold uppercase tracking-wider text-[#9A5B2A] bg-[#B97846]/12 rounded">
+          <span className="inline-block px-3 py-1 mb-4 text-xs font-semibold uppercase tracking-wider text-[#B97846] bg-[#B97846]/10 rounded">
             {tr("catalogue.indoor.hero.badge", "Contract & OEM Manufacturing")}
           </span>
           <h1 className="text-3xl md:text-5xl font-bold font-display text-[#173C2C] mb-6 leading-tight">
             {tr("catalogue.indoor.hero.title", "Indoor & Project Furniture")}
           </h1>
-          <p className="text-base md:text-lg text-[#1F2723]/85 leading-relaxed">
-            {tr("catalogue.indoor.hero.description", "DHT supports solid-wood, engineered-wood, upholstered, and mixed-material furniture for residential, hospitality, and commercial programmes through specialised facilities across our Vietnam network.")}
+          <p className="text-base md:text-lg text-[#1F2723]/80 leading-relaxed">
+            {tr("catalogue.indoor.hero.description", "DHT supports solid-wood, engineered-wood, upholstered, and mixed-material furniture for residential, hospitality, and commercial programmes through specialised facilities within our family-owned group.")}
           </p>
         </section>
 
@@ -123,8 +123,8 @@ export default function IndoorCataloguePage() {
                       <h3 className="text-xl font-bold text-[#173C2C] mb-2.5">{cap.title}</h3>
                       <p className="text-sm text-gray-600 leading-relaxed mb-4">{cap.desc}</p>
                       
-                      <p className="text-xs text-[#9A5B2A] font-semibold flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#9A5B2A]" />
+                      <p className="text-xs text-[#B97846] font-medium flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#B97846]" />
                         {cap.specNote}
                       </p>
                     </div>
@@ -150,7 +150,7 @@ export default function IndoorCataloguePage() {
           <div className="bg-white p-8 sm:p-10 rounded-2xl border border-black/5 shadow-sm">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               <div className="lg:col-span-8">
-                <span className="text-xs font-bold text-[#9A5B2A] uppercase tracking-wider block mb-2">
+                <span className="text-xs font-bold text-[#B97846] uppercase tracking-wider block mb-2">
                   {tr("catalogue.indoor.development.badge", "Tailored To Your Specifications • Commercial Terms")}
                 </span>
                 <h3 className="text-2xl font-bold text-[#173C2C] mb-4">
@@ -165,31 +165,31 @@ export default function IndoorCataloguePage() {
                 {/* OFFICIAL LEAD TIMES & COMMERCIAL CONDITIONS (DHT PROFILE 2026) */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-xs text-gray-700">
                   <div className="flex items-start gap-2.5">
-                    <CheckCircle2 size={16} className="text-[#9A5B2A] shrink-0 mt-0.5" />
+                    <CheckCircle2 size={16} className="text-[#B97846] shrink-0 mt-0.5" />
                     <div>
                       <span className="font-bold text-[#173C2C]">{tr("catalogue.indoor.development.terms.sampleTitle", "Sample Prototyping: ")} </span>
-                      <span>{tr("catalogue.indoor.development.terms.sampleValue", "Typical 7–14 days")} <span className="text-gray-600">{tr("catalogue.indoor.development.terms.sampleCondition", "(post-drawing & material confirmation)")}</span></span>
+                      <span>{tr("catalogue.indoor.development.terms.sampleValue", "Typical 7–14 days")} <span className="text-gray-500">{tr("catalogue.indoor.development.terms.sampleCondition", "(post-drawing & material confirmation)")}</span></span>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-2.5">
-                    <CheckCircle2 size={16} className="text-[#9A5B2A] shrink-0 mt-0.5" />
+                    <CheckCircle2 size={16} className="text-[#B97846] shrink-0 mt-0.5" />
                     <div>
                       <span className="font-bold text-[#173C2C]">{tr("catalogue.indoor.development.terms.orderTitle", "New Order Production: ")} </span>
-                      <span>{tr("catalogue.indoor.development.terms.orderValue", "Typical 60–90 days")} <span className="text-gray-600">{tr("catalogue.indoor.development.terms.orderCondition", "(depending on testing & programme scope)")}</span></span>
+                      <span>{tr("catalogue.indoor.development.terms.orderValue", "Typical 60–90 days")} <span className="text-gray-500">{tr("catalogue.indoor.development.terms.orderCondition", "(depending on testing & programme scope)")}</span></span>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-2.5">
-                    <CheckCircle2 size={16} className="text-[#9A5B2A] shrink-0 mt-0.5" />
+                    <CheckCircle2 size={16} className="text-[#B97846] shrink-0 mt-0.5" />
                     <div>
                       <span className="font-bold text-[#173C2C]">{tr("catalogue.indoor.development.terms.repeatTitle", "Repeat Order Runs: ")} </span>
-                      <span>{tr("catalogue.indoor.development.terms.repeatValue", "Typical 45–60 days")} <span className="text-gray-600">{tr("catalogue.indoor.development.terms.repeatCondition", "(for established collection programmes)")}</span></span>
+                      <span>{tr("catalogue.indoor.development.terms.repeatValue", "Typical 45–60 days")} <span className="text-gray-500">{tr("catalogue.indoor.development.terms.repeatCondition", "(for established collection programmes)")}</span></span>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-2.5">
-                    <CheckCircle2 size={16} className="text-[#9A5B2A] shrink-0 mt-0.5" />
+                    <CheckCircle2 size={16} className="text-[#B97846] shrink-0 mt-0.5" />
                     <div>
                       <span className="font-bold text-[#173C2C]">{tr("catalogue.indoor.development.terms.fscTitle", "FSC Sourcing: ")} </span>
                       <span>{tr("catalogue.indoor.development.terms.fscValue", "All wood used in DHT furniture is FSC-certified")}</span>
@@ -197,7 +197,7 @@ export default function IndoorCataloguePage() {
                   </div>
 
                   <div className="flex items-start gap-2.5">
-                    <CheckCircle2 size={16} className="text-[#9A5B2A] shrink-0 mt-0.5" />
+                    <CheckCircle2 size={16} className="text-[#B97846] shrink-0 mt-0.5" />
                     <div>
                       <span className="font-bold text-[#173C2C]">{tr("catalogue.indoor.development.terms.containerTitle", "Container Loading: ")} </span>
                       <span>{tr("catalogue.indoor.development.terms.containerValue", "Flexible mixed-container loading across collection items")}</span>
@@ -205,7 +205,7 @@ export default function IndoorCataloguePage() {
                   </div>
 
                   <div className="flex items-start gap-2.5">
-                    <CheckCircle2 size={16} className="text-[#9A5B2A] shrink-0 mt-0.5" />
+                    <CheckCircle2 size={16} className="text-[#B97846] shrink-0 mt-0.5" />
                     <div>
                       <span className="font-bold text-[#173C2C]">{tr("catalogue.indoor.development.terms.packagingTitle", "Packaging Options: ")} </span>
                       <span>{tr("catalogue.indoor.development.terms.packagingValue", "Flat-pack (KD) or fully assembled with drop-tested carton engineering")}</span>
@@ -213,7 +213,7 @@ export default function IndoorCataloguePage() {
                   </div>
                 </div>
 
-                <p className="text-[11px] text-gray-600 mt-5 pt-3 border-t border-gray-100 leading-relaxed">
+                <p className="text-[11px] text-gray-500 mt-5 pt-3 border-t border-gray-100 leading-relaxed">
                   {tr("catalogue.indoor.development.conditionsNote", "* Conditions & Starting Point: Production lead times commence upon receipt of confirmed commercial deposit, approved shop drawings, and finalized material swatches. Testing schedules and specific laboratory verifications (e.g., CA TB117, BS 5852, TSCA Title VI, or ISTA packaging standards) are formally confirmed per project specification and destination market dossier.")}
                 </p>
               </div>
@@ -240,12 +240,12 @@ export default function IndoorCataloguePage() {
         <section className="container mx-auto px-6 py-8 text-center max-w-3xl">
           <div className="bg-[#173C2C] text-white p-8 rounded-2xl shadow">
             <h3 className="text-xl font-bold mb-3">{tr("catalogue.indoor.bottomCta.title", "Looking for Outdoor Collections?")}</h3>
-            <p className="text-sm text-white/90 leading-relaxed mb-6">
+            <p className="text-sm text-white/80 leading-relaxed mb-6">
               {tr("catalogue.indoor.bottomCta.description", "Explore our extensive range of outdoor dining, lounge, sunlounger, and modular furniture crafted in FSC timber, powder-coated aluminium, and all-weather ropes.")}
             </p>
             <Link
               href="/catalogue/outdoor"
-              className="inline-flex items-center gap-2 bg-[#A45E2F] text-white px-6 py-3 rounded-lg text-sm font-semibold hover:brightness-110 transition-all shadow-sm"
+              className="inline-flex items-center gap-2 bg-[#B97846] text-white px-6 py-3 rounded-lg text-sm font-semibold hover:bg-[#B97846]/90 transition-all shadow-sm"
             >
               {tr("catalogue.indoor.bottomCta.button", "Explore Outdoor Collections")} <ArrowRight size={16} />
             </Link>

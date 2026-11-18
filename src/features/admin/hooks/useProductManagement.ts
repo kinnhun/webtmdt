@@ -59,7 +59,6 @@ export function useProductManagement() {
     onSuccess: (_, slugOrId) => {
       message.success(`Product deleted successfully`);
       queryClient.invalidateQueries({ queryKey: ['products'] });
-      queryClient.invalidateQueries({ queryKey: ['admin-featured-products'] });
     },
     onError: () => {
       message.error('Failed to delete product. Try again.');

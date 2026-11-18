@@ -11,10 +11,9 @@ interface ProductTableProps {
   onDelete: (slugOrId: string) => void;
   loading?: boolean;
   canManage?: boolean;
-  featuredOrderMap?: Record<string, number>;
 }
 
-export function ProductTable({ data, onEdit, onDelete, loading, canManage = true, featuredOrderMap }: ProductTableProps) {
+export function ProductTable({ data, onEdit, onDelete, loading, canManage = true }: ProductTableProps) {
   const columns = [
     {
       title: 'Media',
@@ -39,14 +38,9 @@ export function ProductTable({ data, onEdit, onDelete, loading, canManage = true
         <div>
           <div className="font-semibold text-navy-deep text-sm flex items-center gap-2">
             {record.name?.us || ''}
-            <div className="flex gap-1 flex-wrap">
+            <div className="flex gap-1">
               {(record.name?.vi) && <Tag color="blue" className="text-[10px] leading-3 px-1 border-0 m-0">VN</Tag>}
               {(record.name?.us) && <Tag color="orange" className="text-[10px] leading-3 px-1 border-0 m-0">US</Tag>}
-              {featuredOrderMap?.[record.slug] !== undefined && (
-                <Tag color="green" className="text-[10px] leading-3 px-1.5 border-0 m-0">
-                  Trang chủ #{featuredOrderMap[record.slug]}
-                </Tag>
-              )}
             </div>
           </div>
           <div className="text-xs text-navy/60 font-mono mt-0.5">{record.code}</div>

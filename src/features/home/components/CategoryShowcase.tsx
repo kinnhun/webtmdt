@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowUpRight, ArrowRight } from "lucide-react";
 import { useInView } from "@/hooks/useInView";
 import { useTranslation } from "react-i18next";
@@ -58,7 +57,7 @@ export default function CategoryShowcase() {
           ? "Nội thất trong nhà và ngoài trời theo yêu cầu dự án."
           : "Indoor and outdoor furniture for project requirements."
       ),
-      image: "/img/readyToWork/1.png",
+      image: "/img/category/aluminum1.png",
       href: "/catalogue/indoor",
     },
     {
@@ -87,8 +86,11 @@ export default function CategoryShowcase() {
               transition={{ duration: 0.5 }}
               className="flex items-center gap-3 mb-4"
             >
-              <span className="h-px w-8 bg-[#9A5B2A]" />
-              <span className="font-body text-xs tracking-[0.25em] uppercase font-semibold text-[#9A5B2A]">
+              <span className="h-px w-8" style={{ backgroundColor: "hsl(var(--orange))" }} />
+              <span
+                className="font-body text-xs tracking-[0.25em] uppercase font-medium"
+                style={{ color: "hsl(var(--orange))" }}
+              >
                 {t("home.categories.label", isVi ? "Năng lực Chuyên môn" : "Core Capabilities")}
               </span>
             </motion.div>
@@ -114,7 +116,7 @@ export default function CategoryShowcase() {
             className="shrink-0"
           >
             <Link
-              href="/catalogue"
+              href="/catalogue/outdoor"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90"
               style={{ backgroundColor: "hsl(var(--navy))" }}
             >
@@ -132,14 +134,11 @@ export default function CategoryShowcase() {
                 className="group flex flex-col h-full overflow-hidden rounded-sm bg-white border border-black/10 shadow-sm hover:shadow-xl transition-all duration-500"
               >
                 <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#0E241B]">
-                  <Image
+                  <img
                     src={card.image}
                     alt={`${card.brand} — ${card.title}`}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                     loading="lazy"
-                    quality={85}
-                    className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
                   <div
                     className="absolute inset-0 pointer-events-none"
@@ -154,14 +153,20 @@ export default function CategoryShowcase() {
                   >
                     {card.brand}
                   </span>
-                  <div className="absolute bottom-3.5 right-3.5 w-8 h-8 rounded-full flex items-center justify-center shrink-0 translate-y-1 opacity-90 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 shadow bg-[#A45E2F]">
+                  <div
+                    className="absolute bottom-3.5 right-3.5 w-8 h-8 rounded-full flex items-center justify-center shrink-0 translate-y-1 opacity-90 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 shadow"
+                    style={{ backgroundColor: "hsl(var(--orange))" }}
+                  >
                     <ArrowUpRight size={14} className="text-white" />
                   </div>
                 </div>
 
                 <div className="p-5 flex-1 flex flex-col justify-between">
                   <div>
-                    <p className="font-body text-[11px] font-bold uppercase tracking-[0.2em] mb-1 text-[#9A5B2A]">
+                    <p
+                      className="font-body text-[11px] font-bold uppercase tracking-[0.2em] mb-1"
+                      style={{ color: "hsl(var(--orange))" }}
+                    >
                       {card.brand}
                     </p>
                     <h3

@@ -1,11 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import dbConnect from "@/lib/mongodb";
-import { cached, invalidateCache } from "@/lib/cache";
 import Product from "@/models/Product";
 import mongoose from "mongoose";
-
-const PRODUCTS_LIST_CACHE_KEY = "products-list-all";
-const PRODUCTS_LIST_TTL = process.env.NODE_ENV === "production" ? 30_000 : 10_000;
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "GET" && req.method !== "POST") {
@@ -24,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       let { productId, code, slug } = payload;
-
+      
       productId = productId || code || `p_${Date.now()}`;
       code = code || `SDK-${Date.now()}`;
       slug = slug || `slug-${Date.now()}`;
@@ -51,14 +47,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       payload.room = payload.room || { us: 'General', uk: 'General', vi: 'General' };
-
+      
       if (!payload.image || typeof payload.image !== 'string' || payload.image.trim() === '') {
         payload.image = '/images/products/placeholder.webp'; // Schema required fallback
       }
 
       const newProduct = await Product.create(payload);
-      invalidateCache("featured-products-public");
-      invalidateCache(PRODUCTS_LIST_CACHE_KEY);
       const productObj = newProduct.toObject();
       return res.status(201).json({
         ...productObj,
@@ -67,40 +61,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     const { search, category, material, color, size, style } = req.query;
-    const isUnfilteredList = !search && !category && !material && !color && !size && !style;
-
-    if (isUnfilteredList) {
-      const mappedAll = await cached(PRODUCTS_LIST_CACHE_KEY, PRODUCTS_LIST_TTL, async () => {
-        const allProducts = await Product.find({}).sort({ createdAt: -1 }).lean();
-        return allProducts.map((p) => {
-          const { _id, ...rest } = p as Record<string, unknown>;
-          return {
-            ...rest,
-            id: (p as { productId?: string }).productId || (_id as mongoose.Types.ObjectId)?.toString(),
-          };
-        });
-      });
-
-      res.setHeader("Cache-Control", "public, s-maxage=30, stale-while-revalidate=60");
-      return res.status(200).json(mappedAll);
-    }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const filter: Record<string, any> = {};
 
     if (search && typeof search === "string") {
-      const regex = new RegExp(search.trim().replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"), "i");
+      const regex = new RegExp(search, "i");
       filter.$or = [
         { "name.us": regex },
         { "name.vi": regex },
         { "name.uk": regex },
         { code: regex },
         { "category.us": regex },
-        { "category.vi": regex },
-        { "material.us": regex },
-        { "material.uk": regex },
-        { "material.vi": regex },
-        { collection: regex },
         { "style.us": regex },
       ];
     }
@@ -138,11 +110,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const { _id, ...rest } = p as Record<string, unknown>;
       return {
         ...rest,
-        id: (p as { productId?: string }).productId || (_id as mongoose.Types.ObjectId)?.toString(),
+        id: (p as any).productId || (_id as mongoose.Types.ObjectId)?.toString(),
       };
     });
 
-    res.setHeader("Cache-Control", "public, s-maxage=30, stale-while-revalidate=60");
     return res.status(200).json(mapped);
   } catch (error: unknown) {
     console.error("Products API Error:", error);

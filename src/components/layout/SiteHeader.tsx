@@ -1,22 +1,36 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Menu, X } from "lucide-react";
+import { Search, Menu, X, Phone, ChevronDown } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "@tanstack/react-query";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 
-type SiteHeaderProps = {
+interface SiteHeaderProps {
   onSearchOpen?: () => void;
-};
+}
 
 export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
   const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [collectionsDropdown, setCollectionsDropdown] = useState(false);
+  const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const router = useRouter();
   const tr = (key: string, defaultVal?: string) => t(key, { defaultValue: defaultVal, lng: router.locale });
+
+  const handleDropdownEnter = () => {
+    if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
+    setCollectionsDropdown(true);
+  };
+
+  const handleDropdownLeave = () => {
+    dropdownTimeoutRef.current = setTimeout(() => {
+      setCollectionsDropdown(false);
+    }, 150);
+  };
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -26,6 +40,7 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
 
   useEffect(() => {
     setMobileOpen(false);
+    setCollectionsDropdown(false);
   }, [router.pathname]);
 
   const isHome = router.pathname === "/";
@@ -73,71 +88,133 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
               {/* 1. Home */}
               <Link
                 href="/"
-                className={`relative font-body text-sm tracking-wide group transition-colors ${
-                  router.pathname === "/" ? "font-semibold" : "font-medium hover:text-white"
-                }`}
-                style={{ color: router.pathname === "/" ? "#F5CA7B" : "rgba(255,255,255,0.92)" }}
+                className="relative font-body text-sm font-medium tracking-wide group"
+                style={{ color: router.pathname === "/" ? "hsl(var(--orange))" : "rgba(255,255,255,0.85)" }}
               >
                 {tr("nav.home", "Home")}
                 <span
-                  className="absolute -bottom-1 left-0 h-[2px] transition-all duration-300"
+                  className="absolute -bottom-1 left-0 h-px transition-all duration-300"
                   style={{
                     width: router.pathname === "/" ? "100%" : "0",
-                    backgroundColor: "#F5CA7B",
+                    backgroundColor: "hsl(var(--orange))",
                   }}
                 />
               </Link>
 
-              {/* 2. Manufacturing */}
+              {/* 2. About */}
+              <Link
+                href="/about"
+                className="relative font-body text-sm font-medium tracking-wide group"
+                style={{ color: router.pathname === "/about" ? "hsl(var(--orange))" : "rgba(255,255,255,0.85)" }}
+              >
+                {tr("nav.about", "About DHT")}
+                <span
+                  className="absolute -bottom-1 left-0 h-px transition-all duration-300"
+                  style={{
+                    width: router.pathname === "/about" ? "100%" : "0",
+                    backgroundColor: "hsl(var(--orange))",
+                  }}
+                />
+              </Link>
+
+              {/* 3. Manufacturing */}
               <Link
                 href="/manufacturing"
-                className={`relative font-body text-sm tracking-wide group transition-colors ${
-                  router.pathname === "/manufacturing" ? "font-semibold" : "font-medium hover:text-white"
-                }`}
-                style={{ color: router.pathname === "/manufacturing" ? "#F5CA7B" : "rgba(255,255,255,0.92)" }}
+                className="relative font-body text-sm font-medium tracking-wide group"
+                style={{ color: router.pathname === "/manufacturing" ? "hsl(var(--orange))" : "rgba(255,255,255,0.85)" }}
               >
                 {tr("nav.manufacturing", "Manufacturing")}
                 <span
-                  className="absolute -bottom-1 left-0 h-[2px] transition-all duration-300"
+                  className="absolute -bottom-1 left-0 h-px transition-all duration-300"
                   style={{
                     width: router.pathname === "/manufacturing" ? "100%" : "0",
-                    backgroundColor: "#F5CA7B",
+                    backgroundColor: "hsl(var(--orange))",
                   }}
                 />
               </Link>
 
-              {/* 3. Collections */}
-              <Link
-                href="/catalogue"
-                className={`relative font-body text-sm tracking-wide group transition-colors ${
-                  isCollectionsActive ? "font-semibold" : "font-medium hover:text-white"
-                }`}
-                style={{ color: isCollectionsActive ? "#F5CA7B" : "rgba(255,255,255,0.92)" }}
+              {/* 4. Collections Dropdown */}
+              <div
+                className="relative"
+                onMouseEnter={handleDropdownEnter}
+                onMouseLeave={handleDropdownLeave}
               >
-                {tr("nav.collections", "Collections")}
+                <button
+                  onClick={() => setCollectionsDropdown(!collectionsDropdown)}
+                  className="flex items-center gap-1 font-body text-sm font-medium tracking-wide transition-colors py-2"
+                  style={{ color: isCollectionsActive ? "hsl(var(--orange))" : "rgba(255,255,255,0.85)" }}
+                >
+                  {tr("nav.collections", "Collections")}
+                  <ChevronDown size={14} className={`transition-transform duration-200 ${collectionsDropdown ? "rotate-180" : ""}`} />
+                </button>
+
+                <AnimatePresence>
+                  {collectionsDropdown && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 8 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute top-full left-0 w-64 py-2 mt-1 rounded shadow-xl border border-white/10 z-50 backdrop-blur-md"
+                      style={{ backgroundColor: "hsl(var(--navy-deep)/0.98)" }}
+                    >
+                      <Link
+                        href="/catalogue/outdoor"
+                        className="block px-4 py-2.5 text-xs font-medium text-white/80 hover:text-white hover:bg-white/10 transition-colors"
+                      >
+                        {tr("nav.outdoorCollection", "Outdoor — DHT")}
+                      </Link>
+                      <Link
+                        href="/catalogue/indoor"
+                        className="block px-4 py-2.5 text-xs font-medium text-white/80 hover:text-white hover:bg-white/10 transition-colors border-t border-white/5"
+                      >
+                        {tr("nav.indoorCollection", "Indoor — JAGER")}
+                      </Link>
+                      <Link
+                        href="/catalogue/indoor?category=Projects"
+                        className="block px-4 py-2.5 text-xs font-medium text-white/80 hover:text-white hover:bg-white/10 transition-colors border-t border-white/5"
+                      >
+                        {tr("nav.projectCollection", "Projects — THE ONE")}
+                      </Link>
+                      <Link
+                        href="/materials/wood-panels-and-processing-mekong"
+                        className="block px-4 py-2.5 text-xs font-medium text-white/80 hover:text-white hover:bg-white/10 transition-colors border-t border-white/5"
+                      >
+                        {tr("nav.materialsCollection", "Wood & Materials — MEKONG")}
+                      </Link>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* 5. Quality & Compliance */}
+              <Link
+                href="/quality-compliance"
+                className="relative font-body text-sm font-medium tracking-wide group"
+                style={{ color: router.pathname === "/quality-compliance" ? "hsl(var(--orange))" : "rgba(255,255,255,0.85)" }}
+              >
+                {tr("nav.qualityCompliance", "Quality & Compliance")}
                 <span
-                  className="absolute -bottom-1 left-0 h-[2px] transition-all duration-300"
+                  className="absolute -bottom-1 left-0 h-px transition-all duration-300"
                   style={{
-                    width: isCollectionsActive ? "100%" : "0",
-                    backgroundColor: "#F5CA7B",
+                    width: router.pathname === "/quality-compliance" ? "100%" : "0",
+                    backgroundColor: "hsl(var(--orange))",
                   }}
                 />
               </Link>
 
-              {/* 4. Contact */}
+              {/* 6. Contact */}
               <Link
                 href="/contact"
-                className={`relative font-body text-sm tracking-wide group transition-colors ${
-                  router.pathname === "/contact" ? "font-semibold" : "font-medium hover:text-white"
-                }`}
-                style={{ color: router.pathname === "/contact" ? "#F5CA7B" : "rgba(255,255,255,0.92)" }}
+                className="relative font-body text-sm font-medium tracking-wide group"
+                style={{ color: router.pathname === "/contact" ? "hsl(var(--orange))" : "rgba(255,255,255,0.85)" }}
               >
                 {tr("nav.contact", "Contact")}
                 <span
-                  className="absolute -bottom-1 left-0 h-[2px] transition-all duration-300"
+                  className="absolute -bottom-1 left-0 h-px transition-all duration-300"
                   style={{
                     width: router.pathname === "/contact" ? "100%" : "0",
-                    backgroundColor: "#F5CA7B",
+                    backgroundColor: "hsl(var(--orange))",
                   }}
                 />
               </Link>
@@ -146,9 +223,8 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
             {/* ACTIONS */}
             <div className="flex items-center gap-2 md:gap-3">
               <button
-                type="button"
                 onClick={onSearchOpen}
-                className="w-8 h-8 flex items-center justify-center rounded-sm text-white/85 hover:text-white hover:bg-white/10 transition-all"
+                className="w-8 h-8 flex items-center justify-center rounded-sm text-white/60 hover:text-white hover:bg-white/10 transition-all"
                 aria-label={tr("nav.search", "Search")}
               >
                 <Search size={17} />
@@ -160,15 +236,14 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
 
               <Link
                 href="/contact"
-                className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 rounded-sm font-body font-semibold text-white text-sm transition-all hover:brightness-110 shadow-sm"
-                style={{ backgroundColor: "#A45E2F" }}
+                className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 rounded-sm font-body font-semibold text-white text-sm transition-all hover:opacity-90 shadow-sm"
+                style={{ backgroundColor: "hsl(var(--orange))" }}
               >
                 {tr("nav.requestQuote", "Request a Quote")}
               </Link>
 
               <button
-                type="button"
-                className="lg:hidden w-8 h-8 flex items-center justify-center text-white/90 hover:text-white transition-colors"
+                className="lg:hidden w-8 h-8 flex items-center justify-center text-white/80 hover:text-white transition-colors"
                 onClick={() => setMobileOpen(!mobileOpen)}
                 aria-label="Toggle Menu"
               >
@@ -193,33 +268,62 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
             <nav className="container mx-auto px-6 py-6 flex flex-col gap-3">
               <Link
                 href="/"
-                className={`font-body text-base font-medium py-2 border-b border-white/10 transition-colors ${
-                  router.pathname === "/" ? "text-[#F5CA7B] font-semibold" : "text-white/90 hover:text-white"
-                }`}
+                className="font-body text-base font-medium text-white/75 hover:text-white py-2 border-b border-white/10 transition-colors"
               >
                 {tr("nav.home", "Home")}
               </Link>
               <Link
+                href="/about"
+                className="font-body text-base font-medium text-white/75 hover:text-white py-2 border-b border-white/10 transition-colors"
+              >
+                {tr("nav.about", "About DHT")}
+              </Link>
+              <Link
                 href="/manufacturing"
-                className={`font-body text-base font-medium py-2 border-b border-white/10 transition-colors ${
-                  router.pathname === "/manufacturing" ? "text-[#F5CA7B] font-semibold" : "text-white/90 hover:text-white"
-                }`}
+                className="font-body text-base font-medium text-white/75 hover:text-white py-2 border-b border-white/10 transition-colors"
               >
                 {tr("nav.manufacturing", "Manufacturing")}
               </Link>
+              <div className="py-2 border-b border-white/10">
+                <span className="text-xs uppercase tracking-wider text-[#B97846] font-semibold block mb-2">
+                  {tr("nav.collections", "Collections")}
+                </span>
+                <div className="flex flex-col gap-2 pl-3">
+                  <Link
+                    href="/catalogue/outdoor"
+                    className="font-body text-sm font-medium text-white/70 hover:text-white py-1 transition-colors"
+                  >
+                    • {tr("nav.outdoorCollection", "Outdoor — DHT")}
+                  </Link>
+                  <Link
+                    href="/catalogue/indoor"
+                    className="font-body text-sm font-medium text-white/70 hover:text-white py-1 transition-colors"
+                  >
+                    • {tr("nav.indoorCollection", "Indoor — JAGER")}
+                  </Link>
+                  <Link
+                    href="/catalogue/indoor?category=Projects"
+                    className="font-body text-sm font-medium text-white/70 hover:text-white py-1 transition-colors"
+                  >
+                    • {tr("nav.projectCollection", "Projects — THE ONE")}
+                  </Link>
+                  <Link
+                    href="/materials/wood-panels-and-processing-mekong"
+                    className="font-body text-sm font-medium text-white/70 hover:text-white py-1 transition-colors"
+                  >
+                    • {tr("nav.materialsCollection", "Wood & Materials — MEKONG")}
+                  </Link>
+                </div>
+              </div>
               <Link
-                href="/catalogue"
-                className={`font-body text-base font-medium py-2 border-b border-white/10 transition-colors ${
-                  isCollectionsActive ? "text-[#F5CA7B] font-semibold" : "text-white/90 hover:text-white"
-                }`}
+                href="/quality-compliance"
+                className="font-body text-base font-medium text-white/75 hover:text-white py-2 border-b border-white/10 transition-colors"
               >
-                {tr("nav.collections", "Collections")}
+                {tr("nav.qualityCompliance", "Quality & Compliance")}
               </Link>
               <Link
                 href="/contact"
-                className={`font-body text-base font-medium py-2 border-b border-white/10 transition-colors ${
-                  router.pathname === "/contact" ? "text-[#F5CA7B] font-semibold" : "text-white/90 hover:text-white"
-                }`}
+                className="font-body text-base font-medium text-white/75 hover:text-white py-2 border-b border-white/10 transition-colors"
               >
                 {tr("nav.contact", "Contact")}
               </Link>
@@ -229,8 +333,8 @@ export default function SiteHeader({ onSearchOpen }: SiteHeaderProps) {
 
                 <Link
                   href="/contact"
-                  className="text-center py-3.5 rounded-sm font-body font-semibold text-white text-base shadow-sm hover:brightness-110 transition-all"
-                  style={{ backgroundColor: "#A45E2F" }}
+                  className="text-center py-3.5 rounded-sm font-body font-semibold text-white text-base shadow-sm"
+                  style={{ backgroundColor: "hsl(var(--orange))" }}
                 >
                   {tr("nav.requestQuote", "Request a Quote")}
                 </Link>

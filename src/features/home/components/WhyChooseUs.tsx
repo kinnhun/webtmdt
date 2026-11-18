@@ -47,8 +47,11 @@ export default function WhyChooseUs() {
               transition={{ duration: 0.5, ease }}
               className="flex items-center gap-3 mb-5"
             >
-              <span className="h-px w-8 bg-[#9A5B2A]" />
-              <span className="font-body text-xs tracking-[0.25em] uppercase font-semibold text-[#9A5B2A]">
+              <span className="h-px w-8" style={{ backgroundColor: "hsl(var(--orange))" }} />
+              <span
+                className="font-body text-xs tracking-[0.25em] uppercase font-medium"
+                style={{ color: "hsl(var(--orange))" }}
+              >
                 {t("home.whyUs.label", isVi ? "Tại sao chọn DHT" : "Why Choose DHT")}
               </span>
             </motion.div>
@@ -98,7 +101,8 @@ export default function WhyChooseUs() {
                 >
                   <CheckCircle2
                     size={18}
-                    className="mt-0.5 shrink-0 text-[#9A5B2A]"
+                    className="mt-0.5 shrink-0"
+                    style={{ color: "hsl(var(--orange))" }}
                   />
                   <span className="font-body text-sm sm:text-base font-medium text-[#173C2C]">
                     {item}
@@ -115,15 +119,17 @@ export default function WhyChooseUs() {
               className="flex flex-wrap gap-3"
             >
               <Link
-                href="/catalogue"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white bg-[#A45E2F] hover:brightness-110 transition-all shadow-sm"
+                href="/catalogue/outdoor"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90 shadow-sm"
+                style={{ backgroundColor: "#B97846" }}
               >
                 {t("home.whyUs.btn1", isVi ? "Xem Bộ sưu tập" : "Explore Collections")}{" "}
                 <ArrowRight size={15} />
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white bg-[#173C2C] hover:opacity-90 transition-all"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90"
+                style={{ backgroundColor: "#173C2C" }}
               >
                 {t("home.whyUs.btn2", isVi ? "Liên hệ DHT" : "Contact DHT")}
               </Link>
@@ -143,10 +149,8 @@ export default function WhyChooseUs() {
                 src="/img/WhyDHT.png"
                 alt="DHT Furniture Collection"
                 fill
-                sizes="(max-width: 1024px) 100vw, 58vw"
-                loading="lazy"
                 className="object-cover object-center"
-                quality={85}
+                quality={95}
               />
             </div>
           </motion.div>

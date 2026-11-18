@@ -33,7 +33,7 @@ export default function ReadyToWorkTogether() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="font-body text-base sm:text-lg text-white/95 leading-relaxed max-w-2xl mx-auto mb-10"
+          className="font-body text-base sm:text-lg text-white/80 leading-relaxed max-w-2xl mx-auto mb-10"
         >
           {t(
             "home.cta.description",
@@ -52,7 +52,8 @@ export default function ReadyToWorkTogether() {
         >
           <Link
             href="/contact?type=proposal"
-            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-sm font-body font-semibold text-sm text-white bg-[#A45E2F] hover:brightness-110 transition-all w-full sm:w-auto shadow-md"
+            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-sm font-body font-semibold text-sm text-white transition-all hover:opacity-90 w-full sm:w-auto shadow-md"
+            style={{ backgroundColor: "hsl(var(--orange))" }}
           >
             {t("home.cta.btn1", isVi ? "Yêu cầu Báo giá" : "Request a Quotation")}
           </Link>
@@ -60,7 +61,7 @@ export default function ReadyToWorkTogether() {
             href="/DHT_Company_Profile_2026.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-sm font-body font-semibold text-sm text-white border border-white/35 bg-white/8 hover:bg-white/15 transition-all w-full sm:w-auto"
+            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-sm font-body font-semibold text-sm text-white/90 border border-white/25 bg-white/5 hover:bg-white/10 transition-all w-full sm:w-auto"
           >
             {t("home.cta.btn2", isVi ? "Tải Hồ sơ Năng lực (PDF)" : "Download Company Profile (PDF)")}
           </a>

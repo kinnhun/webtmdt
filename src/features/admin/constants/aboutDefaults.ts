@@ -11,9 +11,9 @@ export const aboutDefaults = {
       vi: "Sản Xuất & Xuất Khẩu Nội Thất Việt Nam",
     },
     description: {
-      us: "DHT is a Vietnamese furniture manufacturer and exporter with a coordinated manufacturing network of 11 facilities and 543,380 m² across Vietnam. We specialise in high-quality outdoor furniture in certified timber, architectural aluminium, and mixed materials, alongside commercial indoor furniture and bespoke project fit-outs for international retail chains, distributors, and contract projects worldwide.",
-      uk: "DHT is a Vietnamese furniture manufacturer and exporter with a coordinated manufacturing network of 11 facilities and 543,380 m² across Vietnam. We specialise in high-quality outdoor furniture in certified timber, architectural aluminium, and mixed materials, alongside commercial indoor furniture and bespoke project fit-outs for international retail chains, distributors, and contract projects worldwide.",
-      vi: "DHT là nhà sản xuất và xuất khẩu nội thất Việt Nam với mạng lưới sản xuất 11 cơ sở và 543.380 m² trên toàn quốc. Chúng tôi chuyên sâu về nội thất ngoài trời cao cấp từ gỗ có chứng nhận, nhôm định hình và vật liệu phối hợp, cùng với nội thất trong nhà thương mại và dự án may đo cho các chuỗi bán lẻ quốc tế, nhà phân phối và dự án hợp đồng toàn cầu.",
+      us: "DHT is a Vietnamese furniture manufacturer and exporter with a family group footprint of 11 facilities and 543,380 m² across Vietnam. We specialise in high-quality outdoor furniture in certified timber, architectural aluminium, and mixed materials, alongside commercial indoor furniture and bespoke project fit-outs for international retail chains, distributors, and contract projects worldwide.",
+      uk: "DHT is a Vietnamese furniture manufacturer and exporter with a family group footprint of 11 facilities and 543,380 m² across Vietnam. We specialise in high-quality outdoor furniture in certified timber, architectural aluminium, and mixed materials, alongside commercial indoor furniture and bespoke project fit-outs for international retail chains, distributors, and contract projects worldwide.",
+      vi: "DHT là nhà sản xuất và xuất khẩu nội thất Việt Nam với mạng lưới tập đoàn 11 cơ sở và 543.380 m² trên toàn quốc. Chúng tôi chuyên sâu về nội thất ngoài trời cao cấp từ gỗ có chứng nhận, nhôm định hình và vật liệu phối hợp, cùng với nội thất trong nhà thương mại và dự án may đo cho các chuỗi bán lẻ quốc tế, nhà phân phối và dự án hợp đồng toàn cầu.",
     },
     backgroundImages: ["/img/about/image.png"],
   },
@@ -21,19 +21,19 @@ export const aboutDefaults = {
     us: [
       "11 Production Facilities",
       "543,380 m² Combined Manufacturing Footprint",
-      "Approximately 2,400 Network Personnel",
+      "Approximately 2,400 Group Personnel",
       "4 Manufacturing Clusters",
     ],
     uk: [
       "11 Production Facilities",
       "543,380 m² Combined Manufacturing Footprint",
-      "Approximately 2,400 Network Personnel",
+      "Approximately 2,400 Group Personnel",
       "4 Manufacturing Clusters",
     ],
     vi: [
       "11 Cơ sở Sản xuất",
       "543.380 m² Tổng diện tích mặt bằng sản xuất",
-      "Khoảng 2.400 Nhân sự Mạng lưới",
+      "Khoảng 2.400 Nhân sự tập đoàn",
       "4 Cụm sản xuất trọng điểm",
     ],
   },
@@ -67,9 +67,9 @@ export const aboutDefaults = {
     label: { us: "Our Story", uk: "Our Story", vi: "Câu Chuyện Của Chúng Tôi" },
     heading: { us: "From OEM to Global Brand", uk: "From OEM to Global Brand", vi: "Từ OEM Đến Thương Hiệu Toàn Cầu" },
     content: {
-      us: "<p>DHT evolved through industrial furniture manufacturing partnerships across Vietnam, expanding across 11 specialised facilities and 543,380 m².</p><p>Today, DHT operates as the central commercial, international coordination, and export gateway, bridging world-class Vietnamese production capabilities with leading international retailers, commercial specifiers, and project contractors worldwide.</p>",
-      uk: "<p>DHT evolved through industrial furniture manufacturing partnerships across Vietnam, expanding across 11 specialised facilities and 543,380 m².</p><p>Today, DHT operates as the central commercial, international coordination, and export gateway, bridging world-class Vietnamese production capabilities with leading international retailers, commercial specifiers, and project contractors worldwide.</p>",
-      vi: "<p>DHT phát triển cùng hệ sinh thái sản xuất nội thất công nghiệp tại Việt Nam, mở rộng quy mô lên 11 cơ sở chuyên môn hóa với tổng diện tích 543.380 m².</p><p>Ngày nay, DHT đóng vai trò là đầu mối điều phối thương mại và xuất khẩu quốc tế, kết nối năng lực sản xuất chuẩn mực của Việt Nam với các chuỗi bán lẻ, nhà thiết kế và nhà thầu dự án lớn trên toàn cầu.</p>",
+      us: "<p>DHT originated within a family furniture manufacturing tradition in Vietnam. Over decades of industrial craftsmanship, our network expanded across 11 specialised facilities and 543,380 m².</p><p>Today, DHT operates as the central commercial, international coordination, and export gateway, bridging world-class Vietnamese production capabilities with leading international retailers, commercial specifiers, and project contractors worldwide.</p>",
+      uk: "<p>DHT originated within a family furniture manufacturing tradition in Vietnam. Over decades of industrial craftsmanship, our network expanded across 11 specialised facilities and 543,380 m².</p><p>Today, DHT operates as the central commercial, international coordination, and export gateway, bridging world-class Vietnamese production capabilities with leading international retailers, commercial specifiers, and project contractors worldwide.</p>",
+      vi: "<p>DHT bắt nguồn từ truyền thống sản xuất nội thất gia đình tại Việt Nam. Qua nhiều thập kỷ phát triển, mạng lưới của chúng tôi mở rộng quy mô với 11 cơ sở chuyên môn hóa và 543.380 m² mặt bằng sản xuất.</p><p>Ngày nay, DHT đóng vai trò là đầu mối điều phối thương mại và xuất khẩu quốc tế, kết nối năng lực sản xuất chuẩn mực của Việt Nam với các chuỗi bán lẻ, nhà thiết kế và nhà thầu dự án lớn trên toàn cầu.</p>",
     },
     images: ["/img/readyToWork/1.png", "/img/readyToWork/2.png", "/img/readyToWork/3.png"],
   },
@@ -197,22 +197,22 @@ export const aboutDefaults = {
   stats: {
     heading: { us: "Production Figures & Capacity", uk: "Production Figures & Capacity", vi: "Năng Lực & Dữ Liệu Sản Xuất" },
     subtitle: { 
-      us: "Coordinating 11 specialised production facilities and a 543,380 m² combined manufacturing footprint across Vietnam.", 
-      uk: "Coordinating 11 specialised production facilities and a 543,380 m² combined manufacturing footprint across Vietnam.", 
-      vi: "Điều phối mạng lưới 11 cơ sở sản xuất chuyên môn hóa với tổng diện tích 543.380 m² trên toàn quốc." 
+      us: "Operating as part of a family-owned furniture group with 11 production facilities and a 543,380 m² combined footprint across Vietnam.", 
+      uk: "Operating as part of a family-owned furniture group with 11 production facilities and a 543,380 m² combined footprint across Vietnam.", 
+      vi: "Hoạt động trong mạng lưới tập đoàn nội thất gia đình gồm 11 cơ sở sản xuất với tổng diện tích 543.380 m² trên toàn quốc." 
     },
     items: [
       { value: "11", suffix: "", label: { us: "Production Facilities", uk: "Production Facilities", vi: "Cơ Sở Sản Xuất" } },
       { value: "543,380", suffix: "m²", label: { us: "Combined Footprint", uk: "Combined Footprint", vi: "Tổng Mặt Bằng" } },
-      { value: "2,400", suffix: "~", label: { us: "Manufacturing Personnel", uk: "Manufacturing Personnel", vi: "Nhân Sự Sản Xuất" } },
+      { value: "2,400", suffix: "~", label: { us: "Group Personnel", uk: "Group Personnel", vi: "Nhân Sự Tập Đoàn" } },
       { value: "4", suffix: "", label: { us: "Manufacturing Clusters", uk: "Manufacturing Clusters", vi: "Cụm Sản Xuất" } },
     ],
     hr: {
       heading: { us: "Human Resources & Specialised Capabilities", uk: "Human Resources & Specialised Capabilities", vi: "Nguồn Nhân Lực & Chuyên Môn Hóa" },
       items: [
-        { us: "Approximately 2,400 skilled manufacturing personnel across the network.", uk: "Approximately 2,400 skilled manufacturing personnel across the network.", vi: "Khoảng 2.400 nhân sự sản xuất tay nghề cao trên toàn mạng lưới." },
+        { us: "Approximately 2,400 skilled manufacturing personnel across the group.", uk: "Approximately 2,400 skilled manufacturing personnel across the group.", vi: "Khoảng 2.400 nhân sự sản xuất tay nghề cao trên toàn tập đoàn." },
         { us: "Approximately 20 professionals at DHT central team managing buyer programmes.", uk: "Approximately 20 professionals at DHT central team managing buyer programmes.", vi: "Khoảng 20 chuyên gia tại văn phòng trung tâm DHT điều phối chương trình." },
-        { us: "Average export capacity: 50-60 containers/month per finished-furniture facility (Facilities 01-10).", uk: "Average export capacity: 50-60 containers/month per finished-furniture facility (Facilities 01-10).", vi: "Năng lực xuất khẩu tham chiếu: 50-60 container/tháng tại mỗi cơ sở hoàn thiện (Cơ sở 01-10)." },
+        { us: "Reference capacity at an outdoor facility: 60-70 40-ft containers per month.", uk: "Reference capacity at an outdoor facility: 60-70 40-ft containers per month.", vi: "Công suất tham chiếu tại một xưởng outdoor: 60-70 container/tháng." },
       ],
     },
     machinery: {
@@ -238,10 +238,16 @@ export const aboutDefaults = {
         hotline: "+84 932 058 545",
       },
       {
+        key: "showroom",
+        name: { us: "DHT Showroom & Gallery", uk: "DHT Showroom & Gallery", vi: "Showroom Trưng Bày DHT" },
+        address: { us: "206 Phan Dinh Phung Street, Pleiku City, Gia Lai Province, Vietnam", uk: "206 Phan Dinh Phung Street, Pleiku City, Gia Lai Province, Vietnam", vi: "206 Phan Đình Phùng, TP. Pleiku, Tỉnh Gia Lai, Việt Nam" },
+        hotline: "+84 907 386 898",
+      },
+      {
         key: "manufacturing",
         name: { us: "DHT Manufacturing Network", uk: "DHT Manufacturing Network", vi: "Mạng lưới Nhà máy Sản xuất DHT" },
         address: { us: "4 Manufacturing Clusters: Quy Nhon, HCMC & Southern Corridor, Hung Yen, Phu Tho/Vinh Phuc", uk: "4 Manufacturing Clusters: Quy Nhon, HCMC & Southern Corridor, Hung Yen, Phu Tho/Vinh Phuc", vi: "4 Cụm sản xuất: Quy Nhơn, TP.HCM & Nam Bộ, Hưng Yên, Phú Thọ/Vĩnh Phúc" },
-        hotline: "+84 932 058 545",
+        hotline: "+84 902 907 399",
       },
     ],
   },

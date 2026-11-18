@@ -95,11 +95,12 @@ export default function QuickViewModal({ product, onClose }: QuickViewModalProps
                     <button
                       type="button"
                       onClick={() => setIsInquiryOpen(true)}
-                      className="w-full py-3 rounded font-body font-medium text-center text-white text-sm transition-all hover:brightness-110 cursor-pointer border-0 bg-[#A45E2F]"
+                      className="w-full py-3 rounded font-body font-medium text-center text-white text-sm transition-all hover:opacity-90 cursor-pointer border-0"
+                      style={{ backgroundColor: "hsl(var(--accent))" }}
                     >
                       {t("product.sendInquiry")}
                     </button>
-                    <a href={`https://wa.me/84932058545?text=Hi, I'd like to inquire about ${encodeURIComponent(pName)} (${product.code})`} target="_blank" rel="noopener noreferrer" className="w-full py-3 rounded font-body font-medium text-center text-sm border border-[#9A5B2A] text-[#9A5B2A] transition-all hover:bg-[#9A5B2A]/5">
+                    <a href={`https://wa.me/84932058545?text=Hi, I'd like to inquire about ${encodeURIComponent(pName)} (${product.code})`} target="_blank" rel="noopener noreferrer" className="w-full py-3 rounded font-body font-medium text-center text-sm border transition-all hover:bg-orange/5" style={{ borderColor: "hsl(var(--orange))", color: "hsl(var(--orange))" }}>
                       <Phone size={14} className="inline mr-2" /> {t("product.whatsappUs")}
                     </a>
                   </div>

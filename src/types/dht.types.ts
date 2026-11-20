@@ -50,7 +50,7 @@ export type BusinessModelPillar = {
   id: string;
   title: string;
   description: string;
-  iconName: "handshake" | "factory" | "clipboard";
+  iconName: "handshake" | "factory" | "layers";
 };
 
 export type FacilityRowItem = {

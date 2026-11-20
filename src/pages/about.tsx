@@ -7,7 +7,7 @@ import {
   ChevronDown,
   Factory,
   Handshake,
-  ClipboardCheck,
+  Layers,
 } from "lucide-react";
 import SEO from "@/components/SEO";
 import Schema from "@/components/Schema";
@@ -42,22 +42,22 @@ const BUYER_VALUES: BuyerValueItem[] = [
 const EVOLUTION_MILESTONES: EvolutionMilestone[] = [
   {
     year: "2016",
-    logoSrc: "/img/pdf-guide/logos/evo-2016.png",
+    logoSrc: "/img/pdf-guide/logos/evo-2016.png?v=2",
     title: "DHT Investment\nand Commercial",
-    description: "Our foundation in investment and commercial activities.",
+    description: "Our foundation in investment\nand commercial activities.",
   },
   {
     year: "2022",
-    logoSrc: "/img/pdf-guide/logos/evo-2022.png",
+    logoSrc: "/img/pdf-guide/logos/evo-2022.png?v=2",
     title: "DHT Outdoor Furniture",
-    description: "A dedicated focus on outdoor furniture manufacturing and export.",
+    description: "A dedicated focus on outdoor\nfurniture manufacturing\nand export.",
   },
   {
     year: "2025 – Present",
     logoSrc: "/img/logo.png",
     title: "DHT Furniture Vietnam",
     description:
-      "A broader manufacturing and export identity, representing our family-owned group of 11 production facilities.",
+      "A broader manufacturing and export\nidentity, representing our family-owned\ngroup of 11 production facilities.",
   },
 ];
 
@@ -66,33 +66,33 @@ const BUSINESS_MODEL_PILLARS: BusinessModelPillar[] = [
     id: "commercial",
     title: "Commercial Partnership",
     description:
-      "Sales, quotations, sampling, project coordination and customer support.",
+      "A dedicated point of contact for international buyers and long-term business relationships.",
     iconName: "handshake",
   },
   {
     id: "manufacturing",
     title: "Manufacturing Access",
     description:
-      "Direct access to 11 production facilities across outdoor, indoor, project furniture and wood panels.",
+      "Direct access to specialised furniture production within our family-owned group.",
     iconName: "factory",
   },
   {
     id: "programme",
     title: "Programme Management",
     description:
-      "Product development, production follow-up, quality inspection and export logistics.",
-    iconName: "clipboard",
+      "Support across product development, quality assurance and export execution.",
+    iconName: "layers",
   },
 ];
 
 function PillarIcon({ name }: { name: BusinessModelPillar["iconName"] }) {
   if (name === "handshake") {
-    return <Handshake size={26} className="text-[#D89B3C] shrink-0" strokeWidth={1.6} />;
+    return <Handshake size={46} className="text-[#DBA340] shrink-0" strokeWidth={1.6} />;
   }
   if (name === "factory") {
-    return <Factory size={26} className="text-[#D89B3C] shrink-0" strokeWidth={1.6} />;
+    return <Factory size={46} className="text-[#DBA340] shrink-0" strokeWidth={1.6} />;
   }
-  return <ClipboardCheck size={26} className="text-[#D89B3C] shrink-0" strokeWidth={1.6} />;
+  return <Layers size={46} className="text-[#DBA340] shrink-0" strokeWidth={1.6} />;
 }
 
 export default function AboutPage() {
@@ -186,182 +186,224 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* ── PART 12: WHY CHOOSE DHT (Built for Global Furniture Buyers.) ── */}
-        <section className="relative bg-[#0E261C] text-white overflow-hidden pt-20 lg:pt-24 pb-0">
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(circle at 75% 30%, rgba(35, 82, 58, 0.35), transparent 55%), linear-gradient(180deg, #102B1F 0%, #0B1E16 100%)",
-            }}
+        {/* ── PART 12: WHY CHOOSE DHT (Built for Global Furniture Buyers. — Hình 23) ── */}
+        <section className="relative w-full bg-[#0C2016] text-white overflow-hidden">
+          {/* Full-Canvas Seamless Photographic Bokeh + Woven-Rope & Teak Armchair Background */}
+          <img
+            src="/img/pdf-guide/about/why-choose-rope-chair.jpg?v=2"
+            alt="DHT Woven Rope and Teak Outdoor Armchair"
+            className="pointer-events-none select-none absolute inset-0 w-full h-full object-cover object-bottom"
           />
 
-          <div className="container mx-auto px-6 lg:px-10 relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-start pb-14 lg:pb-16">
-              {/* Left Column */}
+          <div className="container mx-auto px-6 lg:px-14 max-w-[1380px] relative z-10 pt-16 sm:pt-20 lg:pt-[92px] pb-56 sm:pb-64 lg:pb-[255px]">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-0 items-start">
+              {/* Left Column (51% -> 6 cols) */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.6 }}
-                className="lg:col-span-6"
+                className="lg:col-span-6 lg:pr-12 xl:pr-16"
               >
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="h-[2px] w-8 bg-[#D89B3C]" />
-                  <span className="font-body text-xs font-bold uppercase tracking-[0.2em] text-[#D89B3C]">
+                <div className="flex items-center gap-3.5 mb-5">
+                  <span className="h-[1.5px] w-11 bg-[#D89F45]" />
+                  <span className="font-body text-xs sm:text-[13px] font-bold uppercase tracking-[0.14em] text-[#D89F45]">
                     WHY CHOOSE DHT
                   </span>
                 </div>
 
                 <h2
-                  className="font-display font-bold text-white leading-[1.12] mb-6"
-                  style={{ fontSize: "clamp(2rem, 3.8vw, 3.25rem)" }}
+                  className="font-display font-bold text-[#F5F4EE] leading-[1.08] tracking-tight mb-6"
+                  style={{ fontSize: "clamp(2.2rem, 4.2vw, 3.85rem)" }}
                 >
                   Built for Global
                   <br />
                   Furniture Buyers.
                 </h2>
 
-                <p className="font-body text-sm sm:text-base text-white/85 leading-relaxed max-w-lg">
+                <p className="font-body text-sm sm:text-[16.5px] text-[#D9E0DC] leading-[1.6] max-w-[490px]">
                   Our furniture export business is built on real manufacturing strength, technical
                   know-how and a commitment to long-term partnership with international buyers.
                 </p>
               </motion.div>
 
-              {/* Right Column: 01, 02, 03 */}
+              {/* Right Column (49% -> 6 cols): Vertical Gold Divider + 01, 02, 03 */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.6, delay: 0.15 }}
-                className="lg:col-span-6 lg:pl-10 lg:border-l lg:border-[#D89B3C]/35 divide-y divide-white/15"
+                transition={{ duration: 0.6, delay: 0.12 }}
+                className="lg:col-span-6 lg:pl-12 xl:pl-16 lg:mt-2 lg:border-l lg:border-[#8C743B]/85"
               >
-                {BUYER_VALUES.map((item) => (
-                  <div
-                    key={item.number}
-                    className="py-6 first:pt-0 last:pb-0 flex items-start gap-6"
-                  >
-                    <span className="font-display font-bold text-3xl sm:text-4xl text-[#D89B3C] leading-none shrink-0 w-12">
-                      {item.number}
-                    </span>
-                    <div>
-                      <h3 className="font-display font-bold text-lg sm:text-xl text-white mb-1.5">
-                        {item.title}
-                      </h3>
-                      <p className="font-body text-sm text-white/80 leading-relaxed">
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </motion.div>
-            </div>
+                {BUYER_VALUES.map((item, idx) => {
+                  const isLast = idx === BUYER_VALUES.length - 1;
+                  return (
+                    <div key={item.number} className="flex items-start gap-6 sm:gap-9">
+                      {/* Prominent Gold Display Serif Number (No horizontal line underneath) */}
+                      <span className="font-display font-bold text-4xl sm:text-[50px] text-[#D89F45] leading-none shrink-0 w-16 sm:w-20 pt-0.5 select-none">
+                        {item.number}
+                      </span>
 
-            {/* Bottom Close-up Rope & Teak Armchair Foreground Detail (Hình 23) */}
-            <div className="-mx-6 lg:-mx-10 mt-2 overflow-hidden max-h-[240px]">
-              <img
-                src="/img/pdf-guide/about/why-choose-rope-chair.jpg"
-                alt="DHT Woven Rope and Teak Outdoor Armchair Detail"
-                className="w-full h-[180px] sm:h-[230px] object-cover object-left-bottom"
-              />
+                      {/* Right Text Column (Horizontal divider ONLY under text, NOT under number) */}
+                      <div
+                        className={`flex-1 ${!isLast ? "pb-6 mb-6 border-b border-white/22" : "pb-0"
+                          }`}
+                      >
+                        <h3 className="font-display font-bold text-lg sm:text-[21px] text-white leading-snug mb-1.5">
+                          {item.title}
+                        </h3>
+                        <p className="font-body text-xs sm:text-[15px] text-[#D7DFDA] leading-[1.52]">
+                          {item.description}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </motion.div>
             </div>
           </div>
         </section>
 
-        {/* ── PART 13: THE EVOLUTION OF DHT (2016 -> 2022 -> 2025 - Present) ── */}
-        <section className="py-20 lg:py-24 bg-[#FAF9F5] border-b border-black/5">
-          <div className="container mx-auto px-6 lg:px-10">
+        {/* ── PART 13: THE EVOLUTION OF DHT (2016 -> 2022 -> 2025 - Present — Hình 25) ── */}
+        <section className="relative py-16 sm:py-20 lg:py-20 bg-[#FDFDFC] border-b border-black/5 overflow-hidden">
+          {/* Top-Right Sunlit Leafy Branch & Soft Botanical Shadows */}
+          <img
+            src="/img/pdf-guide/about/evo-leaves-tr.jpg"
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none select-none absolute top-0 right-0 w-[280px] sm:w-[430px] lg:w-[530px] h-auto mix-blend-multiply opacity-95"
+          />
+
+          {/* Bottom-Right Slatted Teak Furniture Corner */}
+          <img
+            src="/img/pdf-guide/about/evo-wood-br.jpg"
+            alt=""
+            aria-hidden="true"
+            className="pointer-events-none select-none hidden sm:block absolute bottom-0 right-0 w-[76px] lg:w-[96px] h-auto mix-blend-multiply"
+          />
+
+          <div className="container mx-auto px-6 lg:px-14 max-w-[1380px] relative z-10">
             {/* Header */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.6 }}
-              className="max-w-3xl mb-12"
+              className="max-w-4xl mb-10 lg:mb-11"
             >
-              <div className="flex items-center gap-3 mb-3">
-                <span className="h-[2px] w-8 bg-[#B97846]" />
-                <span className="font-body text-xs font-bold uppercase tracking-[0.2em] text-[#B97846]">
+              <div className="flex items-center gap-3.5 mb-3">
+                <span className="h-[2.5px] w-10 bg-[#B3662A]" />
+                <span className="font-body text-xs sm:text-[14px] font-bold uppercase tracking-[0.06em] text-[#9E5422]">
                   OUR DEVELOPMENT
                 </span>
               </div>
 
               <h2
-                className="font-display font-bold text-[#0E241B] leading-tight mb-4"
-                style={{ fontSize: "clamp(2rem, 3.6vw, 3.1rem)" }}
+                className="font-display font-bold text-[#0F2C1E] leading-[1.08] tracking-tight mb-3.5"
+                style={{ fontSize: "clamp(2.25rem, 4.1vw, 3.6rem)" }}
               >
                 The Evolution of DHT.
               </h2>
 
-              <p className="font-body text-sm sm:text-base text-[#2B3430] leading-relaxed">
+              <p className="font-body text-sm sm:text-[16.5px] text-[#1D2421] leading-[1.55] max-w-3xl">
                 From investment and commercial operations to outdoor furniture and a broader
-                manufacturing and export business, DHT has evolved to serve international furniture
-                buyers.
+                <br className="hidden md:inline" /> manufacturing and export business, DHT has
+                evolved to serve international furniture buyers.
               </p>
             </motion.div>
 
-            {/* 3 Equal Horizontal Milestone Columns with Arrows */}
-            <div className="flex flex-col lg:flex-row items-stretch gap-4 lg:gap-3">
-              {EVOLUTION_MILESTONES.map((milestone, idx) => (
-                <div
-                  key={milestone.year}
-                  className="flex-1 flex flex-col lg:flex-row items-center gap-3"
-                >
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-60px" }}
-                    transition={{ duration: 0.5, delay: idx * 0.12 }}
-                    className="w-full h-full rounded-2xl bg-[#F4F1EA] border border-[#E6E0D2] px-6 sm:px-8 py-8 text-center flex flex-col items-center justify-between shadow-xs"
+            {/* 3 Equal Horizontal Milestone Columns with Thin Bronze Chevrons */}
+            <div className="flex flex-col lg:flex-row items-stretch gap-3 lg:gap-2">
+              {EVOLUTION_MILESTONES.map((milestone, idx) => {
+                const isLongYear = milestone.year.length > 6;
+                return (
+                  <div
+                    key={milestone.year}
+                    className="flex-1 flex flex-col lg:flex-row items-center gap-2 lg:gap-2.5"
                   >
-                    {/* Year with flanking lines */}
-                    <div className="w-full flex items-center justify-center gap-3 mb-6">
-                      <span className="h-px flex-1 max-w-[44px] bg-[#B97846]/50" />
-                      <span className="font-display font-bold text-2xl sm:text-3xl text-[#A85D24]">
-                        {milestone.year}
-                      </span>
-                      <span className="h-px flex-1 max-w-[44px] bg-[#B97846]/50" />
-                    </div>
-
-                    {/* Official Historical Logo */}
-                    <div className="h-36 flex items-center justify-center my-2">
-                      <img
-                        src={milestone.logoSrc}
-                        alt={milestone.title}
-                        className="max-h-32 max-w-[200px] object-contain"
+                    <motion.div
+                      initial={{ opacity: 0, y: 18 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-60px" }}
+                      transition={{ duration: 0.5, delay: idx * 0.1 }}
+                      className="relative w-full h-full rounded-[18px] bg-[#F8F6F1]/95 px-6 sm:px-8 pt-6 pb-8 text-center flex flex-col items-center justify-between overflow-hidden"
+                      style={{
+                        boxShadow: "0 2px 14px rgba(15, 44, 30, 0.03)",
+                      }}
+                    >
+                      {/* Subtle Organic Diagonal Ribbon Corner Sheen (Matching Hình 25) */}
+                      <div
+                        className="pointer-events-none absolute -bottom-10 -left-10 w-36 h-36 rounded-full opacity-60"
+                        style={{
+                          background:
+                            "radial-gradient(circle, rgba(235, 228, 215, 0.85) 0%, transparent 70%)",
+                        }}
                       />
-                    </div>
+                      <div
+                        className="pointer-events-none absolute -bottom-10 -right-10 w-36 h-36 rounded-full opacity-55"
+                        style={{
+                          background:
+                            "radial-gradient(circle, rgba(235, 228, 215, 0.8) 0%, transparent 70%)",
+                        }}
+                      />
 
-                    {/* Title & Description */}
-                    <div className="mt-4">
-                      <h3 className="font-display font-bold text-lg sm:text-xl text-[#0E241B] whitespace-pre-line leading-snug mb-3">
-                        {milestone.title}
-                      </h3>
-                      <div className="w-8 h-[2px] bg-[#B97846] mx-auto mb-3" />
-                      <p className="font-body text-xs sm:text-sm text-[#39423E] leading-relaxed max-w-xs mx-auto">
-                        {milestone.description}
-                      </p>
-                    </div>
-                  </motion.div>
+                      {/* Year Header with Flanking Bronze Lines */}
+                      <div className="relative z-10 w-full flex items-center justify-center gap-3.5 mb-5">
+                        <span
+                          className={`h-[1px] bg-[#C28652]/75 ${isLongYear ? "w-7 sm:w-9" : "w-14 sm:w-16"
+                            }`}
+                        />
+                        <span className="font-display font-bold text-2xl sm:text-[32px] text-[#9D5421] leading-none whitespace-nowrap">
+                          {milestone.year}
+                        </span>
+                        <span
+                          className={`h-[1px] bg-[#C28652]/75 ${isLongYear ? "w-7 sm:w-9" : "w-14 sm:w-16"
+                            }`}
+                        />
+                      </div>
 
-                  {/* Arrow between columns */}
-                  {idx < EVOLUTION_MILESTONES.length - 1 && (
-                    <div className="shrink-0 text-[#A85D24] py-1 lg:py-0">
-                      <ChevronRight size={22} className="hidden lg:block" />
-                      <ChevronDown size={22} className="block lg:hidden" />
-                    </div>
-                  )}
-                </div>
-              ))}
+                      {/* Official Historical Logo */}
+                      <div className="relative z-10 h-36 sm:h-[148px] flex items-center justify-center my-1">
+                        <img
+                          src={milestone.logoSrc}
+                          alt={milestone.title}
+                          className={
+                            idx === 0
+                              ? "max-h-[124px] max-w-[180px] object-contain"
+                              : "max-h-[138px] max-w-[235px] object-contain"
+                          }
+                        />
+                      </div>
+
+                      {/* Title, Short Bronze Dash & Description */}
+                      <div className="relative z-10 mt-3 w-full">
+                        <h3 className="font-display font-bold text-xl sm:text-[23px] text-[#0F2C1E] whitespace-pre-line leading-[1.2] min-h-[54px] flex items-center justify-center">
+                          {milestone.title}
+                        </h3>
+                        <div className="w-14 h-[2px] bg-[#B87338] mx-auto my-3" />
+                        <p className="font-body text-sm sm:text-[15px] text-[#222926] whitespace-pre-line leading-[1.48] max-w-[300px] mx-auto">
+                          {milestone.description}
+                        </p>
+                      </div>
+                    </motion.div>
+
+                    {/* Thin Bronze Arrow Between Columns */}
+                    {idx < EVOLUTION_MILESTONES.length - 1 && (
+                      <div className="shrink-0 text-[#9D5421] py-1 lg:py-0">
+                        <ChevronRight size={22} strokeWidth={2} className="hidden lg:block" />
+                        <ChevronDown size={22} strokeWidth={2} className="block lg:hidden" />
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
 
-            {/* Bottom Summary Bar */}
-            <div className="mt-8 rounded-xl bg-[#F2EFE7] border border-[#E4DECFE0] px-6 py-4 flex items-center gap-4">
-              <div className="w-9 h-9 rounded-lg bg-white border border-black/10 flex items-center justify-center shrink-0">
-                <Factory size={18} className="text-[#0E241B]" />
-              </div>
-              <div className="h-5 w-px bg-[#B97846]/40 shrink-0 hidden sm:block" />
-              <p className="font-body text-xs sm:text-sm font-medium text-[#0E241B]">
+            {/* Bottom Summary Bar (Bare Factory Icon + Vertical Bronze Divider + Sentence) */}
+            <div className="mt-6 rounded-[14px] bg-[#F5F4EE] px-6 sm:px-8 py-4 flex items-center gap-5">
+              <Factory size={28} className="text-[#142F22] shrink-0" strokeWidth={1.6} />
+              <div className="h-7 w-[1px] bg-[#D6B89A] shrink-0 hidden sm:block" />
+              <p className="font-body text-sm sm:text-[15.5px] font-medium text-[#112B1E] leading-snug">
                 Today, DHT Furniture Vietnam serves as the international commercial and export arm
                 of our family-owned manufacturing group.
               </p>
@@ -369,36 +411,36 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* ── PARTS 14, 15, 16: OUR BUSINESS MODEL (Replaces HR, Leadership, Locations) ── */}
-        <section className="py-16 lg:py-20 bg-[#FAF9F5]">
-          <div className="container mx-auto px-6 lg:px-10">
+        {/* ── PARTS 14, 15, 16: OUR BUSINESS MODEL (Hình 28 — 57% / 43% Split, Bare Gold Icons) ── */}
+        <section className="py-12 sm:py-16 bg-[#FDFCFC]">
+          <div className="container mx-auto px-6 lg:px-14 max-w-[1380px]">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.6 }}
-              className="rounded-2xl bg-gradient-to-br from-[#163628] via-[#10291E] to-[#0C2017] text-white p-8 sm:p-12 lg:p-14 shadow-xl border border-[#C88A36]/25"
+              className="rounded-[24px] bg-gradient-to-b from-[#042618] via-[#06281A] to-[#082B1D] text-white px-7 sm:px-12 lg:px-16 py-11 sm:py-14 lg:py-[58px] shadow-[0_10px_30px_rgba(4,38,24,0.12)]"
             >
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-                {/* Left Column */}
-                <div className="lg:col-span-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="h-[2px] w-8 bg-[#D89B3C]" />
-                    <span className="font-body text-xs font-bold uppercase tracking-[0.2em] text-[#D89B3C]">
+              <div className="flex flex-col lg:flex-row items-stretch lg:items-center gap-10 lg:gap-0">
+                {/* Left Column (57% width matching x=815/1431) */}
+                <div className="w-full lg:w-[57%] lg:pr-12 xl:pr-16">
+                  <div className="flex items-center gap-3.5 mb-4">
+                    <span className="h-[2.5px] w-10 bg-[#D9A23E]" />
+                    <span className="font-body text-xs sm:text-[14px] font-bold uppercase tracking-[0.06em] text-[#D9A23E]">
                       OUR BUSINESS MODEL
                     </span>
                   </div>
 
                   <h2
-                    className="font-display font-bold text-white leading-[1.15] mb-5"
-                    style={{ fontSize: "clamp(1.85rem, 3.2vw, 2.75rem)" }}
+                    className="font-display font-bold text-[#F5F5F0] leading-[1.12] tracking-tight mb-6"
+                    style={{ fontSize: "clamp(1.95rem, 3.3vw, 3.1rem)" }}
                   >
                     One Commercial Partner.
                     <br />
                     Direct Manufacturing Access.
                   </h2>
 
-                  <p className="font-body text-sm sm:text-base text-white/85 leading-relaxed">
+                  <p className="font-body text-sm sm:text-[16.5px] text-[#DCE3DF] leading-[1.58] max-w-[590px]">
                     DHT Furniture Vietnam serves as the international commercial and export arm of
                     our family-owned manufacturing group. International buyers work with one
                     dedicated DHT team while accessing specialised production capabilities across
@@ -406,75 +448,97 @@ export default function AboutPage() {
                   </p>
                 </div>
 
-                {/* Right Column: 3 Pillars */}
-                <div className="lg:col-span-6 lg:pl-10 lg:border-l lg:border-white/15 divide-y divide-white/15">
-                  {BUSINESS_MODEL_PILLARS.map((pillar) => (
-                    <div
-                      key={pillar.id}
-                      className="py-5 first:pt-0 last:pb-0 flex items-start gap-4 sm:gap-5"
-                    >
-                      <div className="w-11 h-11 rounded-xl bg-[#D89B3C]/15 border border-[#D89B3C]/35 flex items-center justify-center shrink-0 mt-0.5">
-                        <PillarIcon name={pillar.iconName} />
+                {/* Right Column (43% width): Vertical Gold Divider + 3 Bare Gold Icons + Text-Only Dividers */}
+                <div className="w-full lg:w-[43%] lg:pl-10 xl:pl-14 lg:border-l lg:border-[#9F854A]/85">
+                  {BUSINESS_MODEL_PILLARS.map((pillar, idx) => {
+                    const isLast = idx === BUSINESS_MODEL_PILLARS.length - 1;
+                    return (
+                      <div key={pillar.id} className="flex items-start gap-6 sm:gap-8">
+                        {/* Bare Large Gold Outline Icon (No Box, No Horizontal Line Underneath) */}
+                        <div className="w-12 sm:w-14 shrink-0 flex items-center justify-center pt-1">
+                          <PillarIcon name={pillar.iconName} />
+                        </div>
+
+                        {/* Text Column (Horizontal Divider ONLY under text) */}
+                        <div
+                          className={`flex-1 ${!isLast ? "pb-6 mb-6 border-b border-white/22" : "pb-0"
+                            }`}
+                        >
+                          <h3 className="font-display font-bold text-lg sm:text-[21px] text-white leading-snug mb-1.5">
+                            {pillar.title}
+                          </h3>
+                          <p className="font-body text-xs sm:text-[14.5px] text-[#D7DFDA] leading-[1.5]">
+                            {pillar.description}
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="font-display font-bold text-lg sm:text-xl text-white mb-1">
-                          {pillar.title}
-                        </h3>
-                        <p className="font-body text-xs sm:text-sm text-white/80 leading-relaxed">
-                          {pillar.description}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </motion.div>
           </div>
         </section>
 
-        {/* ── PART 17: BOTTOM CTA BANNER (Contact DHT. with Real Wooden Armchair) ── */}
-        <section className="relative bg-[#0E241B] text-white overflow-hidden border-t border-white/10">
-          <div className="container mx-auto px-6 lg:px-10">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              {/* Left Text & Button */}
-              <div className="lg:col-span-6 py-14 lg:py-20">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="h-[2px] w-8 bg-[#D89B3C]" />
-                  <span className="font-body text-xs font-bold uppercase tracking-[0.2em] text-[#D89B3C]">
-                    LET&apos;S WORK TOGETHER
-                  </span>
-                </div>
+        {/* ── PART 17: BOTTOM CTA BANNER (Contact DHT. — Hình 31 Full-Bleed Cinematic Photo) ── */}
+        <section className="relative w-full bg-[#0B1C0A] text-white overflow-hidden min-h-[380px] sm:min-h-[430px] lg:min-h-[470px] flex items-center">
+          {/* Full-Bleed Seamless Photograph (Dark Garden Bokeh Left + Sunlit Teak Armchair Right) */}
+          <img
+            src="/img/pdf-guide/about/contact-armchair-right.jpg?v=2"
+            alt="DHT Wooden Outdoor Armchair with Cushion"
+            className="pointer-events-none select-none absolute inset-0 w-full h-full object-cover object-right"
+          />
 
-                <h2
-                  className="font-display font-bold text-white leading-none mb-5"
-                  style={{ fontSize: "clamp(2.25rem, 4.2vw, 3.5rem)" }}
-                >
-                  Contact DHT.
-                </h2>
+          {/* Subtle mobile-only left scrim so text stays readable on narrow screens */}
+          <div
+            className="pointer-events-none absolute inset-0 lg:hidden"
+            style={{
+              background:
+                "linear-gradient(90deg, rgba(11, 28, 10, 0.88) 0%, rgba(11, 28, 10, 0.65) 55%, rgba(11, 28, 10, 0.15) 100%)",
+            }}
+          />
 
-                <p className="font-body text-sm sm:text-base text-white/85 leading-relaxed max-w-md mb-8">
-                  Tell us about your next furniture programme. Our team is ready to support you
-                  from development to export execution.
-                </p>
-
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-lg bg-[#B97846] hover:bg-[#C88550] text-white font-body text-sm font-semibold transition-all shadow-md"
-                >
-                  <span>Contact DHT</span>
-                  <ArrowRight size={16} />
-                </Link>
+          <div className="container mx-auto px-6 lg:px-14 max-w-[1380px] relative z-10 py-14 sm:py-16 lg:py-[72px]">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.6 }}
+              className="max-w-[500px]"
+            >
+              {/* Eyebrow: — LET'S WORK TOGETHER */}
+              <div className="flex items-center gap-3.5 mb-5">
+                <span className="h-[1.5px] w-10 bg-[#C88E46]" />
+                <span className="font-body text-xs sm:text-[13px] font-semibold uppercase tracking-[0.12em] text-[#C88E46]">
+                  LET&apos;S WORK TOGETHER
+                </span>
               </div>
 
-              {/* Right Authentic Wooden Armchair Image (Hình 31) */}
-              <div className="lg:col-span-6 h-full flex items-end justify-end -mx-6 lg:mx-0">
-                <img
-                  src="/img/pdf-guide/about/contact-armchair-right.jpg"
-                  alt="DHT Wooden Outdoor Armchair with Cushion"
-                  className="w-full max-h-[360px] object-cover object-right"
-                />
-              </div>
-            </div>
+              {/* Headline: Contact DHT. */}
+              <h2
+                className="font-display font-bold text-[#F5F4EE] leading-[1.06] tracking-tight mb-5"
+                style={{ fontSize: "clamp(2.5rem, 4.4vw, 4rem)" }}
+              >
+                Contact DHT.
+              </h2>
+
+              {/* 3-Line Description Matching Hình 31 */}
+              <p className="font-body text-sm sm:text-[16.5px] text-[#E1E6E0] leading-[1.56] mb-8">
+                Tell us about your next furniture programme.
+                <br className="hidden sm:inline" /> Our team is ready to support you from
+                development
+                <br className="hidden sm:inline" /> to export execution.
+              </p>
+
+              {/* CTA Button (#B57A38) */}
+              <Link
+                href="/contact"
+                className="min-w-[235px] h-[58px] px-8 rounded-[8px] bg-[#B57A38] hover:bg-[#C68944] text-white font-body text-base sm:text-[17px] font-bold inline-flex items-center justify-center gap-3.5 transition-all shadow-[0_6px_18px_rgba(0,0,0,0.28)]"
+              >
+                <span>Contact DHT</span>
+                <ArrowRight size={20} strokeWidth={1.6} />
+              </Link>
+            </motion.div>
           </div>
         </section>
       </main>

@@ -36,7 +36,7 @@ const REGIONAL_FACILITY_BLOCKS: RegionalFacilityBlock[] = [
     facilityCountLabel: "01 Facility",
     totalFootprint: "30,000 m²",
     bannerImage: "/img/pdf-guide/manufacturing/region-quynhon.jpg",
-    clusterCardImage: "/img/pdf-guide/manufacturing/cluster-quynhon.jpg",
+    clusterCardImage: "/img/pdf-guide/manufacturing/cluster-quynhon.jpg?v=2",
     clusterCardSummary: "Wooden outdoor furniture and mixed materials.",
     facilities: [
       {
@@ -55,7 +55,7 @@ const REGIONAL_FACILITY_BLOCKS: RegionalFacilityBlock[] = [
     facilityCountLabel: "04 Facilities",
     totalFootprint: "143,080 m²",
     bannerImage: "/img/pdf-guide/manufacturing/region-hcmc.jpg",
-    clusterCardImage: "/img/pdf-guide/manufacturing/cluster-hcmc.jpg",
+    clusterCardImage: "/img/pdf-guide/manufacturing/cluster-hcmc.jpg?v=2",
     clusterCardSummary: "Indoor, outdoor and mixed-material furniture.",
     facilities: [
       {
@@ -92,7 +92,7 @@ const REGIONAL_FACILITY_BLOCKS: RegionalFacilityBlock[] = [
     facilityCountLabel: "04 Facilities",
     totalFootprint: "98,300 m²",
     bannerImage: "/img/pdf-guide/manufacturing/region-hungyen.jpg",
-    clusterCardImage: "/img/pdf-guide/manufacturing/cluster-hungyen.jpg",
+    clusterCardImage: "/img/pdf-guide/manufacturing/cluster-hungyen.jpg?v=2",
     clusterCardSummary: "Metal furniture, indoor and outdoor projects.",
     facilities: [
       {
@@ -128,7 +128,7 @@ const REGIONAL_FACILITY_BLOCKS: RegionalFacilityBlock[] = [
     facilityCountLabel: "02 Facilities",
     totalFootprint: "272,000 m²",
     bannerImage: "/img/pdf-guide/manufacturing/region-phutho.jpg",
-    clusterCardImage: "/img/pdf-guide/manufacturing/cluster-phutho.jpg",
+    clusterCardImage: "/img/pdf-guide/manufacturing/cluster-phutho.jpg?v=2",
     clusterCardSummary:
       "Including 12,000 m² furniture and 260,000 m² panel & primary processing.",
     facilities: [
@@ -310,7 +310,7 @@ export default function ManufacturingPage() {
         title="Manufacturing Footprint | 11 Facilities Across Vietnam | DHT Furniture"
         description="Our family-owned manufacturing group operates 10 furniture production facilities and one wood panel and primary-processing facility across four regional clusters in Vietnam, with a combined footprint of 543,380 m²."
         canonical="https://dhtcompany.com/manufacturing"
-        image="/img/pdf-guide/manufacturing/hero-factory-exterior.jpg"
+        image="/img/pdf-guide/manufacturing/hero-factory-exterior.jpg?v=2"
       />
       <Schema
         id="schema-breadcrumbs-manufacturing"
@@ -329,132 +329,341 @@ export default function ManufacturingPage() {
       />
 
       <main className="bg-[#F7F4ED] text-[#132A1F] pt-16 lg:pt-[72px]">
-        {/* ── PART 18A: FOOTPRINT HERO BANNER + 4 KPIS (Clip THE ONE — Page 3 PDF) ── */}
-        <section className="relative bg-[#0E261C] text-white overflow-hidden border-b border-[#C88A36]/30">
-          {/* Right Factory Video: Clip THE ONE */}
-          <div className="absolute inset-y-0 right-0 w-full lg:w-[60%] pointer-events-none">
+        {/* ── PART 18A: FOOTPRINT HERO BANNER + 4 KPIS (Hình 33 Top + Clip THE ONE — Page 3 PDF) ── */}
+        <section className="relative bg-[#052419] text-white overflow-hidden">
+          {/* Right Factory Video: Clip THE ONE (seamlessly faded into emerald left) */}
+          <div className="absolute inset-y-0 right-0 w-full lg:w-[64%] pointer-events-none">
             <video
               autoPlay
               loop
               muted
               playsInline
               preload="metadata"
-              poster="/img/pdf-guide/home/brand-theone-factory.jpg?v=2"
-              className="w-full h-full object-cover opacity-40 lg:opacity-85"
+              poster="/img/pdf-guide/manufacturing/hero-factory-exterior.jpg?v=2"
+              className="w-full h-full object-cover object-center opacity-45 lg:opacity-90"
             >
               <source src="/video/theone-factory.mp4" type="video/mp4" />
             </video>
+            {/* Left-to-right emerald studio fade */}
             <div
               className="absolute inset-0"
               style={{
                 background:
-                  "linear-gradient(90deg, #0E261C 0%, rgba(14, 38, 28, 0.88) 36%, rgba(14, 38, 28, 0.18) 100%)",
+                  "linear-gradient(90deg, #052419 0%, rgba(5, 36, 25, 0.94) 22%, rgba(5, 36, 25, 0.62) 44%, rgba(5, 36, 25, 0.10) 74%, rgba(5, 36, 25, 0.04) 100%)",
+              }}
+            />
+            {/* Bottom subtle darkening under KPI strip */}
+            <div
+              className="absolute inset-x-0 bottom-0 h-[120px]"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(5, 36, 25, 0) 0%, rgba(5, 34, 24, 0.78) 45%, rgba(5, 34, 24, 0.96) 100%)",
               }}
             />
           </div>
 
-          <div className="container mx-auto px-6 lg:px-10 pt-14 pb-10 relative z-10">
-            <div className="max-w-3xl mb-10">
-              <div className="flex items-center gap-3 mb-3">
-                <span className="h-[1.5px] w-7 bg-[#D89B3C]" />
-                <span className="font-body text-xs font-bold uppercase tracking-[0.2em] text-[#D89B3C]">
+          {/* Subtle architectural curved wave accent behind left headline (Hình 33) */}
+          <svg
+            viewBox="0 0 1432 260"
+            preserveAspectRatio="none"
+            className="absolute inset-x-0 top-0 w-full h-[260px] pointer-events-none opacity-35"
+            aria-hidden="true"
+          >
+            <path
+              d="M 0,185 C 210,165 390,95 620,0"
+              fill="none"
+              stroke="rgba(196, 162, 101, 0.28)"
+              strokeWidth="1.2"
+            />
+          </svg>
+
+          {/* Upper Hero Copy Area — exact Hình 33 proportions (~245px on 1432px) */}
+          <div className="max-w-[1320px] mx-auto px-6 sm:px-8 lg:px-10 pt-9 pb-7 lg:pt-[38px] lg:pb-[26px] relative z-10">
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="max-w-[820px]"
+            >
+              <div className="flex items-center gap-3 mb-2.5 lg:mb-3">
+                <span className="h-[1.5px] w-7 bg-[#C99B52]" />
+                <span className="font-body text-[11px] font-semibold uppercase tracking-[0.2em] text-[#C99B52]">
                   OUR MANUFACTURING FOOTPRINT
                 </span>
               </div>
 
-              <h1
-                className="font-display font-bold text-white leading-[1.12] mb-4"
-                style={{ fontSize: "clamp(1.95rem, 3.8vw, 3.25rem)" }}
-              >
+              <h1 className="font-display font-bold text-white leading-[1.16] tracking-[-0.01em] mb-3 text-[26px] sm:text-[32px] lg:text-[38px] xl:text-[41px]">
                 11 Production Facilities.
                 <br />
                 One Family-Owned Manufacturing Group.
               </h1>
 
-              <p className="font-body text-sm sm:text-base text-white/85 leading-relaxed max-w-2xl">
+              <p className="font-body text-[13.5px] sm:text-[14.5px] text-white/85 leading-[1.55] max-w-[760px]">
                 Our family-owned manufacturing group operates 10 furniture production facilities and
                 one wood panel and primary-processing facility across four regional clusters in
                 Vietnam, with a combined footprint of 543,380 m².
               </p>
-            </div>
+            </motion.div>
+          </div>
 
-            {/* 4 KPI Strip inside Dark Green Banner */}
-            <div className="rounded-2xl bg-[#0A1D15]/90 backdrop-blur-md border border-[#D89B3C]/35 p-5 sm:p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-0">
-              <div className="flex items-center gap-4 lg:pr-6">
-                <Factory size={30} className="text-[#D89B3C] shrink-0" strokeWidth={1.6} />
-                <div>
-                  <p className="font-display font-bold text-2xl sm:text-3xl text-white leading-none">
-                    11
-                  </p>
-                  <p className="font-body text-xs text-white/80 mt-1">Production Facilities</p>
-                </div>
-              </div>
+          {/* Lower 4-KPI Strip with Signature Curved Golden Arc Wave (Hình 33 — height ~100px) */}
+          <div className="relative z-10">
+            {/* Full-bleed Curved Golden Arc + Translucent Emerald Ribbon Backdrop */}
+            <svg
+              viewBox="0 0 1432 106"
+              preserveAspectRatio="none"
+              className="absolute inset-0 w-full h-full pointer-events-none"
+              aria-hidden="true"
+            >
+              <defs>
+                <linearGradient id="kpi-strip-fill" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#05261B" stopOpacity="0.92" />
+                  <stop offset="50%" stopColor="#062319" stopOpacity="0.86" />
+                  <stop offset="100%" stopColor="#0B2E21" stopOpacity="0.90" />
+                </linearGradient>
+                <linearGradient id="hero-gold-arc" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#7C6333" stopOpacity="0.35" />
+                  <stop offset="8%" stopColor="#C8A35F" stopOpacity="0.85" />
+                  <stop offset="50%" stopColor="#9A7E46" stopOpacity="0.72" />
+                  <stop offset="90%" stopColor="#D4B26E" stopOpacity="0.88" />
+                  <stop offset="100%" stopColor="#856A36" stopOpacity="0.35" />
+                </linearGradient>
+                <linearGradient id="hero-gold-glow" x1="0%" y1="100%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#C8A35F" stopOpacity="0" />
+                  <stop offset="100%" stopColor="#D4B26E" stopOpacity="0.22" />
+                </linearGradient>
+              </defs>
+              {/* Soft emerald veil under the curved arc */}
+              <path
+                d="M 0,106 L 0,92 Q 30,8 106,4 L 1326,4 Q 1402,8 1432,92 L 1432,106 Z"
+                fill="url(#kpi-strip-fill)"
+              />
+              {/* Bottom-right soft golden wave sheen */}
+              <path
+                d="M 1180,106 Q 1345,98 1432,36 L 1432,106 Z"
+                fill="url(#hero-gold-glow)"
+              />
+              {/* Crisp thin curved golden arc stroke */}
+              <path
+                d="M 0,92 Q 30,8 106,4 L 1326,4 Q 1402,8 1432,92"
+                fill="none"
+                stroke="url(#hero-gold-arc)"
+                strokeWidth="1.4"
+              />
+              {/* Delicate bottom-right counter-curve accent */}
+              <path
+                d="M 1240,105 Q 1368,98 1432,48"
+                fill="none"
+                stroke="rgba(212, 178, 110, 0.42)"
+                strokeWidth="1"
+              />
+            </svg>
 
-              <div className="flex items-center gap-4 lg:px-6 lg:border-l lg:border-white/15">
-                <Layers size={30} className="text-[#D89B3C] shrink-0" strokeWidth={1.6} />
-                <div>
-                  <p className="font-display font-bold text-2xl sm:text-3xl text-white leading-none whitespace-nowrap">
-                    543,380 <span className="text-lg font-normal">m²</span>
-                  </p>
-                  <p className="font-body text-xs text-white/80 mt-1">Combined Footprint</p>
-                </div>
-              </div>
+            <div className="max-w-[1320px] mx-auto px-6 sm:px-8 lg:px-10 py-5 lg:py-[22px] relative z-10">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-5 sm:gap-x-6 lg:gap-0 items-center">
+                {/* KPI 1 */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.45, delay: 0.1 }}
+                  className="flex items-center gap-3.5 lg:pr-6"
+                >
+                  <Factory size={36} className="text-[#C89F58] shrink-0" strokeWidth={1.3} />
+                  <div>
+                    <p className="font-display font-bold text-[26px] lg:text-[31px] text-white leading-none tracking-[-0.01em] tabular-nums">
+                      11
+                    </p>
+                    <p className="font-body text-[12px] lg:text-[12.5px] text-white/80 mt-1.5 leading-snug">
+                      Production Facilities
+                    </p>
+                  </div>
+                </motion.div>
 
-              <div className="flex items-center gap-4 lg:px-6 lg:border-l lg:border-white/15">
-                <Armchair size={30} className="text-[#D89B3C] shrink-0" strokeWidth={1.6} />
-                <div>
-                  <p className="font-display font-bold text-2xl sm:text-3xl text-white leading-none whitespace-nowrap">
-                    283,380 <span className="text-lg font-normal">m²</span>
-                  </p>
-                  <p className="font-body text-xs text-white/80 mt-1">Furniture Production</p>
-                </div>
-              </div>
+                {/* KPI 2 */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.45, delay: 0.18 }}
+                  className="relative flex items-center gap-3.5 lg:px-7 lg:before:content-[''] lg:before:absolute lg:before:left-0 lg:before:top-1/2 lg:before:-translate-y-1/2 lg:before:h-[44px] lg:before:w-px lg:before:bg-[#D2B478]/25"
+                >
+                  <Layers size={36} className="text-[#C89F58] shrink-0" strokeWidth={1.3} />
+                  <div>
+                    <p className="font-display font-bold text-[26px] lg:text-[31px] text-white leading-none tracking-[-0.01em] whitespace-nowrap tabular-nums">
+                      543,380
+                      <span className="text-[17px] lg:text-[19px] font-semibold ml-1 text-white/95">
+                        m²
+                      </span>
+                    </p>
+                    <p className="font-body text-[12px] lg:text-[12.5px] text-white/80 mt-1.5 leading-snug">
+                      Combined Footprint
+                    </p>
+                  </div>
+                </motion.div>
 
-              <div className="flex items-center gap-4 lg:pl-6 lg:border-l lg:border-white/15">
-                <Box size={30} className="text-[#D89B3C] shrink-0" strokeWidth={1.6} />
-                <div>
-                  <p className="font-display font-bold text-2xl sm:text-3xl text-white leading-none whitespace-nowrap">
-                    260,000 <span className="text-lg font-normal">m²</span>
-                  </p>
-                  <p className="font-body text-xs text-white/80 mt-1">
-                    Panel &amp; Primary Processing
-                  </p>
-                </div>
+                {/* KPI 3 */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.45, delay: 0.26 }}
+                  className="relative flex items-center gap-3.5 lg:px-7 lg:before:content-[''] lg:before:absolute lg:before:left-0 lg:before:top-1/2 lg:before:-translate-y-1/2 lg:before:h-[44px] lg:before:w-px lg:before:bg-[#D2B478]/25"
+                >
+                  <Armchair size={36} className="text-[#C89F58] shrink-0" strokeWidth={1.3} />
+                  <div>
+                    <p className="font-display font-bold text-[26px] lg:text-[31px] text-white leading-none tracking-[-0.01em] whitespace-nowrap tabular-nums">
+                      283,380
+                      <span className="text-[17px] lg:text-[19px] font-semibold ml-1 text-white/95">
+                        m²
+                      </span>
+                    </p>
+                    <p className="font-body text-[12px] lg:text-[12.5px] text-white/80 mt-1.5 leading-snug">
+                      Furniture Production
+                    </p>
+                  </div>
+                </motion.div>
+
+                {/* KPI 4 */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.45, delay: 0.34 }}
+                  className="relative flex items-center gap-3.5 lg:pl-7 lg:before:content-[''] lg:before:absolute lg:before:left-0 lg:before:top-1/2 lg:before:-translate-y-1/2 lg:before:h-[44px] lg:before:w-px lg:before:bg-[#D2B478]/25"
+                >
+                  <Layers size={36} className="text-[#C89F58] shrink-0" strokeWidth={1.3} />
+                  <div>
+                    <p className="font-display font-bold text-[26px] lg:text-[31px] text-white leading-none tracking-[-0.01em] whitespace-nowrap tabular-nums">
+                      260,000
+                      <span className="text-[17px] lg:text-[19px] font-semibold ml-1 text-white/95">
+                        m²
+                      </span>
+                    </p>
+                    <p className="font-body text-[12px] lg:text-[12.5px] text-white/80 mt-1.5 leading-snug">
+                      Panel &amp; Primary Processing
+                    </p>
+                  </div>
+                </motion.div>
               </div>
             </div>
           </div>
         </section>
 
         {/* ── PART 18B: GEOGRAPHIC DISTRIBUTION — FOUR SPECIALISED CLUSTERS (Hình 33 Bottom) ── */}
-        <section className="py-16 lg:py-20 bg-[#FAF8F3] border-b border-black/5">
-          <div className="container mx-auto px-6 lg:px-10">
-            <div className="mb-10">
+        <section className="relative pt-8 pb-14 lg:pt-[34px] lg:pb-[58px] bg-[#F7F1EB] border-b border-[#E5DCCE] overflow-hidden">
+          {/* Subtle luxury diagonal silk waves across champagne-ivory canvas (Hình 33) */}
+          <svg
+            viewBox="0 0 1432 610"
+            preserveAspectRatio="none"
+            className="absolute inset-0 w-full h-full pointer-events-none"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="clusters-sheen-1" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#EFE4D6" stopOpacity="0.65" />
+                <stop offset="50%" stopColor="#FFFDF9" stopOpacity="0.45" />
+                <stop offset="100%" stopColor="#F5ECE1" stopOpacity="0.2" />
+              </linearGradient>
+              <linearGradient id="clusters-sheen-2" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.52" />
+                <stop offset="100%" stopColor="#EDE2D3" stopOpacity="0.3" />
+              </linearGradient>
+            </defs>
+            <path
+              d="M 0,480 C 420,440 940,210 1310,0 L 1432,0 L 1432,120 C 1020,330 480,530 0,610 Z"
+              fill="url(#clusters-sheen-1)"
+            />
+            <path
+              d="M 110,610 C 560,515 1060,310 1432,70 L 1432,610 Z"
+              fill="url(#clusters-sheen-2)"
+              opacity="0.48"
+            />
+          </svg>
+
+          <div className="max-w-[1320px] mx-auto px-6 sm:px-8 lg:px-10 relative z-10">
+            {/* Header Block — exact spacing to Hình 33 */}
+            <div className="mb-6 lg:mb-[22px]">
               <div className="flex items-center gap-3 mb-2">
-                <span className="h-[1.5px] w-7 bg-[#B97846]" />
-                <span className="font-body text-xs font-bold uppercase tracking-[0.2em] text-[#B97846]">
+                <span className="h-[1.5px] w-8 bg-[#A87544]" />
+                <span className="font-body text-[11px] font-bold uppercase tracking-[0.18em] text-[#9A693A]">
                   GEOGRAPHIC DISTRIBUTION
                 </span>
               </div>
-              <h2
-                className="font-display font-bold text-[#0E241B] leading-tight mb-2"
-                style={{ fontSize: "clamp(1.75rem, 3vw, 2.5rem)" }}
-              >
+              <h2 className="font-display font-bold text-[#0C2319] leading-[1.12] tracking-[-0.01em] mb-1.5 text-[28px] sm:text-[36px] lg:text-[42px]">
                 Four Specialised Manufacturing Clusters.
               </h2>
-              <p className="font-body text-sm sm:text-base text-[#37413D]">
+              <p className="font-body text-[14px] sm:text-[15px] text-[#2F3B36] leading-relaxed">
                 Specialised production capabilities across Northern, Central and Southern Vietnam.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              {/* Left: Bronze-Toned Vietnam Cluster Map */}
-              <div className="lg:col-span-5 lg:border-r lg:border-[#E2DACB] lg:pr-6 flex justify-center">
-                <div className="relative w-full max-w-[360px]">
+            {/* 2-Column Split: 33.5% Map | 1px Vertical Divider | 64% 2×2 Cards (exact Hình 33 geometry) */}
+            <div className="flex flex-col lg:flex-row lg:items-stretch gap-8 lg:gap-0">
+              {/* Left Column: 3D-Embossed Sand-Beige Vietnam Cluster Map */}
+              <div className="lg:w-[33.5%] shrink-0 lg:pr-7 flex items-center justify-center">
+                <div className="relative w-full max-w-[380px] lg:max-w-none">
                   <svg
-                    viewBox="70 80 310 560"
-                    className="w-full h-auto drop-shadow-sm select-none"
+                    viewBox="10 72 478 596"
+                    className="w-full h-auto max-h-[398px] select-none overflow-visible"
                     aria-label="Four Specialised Manufacturing Clusters in Vietnam"
                   >
+                    <defs>
+                      {/* Warm tactile sand-stone relief gradient */}
+                      <linearGradient id="vn-sand-relief" x1="15%" y1="5%" x2="85%" y2="95%">
+                        <stop offset="0%" stopColor="#F5E7D6" />
+                        <stop offset="52%" stopColor="#E6D4BC" />
+                        <stop offset="100%" stopColor="#D7C2A6" />
+                      </linearGradient>
+                      {/* Highlight gradient for active/cluster province */}
+                      <linearGradient id="vn-sand-highlight" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#EED6B8" />
+                        <stop offset="100%" stopColor="#D9B78E" />
+                      </linearGradient>
+                      {/* 3D Soft Embossed Drop Shadow */}
+                      <filter id="vn-map-3d-shadow" x="-15%" y="-10%" width="135%" height="125%">
+                        <feDropShadow
+                          dx="-5"
+                          dy="9"
+                          stdDeviation="6"
+                          floodColor="#A69072"
+                          floodOpacity="0.45"
+                        />
+                      </filter>
+                      {/* Soft Pill Elevation Shadow */}
+                      <filter id="vn-pill-shadow" x="-15%" y="-20%" width="135%" height="160%">
+                        <feDropShadow
+                          dx="0"
+                          dy="4"
+                          stdDeviation="3.5"
+                          floodColor="#07241A"
+                          floodOpacity="0.28"
+                        />
+                      </filter>
+                      {/* Pin Ring Shadow */}
+                      <filter id="vn-pin-shadow" x="-50%" y="-50%" width="200%" height="200%">
+                        <feDropShadow
+                          dx="0"
+                          dy="2"
+                          stdDeviation="1.8"
+                          floodColor="#3F2D1D"
+                          floodOpacity="0.35"
+                        />
+                      </filter>
+                    </defs>
+
+                    {/* Extruded 3D thickness underlayer */}
+                    <g transform="translate(-3.5, 4.5)" opacity="0.72" filter="url(#vn-map-3d-shadow)">
+                      {mapData.provinces.map(
+                        (prov: { id: string; name: string; path: string }) => (
+                          <path
+                            key={`extrude-${prov.id}`}
+                            d={prov.path}
+                            fill="#CBB597"
+                            stroke="#CBB597"
+                            strokeWidth="1.2"
+                          />
+                        )
+                      )}
+                    </g>
+
+                    {/* Top Sculpted Sand-Beige Landmass */}
                     <g>
                       {mapData.provinces.map(
                         (prov: { id: string; name: string; path: string }) => {
@@ -472,154 +681,295 @@ export default function ManufacturingPage() {
                             <path
                               key={prov.id}
                               d={prov.path}
-                              fill={isClusterProv ? "#DFC39D" : "#EFE6D5"}
-                              stroke="#D5C5AA"
-                              strokeWidth="0.6"
+                              fill={
+                                isClusterProv
+                                  ? "url(#vn-sand-highlight)"
+                                  : "url(#vn-sand-relief)"
+                              }
+                              stroke="#E6D6C0"
+                              strokeWidth="0.55"
                             />
                           );
                         }
                       )}
                     </g>
 
-                    {/* Hung Yen Pin & Callout */}
+                    {/* Sovereign Archipelagos (Hoang Sa & Truong Sa) */}
+                    <g transform="translate(342, 326)" opacity="0.75">
+                      <circle cx="14" cy="6" r="2.2" fill="#B58352" />
+                      <circle cx="20" cy="9" r="1.4" fill="#B58352" />
+                      <text
+                        x="17"
+                        y="21"
+                        textAnchor="middle"
+                        fill="#7B6753"
+                        fontSize="7.5"
+                        fontWeight="700"
+                        letterSpacing="0.06em"
+                      >
+                        HOANG SA
+                      </text>
+                    </g>
+                    <g transform="translate(356, 496)" opacity="0.75">
+                      <circle cx="14" cy="6" r="2.2" fill="#B58352" />
+                      <circle cx="21" cy="10" r="1.4" fill="#B58352" />
+                      <text
+                        x="17"
+                        y="21"
+                        textAnchor="middle"
+                        fill="#7B6753"
+                        fontSize="7.5"
+                        fontWeight="700"
+                        letterSpacing="0.06em"
+                      >
+                        TRUONG SA
+                      </text>
+                    </g>
+
+                    {/* 1. Hung Yen Pin + Leader + Slanted Dark-Green Pill */}
                     <g
-                      className="cursor-pointer"
+                      className="cursor-pointer transition-opacity"
                       onClick={() => setActiveCluster("hungyen")}
                       onMouseEnter={() => setActiveCluster("hungyen")}
                       onMouseLeave={() => setActiveCluster(null)}
                     >
                       <polyline
-                        points="169,184 205,162 232,162"
+                        points="174,190 226,133 258,133"
                         fill="none"
-                        stroke="#0E241B"
-                        strokeWidth="1.2"
+                        stroke={activeCluster === "hungyen" ? "#AB7446" : "#183328"}
+                        strokeWidth="1.5"
                       />
-                      <circle cx="169" cy="184" r="5" fill="#B97846" stroke="#FFFFFF" strokeWidth="1.5" />
-                      <rect x="232" y="148" width="90" height="24" rx="5" fill="#0E241B" />
-                      <text x="277" y="164" textAnchor="middle" fill="#FFFFFF" fontSize="9.5" fontWeight="700">
-                        Hung Yen
-                      </text>
+                      <circle
+                        cx="174"
+                        cy="190"
+                        r={activeCluster === "hungyen" ? "8" : "6.5"}
+                        fill="#AB7446"
+                        stroke="#FFFFFF"
+                        strokeWidth="2.4"
+                        filter="url(#vn-pin-shadow)"
+                      />
+                      <g transform="translate(260, 118)" filter="url(#vn-pill-shadow)">
+                        <rect
+                          x="0"
+                          y="0"
+                          width="126"
+                          height="30"
+                          rx="6"
+                          transform="skewX(-14)"
+                          fill={activeCluster === "hungyen" ? "#AB7446" : "#072B1F"}
+                        />
+                        <text
+                          x="60"
+                          y="19.5"
+                          textAnchor="middle"
+                          fill="#FFFFFF"
+                          fontSize="12.5"
+                          fontWeight="600"
+                        >
+                          Hung Yen
+                        </text>
+                      </g>
                     </g>
 
-                    {/* Phu Tho & Vinh Phuc Pin & Callout */}
+                    {/* 2. Phu Tho & Vinh Phuc Pin + Leader + Slanted Dark-Green Pill */}
                     <g
-                      className="cursor-pointer"
+                      className="cursor-pointer transition-opacity"
                       onClick={() => setActiveCluster("phutho")}
                       onMouseEnter={() => setActiveCluster("phutho")}
                       onMouseLeave={() => setActiveCluster(null)}
                     >
                       <polyline
-                        points="154,173 200,196 222,196"
+                        points="149,170 212,188 242,188"
                         fill="none"
-                        stroke="#0E241B"
-                        strokeWidth="1.2"
+                        stroke={activeCluster === "phutho" ? "#AB7446" : "#183328"}
+                        strokeWidth="1.5"
                       />
-                      <circle cx="154" cy="173" r="5" fill="#B97846" stroke="#FFFFFF" strokeWidth="1.5" />
-                      <rect x="222" y="183" width="136" height="24" rx="5" fill="#0E241B" />
-                      <text x="290" y="199" textAnchor="middle" fill="#FFFFFF" fontSize="9.5" fontWeight="700">
-                        Phu Tho &amp; Vinh Phuc
-                      </text>
+                      <circle
+                        cx="149"
+                        cy="170"
+                        r={activeCluster === "phutho" ? "8" : "6.5"}
+                        fill="#AB7446"
+                        stroke="#FFFFFF"
+                        strokeWidth="2.4"
+                        filter="url(#vn-pin-shadow)"
+                      />
+                      <g transform="translate(244, 173)" filter="url(#vn-pill-shadow)">
+                        <rect
+                          x="0"
+                          y="0"
+                          width="224"
+                          height="30"
+                          rx="6"
+                          transform="skewX(-14)"
+                          fill={activeCluster === "phutho" ? "#AB7446" : "#072B1F"}
+                        />
+                        <text
+                          x="108"
+                          y="19.5"
+                          textAnchor="middle"
+                          fill="#FFFFFF"
+                          fontSize="12.5"
+                          fontWeight="600"
+                        >
+                          Phu Tho &amp; Vinh Phuc
+                        </text>
+                      </g>
                     </g>
 
-                    {/* Quy Nhon Pin & Callout */}
+                    {/* 3. Quy Nhon Pin + Leader + Slanted Dark-Green Pill */}
                     <g
-                      className="cursor-pointer"
+                      className="cursor-pointer transition-opacity"
                       onClick={() => setActiveCluster("quynhon")}
                       onMouseEnter={() => setActiveCluster("quynhon")}
                       onMouseLeave={() => setActiveCluster(null)}
                     >
                       <polyline
-                        points="247,428 272,414 285,414"
+                        points="279,446 308,425 326,425"
                         fill="none"
-                        stroke="#0E241B"
-                        strokeWidth="1.2"
+                        stroke={activeCluster === "quynhon" ? "#AB7446" : "#183328"}
+                        strokeWidth="1.5"
                       />
-                      <circle cx="247" cy="428" r="5" fill="#B97846" stroke="#FFFFFF" strokeWidth="1.5" />
-                      <rect x="285" y="401" width="84" height="24" rx="5" fill="#0E241B" />
-                      <text x="327" y="417" textAnchor="middle" fill="#FFFFFF" fontSize="9.5" fontWeight="700">
-                        Quy Nhon
-                      </text>
+                      <circle
+                        cx="279"
+                        cy="446"
+                        r={activeCluster === "quynhon" ? "8" : "6.5"}
+                        fill="#AB7446"
+                        stroke="#FFFFFF"
+                        strokeWidth="2.4"
+                        filter="url(#vn-pin-shadow)"
+                      />
+                      <g transform="translate(328, 410)" filter="url(#vn-pill-shadow)">
+                        <rect
+                          x="0"
+                          y="0"
+                          width="134"
+                          height="30"
+                          rx="6"
+                          transform="skewX(-14)"
+                          fill={activeCluster === "quynhon" ? "#AB7446" : "#072B1F"}
+                        />
+                        <text
+                          x="63"
+                          y="19.5"
+                          textAnchor="middle"
+                          fill="#FFFFFF"
+                          fontSize="12.5"
+                          fontWeight="600"
+                        >
+                          Quy Nhon
+                        </text>
+                      </g>
                     </g>
 
-                    {/* Ho Chi Minh City Pin & Callout */}
+                    {/* 4. Ho Chi Minh City Pin + Leader + Slanted Dark-Green Pill */}
                     <g
-                      className="cursor-pointer"
+                      className="cursor-pointer transition-opacity"
                       onClick={() => setActiveCluster("hcmc")}
                       onMouseEnter={() => setActiveCluster("hcmc")}
                       onMouseLeave={() => setActiveCluster(null)}
                     >
                       <polyline
-                        points="196,535 245,535"
+                        points="196,572 292,572"
                         fill="none"
-                        stroke="#0E241B"
-                        strokeWidth="1.2"
+                        stroke={activeCluster === "hcmc" ? "#AB7446" : "#183328"}
+                        strokeWidth="1.5"
                       />
-                      <circle cx="196" cy="535" r="5" fill="#B97846" stroke="#FFFFFF" strokeWidth="1.5" />
-                      <rect x="245" y="522" width="115" height="24" rx="5" fill="#0E241B" />
-                      <text x="302" y="538" textAnchor="middle" fill="#FFFFFF" fontSize="9.5" fontWeight="700">
-                        Ho Chi Minh City
-                      </text>
-                    </g>
-
-                    {/* Sovereign Archipelagos */}
-                    <g transform="translate(295, 340)">
-                      <circle cx="10" cy="8" r="2" fill="#B97846" />
-                      <text x="10" y="20" textAnchor="middle" fill="#6E5A4F" fontSize="6.5" fontWeight="700">
-                        HOANG SA
-                      </text>
-                    </g>
-                    <g transform="translate(295, 485)">
-                      <circle cx="10" cy="8" r="2" fill="#B97846" />
-                      <text x="10" y="20" textAnchor="middle" fill="#6E5A4F" fontSize="6.5" fontWeight="700">
-                        TRUONG SA
-                      </text>
+                      <circle
+                        cx="196"
+                        cy="572"
+                        r={activeCluster === "hcmc" ? "8" : "6.5"}
+                        fill="#AB7446"
+                        stroke="#FFFFFF"
+                        strokeWidth="2.4"
+                        filter="url(#vn-pin-shadow)"
+                      />
+                      <g transform="translate(294, 557)" filter="url(#vn-pill-shadow)">
+                        <rect
+                          x="0"
+                          y="0"
+                          width="174"
+                          height="30"
+                          rx="6"
+                          transform="skewX(-14)"
+                          fill={activeCluster === "hcmc" ? "#AB7446" : "#072B1F"}
+                        />
+                        <text
+                          x="83"
+                          y="19.5"
+                          textAnchor="middle"
+                          fill="#FFFFFF"
+                          fontSize="12.5"
+                          fontWeight="600"
+                        >
+                          Ho Chi Minh City
+                        </text>
+                      </g>
                     </g>
                   </svg>
                 </div>
               </div>
 
-              {/* Right: 2x2 Regional Cards with Product Imagery */}
-              <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5">
-                {REGIONAL_FACILITY_BLOCKS.map((block) => {
+              {/* Crisp 1px Vertical Divider matching height of 2×2 Cards (x=510 in Hình 33) */}
+              <div className="hidden lg:block w-px bg-[#DDD3C4] self-stretch shrink-0" />
+
+              {/* Right Column: 2×2 Regional Cluster Cards (exact Hình 33 dimensions ~188px height) */}
+              <div className="flex-1 lg:pl-8 grid grid-cols-1 md:grid-cols-2 gap-x-5 lg:gap-x-[22px] gap-y-4 lg:gap-y-[18px]">
+                {REGIONAL_FACILITY_BLOCKS.map((block, index) => {
                   const isHighlighted = activeCluster === block.id;
                   const shortTitle =
                     block.id === "hcmc" ? "Ho Chi Minh City" : block.clusterName;
                   return (
-                    <div
+                    <motion.div
                       key={block.id}
+                      initial={{ opacity: 0, y: 14 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-40px" }}
+                      transition={{ duration: 0.45, delay: index * 0.08 }}
                       onMouseEnter={() => setActiveCluster(block.id)}
                       onMouseLeave={() => setActiveCluster(null)}
-                      className={`rounded-2xl bg-[#F4EFE4] border transition-all overflow-hidden flex items-stretch justify-between shadow-xs ${isHighlighted
-                        ? "border-[#B97846] ring-2 ring-[#B97846]/30"
-                        : "border-[#E3D9C6]"
-                        }`}
+                      className={`group relative rounded-[14px] min-h-[184px] lg:h-[188px] overflow-hidden border transition-all duration-300 bg-gradient-to-br from-[#FFF9F4] via-[#FAF3EA] to-[#F5EADF] ${
+                        isHighlighted
+                          ? "border-[#AB7446] ring-1 ring-[#AB7446]/35 shadow-[0_10px_24px_-6px_rgba(14,36,27,0.14)] -translate-y-0.5"
+                          : "border-[#E3D7C7] shadow-[0_4px_12px_-3px_rgba(110,88,64,0.10),0_1px_2px_rgba(110,88,64,0.06)]"
+                      }`}
                     >
-                      <div className="p-5 flex flex-col justify-between flex-1">
-                        <div>
-                          <span className="font-body text-[10px] font-bold uppercase tracking-[0.14em] text-[#4A5550] block mb-1">
-                            {block.regionLabel}
-                          </span>
-                          <h3 className="font-display font-bold text-lg sm:text-xl text-[#0E241B] leading-snug">
-                            {shortTitle}
-                          </h3>
-                          <p className="font-display font-bold text-2xl sm:text-[26px] text-[#B97846] my-1.5 whitespace-nowrap">
-                            {block.totalFootprint}
-                          </p>
-                          <div className="w-6 h-[1.5px] bg-[#B97846] mb-2.5" />
-                        </div>
-                        <p className="font-body text-xs text-[#2E3834] leading-relaxed">
-                          {block.clusterCardSummary}
-                        </p>
-                      </div>
-
-                      <div className="w-28 sm:w-32 shrink-0 overflow-hidden bg-[#EAE2D3]">
+                      {/* Right-side Seamless Product Cutout + Diagonal Studio Lighting */}
+                      <div className="absolute inset-y-0 right-0 w-[44%] sm:w-[45%] pointer-events-none select-none overflow-hidden">
                         <img
                           src={block.clusterCardImage}
                           alt={shortTitle}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover object-right transition-transform duration-500 group-hover:scale-[1.03]"
+                        />
+                        {/* Soft seamless blend fade on left edge into card ivory */}
+                        <div
+                          className="absolute inset-y-0 left-0 w-10"
+                          style={{
+                            background:
+                              "linear-gradient(90deg, #FAF3EA 0%, rgba(250, 243, 234, 0.72) 40%, rgba(250, 243, 234, 0) 100%)",
+                          }}
                         />
                       </div>
-                    </div>
+
+                      {/* Left-side Content Hierarchy */}
+                      <div className="relative z-10 w-[64%] sm:w-[63%] h-full px-5 py-4 lg:px-[22px] lg:py-[19px] flex flex-col justify-between">
+                        <div>
+                          <span className="font-body text-[10px] lg:text-[10.5px] font-bold uppercase tracking-[0.12em] text-[#4E5A54] block">
+                            {block.regionLabel}
+                          </span>
+                          <h3 className="font-display font-bold text-[18px] sm:text-[19px] xl:text-[21px] text-[#0C2319] leading-[1.18] mt-1 whitespace-nowrap">
+                            {shortTitle}
+                          </h3>
+                          <p className="font-display font-bold text-[23px] lg:text-[27px] text-[#AB7446] leading-[1.15] mt-1.5 whitespace-nowrap tracking-[-0.01em] tabular-nums">
+                            {block.totalFootprint}
+                          </p>
+                          <div className="w-7 h-[1.5px] bg-[#AB7446]/80 mt-2.5" />
+                        </div>
+
+                        <p className="font-body text-[12px] lg:text-[12.5px] text-[#2B3732] leading-[1.45] mt-2 max-w-[235px]">
+                          {block.clusterCardSummary}
+                        </p>
+                      </div>
+                    </motion.div>
                   );
                 })}
               </div>

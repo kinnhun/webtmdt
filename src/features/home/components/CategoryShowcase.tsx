@@ -14,9 +14,9 @@ const BRAND_ITEMS: BrandShowcaseItem[] = [
     modalTitle: "DHT | Outdoor Furniture",
     modalDescription:
       "DHT manufactures outdoor furniture for dining, lounging and hospitality spaces. Contact DHT Furniture Vietnam for OEM enquiries.",
-    factoryImage: "/img/pdf-guide/home/brand-dht-factory.jpg",
+    factoryImage: "/img/pdf-guide/home/brand-dht-factory.jpg?v=3",
     brandCardImage: "/img/pdf-guide/brands/card-dht.jpg",
-    videoUrl: "/video/hero-banner.mp4",
+    videoUrl: "/video/dht-fac-1.mp4",
   },
   {
     id: "JAGER",
@@ -26,9 +26,9 @@ const BRAND_ITEMS: BrandShowcaseItem[] = [
     modalTitle: "JAGER | Indoor Furniture",
     modalDescription:
       "JAGER manufactures indoor furniture for residential spaces. For OEM enquiries, contact DHT Furniture Vietnam.",
-    factoryImage: "/img/pdf-guide/home/brand-jager-factory.jpg",
+    factoryImage: "/img/pdf-guide/home/brand-jager-factory.jpg?v=3",
     brandCardImage: "/img/pdf-guide/brands/card-jager.jpg",
-    videoUrl: "/video/hero-banner.mp4",
+    videoUrl: "/video/jager-factory.mp4",
   },
   {
     id: "THE ONE",
@@ -38,9 +38,9 @@ const BRAND_ITEMS: BrandShowcaseItem[] = [
     modalTitle: "THE ONE | Office & Project Furniture",
     modalDescription:
       "THE ONE manufactures office furniture and furniture for indoor and outdoor projects. For OEM enquiries, contact DHT Furniture Vietnam.",
-    factoryImage: "/img/pdf-guide/home/brand-theone-factory.jpg",
+    factoryImage: "/img/pdf-guide/home/brand-theone-factory.jpg?v=3",
     brandCardImage: "/img/pdf-guide/brands/card-theone.jpg",
-    videoUrl: "/video/hero-banner.mp4",
+    videoUrl: "/video/theone-factory.mp4",
   },
   {
     id: "MEKONG",
@@ -50,9 +50,9 @@ const BRAND_ITEMS: BrandShowcaseItem[] = [
     modalTitle: "MEKONG | Wood Processing & Panels",
     modalDescription:
       "MEKONG produces wood panels and processed wood materials for furniture and interior applications. For trade and OEM enquiries, contact DHT Furniture Vietnam.",
-    factoryImage: "/img/pdf-guide/home/brand-mekong-factory.jpg",
+    factoryImage: "/img/pdf-guide/home/brand-mekong-factory.jpg?v=3",
     brandCardImage: "/img/pdf-guide/brands/card-mekong.jpg",
-    videoUrl: "/video/hero-banner.mp4",
+    videoUrl: "/video/mekong-factory.mp4",
   },
 ];
 

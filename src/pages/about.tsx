@@ -126,7 +126,7 @@ export default function AboutPage() {
       />
 
       <main className="bg-[#FAF8F3] text-[#132A1F]">
-        {/* ── PART 11: HERO VIDEO (JAGER FACTORY VIDEO, NO GIANT PLAY BUTTON) ── */}
+        {/* ── PART 11: HERO VIDEO (Clip JAGER — Page 3 & Page 18 PDF, NO GIANT PLAY BUTTON) ── */}
         <section className="relative min-h-[82vh] lg:min-h-[88vh] flex items-center justify-center overflow-hidden bg-[#0C2118] pt-20">
           <video
             autoPlay
@@ -134,10 +134,10 @@ export default function AboutPage() {
             muted
             playsInline
             preload="metadata"
-            poster="/img/pdf-guide/about/about-hero-poster.jpg"
+            poster="/img/pdf-guide/home/brand-jager-factory.jpg?v=2"
             className="absolute inset-0 w-full h-full object-cover"
           >
-            <source src="/video/hero-banner.mp4" type="video/mp4" />
+            <source src="/video/jager-factory.mp4" type="video/mp4" />
           </video>
 
           <div

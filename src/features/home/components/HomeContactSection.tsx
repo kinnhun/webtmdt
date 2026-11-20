@@ -3,119 +3,140 @@ import { DhtHorizontalLogo } from "@/components/ui/BrandLogos";
 
 export default function HomeContactSection() {
   return (
-    <section className="relative bg-[#0E261C] text-white overflow-hidden border-t border-white/10">
-      {/* Subtle dappled sunlight gradient */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(circle at 18% 25%, rgba(255, 255, 255, 0.07), transparent 45%), linear-gradient(135deg, #133124 0%, #0B1F16 100%)",
-        }}
+    <section className="relative w-full overflow-hidden bg-[#0A2219] text-white">
+      {/* Full-Canvas Authentic Background (Top-Left Leaf + Diagonal Sunbeams + Bottom-Left Wooden Armchair) */}
+      <img
+        src="/img/pdf-guide/home/contact-section-bg.jpg"
+        alt="DHT Commercial Office and Wooden Outdoor Armchair"
+        className="pointer-events-none select-none absolute inset-0 w-full h-full object-cover object-left-bottom"
       />
 
-      <div className="container mx-auto px-6 lg:px-10 pt-16 lg:pt-20 pb-0 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-stretch">
-          {/* Left Column: Brand + Title + Real Wooden Armchair Photo at Bottom-Left */}
-          <div className="lg:col-span-6 flex flex-col justify-between">
-            <div className="pb-8">
-              <div className="mb-8">
-                <DhtHorizontalLogo iconSize={38} textClassName="text-xl sm:text-2xl" />
-              </div>
-
-              <div className="flex items-center gap-3 mb-4">
-                <span className="h-[2px] w-9 bg-[#D89B3C]" />
-                <span className="font-body text-xs sm:text-sm font-semibold uppercase tracking-[0.25em] text-[#D89B3C]">
-                  GET IN TOUCH
-                </span>
-              </div>
-
-              <h2
-                className="font-display font-bold text-white leading-none mb-4"
-                style={{ fontSize: "clamp(2.5rem, 5vw, 4.25rem)" }}
-              >
-                Contact DHT
-              </h2>
-
-              <p className="font-body text-xs sm:text-sm font-medium uppercase tracking-[0.24em] text-[#D89B3C]">
-                DHT COMMERCIAL OFFICE
-              </p>
-            </div>
-
-            {/* Bottom-Left Authentic Wooden Armchair Corner Image (Hình 16) */}
-            <div className="mt-auto -mx-6 lg:mx-0 max-w-md overflow-hidden rounded-tr-2xl">
-              <img
-                src="/img/pdf-guide/home/contact-armchair-corner.jpg"
-                alt="DHT Outdoor Wooden Armchair"
-                className="w-full h-48 sm:h-56 object-cover object-left-bottom"
+      <div className="container mx-auto px-6 lg:px-14 max-w-[1430px] relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[560px] lg:min-h-[680px]">
+          {/* Left Column (50% -> 6 cols): Logo + GET IN TOUCH + Contact DHT + Armchair Space Below */}
+          <div className="lg:col-span-6 pt-12 sm:pt-16 lg:pt-[70px] pb-56 sm:pb-64 lg:pb-16 flex flex-col justify-start">
+            {/* Official Horizontal Logo */}
+            <div className="mb-12 sm:mb-14 lg:mb-[66px]">
+              <DhtHorizontalLogo
+                iconSize={46}
+                textClassName="text-xl sm:text-2xl lg:text-[26px]"
               />
             </div>
+
+            {/* Eyebrow: —— GET IN TOUCH */}
+            <div className="flex items-center gap-5 mb-5">
+              <span className="h-[3px] w-14 sm:w-20 rounded-full bg-[#D08B43]" />
+              <span className="font-body text-sm sm:text-base font-normal uppercase tracking-[0.28em] text-[#D89448]">
+                GET IN TOUCH
+              </span>
+            </div>
+
+            {/* Main Serif Heading: Contact DHT */}
+            <h2
+              className="font-display font-bold text-[#EBE8E0] leading-none tracking-tight mb-5"
+              style={{ fontSize: "clamp(2.75rem, 5vw, 4.35rem)" }}
+            >
+              Contact DHT
+            </h2>
+
+            {/* Sub-label: DHT COMMERCIAL OFFICE */}
+            <p className="font-body text-xs sm:text-[15px] font-medium uppercase tracking-[0.28em] text-[#D89448]">
+              DHT COMMERCIAL OFFICE
+            </p>
           </div>
 
-          {/* Right Column: 4 Contact Rows with Square Bronze Icons */}
-          <div className="lg:col-span-6 lg:pl-10 lg:border-l lg:border-[#D89B3C]/40 pb-16 flex flex-col justify-center">
-            <div className="divide-y divide-white/15">
-              {/* Row 1: Email */}
-              <div className="py-5 first:pt-0 flex items-center gap-5">
-                <div className="w-12 h-12 rounded-xl bg-white/5 border border-[#D89B3C]/50 flex items-center justify-center shrink-0 shadow-inner">
-                  <Mail size={22} className="text-[#D89B3C]" strokeWidth={1.75} />
-                </div>
-                <div>
-                  <span className="font-body text-[11px] font-semibold uppercase tracking-[0.16em] text-white/75 block mb-1">
-                    EMAIL OUR TEAM
-                  </span>
-                  <a
-                    href="mailto:sales@dhtcompany.com"
-                    className="font-body text-lg sm:text-2xl font-bold text-white hover:text-[#E5B869] transition-colors break-all"
+          {/* Right Column (50% -> 6 cols): Vertical Gold Line + 4 Contact Rows */}
+          <div className="lg:col-span-6 flex items-center pb-14 lg:py-16">
+            {/* Vertical Gold Line matching exact height of the 4 icon rows (y=148..551) */}
+            <div className="w-full lg:pl-12 xl:pl-16 lg:border-l-[1.5px] lg:border-[#D69251]/85">
+              <div className="divide-y divide-[#858B80]/40">
+                {/* Row 1: EMAIL OUR TEAM */}
+                <div className="py-5 first:pt-0 flex items-center gap-6">
+                  <div
+                    className="w-16 h-16 sm:w-[74px] sm:h-[74px] rounded-[16px] border border-[#D69251]/75 flex items-center justify-center shrink-0 shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),0_4px_12px_rgba(0,0,0,0.25)]"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(36, 62, 47, 0.45) 48%, rgba(12, 32, 23, 0.85) 100%)",
+                    }}
                   >
-                    sales@dhtcompany.com
-                  </a>
+                    <Mail size={28} className="text-[#E09648]" strokeWidth={1.75} />
+                  </div>
+                  <div>
+                    <span className="font-body text-xs sm:text-[13px] font-normal uppercase tracking-[0.14em] text-[#DCE2DF] block mb-1">
+                      EMAIL OUR TEAM
+                    </span>
+                    <a
+                      href="mailto:sales@dhtcompany.com"
+                      className="font-body text-xl sm:text-2xl lg:text-[26px] font-bold text-white hover:text-[#E5B869] transition-colors tracking-tight break-all leading-snug"
+                    >
+                      sales@dhtcompany.com
+                    </a>
+                  </div>
                 </div>
-              </div>
 
-              {/* Row 2: Phone */}
-              <div className="py-5 flex items-center gap-5">
-                <div className="w-12 h-12 rounded-xl bg-white/5 border border-[#D89B3C]/50 flex items-center justify-center shrink-0 shadow-inner">
-                  <Phone size={22} className="text-[#D89B3C]" strokeWidth={1.75} />
-                </div>
-                <div>
-                  <span className="font-body text-[11px] font-semibold uppercase tracking-[0.16em] text-white/75 block mb-1">
-                    CALL DHT
-                  </span>
-                  <a
-                    href="tel:+84932058545"
-                    className="font-body text-lg sm:text-2xl font-bold text-white hover:text-[#E5B869] transition-colors"
+                {/* Row 2: CALL DHT */}
+                <div className="py-5 flex items-center gap-6">
+                  <div
+                    className="w-16 h-16 sm:w-[74px] sm:h-[74px] rounded-[16px] border border-[#D69251]/75 flex items-center justify-center shrink-0 shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),0_4px_12px_rgba(0,0,0,0.25)]"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(36, 62, 47, 0.45) 48%, rgba(12, 32, 23, 0.85) 100%)",
+                    }}
                   >
-                    +84 932 058 545
-                  </a>
+                    <Phone size={28} className="text-[#E09648]" strokeWidth={1.75} />
+                  </div>
+                  <div>
+                    <span className="font-body text-xs sm:text-[13px] font-normal uppercase tracking-[0.14em] text-[#DCE2DF] block mb-1">
+                      CALL DHT
+                    </span>
+                    <a
+                      href="tel:+84932058545"
+                      className="font-body text-xl sm:text-2xl lg:text-[26px] font-bold text-white hover:text-[#E5B869] transition-colors tracking-tight leading-snug"
+                    >
+                      +84 932 058 545
+                    </a>
+                  </div>
                 </div>
-              </div>
 
-              {/* Row 3: Commercial Office Address */}
-              <div className="py-5 flex items-center gap-5">
-                <div className="w-12 h-12 rounded-xl bg-white/5 border border-[#D89B3C]/50 flex items-center justify-center shrink-0 shadow-inner">
-                  <MapPin size={22} className="text-[#D89B3C]" strokeWidth={1.75} />
+                {/* Row 3: DHT COMMERCIAL OFFICE */}
+                <div className="py-5 flex items-center gap-6">
+                  <div
+                    className="w-16 h-16 sm:w-[74px] sm:h-[74px] rounded-[16px] border border-[#D69251]/75 flex items-center justify-center shrink-0 shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),0_4px_12px_rgba(0,0,0,0.25)]"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(36, 62, 47, 0.45) 48%, rgba(12, 32, 23, 0.85) 100%)",
+                    }}
+                  >
+                    <MapPin size={28} className="text-[#E09648]" strokeWidth={1.75} />
+                  </div>
+                  <div>
+                    <span className="font-body text-xs sm:text-[13px] font-normal uppercase tracking-[0.14em] text-[#DCE2DF] block mb-1.5">
+                      DHT COMMERCIAL OFFICE
+                    </span>
+                    <p className="font-body text-base sm:text-[18.5px] font-normal text-white/95 leading-[1.38]">
+                      72A Le Thanh Ton Street, Saigon Ward,
+                      <br />
+                      Ho Chi Minh City, Vietnam
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <span className="font-body text-[11px] font-semibold uppercase tracking-[0.16em] text-white/75 block mb-1">
-                    DHT COMMERCIAL OFFICE
-                  </span>
-                  <p className="font-body text-sm sm:text-base text-white/95 leading-snug">
-                    72A Le Thanh Ton Street, Saigon Ward,
-                    <br />
-                    Ho Chi Minh City, Vietnam
-                  </p>
-                </div>
-              </div>
 
-              {/* Row 4: Factory Visits */}
-              <div className="py-5 last:pb-0 flex items-center gap-5">
-                <div className="w-12 h-12 rounded-xl bg-white/5 border border-[#D89B3C]/50 flex items-center justify-center shrink-0 shadow-inner">
-                  <Calendar size={22} className="text-[#D89B3C]" strokeWidth={1.75} />
-                </div>
-                <div>
-                  <p className="font-body text-sm sm:text-base text-white/95">
-                    Factory visits by appointment.
-                  </p>
+                {/* Row 4: Factory visits by appointment. */}
+                <div className="py-5 last:pb-0 flex items-center gap-6">
+                  <div
+                    className="w-16 h-16 sm:w-[74px] sm:h-[74px] rounded-[16px] border border-[#D69251]/75 flex items-center justify-center shrink-0 shadow-[inset_0_1px_1px_rgba(255,255,255,0.25),0_4px_12px_rgba(0,0,0,0.25)]"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(36, 62, 47, 0.45) 48%, rgba(12, 32, 23, 0.85) 100%)",
+                    }}
+                  >
+                    <Calendar size={28} className="text-[#E09648]" strokeWidth={1.75} />
+                  </div>
+                  <div>
+                    <p className="font-body text-base sm:text-[19.5px] font-normal text-white/95">
+                      Factory visits by appointment.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

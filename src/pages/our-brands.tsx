@@ -127,7 +127,7 @@ export default function OurBrandsPage() {
       />
 
       <main className="bg-[#FAF8F3] text-[#0E241B] pt-16 lg:pt-[72px]">
-        {/* ── 1. HERO VIDEO BANNER (Hình 45 Top) ── */}
+        {/* ── 1. HERO VIDEO BANNER (Clip MEKONG — Page 3 PDF) ── */}
         <section className="relative min-h-[420px] lg:min-h-[470px] flex items-center bg-[#0C2118] text-white overflow-hidden">
           <div className="absolute inset-y-0 right-0 w-full lg:w-[64%]">
             <video
@@ -136,10 +136,10 @@ export default function OurBrandsPage() {
               muted
               playsInline
               preload="metadata"
-              poster="/img/pdf-guide/brands/hero-factory-theone.jpg"
+              poster="/img/pdf-guide/home/brand-mekong-factory.jpg?v=2"
               className="w-full h-full object-cover"
             >
-              <source src="/video/hero-banner.mp4" type="video/mp4" />
+              <source src="/video/mekong-factory.mp4" type="video/mp4" />
             </video>
             <div
               className="absolute inset-0"
@@ -326,9 +326,8 @@ export default function OurBrandsPage() {
                 <Link
                   key={cap.title}
                   href={cap.href}
-                  className={`group flex flex-col items-center text-center px-4 py-3 transition-transform hover:-translate-y-1 ${
-                    idx > 0 ? "lg:border-l lg:border-[#E2DACB]" : ""
-                  }`}
+                  className={`group flex flex-col items-center text-center px-4 py-3 transition-transform hover:-translate-y-1 ${idx > 0 ? "lg:border-l lg:border-[#E2DACB]" : ""
+                    }`}
                 >
                   <div className="w-16 h-16 rounded-2xl bg-[#F3EDE0] border border-[#E2D6C1] group-hover:border-[#C88A36] flex items-center justify-center mb-3.5 shadow-xs transition-colors">
                     <CapabilityIcon name={cap.icon} />

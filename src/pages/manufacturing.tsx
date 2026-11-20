@@ -329,20 +329,26 @@ export default function ManufacturingPage() {
       />
 
       <main className="bg-[#F7F4ED] text-[#132A1F] pt-16 lg:pt-[72px]">
-        {/* ── PART 18A: FOOTPRINT HERO BANNER + 4 KPIS (Hình 33 Top) ── */}
+        {/* ── PART 18A: FOOTPRINT HERO BANNER + 4 KPIS (Clip THE ONE — Page 3 PDF) ── */}
         <section className="relative bg-[#0E261C] text-white overflow-hidden border-b border-[#C88A36]/30">
-          {/* Right Factory Exterior Image */}
-          <div className="absolute inset-y-0 right-0 w-full lg:w-[55%] pointer-events-none">
-            <img
-              src="/img/pdf-guide/manufacturing/hero-factory-exterior.jpg"
-              alt="DHT Furniture Production Facility in Vietnam"
-              className="w-full h-full object-cover opacity-35 lg:opacity-85"
-            />
+          {/* Right Factory Video: Clip THE ONE */}
+          <div className="absolute inset-y-0 right-0 w-full lg:w-[60%] pointer-events-none">
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="metadata"
+              poster="/img/pdf-guide/home/brand-theone-factory.jpg?v=2"
+              className="w-full h-full object-cover opacity-40 lg:opacity-85"
+            >
+              <source src="/video/theone-factory.mp4" type="video/mp4" />
+            </video>
             <div
               className="absolute inset-0"
               style={{
                 background:
-                  "linear-gradient(90deg, #0E261C 0%, rgba(14, 38, 28, 0.85) 35%, rgba(14, 38, 28, 0.15) 100%)",
+                  "linear-gradient(90deg, #0E261C 0%, rgba(14, 38, 28, 0.88) 36%, rgba(14, 38, 28, 0.18) 100%)",
               }}
             />
           </div>
@@ -584,8 +590,8 @@ export default function ManufacturingPage() {
                       onMouseEnter={() => setActiveCluster(block.id)}
                       onMouseLeave={() => setActiveCluster(null)}
                       className={`rounded-2xl bg-[#F4EFE4] border transition-all overflow-hidden flex items-stretch justify-between shadow-xs ${isHighlighted
-                          ? "border-[#B97846] ring-2 ring-[#B97846]/30"
-                          : "border-[#E3D9C6]"
+                        ? "border-[#B97846] ring-2 ring-[#B97846]/30"
+                        : "border-[#E3D9C6]"
                         }`}
                     >
                       <div className="p-5 flex flex-col justify-between flex-1">
@@ -1343,8 +1349,8 @@ export default function ManufacturingPage() {
                           onMouseEnter={() => setHoveredPortId(port.id)}
                           onMouseLeave={() => setHoveredPortId(null)}
                           className={`rounded-xl border transition-all overflow-hidden flex items-stretch justify-between bg-[#F6F3EC] ${isHovered
-                              ? "border-[#C57B35] ring-2 ring-[#C57B35]/25"
-                              : "border-[#E3D9C6]"
+                            ? "border-[#C57B35] ring-2 ring-[#C57B35]/25"
+                            : "border-[#E3D9C6]"
                             }`}
                         >
                           <div className="p-4 sm:p-5 flex items-center gap-4 flex-1">
@@ -1654,8 +1660,8 @@ export default function ManufacturingPage() {
                           onMouseEnter={() => setHoveredMarketCountry(country)}
                           onMouseLeave={() => setHoveredMarketCountry(null)}
                           className={`transition-colors ${hoveredMarketCountry === country
-                              ? "text-[#B97846] font-bold"
-                              : "text-[#2D3732]"
+                            ? "text-[#B97846] font-bold"
+                            : "text-[#2D3732]"
                             }`}
                         >
                           {country}

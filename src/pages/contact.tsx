@@ -6,8 +6,6 @@ import {
   Paperclip,
   Mail,
   PhoneCall,
-  Play,
-  Pause,
   CheckCircle2,
   X,
 } from "lucide-react";
@@ -99,9 +97,7 @@ function resolveBrandInterest(raw: string | undefined): BrandInterestValue {
 
 export default function ContactPage() {
   const router = useRouter();
-  const videoRef = useRef<HTMLVideoElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [isPlaying, setIsPlaying] = useState(true);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -153,18 +149,6 @@ export default function ContactPage() {
     }
   }, [router.isReady, router.query, router.asPath]);
 
-  const toggleVideoPlay = () => {
-    const vid = videoRef.current;
-    if (!vid) return;
-    if (vid.paused) {
-      vid.play();
-      setIsPlaying(true);
-    } else {
-      vid.pause();
-      setIsPlaying(false);
-    }
-  };
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -199,11 +183,9 @@ export default function ContactPage() {
           inquiryType: form.inquiryType,
           brandOfInterest: form.brandOfInterest,
           attachmentName: form.attachmentName,
-          message: `[${form.inquiryType} | ${form.brandOfInterest} | Market: ${
-            form.countryMarket
-          }${form.attachmentName ? ` | Attached: ${form.attachmentName}` : ""}]\n\n${
-            form.message
-          }`,
+          message: `[${form.inquiryType} | ${form.brandOfInterest} | Market: ${form.countryMarket
+            }${form.attachmentName ? ` | Attached: ${form.attachmentName}` : ""}]\n\n${form.message
+            }`,
         }),
       }).catch(() => null);
       setSubmitted(true);
@@ -237,43 +219,28 @@ export default function ContactPage() {
       />
 
       <main className="bg-[#F7F5F0] text-[#1A1A1A] pt-16 lg:pt-[72px]">
-        {/* ── SECTION 02: HERO BANNER — VIDEO MEKONG (Hình 46 Top) ── */}
-        <section className="relative min-h-[290px] lg:min-h-[330px] flex items-center bg-[#0F2C1E] text-white overflow-hidden">
-          {/* Right 58% MEKONG Factory Video */}
+        {/* ── SECTION 02: HERO BANNER — CLIP DHT 2 (Page 3 PDF: Autoplay, Muted, Loop, No Big Play Button) ── */}
+        <section className="relative min-h-[340px] lg:min-h-[420px] flex items-center bg-[#0F2C1E] text-white overflow-hidden">
+          {/* Right 62% Factory Video: Clip DHT 2 */}
           <div className="absolute inset-y-0 right-0 w-full lg:w-[62%]">
             <video
-              ref={videoRef}
               autoPlay
               loop
               muted
               playsInline
               preload="metadata"
-              poster="/img/pdf-guide/contact/hero-factory-mekong.jpg"
+              poster="/img/pdf-guide/contact/hero-factory-mekong.jpg?v=2"
               className="w-full h-full object-cover"
             >
-              <source src="/video/hero-banner.mp4" type="video/mp4" />
+              <source src="/video/dht-fac-2.mp4" type="video/mp4" />
             </video>
             <div
               className="absolute inset-0"
               style={{
                 background:
-                  "linear-gradient(90deg, #0F2C1E 0%, rgba(15, 44, 30, 0.85) 34%, rgba(15, 44, 30, 0.15) 100%)",
+                  "linear-gradient(90deg, #0F2C1E 0%, rgba(15, 44, 30, 0.86) 36%, rgba(15, 44, 30, 0.16) 100%)",
               }}
             />
-
-            {/* Video Play/Pause Button Overlay */}
-            <button
-              type="button"
-              onClick={toggleVideoPlay}
-              aria-label={isPlaying ? "Pause factory video" : "Play factory video"}
-              className="hidden lg:flex absolute top-1/2 left-[38%] -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-black/45 hover:bg-black/65 border-2 border-white/85 text-white items-center justify-center transition-all cursor-pointer shadow-lg"
-            >
-              {isPlaying ? (
-                <Pause size={22} className="fill-white" />
-              ) : (
-                <Play size={22} className="fill-white ml-0.5" />
-              )}
-            </button>
           </div>
 
           <div className="container mx-auto px-6 lg:px-10 py-12 lg:py-14 relative z-10">

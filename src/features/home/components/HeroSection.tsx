@@ -39,17 +39,17 @@ function ValuePropIcon({ name }: { name: ValuePropItem["icon"] }) {
 export default function HeroSection() {
   return (
     <section className="relative min-h-[88vh] lg:min-h-[94vh] flex items-center justify-center pt-24 pb-16 overflow-hidden bg-[#121C17]">
-      {/* Background Video */}
+      {/* Background Video: Clip DHT 1 (Page 3 PDF) */}
       <video
         autoPlay
         loop
         muted
         playsInline
         preload="metadata"
-        poster="/img/pdf-guide/home/brand-dht-factory.jpg"
+        poster="/img/pdf-guide/home/brand-dht-factory.jpg?v=2"
         className="absolute inset-0 w-full h-full object-cover"
       >
-        <source src="/video/hero-banner.mp4" type="video/mp4" />
+        <source src="/video/dht-fac-1.mp4" type="video/mp4" />
       </video>
 
       {/* Evenly balanced dark overlay matching Hình 02 */}

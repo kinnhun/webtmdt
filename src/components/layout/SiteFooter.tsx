@@ -43,7 +43,7 @@ export default function SiteFooter() {
               </p>
             </div>
 
-            {/* Official Social Links (Facebook + LinkedIn) */}
+            {/* Official Social Links (Facebook + LinkedIn) — tạm ẩn theo yêu cầu
             <div className="flex items-center gap-3 mt-6">
               <a
                 href="https://www.facebook.com"
@@ -64,6 +64,7 @@ export default function SiteFooter() {
                 in
               </a>
             </div>
+            */}
           </div>
 
           {/* Column 2 (Middle): EXPLORE DHT */}

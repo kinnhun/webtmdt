@@ -9,6 +9,8 @@ import {
   Box,
   Ship,
   Globe2,
+  Handshake,
+  Warehouse,
   CalendarCheck,
   ShieldCheck,
   HardHat,
@@ -35,7 +37,7 @@ const REGIONAL_FACILITY_BLOCKS: RegionalFacilityBlock[] = [
     clusterName: "Quy Nhon",
     facilityCountLabel: "01 Facility",
     totalFootprint: "30,000 m²",
-    bannerImage: "/img/pdf-guide/manufacturing/region-quynhon.jpg",
+    bannerImage: "/img/pdf-guide/manufacturing/region-quynhon.jpg?v=2",
     clusterCardImage: "/img/pdf-guide/manufacturing/cluster-quynhon.jpg?v=2",
     clusterCardSummary: "Wooden outdoor furniture and mixed materials.",
     facilities: [
@@ -54,7 +56,7 @@ const REGIONAL_FACILITY_BLOCKS: RegionalFacilityBlock[] = [
     clusterName: "Ho Chi Minh City & Southern Corridor",
     facilityCountLabel: "04 Facilities",
     totalFootprint: "143,080 m²",
-    bannerImage: "/img/pdf-guide/manufacturing/region-hcmc.jpg",
+    bannerImage: "/img/pdf-guide/manufacturing/region-hcmc.jpg?v=2",
     clusterCardImage: "/img/pdf-guide/manufacturing/cluster-hcmc.jpg?v=2",
     clusterCardSummary: "Indoor, outdoor and mixed-material furniture.",
     facilities: [
@@ -91,7 +93,7 @@ const REGIONAL_FACILITY_BLOCKS: RegionalFacilityBlock[] = [
     clusterName: "Hung Yen",
     facilityCountLabel: "04 Facilities",
     totalFootprint: "98,300 m²",
-    bannerImage: "/img/pdf-guide/manufacturing/region-hungyen.jpg",
+    bannerImage: "/img/pdf-guide/manufacturing/region-hungyen.jpg?v=2",
     clusterCardImage: "/img/pdf-guide/manufacturing/cluster-hungyen.jpg?v=2",
     clusterCardSummary: "Metal furniture, indoor and outdoor projects.",
     facilities: [
@@ -127,7 +129,7 @@ const REGIONAL_FACILITY_BLOCKS: RegionalFacilityBlock[] = [
     clusterName: "Phu Tho & Vinh Phuc",
     facilityCountLabel: "02 Facilities",
     totalFootprint: "272,000 m²",
-    bannerImage: "/img/pdf-guide/manufacturing/region-phutho.jpg",
+    bannerImage: "/img/pdf-guide/manufacturing/region-phutho.jpg?v=2",
     clusterCardImage: "/img/pdf-guide/manufacturing/cluster-phutho.jpg?v=2",
     clusterCardSummary:
       "Including 12,000 m² furniture and 260,000 m² panel & primary processing.",
@@ -190,21 +192,21 @@ const EXPORT_GATEWAY_CARDS: ExportGatewayCardItem[] = [
     name: "Hai Phong Port",
     roleLabel: "Northern Export Gateway",
     servedFrom: "Serving: Hung Yen and Phu Tho & Vinh Phuc.",
-    image: "/img/pdf-guide/manufacturing/port-haiphong.jpg",
+    image: "/img/pdf-guide/manufacturing/port-haiphong.jpg?v=2",
   },
   {
     id: "south_ports",
     name: "Cat Lai / Cai Mep – Thi Vai",
     roleLabel: "Southern Export Gateway",
     servedFrom: "Serving: Ho Chi Minh City & Southern Corridor.",
-    image: "/img/pdf-guide/manufacturing/port-catlai.jpg",
+    image: "/img/pdf-guide/manufacturing/port-catlai.jpg?v=2",
   },
   {
     id: "quynhon_port",
     name: "Quy Nhon Port",
     roleLabel: "Central Export Gateway",
     servedFrom: "Serving: Quy Nhon.",
-    image: "/img/pdf-guide/manufacturing/port-quynhon.jpg",
+    image: "/img/pdf-guide/manufacturing/port-quynhon.jpg?v=2",
   },
 ];
 
@@ -259,6 +261,38 @@ const GLOBAL_MARKET_REGIONS: GlobalMarketRegionItem[] = [
   },
 ];
 
+const MARKET_PIN_COORDS: Record<string, { x: number; y: number; region: string }> = {
+  Canada: { x: 117, y: 65, region: "na" },
+  "United States": { x: 143, y: 117, region: "na" },
+  "United Kingdom": { x: 103, y: 236, region: "eu" },
+  Denmark: { x: 174, y: 200, region: "eu" },
+  Estonia: { x: 252, y: 204, region: "eu" },
+  Netherlands: { x: 195, y: 240, region: "eu" },
+  Poland: { x: 289, y: 250, region: "eu" },
+  France: { x: 131, y: 276, region: "eu" },
+  Germany: { x: 215, y: 267, region: "eu" },
+  Slovakia: { x: 289, y: 285, region: "eu" },
+  Austria: { x: 220, y: 297, region: "eu" },
+  Hungary: { x: 284, y: 314, region: "eu" },
+  Spain: { x: 108, y: 349, region: "eu" },
+  Italy: { x: 185, y: 325, region: "eu" },
+  Slovenia: { x: 243, y: 338, region: "eu" },
+  Greece: { x: 265, y: 369, region: "eu" },
+  Russia: { x: 704, y: 52, region: "mea" },
+  Georgia: { x: 563, y: 88, region: "mea" },
+  Türkiye: { x: 549, y: 114, region: "mea" },
+  Israel: { x: 535, y: 139, region: "mea" },
+  Lebanon: { x: 534, y: 163, region: "mea" },
+  "United Arab Emirates": { x: 596, y: 208, region: "mea" },
+  Qatar: { x: 596, y: 208, region: "mea" },
+  "Saudi Arabia": { x: 578, y: 240, region: "mea" },
+  China: { x: 760, y: 143, region: "apac" },
+  India: { x: 653, y: 173, region: "apac" },
+  Mauritius: { x: 602, y: 313, region: "apac" },
+  "South Africa": { x: 473, y: 362, region: "apac" },
+  Australia: { x: 775, y: 326, region: "apac" },
+};
+
 function CountUpNumber({ target, durationMs = 1400 }: { target: number; durationMs?: number }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
@@ -288,6 +322,7 @@ export default function ManufacturingPage() {
   const [activeCluster, setActiveCluster] = useState<string | null>(null);
   const [hoveredExportRegion, setHoveredExportRegion] = useState<string | null>(null);
   const [hoveredPortId, setHoveredPortId] = useState<string | null>(null);
+  const [hoveredMarketRegion, setHoveredMarketRegion] = useState<string | null>(null);
   const [hoveredMarketCountry, setHoveredMarketCountry] = useState<string | null>(null);
 
   const isExportClusterActive = (clusterId: string, portId: string) => {
@@ -927,11 +962,10 @@ export default function ManufacturingPage() {
                       transition={{ duration: 0.45, delay: index * 0.08 }}
                       onMouseEnter={() => setActiveCluster(block.id)}
                       onMouseLeave={() => setActiveCluster(null)}
-                      className={`group relative rounded-[14px] min-h-[184px] lg:h-[188px] overflow-hidden border transition-all duration-300 bg-gradient-to-br from-[#FFF9F4] via-[#FAF3EA] to-[#F5EADF] ${
-                        isHighlighted
-                          ? "border-[#AB7446] ring-1 ring-[#AB7446]/35 shadow-[0_10px_24px_-6px_rgba(14,36,27,0.14)] -translate-y-0.5"
-                          : "border-[#E3D7C7] shadow-[0_4px_12px_-3px_rgba(110,88,64,0.10),0_1px_2px_rgba(110,88,64,0.06)]"
-                      }`}
+                      className={`group relative rounded-[14px] min-h-[184px] lg:h-[188px] overflow-hidden border transition-all duration-300 bg-gradient-to-br from-[#FFF9F4] via-[#FAF3EA] to-[#F5EADF] ${isHighlighted
+                        ? "border-[#AB7446] ring-1 ring-[#AB7446]/35 shadow-[0_10px_24px_-6px_rgba(14,36,27,0.14)] -translate-y-0.5"
+                        : "border-[#E3D7C7] shadow-[0_4px_12px_-3px_rgba(110,88,64,0.10),0_1px_2px_rgba(110,88,64,0.06)]"
+                        }`}
                     >
                       {/* Right-side Seamless Product Cutout + Diagonal Studio Lighting */}
                       <div className="absolute inset-y-0 right-0 w-[44%] sm:w-[45%] pointer-events-none select-none overflow-hidden">
@@ -977,226 +1011,366 @@ export default function ManufacturingPage() {
           </div>
         </section>
 
-        {/* ── PART 19: 11 FACILITIES GROUPED BY 4 REGIONAL BLOCKS (Hình 35) ── */}
-        <section className="py-16 lg:py-20 bg-[#F7F4ED] border-b border-black/5">
-          <div className="container mx-auto px-6 lg:px-10">
+        {/* ── PART 19: 11 FACILITIES GROUPED BY 4 REGIONAL BLOCKS (Hình 35 — Exact Proportions) ── */}
+        <section className="relative pt-10 pb-14 lg:pt-[42px] lg:pb-[64px] bg-[#F9F5F0] border-b border-[#E5DCCE] overflow-hidden">
+          {/* Top-Right Curved DHT FURNITURE Factory Facade Sweep (Hình 35 Signature Header) */}
+          <div className="hidden md:block absolute top-0 right-0 w-[56%] lg:w-[54%] xl:w-[52%] h-[300px] lg:h-[340px] pointer-events-none select-none overflow-hidden">
+            <img
+              src="/img/pdf-guide/manufacturing/hero-factory-exterior.jpg?v=2"
+              alt="DHT Furniture Production Complex"
+              className="w-full h-full object-cover object-right-top"
+            />
+            {/* Soft horizontal ivory dissolve on the left edge */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(90deg, #F9F5F0 0%, rgba(249, 245, 240, 0.94) 10%, rgba(249, 245, 240, 0.36) 28%, rgba(249, 245, 240, 0) 48%)",
+              }}
+            />
+            {/* Sculpted Ivory S-Curve Wave sweeping from top-left down-right above Card 1 */}
+            <svg
+              viewBox="0 0 700 340"
+              preserveAspectRatio="none"
+              className="absolute inset-0 w-full h-full"
+              aria-hidden="true"
+            >
+              <defs>
+                <filter id="fac-curve-blur" x="-10%" y="-10%" width="120%" height="120%">
+                  <feGaussianBlur stdDeviation="14" />
+                </filter>
+              </defs>
+              {/* Feathered glow edge under the main curve */}
+              <path
+                d="M 0,0 L 145,0 C 165,135 280,255 510,285 C 590,295 655,295 700,292 L 700,340 L 0,340 Z"
+                fill="#F9F5F0"
+                filter="url(#fac-curve-blur)"
+                opacity="0.72"
+              />
+              {/* Main clean curved ivory wave */}
+              <path
+                d="M 0,0 L 118,0 C 142,148 265,268 498,298 C 585,309 652,306 700,302 L 700,340 L 0,340 Z"
+                fill="#F9F5F0"
+              />
+            </svg>
+          </div>
+
+          {/* Subtle bottom-right ivory silk wave accent */}
+          <svg
+            viewBox="0 0 1200 180"
+            preserveAspectRatio="none"
+            className="absolute bottom-0 inset-x-0 w-full h-[160px] pointer-events-none"
+            aria-hidden="true"
+          >
+            <path
+              d="M 480,180 C 780,165 1010,115 1200,32 L 1200,180 Z"
+              fill="#EFE6D9"
+              opacity="0.55"
+            />
+          </svg>
+
+          <div className="max-w-[1320px] mx-auto px-6 sm:px-8 lg:px-10 relative z-10">
             {/* Section Header */}
-            <div className="max-w-3xl mb-10">
+            <div className="max-w-[660px] mb-8 lg:mb-[34px]">
               <div className="flex items-center gap-3 mb-2.5">
-                <span className="h-[1.5px] w-7 bg-[#B97846]" />
-                <span className="font-body text-xs font-bold uppercase tracking-[0.2em] text-[#B97846]">
+                <span className="h-[1.5px] w-8 bg-[#B07A46]" />
+                <span className="font-body text-[11px] font-bold uppercase tracking-[0.18em] text-[#A67241]">
                   OUR PRODUCTION FACILITIES
                 </span>
               </div>
 
-              <h2
-                className="font-display font-bold text-[#0E241B] leading-[1.12] mb-3"
-                style={{ fontSize: "clamp(1.85rem, 3.2vw, 2.75rem)" }}
-              >
+              <h2 className="font-display font-bold text-[#0B231A] leading-[1.12] tracking-[-0.01em] mb-3 text-[30px] sm:text-[38px] lg:text-[44px]">
                 11 Facilities. Specialised
                 <br />
                 Manufacturing Expertise.
               </h2>
 
-              <p className="font-body text-sm sm:text-base text-[#37413D] mb-6">
+              <p className="font-body text-[14px] sm:text-[15px] text-[#2D3A34] leading-[1.55] max-w-[540px] mb-5">
                 Explore the production capabilities of our family-owned manufacturing group across
                 four regional clusters in Vietnam.
               </p>
 
-              {/* 2 Classification Pills */}
+              {/* 2 Classification Pills — exact Hình 35 height (40px) & cream-gold finish */}
               <div className="flex flex-wrap items-center gap-3">
-                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#F3EDE0] border border-[#D8CBB8] font-body text-xs font-bold text-[#0E241B]">
-                  <Armchair size={15} className="text-[#B97846]" />
+                <span className="inline-flex items-center gap-2.5 h-[40px] px-5 rounded-full bg-gradient-to-b from-[#FCF7F0] to-[#F5ECDF] border border-[#D8C2A4] shadow-[0_1px_2px_rgba(120,90,55,0.08)] font-body text-[13px] font-semibold text-[#0E241B]">
+                  <Armchair size={17} strokeWidth={1.6} className="text-[#B07A46] shrink-0" />
                   <span>10 Furniture Facilities</span>
                 </span>
-                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#F3EDE0] border border-[#D8CBB8] font-body text-xs font-bold text-[#0E241B]">
-                  <Layers size={15} className="text-[#B97846]" />
+                <span className="inline-flex items-center gap-2.5 h-[40px] px-5 rounded-full bg-gradient-to-b from-[#FCF7F0] to-[#F5ECDF] border border-[#D8C2A4] shadow-[0_1px_2px_rgba(120,90,55,0.08)] font-body text-[13px] font-semibold text-[#0E241B]">
+                  <Layers size={17} strokeWidth={1.6} className="text-[#B07A46] shrink-0" />
                   <span>1 Wood Panel &amp; Primary Processing Facility</span>
                 </span>
               </div>
             </div>
 
-            {/* 4 Horizontal Regional Facility Blocks */}
-            <div className="space-y-5">
-              {REGIONAL_FACILITY_BLOCKS.map((block) => (
-                <div
+            {/* 4 Horizontal Regional Facility Blocks — Exact 26% Landmark / 74% Table Split */}
+            <div className="space-y-5 lg:space-y-[22px]">
+              {REGIONAL_FACILITY_BLOCKS.map((block, index) => (
+                <motion.div
                   key={block.id}
-                  className="rounded-2xl overflow-hidden bg-[#FBF9F5] border border-[#E2DACB] shadow-xs grid grid-cols-1 lg:grid-cols-12"
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.45, delay: index * 0.06 }}
+                  className="rounded-[14px] overflow-hidden bg-[#FAF7F2] border border-[#E5DDD0] shadow-[0_4px_14px_-3px_rgba(95,78,58,0.10),0_1px_2px_rgba(95,78,58,0.06)] flex flex-col lg:flex-row"
                 >
-                  {/* Left Regional Header Banner */}
-                  <div className="lg:col-span-3 relative bg-[#0E261C] text-white p-6 flex flex-col justify-between overflow-hidden min-h-[140px]">
+                  {/* Left Regional Landmark Banner (26% exact width) */}
+                  <div className="lg:w-[26%] shrink-0 relative bg-[#072B1E] text-white px-6 py-5 lg:px-[26px] lg:py-[22px] flex flex-col justify-start overflow-hidden min-h-[132px]">
                     <img
                       src={block.bannerImage}
                       alt={block.clusterName}
-                      className="absolute inset-0 w-full h-full object-cover opacity-35"
+                      className="absolute inset-0 w-full h-full object-cover object-right-bottom"
                     />
+                    {/* Gentle upper-left vignette preserving crisp landmark & light rays */}
                     <div
                       className="absolute inset-0"
                       style={{
                         background:
-                          "linear-gradient(135deg, rgba(12, 34, 24, 0.92) 0%, rgba(12, 34, 24, 0.65) 100%)",
+                          "linear-gradient(130deg, rgba(6, 36, 25, 0.42) 0%, rgba(6, 36, 25, 0.10) 52%, rgba(6, 36, 25, 0) 100%)",
                       }}
                     />
                     <div className="relative z-10">
-                      <span className="font-body text-[10px] font-bold uppercase tracking-[0.18em] text-[#E5B869] block mb-1.5">
+                      <span className="font-body text-[10px] lg:text-[10.5px] font-bold uppercase tracking-[0.15em] text-[#D7B36D] block">
                         {block.regionLabel}
                       </span>
-                      <h3 className="font-display font-bold text-xl sm:text-2xl text-white leading-snug mb-2">
+                      <h3 className="font-display font-bold text-[21px] xl:text-[24px] text-white leading-[1.18] mt-1">
                         {block.clusterName}
                       </h3>
-                      <span className="font-body text-xs text-white/85 font-medium">
+                      <span className="font-body text-[12.5px] lg:text-[13px] text-white/90 font-medium mt-1.5 block">
                         {block.facilityCountLabel}
                       </span>
                     </div>
                   </div>
 
-                  {/* Right Facility Breakdown Table */}
-                  <div className="lg:col-span-9 p-5 sm:p-6 flex flex-col justify-center">
-                    <div className="flex flex-wrap items-center justify-between gap-2 pb-3 mb-2 border-b border-[#E6DFD1]">
-                      <div className="grid grid-cols-12 w-full items-center text-[11px] font-body font-bold uppercase tracking-wider text-[#4A5550]">
-                        <div className="col-span-3 sm:col-span-2">FACILITY</div>
-                        <div className="col-span-4 sm:col-span-3">OPERATING FOOTPRINT</div>
-                        <div className="col-span-5 sm:col-span-4">CORE MANUFACTURING FOCUS</div>
-                        <div className="col-span-12 sm:col-span-3 flex sm:justify-end mt-2 sm:mt-0">
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#F2E9D8] text-[#B97846] font-display font-bold text-sm normal-case">
-                            <Factory size={14} />
-                            <span>{block.totalFootprint}</span>
-                          </span>
-                        </div>
+                  {/* Right Facility Breakdown Table (74% exact width, aligned across all 4 cards) */}
+                  <div className="flex-1 bg-[#FAF7F2] px-5 sm:px-7 lg:px-8 py-3.5 lg:py-4 flex flex-col justify-center">
+                    {/* Table Header Row */}
+                    <div className="grid grid-cols-12 items-center gap-x-3 sm:gap-x-4 pb-2.5 lg:pb-3 border-b border-[#E7E0D4]">
+                      <div className="col-span-4 sm:col-span-2 font-body text-[10.5px] lg:text-[11px] font-bold uppercase tracking-[0.08em] text-[#45504B]">
+                        FACILITY
+                      </div>
+                      <div className="col-span-8 sm:col-span-3 sm:text-center font-body text-[10.5px] lg:text-[11px] font-bold uppercase tracking-[0.08em] text-[#45504B]">
+                        OPERATING FOOTPRINT
+                      </div>
+                      <div className="col-span-12 sm:col-span-7 flex flex-wrap sm:flex-nowrap items-center justify-between gap-2 mt-2 sm:mt-0">
+                        <span className="font-body text-[10.5px] lg:text-[11px] font-bold uppercase tracking-[0.08em] text-[#45504B]">
+                          CORE MANUFACTURING FOCUS
+                        </span>
+                        <span className="inline-flex items-center justify-center gap-2 min-w-[158px] lg:min-w-[180px] h-[36px] px-3.5 rounded-[8px] bg-[#F5EADC] border border-[#EADBC7] text-[#B2733C] font-display font-bold text-[16.5px] lg:text-[18.5px] tabular-nums leading-none shrink-0">
+                          <Factory size={17} strokeWidth={1.55} className="text-[#B2733C] shrink-0" />
+                          <span>{block.totalFootprint}</span>
+                        </span>
                       </div>
                     </div>
 
-                    <div className="divide-y divide-[#ECE6DA]">
+                    {/* Table Data Rows */}
+                    <div className="divide-y divide-[#EAE4DA]">
                       {block.facilities.map((fac) => (
                         <div
                           key={fac.id}
-                          className="py-3.5 grid grid-cols-1 sm:grid-cols-12 gap-2 sm:gap-4 items-center font-body text-sm"
+                          className="py-2.5 lg:py-[11px] grid grid-cols-12 gap-x-3 sm:gap-x-4 gap-y-1 items-center font-body"
                         >
-                          <div className="sm:col-span-2 font-bold text-[#0E241B]">{fac.name}</div>
-                          <div className="sm:col-span-3 font-bold text-[#B97846]">
+                          <div className="col-span-4 sm:col-span-2 font-bold text-[13px] lg:text-[13.5px] text-[#0E241B] whitespace-nowrap">
+                            {fac.name}
+                          </div>
+                          <div className="col-span-8 sm:col-span-3 sm:text-center font-bold text-[13px] lg:text-[13.5px] text-[#B6733A] tabular-nums whitespace-nowrap">
                             {fac.footprint}
                           </div>
-                          <div className="sm:col-span-7 text-xs sm:text-sm text-[#2D3732] leading-relaxed">
+                          <div className="col-span-12 sm:col-span-7 text-[12.5px] lg:text-[13px] text-[#26322D] leading-[1.45]">
                             {fac.focus}
                           </div>
                         </div>
                       ))}
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
 
-            {/* Bottom Combined Manufacturing Footprint Dark Green Bar */}
-            <div className="mt-8 rounded-2xl bg-[#0E261C] text-white px-6 sm:px-10 py-6 flex flex-col md:flex-row items-center justify-between gap-6 shadow-md border border-[#C88A36]/30">
-              <div className="flex items-center gap-4">
-                <Layers size={32} className="text-[#D89B3C] shrink-0" strokeWidth={1.6} />
-                <span className="font-body text-xs sm:text-sm font-bold uppercase tracking-[0.14em] text-white">
-                  COMBINED
-                  <br />
-                  MANUFACTURING FOOTPRINT
-                </span>
+            {/* Bottom Combined Manufacturing Footprint Dark Green Bar (Hình 35 — 36.5% | 27% | 36.5%) */}
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5 }}
+              className="relative mt-9 lg:mt-[42px] rounded-[14px] overflow-hidden bg-gradient-to-r from-[#052B1D] via-[#073222] to-[#06291C] text-white px-6 sm:px-8 lg:px-10 py-6 lg:py-[26px] shadow-[0_8px_24px_-6px_rgba(5,36,25,0.28)] border border-[#1B4936]"
+            >
+              {/* Subtle luxury emerald-gold light sheen inside bar */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background:
+                    "radial-gradient(ellipse 45% 120% at 88% 100%, rgba(212, 175, 90, 0.14) 0%, rgba(212, 175, 90, 0) 70%)",
+                }}
+              />
+
+              <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-0">
+                {/* Left Zone (36.5%) */}
+                <div className="lg:w-[36.5%] flex items-center justify-center lg:justify-start gap-4 lg:pr-6">
+                  <Layers size={42} className="text-[#D4AF5A] shrink-0" strokeWidth={1.35} />
+                  <span className="font-body text-[13.5px] lg:text-[15px] font-semibold uppercase tracking-[0.06em] text-white leading-[1.3]">
+                    COMBINED
+                    <br />
+                    MANUFACTURING FOOTPRINT
+                  </span>
+                </div>
+
+                {/* Vertical Divider 1 */}
+                <div className="hidden lg:block h-[54px] w-px bg-[#D4AF5A]/38 shrink-0" />
+
+                {/* Center Metric (27%) */}
+                <div className="lg:w-[27%] flex items-center justify-center lg:px-6">
+                  <p className="font-display font-bold text-[34px] lg:text-[42px] text-[#D7B55C] leading-none tracking-[-0.01em] whitespace-nowrap tabular-nums">
+                    543,380
+                    <span className="text-[22px] lg:text-[27px] font-semibold ml-1.5 text-[#D7B55C]">
+                      m²
+                    </span>
+                  </p>
+                </div>
+
+                {/* Vertical Divider 2 */}
+                <div className="hidden lg:block h-[54px] w-px bg-[#D4AF5A]/38 shrink-0" />
+
+                {/* Right Description (36.5%) */}
+                <div className="lg:w-[36.5%] lg:pl-8 text-center lg:text-left">
+                  <p className="font-body text-[13.5px] lg:text-[14.5px] text-white/92 leading-[1.45]">
+                    <span className="font-semibold text-white">10</span> furniture production
+                    facilities and
+                    <br className="hidden sm:inline" />{" "}
+                    <span className="font-semibold text-white">1</span> wood panel &amp;
+                    primary-processing facility.
+                  </p>
+                </div>
               </div>
-
-              <div className="hidden md:block h-10 w-px bg-white/20" />
-
-              <div className="font-display font-bold text-3xl sm:text-4xl text-[#E5B869] whitespace-nowrap">
-                543,380 <span className="text-2xl font-normal">m²</span>
-              </div>
-
-              <div className="hidden md:block h-10 w-px bg-white/20" />
-
-              <p className="font-body text-xs sm:text-sm text-white/90 text-center md:text-left max-w-md">
-                <strong>10</strong> furniture production facilities and <strong>1</strong> wood
-                panel &amp; primary-processing facility.
-              </p>
-            </div>
+            </motion.div>
           </div>
         </section>
 
-        {/* ── PART 21: EXPORT CAPACITY & LOGISTICS (600 Containers / Month — Hình 38 + Strict Rules) ── */}
-        <section className="py-16 lg:py-20 bg-[#FAF8F3] border-b border-black/5">
-          <div className="container mx-auto px-6 lg:px-10">
-            {/* Top Export Banner with Port Crane & Container Ship */}
-            <div className="relative rounded-2xl overflow-hidden bg-[#0E261C] text-white p-6 sm:p-10 mb-8 shadow-lg border border-[#C88A36]/30">
-              <div className="absolute inset-y-0 right-0 w-full lg:w-[55%] pointer-events-none">
-                <img
-                  src="/img/pdf-guide/manufacturing/export-port-hero.jpg"
-                  alt="Container Ship at Vietnam Export Gateway"
-                  className="w-full h-full object-cover opacity-35 lg:opacity-85"
-                />
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background:
-                      "linear-gradient(90deg, #0E261C 0%, rgba(14, 38, 28, 0.88) 40%, rgba(14, 38, 28, 0.15) 100%)",
-                  }}
-                />
-              </div>
+        {/* ── PART 21: EXPORT CAPACITY & LOGISTICS (Hình 38 Exact Layout + Strict Pages 34–37 Rules) ── */}
+        <section className="relative bg-[#F6F1EA] border-b border-[#E5DCCE] overflow-hidden">
+          {/* Top Full-Bleed Port & Container Ship Banner (y = 0..248px in Hình 38) */}
+          <div className="relative bg-[#042A1C] text-white overflow-hidden">
+            {/* Right Sunset Port & Container Ship Photo with subtle 103% -> 100% zoom-in (Page 34) */}
+            <motion.div
+              initial={{ scale: 1.03 }}
+              whileInView={{ scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
+              className="absolute inset-y-0 right-0 w-full lg:w-[62%] pointer-events-none"
+            >
+              <img
+                src="/img/pdf-guide/manufacturing/export-port-hero.jpg?v=2"
+                alt="Container Ship and Port Gantry Crane at Vietnam Export Gateway"
+                className="w-full h-full object-cover object-right opacity-45 lg:opacity-95"
+              />
+              <div
+                className="absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(90deg, #042A1C 0%, rgba(4, 42, 28, 0.94) 18%, rgba(4, 42, 28, 0.52) 40%, rgba(4, 42, 28, 0.08) 68%, rgba(4, 42, 28, 0) 100%)",
+                }}
+              />
+            </motion.div>
 
-              <div className="relative z-10 max-w-2xl mb-8">
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="h-[1.5px] w-7 bg-[#D89B3C]" />
-                  <span className="font-body text-xs font-bold uppercase tracking-[0.2em] text-[#D89B3C]">
+            {/* Subtle curved silk highlight line in upper-left dark emerald sky (Hình 38) */}
+            <svg
+              viewBox="0 0 1200 260"
+              preserveAspectRatio="none"
+              className="absolute inset-0 w-full h-full pointer-events-none opacity-35"
+              aria-hidden="true"
+            >
+              <path
+                d="M 0,180 C 190,150 380,82 560,0"
+                fill="none"
+                stroke="rgba(212, 175, 90, 0.35)"
+                strokeWidth="1.2"
+              />
+            </svg>
+
+            {/* Banner Copy (padded at bottom for the overlapping floating 3-KPI bar) */}
+            <div className="max-w-[1320px] mx-auto px-6 sm:px-8 lg:px-10 pt-10 pb-14 lg:pt-[38px] lg:pb-[52px] relative z-10">
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="max-w-[600px]"
+              >
+                <div className="flex items-center gap-3 mb-2.5">
+                  <span className="h-[1.5px] w-8 bg-[#D4AF5A]" />
+                  <span className="font-body text-[11px] font-bold uppercase tracking-[0.18em] text-[#D4AF5A]">
                     EXPORT CAPACITY &amp; LOGISTICS
                   </span>
                 </div>
 
-                <h2
-                  className="font-display font-bold text-white leading-[1.1] mb-3"
-                  style={{ fontSize: "clamp(2rem, 3.8vw, 3.2rem)" }}
-                >
+                <h2 className="font-display font-bold text-white leading-[1.1] tracking-[-0.01em] mb-3 text-[30px] sm:text-[38px] lg:text-[46px]">
                   600 Containers (40HQ)
                   <br />
                   per Month
                 </h2>
+              </motion.div>
 
-                <p className="font-body text-sm sm:text-base text-white/85 leading-relaxed">
-                  Reference monthly export capacity across our 10 furniture production facilities
-                  (Facilities 01–10), with access to major international ports in Vietnam.
-                </p>
-              </div>
+              <motion.p
+                initial={{ opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.55, delay: 0.15, ease: "easeOut" }}
+                className="font-body text-[14px] sm:text-[15px] text-white/88 leading-[1.55] max-w-[540px]"
+              >
+                Reference export capacity from our 10 finished furniture facilities (Facilities
+                01–10), with efficient access to major international ports across Vietnam.
+              </motion.p>
+            </div>
+          </div>
 
-              {/* 3-Metric Count-Up Bar */}
-              <div className="relative z-10 rounded-xl bg-[#0A1D15]/95 border border-[#D89B3C]/40 p-5 sm:p-6 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-0">
-                <div className="flex items-center gap-4 md:pr-6">
-                  <Box size={34} className="text-[#D89B3C] shrink-0" strokeWidth={1.5} />
+          {/* Main Lower Body Container (with Floating 3-KPI Bar straddling banner bottom edge) */}
+          <div className="max-w-[1320px] mx-auto px-6 sm:px-8 lg:px-10 pb-14 lg:pb-[64px] relative z-20">
+            {/* Floating 3-Metric Count-Up Bar (overlapping top banner by ~24px — exact Hình 38 geometry) */}
+            <div className="-mt-7 lg:-mt-[26px] mb-6 lg:mb-[24px] rounded-[14px] bg-gradient-to-r from-[#052C1D] via-[#063222] to-[#052B1D] text-white border border-white/20 shadow-[0_10px_26px_-6px_rgba(4,34,23,0.35)] px-6 sm:px-8 lg:px-9 py-5 lg:py-[22px]">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-0 items-center">
+                {/* Stat 1: 600 */}
+                <div className="flex items-center gap-4 lg:gap-5 md:pr-7">
+                  <Box size={42} className="text-[#D4AF5A] shrink-0" strokeWidth={1.3} />
                   <div>
-                    <p className="font-display font-bold text-3xl sm:text-4xl text-white leading-none">
+                    <p className="font-display font-bold text-[34px] lg:text-[40px] text-white leading-none tabular-nums">
                       <CountUpNumber target={600} />
                     </p>
-                    <p className="font-body text-xs sm:text-sm font-bold text-white mt-1">
+                    <p className="font-body text-[13.5px] lg:text-[14.5px] font-semibold text-white mt-1 leading-snug">
                       Containers (40HQ) / Month
                     </p>
-                    <p className="font-body text-[11px] text-white/70">
+                    <p className="font-body text-[11.5px] text-white/75 mt-0.5">
                       Total from 10 Furniture Facilities
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4 md:px-6 md:border-l md:border-white/15">
-                  <Factory size={34} className="text-[#D89B3C] shrink-0" strokeWidth={1.5} />
+                {/* Stat 2: 10 */}
+                <div className="relative flex items-center gap-4 lg:gap-5 md:px-7 md:before:content-[''] md:before:absolute md:before:left-0 md:before:top-1/2 md:before:-translate-y-1/2 md:before:h-[58px] md:before:w-px md:before:bg-white/28">
+                  <Factory size={42} className="text-[#D4AF5A] shrink-0" strokeWidth={1.3} />
                   <div>
-                    <p className="font-display font-bold text-3xl sm:text-4xl text-white leading-none">
+                    <p className="font-display font-bold text-[34px] lg:text-[40px] text-white leading-none tabular-nums">
                       <CountUpNumber target={10} />
                     </p>
-                    <p className="font-body text-xs sm:text-sm font-bold text-white mt-1">
+                    <p className="font-body text-[13.5px] lg:text-[14.5px] font-semibold text-white mt-1 leading-snug">
                       Furniture Facilities
                     </p>
-                    <p className="font-body text-[11px] text-white/70">(Facilities 01–10)</p>
+                    <p className="font-body text-[11.5px] text-white/75 mt-0.5">
+                      (Facilities 01–10)
+                    </p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4 md:pl-6 md:border-l md:border-white/15">
-                  <Ship size={34} className="text-[#D89B3C] shrink-0" strokeWidth={1.5} />
+                {/* Stat 3: 3 */}
+                <div className="relative flex items-center gap-4 lg:gap-5 md:pl-7 md:before:content-[''] md:before:absolute md:before:left-0 md:before:top-1/2 md:before:-translate-y-1/2 md:before:h-[58px] md:before:w-px md:before:bg-white/28">
+                  <Ship size={42} className="text-[#D4AF5A] shrink-0" strokeWidth={1.3} />
                   <div>
-                    <p className="font-display font-bold text-3xl sm:text-4xl text-white leading-none">
+                    <p className="font-display font-bold text-[34px] lg:text-[40px] text-white leading-none tabular-nums">
                       <CountUpNumber target={3} />
                     </p>
-                    <p className="font-body text-xs sm:text-sm font-bold text-white mt-1">
+                    <p className="font-body text-[13.5px] lg:text-[14.5px] font-semibold text-white mt-1 leading-snug">
                       Primary Export Gateway Areas
                     </p>
-                    <p className="font-body text-[11px] text-white/70">
+                    <p className="font-body text-[11.5px] text-white/75 mt-0.5">
                       Hai Phong · Cat Lai / Cai Mep – Thi Vai · Quy Nhon
                     </p>
                   </div>
@@ -1204,31 +1378,61 @@ export default function ManufacturingPage() {
               </div>
             </div>
 
-            {/* Main 2-Column Logistics Map + Region Table & Port Cards */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-              {/* Left Column (44%): Vietnam Logistics & Export Gateways Map (4-Stage Animation per Page 36) */}
+            {/* Main 2-Column Split: 43.6% Logistics Map | 54.4% Region Table + 3 Port Cards (Exact Hình 38) */}
+            <div className="flex flex-col lg:flex-row gap-6 lg:gap-[24px] items-stretch">
+              {/* Left Column (43.6%): Vietnam Logistics & Export Gateways Map (4-Stage Animation per Page 36) */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.7 }}
-                className="lg:col-span-5 rounded-2xl bg-[#FBF9F5] border border-[#E2DACB] p-6 flex flex-col justify-between shadow-xs"
+                className="lg:w-[43.6%] shrink-0 rounded-[14px] bg-[#FBF9F6] border border-[#E5DDD0] px-5 py-5 lg:px-6 lg:py-6 flex flex-col justify-between shadow-[0_4px_14px_-3px_rgba(95,78,58,0.09),0_1px_2px_rgba(95,78,58,0.05)]"
               >
-                <div className="flex items-center gap-2.5 mb-4">
-                  <span className="h-[1.5px] w-6 bg-[#B97846]" />
-                  <span className="font-body text-xs font-bold uppercase tracking-[0.16em] text-[#9E3B24]">
+                <div className="flex items-center gap-2.5 mb-2">
+                  <span className="h-[1.5px] w-6 bg-[#B2733C]" />
+                  <span className="font-body text-[11px] font-bold uppercase tracking-[0.15em] text-[#9E6A3A]">
                     LOGISTICS &amp; EXPORT GATEWAYS
                   </span>
                 </div>
 
-                <div className="relative w-full max-w-[360px] mx-auto my-auto">
+                <div className="relative w-full max-w-[430px] mx-auto my-auto py-1">
                   <svg
-                    viewBox="55 75 335 565"
-                    className="w-full h-auto select-none"
+                    viewBox="4 66 432 612"
+                    className="w-full h-auto select-none overflow-visible"
                     aria-label="Vietnam Logistics and Export Gateways Map"
                   >
-                    {/* Stage 1: Accurate Vietnam Map Silhouette */}
-                    <g>
+                    <defs>
+                      <linearGradient id="log-vn-relief" x1="15%" y1="5%" x2="85%" y2="95%">
+                        <stop offset="0%" stopColor="#F5E7D4" />
+                        <stop offset="55%" stopColor="#E9D6BC" />
+                        <stop offset="100%" stopColor="#DCC5A7" />
+                      </linearGradient>
+                      <linearGradient id="log-vn-cluster" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#EED4B1" />
+                        <stop offset="100%" stopColor="#DAB688" />
+                      </linearGradient>
+                      <filter id="log-vn-shadow" x="-15%" y="-10%" width="135%" height="125%">
+                        <feDropShadow
+                          dx="-4"
+                          dy="7"
+                          stdDeviation="5"
+                          floodColor="#AD977A"
+                          floodOpacity="0.40"
+                        />
+                      </filter>
+                      <filter id="log-card-shadow" x="-15%" y="-20%" width="135%" height="150%">
+                        <feDropShadow
+                          dx="0"
+                          dy="2.5"
+                          stdDeviation="2.5"
+                          floodColor="#1C2E25"
+                          floodOpacity="0.14"
+                        />
+                      </filter>
+                    </defs>
+
+                    {/* Stage 1: Accurate 3D-Embossed Vietnam Map Silhouette (unclipped!) */}
+                    <g filter="url(#log-vn-shadow)">
                       {mapData.provinces.map(
                         (prov: { id: string; name: string; path: string }) => {
                           const isClusterProv = [
@@ -1245,162 +1449,201 @@ export default function ManufacturingPage() {
                             <path
                               key={prov.id}
                               d={prov.path}
-                              fill={isClusterProv ? "#DFC39D" : "#EFE6D5"}
-                              stroke="#D5C5AA"
-                              strokeWidth="0.6"
+                              fill={isClusterProv ? "url(#log-vn-cluster)" : "url(#log-vn-relief)"}
+                              stroke="#E5D5BE"
+                              strokeWidth="0.55"
                             />
                           );
                         }
                       )}
                     </g>
 
-                    {/* Stage 3: 4 Independent Short Curved Dashed Port Connection Lines (700-900ms draw) */}
+                    {/* Soft Warm Amber Cluster Halos (Hình 38 visual cue beneath dots) */}
+                    <circle cx="168" cy="186" r="29" fill="#DCAA6E" opacity="0.34" />
+                    <circle cx="275" cy="446" r="21" fill="#DCAA6E" opacity="0.34" />
+                    <circle cx="192" cy="572" r="29" fill="#DCAA6E" opacity="0.34" />
+
+                    {/* Sovereign Archipelagos (Hoang Sa & Truong Sa) */}
+                    <g transform="translate(335, 326)" opacity="0.72">
+                      <circle cx="12" cy="6" r="2" fill="#B2733C" />
+                      <text
+                        x="12"
+                        y="19"
+                        textAnchor="middle"
+                        fill="#7B6753"
+                        fontSize="7"
+                        fontWeight="700"
+                        letterSpacing="0.06em"
+                      >
+                        HOANG SA
+                      </text>
+                    </g>
+                    <g transform="translate(348, 514)" opacity="0.72">
+                      <circle cx="12" cy="6" r="2" fill="#B2733C" />
+                      <text
+                        x="12"
+                        y="19"
+                        textAnchor="middle"
+                        fill="#7B6753"
+                        fontSize="7"
+                        fontWeight="700"
+                        letterSpacing="0.06em"
+                      >
+                        TRUONG SA
+                      </text>
+                    </g>
+
+                    {/* Stage 3: 4 Independent Short Curved Dashed Port Connections (strictly per Page 35–36) */}
                     {/* 1. Hung Yen -> Hai Phong Port */}
                     <motion.path
-                      d="M 176 184 Q 192 178 205 190"
+                      d="M 181 189 Q 198 184 205 194"
                       fill="none"
-                      stroke="#173C2C"
-                      strokeWidth="2"
+                      stroke="#0D3B2A"
+                      strokeWidth="2.1"
                       strokeDasharray="4 3"
                       initial={{ pathLength: 0, opacity: 0 }}
                       whileInView={{
                         pathLength: 1,
-                        opacity: isExportClusterActive("hungyen", "haiphong_port") ? 1 : 0.25,
+                        opacity: isExportClusterActive("hungyen", "haiphong_port") ? 1 : 0.22,
                       }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.8, delay: 0.75 }}
                     />
                     {/* 2. Phu Tho & Vinh Phuc -> Hai Phong Port */}
                     <motion.path
-                      d="M 150 172 Q 178 164 205 190"
+                      d="M 152 174 Q 186 164 207 188"
                       fill="none"
-                      stroke="#173C2C"
-                      strokeWidth="2"
+                      stroke="#0D3B2A"
+                      strokeWidth="2.1"
                       strokeDasharray="4 3"
                       initial={{ pathLength: 0, opacity: 0 }}
                       whileInView={{
                         pathLength: 1,
-                        opacity: isExportClusterActive("phutho", "haiphong_port") ? 1 : 0.25,
+                        opacity: isExportClusterActive("phutho", "haiphong_port") ? 1 : 0.22,
                       }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.8, delay: 0.9 }}
                     />
                     {/* 3. Quy Nhon -> Quy Nhon Port */}
                     <motion.path
-                      d="M 243 426 Q 254 428 264 434"
+                      d="M 278 448 Q 287 451 290 455"
                       fill="none"
-                      stroke="#173C2C"
-                      strokeWidth="2"
+                      stroke="#0D3B2A"
+                      strokeWidth="2.1"
                       strokeDasharray="4 3"
                       initial={{ pathLength: 0, opacity: 0 }}
                       whileInView={{
                         pathLength: 1,
-                        opacity: isExportClusterActive("quynhon", "quynhon_port") ? 1 : 0.25,
+                        opacity: isExportClusterActive("quynhon", "quynhon_port") ? 1 : 0.22,
                       }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.8, delay: 1.05 }}
                     />
                     {/* 4. HCMC & Southern Corridor -> Cat Lai / Cai Mep - Thi Vai */}
                     <motion.path
-                      d="M 192 536 Q 204 544 214 552"
+                      d="M 197 578 Q 208 588 214 592"
                       fill="none"
-                      stroke="#173C2C"
-                      strokeWidth="2"
+                      stroke="#0D3B2A"
+                      strokeWidth="2.1"
                       strokeDasharray="4 3"
                       initial={{ pathLength: 0, opacity: 0 }}
                       whileInView={{
                         pathLength: 1,
-                        opacity: isExportClusterActive("hcmc", "south_ports") ? 1 : 0.25,
+                        opacity: isExportClusterActive("hcmc", "south_ports") ? 1 : 0.22,
                       }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.8, delay: 1.2 }}
                     />
 
-                    {/* Stage 2: 10 Dark-Green Facility Dots (4 - 1 - 1 - 4, sequential North to South) */}
-                    {/* Cluster B (North-West): Phu Tho & Vinh Phuc (1 dot: Facility 10) */}
+                    {/* Stage 2: Exact 10 Dark-Green Facility Dots (4 - 1 - 1 - 4, North to South) */}
+                    {/* Cluster A: Hung Yen (4 dots: Facilities 06-09) */}
                     <motion.g
                       className="cursor-pointer"
-                      initial={{ opacity: 0, scale: 0.8 }}
+                      initial={{ opacity: 0, scale: 0.85 }}
                       whileInView={{
-                        opacity: isExportClusterActive("phutho", "haiphong_port") ? 1 : 0.3,
+                        opacity: isExportClusterActive("hungyen", "haiphong_port") ? 1 : 0.28,
                         scale: 1,
                       }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.4, delay: 0.2 }}
-                      onMouseEnter={() => setHoveredExportRegion("phutho")}
-                      onMouseLeave={() => setHoveredExportRegion(null)}
-                      onClick={() =>
-                        setHoveredExportRegion(hoveredExportRegion === "phutho" ? null : "phutho")
-                      }
-                    >
-                      <line x1="138" y1="186" x2="150" y2="172" stroke="#173C2C" strokeWidth="1.2" />
-                      <rect
-                        x="58"
-                        y="168"
-                        width="82"
-                        height="44"
-                        rx="6"
-                        fill="#FFFFFF"
-                        stroke="#173C2C"
-                        strokeWidth="1"
-                      />
-                      <text x="65" y="182" fill="#0E241B" fontSize="9" fontWeight="800">
-                        Phu Tho &amp;
-                      </text>
-                      <text x="65" y="193" fill="#0E241B" fontSize="9" fontWeight="800">
-                        Vinh Phuc
-                      </text>
-                      <text x="65" y="205" fill="#37413D" fontSize="8" fontWeight="600">
-                        (Facility 10)
-                      </text>
-                      <circle cx="150" cy="172" r="4.5" fill="#173C2C" stroke="#FFFFFF" strokeWidth="1.2" />
-                    </motion.g>
-
-                    {/* Cluster A (North): Hung Yen (4 dots: Facilities 06-09) */}
-                    <motion.g
-                      className="cursor-pointer"
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      whileInView={{
-                        opacity: isExportClusterActive("hungyen", "haiphong_port") ? 1 : 0.3,
-                        scale: 1,
-                      }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.4, delay: 0.34 }}
                       onMouseEnter={() => setHoveredExportRegion("hungyen")}
                       onMouseLeave={() => setHoveredExportRegion(null)}
                       onClick={() =>
                         setHoveredExportRegion(hoveredExportRegion === "hungyen" ? null : "hungyen")
                       }
                     >
-                      <line x1="158" y1="128" x2="167" y2="174" stroke="#173C2C" strokeWidth="1.2" />
-                      <rect
-                        x="95"
-                        y="94"
-                        width="112"
-                        height="34"
-                        rx="6"
-                        fill="#FFFFFF"
-                        stroke="#173C2C"
-                        strokeWidth="1"
-                      />
-                      <text x="103" y="109" fill="#0E241B" fontSize="9.5" fontWeight="800">
+                      <line x1="148" y1="115" x2="171" y2="179" stroke="#183A2C" strokeWidth="1.25" />
+                      <g filter="url(#log-card-shadow)">
+                        <rect
+                          x="84"
+                          y="76"
+                          width="124"
+                          height="39"
+                          rx="7"
+                          fill="#FFFFFF"
+                          stroke="#2A4A3B"
+                          strokeWidth="1"
+                        />
+                      </g>
+                      <text x="94" y="93" fill="#0B231A" fontSize="10.5" fontWeight="800">
                         Hung Yen
                       </text>
-                      <text x="103" y="121" fill="#37413D" fontSize="8.5" fontWeight="600">
+                      <text x="94" y="107" fill="#3A4741" fontSize="9" fontWeight="600">
                         (Facilities 06–09)
                       </text>
-                      <circle cx="166" cy="179" r="4.2" fill="#173C2C" stroke="#FFFFFF" strokeWidth="1" />
-                      <circle cx="176" cy="179" r="4.2" fill="#173C2C" stroke="#FFFFFF" strokeWidth="1" />
-                      <circle cx="166" cy="189" r="4.2" fill="#173C2C" stroke="#FFFFFF" strokeWidth="1" />
-                      <circle cx="176" cy="189" r="4.2" fill="#173C2C" stroke="#FFFFFF" strokeWidth="1" />
+                      <circle cx="167" cy="184" r="4.6" fill="#0D3B2A" stroke="#FFFFFF" strokeWidth="1.2" />
+                      <circle cx="177" cy="184" r="4.6" fill="#0D3B2A" stroke="#FFFFFF" strokeWidth="1.2" />
+                      <circle cx="167" cy="194" r="4.6" fill="#0D3B2A" stroke="#FFFFFF" strokeWidth="1.2" />
+                      <circle cx="177" cy="194" r="4.6" fill="#0D3B2A" stroke="#FFFFFF" strokeWidth="1.2" />
                     </motion.g>
 
-                    {/* Cluster C (Central): Quy Nhon (1 dot: Facility 01) */}
+                    {/* Cluster B: Phu Tho & Vinh Phuc (1 dot: Facility 10) */}
                     <motion.g
                       className="cursor-pointer"
-                      initial={{ opacity: 0, scale: 0.8 }}
+                      initial={{ opacity: 0, scale: 0.85 }}
                       whileInView={{
-                        opacity: isExportClusterActive("quynhon", "quynhon_port") ? 1 : 0.3,
+                        opacity: isExportClusterActive("phutho", "haiphong_port") ? 1 : 0.28,
+                        scale: 1,
+                      }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: 0.34 }}
+                      onMouseEnter={() => setHoveredExportRegion("phutho")}
+                      onMouseLeave={() => setHoveredExportRegion(null)}
+                      onClick={() =>
+                        setHoveredExportRegion(hoveredExportRegion === "phutho" ? null : "phutho")
+                      }
+                    >
+                      <line x1="108" y1="194" x2="148" y2="174" stroke="#183A2C" strokeWidth="1.25" />
+                      <g filter="url(#log-card-shadow)">
+                        <rect
+                          x="10"
+                          y="170"
+                          width="98"
+                          height="50"
+                          rx="7"
+                          fill="#FFFFFF"
+                          stroke="#2A4A3B"
+                          strokeWidth="1"
+                        />
+                      </g>
+                      <text x="19" y="186" fill="#0B231A" fontSize="10" fontWeight="800">
+                        Phu Tho &amp;
+                      </text>
+                      <text x="19" y="199" fill="#0B231A" fontSize="10" fontWeight="800">
+                        Vinh Phuc
+                      </text>
+                      <text x="19" y="212" fill="#3A4741" fontSize="8.8" fontWeight="600">
+                        (Facility 10)
+                      </text>
+                      <circle cx="148" cy="174" r="5" fill="#0D3B2A" stroke="#FFFFFF" strokeWidth="1.3" />
+                    </motion.g>
+
+                    {/* Cluster C: Quy Nhon (1 dot: Facility 01) */}
+                    <motion.g
+                      className="cursor-pointer"
+                      initial={{ opacity: 0, scale: 0.85 }}
+                      whileInView={{
+                        opacity: isExportClusterActive("quynhon", "quynhon_port") ? 1 : 0.28,
                         scale: 1,
                       }}
                       viewport={{ once: true }}
@@ -1411,32 +1654,34 @@ export default function ManufacturingPage() {
                         setHoveredExportRegion(hoveredExportRegion === "quynhon" ? null : "quynhon")
                       }
                     >
-                      <line x1="210" y1="402" x2="243" y2="426" stroke="#173C2C" strokeWidth="1.2" />
-                      <rect
-                        x="148"
-                        y="368"
-                        width="82"
-                        height="34"
-                        rx="6"
-                        fill="#FFFFFF"
-                        stroke="#173C2C"
-                        strokeWidth="1"
-                      />
-                      <text x="156" y="383" fill="#0E241B" fontSize="9.5" fontWeight="800">
+                      <line x1="226" y1="422" x2="275" y2="446" stroke="#183A2C" strokeWidth="1.25" />
+                      <g filter="url(#log-card-shadow)">
+                        <rect
+                          x="152"
+                          y="384"
+                          width="96"
+                          height="39"
+                          rx="7"
+                          fill="#FFFFFF"
+                          stroke="#2A4A3B"
+                          strokeWidth="1"
+                        />
+                      </g>
+                      <text x="162" y="401" fill="#0B231A" fontSize="10.5" fontWeight="800">
                         Quy Nhon
                       </text>
-                      <text x="156" y="395" fill="#37413D" fontSize="8.5" fontWeight="600">
+                      <text x="162" y="415" fill="#3A4741" fontSize="9" fontWeight="600">
                         (Facility 01)
                       </text>
-                      <circle cx="243" cy="426" r="4.5" fill="#173C2C" stroke="#FFFFFF" strokeWidth="1.2" />
+                      <circle cx="275" cy="446" r="5" fill="#0D3B2A" stroke="#FFFFFF" strokeWidth="1.3" />
                     </motion.g>
 
-                    {/* Cluster D (South): Ho Chi Minh City & Southern Corridor (4 dots: Facilities 02-05) */}
+                    {/* Cluster D: Ho Chi Minh City & Southern Corridor (4 dots: Facilities 02-05) */}
                     <motion.g
                       className="cursor-pointer"
-                      initial={{ opacity: 0, scale: 0.8 }}
+                      initial={{ opacity: 0, scale: 0.85 }}
                       whileInView={{
-                        opacity: isExportClusterActive("hcmc", "south_ports") ? 1 : 0.3,
+                        opacity: isExportClusterActive("hcmc", "south_ports") ? 1 : 0.28,
                         scale: 1,
                       }}
                       viewport={{ once: true }}
@@ -1447,39 +1692,41 @@ export default function ManufacturingPage() {
                         setHoveredExportRegion(hoveredExportRegion === "hcmc" ? null : "hcmc")
                       }
                     >
-                      <line x1="155" y1="505" x2="180" y2="528" stroke="#173C2C" strokeWidth="1.2" />
-                      <rect
-                        x="58"
-                        y="460"
-                        width="115"
-                        height="44"
-                        rx="6"
-                        fill="#FFFFFF"
-                        stroke="#173C2C"
-                        strokeWidth="1"
-                      />
-                      <text x="65" y="474" fill="#0E241B" fontSize="9" fontWeight="800">
+                      <line x1="138" y1="546" x2="184" y2="569" stroke="#183A2C" strokeWidth="1.25" />
+                      <g filter="url(#log-card-shadow)">
+                        <rect
+                          x="10"
+                          y="498"
+                          width="138"
+                          height="52"
+                          rx="7"
+                          fill="#FFFFFF"
+                          stroke="#2A4A3B"
+                          strokeWidth="1"
+                        />
+                      </g>
+                      <text x="19" y="514" fill="#0B231A" fontSize="10" fontWeight="800">
                         Ho Chi Minh City
                       </text>
-                      <text x="65" y="485" fill="#0E241B" fontSize="9" fontWeight="800">
+                      <text x="19" y="527" fill="#0B231A" fontSize="10" fontWeight="800">
                         &amp; Southern Corridor
                       </text>
-                      <text x="65" y="497" fill="#37413D" fontSize="8" fontWeight="600">
+                      <text x="19" y="541" fill="#3A4741" fontSize="8.8" fontWeight="600">
                         (Facilities 02–05)
                       </text>
-                      <circle cx="182" cy="530" r="4.2" fill="#173C2C" stroke="#FFFFFF" strokeWidth="1" />
-                      <circle cx="192" cy="530" r="4.2" fill="#173C2C" stroke="#FFFFFF" strokeWidth="1" />
-                      <circle cx="182" cy="540" r="4.2" fill="#173C2C" stroke="#FFFFFF" strokeWidth="1" />
-                      <circle cx="192" cy="540" r="4.2" fill="#173C2C" stroke="#FFFFFF" strokeWidth="1" />
+                      <circle cx="185" cy="566" r="4.6" fill="#0D3B2A" stroke="#FFFFFF" strokeWidth="1.2" />
+                      <circle cx="195" cy="566" r="4.6" fill="#0D3B2A" stroke="#FFFFFF" strokeWidth="1.2" />
+                      <circle cx="185" cy="576" r="4.6" fill="#0D3B2A" stroke="#FFFFFF" strokeWidth="1.2" />
+                      <circle cx="195" cy="576" r="4.6" fill="#0D3B2A" stroke="#FFFFFF" strokeWidth="1.2" />
                     </motion.g>
 
-                    {/* Stage 4: 3 Bronze Anchor Export Port Gateways (scale 0.95 -> 1 after lines finish) */}
+                    {/* Stage 4: 3 Bronze Anchor Export Port Gateways (scale 0.95 -> 1 after routes finish) */}
                     {/* Port 1: Hai Phong Port */}
                     <motion.g
                       className="cursor-pointer"
                       initial={{ opacity: 0, scale: 0.95 }}
                       whileInView={{
-                        opacity: isPortActive("haiphong_port") ? 1 : 0.3,
+                        opacity: isPortActive("haiphong_port") ? 1 : 0.28,
                         scale: 1,
                       }}
                       viewport={{ once: true }}
@@ -1490,24 +1737,26 @@ export default function ManufacturingPage() {
                         setHoveredPortId(hoveredPortId === "haiphong_port" ? null : "haiphong_port")
                       }
                     >
-                      <circle cx="205" cy="192" r="9" fill="#C57B35" stroke="#FFFFFF" strokeWidth="1.5" />
-                      <text x="205" y="196" textAnchor="middle" fill="#FFFFFF" fontSize="10" fontWeight="800">
+                      <circle cx="214" cy="196" r="10.5" fill="#C27834" stroke="#FFFFFF" strokeWidth="1.8" />
+                      <text x="214" y="200.5" textAnchor="middle" fill="#FFFFFF" fontSize="11" fontWeight="800">
                         ⚓
                       </text>
-                      <rect
-                        x="220"
-                        y="176"
-                        width="128"
-                        height="34"
-                        rx="6"
-                        fill="#FBF8F1"
-                        stroke="#C57B35"
-                        strokeWidth="1"
-                      />
-                      <text x="230" y="191" fill="#0E241B" fontSize="9.5" fontWeight="800">
+                      <g filter="url(#log-card-shadow)">
+                        <rect
+                          x="232"
+                          y="177"
+                          width="136"
+                          height="39"
+                          rx="7"
+                          fill="#FBF5EB"
+                          stroke="#D8B992"
+                          strokeWidth="1.1"
+                        />
+                      </g>
+                      <text x="242" y="194" fill="#0B231A" fontSize="10.5" fontWeight="800">
                         Hai Phong Port
                       </text>
-                      <text x="230" y="203" fill="#4A5550" fontSize="8" fontWeight="600">
+                      <text x="242" y="208" fill="#525E58" fontSize="8.8" fontWeight="600">
                         (Northern Gateway)
                       </text>
                     </motion.g>
@@ -1517,7 +1766,7 @@ export default function ManufacturingPage() {
                       className="cursor-pointer"
                       initial={{ opacity: 0, scale: 0.95 }}
                       whileInView={{
-                        opacity: isPortActive("quynhon_port") ? 1 : 0.3,
+                        opacity: isPortActive("quynhon_port") ? 1 : 0.28,
                         scale: 1,
                       }}
                       viewport={{ once: true }}
@@ -1528,24 +1777,26 @@ export default function ManufacturingPage() {
                         setHoveredPortId(hoveredPortId === "quynhon_port" ? null : "quynhon_port")
                       }
                     >
-                      <circle cx="264" cy="436" r="9" fill="#C57B35" stroke="#FFFFFF" strokeWidth="1.5" />
-                      <text x="264" y="440" textAnchor="middle" fill="#FFFFFF" fontSize="10" fontWeight="800">
+                      <circle cx="296" cy="456" r="10.5" fill="#C27834" stroke="#FFFFFF" strokeWidth="1.8" />
+                      <text x="296" y="460.5" textAnchor="middle" fill="#FFFFFF" fontSize="11" fontWeight="800">
                         ⚓
                       </text>
-                      <rect
-                        x="278"
-                        y="420"
-                        width="108"
-                        height="34"
-                        rx="6"
-                        fill="#FBF8F1"
-                        stroke="#C57B35"
-                        strokeWidth="1"
-                      />
-                      <text x="286" y="435" fill="#0E241B" fontSize="9.5" fontWeight="800">
+                      <g filter="url(#log-card-shadow)">
+                        <rect
+                          x="312"
+                          y="437"
+                          width="118"
+                          height="39"
+                          rx="7"
+                          fill="#FBF5EB"
+                          stroke="#D8B992"
+                          strokeWidth="1.1"
+                        />
+                      </g>
+                      <text x="321" y="454" fill="#0B231A" fontSize="10.5" fontWeight="800">
                         Quy Nhon Port
                       </text>
-                      <text x="286" y="447" fill="#4A5550" fontSize="8" fontWeight="600">
+                      <text x="321" y="468" fill="#525E58" fontSize="8.8" fontWeight="600">
                         (Central Gateway)
                       </text>
                     </motion.g>
@@ -1555,7 +1806,7 @@ export default function ManufacturingPage() {
                       className="cursor-pointer"
                       initial={{ opacity: 0, scale: 0.95 }}
                       whileInView={{
-                        opacity: isPortActive("south_ports") ? 1 : 0.3,
+                        opacity: isPortActive("south_ports") ? 1 : 0.28,
                         scale: 1,
                       }}
                       viewport={{ once: true }}
@@ -1566,166 +1817,209 @@ export default function ManufacturingPage() {
                         setHoveredPortId(hoveredPortId === "south_ports" ? null : "south_ports")
                       }
                     >
-                      <circle cx="214" cy="554" r="9" fill="#C57B35" stroke="#FFFFFF" strokeWidth="1.5" />
-                      <text x="214" y="558" textAnchor="middle" fill="#FFFFFF" fontSize="10" fontWeight="800">
+                      <circle cx="222" cy="594" r="10.5" fill="#C27834" stroke="#FFFFFF" strokeWidth="1.8" />
+                      <text x="222" y="598.5" textAnchor="middle" fill="#FFFFFF" fontSize="11" fontWeight="800">
                         ⚓
                       </text>
-                      <rect
-                        x="228"
-                        y="534"
-                        width="142"
-                        height="44"
-                        rx="6"
-                        fill="#FBF8F1"
-                        stroke="#C57B35"
-                        strokeWidth="1"
-                      />
-                      <text x="236" y="548" fill="#0E241B" fontSize="9" fontWeight="800">
+                      <g filter="url(#log-card-shadow)">
+                        <rect
+                          x="240"
+                          y="572"
+                          width="150"
+                          height="50"
+                          rx="7"
+                          fill="#FBF5EB"
+                          stroke="#D8B992"
+                          strokeWidth="1.1"
+                        />
+                      </g>
+                      <text x="250" y="588" fill="#0B231A" fontSize="10" fontWeight="800">
                         Cat Lai /
                       </text>
-                      <text x="236" y="559" fill="#0E241B" fontSize="9" fontWeight="800">
+                      <text x="250" y="601" fill="#0B231A" fontSize="10" fontWeight="800">
                         Cai Mep – Thi Vai
                       </text>
-                      <text x="236" y="571" fill="#4A5550" fontSize="8" fontWeight="600">
+                      <text x="250" y="614" fill="#525E58" fontSize="8.8" fontWeight="600">
                         (Southern Gateway)
                       </text>
                     </motion.g>
                   </svg>
                 </div>
 
-                {/* Map Legend */}
-                <div className="pt-4 border-t border-[#E6DFD1] flex flex-wrap items-center justify-center gap-4 text-xs font-body text-[#2D3732]">
+                {/* Map Legend Bar */}
+                <div className="pt-3.5 border-t border-[#EAE2D4] flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11.5px] font-body text-[#2C3732]">
                   <span className="inline-flex items-center gap-1.5">
-                    <span className="w-3 h-3 rounded-full bg-[#173C2C] inline-block" />
+                    <span className="w-3 h-3 rounded-full bg-[#0D3B2A] inline-block" />
                     <span>Furniture facility (01–10)</span>
                   </span>
                   <span className="inline-flex items-center gap-1.5">
-                    <span className="w-4 h-4 rounded-full bg-[#C57B35] text-white text-[10px] inline-flex items-center justify-center font-bold">
+                    <span className="w-4 h-4 rounded-full bg-[#C27834] text-white text-[9.5px] inline-flex items-center justify-center font-bold">
                       ⚓
                     </span>
                     <span>Export gateway</span>
                   </span>
                   <span className="inline-flex items-center gap-1.5">
-                    <span className="w-5 border-t-2 border-dashed border-[#173C2C] inline-block" />
+                    <span className="w-5 border-t-2 border-dashed border-[#0D3B2A] inline-block" />
                     <span>Logistics connection</span>
                   </span>
                 </div>
               </motion.div>
 
-              {/* Right Column (56%): Region Breakdown Table (without unverified container numbers) + 3 Port Gateway Cards */}
-              <div className="lg:col-span-7 flex flex-col justify-between gap-6">
-                {/* Right Top: Manufacturing Regions Table (Page 42 strict specification) */}
-                <div className="rounded-2xl bg-[#FBF9F5] border border-[#E2DACB] p-6 shadow-xs">
-                  <div className="flex items-center gap-2.5 mb-4">
-                    <span className="h-[1.5px] w-6 bg-[#B97846]" />
-                    <span className="font-body text-xs font-bold uppercase tracking-[0.16em] text-[#9E3B24]">
-                      MANUFACTURING REGIONS &amp; PRIMARY GATEWAYS (FACILITIES 01–10)
+              {/* Right Column (54.4%): Region Table Card + 3 Export Gateway Cards */}
+              <div className="flex-1 flex flex-col justify-between gap-6 lg:gap-[22px]">
+                {/* Right Top Card: Export Capacity by Manufacturing Region (Page 37 Strict Columns) */}
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.5 }}
+                  className="rounded-[14px] bg-[#FBF9F6] border border-[#E5DDD0] px-5 py-5 lg:px-6 lg:py-5 shadow-[0_4px_14px_-3px_rgba(95,78,58,0.09),0_1px_2px_rgba(95,78,58,0.05)]"
+                >
+                  <div className="flex items-center gap-2.5 mb-3.5">
+                    <span className="h-[1.5px] w-6 bg-[#B2733C]" />
+                    <span className="font-body text-[11px] font-bold uppercase tracking-[0.15em] text-[#9E6A3A]">
+                      EXPORT CAPACITY BY MANUFACTURING REGION
                     </span>
                   </div>
 
-                  <div className="overflow-x-auto rounded-xl border border-[#E2DACB]">
-                    <table className="w-full text-left font-body text-sm">
-                      <thead className="bg-[#0E261C] text-white text-xs uppercase tracking-wider">
-                        <tr>
-                          <th className="py-3.5 px-4 font-bold">Manufacturing Region</th>
-                          <th className="py-3.5 px-4 font-bold text-center">Facilities</th>
-                          <th className="py-3.5 px-4 font-bold text-center">Count</th>
-                          <th className="py-3.5 px-4 font-bold">Primary Gateway</th>
+                  <div className="overflow-x-auto rounded-[10px] border border-[#E4DACB]">
+                    <table className="w-full text-left font-body text-[13px] border-collapse">
+                      <thead className="bg-[#062E1F] text-white">
+                        <tr className="divide-x divide-white/15">
+                          <th className="py-3 px-4 font-semibold text-[12px]">
+                            Manufacturing Region
+                          </th>
+                          <th className="py-3 px-3 font-semibold text-[12px] text-center whitespace-nowrap">
+                            Facility References
+                          </th>
+                          <th className="py-3 px-3 font-semibold text-[12px] text-center leading-tight">
+                            Furniture Facilities
+                          </th>
+                          <th className="py-3 px-4 font-semibold text-[12px] whitespace-nowrap">
+                            Primary Export Gateway
+                          </th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-[#E8E1D3] bg-white">
-                        {EXPORT_REGION_ROWS.map((row) => {
+                      <tbody className="divide-y divide-[#ECE5D9] bg-[#FDFCF9]">
+                        {EXPORT_REGION_ROWS.map((row, idx) => {
                           const isHovered = hoveredExportRegion === row.id;
                           return (
-                            <tr
+                            <motion.tr
                               key={row.id}
+                              initial={{ opacity: 0, y: 8 }}
+                              whileInView={{ opacity: 1, y: 0 }}
+                              viewport={{ once: true }}
+                              transition={{ duration: 0.35, delay: idx * 0.09 }}
                               onMouseEnter={() => setHoveredExportRegion(row.id)}
                               onMouseLeave={() => setHoveredExportRegion(null)}
-                              className={`transition-colors cursor-pointer ${isHovered ? "bg-[#F4EFE4]" : "hover:bg-[#FAF7F0]"
+                              className={`divide-x divide-[#EFE8DD] transition-colors cursor-pointer ${isHovered ? "bg-[#EDF3EF]" : "hover:bg-[#F1F6F3]"
                                 }`}
                             >
-                              <td className="py-3.5 px-4 font-bold text-[#0E241B] flex items-center gap-2.5">
-                                <Factory size={16} className="text-[#B97846] shrink-0" />
-                                <span>{row.regionName}</span>
+                              <td className="py-3 px-4 font-bold text-[#0C2319]">
+                                <div className="flex items-center gap-2.5">
+                                  <Factory
+                                    size={16}
+                                    strokeWidth={1.6}
+                                    className="text-[#B6733A] shrink-0"
+                                  />
+                                  <span className="leading-snug">{row.regionName}</span>
+                                </div>
                               </td>
-                              <td className="py-3.5 px-4 text-center font-semibold text-[#2D3732] whitespace-nowrap">
+                              <td className="py-3 px-3 text-center font-semibold text-[#2B3732] whitespace-nowrap">
                                 {row.facilitiesRange}
                               </td>
-                              <td className="py-3.5 px-4 text-center font-display font-bold text-lg text-[#B97846]">
+                              <td className="py-3 px-3 text-center font-display font-bold text-[19px] text-[#B6733A] tabular-nums">
                                 {row.count}
                               </td>
-                              <td className="py-3.5 px-4 font-semibold text-[#173C2C] whitespace-nowrap">
+                              <td className="py-3 px-4 font-semibold text-[#153A2B] whitespace-nowrap">
                                 {row.primaryGateway}
                               </td>
-                            </tr>
+                            </motion.tr>
                           );
                         })}
                       </tbody>
-                      <tfoot className="bg-[#F3EADF] border-t border-[#DECZBA] font-body">
-                        <tr>
-                          <td className="py-3.5 px-4 font-bold text-[#9E3B24]">
-                            Total – Furniture Facilities (01 – 10)
+                      <tfoot className="bg-[#F6E6CE] border-t border-[#E3C9A3]">
+                        <tr className="divide-x divide-[#E7D0B0]">
+                          <td className="py-3 px-4 font-bold text-[#9A5A24] text-[13px]">
+                            Total – 10 Furniture Facilities (01 – 10)
                           </td>
-                          <td className="py-3.5 px-4 text-center font-bold text-[#0E241B]">
+                          <td className="py-3 px-3 text-center font-bold text-[#0C2319] whitespace-nowrap">
                             01 – 10
                           </td>
-                          <td className="py-3.5 px-4 text-center font-display font-bold text-xl text-[#9E3B24]">
+                          <td className="py-3 px-3 text-center font-display font-bold text-[21px] text-[#9A5A24] tabular-nums">
                             10
                           </td>
-                          <td className="py-3.5 px-4 text-xs font-bold text-[#0E241B]">
-                            3 Primary Export Gateway Areas
+                          <td className="py-3 px-4 font-bold text-[#0C2319] text-[12px]">
+                            3 Primary Export Gateways
                           </td>
                         </tr>
                       </tfoot>
                     </table>
                   </div>
-                </div>
+                </motion.div>
 
-                {/* Right Bottom: 3 Export Gateway Cards with Port Photos */}
-                <div className="rounded-2xl bg-[#FBF9F5] border border-[#E2DACB] p-6 shadow-xs">
-                  <div className="flex items-center gap-2.5 mb-4">
-                    <span className="h-[1.5px] w-6 bg-[#B97846]" />
-                    <span className="font-body text-xs font-bold uppercase tracking-[0.16em] text-[#9E3B24]">
+                {/* Right Bottom Card: 3 Export Gateways with Bare Bronze Ship Icon & Seamless Port Photos */}
+                <div className="rounded-[14px] bg-[#FBF9F6] border border-[#E5DDD0] px-5 py-5 lg:px-6 lg:py-5 shadow-[0_4px_14px_-3px_rgba(95,78,58,0.09),0_1px_2px_rgba(95,78,58,0.05)] flex-1 flex flex-col justify-between">
+                  <div className="flex items-center gap-2.5 mb-3.5">
+                    <span className="h-[1.5px] w-6 bg-[#B2733C]" />
+                    <span className="font-body text-[11px] font-bold uppercase tracking-[0.15em] text-[#9E6A3A]">
                       EXPORT GATEWAYS
                     </span>
                   </div>
 
-                  <div className="space-y-3.5">
-                    {EXPORT_GATEWAY_CARDS.map((port) => {
+                  <div className="space-y-3.5 flex-1 flex flex-col justify-between">
+                    {EXPORT_GATEWAY_CARDS.map((port, idx) => {
                       const isHovered = hoveredPortId === port.id;
                       return (
-                        <div
+                        <motion.div
                           key={port.id}
+                          initial={{ opacity: 0, y: 12 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true, margin: "-30px" }}
+                          transition={{ duration: 0.5, delay: idx * 0.1 }}
                           onMouseEnter={() => setHoveredPortId(port.id)}
                           onMouseLeave={() => setHoveredPortId(null)}
-                          className={`rounded-xl border transition-all overflow-hidden flex items-stretch justify-between bg-[#F6F3EC] ${isHovered
-                            ? "border-[#C57B35] ring-2 ring-[#C57B35]/25"
-                            : "border-[#E3D9C6]"
+                          className={`group relative rounded-[12px] min-h-[104px] overflow-hidden border transition-all duration-300 bg-[#FAF8F4] flex items-center cursor-pointer ${isHovered
+                            ? "border-[#C27834] ring-1 ring-[#C27834]/30 -translate-y-[3px] shadow-[0_10px_22px_-6px_rgba(14,36,27,0.14)]"
+                            : "border-[#E5DDD0] shadow-[0_2px_8px_-2px_rgba(95,78,58,0.08)]"
                             }`}
                         >
-                          <div className="p-4 sm:p-5 flex items-center gap-4 flex-1">
-                            <div className="w-11 h-11 rounded-xl bg-[#EFE6D5] border border-[#D8CBB8] flex items-center justify-center shrink-0">
-                              <Ship size={22} className="text-[#B97846]" strokeWidth={1.75} />
-                            </div>
-                            <div>
-                              <h3 className="font-display font-bold text-base sm:text-lg text-[#0E241B]">
-                                {port.name}
-                              </h3>
-                              <span className="inline-block px-2.5 py-0.5 rounded bg-[#EFE5D4] text-[#9E3B24] font-body text-xs font-bold my-1">
-                                {port.roleLabel}
-                              </span>
-                              <p className="font-body text-xs text-[#2D3732]">{port.servedFrom}</p>
-                            </div>
-                          </div>
-
-                          <div className="hidden sm:block w-44 shrink-0 overflow-hidden">
+                          {/* Right Seamless Port Photo with Soft Ivory Left-Edge Fade */}
+                          <div className="hidden sm:block absolute inset-y-0 right-0 w-[40%] lg:w-[42%] pointer-events-none select-none overflow-hidden">
                             <img
                               src={port.image}
                               alt={port.name}
-                              className="w-full h-full object-cover"
+                              className="w-full h-full object-cover object-right"
+                            />
+                            <div
+                              className="absolute inset-y-0 left-0 w-16"
+                              style={{
+                                background:
+                                  "linear-gradient(90deg, #FAF8F4 0%, rgba(250, 248, 244, 0.85) 35%, rgba(250, 248, 244, 0) 100%)",
+                              }}
                             />
                           </div>
-                        </div>
+
+                          {/* Left Content: Bare Bronze Ship Icon + Port Hierarchy */}
+                          <div className="relative z-10 w-full sm:w-[66%] px-5 py-3.5 flex items-center gap-4">
+                            <Ship
+                              size={36}
+                              className="text-[#B6733A] shrink-0"
+                              strokeWidth={1.35}
+                            />
+                            <div>
+                              <h3 className="font-display font-bold text-[17px] lg:text-[18.5px] text-[#0B231A] leading-snug">
+                                {port.name}
+                              </h3>
+                              <span className="inline-block px-3 py-0.5 rounded-[6px] bg-[#F5E6D0] text-[#9E5D28] font-body text-[12px] font-bold my-1">
+                                {port.roleLabel}
+                              </span>
+                              <p className="font-body text-[12px] text-[#2F3B36] leading-snug">
+                                {port.servedFrom}
+                              </p>
+                            </div>
+                          </div>
+                        </motion.div>
                       );
                     })}
                   </div>
@@ -1733,390 +2027,470 @@ export default function ManufacturingPage() {
               </div>
             </div>
 
-            {/* Bottom Dark-Green Reference Capacity Note Bar */}
-            <div className="mt-6 rounded-xl bg-[#122E22] text-white px-6 py-4 flex items-start gap-3.5 border border-[#C88A36]/30 shadow-sm">
-              <Info size={18} className="text-[#E5B869] shrink-0 mt-0.5" />
-              <p className="font-body text-xs sm:text-sm text-white/90 leading-relaxed">
-                <strong className="text-[#E5B869]">Reference Capacity Note:</strong> The stated
-                monthly capacity of approximately 600 × 40HQ containers represents an indicative
-                combined planning capacity across 10 furniture production facilities (Facilities
-                01–10). Actual output varies by product specifications, production mix and order
-                scheduling. Facility 11, dedicated to wood panels and primary processing, is
-                excluded.
+            {/* Bottom Full-Width Dark Forest Green Reference Capacity Note Bar (Hình 38 — h ~104px) */}
+            <div className="relative mt-6 lg:mt-[24px] rounded-[14px] overflow-hidden bg-gradient-to-r from-[#052C1D] via-[#073423] to-[#05291B] text-white px-6 sm:px-8 py-5 lg:py-[22px] flex items-start gap-4 border border-[#1B4B37] shadow-[0_8px_22px_-6px_rgba(4,34,23,0.28)]">
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background:
+                    "radial-gradient(ellipse 40% 120% at 92% 100%, rgba(212, 175, 90, 0.14) 0%, rgba(212, 175, 90, 0) 70%)",
+                }}
+              />
+              <Info
+                size={24}
+                strokeWidth={1.7}
+                className="text-[#D9B45A] shrink-0 mt-0.5 relative z-10"
+              />
+              <p className="font-body text-[12.5px] sm:text-[13.5px] text-white/92 leading-[1.6] relative z-10">
+                <strong className="text-[#E0BE69] font-bold">Reference Capacity Note:</strong> The
+                stated monthly capacity of approximately 600 × 40HQ containers represents an
+                indicative combined planning capacity across 10 furniture production facilities
+                (Facilities 01–10). Actual output varies by product specifications, production mix
+                and order scheduling. Facility 11, dedicated to wood panels and primary processing,
+                is excluded.
               </p>
             </div>
           </div>
         </section>
 
-        {/* ── PART 22A: OUR GLOBAL MARKETS (29 Countries — Hình 40) ── */}
-        <section className="py-16 lg:py-20 bg-[#F7F4ED] border-b border-black/5">
-          <div className="container mx-auto px-6 lg:px-10">
-            {/* Header with Port Ship Image */}
-            <div className="relative rounded-2xl overflow-hidden bg-[#FBF9F5] border border-[#E2DACB] p-6 sm:p-10 mb-8 shadow-xs">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-                <div className="lg:col-span-7">
-                  <div className="flex items-center gap-3 mb-2.5">
-                    <span className="h-[1.5px] w-7 bg-[#B97846]" />
-                    <span className="font-body text-xs font-bold uppercase tracking-[0.2em] text-[#B97846]">
-                      INTERNATIONAL REACH
-                    </span>
-                  </div>
-                  <h2
-                    className="font-display font-bold text-[#0E241B] leading-tight mb-3"
-                    style={{ fontSize: "clamp(2rem, 3.6vw, 3rem)" }}
-                  >
-                    Our Global Markets
-                  </h2>
-                  <p className="font-body text-sm sm:text-base text-[#2D3732] leading-relaxed max-w-xl">
-                    Exporting to 29 countries across North America, Europe, Middle East &amp;
-                    Eurasia, and Asia-Pacific &amp; Africa, with long-term partnerships worldwide.
-                  </p>
-                </div>
+        {/* ── PART 22A: OUR GLOBAL MARKETS (29 Countries — Hình 40 Exact Proportions & Interactive Map) ── */}
+        <section className="relative pt-9 pb-14 lg:pt-[38px] lg:pb-[64px] bg-[#F8F4EE] border-b border-[#E5DCCE] overflow-hidden">
+          {/* Top-Right Full-Bleed Sunset Container Ship & Twin Cranes Banner (flush top-right like Hình 40) */}
+          <div className="hidden md:block absolute top-0 right-0 w-[56%] lg:w-[55%] xl:w-[53%] h-[215px] lg:h-[235px] pointer-events-none select-none overflow-hidden">
+            <img
+              src="/img/pdf-guide/manufacturing/global-markets-ship.jpg?v=2"
+              alt="DHT Global Export Container Ship and Port Cranes"
+              className="w-full h-full object-cover object-right-top"
+            />
+            {/* Seamless horizontal fade into #F8F4EE warm ivory on the left */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(90deg, #F8F4EE 0%, rgba(248, 244, 238, 0.92) 14%, rgba(248, 244, 238, 0.35) 34%, rgba(248, 244, 238, 0) 56%)",
+              }}
+            />
+            {/* Soft bottom fade right into the canvas behind 3-stat bar */}
+            <div
+              className="absolute inset-x-0 bottom-0 h-10"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(248, 244, 238, 0) 0%, #F8F4EE 100%)",
+              }}
+            />
+          </div>
 
-                <div className="lg:col-span-5 rounded-xl overflow-hidden max-h-[160px]">
-                  <img
-                    src="/img/pdf-guide/manufacturing/global-markets-ship.jpg"
-                    alt="DHT Global Export Shipping"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+          <div className="max-w-[1320px] mx-auto px-6 sm:px-8 lg:px-10 relative z-10">
+            {/* Top Left Header Copy (directly on ivory canvas — zero outer box, exact Hình 40) */}
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.55 }}
+              className="max-w-[660px] mb-7 lg:mb-[28px]"
+            >
+              <div className="flex items-center gap-3 mb-2">
+                <span className="h-[1.5px] w-8 bg-[#A87544]" />
+                <span className="font-body text-[11px] font-bold uppercase tracking-[0.18em] text-[#9E6A3A]">
+                  INTERNATIONAL REACH
+                </span>
               </div>
 
-              {/* 3-Stat Dark-Green Bar */}
-              <div className="mt-8 rounded-xl bg-[#0E261C] text-white p-5 sm:p-6 grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-0 border border-[#C88A36]/35">
-                <div className="flex items-center gap-4 md:pr-6">
-                  <Globe2 size={32} className="text-[#D89B3C] shrink-0" strokeWidth={1.5} />
+              <h2 className="font-display font-bold text-[#0B231A] leading-[1.08] tracking-[-0.01em] mb-2.5 text-[34px] sm:text-[42px] lg:text-[48px]">
+                Our Global Markets
+              </h2>
+
+              <p className="font-body text-[14px] sm:text-[15px] text-[#2D3A34] leading-[1.55] max-w-[610px]">
+                Exporting to 29 countries across North America, Europe, Middle East &amp; Eurasia,
+                and Asia-Pacific &amp; Africa, with long-term partnerships worldwide.
+              </p>
+            </motion.div>
+
+            {/* Full-Width Dark Emerald 3-Stat Bar with Gold Hairline Border (y=219..309 in Hình 40) */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.5 }}
+              className="mb-6 lg:mb-[26px] rounded-[16px] bg-gradient-to-r from-[#052C1D] via-[#073424] to-[#052B1D] text-white border-[1.5px] border-[#C9A86A]/70 shadow-[0_8px_22px_-6px_rgba(4,34,23,0.30)] px-6 sm:px-8 lg:px-10 py-4 lg:py-[18px]"
+            >
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-0 items-center">
+                {/* Stat 1: 29 Export Countries */}
+                <div className="flex items-center md:justify-center gap-4 lg:gap-5 md:pr-6">
+                  <Globe2 size={42} className="text-[#D4AF5A] shrink-0" strokeWidth={1.3} />
                   <div>
-                    <p className="font-display font-bold text-2xl sm:text-3xl text-white leading-none">
-                      29
+                    <p className="font-display font-bold text-[32px] lg:text-[38px] text-white leading-none tabular-nums">
+                      <CountUpNumber target={29} />
                     </p>
-                    <p className="font-body text-xs sm:text-sm text-white/85 mt-1">
+                    <p className="font-body text-[13px] lg:text-[14px] text-white/90 mt-1">
                       Export Countries
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4 md:px-6 md:border-l md:border-white/15">
-                  <Ship size={32} className="text-[#D89B3C] shrink-0" strokeWidth={1.5} />
+                {/* Stat 2: 4 Global Regions */}
+                <div className="relative flex items-center md:justify-center gap-4 lg:gap-5 md:px-6 md:before:content-[''] md:before:absolute md:before:left-0 md:before:top-1/2 md:before:-translate-y-1/2 md:before:h-[46px] md:before:w-px md:before:bg-white/25">
+                  <Handshake size={42} className="text-[#D4AF5A] shrink-0" strokeWidth={1.3} />
                   <div>
-                    <p className="font-display font-bold text-2xl sm:text-3xl text-white leading-none">
-                      4
+                    <p className="font-display font-bold text-[32px] lg:text-[38px] text-white leading-none tabular-nums">
+                      <CountUpNumber target={4} />
                     </p>
-                    <p className="font-body text-xs sm:text-sm text-white/85 mt-1">
+                    <p className="font-body text-[13px] lg:text-[14px] text-white/90 mt-1">
                       Global Regions
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4 md:pl-6 md:border-l md:border-white/15">
-                  <Box size={32} className="text-[#D89B3C] shrink-0" strokeWidth={1.5} />
+                {/* Stat 3: 10+ Years of Export Experience */}
+                <div className="relative flex items-center md:justify-center gap-4 lg:gap-5 md:pl-6 md:before:content-[''] md:before:absolute md:before:left-0 md:before:top-1/2 md:before:-translate-y-1/2 md:before:h-[46px] md:before:w-px md:before:bg-white/25">
+                  <Warehouse size={42} className="text-[#D4AF5A] shrink-0" strokeWidth={1.3} />
                   <div>
-                    <p className="font-display font-bold text-2xl sm:text-3xl text-white leading-none">
-                      10+
+                    <p className="font-display font-bold text-[32px] lg:text-[38px] text-white leading-none tabular-nums">
+                      <CountUpNumber target={10} />+
                     </p>
-                    <p className="font-body text-xs sm:text-sm text-white/85 mt-1">
+                    <p className="font-body text-[13px] lg:text-[14px] text-white/90 mt-1">
                       Years of Export Experience
                     </p>
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            {/* World Map + 4 Regional Country Lists */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-              {/* Left (62%): Dark-Green World Map + 6 Bottom Capability Icons */}
-              <div className="lg:col-span-7 rounded-2xl bg-[#0B2017] text-white p-5 sm:p-6 border border-[#C88A36]/25 flex flex-col justify-between shadow-md">
-                <div className="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-[#0E281D] border border-white/10">
+            {/* Exact 2-Column Split: 67.4% Dark World Map Card | 30.7% Stack of 4 Regional Cards (Hình 40) */}
+            <div className="flex flex-col lg:flex-row gap-6 lg:gap-[24px] items-stretch">
+              {/* Left (67.4%): Museum-Grade Dark-Emerald World Map + Interactive Beacons + 6 Capability Icons */}
+              <motion.div
+                initial={{ opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.6 }}
+                className="lg:w-[67.4%] shrink-0 rounded-[14px] bg-[#06291C] text-white border border-[#C9A86A]/30 shadow-[0_10px_28px_-8px_rgba(4,34,23,0.35)] overflow-hidden flex flex-col justify-between"
+              >
+                {/* High-Res World Map Artwork + Animated Interactive SVG Overlay */}
+                <div className="relative w-full aspect-[916/450] bg-[#06291C] overflow-hidden">
+                  <img
+                    src="/img/pdf-guide/manufacturing/global-markets-map.jpg?v=2"
+                    alt="DHT 29 Global Export Markets World Map with Europe Inset"
+                    className="w-full h-full object-cover select-none"
+                  />
+
+                  {/* Interactive Animated Beacons & Pulses Over Authentic Map Coordinates */}
                   <svg
-                    viewBox="60 50 860 400"
-                    className="w-full h-full select-none"
-                    aria-label="DHT 29 Global Export Markets Map"
+                    viewBox="0 0 916 450"
+                    className="absolute inset-0 w-full h-full pointer-events-none"
+                    aria-hidden="true"
                   >
-                    {/* Continents */}
-                    <g fill="#194230" stroke="#285E46" strokeWidth="1">
-                      {/* North America */}
-                      <path d="M100,90 L280,85 L300,165 L240,235 L165,225 L110,165 Z" />
-                      {/* South America */}
-                      <path d="M245,250 L330,275 L315,410 L265,420 L235,325 Z" />
-                      {/* Europe */}
-                      <path d="M445,95 L560,90 L570,180 L515,192 L450,185 Z" />
-                      {/* Africa */}
-                      <path d="M450,205 L570,210 L600,305 L550,395 L500,390 L470,300 Z" />
-                      {/* Eurasia & Asia */}
-                      <path d="M565,85 L865,90 L880,240 L760,290 L660,270 L570,240 L550,180 Z" />
-                      {/* Australia */}
-                      <path d="M760,330 L865,330 L875,400 L770,400 Z" />
-                    </g>
-
-                    {/* Subtle Europe Callout Circle */}
-                    <circle
-                      cx="495"
-                      cy="150"
-                      r="36"
-                      fill="rgba(216, 155, 60, 0.12)"
-                      stroke="#D89B3C"
+                    {/* Live Subtle Pulsing Golden Halo on Vietnam Origin Star */}
+                    <motion.circle
+                      cx="744"
+                      cy="201"
+                      r="16"
+                      fill="none"
+                      stroke="#F0CC6E"
+                      strokeWidth="2"
+                      animate={{ r: [10, 26], opacity: [0.85, 0] }}
+                      transition={{ duration: 2.4, repeat: Infinity, ease: "easeOut" }}
+                    />
+                    <motion.circle
+                      cx="744"
+                      cy="201"
+                      r="10"
+                      fill="none"
+                      stroke="#F5D98A"
                       strokeWidth="1.5"
-                    />
-                    <line
-                      x1="460"
-                      y1="162"
-                      x2="310"
-                      y2="225"
-                      stroke="#D89B3C"
-                      strokeWidth="1.2"
-                      strokeDasharray="4 3"
+                      animate={{ r: [8, 20], opacity: [0.7, 0] }}
+                      transition={{
+                        duration: 2.4,
+                        delay: 0.9,
+                        repeat: Infinity,
+                        ease: "easeOut",
+                      }}
                     />
 
-                    {/* Europe Inset Circle (Bottom-Left of Map) */}
-                    <g transform="translate(215, 305)">
-                      <circle
-                        cx="0"
-                        cy="0"
-                        r="95"
-                        fill="#0E261C"
-                        stroke="#D89B3C"
-                        strokeWidth="2"
-                      />
-                      <text
-                        x="0"
-                        y="-70"
-                        textAnchor="middle"
-                        fill="#E5B869"
-                        fontSize="10"
-                        fontWeight="800"
-                      >
-                        EUROPE (14 MARKETS)
-                      </text>
-                      {[
-                        { name: "UK", x: -55, y: -25 },
-                        { name: "DENMARK", x: -18, y: -48 },
-                        { name: "ESTONIA", x: 35, y: -48 },
-                        { name: "NETHERLANDS", x: -22, y: -22 },
-                        { name: "POLAND", x: 38, y: -20 },
-                        { name: "FRANCE", x: -48, y: 5 },
-                        { name: "GERMANY", x: -5, y: 0 },
-                        { name: "SLOVAKIA", x: 42, y: 5 },
-                        { name: "AUSTRIA", x: 0, y: 22 },
-                        { name: "HUNGARY", x: 42, y: 26 },
-                        { name: "SPAIN", x: -52, y: 42 },
-                        { name: "ITALY", x: -18, y: 44 },
-                        { name: "SLOVENIA", x: 18, y: 48 },
-                        { name: "GREECE", x: 32, y: 68 },
-                      ].map((eu) => (
-                        <g key={eu.name} transform={`translate(${eu.x}, ${eu.y})`}>
-                          <circle cx="0" cy="0" r="3.5" fill="#E5B869" />
-                          <text x="6" y="3" fill="#FFFFFF" fontSize="7.5" fontWeight="700">
-                            {eu.name}
-                          </text>
-                        </g>
-                      ))}
-                    </g>
-
-                    {/* Vietnam Origin Star */}
-                    <g transform="translate(735, 245)">
-                      <circle cx="0" cy="0" r="9" fill="#D89B3C" fillOpacity="0.3" />
-                      <circle cx="0" cy="0" r="4.5" fill="#E5B869" stroke="#FFFFFF" strokeWidth="1.5" />
-                      <text x="12" y="4" fill="#E5B869" fontSize="12" fontWeight="800">
-                        VIETNAM
-                      </text>
-                    </g>
-
-                    {/* Global Country Pins */}
-                    {[
-                      { name: "CANADA", x: 165, y: 125 },
-                      { name: "UNITED STATES", x: 185, y: 168 },
-                      { name: "RUSSIA", x: 645, y: 118 },
-                      { name: "GEORGIA", x: 585, y: 158 },
-                      { name: "TÜRKIYE", x: 562, y: 178 },
-                      { name: "ISRAEL", x: 558, y: 202 },
-                      { name: "LEBANON", x: 558, y: 220 },
-                      { name: "SAUDI ARABIA", x: 590, y: 245 },
-                      { name: "UAE / QATAR", x: 618, y: 225 },
-                      { name: "INDIA", x: 678, y: 220 },
-                      { name: "CHINA", x: 740, y: 190 },
-                      { name: "MAURITIUS", x: 615, y: 335 },
-                      { name: "SOUTH AFRICA", x: 530, y: 375 },
-                      { name: "AUSTRALIA", x: 800, y: 355 },
-                    ].map((pin) => (
-                      <g key={pin.name} transform={`translate(${pin.x}, ${pin.y})`}>
-                        <circle
-                          cx="0"
-                          cy="0"
-                          r="4"
-                          fill="#E5B869"
-                          stroke="#0B2017"
-                          strokeWidth="1.2"
+                    {/* Highlight Golden Ring around Europe Magnifier when Europe region or EU country is hovered */}
+                    {(hoveredMarketRegion === "eu" ||
+                      (hoveredMarketCountry &&
+                        MARKET_PIN_COORDS[hoveredMarketCountry]?.region === "eu")) && (
+                        <motion.circle
+                          cx="210"
+                          cy="286"
+                          r="142"
+                          fill="rgba(240, 204, 110, 0.08)"
+                          stroke="#F4D37A"
+                          strokeWidth="3.5"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 0.25 }}
                         />
-                        <text x="7" y="3.5" fill="#FFFFFF" fontSize="8.5" fontWeight="700">
-                          {pin.name}
-                        </text>
-                      </g>
-                    ))}
+                      )}
+
+                    {/* Spotlight Beacon on Any Hovered Region's Pins or Individual Country Pin */}
+                    {Object.entries(MARKET_PIN_COORDS).map(([country, pt]) => {
+                      const isCountryMatch = hoveredMarketCountry === country;
+                      const isRegionMatch =
+                        !hoveredMarketCountry && hoveredMarketRegion === pt.region;
+                      if (!isCountryMatch && !isRegionMatch) return null;
+                      return (
+                        <g key={country}>
+                          <motion.circle
+                            cx={pt.x}
+                            cy={pt.y}
+                            r={isCountryMatch ? 18 : 13}
+                            fill="rgba(244, 211, 122, 0.24)"
+                            stroke="#F6D884"
+                            strokeWidth={isCountryMatch ? 2.4 : 1.6}
+                            initial={{ scale: 0.6, opacity: 0 }}
+                            animate={{ scale: [0.9, 1.18, 0.9], opacity: 1 }}
+                            transition={{
+                              duration: 1.4,
+                              repeat: Infinity,
+                              ease: "easeInOut",
+                            }}
+                          />
+                          {isCountryMatch && (
+                            <motion.path
+                              d={`M 744 201 Q ${(744 + pt.x) / 2} ${Math.min(201, pt.y) - 55} ${pt.x} ${pt.y}`}
+                              fill="none"
+                              stroke="#F6D884"
+                              strokeWidth="2"
+                              strokeDasharray="5 4"
+                              initial={{ pathLength: 0, opacity: 0 }}
+                              animate={{ pathLength: 1, opacity: 0.85 }}
+                              transition={{ duration: 0.55, ease: "easeOut" }}
+                            />
+                          )}
+                        </g>
+                      );
+                    })}
                   </svg>
                 </div>
 
-                {/* Bottom 6 Logistics Capability Icons */}
-                <div className="pt-5 mt-4 border-t border-white/15 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-xs text-white/90 font-body">
-                  <div className="flex items-center gap-2">
-                    <Ship size={18} className="text-[#D89B3C] shrink-0" />
-                    <span className="font-semibold">FCL</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Box size={18} className="text-[#D89B3C] shrink-0" />
-                    <span className="font-semibold">LCL</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <FileText size={18} className="text-[#D89B3C] shrink-0" />
-                    <span className="leading-tight">Commercial documents</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Package size={18} className="text-[#D89B3C] shrink-0" />
-                    <span className="leading-tight">Packing information</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <ClipboardList size={18} className="text-[#D89B3C] shrink-0" />
-                    <span className="leading-tight">Loading plans</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Calendar size={18} className="text-[#D89B3C] shrink-0" />
-                    <span className="leading-tight">Shipment schedules</span>
-                  </div>
-                </div>
-              </div>
+                {/* Bottom 6 Export Capabilities Strip inside Dark Map Card (exact Hình 40 height & dividers) */}
+                <div className="bg-[#05271A] border-t border-[#D4AF5A]/22 px-4 sm:px-6 py-4 lg:py-[16px]">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-y-3 lg:gap-0 items-center text-[11.5px] lg:text-[12px] text-white/92 font-body">
+                    <div className="flex items-center justify-center gap-2 lg:px-2">
+                      <Ship size={23} strokeWidth={1.4} className="text-[#D4AF5A] shrink-0" />
+                      <span className="font-semibold tracking-wide">FCL</span>
+                    </div>
 
-              {/* Right (38%): 4 Regional Cards Listing 29 Countries */}
-              <div className="lg:col-span-5 flex flex-col justify-between gap-4">
-                {GLOBAL_MARKET_REGIONS.map((region) => (
-                  <div
-                    key={region.id}
-                    className="rounded-xl bg-[#FBF9F5] border border-[#E2DACB] p-5 shadow-xs"
-                  >
-                    <div className="flex items-center justify-between gap-2 mb-2.5">
-                      <div className="flex items-center gap-2">
-                        <Globe2 size={18} className="text-[#B97846]" />
-                        <h3 className="font-body text-xs sm:text-sm font-bold uppercase tracking-wider text-[#0E241B]">
-                          {region.name}
-                        </h3>
-                      </div>
-                      <span className="px-2.5 py-0.5 rounded-full bg-[#173C2C] text-white font-body text-xs font-bold">
-                        {region.count}
+                    <div className="relative flex items-center justify-center gap-2 lg:px-2 lg:before:content-[''] lg:before:absolute lg:before:left-0 lg:before:top-1/2 lg:before:-translate-y-1/2 lg:before:h-6 lg:before:w-px lg:before:bg-white/15">
+                      <Warehouse size={23} strokeWidth={1.4} className="text-[#D4AF5A] shrink-0" />
+                      <span className="font-semibold tracking-wide">LCL</span>
+                    </div>
+
+                    <div className="relative flex items-center justify-center gap-2 lg:px-2.5 lg:before:content-[''] lg:before:absolute lg:before:left-0 lg:before:top-1/2 lg:before:-translate-y-1/2 lg:before:h-6 lg:before:w-px lg:before:bg-white/15">
+                      <FileText size={21} strokeWidth={1.4} className="text-[#D4AF5A] shrink-0" />
+                      <span className="leading-[1.2]">
+                        Commercial
+                        <br />
+                        documents
                       </span>
                     </div>
 
-                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 font-body text-xs sm:text-sm text-[#2D3732] leading-relaxed">
-                      {region.countries.map((country, idx) => (
-                        <span
-                          key={country}
-                          onMouseEnter={() => setHoveredMarketCountry(country)}
-                          onMouseLeave={() => setHoveredMarketCountry(null)}
-                          className={`transition-colors ${hoveredMarketCountry === country
-                            ? "text-[#B97846] font-bold"
-                            : "text-[#2D3732]"
-                            }`}
-                        >
-                          {country}
-                          {idx < region.countries.length - 1 && (
-                            <span className="text-[#B97846] ml-2">•</span>
-                          )}
-                        </span>
-                      ))}
+                    <div className="relative flex items-center justify-center gap-2 lg:px-2.5 lg:before:content-[''] lg:before:absolute lg:before:left-0 lg:before:top-1/2 lg:before:-translate-y-1/2 lg:before:h-6 lg:before:w-px lg:before:bg-white/15">
+                      <Package size={21} strokeWidth={1.4} className="text-[#D4AF5A] shrink-0" />
+                      <span className="leading-[1.2]">
+                        Packing
+                        <br />
+                        information
+                      </span>
+                    </div>
+
+                    <div className="relative flex items-center justify-center gap-2 lg:px-2.5 lg:before:content-[''] lg:before:absolute lg:before:left-0 lg:before:top-1/2 lg:before:-translate-y-1/2 lg:before:h-6 lg:before:w-px lg:before:bg-white/15">
+                      <ClipboardList
+                        size={21}
+                        strokeWidth={1.4}
+                        className="text-[#D4AF5A] shrink-0"
+                      />
+                      <span className="leading-[1.2]">
+                        Loading
+                        <br />
+                        plans
+                      </span>
+                    </div>
+
+                    <div className="relative flex items-center justify-center gap-2 lg:px-2.5 lg:before:content-[''] lg:before:absolute lg:before:left-0 lg:before:top-1/2 lg:before:-translate-y-1/2 lg:before:h-6 lg:before:w-px lg:before:bg-white/15">
+                      <Calendar size={21} strokeWidth={1.4} className="text-[#D4AF5A] shrink-0" />
+                      <span className="leading-[1.2]">
+                        Shipment
+                        <br />
+                        schedules
+                      </span>
                     </div>
                   </div>
-                ))}
+                </div>
+              </motion.div>
+
+              {/* Right (30.7%): Stack of 4 Regional Country Cards aligned top-to-bottom with Map */}
+              <div className="flex-1 flex flex-col justify-between gap-3.5 lg:gap-[14px]">
+                {GLOBAL_MARKET_REGIONS.map((region, idx) => {
+                  const isRegionActive =
+                    hoveredMarketRegion === region.id ||
+                    (hoveredMarketCountry !== null &&
+                      MARKET_PIN_COORDS[hoveredMarketCountry]?.region === region.id);
+                  return (
+                    <motion.div
+                      key={region.id}
+                      initial={{ opacity: 0, x: 12 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, margin: "-30px" }}
+                      transition={{ duration: 0.45, delay: idx * 0.08 }}
+                      onMouseEnter={() => setHoveredMarketRegion(region.id)}
+                      onMouseLeave={() => setHoveredMarketRegion(null)}
+                      className={`rounded-[12px] px-5 py-4 lg:px-[20px] lg:py-[16px] border transition-all duration-300 bg-[#FAF6F0] flex-1 flex flex-col justify-center cursor-pointer ${isRegionActive
+                        ? "border-[#C27834] ring-1 ring-[#C27834]/30 shadow-[0_8px_20px_-6px_rgba(14,36,27,0.12)] -translate-y-0.5"
+                        : "border-[#E5DDD0] shadow-[0_3px_10px_-3px_rgba(95,78,58,0.10)]"
+                        }`}
+                    >
+                      {/* Card Header: Bronze Globe + Region Title + Dark Emerald Pill Count */}
+                      <div className="flex items-center justify-between gap-2 mb-2">
+                        <div className="flex items-center gap-2.5">
+                          <Globe2
+                            size={22}
+                            strokeWidth={1.5}
+                            className="text-[#B27B42] shrink-0"
+                          />
+                          <h3 className="font-display text-[13.5px] lg:text-[14px] font-bold uppercase tracking-[0.04em] text-[#0B231A]">
+                            {region.name}
+                          </h3>
+                        </div>
+                        <span className="min-w-[34px] h-[22px] px-2.5 rounded-full bg-[#093524] text-white font-body text-[12px] font-bold inline-flex items-center justify-center shrink-0">
+                          {region.count}
+                        </span>
+                      </div>
+
+                      {/* Indented Country List aligned right underneath the Region Title (exact Hình 40) */}
+                      <div className="pl-[32px] flex flex-wrap items-center gap-x-1.5 gap-y-0.5 font-body text-[12px] lg:text-[12.5px] text-[#28342F] leading-[1.6]">
+                        {region.countries.map((country, cIdx) => (
+                          <span
+                            key={country}
+                            onMouseEnter={() => setHoveredMarketCountry(country)}
+                            onMouseLeave={() => setHoveredMarketCountry(null)}
+                            className={`transition-colors ${hoveredMarketCountry === country
+                              ? "text-[#B6733A] font-bold"
+                              : "text-[#28342F] hover:text-[#B6733A]"
+                              }`}
+                          >
+                            {country}
+                            {cIdx < region.countries.length - 1 && (
+                              <span className="text-[#B6733A] ml-1.5">•</span>
+                            )}
+                          </span>
+                        ))}
+                      </div>
+                    </motion.div>
+                  );
+                })}
               </div>
             </div>
           </div>
         </section>
 
-        {/* ── PART 22B: FACTORY VISIT CTA BANNER (Planning an On-Site Factory Inspection? — Hình 42) ── */}
-        <section className="py-14 lg:py-18 bg-[#FAF8F3]">
-          <div className="container mx-auto px-6 lg:px-10">
+        {/* ── PART 22B: FACTORY VISIT CTA BANNER (Planning an On-Site Factory Inspection? — Hình 42 Exact) ── */}
+        <section className="py-10 lg:py-[46px] bg-[#F8F1EB]">
+          <div className="max-w-[1320px] mx-auto px-6 sm:px-8 lg:px-10">
             <motion.div
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.55 }}
-              className="rounded-2xl bg-gradient-to-br from-[#153527] via-[#0F281D] to-[#0B1E15] text-white p-8 sm:p-12 shadow-xl border border-[#C88A36]/30"
+              className="relative rounded-[20px] overflow-hidden bg-[#012C1C] text-white px-7 py-9 sm:px-11 sm:py-11 lg:px-[60px] lg:py-[44px] shadow-[0_14px_34px_-10px_rgba(1,44,28,0.38)]"
             >
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                {/* Left Column */}
-                <div className="lg:col-span-8">
+              {/* Authentic Velvet Emerald + Luminous Golden Silk Waves Background (Hình 42) */}
+              <img
+                src="/img/pdf-guide/manufacturing/factory-visit-bg.jpg?v=2"
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none select-none"
+              />
+
+              {/* Upper Row: Left 52% Copy | Mid-Height Vertical Divider | Right 48% 3 Bare Gold Icon Pillars */}
+              <div className="relative z-10 flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-0">
+                {/* Left Copy Block (52%) */}
+                <div className="lg:w-[52%] lg:pr-10">
                   <div className="flex items-center gap-3 mb-3">
-                    <span className="h-[1.5px] w-7 bg-[#D89B3C]" />
-                    <span className="font-body text-xs font-bold uppercase tracking-[0.2em] text-[#D89B3C]">
+                    <span className="h-[1.5px] w-8 bg-[#D8B460]" />
+                    <span className="font-body text-[11.5px] font-semibold uppercase tracking-[0.18em] text-[#D8B460]">
                       FACTORY VISIT
                     </span>
                   </div>
 
-                  <h2
-                    className="font-display font-bold text-white leading-tight mb-4"
-                    style={{ fontSize: "clamp(1.75rem, 3vw, 2.5rem)" }}
-                  >
-                    Planning an On-Site Factory Inspection?
+                  <h2 className="font-display font-bold text-white leading-[1.12] tracking-[-0.01em] mb-4 text-[30px] sm:text-[36px] lg:text-[42px]">
+                    Planning an On-Site
+                    <br />
+                    Factory Inspection?
                   </h2>
 
-                  <p className="font-body text-sm sm:text-base text-white/85 leading-relaxed max-w-2xl mb-7">
+                  <p className="font-body text-[13.5px] sm:text-[14.5px] text-white/88 leading-[1.58] max-w-[540px]">
                     To protect client proprietary designs and maintain operational safety, factory
                     visits are arranged by appointment following an initial review of your product
                     scope and requirements.
                   </p>
-
-                  <div className="flex flex-wrap items-center gap-4">
-                    <Link
-                      href="/contact?inquiry=factory-visit#smart-contact-form"
-                      className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg bg-[#B97846] hover:bg-[#C88550] text-white font-body text-sm font-semibold transition-all shadow-md"
-                    >
-                      <span>Arrange Factory Visit</span>
-                      <ArrowRight size={16} />
-                    </Link>
-
-                    <a
-                      href="/DHT_Company_Profile_2026.pdf"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg bg-white/5 hover:bg-white/10 text-white border border-white/30 font-body text-sm font-semibold transition-all"
-                    >
-                      <FileText size={16} className="text-[#E5B869]" />
-                      <span>View Company Profile (PDF)</span>
-                    </a>
-                  </div>
                 </div>
 
-                {/* Right Column: 3 Inspection Pillars */}
-                <div className="lg:col-span-4 lg:pl-8 lg:border-l lg:border-white/15 grid grid-cols-3 gap-4 text-center">
-                  <div className="flex flex-col items-center">
-                    <div className="w-12 h-12 rounded-xl bg-[#D89B3C]/15 border border-[#D89B3C]/40 flex items-center justify-center mb-2.5">
-                      <CalendarCheck size={22} className="text-[#E5B869]" />
-                    </div>
-                    <span className="font-body text-xs font-semibold text-white/90 leading-snug">
-                      By
-                      <br />
-                      Appointment
+                {/* Main Mid-Height Vertical Divider (x=51.6% in Hình 42) */}
+                <div className="hidden lg:block w-px h-[138px] bg-white/22 shrink-0" />
+
+                {/* Right 3 Bare-Gold-Icon Inspection Pillars (48% — single-line labels, 2 shorter dividers) */}
+                <div className="lg:w-[48%] lg:pl-6 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-0 items-center text-center">
+                  <div className="flex flex-col items-center justify-center px-3">
+                    <CalendarCheck
+                      size={42}
+                      strokeWidth={1.35}
+                      className="text-[#E5C375] mb-3.5 shrink-0"
+                    />
+                    <span className="font-body text-[13.5px] lg:text-[14px] font-medium text-white/95 whitespace-nowrap">
+                      By Appointment
                     </span>
                   </div>
 
-                  <div className="flex flex-col items-center">
-                    <div className="w-12 h-12 rounded-xl bg-[#D89B3C]/15 border border-[#D89B3C]/40 flex items-center justify-center mb-2.5">
-                      <ShieldCheck size={22} className="text-[#E5B869]" />
-                    </div>
-                    <span className="font-body text-xs font-semibold text-white/90 leading-snug">
-                      Design
-                      <br />
-                      Confidentiality
+                  <div className="relative flex flex-col items-center justify-center px-3 sm:before:content-[''] sm:before:absolute sm:before:left-0 sm:before:top-1/2 sm:before:-translate-y-1/2 sm:before:h-[72px] sm:before:w-px sm:before:bg-white/18">
+                    <ShieldCheck
+                      size={42}
+                      strokeWidth={1.35}
+                      className="text-[#E5C375] mb-3.5 shrink-0"
+                    />
+                    <span className="font-body text-[13.5px] lg:text-[14px] font-medium text-white/95 whitespace-nowrap">
+                      Design Confidentiality
                     </span>
                   </div>
 
-                  <div className="flex flex-col items-center">
-                    <div className="w-12 h-12 rounded-xl bg-[#D89B3C]/15 border border-[#D89B3C]/40 flex items-center justify-center mb-2.5">
-                      <HardHat size={22} className="text-[#E5B869]" />
-                    </div>
-                    <span className="font-body text-xs font-semibold text-white/90 leading-snug">
-                      Operational
-                      <br />
-                      Safety
+                  <div className="relative flex flex-col items-center justify-center px-3 sm:before:content-[''] sm:before:absolute sm:before:left-0 sm:before:top-1/2 sm:before:-translate-y-1/2 sm:before:h-[72px] sm:before:w-px sm:before:bg-white/18">
+                    <HardHat
+                      size={42}
+                      strokeWidth={1.35}
+                      className="text-[#E5C375] mb-3.5 shrink-0"
+                    />
+                    <span className="font-body text-[13.5px] lg:text-[14px] font-medium text-white/95 whitespace-nowrap">
+                      Operational Safety
                     </span>
                   </div>
                 </div>
+              </div>
+
+              {/* Lower CTA Row (aligned left directly under copy, exact 54px height & metallic gold/outline styling) */}
+              <div className="relative z-10 mt-7 lg:mt-8 flex flex-wrap items-center gap-4">
+                <Link
+                  href="/contact?inquiry=factory-visit#smart-contact-form"
+                  className="inline-flex items-center justify-center gap-2.5 h-[52px] lg:h-[54px] px-7 sm:px-9 rounded-[10px] text-[#082419] font-body text-[14.5px] lg:text-[15px] font-semibold transition-all duration-300 hover:brightness-105 hover:-translate-y-0.5 shadow-[0_6px_18px_-4px_rgba(222,168,89,0.45)]"
+                  style={{
+                    background:
+                      "linear-gradient(180deg, #F6D594 0%, #E0AB5C 52%, #C98B3B 100%)",
+                  }}
+                >
+                  <span>Arrange Factory Visit</span>
+                  <ArrowRight size={17} strokeWidth={2} />
+                </Link>
+
+                <a
+                  href="/DHT_Company_Profile_2026.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2.5 h-[52px] lg:h-[54px] px-7 sm:px-8 rounded-[10px] bg-[#032619]/75 hover:bg-[#073624]/90 text-white border border-[#D8B460]/75 font-body text-[14.5px] lg:text-[15px] font-medium transition-all duration-300"
+                >
+                  <FileText size={19} strokeWidth={1.6} className="text-white/90 shrink-0" />
+                  <span>View Company Profile (PDF)</span>
+                </a>
               </div>
             </motion.div>
           </div>

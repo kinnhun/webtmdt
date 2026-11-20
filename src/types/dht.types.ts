@@ -121,3 +121,17 @@ export type SmartContactFormValues = {
   message: string;
   attachmentName: string;
 };
+
+export type OurBrandCardItem = {
+  id: BrandId;
+  specialty: string;
+  description: string;
+  image: string;
+  ctaLabel: string;
+};
+
+export type ProductCapabilityItem = {
+  title: string;
+  href: string;
+  icon: "outdoor" | "indoor" | "office" | "project" | "panels";
+};

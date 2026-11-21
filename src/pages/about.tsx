@@ -134,7 +134,7 @@ export default function AboutPage() {
             muted
             playsInline
             preload="metadata"
-            poster="/img/pdf-guide/home/brand-jager-factory.jpg?v=2"
+            poster="/img/pdf-guide/home/brand-jager-factory.jpg?v=4"
             className="absolute inset-0 w-full h-full object-cover"
           >
             <source src="/video/jager-factory.mp4" type="video/mp4" />

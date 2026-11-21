@@ -26,7 +26,7 @@ const BRAND_ITEMS: BrandShowcaseItem[] = [
     modalTitle: "JAGER | Indoor Furniture",
     modalDescription:
       "JAGER manufactures indoor furniture for residential spaces. For OEM enquiries, contact DHT Furniture Vietnam.",
-    factoryImage: "/img/pdf-guide/home/brand-jager-factory.jpg?v=3",
+    factoryImage: "/img/pdf-guide/home/brand-jager-factory.jpg?v=4",
     brandCardImage: "/img/pdf-guide/brands/card-jager.jpg",
     videoUrl: "/video/jager-factory.mp4",
   },
